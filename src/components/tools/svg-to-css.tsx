@@ -1,0 +1,120 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { sanitize } from "@/lib/sanitize";
+
+export function SvgToCss() {
+  const [input, setInput] = useState(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`);
+  const [mode, setMode] = useState("background");
+  const [encoding, setEncoding] = useState<"url" | "base64">("url");
+  const [copied, setCopied] = useState("");
+
+  const svgSize = useMemo(() => {
+    const w = input.match(/width="(\d+)"/)?.[1];
+    const h = input.match(/height="(\d+)"/)?.[1];
+    return { w: w ?? "auto", h: h ?? "auto" };
+  }, [input]);
+
+  const isValid = useMemo(() => {
+    const trimmed = input.trim();
+    if (!trimmed) return false;
+    return trimmed.startsWith("<svg") && trimmed.endsWith("</svg>") || trimmed.startsWith("<svg") && trimmed.endsWith("/>");
+  }, [input]);
+
+  const optimized = useMemo(() => {
+    return input
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/>\s+</g, "><")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }, [input]);
+
+  const cssOutput = useMemo(() => {
+    if (!isValid) return "";
+    const svg = optimized;
+    let dataUri: string;
+    if (encoding === "url") {
+      dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    } else {
+      dataUri = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
+    }
+
+    switch (mode) {
+      case "background":
+        return `.svg-icon {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  background-image: url("${dataUri}");\n  background-size: contain;\n  background-repeat: no-repeat;\n}`;
+      case "mask":
+        return `.svg-mask {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  background: currentColor;\n  mask: url("${dataUri}") no-repeat center / contain;\n  -webkit-mask: url("${dataUri}") no-repeat center / contain;\n}`;
+      case "inline":
+        return `.svg-inline {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  background: transparent;\n}\n\n.svg-inline::before {\n  content: "${encodeURIComponent(svg).replace(/"/g, '\\"')}";\n  /* Use with data URI in content */\n}`;
+      case "clip":
+        return `.svg-clip {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  clip-path: url("${dataUri}");\n}`;
+      default:
+        return "";
+    }
+  }, [mode, encoding, isValid, optimized, svgSize]);
+
+  const handleCopy = async (text: string, label: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(""), 1500);
+  };
+
+  const downloadCss = () => {
+    const a = document.createElement("a");
+    a.href = "data:text/css;charset=utf-8," + encodeURIComponent(cssOutput);
+    a.download = "svg-styles.css";
+    a.click();
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">SVG Code</label>
+        <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
+          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+      </div>
+
+      {!isValid && input.trim() && <p className="text-sm text-red-500">Invalid SVG — must start with &lt;svg and end with &lt;/svg&gt;</p>}
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Output Mode</label>
+          <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="background">CSS Background</option>
+            <option value="mask">CSS Mask</option>
+            <option value="inline">Inline SVG in CSS</option>
+            <option value="clip">CSS Clip Path</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Encoding</label>
+          <select value={encoding} onChange={(e) => setEncoding(e.target.value as "url" | "base64")} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="url">URL-encoded</option>
+            <option value="base64">Base64</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 p-3 rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+        <div className="text-xs text-surface-500 dark:text-dark-muted">Preview:</div>
+        <div className="flex items-center justify-center min-w-[48px] min-h-[48px]" dangerouslySetInnerHTML={{ __html: sanitize(optimized) }} />
+        {svgSize.w !== "auto" && <span className="text-xs text-surface-400">{svgSize.w}x{svgSize.h}</span>}
+        <span className="text-xs text-surface-400">{input.length} chars → ~{cssOutput.length} chars</span>
+      </div>
+
+      {cssOutput && (
+        <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Generated CSS</label>
+          <div className="relative">
+            <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-60 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{cssOutput}</pre>
+            <div className="absolute top-2 right-2 flex gap-1">
+              <button onClick={() => handleCopy(cssOutput, "css")} className="rounded bg-brand-500 px-2 py-1 text-xs text-white hover:bg-brand-600">{copied === "css" ? "Copied!" : "Copy CSS"}</button>
+              <button onClick={downloadCss} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">Download .css</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

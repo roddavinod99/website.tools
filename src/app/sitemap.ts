@@ -1,0 +1,91 @@
+import type { MetadataRoute } from "next";
+import { allTools, categories, siteConfig, learningTopics } from "@/lib/constants";
+import { toolkits } from "@/lib/toolkits";
+
+export const revalidate = 86400;
+
+const BASE = siteConfig.url;
+
+const staticPages: MetadataRoute.Sitemap = [
+  { url: `${BASE}/`, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
+  { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+  { url: `${BASE}/categories`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+  { url: `${BASE}/guides`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+  { url: `${BASE}/blog`, lastModified: new Date("2026-06-28"), changeFrequency: "weekly", priority: 0.7 },
+  { url: `${BASE}/learning`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+  { url: `${BASE}/popular`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+  { url: `${BASE}/new`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+  { url: `${BASE}/changelog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
+  { url: `${BASE}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+  { url: `${BASE}/api`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+  { url: `${BASE}/best-practices`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+  { url: `${BASE}/feature-request`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  { url: `${BASE}/feedback`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  { url: `${BASE}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
+  { url: `${BASE}/report-bug`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  { url: `${BASE}/roadmap`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+  { url: `${BASE}/search`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+  { url: `${BASE}/sitemap`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+  { url: `${BASE}/status`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.3 },
+  { url: `${BASE}/suggest`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  { url: `${BASE}/support`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  { url: `${BASE}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
+  { url: `${BASE}/tutorials`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+];
+
+const blogPosts: { slug: string; date: Date }[] = [
+  { slug: "getting-started-json", date: new Date("2026-06-28") },
+  { slug: "understanding-jwt", date: new Date("2026-06-25") },
+  { slug: "image-optimization", date: new Date("2026-06-20") },
+  { slug: "password-security", date: new Date("2026-06-15") },
+  { slug: "guide-to-uuids", date: new Date("2026-06-10") },
+];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+  const recentDate = new Date("2026-06-01");
+
+  const categoriesPages: MetadataRoute.Sitemap = categories.map((cat) => ({
+    url: `${BASE}/categories/${cat.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  const toolPages: MetadataRoute.Sitemap = allTools.map((tool) => ({
+    url: `${BASE}/tools/${tool.slug}`,
+    lastModified: tool.new ? now : recentDate,
+    changeFrequency: "monthly",
+    priority: tool.featured ? 0.9 : tool.new ? 0.85 : 0.8,
+  }));
+
+  const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) => ({
+    url: `${BASE}/guides/${topic.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${BASE}/blog/${post.slug}`,
+    lastModified: post.date,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const toolkitPages: MetadataRoute.Sitemap = Object.keys(toolkits).map((slug) => ({
+    url: `${BASE}/toolkits/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [
+    ...staticPages,
+    ...categoriesPages,
+    ...toolPages,
+    ...guidePages,
+    ...blogPages,
+    ...toolkitPages,
+  ];
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="280" font-family="system-ui, sans-serif" font-size="72" font-weight="bold" fill="white">DevStackIO</text>
+  <text x="80" y="360" font-family="system-ui, sans-serif" font-size="36" fill="#c7d2fe">70+ Free Online Developer Tools</text>
+  <text x="80" y="420" font-family="system-ui, sans-serif" font-size="24" fill="#a5b4fc">JSON Formatters, JWT Decoders, Image Tools &amp; More</text>
+  <rect x="80" y="470" width="200" height="6" rx="3" fill="#a5b4fc"/>
+</svg>

@@ -1,0 +1,10 @@
+# Security Contact
+Contact: mailto:security@devstackio.com
+Contact: https://github.com/devstackio/tools/security/advisories/new
+
+# Disclosure Policy
+Preferred-Languages: en
+Policy: https://tools.devstackio.com/.well-known/security.txt
+
+# Timestamp
+Expires: 2027-07-04T00:00:00.000Z
