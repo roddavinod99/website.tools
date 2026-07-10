@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "TOTP (Time-based One-Time Password) generator supporting SHA-1, SHA-256, and SHA-512 hashing algorithms with 6 or 8 digit codes and 30 or 60 second time steps. Displays a live countdown timer, keeps a rolling code history (last 10 codes), includes a cryptographically secure random secret generator, and exports otpauth:// URI for QR codes. Supports Steam TOTP format and multi-account management.",
+  "whyItExists": "Implementing TOTP authentication requires generating codes with precise timing and algorithm parameters. This tool provides a fully functional TOTP client in the browser for testing, development, and account setup without needing a phone or dedicated authenticator app.",
+  "whoShouldUse": "Security engineers, backend developers implementing 2FA, QA testers validating TOTP flows, and users who need a quick TOTP code without their phone.",
+  "useCases": [
+    "Generate a TOTP code for testing a 2FA login flow during development",
+    "Create an otpauth:// URI to generate a QR code for user onboarding",
+    "Compare codes generated with SHA-1 vs. SHA-256 to test algorithm compatibility",
+    "Use Steam TOTP format for Steam account 2FA code generation",
+    "Generate a random base32 secret and immediately see its TOTP code",
+    "Manage multiple TOTP accounts with different algorithms, digits, and step settings"
+  ],
+  "instructions": [
+    "Enter a base32-encoded secret (or click Generate Random Secret to create one).",
+    "Select the algorithm: SHA-1 (default), SHA-256, or SHA-512.",
+    "Set digits to 6 (standard) or 8 (extended) and time step to 30s (standard) or 60s.",
+    "View the current TOTP code in large font with a countdown timer showing seconds until the next code.",
+    "Check the code history panel to see the last 10 codes with their timestamps.",
+    "Switch accounts using the account dropdown or add a new account with the + button."
+  ],
+  "examples": [
+    "Input: secret \"JBSWY3DPEHPK3PXP\" (base32), SHA-1, 6 digits, 30s step → Output: \"123456\" with 23s countdown timer and otpauth:// URI: otpauth://totp/Example?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30",
+    "Input: same secret with Steam TOTP format enabled → Output: \"ST-12345\" (Steam-style 5 character code with leading ST-)"
+  ],
+  "bestPractices": [
+    "Use SHA-256 or SHA-512 for stronger security when the authenticator app supports it",
+    "Always verify the generated code against your server implementation to ensure algorithm/digits/step match",
+    "Generate secrets with the built-in random generator rather than typing them manually",
+    "Use the otpauth:// URI to create a QR code for user onboarding instead of sharing the secret in plaintext",
+    "Store the secret and parameters for each account — the tool uses local storage to persist multi-account data"
+  ],
+  "commonMistakes": [
+    "Using a non-base32 secret — only A-Z and 2-7 characters are valid in base32",
+    "Mismatching algorithm or digits between client and server — codes will never match",
+    "Assuming the time step is always 30 seconds — some services use 60 seconds",
+    "Sharing the secret in plaintext via email or chat instead of using the secure otpauth:// URI",
+    "Forgetting that the code changes every time step — the current code expires based on the countdown timer"
+  ],
+  "faq": [
+    "What is the difference between TOTP and HOTP? TOTP is time-based (code changes every 30/60 seconds); HOTP is counter-based (code changes after each use). This tool only generates TOTP codes.",
+    "Why does my generated code not match my server? Check that the secret, algorithm, digits, and time step match exactly. Also verify the server clock is synchronized via NTP.",
+    "Can I use this as my primary authenticator? It is designed for development/testing; for daily use, a dedicated authenticator app with backups is recommended.",
+    "What is the Steam TOTP format? Steam uses a modified TOTP that produces a 5-character alphanumeric code (including digits and letters) prefixed with \"ST-\" rather than a standard 6-digit numeric code."
+  ]
+}

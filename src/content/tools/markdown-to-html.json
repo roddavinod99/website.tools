@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts Markdown documents to clean HTML with GitHub Flavored Markdown support for tables, task lists, fenced code blocks, and emoji. Offers HTML sanitization toggle, pretty-print (formatted) or minified output, a split-pane preview for before/after comparison, and word/character count.",
+  "whyItExists": "Markdown is the preferred authoring format but HTML is required for web publishing. Simplifies the conversion process with customizable output formatting, ensuring correct rendering without manual HTML tagging.",
+  "whoShouldUse": "Web developers, content publishers, static site generator users, and anyone who authors in Markdown and publishes to the web.",
+  "useCases": [
+    "Convert Markdown documentation to HTML for static site generators like Jekyll, Hugo, or Gatsby",
+    "Transform GitHub README files into styled HTML for embedded documentation pages",
+    "Generate HTML email content from Markdown drafts with proper formatting and sanitization",
+    "Convert Markdown blog posts to HTML fragments for CMS content management systems",
+    "Create sanitized HTML from user-submitted Markdown for comment systems or forums",
+    "Generate clean HTML pages from Markdown meeting notes or documentation for intranet publishing"
+  ],
+  "instructions": [
+    "Paste or type Markdown into the left input pane; the converted HTML appears in the right output pane",
+    "Toggle GFM features on/off to control whether GitHub-specific syntax (task lists, tables, emoji) is processed",
+    "Enable HTML sanitization to strip dangerous tags (script, onclick, etc.) for secure output in user-facing contexts",
+    "Select output formatting: Pretty-print (indented, readable HTML) or Minified (single line, smaller size)",
+    "Use the word/character count to track document size; switch to split-pane view for side-by-side comparison",
+    "Copy the HTML output to clipboard or download as .html file; the preview pane shows rendered HTML appearance"
+  ],
+  "examples": [
+    "Input Markdown: \"# Title\\n\\nHello **world**\\n\\n- Item 1\\n- Item 2\" -> Output HTML: \"<h1>Title</h1>\\n<p>Hello <strong>world</strong></p>\\n<ul>\\n<li>Item 1</li>\\n<li>Item 2</li>\\n</ul>\"",
+    "Input with task list: \"- [x] Done\\n- [ ] Todo\" with GFM on -> Output: \"<ul class=\\\"contains-task-list\\\">\\n<li class=\\\"task-list-item\\\"><input type=\\\"checkbox\\\" checked disabled> Done</li>\\n<li class=\\\"task-list-item\\\"><input type=\\\"checkbox\\\" disabled> Todo</li>\\n</ul>\""
+  ],
+  "bestPractices": [
+    "Always enable sanitization when converting user-submitted Markdown for display on public websites",
+    "Use pretty-print output during development for readability; use minified for production to reduce page weight",
+    "Preview the rendered HTML using the built-in preview pane to verify complex elements like tables render correctly",
+    "Enable GFM features for GitHub/GitLab content; disable for generic Markdown that targets multiple platforms",
+    "Check the HTML output for any broken elements after conversion, especially nested lists and code blocks"
+  ],
+  "commonMistakes": [
+    "Assuming sanitization removes all XSS vectors; always test sanitized output with known attack patterns",
+    "Using pretty-print in production, unnecessarily increasing HTML file size when minified would suffice",
+    "Forgetting to enable GFM mode and wondering why task lists and tables didn't convert",
+    "Not verifying converted HTML in the preview pane before publishing, missing rendering issues",
+    "Relying on the tool for complex documents without checking edge cases like HTML entities and special characters"
+  ],
+  "faq": [
+    "Can it convert Markdown to HTML with inline styles? No, the output is semantic HTML without inline styling; use CSS for styling.",
+    "Does it support custom Markdown extensions? It supports GFM extensions; custom or uncommon extensions may not be recognized.",
+    "What HTML tags are stripped when sanitization is enabled? Dangerous tags like script, iframe, object, embed, and event handlers are removed.",
+    "Can I customize the HTML wrapper/doctype? The output is an HTML fragment; wrap it manually for a full HTML page structure."
+  ]
+}

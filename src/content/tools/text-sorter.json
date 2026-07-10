@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Text line sorter with 8 modes: A-Z, Z-A, length ascending, length descending, numeric sort, natural sort (human-friendly), reverse order, and randomize. Supports deduplication, empty line removal, trimming whitespace per line, case-sensitive toggle, and a paste button for quick input from clipboard.",
+  "whyItExists": "Sorting lines of text manually is slow and error-prone. This tool provides a variety of sort orders and preprocessing options so users can organize any list-based text in one click.",
+  "whoShouldUse": "Anyone who works with lists, CSV extracts, keyword collections, code imports, or any line-delimited text that needs ordering or deduplication.",
+  "useCases": [
+    "Sort a list of names alphabetically (A-Z) for a mailing list",
+    "Find the longest and shortest lines in a dataset using length ascending/descending",
+    "Remove duplicate lines from a combined CSV extract",
+    "Randomize a list of raffle entries or quiz questions",
+    "Naturally sort file names containing numbers (e.g., file2, file10, file20) using natural sort",
+    "Reverse the order of a chronologically ascending list to make it descending"
+  ],
+  "instructions": [
+    "Paste or type text (one item per line) into the input area; use the paste button to quickly load clipboard content.",
+    "Select a sort mode: A-Z, Z-A, Length ↑, Length ↓, Numeric, Natural, Reverse, or Randomize.",
+    "Toggle case-sensitive sorting on or off — when off, all lines are compared case-insensitively.",
+    "Enable Remove Duplicates, Remove Empty Lines, and Trim Each Line as needed via checkboxes.",
+    "Click Sort to process the text; the output appears in the result area with line count shown.",
+    "Use the copy button to copy the sorted output to your clipboard."
+  ],
+  "examples": [
+    "Input: lines \"banana\", \"Apple\", \"cherry\", \"Banana\", \"\" with A-Z sort, case-insensitive, remove duplicates, remove empty → Output: [\"Apple\", \"banana\", \"cherry\"] (4 lines → 3 lines)",
+    "Input: lines \"file2.txt\", \"file10.txt\", \"file1.txt\", \"file20.txt\" with Natural sort → Output: [\"file1.txt\", \"file2.txt\", \"file10.txt\", \"file20.txt\"] (numeric-aware ordering)"
+  ],
+  "bestPractices": [
+    "Enable Remove Duplicates when merging lists from multiple sources to get a unique set",
+    "Use Natural sort for file names, version numbers, or any text containing embedded numbers",
+    "Enable Trim Each Line before sorting to avoid leading/trailing spaces affecting the order",
+    "Use A-Z for general alphabetization and Z-A for reverse-alphabetical reference lists",
+    "Use Randomize for unbiased shuffling — the tool uses a cryptographically seeded randomizer"
+  ],
+  "commonMistakes": [
+    "Using alphabetical sort on numeric data — use Numeric sort for proper ordering (10 > 2)",
+    "Forgetting to enable case-insensitive sorting, causing \"Apple\" and \"apple\" to appear far apart",
+    "Assuming duplicate removal is case-sensitive — \"Apple\" and \"apple\" are treated as distinct when case-sensitive is on",
+    "Using Reverse when Z-A would produce the correct actual reverse-alphabetical order",
+    "Not trimming lines first — a trailing space changes the sort position and makes duplicates invisible"
+  ],
+  "faq": [
+    "What is the difference between Numeric and Natural sort? Numeric treats each line as a number; Natural sorts by text but recognizes numeric sequences within text (e.g., file2 < file10).",
+    "Does Randomize produce the same order every time? No — each click produces a fresh random order using a cryptographically secure PRNG.",
+    "How large an input can the tool handle? Up to 100,000 lines or 5MB of text; larger inputs may cause performance degradation.",
+    "Can I sort by a specific column or delimiter? Not in this tool — each line is treated as a single item. Use a spreadsheet for columnar sorting."
+  ]
+}

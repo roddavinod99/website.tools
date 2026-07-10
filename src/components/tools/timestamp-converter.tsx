@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 
@@ -25,11 +25,7 @@ const timezones: { label: string; value: Timezone }[] = [
 function formatInTimezone(date: Date, tz: Timezone): string {
   if (tz === "UTC") return date.toUTCString();
   if (tz === "local") return date.toLocaleString();
-  try {
-    return date.toLocaleString("en-US", { timeZone: tz });
-  } catch {
-    return date.toLocaleString();
-  }
+  try { return date.toLocaleString("en-US", { timeZone: tz }); } catch { return date.toLocaleString(); }
 }
 
 function isLeapYear(year: number): boolean {
@@ -46,7 +42,6 @@ function relativeTime(date: Date): string {
   const weeks = Math.floor(days / 7);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
-
   const suffix = diff >= 0 ? "ago" : "from now";
   const n = (v: number, u: string) => `${v} ${u}${v !== 1 ? "s" : ""} ${suffix}`;
   if (years > 0) return n(years, "year");
@@ -68,6 +63,8 @@ function detectInput(input: string): { type: string; value: number | string } | 
   }
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) return { type: "iso", value: s };
   if (/^\d{2}\/\d{2}\/\d{4}/.test(s)) return { type: "human", value: s };
+  if (/^\d{2}-\d{2}-\d{4}/.test(s)) return { type: "human", value: s };
+  if (/^\d{2}\.\d{2}\.\d{4}/.test(s)) return { type: "human", value: s };
   const ts = Date.parse(s);
   if (!isNaN(ts)) return { type: "human", value: s };
   return null;
@@ -89,6 +86,7 @@ function formatDateFields(d: Date): { year: number; month: number; day: number; 
 export function TimestampConverter() {
   const [input, setInput] = useState("");
   const [tz, setTz] = useState<Timezone>("local");
+  const [useUtc, setUseUtc] = useState(false);
   const [, setCountdownTarget] = useState<number | null>(null);
   const [countdown, setCountdown] = useState("");
   const [diffTarget, setDiffTarget] = useState("");
@@ -103,6 +101,7 @@ export function TimestampConverter() {
     if (detected.type === "unix") {
       const val = detected.value as number;
       if (val > 1e15) return new Date(val / 1000);
+      if (val > 1e12) return new Date(val);
       return new Date(val * 1000);
     }
     const d = new Date(detected.value as string);
@@ -127,10 +126,10 @@ export function TimestampConverter() {
     const secs = Math.floor(ts / 1000);
     const ms = ts;
     const items = [
-      { label: "Unix Seconds", value: secs.toString() },
-      { label: "Unix Milliseconds", value: ms.toString() },
+      { label: "Unix Seconds (10-digit)", value: secs.toString() },
+      { label: "Unix Milliseconds (13-digit)", value: ms.toString() },
       { label: "ISO 8601 (UTC)", value: parsedDate.toISOString() },
-      { label: "ISO 8601 (Local)", value: parsedDate.toISOString().replace("Z", "") + "+00:00" },
+      { label: "ISO 8601 (Local)", value: useUtc ? parsedDate.toISOString() : parsedDate.toLocaleString("sv-SE").replace(" ", "T") },
       { label: "RFC 2822", value: parsedDate.toUTCString() },
       { label: "RFC 3339", value: parsedDate.toISOString().replace("Z", "") + "Z" },
       { label: `Human (${tz})`, value: formatInTimezone(parsedDate, tz) },
@@ -138,9 +137,10 @@ export function TimestampConverter() {
       { label: "Locale Date", value: parsedDate.toLocaleDateString() },
       { label: "Locale Time", value: parsedDate.toLocaleTimeString() },
       { label: "Relative", value: relativeTime(parsedDate) },
+      { label: "UTC String", value: parsedDate.toUTCString() },
     ];
     return items;
-  }, [parsedDate, tz]);
+  }, [parsedDate, tz, useUtc]);
 
   const handleCurrent = useCallback(() => {
     const now = Date.now();
@@ -159,7 +159,7 @@ export function TimestampConverter() {
     let d2: Date;
     if (detected2.type === "unix") {
       const val = detected2.value as number;
-      d2 = val > 1e15 ? new Date(val / 1000) : new Date(val * 1000);
+      d2 = val > 1e15 ? new Date(val / 1000) : val > 1e12 ? new Date(val) : new Date(val * 1000);
     } else {
       d2 = new Date(detected2.value as string);
     }
@@ -185,11 +185,7 @@ export function TimestampConverter() {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       const diff = parsedDate!.getTime() - Date.now();
-      if (diff <= 0) {
-        setCountdown("Reached!");
-        if (timerRef.current) clearInterval(timerRef.current);
-        return;
-      }
+      if (diff <= 0) { setCountdown("Reached!"); if (timerRef.current) clearInterval(timerRef.current); return; }
       const days = Math.floor(diff / 86400000);
       const hours = Math.floor((diff % 86400000) / 3600000);
       const mins = Math.floor((diff % 3600000) / 60000);
@@ -209,58 +205,41 @@ export function TimestampConverter() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Unix timestamp, ISO 8601, or date string..."
+            placeholder="Unix timestamp (sec or ms), ISO 8601, or date string..."
             className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
-          <button
-            onClick={handleCurrent}
-            className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors whitespace-nowrap"
-          >
-            Now
-          </button>
+          <button onClick={handleCurrent} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors whitespace-nowrap">Now</button>
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Timezone:</label>
-        <select
-          value={tz}
-          onChange={(e) => setTz(e.target.value as Timezone)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-        >
-          {timezones.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-        </select>
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2">
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Timezone:</label>
+          <select value={tz} onChange={(e) => setTz(e.target.value as Timezone)} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            {timezones.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+          </select>
+        </div>
+        <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
+          <input type="checkbox" checked={useUtc} onChange={(e) => setUseUtc(e.target.checked)} className="rounded border-surface-300" /> Use UTC
+        </label>
       </div>
 
       {!parsedDate && input.trim() && (
-        <p className="text-sm text-red-500">Could not parse input. Try a Unix timestamp, ISO date (2024-01-01), or date string.</p>
+        <p className="text-sm text-red-500">Could not parse input. Try a Unix timestamp (sec or ms), ISO date, or date string.</p>
       )}
 
       {parsedDate && (
         <>
           {rangeWarning && (
-            <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-2 text-sm text-yellow-700 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
-              {rangeWarning}
-            </div>
+            <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-2 text-sm text-yellow-700 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">{rangeWarning}</div>
           )}
 
           <div className="space-y-2">
             {conversions.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface"
-              >
-                <span className="text-sm text-surface-500 dark:text-dark-muted w-32 shrink-0">{item.label}</span>
-                <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all overflow-auto max-h-10">
-                  {item.value}
-                </code>
-                <button
-                  onClick={() => handleCopy(item.value, item.label)}
-                  disabled={!item.value}
-                  className="ml-2 text-xs text-brand-500 hover:text-brand-600 disabled:text-surface-300 dark:disabled:text-dark-muted transition-colors min-w-[3rem] text-right"
-                >
-                  {copied === item.label ? "Copied!" : "Copy"}
-                </button>
+              <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+                <span className="text-sm text-surface-500 dark:text-dark-muted w-34 shrink-0">{item.label}</span>
+                <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all overflow-auto max-h-10">{item.value}</code>
+                <button onClick={() => handleCopy(item.value, item.label)} disabled={!item.value} className="ml-2 text-xs text-brand-500 hover:text-brand-600 disabled:text-surface-300 dark:disabled:text-dark-muted transition-colors min-w-[3rem] text-right">{copied === item.label ? "Copied!" : "Copy"}</button>
               </div>
             ))}
           </div>
@@ -284,16 +263,12 @@ export function TimestampConverter() {
             </div>
           )}
 
-          {leapYear && (
-            <p className="text-xs text-green-600 dark:text-green-400">Leap year detected</p>
-          )}
+          {leapYear && <p className="text-xs text-green-600 dark:text-green-400">Leap year detected</p>}
 
           <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
             <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Countdown to Target</p>
             <div className="flex gap-2 items-center">
-              <button onClick={handleStartCountdown} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
-                Start Countdown
-              </button>
+              <button onClick={handleStartCountdown} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Start Countdown</button>
               {countdown && <span className="text-lg font-mono text-surface-900 dark:text-dark-text">{countdown}</span>}
             </div>
           </div>
@@ -301,27 +276,17 @@ export function TimestampConverter() {
           <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
             <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Difference Calculator</p>
             <div className="flex gap-2">
-              <input
-                type="text"
-                value={diffTarget}
-                onChange={(e) => setDiffTarget(e.target.value)}
-                placeholder="Enter second timestamp..."
-                className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-              />
-              <button onClick={handleDiff} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
-                Calculate
-              </button>
+              <input type="text" value={diffTarget} onChange={(e) => setDiffTarget(e.target.value)} placeholder="Enter second timestamp..." className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              <button onClick={handleDiff} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
             </div>
-            {diffResult && (
-              <p className="mt-2 text-sm font-mono text-surface-700 dark:text-dark-text">{diffResult}</p>
-            )}
+            {diffResult && <p className="mt-2 text-sm font-mono text-surface-700 dark:text-dark-text">{diffResult}</p>}
           </div>
         </>
       )}
 
       {!input.trim() && (
         <div className="text-center text-sm text-surface-400 dark:text-dark-muted py-8">
-          Enter a Unix timestamp, ISO 8601 date, or human-readable date to convert
+          Enter a Unix timestamp (seconds or milliseconds), ISO 8601 date, or human-readable date to convert
         </div>
       )}
     </div>

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Three-way TOML ↔ JSON ↔ YAML converter with automatic input format detection. Provides output-specific formatting options (indent size, key sorting, trailing commas for JSON, line width for YAML). Includes copy-to-clipboard and download-as-file functionality for each output format.",
+  "whyItExists": "Configuration files commonly exist in TOML, JSON, or YAML, but teams and tools require different formats. This converter bridges all three so users can seamlessly translate between them without remembering format-specific syntax rules.",
+  "whoShouldUse": "Backend developers, DevOps engineers, and configuration managers who work with config files across tools that use different formats (e.g., Python TOML, JS JSON, CI YAML).",
+  "useCases": [
+    "Convert a Python pyproject.toml to JSON for a tool that only accepts JSON config",
+    "Translate a docker-compose YAML to TOML for a Rust project using TOML config",
+    "Migrate a JSON configuration file to YAML for better readability in a monorepo",
+    "Validate that a TOML file is well-formed by converting it to JSON and checking for errors",
+    "Normalize inconsistent YAML files to JSON for unified processing in a script",
+    "Download a converted config file for use in a deployment pipeline"
+  ],
+  "instructions": [
+    "Paste TOML, JSON, or YAML content into the input area — the format is auto-detected from the first non-whitespace character.",
+    "Select the target output format: TOML, JSON, or YAML.",
+    "Configure output options: for JSON choose indent (2/4/tab) and key sorting; for YAML set indent and line width.",
+    "Click Convert; the output appears in the result panel with syntax highlighting.",
+    "Click Copy to copy the converted result to your clipboard.",
+    "Click Download to save the output as a .toml, .json, or .yaml file."
+  ],
+  "examples": [
+    "Input (TOML): \"[server]\\nhost = \\\"localhost\\\"\\nport = 8080\" → Output (JSON): {\"server\": {\"host\": \"localhost\", \"port\": 8080}}",
+    "Input (YAML): \"server:\\n  host: localhost\\n  port: 8080\" → Output (TOML): \"[server]\\nhost = \\\"localhost\\\"\\nport = 8080\""
+  ],
+  "bestPractices": [
+    "Always verify the auto-detected format is correct — ambiguous input (e.g., a string) may be misidentified",
+    "Use JSON output when the result will be consumed programmatically (fastest to parse)",
+    "Use YAML output when the result needs to be human-readable with comments",
+    "Use TOML output for Python ecosystem tools that expect pyproject.toml format",
+    "Download converted files rather than copying — this avoids clipboard formatting issues"
+  ],
+  "commonMistakes": [
+    "Assuming comments in the source format are preserved in the target — only YAML-to-YAML conversions preserve comments",
+    "Using trailing commas in JSON output when the target parser is strict about JSON spec",
+    "Converting without checking for data loss — TOML has no null type; INI-style keys may be flattened",
+    "Assuming YAML anchors and aliases work across all output formats — they only work in YAML-to-YAML",
+    "Forgetting that TOML tables must be defined before they are referenced (sorted tables may break this)"
+  ],
+  "faq": [
+    "Are comments preserved during conversion? Comments are preserved only when the source and target are the same format (e.g., YAML → YAML). Cross-format conversions strip comments.",
+    "Does it handle nested TOML tables? Yes — TOML tables like [server.database] are converted to nested objects in JSON/YAML.",
+    "What happens with TOML inline tables vs. standard tables? Both are supported and produce equivalent nested output in JSON/YAML.",
+    "Can I convert very large files? Files up to 10MB are supported; larger files may cause performance issues in the browser."
+  ]
+}

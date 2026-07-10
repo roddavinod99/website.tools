@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.gitignore
+.env*
+*.md
+tests
+scripts
+data
+public/next.svg
+public/vercel.svg
+public/file.svg
+public/globe.svg
+public/window.svg
+public/og.svg
+tsconfig.tsbuildinfo

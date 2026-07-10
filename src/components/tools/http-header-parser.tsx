@@ -5,21 +5,47 @@ import { cn } from "@/lib/utils";
 
 interface HeaderEntry { id: number; name: string; value: string; }
 
-const CATEGORIES: Record<string, string[]> = {
-  Cache: ["cache-control", "pragma", "expires", "age", "etag", "if-match", "if-none-match", "if-modified-since", "if-unmodified-since", "last-modified", "vary"],
-  Content: ["content-type", "content-length", "content-encoding", "content-language", "content-location", "content-disposition", "content-range", "content-security-policy"],
-  Auth: ["authorization", "www-authenticate", "proxy-authenticate", "proxy-authorization", "set-cookie", "cookie"],
-  CORS: ["access-control-allow-origin", "access-control-allow-methods", "access-control-allow-headers", "access-control-allow-credentials", "access-control-expose-headers", "access-control-max-age", "access-control-request-headers", "access-control-request-method", "origin"],
-  Security: ["strict-transport-security", "x-frame-options", "x-content-type-options", "x-xss-protection", "referrer-policy", "permissions-policy", "cross-origin-opener-policy", "cross-origin-embedder-policy", "cross-origin-resource-policy"],
-  Transfer: ["transfer-encoding", "connection", "keep-alive", "upgrade", "via", "trailer", "te"],
+const CATEGORIES: Record<string, { label: string; keys: string[] }> = {
+  General: { label: "General", keys: ["date", "connection", "via", "transfer-encoding", "upgrade", "trailer", "te", "keep-alive", "host", "user-agent", "accept", "accept-language", "accept-encoding", "referer", "from", "expect", "max-forwards", "server"] },
+  Cache: { label: "Caching", keys: ["cache-control", "pragma", "expires", "age", "etag", "if-match", "if-none-match", "if-modified-since", "if-unmodified-since", "last-modified", "vary"] },
+  Content: { label: "Content", keys: ["content-type", "content-length", "content-encoding", "content-language", "content-location", "content-disposition", "content-range", "content-security-policy"] },
+  CORS: { label: "CORS", keys: ["access-control-allow-origin", "access-control-allow-methods", "access-control-allow-headers", "access-control-allow-credentials", "access-control-expose-headers", "access-control-max-age", "access-control-request-headers", "access-control-request-method", "origin"] },
+  Security: { label: "Security", keys: ["strict-transport-security", "x-frame-options", "x-content-type-options", "x-xss-protection", "referrer-policy", "permissions-policy", "cross-origin-opener-policy", "cross-origin-embedder-policy", "cross-origin-resource-policy"] },
 };
+
+const CATEGORY_ORDER = ["General", "Content", "Security", "Cache", "CORS"];
 
 const REQUIRED_SECURITY = ["content-security-policy", "strict-transport-security", "x-frame-options", "x-content-type-options", "referrer-policy", "permissions-policy"];
 
+const SECURITY_LABELS: Record<string, string> = {
+  "content-security-policy": "CSP",
+  "strict-transport-security": "HSTS",
+  "x-frame-options": "X-Frame-Options",
+  "x-content-type-options": "X-Content-Type-Options",
+  "referrer-policy": "Referrer-Policy",
+  "permissions-policy": "Permissions-Policy",
+};
+
+const REQUEST_HEADERS = ["host", "user-agent", "accept", "accept-language", "accept-encoding", "referer", "origin", "authorization", "cookie", "cache-control", "content-type", "content-length", "if-match", "if-none-match", "if-modified-since", "if-unmodified-since", "x-requested-with", "x-csrftoken", "x-api-key"];
+const RESPONSE_HEADERS = ["date", "server", "content-type", "content-length", "cache-control", "expires", "age", "etag", "last-modified", "vary", "set-cookie", "www-authenticate", "access-control-allow-origin", "strict-transport-security", "x-frame-options", "x-content-type-options", "x-xss-protection", "referrer-policy", "permissions-policy"];
+
+function detectType(headers: HeaderEntry[]): "request" | "response" | "mixed" | "unknown" {
+  const names = headers.map(h => h.name.toLowerCase());
+  let reqScore = 0, resScore = 0;
+  for (const n of names) {
+    if (REQUEST_HEADERS.includes(n)) reqScore++;
+    if (RESPONSE_HEADERS.includes(n)) resScore++;
+  }
+  if (reqScore > 0 && resScore === 0) return "request";
+  if (resScore > 0 && reqScore === 0) return "response";
+  if (reqScore > 0 && resScore > 0) return "mixed";
+  return "unknown";
+}
+
 function categorize(name: string): string {
   const lower = name.toLowerCase();
-  for (const [cat, keys] of Object.entries(CATEGORIES)) {
-    if (keys.includes(lower)) return cat;
+  for (const cat of CATEGORY_ORDER) {
+    if (CATEGORIES[cat].keys.includes(lower)) return cat;
   }
   return "Custom";
 }
@@ -67,6 +93,7 @@ X-Request-ID: abc-123-def-456`);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editValue, setEditValue] = useState("");
+  const [collapsedCats, setCollapsedCats] = useState<Record<string, boolean>>({});
 
   const parse = () => {
     setError("");
@@ -98,6 +125,18 @@ X-Request-ID: abc-123-def-456`);
     return headers.reduce((acc, h) => acc + h.name.length + h.value.length + 2, 0);
   }, [headers]);
 
+  const headerType = useMemo(() => detectType(headers), [headers]);
+
+  const groupedHeaders = useMemo(() => {
+    const groups: Record<string, HeaderEntry[]> = {};
+    for (const h of displayHeaders) {
+      const cat = categorize(h.name);
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(h);
+    }
+    return groups;
+  }, [displayHeaders]);
+
   const copyAs = async (format: "text" | "json") => {
     if (format === "text") {
       await navigator.clipboard.writeText(headers.map(h => `${h.name}: ${h.value}`).join("\n"));
@@ -106,6 +145,14 @@ X-Request-ID: abc-123-def-456`);
     }
     setCopyFeedback(`Copied as ${format}`);
     setTimeout(() => setCopyFeedback(""), 2000);
+  };
+
+  const exportJSON = () => {
+    const data = JSON.stringify(Object.fromEntries(headers.map(h => [h.name, h.value])), null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = "headers.json"; a.click();
+    URL.revokeObjectURL(url);
   };
 
   const addHeader = () => {
@@ -135,6 +182,10 @@ X-Request-ID: abc-123-def-456`);
     return null;
   };
 
+  const toggleCat = (cat: string) => {
+    setCollapsedCats(prev => ({ ...prev, [cat]: !prev[cat] }));
+  };
+
   return (
     <div className="space-y-4 animate-fade-in">
       <div>
@@ -152,6 +203,8 @@ X-Request-ID: abc-123-def-456`);
           className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy Text</button>
         <button onClick={() => { copyAs("json"); }} disabled={headers.length === 0}
           className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy JSON</button>
+        <button onClick={exportJSON} disabled={headers.length === 0}
+          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Export JSON</button>
         <button onClick={() => setBuilderMode(v => !v)} disabled={headers.length === 0}
           className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">{builderMode ? "Done Editing" : "Edit Headers"}</button>
       </div>
@@ -163,49 +216,123 @@ X-Request-ID: abc-123-def-456`);
           <div className="flex flex-wrap items-center gap-3 text-xs text-surface-500 dark:text-dark-muted">
             <span>{headers.length} headers</span>
             <span>{totalBytes} bytes</span>
+            <span className={cn("px-1.5 py-0.5 rounded text-[10px] font-medium",
+              headerType === "request" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" :
+              headerType === "response" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" :
+              "bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
+            )}>
+              {headerType === "request" ? "Request" : headerType === "response" ? "Response" : headerType === "mixed" ? "Mixed" : "Unknown"}
+            </span>
             {missingSecurity.length > 0 && (
-              <span className="text-amber-600 dark:text-amber-400">
-                Missing security: {missingSecurity.join(", ")}
-              </span>
+              <div className="flex flex-wrap gap-1">
+                {missingSecurity.map(s => (
+                  <span key={s} className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 text-[10px] font-medium">
+                    Missing: {SECURITY_LABELS[s] || s}
+                  </span>
+                ))}
+              </div>
             )}
             {missingSecurity.length === 0 && <span className="text-green-600 dark:text-green-400">All security headers present</span>}
           </div>
 
-          <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
-            <table className="w-full text-xs">
-              <thead><tr className="bg-surface-50 dark:bg-dark-surface">
-                <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Name</th>
-                <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
-                <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Category</th>
-                <th className="w-16 px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Actions</th>
-              </tr></thead>
-              <tbody>
-                {displayHeaders.map(h => {
-                  const cat = categorize(h.name);
-                  const susp = isSuspicious(h.name, h.value);
-                  const validationErr = validateHeader(h.name, h.value);
-                  return (
-                    <tr key={h.id} className={cn("border-t border-surface-200 dark:border-dark-border", susp && "bg-red-50 dark:bg-red-900/10")}>
-                      {editingId === h.id ? (
-                        <>
-                          <td className="px-3 py-1.5"><input type="text" value={editName}
-                            className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-                            onChange={e => setEditName(e.target.value)}
-                          /></td>
-                          <td className="px-3 py-1.5"><input type="text" value={editValue}
-                            className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-                            onChange={e => setEditValue(e.target.value)}
-                          /></td>
-                          <td className="px-3 py-1.5"><span className="px-1.5 py-0.5 rounded-full bg-brand-100 text-brand-700 dark:bg-brand-800 dark:text-brand-200 text-[10px]">{cat}</span></td>
-                          <td className="px-3 py-1.5">
-                            <button onClick={() => updateHeader(h.id, editName, editValue)} className="text-brand-500 hover:text-brand-600 text-[10px]">Save</button>
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td className={cn("px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text", susp && "text-red-600 dark:text-red-400")}>{h.name}</td>
+          {CATEGORY_ORDER.map(cat => {
+            const catHeaders = groupedHeaders[cat];
+            if (!catHeaders || catHeaders.length === 0) return null;
+            const isCollapsed = collapsedCats[cat];
+            const catColors: Record<string, string> = {
+              General: "bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted",
+              Content: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+              Security: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+              Cache: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+              CORS: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+            };
+            return (
+              <div key={cat} className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+                <button onClick={() => toggleCat(cat)} className="flex items-center justify-between w-full px-3 py-2 bg-surface-50 dark:bg-dark-surface text-xs font-medium text-surface-700 dark:text-dark-text hover:bg-surface-100 dark:hover:bg-dark-border transition-colors">
+                  <span className={cn("px-1.5 py-0.5 rounded text-[10px] font-medium", catColors[cat] || "")}>{CATEGORIES[cat]?.label || cat}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="text-surface-400 dark:text-dark-muted">{catHeaders.length}</span>
+                    <svg className={`w-3 h-3 transition-transform ${isCollapsed ? "" : "rotate-180"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </span>
+                </button>
+                {!isCollapsed && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead><tr className="bg-surface-50 dark:bg-dark-surface">
+                        <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Name</th>
+                        <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
+                        <th className="w-16 px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Actions</th>
+                      </tr></thead>
+                      <tbody>
+                        {catHeaders.map(h => {
+                          const susp = isSuspicious(h.name, h.value);
+                          const validationErr = validateHeader(h.name, h.value);
+                          return (
+                            <tr key={h.id} className={cn("border-t border-surface-200 dark:border-dark-border", susp && "bg-red-50 dark:bg-red-900/10")}>
+                              {editingId === h.id ? (
+                                <>
+                                  <td className="px-3 py-1.5"><input type="text" value={editName}
+                                    className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                                    onChange={e => setEditName(e.target.value)}
+                                  /></td>
+                                  <td className="px-3 py-1.5"><input type="text" value={editValue}
+                                    className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                                    onChange={e => setEditValue(e.target.value)}
+                                  /></td>
+                                  <td className="px-3 py-1.5">
+                                    <button onClick={() => updateHeader(h.id, editName, editValue)} className="text-brand-500 hover:text-brand-600 text-[10px]">Save</button>
+                                  </td>
+                                </>
+                              ) : (
+                                <>
+                                  <td className={cn("px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text", susp && "text-red-600 dark:text-red-400")}>{h.name}</td>
+                                  <td className="px-3 py-1.5 font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
+                                  <td className="px-3 py-1.5">
+                                    {builderMode && (
+                                      <div className="flex gap-1">
+                                        <button onClick={() => startEdit(h)} className="text-brand-500 hover:text-brand-600 text-[10px]">Edit</button>
+                                        <button onClick={() => removeHeader(h.id)} className="text-red-500 hover:text-red-600 text-[10px]">Del</button>
+                                      </div>
+                                    )}
+                                  </td>
+                                </>
+                              )}
+                              {validationErr && !editingId && (
+                                <td colSpan={3} className="px-3 py-0.5 text-[10px] text-red-500">{validationErr}</td>
+                              )}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {groupedHeaders["Custom"] && groupedHeaders["Custom"].length > 0 && (
+            <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+              <button onClick={() => toggleCat("Custom")} className="flex items-center justify-between w-full px-3 py-2 bg-surface-50 dark:bg-dark-surface text-xs font-medium text-surface-700 dark:text-dark-text hover:bg-surface-100 dark:hover:bg-dark-border transition-colors">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted">Custom</span>
+                <span className="flex items-center gap-2">
+                  <span className="text-surface-400 dark:text-dark-muted">{groupedHeaders["Custom"].length}</span>
+                  <svg className={`w-3 h-3 transition-transform ${collapsedCats["Custom"] ? "" : "rotate-180"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </button>
+              {!collapsedCats["Custom"] && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead><tr className="bg-surface-50 dark:bg-dark-surface">
+                      <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Name</th>
+                      <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
+                      <th className="w-16 px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Actions</th>
+                    </tr></thead>
+                    <tbody>
+                      {groupedHeaders["Custom"].map(h => (
+                        <tr key={h.id} className="border-t border-surface-200 dark:border-dark-border">
+                          <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text">{h.name}</td>
                           <td className="px-3 py-1.5 font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
-                          <td className="px-3 py-1.5"><span className={cn("px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted")}>{cat}</span></td>
                           <td className="px-3 py-1.5">
                             {builderMode && (
                               <div className="flex gap-1">
@@ -214,17 +341,14 @@ X-Request-ID: abc-123-def-456`);
                               </div>
                             )}
                           </td>
-                        </>
-                      )}
-                      {validationErr && !editingId && (
-                        <td colSpan={4} className="px-3 py-0.5 text-[10px] text-red-500">{validationErr}</td>
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
 
           {builderMode && (
             <div className="flex gap-2 items-end">

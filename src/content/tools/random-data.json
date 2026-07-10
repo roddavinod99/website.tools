@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates realistic random test data across 8 categories (People, Companies, Finance, Internet, IDs, Dates, Text, Numbers) with 27+ field types. Supports 6 export formats (JSON, CSV, SQL, XML, YAML, HTML table), locale selection for regional data (US, UK, DE, FR, JP, IN, etc.), seed-based reproducible generation, and a field selector for custom dataset composition.",
+  "whyItExists": "Development and testing require realistic data that doesn't compromise privacy. Provides comprehensive test data generation across domains with locale-specific formatting, eliminating the need for manual test data creation or using real production data.",
+  "whoShouldUse": "Software developers, QA engineers, database testers, data scientists, and anyone who needs realistic but synthetic data for application testing or demo environments.",
+  "useCases": [
+    "Generate realistic user profiles for application testing with locale-appropriate names, addresses, and contact info",
+    "Create financial test data including credit card numbers, IBANs, currency amounts, and transaction records",
+    "Generate company data for B2B application testing including departments, employees, and corporate structures",
+    "Create database seed data in SQL format for populating development databases with realistic records",
+    "Generate test data with specific seeds for reproducible test scenarios in automated testing pipelines",
+    "Create demographic data sets for data science prototyping and algorithm testing"
+  ],
+  "instructions": [
+    "Select data categories to include: People (names, emails, phones, addresses), Companies, Finance (cards, IBAN, amounts), Internet (IPs, URLs, user agents), IDs (UUID, CUID, ObjectId), Dates, Text (sentences, paragraphs), or Numbers",
+    "Configure field types within each category using the field selector checkboxes (27+ total field types available)",
+    "Choose locale for region-specific data: names, addresses, phone formats, and postal codes adapt to the selected locale",
+    "Set a seed value (numeric) for reproducible results; same seed + same settings = identical output every time",
+    "Select export format: JSON, CSV, SQL (INSERT statements), XML, YAML, or HTML Table",
+    "Click \"Generate\" and set the record count (1-1000); preview the data and download or copy to clipboard"
+  ],
+  "examples": [
+    "Settings: Category=People, Locale=US, Fields=[firstName, lastName, email, phone, address], Count=2 -> Output: [{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"john.doe@email.com\",\"phone\":\"(555) 123-4567\",\"address\":{\"street\":\"123 Main St\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"10001\"}}, ...]",
+    "Settings: Category=Finance, Locale=DE, Fields=[iban, amount, currency], Count=1, Seed=42 -> Output: [{\"iban\":\"DE89370400440532013000\",\"amount\":1234.56,\"currency\":\"EUR\"}]"
+  ],
+  "bestPractices": [
+    "Use seed values in test automation to ensure reproducible test data across different test runs and environments",
+    "Select the appropriate locale for your target market to get realistic addresses, phone formats, and naming conventions",
+    "Use the field selector to include only needed fields to reduce data size and focus on relevant test scenarios",
+    "Export test data as SQL for direct database seeding, or as JSON/CSV for application-level testing",
+    "Generate conservative record counts (under 100) during development; increase to 500-1000 for performance testing"
+  ],
+  "commonMistakes": [
+    "Assuming generated data is suitable for production; synthetic data may not reflect real-world edge cases",
+    "Not using seed values in test suites, resulting in different test data each run and non-reproducible test failures",
+    "Generating too many records (1000+) during development, overwhelming test fixtures and slowing iteration",
+    "Forgetting to select locale and getting default (US) data when testing internationalization features",
+    "Using credit card numbers that look real but aren't from the test card range, potentially triggering fraud systems"
+  ],
+  "faq": [
+    "Are the generated email addresses real? No, they use example domains (example.com, test.org) and are not real email addresses.",
+    "Is the financial data valid for testing? Credit card numbers use test ranges (e.g., 4111...) that pass Luhn checks but are invalid for real transactions.",
+    "Can I generate relational data (e.g., users with company IDs)? The tool generates flat records per category; manual cross-referencing is needed for relational data.",
+    "Does the seed guarantee identical output across sessions? Yes, the same seed, locale, and field selection always produces identical data."
+  ]
+}

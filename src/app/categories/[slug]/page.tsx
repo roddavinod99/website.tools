@@ -33,6 +33,20 @@ export default async function CategoryPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 2, name: "Categories", item: `${siteConfig.url}/categories` },
+              { "@type": "ListItem", position: 3, name: category.name },
+            ],
+          }),
+        }}
+      />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-8">
           <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">

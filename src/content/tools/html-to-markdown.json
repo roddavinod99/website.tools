@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Converts HTML content to Markdown with support for 6 heading styles (ATX, ATX-closed, Setext, etc.), 3 bullet styles (*, -, +), inline and reference link formats, and code style options. Strips inline CSS styles while preserving the structural content in clean Markdown syntax.",
+  "whyItExists": "Content migration from HTML to Markdown is common when moving from WYSIWYG editors to static site generators or documentation platforms. Manual conversion is tedious and inconsistent, so this tool automates the transformation with configurable output style.",
+  "whoShouldUse": "Technical writers migrating documentation, developers converting blog content to static site generators, and anyone moving from rich-text HTML to Markdown-based workflows.",
+  "useCases": [
+    "Convert an HTML blog post to Markdown for use with a static site generator like Jekyll or Hugo",
+    "Migrate documentation from a CMS to a Markdown-based documentation platform like Docusaurus",
+    "Convert HTML emails to Markdown for archiving or plain-text rendering",
+    "Strip inline styles from HTML while preserving the content in clean Markdown",
+    "Choose reference-style links for more readable raw Markdown in long documents"
+  ],
+  "instructions": [
+    "Paste the HTML content into the input area",
+    "Select heading style: ATX (##), ATX-closed (## ##), Setext (===, ---), or others",
+    "Choose bullet style: *, -, or + for unordered lists",
+    "Select link format: inline [text](url) or reference [text][ref] style",
+    "Choose code style: indented or fenced (```) for code blocks",
+    "Click Convert and review the Markdown output; copy for use in your documentation"
+  ],
+  "examples": [
+    "Input: '<h1>Title</h1><p>Hello <strong>world</strong></p>'. Output: '# Title\\n\\nHello **world**'",
+    "Input: '<a href=\"https://example.com\">click here</a>' with reference links. Output: '[click here][0]\\n\\n[0]: https://example.com'"
+  ],
+  "bestPractices": [
+    "Use ATX headings (#) for Markdown that will be processed by most static site generators",
+    "Use reference-style links when the Markdown will be manually edited to keep URLs out of the text flow",
+    "Strip inline styles before conversion to avoid bloated output with style attribute residue",
+    "Review the output for complex tables, as some HTML tables may not convert perfectly"
+  ],
+  "commonMistakes": [
+    "Converting HTML that contains complex tables or nested lists and expecting pixel-perfect results",
+    "Using fenced code style but the target Markdown parser only supports indented code blocks",
+    "Forgetting to check heading style compatibility with the target platform",
+    "Converting content with inline event handlers that are irrelevant in Markdown"
+  ],
+  "faq": [
+    "Does it handle images? Yes, <img> tags are converted to Markdown image syntax ![alt](src).",
+    "Can I convert HTML tables? Basic tables are converted, but complex rowspan/colspan may not work perfectly.",
+    "What happens to <style> and <script> blocks? They are stripped from the output.",
+    "Does it support nested lists? Yes, nested <ul>/<ol> elements are preserved as nested Markdown lists."
+  ]
+}

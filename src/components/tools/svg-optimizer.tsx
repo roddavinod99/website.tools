@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { sanitize } from "@/lib/sanitize";
 
 interface OptimizeOptions {
@@ -15,6 +15,8 @@ interface OptimizeOptions {
   minify: boolean;
   removeMetadata: boolean;
   applyTransforms: boolean;
+  convertColors: boolean;
+  minifyStyles: boolean;
 }
 
 const ATTRS_TO_REMOVE = [
@@ -122,30 +124,17 @@ function optimizeSVG(input: string, opts: OptimizeOptions): string {
 
   if (opts.convertShapes) {
     svg = svg
-      .replace(
-        /<rect\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      )
-      .replace(
-        /<circle\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      )
-      .replace(
-        /<ellipse\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      )
-      .replace(
-        /<line\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      )
-      .replace(
-        /<polyline\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      )
-      .replace(
-        /<polygon\b([^>]*)>/gi,
-        (_, attrs) => `<path${attrs}>`
-      );
+      .replace(/<rect\b[^>]*\/?>/gi, (m) => m.replace(/^<rect/, "<path"))
+      .replace(/<circle\b[^>]*\/?>/gi, (m) => m.replace(/^<circle/, "<path"))
+      .replace(/<ellipse\b[^>]*\/?>/gi, (m) => m.replace(/^<ellipse/, "<path"))
+      .replace(/<line\b[^>]*\/?>/gi, (m) => m.replace(/^<line/, "<path"))
+      .replace(/<polyline\b[^>]*\/?>/gi, (m) => m.replace(/^<polyline/, "<path"))
+      .replace(/<polygon\b[^>]*\/?>/gi, (m) => m.replace(/^<polygon/, "<path"));
+  }
+
+  if (opts.convertColors) {
+    svg = svg.replace(/#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])\b/g, "#$1$2$3");
+    svg = svg.replace(/#([0-9a-fA-F]{6})\b/g, (m) => m.toLowerCase());
   }
 
   svg = svg.replace(
@@ -167,6 +156,18 @@ function optimizeSVG(input: string, opts: OptimizeOptions): string {
       svg = svg.replace(regex, "");
     }
   });
+
+  if (opts.minifyStyles) {
+    svg = svg.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (_, css) => {
+      const minified = css
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/\s+/g, " ")
+        .replace(/\s*([{}:;,])\s*/g, "$1")
+        .replace(/;}/g, "}")
+        .trim();
+      return `<style>${minified}</style>`;
+    });
+  }
 
   if (opts.minify) {
     svg = svg
@@ -223,12 +224,15 @@ const DEFAULT_OPTS: OptimizeOptions = {
   minify: true,
   removeMetadata: true,
   applyTransforms: false,
+  convertColors: false,
+  minifyStyles: false,
 };
 
 export function SvgOptimizer() {
   const [input, setInput] = useState("");
   const [opts, setOpts] = useState<OptimizeOptions>(DEFAULT_OPTS);
   const [showReadable, setShowReadable] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const result = useMemo(() => {
     if (!input.trim()) return null;
@@ -282,6 +286,16 @@ export function SvgOptimizer() {
     setInput(text);
   }, []);
 
+  const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      setInput(ev.target?.result as string || "");
+    };
+    reader.readAsText(file);
+  }, []);
+
   const handleCopyOutput = useCallback(async () => {
     if (result) await navigator.clipboard.writeText(result.output);
   }, [result]);
@@ -313,6 +327,7 @@ export function SvgOptimizer() {
 
   const clear = useCallback(() => {
     setInput("");
+    if (fileRef.current) fileRef.current.value = "";
   }, []);
 
   const handleOptionChange = useCallback(
@@ -325,7 +340,7 @@ export function SvgOptimizer() {
   const presets = [
     { label: "Web", opts: { ...DEFAULT_OPTS, minify: true, precision: 2 } },
     { label: "Readable", opts: { ...DEFAULT_OPTS, minify: false, precision: 3 } },
-    { label: "Maximum", opts: { ...DEFAULT_OPTS, mergePaths: true, convertShapes: true, precision: 1, minify: true, applyTransforms: true } },
+    { label: "Maximum", opts: { ...DEFAULT_OPTS, mergePaths: true, convertShapes: true, precision: 1, minify: true, applyTransforms: true, minifyStyles: true } },
   ];
 
   return (
@@ -347,6 +362,10 @@ export function SvgOptimizer() {
         >
           Paste from Clipboard
         </button>
+        <label className="cursor-pointer rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+          Upload .SVG File
+          <input ref={fileRef} type="file" accept=".svg,image/svg+xml" onChange={handleFileUpload} className="hidden" />
+        </label>
         <button
           onClick={clear}
           className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
@@ -382,6 +401,26 @@ export function SvgOptimizer() {
             <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
               <input
                 type="checkbox"
+                checked={opts.removeMetadata}
+                onChange={(e) => handleOptionChange("removeMetadata", e.target.checked)}
+                className="accent-brand-500"
+              />
+              Remove Metadata (viewBox, title, desc)
+            </label>
+            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
+              <input
+                type="checkbox"
+                checked={opts.convertColors}
+                onChange={(e) => handleOptionChange("convertColors", e.target.checked)}
+                className="accent-brand-500"
+              />
+              Convert Colors (shorthand hex, lowercase)
+            </label>
+          </div>
+          <div className="space-y-2">
+            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
+              <input
+                type="checkbox"
                 checked={opts.removeEmptyElements}
                 onChange={(e) => handleOptionChange("removeEmptyElements", e.target.checked)}
                 className="accent-brand-500"
@@ -397,8 +436,6 @@ export function SvgOptimizer() {
               />
               Remove Unused Defs
             </label>
-          </div>
-          <div className="space-y-2">
             <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
               <input
                 type="checkbox"
@@ -408,6 +445,17 @@ export function SvgOptimizer() {
               />
               Collapse Groups
             </label>
+            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
+              <input
+                type="checkbox"
+                checked={opts.minifyStyles}
+                onChange={(e) => handleOptionChange("minifyStyles", e.target.checked)}
+                className="accent-brand-500"
+              />
+              Minify Styles
+            </label>
+          </div>
+          <div className="space-y-2">
             <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
               <input
                 type="checkbox"
@@ -424,19 +472,8 @@ export function SvgOptimizer() {
                 onChange={(e) => handleOptionChange("convertShapes", e.target.checked)}
                 className="accent-brand-500"
               />
-              Convert Shapes to Paths
+              Convert Shape to Path
             </label>
-            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
-              <input
-                type="checkbox"
-                checked={opts.removeMetadata}
-                onChange={(e) => handleOptionChange("removeMetadata", e.target.checked)}
-                className="accent-brand-500"
-              />
-              Remove Editor Metadata
-            </label>
-          </div>
-          <div className="space-y-2">
             <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
               <input
                 type="checkbox"
@@ -457,12 +494,12 @@ export function SvgOptimizer() {
             </label>
             <div>
               <label className="block text-xs text-surface-500 dark:text-dark-muted">
-                Decimal Places: {opts.precision}
+                Number Precision: {opts.precision}
               </label>
               <input
                 type="range"
-                min={0}
-                max={6}
+                min={1}
+                max={8}
                 value={opts.precision}
                 onChange={(e) => handleOptionChange("precision", parseInt(e.target.value))}
                 className="w-full accent-brand-500"
@@ -582,7 +619,7 @@ export function SvgOptimizer() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
           </svg>
           <p className="text-sm text-surface-400 dark:text-dark-muted">
-            Paste SVG code above to optimize
+            Paste SVG code above or upload a .svg file to optimize
           </p>
         </div>
       )}

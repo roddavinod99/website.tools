@@ -1,0 +1,4 @@
+[
+  { "slug": "ssl-decoder", "category": "Security", "name": "SSL Certificate Decoder", "input": "-----BEGIN CERTIFICATE-----\nMIIBtzCCAScCFH4TGfUcCbQv7Qw7X5G0n5K7w5R7MAoGCCqGSM49BAMEMB4xCzAJBgNVBAYTAlVTMRcwFQYDVQQDDA5leGFtcGxlLm9yZzAeFw0yNDAxMDEwMDAwMDBaFw0yNTAxMDEwMDAwMDBaMB4xCzAJBgNVBAYTAlVTMRcwFQYDVQQDDA5leGFtcGxlLm9yZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIXP6jQa7vLx0g7K2H0Yc2LcYm6C\n-----END CERTIFICATE-----", "action": "Decode", "expect": "output" },
+  { "slug": "csp-generator", "category": "Security", "name": "CSP Generator", "input": "", "action": "Generate", "expect": "output" }
+]

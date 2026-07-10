@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates placeholder images in multiple formats (SVG, PNG, JPEG, WebP) with customizable dimensions, colors, and text overlay. Features gradient backgrounds, noise texture overlays, preset configuration themes (e.g., Bootstrap, Material, plain), border radius control, and a batch strip mode for generating multiple images at once.",
+  "whyItExists": "Design mockups and development prototypes need placeholder images to test layouts before final assets are ready. Eliminates reliance on external placeholder services and provides format flexibility for different testing scenarios.",
+  "whoShouldUse": "Web designers, frontend developers, UI/UX designers, and anyone creating wireframes or prototypes that require image placeholders.",
+  "useCases": [
+    "Generate placeholder images for website mockups and wireframes during client presentations",
+    "Create test images in specific formats (WebP, JPEG) for performance and format testing",
+    "Generate gradient placeholder backgrounds for hero sections and banners in design prototypes",
+    "Create batch placeholder images for gallery layouts, product grids, and card component testing",
+    "Generate images with specific aspect ratios and text labels for responsive design testing",
+    "Create styled placeholder images that match design system presets (Material, Bootstrap) for consistent mockups"
+  ],
+  "instructions": [
+    "Set the image dimensions using width and height fields; maintain aspect ratio with the lock toggle",
+    "Select the output format: SVG (scalable, smallest size), PNG (raster, lossless), JPEG (raster, smaller), or WebP (modern format)",
+    "Choose a background type: Solid color (pick from palette or custom hex), Gradient (linear/radial with 2 colors), or Noise texture",
+    "Configure text overlay: enter text, adjust font size, and pick text color; position with alignment options",
+    "Set border radius for rounded corners (0-50px); apply via CSS for SVG or raster rendering for bitmap formats",
+    "Use batch strip mode (enable toggle) to generate a horizontal strip of multiple images with sequential labels"
+  ],
+  "examples": [
+    "Settings: 800x600, PNG, Solid blue (#3B82F6), white text \"Hero Image\" -> Output: 800x600 PNG placeholder with blue background and centered white text",
+    "Settings: Batch strip mode, 4 images 200x200 each, SVG, alternating colors -> Output: 800x200 SVG strip with 4 colored squares labeled Image 1-4"
+  ],
+  "bestPractices": [
+    "Use SVG format for development mockups since it's resolution-independent and has the smallest file size",
+    "Use PNG or JPEG format when testing image loading performance with realistic file sizes",
+    "Match placeholder colors to your design system palette for more realistic client-facing mockups",
+    "Use the gradient option for hero sections and banners to create more visually appealing prototypes",
+    "Use batch strip mode for testing horizontal scrolling components, carousels, and image gallery layouts"
+  ],
+  "commonMistakes": [
+    "Using raster formats (PNG/JPEG) when SVG would be sufficient, unnecessarily increasing page weight in mockups",
+    "Not specifying text overlay and getting blank colored rectangles that lack context in design reviews",
+    "Using the tool for production images instead of real assets, which should be replaced before launch",
+    "Setting dimensions too large for raster formats (4000+ pixels) causing slow generation or browser issues",
+    "Forgetting to set border radius in CSS when using SVG output; radius only applies to raster formats directly"
+  ],
+  "faq": [
+    "Can I use the generated images in production? The images are for development/design purposes; replace with real images before production deployment.",
+    "What's the maximum resolution supported? SVG has no resolution limit; PNG/JPEG/WebP are capped at 8192x8192 pixels.",
+    "Are the images generated client-side or server-side? All generation happens in-browser using Canvas API for raster and markup for SVG; no server calls.",
+    "Can I customize the gradient direction? Yes, you can choose between linear (top-to-bottom, left-to-right, diagonal) and radial gradient types."
+  ]
+}

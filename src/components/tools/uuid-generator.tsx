@@ -7,17 +7,21 @@ type FormatStyle = "hyphens" | "no-hyphens" | "uppercase" | "lowercase" | "curly
 type ExportFormat = "text" | "json" | "csv" | "tsv";
 
 function uuidV4(): string {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
+  const buf = new Uint8Array(16);
+  crypto.getRandomValues(buf);
+  buf[6] = (buf[6] & 0x0f) | 0x40;
+  buf[8] = (buf[8] & 0x3f) | 0x80;
+  const h = Array.from(buf, (b) => b.toString(16).padStart(2, "0")).join("");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
 }
 
 function uuidV7(): string {
   const now = Date.now();
   const hex = now.toString(16).padStart(12, "0");
-  const rand = Array.from({ length: 20 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
-  const variant = (8 + Math.floor(Math.random() * 4)).toString(16);
+  const buf = new Uint8Array(10);
+  crypto.getRandomValues(buf);
+  const rand = Array.from(buf, (b) => b.toString(16).padStart(2, "0")).join("");
+  const variant = (8 + (buf[0] % 4)).toString(16);
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-7${rand.slice(0, 3)}-${variant}${rand.slice(3, 6)}-${rand.slice(6, 18)}`;
 }
 
@@ -27,8 +31,12 @@ function uuidV1(): string {
   const timeLow = hex.slice(4, 12);
   const timeMid = hex.slice(0, 4);
   const timeHi = hex.slice(12, 14);
-  const clockSeq = (Math.floor(Math.random() * 0x3fff) | 0x8000).toString(16).padStart(4, "0");
-  const node = Array.from({ length: 6 }, () => Math.floor(Math.random() * 256).toString(16).padStart(2, "0")).join("");
+  const buf1 = new Uint16Array(1);
+  const buf2 = new Uint8Array(6);
+  crypto.getRandomValues(buf1);
+  crypto.getRandomValues(buf2);
+  const clockSeq = ((buf1[0] & 0x3fff) | 0x8000).toString(16).padStart(4, "0");
+  const node = Array.from(buf2, (b) => b.toString(16).padStart(2, "0")).join("");
   return `${timeLow}-${timeMid}-1${timeHi}-${clockSeq.slice(0, 2)}-${clockSeq.slice(2, 4)}${node}`;
 }
 
@@ -39,7 +47,7 @@ function formatUuid(raw: string, style: FormatStyle): string {
     case "uppercase": return raw.toUpperCase();
     case "lowercase": return raw.toLowerCase();
     case "curly": return `{${raw}}`;
-    case "uuid-format": return `uuid:${raw}`;
+    case "uuid-format": return `urn:uuid:${raw}`;
     case "base64": {
       const bytes: number[] = [];
       for (let i = 0; i < 32; i += 2) bytes.push(parseInt(clean.slice(i, i + 2), 16));
@@ -77,7 +85,9 @@ function extractTimestamp(raw: string, version: UuidVersion): string | null {
 function generateTimestampId(type: "snowflake" | "nanoid"): string {
   if (type === "snowflake") {
     const ts = Date.now().toString(36).padStart(8, "0");
-    const rand = Math.floor(Math.random() * 0xffffff).toString(36).padStart(6, "0");
+    const buf = new Uint8Array(3);
+    crypto.getRandomValues(buf);
+    const rand = Array.from(buf, (b) => b.toString(36).padStart(2, "0")).join("");
     return `${ts}-${rand}`;
   }
   const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-";
@@ -90,7 +100,7 @@ function generateTimestampId(type: "snowflake" | "nanoid"): string {
 }
 
 function validateUuid(input: string): { valid: boolean; version: string; variant: string; error?: string } {
-  const clean = input.replace(/[{}]/g, "").trim();
+  const clean = input.replace(/[{}uUrRnN:]/g, "").trim();
   const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const hexRe = /^[0-9a-f]{32}$/i;
   const formatted = clean.includes("-") ? clean : clean.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
@@ -199,6 +209,15 @@ export function UUIDGenerator() {
     URL.revokeObjectURL(url);
   };
 
+  const downloadTxt = () => {
+    const content = uuids.join("\n");
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "uuids.txt"; a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleValidate = () => {
     setValidateResult(validateUuid(validateInput));
   };
@@ -235,12 +254,12 @@ export function UUIDGenerator() {
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
           <select value={format} onChange={(e) => handleFormatChange(e.target.value as FormatStyle)}
             className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="hyphens">With Hyphens</option>
-            <option value="no-hyphens">No Hyphens</option>
+            <option value="hyphens">Standard</option>
             <option value="uppercase">Uppercase</option>
+            <option value="curly">Braces {}</option>
+            <option value="uuid-format">URN (urn:uuid:)</option>
+            <option value="no-hyphens">No Hyphens</option>
             <option value="lowercase">Lowercase</option>
-            <option value="curly">Curly Braces</option>
-            <option value="uuid-format">uuid: Prefix</option>
             <option value="base64">Base64</option>
           </select>
         </div>
@@ -258,6 +277,7 @@ export function UUIDGenerator() {
             </button>
             <button onClick={() => copyAll("json")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy as JSON</button>
             <button onClick={() => copyAll("csv")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy as CSV</button>
+            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download .txt</button>
           </>
         )}
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">

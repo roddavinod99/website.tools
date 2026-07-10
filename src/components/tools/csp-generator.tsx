@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Copy, Plus, Trash2, Download, AlertTriangle, Shield } from "lucide-react";
 
 interface Source {
@@ -13,9 +13,11 @@ interface Directive {
   label: string;
   enabled: boolean;
   sources: Source[];
+  hasUnsafeInline: boolean;
+  hasUnsafeEval: boolean;
 }
 
-const sourceOptions = ["'self'", "'none'", "'unsafe-inline'", "'unsafe-eval'", "'strict-dynamic'", "'report-sample'", "https:", "http:", "data:", "blob:", "filesystem:"];
+const sourceOptions = ["'self'", "'none'", "'strict-dynamic'", "'report-sample'", "https:", "http:", "data:", "blob:", "filesystem:"];
 const allDirectives = [
   "default-src", "script-src", "style-src", "img-src", "connect-src",
   "font-src", "object-src", "media-src", "frame-src", "frame-ancestors",
@@ -24,8 +26,16 @@ const allDirectives = [
 
 const presets: Record<string, { label: string; dirs: Record<string, string[]> }> = {
   strict: {
-    label: "Strict CSP",
+    label: "Strict",
     dirs: { "default-src": ["'self'"], "script-src": ["'self'", "'strict-dynamic'"], "object-src": ["'none'"], "base-uri": ["'self'"], "report-uri": ["/csp-report"] },
+  },
+  moderate: {
+    label: "Moderate",
+    dirs: { "default-src": ["'self'"], "script-src": ["'self'"], "style-src": ["'self'"], "img-src": ["'self'", "data:"], "font-src": ["'self'"], "connect-src": ["'self'"], "object-src": ["'none'"], "base-uri": ["'self'"] },
+  },
+  permissive: {
+    label: "Permissive",
+    dirs: { "default-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https:", "data:"], "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https:"], "style-src": ["'self'", "'unsafe-inline'", "https:"], "img-src": ["'self'", "data:", "https:"], "font-src": ["'self'", "https:"], "connect-src": ["'self'", "https:"] },
   },
   wordpress: {
     label: "WordPress",
@@ -46,6 +56,8 @@ function makeDirectives(presetDirs: Record<string, string[]>): Directive[] {
     id, label: id,
     enabled: !!presetDirs[id],
     sources: (presetDirs[id] || []).map((v) => ({ value: v, id: `${id}-${v}-${Math.random().toString(36).slice(2, 6)}` })),
+    hasUnsafeInline: (presetDirs[id] || []).includes("'unsafe-inline'"),
+    hasUnsafeEval: (presetDirs[id] || []).includes("'unsafe-eval'"),
   }));
 }
 
@@ -56,25 +68,31 @@ export function CspGenerator() {
   const [reportTo, setReportTo] = useState("");
   const [nonce, setNonce] = useState("");
   const [asMeta, setAsMeta] = useState(false);
+  const [upgradeInsecure, setUpgradeInsecure] = useState(false);
+  const [reportOnly, setReportOnly] = useState(false);
+  const prevRef = useRef<HTMLTextAreaElement>(null);
 
   const allDirs = useMemo(() => [
     ...directives,
-    ...customDirs.map((d) => ({ id: d.id, label: d.id, enabled: true, sources: d.sources })),
+    ...customDirs.map((d) => ({ id: d.id, label: d.id, enabled: true, sources: d.sources, hasUnsafeInline: false, hasUnsafeEval: false })),
   ], [directives, customDirs]);
 
   const policy = useMemo(() => {
     const parts = allDirs.filter((d) => d.enabled && d.sources.length > 0).map((d) => {
-      const srcs = d.sources.map((s) => {
+      let srcs = d.sources.map((s) => {
         let val = s.value;
         if (d.id === "script-src" && nonce) val = `'nonce-${nonce}'`;
         return val;
       }).join(" ");
+      if (d.hasUnsafeInline && !srcs.includes("'unsafe-inline'")) srcs += " 'unsafe-inline'";
+      if (d.hasUnsafeEval && !srcs.includes("'unsafe-eval'")) srcs += " 'unsafe-eval'";
       return `${d.id} ${srcs}`;
     });
     if (reportUri) parts.push(`report-uri ${reportUri}`);
     if (reportTo) parts.push(`report-to ${reportTo}`);
+    if (upgradeInsecure) parts.push("upgrade-insecure-requests");
     return parts.join("; ");
-  }, [allDirs, reportUri, reportTo, nonce]);
+  }, [allDirs, reportUri, reportTo, nonce, upgradeInsecure]);
 
   const effectiveness = useMemo(() => {
     let score = 5;
@@ -87,22 +105,31 @@ export function CspGenerator() {
     if (policy.includes("base-uri")) score += 1;
     if (policy.includes("object-src")) score += 1;
     if (policy.includes("frame-ancestors")) score += 1;
+    if (upgradeInsecure) score += 1;
     const dirCount = allDirs.filter((d) => d.enabled).length;
     const srcCount = allDirs.reduce((s, d) => s + d.sources.length, 0);
     return { score: Math.max(1, Math.min(10, score)), dirCount, srcCount, rating: score >= 8 ? "High" : score >= 5 ? "Medium" : "Low" };
-  }, [policy, allDirs, nonce, reportUri]);
+  }, [policy, allDirs, nonce, reportUri, upgradeInsecure]);
 
   const hasInlineWarnings = useMemo(() => {
     const scriptDir = allDirs.find((d) => d.id === "script-src");
     const styleDir = allDirs.find((d) => d.id === "style-src");
     return {
-      scriptUnsafe: scriptDir?.sources.some((s) => s.value === "'unsafe-inline'"),
-      styleUnsafe: styleDir?.sources.some((s) => s.value === "'unsafe-inline'"),
+      scriptUnsafe: scriptDir?.sources.some((s) => s.value === "'unsafe-inline'") || scriptDir?.hasUnsafeInline,
+      styleUnsafe: styleDir?.sources.some((s) => s.value === "'unsafe-inline'") || styleDir?.hasUnsafeInline,
     };
   }, [allDirs]);
 
   const toggle = (id: string) => {
     setDirectives((prev) => prev.map((d) => d.id === id ? { ...d, enabled: !d.enabled } : d));
+  };
+
+  const toggleUnsafeInline = (dirId: string) => {
+    setDirectives((prev) => prev.map((d) => d.id === dirId ? { ...d, hasUnsafeInline: !d.hasUnsafeInline } : d));
+  };
+
+  const toggleUnsafeEval = (dirId: string) => {
+    setDirectives((prev) => prev.map((d) => d.id === dirId ? { ...d, hasUnsafeEval: !d.hasUnsafeEval } : d));
   };
 
   const addSource = (dirId: string, value: string) => {
@@ -135,6 +162,7 @@ export function CspGenerator() {
     setDirectives(makeDirectives(p.dirs));
     setCustomDirs([]);
     setNonce("");
+    setUpgradeInsecure(name === "strict");
   };
 
   const generateNonce = () => {
@@ -144,16 +172,17 @@ export function CspGenerator() {
   };
 
   const finalPolicy = useMemo(() => {
-    if (asMeta) return `<meta http-equiv="Content-Security-Policy" content="${policy}">`;
+    const header = reportOnly ? "Content-Security-Policy-Report-Only" : "Content-Security-Policy";
+    if (asMeta) return `<meta http-equiv="${header}" content="${policy}">`;
     return policy;
-  }, [policy, asMeta]);
+  }, [policy, asMeta, reportOnly]);
 
   const copyPolicy = async () => {
     if (policy) await navigator.clipboard.writeText(finalPolicy);
   };
 
   const download = (format: "txt" | "json") => {
-    const content = format === "json" ? JSON.stringify({ "content-security-policy": policy, directives: allDirs }, null, 2) : finalPolicy;
+    const content = format === "json" ? JSON.stringify({ "content-security-policy": policy, directives: allDirs, reportOnly }, null, 2) : finalPolicy;
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -172,12 +201,23 @@ export function CspGenerator() {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 text-xs text-surface-500 dark:text-dark-muted">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-surface-500 dark:text-dark-muted">
         <span>Directives: {effectiveness.dirCount}</span>
         <span>Sources: {effectiveness.srcCount}</span>
         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-medium ${effectiveness.rating === "High" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : effectiveness.rating === "Medium" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"}`}>
           <Shield size={10} /> {effectiveness.rating} ({effectiveness.score}/10)
         </span>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" checked={upgradeInsecure} onChange={(e) => setUpgradeInsecure(e.target.checked)} className="accent-brand-500" />
+          upgrade-insecure-requests
+        </label>
+        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" checked={reportOnly} onChange={(e) => setReportOnly(e.target.checked)} className="accent-brand-500" />
+          Report-Only mode
+        </label>
       </div>
 
       {hasInlineWarnings.scriptUnsafe && (
@@ -203,23 +243,37 @@ export function CspGenerator() {
 
       <div className="space-y-1.5 max-h-80 overflow-y-auto">
         {directives.map((d) => (
-          <div key={d.id} className="flex items-center gap-2 rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+          <div key={d.id} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
             <input type="checkbox" checked={d.enabled} onChange={() => toggle(d.id)}
-              className="rounded border-surface-300 text-brand-500 focus:ring-brand-400 dark:border-dark-muted" />
-            <span className="text-xs font-medium text-surface-700 dark:text-dark-text w-28 shrink-0">{d.label}</span>
-            <div className="flex-1 flex flex-wrap gap-1">
-              {d.sources.map((s) => (
-                <span key={s.id} className="inline-flex items-center gap-0.5 rounded bg-white dark:bg-dark-bg border border-surface-200 dark:border-dark-border px-1.5 py-0.5 text-[10px] font-mono text-surface-700 dark:text-dark-text">
-                  <input type="text" value={s.value} onChange={(e) => updateSource(d.id, s.id, e.target.value)}
-                    className="w-16 bg-transparent outline-none text-[10px] font-mono" />
-                  <button onClick={() => removeSource(d.id, s.id)} className="text-red-400 hover:text-red-600"><Trash2 size={10} /></button>
-                </span>
-              ))}
-              <select onChange={(e) => { if (e.target.value) { addSource(d.id, e.target.value); e.target.value = ""; } }}
-                className="text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                <option value="">+ source</option>
-                {sourceOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-              </select>
+              className="mt-1 rounded border-surface-300 text-brand-500 focus:ring-brand-400 dark:border-dark-muted" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-medium text-surface-700 dark:text-dark-text">{d.label}</span>
+                <div className="flex gap-2">
+                  <label className="flex items-center gap-1 text-[10px] text-surface-500 dark:text-dark-muted cursor-pointer">
+                    <input type="checkbox" checked={d.hasUnsafeInline} onChange={() => toggleUnsafeInline(d.id)} className="accent-brand-500" />
+                    unsafe-inline
+                  </label>
+                  <label className="flex items-center gap-1 text-[10px] text-surface-500 dark:text-dark-muted cursor-pointer">
+                    <input type="checkbox" checked={d.hasUnsafeEval} onChange={() => toggleUnsafeEval(d.id)} className="accent-brand-500" />
+                    unsafe-eval
+                  </label>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {d.sources.map((s) => (
+                  <span key={s.id} className="inline-flex items-center gap-0.5 rounded bg-white dark:bg-dark-bg border border-surface-200 dark:border-dark-border px-1.5 py-0.5 text-[10px] font-mono text-surface-700 dark:text-dark-text">
+                    <input type="text" value={s.value} onChange={(e) => updateSource(d.id, s.id, e.target.value)}
+                      className="w-16 bg-transparent outline-none text-[10px] font-mono" />
+                    <button onClick={() => removeSource(d.id, s.id)} className="text-red-400 hover:text-red-600"><Trash2 size={10} /></button>
+                  </span>
+                ))}
+                <select onChange={(e) => { if (e.target.value) { addSource(d.id, e.target.value); e.target.value = ""; } }}
+                  className="text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="">+ source</option>
+                  {sourceOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </div>
             </div>
           </div>
         ))}
@@ -279,7 +333,9 @@ export function CspGenerator() {
               <button onClick={() => download("json")} className="rounded px-2 py-1 text-xs font-medium border border-surface-200 text-surface-700 hover:bg-surface-100 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-border transition-colors flex items-center gap-1"><Download size={12} /> .json</button>
             </div>
           </div>
-          <pre className="bg-white dark:bg-dark-bg rounded p-2 text-xs font-mono text-surface-900 dark:text-dark-text border border-surface-200 dark:border-dark-border overflow-auto max-h-32 select-all break-all whitespace-pre-wrap">{finalPolicy}</pre>
+          <textarea ref={prevRef} readOnly value={finalPolicy}
+            className="w-full bg-white dark:bg-dark-bg rounded p-2 text-xs font-mono text-surface-900 dark:text-dark-text border border-surface-200 dark:border-dark-border overflow-auto resize-none select-all break-all whitespace-pre-wrap"
+            rows={4} />
         </div>
       )}
     </div>

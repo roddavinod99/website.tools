@@ -38,6 +38,28 @@ const BOT_PATTERNS: [RegExp, string][] = [
   [/MJ12bot/i, "MJ12bot"], [/SeznamBot/i, "SeznamBot"], [/PetalBot/i, "PetalBot"],
 ];
 
+const BROWSER_LIST = [
+  { name: "Chrome", engine: "Blink/V8", since: 2008 },
+  { name: "Firefox", engine: "Gecko/SpiderMonkey", since: 2004 },
+  { name: "Safari", engine: "WebKit/JavaScriptCore", since: 2003 },
+  { name: "Edge", engine: "Blink/V8", since: 2015 },
+  { name: "Opera", engine: "Blink/V8", since: 1996 },
+  { name: "Samsung Internet", engine: "Blink/V8", since: 2012 },
+  { name: "IE", engine: "Trident/Chakra", since: 1995 },
+  { name: "Brave", engine: "Blink/V8", since: 2016 },
+  { name: "Vivaldi", engine: "Blink/V8", since: 2016 },
+  { name: "Arc", engine: "Blink/V8", since: 2022 },
+];
+
+const OS_LIST = [
+  { name: "Windows", latest: "Windows 11", kernel: "NT" },
+  { name: "macOS", latest: "macOS 15 Sequoia", kernel: "XNU/Darwin" },
+  { name: "iOS", latest: "iOS 19", kernel: "XNU/Darwin" },
+  { name: "Android", latest: "Android 16", kernel: "Linux" },
+  { name: "Linux", latest: "Various", kernel: "Linux" },
+  { name: "Chrome OS", latest: "Latest", kernel: "Linux" },
+];
+
 function parseUA(ua: string): UAResult {
   const r: UAResult = {
     browser: "Unknown", browserVersion: "", engine: "Unknown", engineVersion: "",
@@ -50,12 +72,12 @@ function parseUA(ua: string): UAResult {
 
   const browserChecks: [RegExp, (m: RegExpMatchArray) => void][] = [
     [/(Edg)\/(\S+)/, m => { r.browser = "Edge"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
-    [/(Firefox)\/(\S+)/, m => { r.browser = "Firefox"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
-    [/(OPR)\/(\S+)/, m => { r.browser = "Opera"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
-    [/(SamsungBrowser)\/(\S+)/, m => { r.browser = "Samsung Internet"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
-    [/(Chrome)\/(\S+)/, m => { r.browser = "Chrome"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
+    [/(Firefox)\/(\S+)/, m => { r.browser = "Firefox"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
+    [/(OPR)\/(\S+)/, m => { r.browser = "Opera"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
+    [/(SamsungBrowser)\/(\S+)/, m => { r.browser = "Samsung Internet"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
+    [/(Chrome)\/(\S+)/, m => { r.browser = "Chrome"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
     [/(Version)\/(\S+).*Safari/, m => { r.browser = "Safari"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
-    [/(Safari)\/(\S+)/, m => { r.browser = "Safari"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
+    [/(Safari)\/(\S+)/, m => { r.browser = "Safari"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
     [/(MSIE)\s(\S+)/, m => { r.browser = "IE"; r.browserVersion = m[2].replace(/[;)]/g, ""); }],
     [/Trident\/.*rv:(\S+)/, m => { r.browser = "IE"; r.browserVersion = m[1].replace(/[;)]/g, ""); }],
   ];
@@ -126,6 +148,8 @@ export function UserAgentParser() {
   const [compareInput, setCompareInput] = useState("");
   const [compareResult, setCompareResult] = useState<UAResult | null>(null);
   const [copyFeedback, setCopyFeedback] = useState("");
+  const [showReference, setShowReference] = useState(false);
+
   useEffect(() => {
     if (history.length > 0) localStorage.setItem("uaparse_history", JSON.stringify(history.slice(0, 20)));
   }, [history]);
@@ -146,10 +170,20 @@ export function UserAgentParser() {
     setCompareResult(parseUA(compareInput.trim()));
   };
 
-  const copyJson = async () => {
+  const detectCurrent = () => {
+    if (typeof navigator !== "undefined") {
+      setInput(navigator.userAgent);
+      parse(navigator.userAgent);
+    }
+  };
+
+  const exportJson = async () => {
     if (!result) return;
-    await navigator.clipboard.writeText(JSON.stringify(result, null, 2));
-    setCopyFeedback("JSON copied");
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = "user-agent.json"; a.click();
+    URL.revokeObjectURL(url);
+    setCopyFeedback("JSON exported");
     setTimeout(() => setCopyFeedback(""), 2000);
   };
 
@@ -172,7 +206,8 @@ export function UserAgentParser() {
       </div>
       <div className="flex flex-wrap gap-2">
         <button onClick={() => parse()} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
-        <button onClick={copyJson} disabled={!result} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy JSON</button>
+        <button onClick={detectCurrent} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Detect Current Browser</button>
+        {result && <button onClick={exportJson} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export JSON</button>}
       </div>
 
       <div className="flex flex-wrap gap-1.5">
@@ -186,6 +221,13 @@ export function UserAgentParser() {
 
       {result && (
         <>
+          {result.isBot && (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400 flex items-center gap-2">
+              <span className="inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-700 dark:text-amber-100">BOT</span>
+              This is a <strong>{result.botName}</strong> crawler/bot
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {categories.map(c => (
               <div key={c.label} className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
@@ -195,12 +237,6 @@ export function UserAgentParser() {
               </div>
             ))}
           </div>
-
-          {result.isBot && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
-              This is a <strong>{result.botName}</strong> crawler/bot
-            </div>
-          )}
 
           <div className="border-t border-surface-200 dark:border-dark-border pt-3">
             <details>
@@ -224,6 +260,38 @@ export function UserAgentParser() {
                 )}
               </div>
             </details>
+          </div>
+
+          <div className="border-t border-surface-200 dark:border-dark-border pt-3">
+            <button onClick={() => setShowReference(v => !v)} className="text-xs font-medium text-brand-500 hover:text-brand-600 transition-colors">
+              {showReference ? "Hide" : "Show"} browser/OS reference
+            </button>
+            {showReference && (
+              <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Browsers</p>
+                  <div className="space-y-1">
+                    {BROWSER_LIST.map(b => (
+                      <div key={b.name} className="flex items-center justify-between rounded border border-surface-200 px-2 py-1 text-xs dark:border-dark-border">
+                        <span className="font-medium text-surface-700 dark:text-dark-text">{b.name}</span>
+                        <span className="text-surface-400 dark:text-dark-muted">{b.engine}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Operating Systems</p>
+                  <div className="space-y-1">
+                    {OS_LIST.map(o => (
+                      <div key={o.name} className="flex items-center justify-between rounded border border-surface-200 px-2 py-1 text-xs dark:border-dark-border">
+                        <span className="font-medium text-surface-700 dark:text-dark-text">{o.name}</span>
+                        <span className="text-surface-400 dark:text-dark-muted">{o.latest}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}

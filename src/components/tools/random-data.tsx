@@ -22,10 +22,6 @@ const SURNAMES_ES = ["García","Rodríguez","Martínez","López","González","He
 const SURNAMES_JP = ["Sato","Suzuki","Takahashi","Tanaka","Watanabe","Ito","Yamamoto","Nakamura","Kobayashi","Kato"];
 const DOMAINS = ["gmail.com","outlook.com","yahoo.com","proton.me","example.com","mail.com","icloud.com"];
 const CITIES_EN = ["New York","Los Angeles","Chicago","Houston","Phoenix","Seattle","Boston","Denver","Miami","Portland"];
-const CITIES_DE = ["Berlin","München","Hamburg","Köln","Frankfurt","Stuttgart","Düsseldorf","Leipzig","Dresden","Bremen"];
-const CITIES_FR = ["Paris","Marseille","Lyon","Toulouse","Bordeaux","Lille","Nice","Nantes","Strasbourg","Montpellier"];
-const CITIES_ES = ["Madrid","Barcelona","Valencia","Sevilla","Bilbao","Málaga","Zaragoza","Alicante","Granada","Murcia"];
-const CITIES_JP = ["Tokyo","Yokohama","Osaka","Nagoya","Sapporo","Fukuoka","Kobe","Kyoto","Kawasaki","Saitama"];
 const STREETS = ["Main St","Oak Ave","Elm Rd","Park Blvd","Broadway","Lake Dr","Hill St","Maple Ln","Cedar Ct","River Rd"];
 const BS_WORDS = ["next-generation","synergistic","enterprise","cross-platform","scalable","innovative","disruptive","strategic","robust","dynamic"];
 const CATCHPHRASES = ["Enhanced","Advanced","Integrated","Optimized","Universal","Streamlined","Automated","Intelligent","Seamless","Proactive"];
@@ -33,17 +29,6 @@ const DEPARTMENTS = ["Engineering","Marketing","Sales","HR","Finance","Legal","O
 const COMPANY_SUFFIXES = ["Inc","Corp","LLC","Ltd","Group","Partners","Solutions","Technologies","Ventures","Industries"];
 const CURRENCIES = ["USD","EUR","GBP","JPY","CHF","CAD","AUD","CNY","INR","BRL"];
 const CC_PREFIXES = ["4","5","3","6","2"];
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _randArr = <T,>(arr: T[], s?: number): T => {
-  const r = s !== undefined ? ((s * 9301 + 49297) % 233280) / 233280 : Math.random();
-  return arr[Math.floor(Math.abs(r) * arr.length)];
-};
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _randInt = (min: number, max: number, s?: number): number => {
-  const r = s !== undefined ? ((s * 9301 + 49297) % 233280) / 233280 : Math.random();
-  return Math.floor(Math.abs(r) * (max - min + 1)) + min;
-};
 
 function nameSet(locale: Locale): [string[], string[]] {
   switch (locale) {
@@ -55,22 +40,42 @@ function nameSet(locale: Locale): [string[], string[]] {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function citySet(locale: Locale): string[] {
-  switch (locale) {
-    case "de-DE": return CITIES_DE;
-    case "fr-FR": return CITIES_FR;
-    case "es-ES": return CITIES_ES;
-    case "ja-JP": return CITIES_JP;
-    default: return CITIES_EN;
-  }
-}
-
 type SeededRandom = { next: () => number; };
 
 function makeSeed(s: number): SeededRandom {
   let seed = s;
   return { next: () => { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return (seed >>> 0) / 0xffffffff; } };
+}
+
+function randInt(min: number, max: number, r: SeededRandom): number {
+  return Math.floor(r.next() * (max - min + 1)) + min;
+}
+
+function applyPrefixSuffix(val: string, prefix: string, suffix: string): string {
+  return prefix + val + suffix;
+}
+
+function generateField(f: FieldDef, seed: number, prefix: string, suffix: string, numMin: number, numMax: number): string {
+  let val = f.generate(seed);
+  if ((f.category === "text" || f.id === "slug") && (prefix || suffix)) {
+    val = applyPrefixSuffix(val, prefix, suffix);
+  }
+  if (f.category === "numbers") {
+    if (f.id === "integer") {
+      const r = makeSeed(seed);
+      val = String(randInt(numMin, numMax, r));
+    } else if (f.id === "float") {
+      const r = makeSeed(seed);
+      val = (numMin + r.next() * (numMax - numMin)).toFixed(4);
+    } else if (f.id === "percentage") {
+      const r = makeSeed(seed);
+      val = (r.next() * (numMax - numMin) + numMin).toFixed(2) + "%";
+    } else if (f.id === "price") {
+      const r = makeSeed(seed);
+      val = "$" + (r.next() * (numMax - numMin) + numMin).toFixed(2);
+    }
+  }
+  return val;
 }
 
 const ALL_FIELDS: FieldDef[] = [
@@ -120,6 +125,10 @@ export function RandomData() {
   const [includeHeader, setIncludeHeader] = useState(true);
   const [checked, setChecked] = useState<Record<string, boolean>>(Object.fromEntries(ALL_FIELDS.map((f) => [f.id, f.enabled])));
   const [copied, setCopied] = useState(false);
+  const [textPrefix, setTextPrefix] = useState("");
+  const [textSuffix, setTextSuffix] = useState("");
+  const [numMin, setNumMin] = useState(0);
+  const [numMax, setNumMax] = useState(100000);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeFields = useMemo(() => ALL_FIELDS.filter((f) => f.category === category && checked[f.id]), [category, checked]);
@@ -130,7 +139,9 @@ export function RandomData() {
     const useSeed = seedInput ? parseInt(seedInput, 10) || Date.now() : Date.now();
     const rows = Array.from({ length: count }, (_, i) => {
       const row: Record<string, string> = {};
-      for (const f of fields) row[f.id] = f.generate(useSeed + i * 1000);
+      for (const f of fields) {
+        row[f.id] = generateField(f, useSeed + i * 1000, textPrefix, textSuffix, numMin, numMax);
+      }
       return row;
     });
     let result = "";
@@ -172,7 +183,7 @@ export function RandomData() {
       }
     }
     setOutput(result);
-  }, [activeFields, count, format, includeHeader, category, seedInput]);
+  }, [activeFields, count, format, includeHeader, category, seedInput, textPrefix, textSuffix, numMin, numMax]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -283,6 +294,36 @@ export function RandomData() {
           </div>
         )}
       </div>
+
+      {(category === "text") && (
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Prefix</label>
+            <input type="text" value={textPrefix} onChange={(e) => setTextPrefix(e.target.value)} placeholder="e.g. start_"
+              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Suffix</label>
+            <input type="text" value={textSuffix} onChange={(e) => setTextSuffix(e.target.value)} placeholder="e.g. _end"
+              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          </div>
+        </div>
+      )}
+
+      {(category === "numbers") && (
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Min Value</label>
+            <input type="number" value={numMin} onChange={(e) => setNumMin(parseFloat(e.target.value) || 0)}
+              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Max Value</label>
+            <input type="number" value={numMax} onChange={(e) => setNumMax(parseFloat(e.target.value) || 0)}
+              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>

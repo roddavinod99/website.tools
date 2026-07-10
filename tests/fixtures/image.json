@@ -1,0 +1,11 @@
+[
+  { "slug": "image-compressor", "category": "Image", "name": "Image Compressor", "input": "", "action": "Compress", "expect": "output" },
+  { "slug": "image-resizer", "category": "Image", "name": "Image Resizer", "input": "", "action": "Resize", "expect": "output" },
+  { "slug": "favicon-generator", "category": "Image", "name": "Favicon Generator", "input": "", "action": "Generate", "expect": "output" },
+  { "slug": "svg-optimizer", "category": "Image", "name": "SVG Optimizer", "input": "<svg xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"50\" cy=\"50\" r=\"40\"/></svg>", "action": "Optimize", "expect": "output" },
+  { "slug": "placeholder-image", "category": "Image", "name": "Placeholder Image", "input": "800x600", "action": "Generate", "expect": "output" },
+  { "slug": "svg-to-css", "category": "Image", "name": "SVG to CSS", "input": "<svg xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"5\"/></svg>", "action": "Convert", "expect": "output" },
+  { "slug": "exif-reader", "category": "Image", "name": "EXIF Reader", "input": "", "action": "Read", "expect": "output" },
+  { "slug": "exif-transfer", "category": "Image", "name": "EXIF Transfer", "input": "", "action": "Transfer", "expect": "output" },
+  { "slug": "color-eyedropper", "category": "Image", "name": "Color Eyedropper", "input": "#ff6600", "action": "Pick", "expect": "output" }
+]

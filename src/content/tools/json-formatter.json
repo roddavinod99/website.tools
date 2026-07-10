@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Formats JSON with syntax highlighting using colored keys, strings, numbers, and booleans, plus line numbers for easy reference. Supports configurable indentation, key sorting, full-text search with navigation arrows to jump between matches, auto-format on paste, and displays input statistics (character count, line count, key count, depth).",
+  "whyItExists": "Reading raw JSON from APIs or logs is painful without syntax highlighting and line numbers. This tool makes JSON instantly readable with search and navigation, and the auto-format paste feature eliminates the extra step of hitting a Format button.",
+  "whoShouldUse": "API developers reading JSON responses, data analysts exploring JSON datasets, and developers debugging JSON configuration files.",
+  "useCases": [
+    "Paste a minified API response and have it auto-format with colored syntax highlighting",
+    "Search for a specific key or value in a large JSON document with navigation between matches",
+    "Check the depth of a nested JSON structure using the input stats (depth, key count, etc.)",
+    "Format JSON with sorted keys and line numbers for code review in a pull request",
+    "Troubleshoot a malformed JSON configuration by pasting it and seeing the auto-format correction"
+  ],
+  "instructions": [
+    "Paste JSON into the input area; auto-format on paste instantly beautifies it with highlighting",
+    "Adjust indent size (2 or 4 spaces) and toggle key sorting on or off",
+    "Use the search bar to type a key or value; matching lines are highlighted with navigation arrows",
+    "View input stats: character count, line count, key count, and maximum nesting depth",
+    "Toggle line numbers on/off and copy the formatted output",
+    "Invalid JSON shows a parse error with line number and character position for debugging"
+  ],
+  "examples": [
+    "Input: '{\"users\":[{\"name\":\"Alice\"}]}' pasted with auto-format. Output: Colored, indented JSON showing 'users' as a key (purple), 'Alice' as a string (green), line numbers 1-4.",
+    "Input: Search for 'email' in a 500-line JSON document. Output: 12 matches highlighted with prev/next navigation arrows."
+  ],
+  "bestPractices": [
+    "Enable auto-format on paste to save time; it eliminates the extra Format button click",
+    "Use search with navigation for large JSON files instead of scrolling manually",
+    "Check the depth stat to understand how nested a JSON structure is before writing traversal code",
+    "Use sorted keys to quickly locate keys in alphabetical order within the formatted output"
+  ],
+  "commonMistakes": [
+    "Pasting invalid JSON and not noticing the parse error message below the input area",
+    "Using the tool for JSON larger than 50MB, which may cause browser slowdowns",
+    "Searching for a value without quotes when the search expects exact string matching",
+    "Confusing line numbers in the formatted output with actual file line numbers (they match)"
+  ],
+  "faq": [
+    "What syntax highlighting colors are used? Keys are typically blue/purple, strings green, numbers orange, booleans red, brackets gray.",
+    "Does auto-format work for partial or invalid JSON? It attempts to format valid portions and highlights the error location.",
+    "Can I copy only a selection of the formatted JSON? Use the copy all button; for partial copy, select text manually.",
+    "What does the depth stat mean? It shows the maximum nesting level of objects/arrays in the JSON."
+  ]
+}

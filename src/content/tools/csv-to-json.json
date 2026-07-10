@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts CSV data to JSON with automatic delimiter detection (comma, tab, semicolon, pipe). Supports four JSON output formats: array of objects, array of arrays, column-oriented (object of arrays), and pretty-printed. Features configurable quote character handling, drag-and-drop file upload, a preview table showing the first 5 rows, and size comparison between CSV input and JSON output.",
+  "whyItExists": "CSV is the most common data exchange format from spreadsheets, databases, and analytics tools, but most APIs consume JSON. A reliable, format-flexible converter that handles embedded commas, custom delimiters, and large files saves developers from writing one-off parsing scripts.",
+  "whoShouldUse": "Data engineers transforming CSV exports, backend developers ingesting spreadsheet data into APIs, data scientists converting survey results, and anyone migrating from legacy CSV to modern JSON APIs.",
+  "useCases": [
+    "Convert an Excel-exported CSV of customer data to array-of-objects JSON for a REST API",
+    "Transform a tab-separated TSV from a database export to JSON for a web dashboard",
+    "Convert semicolon-separated CSV (common in European locales) to column-oriented JSON",
+    "Preview first 5 rows of a large CSV to verify column mapping before full conversion",
+    "Convert pipe-delimited CSV from a mainframe export to pretty-printed JSON",
+    "Parse CSV with quoted fields containing embedded commas and newlines"
+  ],
+  "instructions": [
+    "Paste CSV text or drag-and-drop a .csv file — delimiter is auto-detected and displayed",
+    "Review 'Preview' table showing first 5 rows — verify columns/data types before full conversion",
+    "Select JSON output format: 'Array of Objects', 'Array of Arrays', 'Column-Oriented', or 'Pretty-Printed'",
+    "Configure options: quote character (double/single), header row (first row as keys or key0,key1...), encoding",
+    "Click 'Convert' — JSON output appears with size comparison (CSV vs JSON byte count)",
+    "Copy JSON or download as .json — use streaming mode for large datasets to avoid memory limits"
+  ],
+  "examples": [
+    "Input CSV: 'name,age,city\\nAlice,30,NYC\\nBob,25,LA' | Array of Objects => '[{\"name\":\"Alice\",\"age\":\"30\",\"city\":\"NYC\"},{\"name\":\"Bob\",\"age\":\"25\",\"city\":\"LA\"}]'",
+    "Input: 'product\\tprice\\tstock\\nWidget\\t9.99\\t42' | Tab delimiter | Column-Oriented => '{\"product\":[\"Widget\"],\"price\":[\"9.99\"],\"stock\":[\"42\"]}'"
+  ],
+  "bestPractices": [
+    "Always check preview before converting — catches delimiter detection errors",
+    "Use 'Array of Objects' for REST APIs; 'Column-Oriented' for large datasets where only some columns are needed",
+    "Check for BOM in Excel-exported CSVs — tool handles BOM but verify first column name",
+    "For very large files (>100 MB), use streaming or split into smaller chunks",
+    "Specify correct quote character — wrong setting causes incorrect parsing of quoted fields"
+  ],
+  "commonMistakes": [
+    "Assuming auto-detected delimiter is always correct for short files",
+    "Using 'Array of Arrays' when CSV has headers — headers become first data row",
+    "Forgetting all CSV values are strings in JSON — no auto type coercion",
+    "Parsing CSVs with inconsistent quote characters — pre-normalize first",
+    "Converting CSV with empty trailing rows — produces null JSON entries; trim first"
+  ],
+  "faq": [
+    "Can this handle commas inside quoted fields? — Yes, correctly handles commas, newlines, and escaped quotes within quoted fields.",
+    "Does it convert data types? — No, all values remain as strings. Use JSON.parse() after conversion.",
+    "Maximum file size? — ~200 MB browser-based. For larger files, use command-line tool or split CSV.",
+    "Can I use custom column names? — Yes, disable 'First Row as Headers' to get key0, key1, key2... names."
+  ]
+}

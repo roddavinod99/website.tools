@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts SVG markup to CSS values for background-image, mask-image, inline SVG (content property), and clip-path modes. Supports URL-encoded and base64 encoding, applies optimization before conversion, shows a live preview of the rendered result, and compares byte sizes of the original SVG, URL-encoded, and base64 versions.",
+  "whyItExists": "Embedding SVGs in CSS requires proper encoding and wrapping for each CSS property. This tool automates the conversion so developers can use SVGs in stylesheets without manual string manipulation.",
+  "whoShouldUse": "Frontend developers, CSS authors, and UI engineers who embed vector graphics as CSS background images, masks, or clip-paths.",
+  "useCases": [
+    "Convert an SVG icon to a CSS background-image data URI for use in a button",
+    "Create a CSS mask from an SVG shape for advanced hover effects",
+    "Embed an SVG inline in the content property for pseudo-elements",
+    "Generate a clip-path polygon from an SVG path for creative layouts",
+    "Compare URL-encoded vs. base64 sizes to choose the most efficient encoding",
+    "Optimize and convert multiple SVGs to CSS in a batch for a design system"
+  ],
+  "instructions": [
+    "Paste SVG markup into the input area — it will automatically be optimized in the preview pane.",
+    "Select the output mode: background-image, mask-image, inline (content), or clip-path.",
+    "Choose encoding: URL-encoded (smaller, human-readable) or base64 (binary-safe, larger).",
+    "Review the live preview showing the CSS-rendered SVG on a sample element.",
+    "Check the size comparison table showing original bytes vs. URL-encoded bytes vs. base64 bytes.",
+    "Click Copy CSS to copy the generated CSS declaration(s) to your clipboard."
+  ],
+  "examples": [
+    "Input: <svg viewBox=\"0 0 24 24\"><path d=\"M12 2L2 22h20z\"/></svg> with background-image mode and URL encoding → output: background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L2 22h20z'/%3E%3C/svg%3E\");",
+    "Input: same SVG with mask-image mode and base64 encoding → output: mask-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMiAyMmgyMHoiLz48L3N2Zz4=\");"
+  ],
+  "bestPractices": [
+    "Use URL-encoding for simple SVGs — it produces smaller CSS than base64",
+    "Use base64 encoding when the SVG contains characters that may not survive URL-encoding cleanly",
+    "Always optimize the SVG before converting to reduce CSS byte size",
+    "Choose mask-image over background-image for colorable icons (mask follows currentColor)",
+    "Test the generated CSS in all target browsers — some older browsers have encoding edge cases"
+  ],
+  "commonMistakes": [
+    "Using background-image with colorable icons — use mask-image so the icon inherits the text color",
+    "Forgetting the xmlns attribute in the SVG — it is required for data URIs",
+    "Adding quotes inside the data URI that break the CSS url() syntax",
+    "Assuming all SVG features (animations, external fonts) work in CSS background-images — they do not",
+    "Copying the CSS without verifying the semicolon and closing parenthesis are present"
+  ],
+  "faq": [
+    "What is the smallest encoding? URL-encoding is typically 5–15% smaller than base64 for most SVGs.",
+    "Can I use this for SVG sprites? No — this tool is for individual SVGs; use an SVG sprite generator for multiple icons.",
+    "Does clip-path support all SVG paths? clip-path uses only the path's geometry — fill, stroke, and colors are ignored.",
+    "Will animations inside the SVG work? No — CSS background-images and masks do not render SVG animations."
+  ]
+}

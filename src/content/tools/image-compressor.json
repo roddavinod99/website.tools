@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Compresses images with batch upload support, quality presets (low, medium, high, lossless), and format selection (JPEG, PNG, WebP, AVIF). Provides a before/after preview slider, shows size reduction percentage, adjusts max dimensions, and displays DPI information for each image.",
+  "whyItExists": "Large images are the #1 cause of slow page loads, but finding the right compression-quality balance requires trial and error. This tool lets you visually compare compression results side by side while adjusting quality presets, making it easy to find the optimal trade-off for web performance.",
+  "whoShouldUse": "Web developers optimizing page load speed, content authors uploading media to websites, and designers preparing assets for production deployment.",
+  "useCases": [
+    "Compress JPEG photos from a photoshoot for a fast-loading portfolio website",
+    "Batch convert PNG screenshots to WebP for a modern web application with better compression",
+    "Use the before/after slider to visually verify quality loss is acceptable before saving",
+    "Set a maximum dimension to downscale large images while compressing in one step",
+    "Check DPI information to ensure images meet print-quality requirements when needed"
+  ],
+  "instructions": [
+    "Drag and drop images or click to upload one or multiple files",
+    "Select the target output format: JPEG, PNG, WebP, or AVIF",
+    "Choose a quality preset: Low (smallest file), Medium, High, or Lossless",
+    "Set a max dimension in pixels to downscale images that exceed the limit",
+    "Use the before/after slider on any image to compare original vs compressed quality",
+    "Review the size reduction % and DPI info for each image; download individually or all as a zip"
+  ],
+  "examples": [
+    "Input: 5MB JPEG photo with Medium quality preset and WebP format. Output: 320KB WebP, 94% reduction, before/after slider shows minimal quality loss.",
+    "Input: 300 DPI PNG screenshot with max dimension set to 1920px. Output: Downscaled and compressed PNG at 1920px width, size reduced from 2MB to 400KB."
+  ],
+  "bestPractices": [
+    "Use AVIF or WebP for web delivery; fall back to JPEG for maximum compatibility",
+    "Use the slider comparison to verify quality at each preset before batch processing",
+    "Set a max dimension matching your website's max content width to avoid wasted bytes",
+    "For PNG screenshots, try lossless WebP compression for the same quality at smaller size"
+  ],
+  "commonMistakes": [
+    "Over-compressing at Low quality and not checking the slider preview before downloading",
+    "Compressing images that will be resized later by the browser, wasting quality on oversized pixels",
+    "Using JPEG for images with text or sharp edges where artifacts are more visible",
+    "Batch processing without setting a max dimension, leaving unnecessarily large pixel dimensions"
+  ],
+  "faq": [
+    "What is AVIF and is it supported? AVIF is a modern format with superior compression; supported in Chrome, Firefox, and Safari 16.4+.",
+    "Does batch processing preserve folder structure? No, all images are downloaded flat or in a zip.",
+    "How is the reduction percentage calculated? (Original size - Compressed size) / Original size * 100.",
+    "Can I keep EXIF data? Currently compression strips EXIF to maximize reduction; use the image-resizer tool for EXIF control."
+  ]
+}

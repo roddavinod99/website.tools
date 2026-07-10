@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Copy, Download, Trash2, RefreshCw, Minimize, ShieldCheck } from "lucide-react";
+import { Copy, Download, Trash2, RefreshCw, Minimize, ShieldCheck, Upload } from "lucide-react";
 
-type Indent = "2" | "4" | "tab";
+type IndentType = "spaces" | "tabs";
 type SelfClose = "preserve" | "always-slash" | "never-slash";
 type AttrOrder = "preserve" | "sorted";
 type QuoteStyle = "double" | "single";
 
-const INDENT_MAP: Record<Indent, string> = { "2": "  ", "4": "    ", tab: "\t" };
+interface FormatError extends Error {
+  line: number | null;
+  col: number | null;
+}
 
 function formatXmlNode(xml: string, indent: string, selfClose: SelfClose, attrOrder: AttrOrder, quoteStyle: QuoteStyle): string {
   let result = xml;
@@ -34,7 +37,9 @@ export function XMLFormatter() {
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);
-  const [indentW, setIndentW] = useState<Indent>("2");
+  const [errorCol, setErrorCol] = useState<number | null>(null);
+  const [indentSize, setIndentSize] = useState<number>(2);
+  const [indentType, setIndentType] = useState<IndentType>("spaces");
   const [removeCmts, setRemoveCmts] = useState(false);
   const [removeWS, setRemoveWS] = useState(false);
   const [selfClose, setSelfClose] = useState<SelfClose>("preserve");
@@ -42,6 +47,11 @@ export function XMLFormatter() {
   const [quoteStyle, setQuoteStyle] = useState<QuoteStyle>("double");
   const [addDecl, setAddDecl] = useState(true);
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const getIndent = useCallback(() => {
+    return indentType === "tabs" ? "\t".repeat(indentSize / 2) : " ".repeat(indentSize);
+  }, [indentSize, indentType]);
 
   const process = useCallback((xmlStr: string): string => {
     let xml = xmlStr;
@@ -51,12 +61,20 @@ export function XMLFormatter() {
     const parser = new DOMParser();
     const doc = parser.parseFromString(xml, "text/xml");
     const parseErrors = doc.querySelectorAll("parsererror");
-    if (parseErrors.length > 0) throw new Error(parseErrors[0].textContent?.trim() || "Invalid XML");
+    if (parseErrors.length > 0) {
+      const errText = parseErrors[0].textContent?.trim() || "Invalid XML";
+      const lineM = errText.match(/line\s+(\d+)/i);
+      const colM = errText.match(/column\s+(\d+)/i);
+      const err = new Error(errText) as FormatError;
+      err.line = lineM ? parseInt(lineM[1], 10) : null;
+      err.col = colM ? parseInt(colM[1], 10) : null;
+      throw err;
+    }
 
     let serialized = new XMLSerializer().serializeToString(doc);
     serialized = serialized.replace(/>\s+</g, "><");
 
-    const indent = INDENT_MAP[indentW];
+    const indent = getIndent();
     let depth = 0;
     const formatted = serialized
       .replace(/(<\/?[^>]+>)/g, (m) => {
@@ -77,7 +95,7 @@ export function XMLFormatter() {
       return processed.replace(/^<\?xml[^>]*>\n?/, "");
     }
     return processed;
-  }, [indentW, removeCmts, removeWS, selfClose, attrOrder, quoteStyle, addDecl]);
+  }, [getIndent, removeCmts, removeWS, selfClose, attrOrder, quoteStyle, addDecl]);
 
   const format = useCallback(() => {
     try {
@@ -85,9 +103,12 @@ export function XMLFormatter() {
       setOutput(result);
       setError("");
       setErrorLine(null);
+      setErrorCol(null);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Formatting failed");
-      setErrorLine(null);
+      const msg = e instanceof Error ? e.message : "Formatting failed";
+      setError(msg);
+      setErrorLine(e instanceof Error ? (e as FormatError).line ?? null : null);
+      setErrorCol(e instanceof Error ? (e as FormatError).col ?? null : null);
       setOutput("");
     }
   }, [input, process]);
@@ -97,7 +118,16 @@ export function XMLFormatter() {
       const parser = new DOMParser();
       const doc = parser.parseFromString(input, "text/xml");
       const parseErrors = doc.querySelectorAll("parsererror");
-      if (parseErrors.length > 0) throw new Error("Invalid XML");
+      if (parseErrors.length > 0) {
+        const errText = parseErrors[0].textContent?.trim() || "Invalid XML";
+        const lineM = errText.match(/line\s+(\d+)/i);
+        const colM = errText.match(/column\s+(\d+)/i);
+        setError(errText);
+        setErrorLine(lineM ? parseInt(lineM[1], 10) : null);
+        setErrorCol(colM ? parseInt(colM[1], 10) : null);
+        setOutput("");
+        return;
+      }
       let result = new XMLSerializer().serializeToString(doc)
         .replace(/>\s+</g, "><")
         .replace(/\n/g, "")
@@ -108,6 +138,7 @@ export function XMLFormatter() {
       setOutput(result);
       setError("");
       setErrorLine(null);
+      setErrorCol(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Minification failed");
       setOutput("");
@@ -124,11 +155,14 @@ export function XMLFormatter() {
         setError(msg);
         setOutput("");
         const lineM = msg.match(/line\s+(\d+)/i);
+        const colM = msg.match(/column\s+(\d+)/i);
         setErrorLine(lineM ? parseInt(lineM[1], 10) : null);
+        setErrorCol(colM ? parseInt(colM[1], 10) : null);
       } else {
         setError("");
         setErrorLine(null);
-        setOutput("✓ XML is well-formed and valid.");
+        setErrorCol(null);
+        setOutput("XML is well-formed and valid.");
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Validation failed");
@@ -149,22 +183,41 @@ export function XMLFormatter() {
     const url = URL.createObjectURL(blob); const a = document.createElement("a");
     a.href = url; a.download = "formatted.xml"; a.click(); URL.revokeObjectURL(url);
   }, [output]);
-  const clear = useCallback(() => { setInput(""); setOutput(""); setError(""); setErrorLine(null); }, []);
+  const clear = useCallback(() => { setInput(""); setOutput(""); setError(""); setErrorLine(null); setErrorCol(null); }, []);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setInput(reader.result as string);
+    reader.readAsText(file);
+  };
 
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">XML Input</label>
+        <div className="flex items-center justify-between mb-1">
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text">XML Input</label>
+          <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"><Upload className="w-3 h-3" /> Upload .xml</button>
+          <input ref={fileRef} type="file" accept=".xml" onChange={handleFile} className="hidden" />
+        </div>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="<root><item>value</item></root>" rows={8} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
         <div>
-          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent</label>
-          <select value={indentW} onChange={(e) => setIndentW(e.target.value as Indent)}
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent type</label>
+          <select value={indentType} onChange={(e) => setIndentType(e.target.value as IndentType)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option>
+            <option value="spaces">Spaces</option><option value="tabs">Tabs</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent size</label>
+          <select value={indentSize} onChange={(e) => setIndentSize(Number(e.target.value))}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value={2}>2</option><option value={4}>4</option><option value={8}>8</option>
           </select>
         </div>
         <div>
@@ -178,7 +231,7 @@ export function XMLFormatter() {
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Attributes</label>
           <select value={attrOrder} onChange={(e) => setAttrOrder(e.target.value as AttrOrder)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="preserve">Preserve</option><option value="sorted">Sort</option>
+            <option value="preserve">Preserve</option><option value="sorted">Sort A-Z</option>
           </select>
         </div>
         <div>
@@ -214,7 +267,9 @@ export function XMLFormatter() {
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
-          {errorLine !== null && <p className="text-xs text-red-500 mt-0.5">Error near line {errorLine}</p>}
+          {errorLine !== null && (
+            <p className="text-xs text-red-500 mt-0.5">Line {errorLine}{errorCol !== null ? `, Column ${errorCol}` : ""}</p>
+          )}
         </div>
       )}
 

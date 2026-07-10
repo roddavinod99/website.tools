@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Evaluates JSONPath expressions on JSON documents with a live expression input that suggests completions as you type. Shows matching results with count, a tree explorer of the JSON structure with clickable paths, and highlights matched nodes. Displays the total match count and lets you click any path to copy it.",
+  "whyItExists": "Querying nested JSON data manually is error-prone and time-consuming. This tool provides an interactive JSONPath explorer with autocomplete suggestions and visual tree navigation so you can find exactly what you need without guesswork.",
+  "whoShouldUse": "API developers extracting specific fields from responses, data analysts querying JSON datasets, and anyone working with deeply nested JSON who needs to locate specific values.",
+  "useCases": [
+    "Query all email addresses from a nested user JSON using $.users[*].email",
+    "Find the last item in an array with $..[-1:] without manually counting array elements",
+    "Explore an unfamiliar API response structure by clicking through the tree explorer",
+    "Copy the exact JSONPath for a frequently accessed field to use in automation scripts",
+    "Count how many items match a filter condition using $.items[?(@.price>10)]"
+  ],
+  "instructions": [
+    "Paste JSON into the input area or upload a .json file",
+    "Type a JSONPath expression (e.g., $.store.book[*].title) in the expression input",
+    "View autocomplete suggestions while typing to help construct valid JSONPath queries",
+    "Review matching results displayed below the input with the total match count",
+    "Use the tree explorer to browse the JSON structure; click any node to see its path",
+    "Click on any result or tree node to copy its JSONPath to the clipboard"
+  ],
+  "examples": [
+    "Input JSON: '{\"store\":{\"book\":[{\"title\":\"Book A\"},{\"title\":\"Book B\"}]}}'. Expression: '$.store.book[*].title'. Output: 2 matches: 'Book A', 'Book B'.",
+    "Input: Click on 'store' node in the tree explorer. Output: Path '$.store' is copied to clipboard."
+  ],
+  "bestPractices": [
+    "Use the tree explorer first to understand the structure before writing complex JSONPath queries",
+    "Rely on autocomplete suggestions to learn JSONPath syntax if you are unfamiliar with it",
+    "Use filter expressions [$?(@.key==value)] for conditional queries instead of brute-force searching",
+    "Click a tree node to get its path, then modify the expression for more specific queries"
+  ],
+  "commonMistakes": [
+    "Using XPath syntax ($x) instead of JSONPath ($.) syntax and getting zero matches",
+    "Forgetting that array indices are 0-based in JSONPath expressions",
+    "Using dot notation for keys with special characters or spaces when bracket notation is needed",
+    "Writing overly broad expressions like $..* that return the entire document instead of filtered results"
+  ],
+  "faq": [
+    "What JSONPath implementation is used? It follows the Stefan Goessner JSONPath proposal with common extensions.",
+    "Can I use filter expressions? Yes, use [?(@.key value)] format for conditional filtering.",
+    "Does the tool validate the JSON before querying? Yes, invalid JSON shows a parse error.",
+    "What are autocomplete suggestions based on? They are generated from the JSON structure and common JSONPath patterns."
+  ]
+}

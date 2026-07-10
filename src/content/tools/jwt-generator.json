@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates JSON Web Tokens with configurable algorithm selection (HS256, HS384, HS512, or none), a header/payload builder with standard claim auto-completion, an expiry date/time picker, and a secret input field. Displays a live token preview with color-coded sections before final generation.",
+  "whyItExists": "Testing JWT-based authentication requires valid tokens with specific claims, expiry times, and algorithms. Eliminates manual token construction and base64 encoding, providing a visual builder for rapid prototyping and testing.",
+  "whoShouldUse": "Backend and API developers testing JWT authentication flows, security engineers creating test tokens, and developers integrating with JWT-based services during development.",
+  "useCases": [
+    "Generate test JWTs with specific claims for unit testing authentication middleware",
+    "Create JWTs with controlled expiry times for testing token refresh logic",
+    "Build tokens with different algorithms (HS256/HS384/HS512) to test algorithm compatibility",
+    "Generate JWTs with custom claims for integration testing of authorization systems",
+    "Create tokens with \"none\" algorithm to test security validation in development environments",
+    "Generate signed JWTs for load testing JWT-dependent services with controlled payloads"
+  ],
+  "instructions": [
+    "Select the signing algorithm from the dropdown (HS256, HS384, HS512, or none for unsigned tokens)",
+    "Use the payload builder to add claims: select standard claims (iss, sub, aud, exp, nbf, iat, jti) or add custom key-value pairs",
+    "Set the expiry time using the date/time picker; the tool automatically calculates the exp claim epoch value",
+    "Enter a secret key in the secret input field; minimum length requirements vary by algorithm strength",
+    "Review the live token preview showing the three color-coded sections as you build the payload",
+    "Click \"Generate\" to finalize; copy the token or download it; use \"Regenerate\" to update with new settings"
+  ],
+  "examples": [
+    "Settings: alg=HS256, secret=mysecret, claims: {sub:\"123\",name:\"Alice\",exp:2025-01-01T00:00Z} -> Output: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJuYW1lIjoiQWxpY2UiLCJleHAiOjE3Mzc2MDAwMDB9.signature",
+    "Settings: alg=none, claims: {role:\"admin\"} -> Output: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJyb2xlIjoiYWRtaW4ifQ."
+  ],
+  "bestPractices": [
+    "Use strong secrets (32+ characters) for HS256 to prevent brute-force attacks on JWT signatures",
+    "Set realistic expiry times matching your production token lifetime (usually 15-60 minutes for access tokens)",
+    "Include only necessary claims to keep the token size small and avoid exposing sensitive data",
+    "Use the \"none\" algorithm only for testing scenarios where signature validation is deliberately skipped",
+    "Generate multiple tokens with different claims to thoroughly test authorization logic edge cases"
+  ],
+  "commonMistakes": [
+    "Using weak secrets like \"secret\" or \"password\" which are easily brute-forced to forge signatures",
+    "Setting extremely long expiry times (years) which creates security tokens that never expire",
+    "Including sensitive data (passwords, PII) in the payload which is base64-encoded, not encrypted",
+    "Using HS256 with secrets that don't meet minimum length requirements, weakening the signature",
+    "Forgetting that unsigned tokens (alg:none) should never be accepted in production environments"
+  ],
+  "faq": [
+    "Can I generate tokens with asymmetric algorithms (RS256/ES256)? This tool supports symmetric HMAC algorithms (HS256/384/512); for asymmetric keys, use a dedicated JWT library.",
+    "How is the expiry time calculated? The exp claim is set as the Unix epoch timestamp of the selected date/time in UTC.",
+    "Does the tool store the generated token or secret? No, all generation happens client-side; nothing is persisted or transmitted.",
+    "Can I generate multiple tokens at once? The tool generates one token per configuration; use the \"Regenerate\" button after changing claims or settings."
+  ]
+}

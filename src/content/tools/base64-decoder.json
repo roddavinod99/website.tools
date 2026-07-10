@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "A dedicated standalone Base64 decoder that automatically detects whether input contains valid Base64 content and determines the original encoding type. Features include automatic encoding detection (UTF-8, ASCII, UTF-16LE, UTF-16BE), downloadable decoded output as a binary file, real-time validation with error highlighting, and a clean single-purpose interface focused exclusively on decoding.",
+  "whyItExists": "Users often need a focused tool that handles Base64 decoding without the clutter of an encoder. A standalone decoder reduces cognitive load by presenting exactly the controls needed, with automatic detection that eliminates guesswork about input format and source encoding.",
+  "whoShouldUse": "Security researchers analyzing encoded payloads, developers debugging Base64 data from APIs, QA engineers verifying encoded assets, and anyone who primarily decodes rather than encodes.",
+  "useCases": [
+    "Decode a Base64-encoded image received from an API to verify its contents",
+    "Decode email attachment data (MIME Base64) for quick inspection",
+    "Convert Base64-encoded configuration values back to human-readable text",
+    "Download a Base64-encoded binary file (ZIP, PDF) after decoding to disk",
+    "Validate whether a suspicious string is valid Base64 before further analysis",
+    "Decode multi-encoded data nested inside other Base64 layers"
+  ],
+  "instructions": [
+    "Paste the Base64 string into the input area or drag-and-drop a text file containing the Base64 data",
+    "The tool automatically detects if the input is valid Base64 — invalid characters are highlighted in red",
+    "Review the detected source encoding (UTF-8, ASCII, UTF-16LE, UTF-16BE) shown in the status bar",
+    "Click 'Decode' — decoded output appears in the result panel with byte-by-byte breakdown if binary",
+    "If the decoded output is binary, use 'Download' to save it as a file with the correct extension",
+    "Copy decoded text to clipboard directly, or use 'Download as Text' for non-binary output"
+  ],
+  "examples": [
+    "Input: 'SGVsbG8gV29ybGQh' | Auto-detect => Output: 'Hello World!' (decoded to UTF-8 text)",
+    "Input: 'iVBORw0KGgo...' (PNG) | Auto-detect => Output: [binary PNG] | Download as 'decoded.png'"
+  ],
+  "bestPractices": [
+    "Check the auto-detected encoding before decoding — mismatched encoding produces garbled text",
+    "Use file download for binary data rather than copying to clipboard, which may corrupt bytes",
+    "Verify padding: valid Base64 has length divisible by 4 — the tool warns about malformed padding",
+    "For nested Base64, decode in stages until you reach plain text",
+    "Validate decoded output size matches expectations — wildly different size indicates corrupted input"
+  ],
+  "commonMistakes": [
+    "Pasting Base64 with line breaks or 'data:' URI prefixes — strip these first or auto-detection may fail",
+    "Assuming auto-detected encoding is always correct for short strings",
+    "Forgetting to download binary output and trying to view it as text in the result panel",
+    "Using the decoder on already-decoded plain text, producing garbage or triggering an error",
+    "Ignoring padding warnings — missing/extra padding indicates truncated or corrupted input"
+  ],
+  "faq": [
+    "Can this tool decode base64url? — Yes, base64url is automatically detected and decoded.",
+    "How does encoding detection work? — It examines byte patterns and BOM markers for UTF-16 vs UTF-8 vs ASCII.",
+    "What if my decoded output is garbled? — Try switching source encoding manually. Auto-detection may be wrong for short strings.",
+    "Can I decode large strings? — Yes, but multi-megabyte strings may take a few seconds."
+  ]
+}

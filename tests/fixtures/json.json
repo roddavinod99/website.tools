@@ -1,0 +1,16 @@
+[
+  { "slug": "json-formatter", "category": "Formatters", "name": "JSON Formatter", "input": "{\"name\":\"test\",\"value\":123,\"nested\":{\"a\":1}}", "action": "Format", "expect": "output" },
+  { "slug": "json-diff", "category": "Formatters", "name": "JSON Diff", "input": "{\"a\":1}", "input2": "{\"a\":2}", "action": "Compare", "expect": "diff" },
+  { "slug": "json-beautifier", "category": "Formatters", "name": "JSON Beautifier", "input": "{\"x\":1}", "action": "Beautify", "expect": "output" },
+  { "slug": "json-minifier", "category": "Formatters", "name": "JSON Minifier", "input": "{ \"x\" : 1 }", "action": "Minify", "expect": "output" },
+  { "slug": "json-validator", "category": "Formatters", "name": "JSON Validator", "input": "{\"ok\":true}", "action": "Validate", "expect": "output" },
+  { "slug": "json-to-csv", "category": "Converters", "name": "JSON to CSV", "input": "[{\"name\":\"Alice\",\"age\":30}]", "action": "Convert", "expect": "output" },
+  { "slug": "csv-to-json", "category": "Converters", "name": "CSV to JSON", "input": "name,age\nAlice,30", "action": "Convert", "expect": "output" },
+  { "slug": "json-to-xml", "category": "Converters", "name": "JSON to XML", "input": "{\"root\":{\"item\":\"value\"}}", "action": "Convert", "expect": "output" },
+  { "slug": "xml-to-json", "category": "Converters", "name": "XML to JSON", "input": "<root><item>value</item></root>", "action": "Convert", "expect": "output" },
+  { "slug": "json-to-yaml", "category": "Converters", "name": "JSON to YAML", "input": "{\"key\":\"val\"}", "action": "Convert", "expect": "output" },
+  { "slug": "json-to-typescript", "category": "Converters", "name": "JSON to TypeScript", "input": "{\"name\":\"string\",\"age\":\"number\"}", "action": "Convert", "expect": "output" },
+  { "slug": "json-to-go", "category": "Converters", "name": "JSON to Go Struct", "input": "{\"id\":1,\"name\":\"test\"}", "action": "Convert", "expect": "output" },
+  { "slug": "json-schema-generator", "category": "Security", "name": "JSON Schema Generator", "input": "{\"name\":\"test\"}", "action": "Generate", "expect": "output" },
+  { "slug": "json-path-finder", "category": "Utilities", "name": "JSON Path Finder", "input": "{\"store\":{\"book\":[{\"title\":\"A\"}]}}", "action": "Find", "expect": "output" }
+]

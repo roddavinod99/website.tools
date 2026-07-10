@@ -29,6 +29,18 @@ function normalizeURL(url: string): string {
   try { return new URL(url).href; } catch { return url; }
 }
 
+function detectIP(hostname: string): "IPv4" | "IPv6" | "domain" | null {
+  if (!hostname) return null;
+  const ipv4 = /^(\d{1,3}\.){3}\d{1,3}$/;
+  if (ipv4.test(hostname)) {
+    const parts = hostname.split(".").map(Number);
+    if (parts.every(p => p >= 0 && p <= 255)) return "IPv4";
+  }
+  if (hostname.includes(":")) return "IPv6";
+  if (/^[a-zA-Z0-9.-]+$/.test(hostname)) return "domain";
+  return null;
+}
+
 interface EditableFields {
   protocol: string; hostname: string; port: string; pathname: string;
   search: string; hash: string; username: string; password: string;
@@ -104,6 +116,8 @@ export function UrlParser() {
 
   const reconstructedUrl = buildUrl(fields);
 
+  const ipType = parsed ? detectIP(parsed.hostname) : null;
+
   return (
     <div className="space-y-4 animate-fade-in">
       <div>
@@ -141,6 +155,16 @@ export function UrlParser() {
             ))}
           </div>
 
+          {ipType && (
+            <div className="flex items-center gap-2 text-xs">
+              <span className={cn("px-1.5 py-0.5 rounded text-[10px] font-medium",
+                ipType === "IPv4" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" :
+                ipType === "IPv6" ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" :
+                "bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
+              )}>{ipType}</span>
+            </div>
+          )}
+
           <div className="flex items-center gap-2 text-xs">
             <span className="text-surface-400 dark:text-dark-muted">Percent-encoded chars: {percentEncoded(parsed.href)}</span>
             <span className="text-surface-300 dark:text-dark-border">|</span>
@@ -154,15 +178,15 @@ export function UrlParser() {
                 <table className="w-full text-xs">
                   <thead><tr className="bg-surface-50 dark:bg-dark-surface">
                     <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Key</th>
-                    <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
+                    <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Decoded Value</th>
                     <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Encoded</th>
                   </tr></thead>
                   <tbody>
                     {Object.entries(parsed.searchParams).map(([k, v]) => (
                       <tr key={k} className="border-t border-surface-200 dark:border-dark-border">
                         <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text">{k}</td>
-                        <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text break-all">{v}</td>
-                        <td className="px-3 py-1.5 font-mono text-surface-400 dark:text-dark-muted">{encodeURIComponent(v)}</td>
+                        <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text break-all">{decodeURIComponent(v)}</td>
+                        <td className="px-3 py-1.5 font-mono text-surface-400 dark:text-dark-muted">{v}</td>
                       </tr>
                     ))}
                   </tbody>

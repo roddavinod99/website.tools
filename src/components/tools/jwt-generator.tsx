@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import { Copy, Eye, EyeOff, Save, Plus, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, Save, Plus, Trash2, Key } from "lucide-react";
 
 function base64UrlEncode(data: string): string {
   return btoa(data).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
@@ -23,6 +23,12 @@ interface SavedToken {
   ts: number;
 }
 
+interface Template {
+  label: string;
+  claims: Record<string, string>;
+  expSecs: number;
+}
+
 const algOptions = [
   { id: "none", label: "None (unsigned)" },
   { id: "HS256", label: "HS256" },
@@ -31,12 +37,36 @@ const algOptions = [
 ];
 
 const expPresets = [
-  { label: "15 min", value: 900 },
   { label: "1 hour", value: 3600 },
+  { label: "6 hours", value: 21600 },
   { label: "24 hours", value: 86400 },
   { label: "7 days", value: 604800 },
+  { label: "30 days", value: 2592000 },
   { label: "Custom", value: -1 },
 ];
+
+const templates: Record<string, Template> = {
+  auth: {
+    label: "Auth",
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: crypto.randomUUID() },
+    expSecs: 3600,
+  },
+  api: {
+    label: "API",
+    claims: { iss: "https://api.example.com", sub: "svc-account", aud: "internal-services" },
+    expSecs: 86400,
+  },
+  refresh: {
+    label: "Refresh",
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: crypto.randomUUID() },
+    expSecs: 2592000,
+  },
+  email: {
+    label: "Email Verification",
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "verify.example.com", jti: crypto.randomUUID() },
+    expSecs: 86400,
+  },
+};
 
 export function JwtGenerator() {
   const [algorithm, setAlgorithm] = useState("HS256");
@@ -55,7 +85,24 @@ export function JwtGenerator() {
   const [savedTokens, setSavedTokens] = useState<SavedToken[]>([]);
   const [saveLabel, setSaveLabel] = useState("");
   const [showSave, setShowSave] = useState(false);
+  const [expDate, setExpDate] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const applyTemplate = (name: string) => {
+    const t = templates[name];
+    if (!t) return;
+    setClaims((prev) => ({ ...prev, ...t.claims }));
+    setExpPreset(t.expSecs);
+    setCustomExp("");
+    setExpDate("");
+  };
+
+  const generateSecureKey = () => {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    const key = btoa(Array.from(bytes).map((b) => String.fromCharCode(b)).join(""));
+    setSecret(key);
+  };
 
   const buildHeader = useCallback(() => {
     const h: Record<string, string> = { alg: algorithm, typ: "JWT" };
@@ -74,7 +121,13 @@ export function JwtGenerator() {
         p[k] = !isNaN(num) && v.trim() !== "" ? num : v;
       }
     }
-    const expVal = expPreset === -1 ? parseInt(customExp, 10) : expPreset;
+    let expVal = expPreset === -1 ? parseInt(customExp, 10) : expPreset;
+    if (expDate) {
+      const d = new Date(expDate);
+      if (!isNaN(d.getTime())) {
+        expVal = Math.floor(d.getTime() / 1000) - Math.floor(Date.now() / 1000);
+      }
+    }
     if (expVal && expVal > 0) p.exp = Math.floor(Date.now() / 1000) + expVal;
     for (const c of customClaims) {
       if (c.key.trim()) {
@@ -83,7 +136,7 @@ export function JwtGenerator() {
       }
     }
     return p;
-  }, [claims, customClaims, expPreset, customExp]);
+  }, [claims, customClaims, expPreset, customExp, expDate]);
 
   const generate = useCallback(async () => {
     try {
@@ -148,6 +201,15 @@ export function JwtGenerator() {
 
   return (
     <div className="space-y-4">
+      <div className="flex flex-wrap gap-2">
+        {Object.entries(templates).map(([key, t]) => (
+          <button key={key} onClick={() => applyTemplate(key)}
+            className="rounded px-3 py-1.5 text-xs font-medium bg-surface-100 text-surface-700 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors">
+            {t.label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Algorithm</label>
@@ -165,10 +227,15 @@ export function JwtGenerator() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Secret Key</label>
           <div className="relative">
             <input type={showSecret ? "text" : "password"} value={secret} onChange={(e) => setSecret(e.target.value)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 pr-10 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-            <button onClick={() => setShowSecret(!showSecret)} className="absolute right-2 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 dark:hover:text-dark-text">
-              {showSecret ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
+              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 pr-20 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
+              <button onClick={generateSecureKey} className="rounded p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:text-dark-text dark:hover:bg-dark-border" title="Generate secure key">
+                <Key size={14} />
+              </button>
+              <button onClick={() => setShowSecret(!showSecret)} className="rounded p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:text-dark-text dark:hover:bg-dark-border">
+                {showSecret ? <EyeOff size={14} /> : <Eye size={14} />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -202,6 +269,11 @@ export function JwtGenerator() {
             <input type="number" value={customExp} onChange={(e) => setCustomExp(e.target.value)} placeholder="Custom seconds"
               className="w-28 rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-mono text-surface-900 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           )}
+        </div>
+        <div className="mt-2">
+          <label className="block text-xs text-surface-500 dark:text-dark-muted mb-0.5">Or pick expiration date/time</label>
+          <input type="datetime-local" value={expDate} onChange={(e) => { setExpDate(e.target.value); setExpPreset(-1); }}
+            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       </div>
 

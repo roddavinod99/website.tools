@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts JSON input into TypeScript interfaces or type aliases with full support for nested objects, arrays, union types from varying structures, and nullable fields. Offers toggles for optional properties, readonly modifiers, export keywords, and JSDoc comments.",
+  "whyItExists": "TypeScript developers frequently need type definitions for JSON API responses, configuration files, or data payloads. Manual typing is repetitive and error-prone, especially when dealing with large or nested JSON structures with optional fields.",
+  "whoShouldUse": "TypeScript and Angular/React/Vue developers who need to quickly generate type definitions from JSON samples or API documentation.",
+  "useCases": [
+    "Generate TypeScript interfaces from REST API JSON responses for type-safe HTTP clients",
+    "Create type definitions from JSON configuration files used across a TypeScript project",
+    "Convert GraphQL query response examples into TypeScript types",
+    "Scaffold data model interfaces from JSON test fixtures or mock data",
+    "Generate types for JSON webhook payloads consumed by TypeScript services",
+    "Create type-safe contracts from JSON schema examples in microservice architectures"
+  ],
+  "instructions": [
+    "Paste your JSON into the input editor; the tool parses the structure and infers types automatically",
+    "Select whether to generate interfaces (extends-friendly) or type aliases (union-friendly)",
+    "Toggle optional properties ON to mark all fields as optional with ? syntax, or OFF for required fields",
+    "Enable readonly modifiers to make all properties readonly, useful for immutable data patterns",
+    "Toggle \"export\" to prefix each type with the export keyword, and JSDoc for generating doc comments",
+    "Click \"Generate\" and review the output; copy the generated TypeScript types to your project"
+  ],
+  "examples": [
+    "Input: {\"id\":1,\"name\":\"Alice\",\"roles\":[\"admin\"]} -> Output: export interface User { id: number; name: string; roles: string[]; }",
+    "Input: [{\"type\":\"cat\",\"meow\":true},{\"type\":\"dog\",\"bark\":true}] with union detection -> Output: export type Animal = Cat | Dog; export interface Cat { type: string; meow: boolean; } export interface Dog { type: string; bark: boolean; }"
+  ],
+  "bestPractices": [
+    "Provide a complete JSON sample with all possible fields to generate accurate types, not a minimal subset",
+    "Use union type generation when your data has polymorphic structures (different fields per object)",
+    "Enable readonly for types representing API responses that should not be mutated after receipt",
+    "Prefer interfaces over type aliases when you need declaration merging or extends capabilities",
+    "Review generated types for anyOf/nullable patterns and adjust manually for precision"
+  ],
+  "commonMistakes": [
+    "Providing JSON with a single object that has null values, causing the tool to infer \"any\" type",
+    "Assuming union types are automatically detected; you need to enable the option explicitly",
+    "Forgetting that the tool generates types from concrete values, not from JSON schema definitions",
+    "Using a JSON sample that doesn't represent all possible states, leading to incomplete type definitions",
+    "Not enabling JSDoc generation and then manually documenting each property afterward"
+  ],
+  "faq": [
+    "Can it generate types for deeply nested JSON? Yes, nested objects become nested interfaces with proper hierarchical structure.",
+    "How does it handle arrays with different element types? Arrays are typed as union types (e.g., (string | number)[]) when elements have mixed types.",
+    "Does it support generating enums from string literals? Not automatically; you'll need to manually create enums from generated string literal unions.",
+    "What happens with empty objects or arrays? Empty objects become Record<string, any> and empty arrays become any[] as fallback types."
+  ]
+}

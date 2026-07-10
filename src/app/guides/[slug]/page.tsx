@@ -112,6 +112,33 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 2, name: "Guides", item: `${siteConfig.url}/guides` },
+              { "@type": "ListItem", position: 3, name: topic.title },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            headline: topic.title,
+            description: topic.description,
+            url: `${siteConfig.url}/guides/${topic.slug}`,
+            author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+          }),
+        }}
+      />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-8">
           <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">

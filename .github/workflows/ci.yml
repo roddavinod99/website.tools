@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://tools.devstackio.com
+          NEXT_PUBLIC_GA_ID: ""
+
+      - run: npx tsc --noEmit
+        name: TypeScript check
+
+      - run: npm run lint
+        name: Lint
+
+      - run: npx playwright install --with-deps chromium
+        name: Install Playwright browsers
+
+      - run: npx playwright test tests/snapshots.spec.ts
+        name: Snapshot tests
+        continue-on-error: true
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 0
+
+      - run: node scripts/production-readiness.mjs
+        name: Production Readiness Report
+        continue-on-error: true
+        env:
+          NEXT_PUBLIC_SITE_URL: https://tools.devstackio.com
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            data/
+            test-results/
+            playwright-report/
+          retention-days: 7

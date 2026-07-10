@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-
-/* ---------- polyfills ---------- */
+import { Copy, Download } from "lucide-react";
 
 function rotateLeft(x: number, n: number) { return (x << n) | (x >>> (32 - n)); }
 
@@ -66,7 +65,6 @@ function sha512_256(data: string): Promise<string> {
   });
 }
 
-/* RIPEMD-160 */
 function rmd160(data: string): string {
   const bytes = new TextEncoder().encode(data);
   const ml = bytes.length * 8;
@@ -115,7 +113,6 @@ function rmd160(data: string): string {
   return toHex(h0) + toHex(h1) + toHex(h2) + toHex(h3) + toHex(h4);
 }
 
-/* CRC32 / CRC32C */
 const CRC32_TABLE = new Uint32Array(256).map((_, i) => {
   let c = i;
   for (let j = 0; j < 8; j++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
@@ -142,7 +139,6 @@ function crc32c(data: string): string {
   return ((crc ^ 0xffffffff) >>> 0).toString(16).padStart(8, "0");
 }
 
-/* hash format */
 function formatHash(hex: string, fmt: "hex" | "base64" | "binary"): string {
   if (fmt === "hex") return hex;
   const bytes: number[] = [];
@@ -158,7 +154,7 @@ type HashAlgorithm = {
   hash: (data: string, hmacSecret?: string, salt?: string, saltPos?: "prepend" | "append") => Promise<string>;
 };
 
-const ALGORITHMS: HashAlgorithm[] = [
+const ALL_ALGORITHMS: HashAlgorithm[] = [
   { id: "MD5", label: "MD5", bits: 128, hash: async (d) => md5(d) },
   { id: "SHA-1", label: "SHA-1", bits: 160, hash: async (d) => hexDigest("SHA-1", d) },
   { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => sha224(d) },
@@ -171,6 +167,8 @@ const ALGORITHMS: HashAlgorithm[] = [
   { id: "CRC32", label: "CRC32", bits: 32, hash: async (d) => crc32(d) },
   { id: "CRC32C", label: "CRC32C", bits: 32, hash: async (d) => crc32c(d) },
 ];
+
+const CORE_ALGO_IDS = ["MD5", "SHA-1", "SHA-256", "SHA-512"];
 
 async function hexDigest(algo: string, data: string): Promise<string> {
   const buf = await crypto.subtle.digest(algo, new TextEncoder().encode(data));
@@ -192,7 +190,7 @@ function birthdayProb(bits: number): string {
 
 export function HashGenerator() {
   const [input, setInput] = useState("");
-  const [selected, setSelected] = useState(() => ALGORITHMS.map((a) => a.id));
+  const [selected, setSelected] = useState(() => ALL_ALGORITHMS.map((a) => a.id));
   const [results, setResults] = useState<Record<string, string>>({});
   const [hmac, setHmac] = useState(false);
   const [hmacKey, setHmacKey] = useState("");
@@ -209,13 +207,14 @@ export function HashGenerator() {
   const [fileAlgo, setFileAlgo] = useState("SHA-256");
   const [hasFile, setHasFile] = useState(false);
   const [bulkResults, setBulkResults] = useState<{ idx: number; line: string; results: Record<string, string> }[]>([]);
+  const [copied, setCopied] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dropRef = useRef<HTMLDivElement>(null);
 
   const computeAll = useCallback(async (text: string) => {
     if (!text.trim()) { setResults({}); return; }
     const r: Record<string, string> = {};
-    const active = ALGORITHMS.filter((a) => selected.includes(a.id));
+    const active = ALL_ALGORITHMS.filter((a) => selected.includes(a.id));
     for (const algo of active) {
       try {
         let data = text;
@@ -242,7 +241,7 @@ export function HashGenerator() {
     const run = async () => {
       if (!bulkMode || !input.trim()) { setBulkResults([]); return; }
       const lines = input.split("\n").filter((l) => l.trim());
-      const active = ALGORITHMS.filter((a) => selected.includes(a.id));
+      const active = ALL_ALGORITHMS.filter((a) => selected.includes(a.id));
       const results: { idx: number; line: string; results: Record<string, string> }[] = [];
       for (let idx = 0; idx < lines.length; idx++) {
         const line = lines[idx];
@@ -268,10 +267,10 @@ export function HashGenerator() {
   }, [input, bulkMode, selected, hmac, hmacKey, salt, saltPos, hashFmt]);
 
   const toggleAlgo = (id: string) => {
+    if (CORE_ALGO_IDS.includes(id)) return;
     setSelected((prev) => prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]);
   };
 
-  /* file hashing */
   const hashFile = async (f: File) => {
     setFile(f);
     setHasFile(true);
@@ -302,13 +301,37 @@ export function HashGenerator() {
     if (f) hashFile(f);
   };
 
-  const activeAlgos = ALGORITHMS.filter((a) => selected.includes(a.id));
+  const copyResult = async (text: string, label: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(""), 2000);
+  };
+
+  const downloadHash = (algoId: string, hash: string) => {
+    const blob = new Blob([hash], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `hash-${algoId.toLowerCase()}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const coreAlgos = ALL_ALGORITHMS.filter((a) => CORE_ALGO_IDS.includes(a.id));
+  const extraAlgos = ALL_ALGORITHMS.filter((a) => !CORE_ALGO_IDS.includes(a.id));
+  const activeAlgos = ALL_ALGORITHMS.filter((a) => selected.includes(a.id));
 
   return (
     <div className="space-y-4">
       <div>
         <div className="flex flex-wrap gap-2 mb-3">
-          {ALGORITHMS.map((a) => (
+          {coreAlgos.map((a) => (
+            <span key={a.id}
+              className="rounded-lg px-3 py-1.5 text-xs font-medium bg-brand-500 text-white cursor-default">
+              {a.label}
+            </span>
+          ))}
+          {extraAlgos.map((a) => (
             <button key={a.id} onClick={() => toggleAlgo(a.id)}
               className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 selected.includes(a.id)
@@ -431,7 +454,6 @@ export function HashGenerator() {
         </div>
       )}
 
-      {/* file hashing */}
       <div
         ref={dropRef}
         onDrop={handleDrop}
@@ -443,7 +465,7 @@ export function HashGenerator() {
           <span className="text-xs">Algorithm:</span>
           <select value={fileAlgo} onChange={(e) => setFileAlgo(e.target.value)}
             className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 focus:outline-none dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            {ALGORITHMS.filter((a) => a.id !== "CRC32" && a.id !== "CRC32C" && a.id !== "RIPEMD-160").map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+            {ALL_ALGORITHMS.filter((a) => a.id !== "CRC32" && a.id !== "CRC32C" && a.id !== "RIPEMD-160").map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
           </select>
         </div>
         {hasFile && (
@@ -454,7 +476,6 @@ export function HashGenerator() {
         )}
       </div>
 
-      {/* results */}
       {Object.keys(results).length > 0 && !compareMode && !bulkMode && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -476,7 +497,14 @@ export function HashGenerator() {
                     <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">{algo.label}</span>
                     <span className="text-xs text-surface-400 dark:text-dark-muted">{algo.bits} bits ({algo.bits / 4} hex chars)</span>
                   </div>
-                  <button onClick={() => navigator.clipboard.writeText(hash)} className="text-xs text-brand-500 hover:text-brand-600">Copy</button>
+                  <div className="flex gap-1">
+                    <button onClick={() => downloadHash(algo.id, hash)} className="text-xs text-surface-500 hover:text-brand-600 flex items-center gap-0.5" title="Download hash file">
+                      <Download size={12} />
+                    </button>
+                    <button onClick={() => copyResult(hash, algo.id)} className="text-xs text-brand-500 hover:text-brand-600 flex items-center gap-0.5">
+                      <Copy size={12} /> {copied === algo.id ? "Copied!" : "Copy"}
+                    </button>
+                  </div>
                 </div>
                 <code className="block text-sm font-mono text-surface-900 dark:text-dark-text break-all select-all">{hash}</code>
               </div>

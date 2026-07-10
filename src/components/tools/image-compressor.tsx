@@ -20,6 +20,9 @@ const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
   { value: "image/avif", label: "AVIF", ext: "avif" },
 ];
 
+const INPUT_ACCEPT = "image/jpeg,image/png,image/webp";
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
+
 interface ImageEntry {
   id: string;
   file: File;
@@ -85,14 +88,21 @@ export function ImageCompressor() {
   const [maintainAspect, setMaintainAspect] = useState(true);
   const [preset, setPreset] = useState<string>("custom");
   const [dragging, setDragging] = useState(false);
+  const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleFiles = useCallback(async (fileList: FileList) => {
+    setError("");
+    const totalSize = images.reduce((s, i) => s + i.file.size, 0);
     const newEntries: ImageEntry[] = [];
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
-      if (!file.type.startsWith("image/")) continue;
+      if (!file.type.match(/^image\/(jpeg|png|webp)$/)) continue;
+      if (totalSize + file.size > MAX_TOTAL_SIZE) {
+        setError("Total size exceeds 50MB limit");
+        break;
+      }
       const info = await readImageFile(file);
       newEntries.push({
         id: crypto.randomUUID(),
@@ -106,7 +116,7 @@ export function ImageCompressor() {
       });
     }
     setImages((prev) => [...prev, ...newEntries]);
-  }, []);
+  }, [images]);
 
   const handleFileInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -279,7 +289,7 @@ export function ImageCompressor() {
         <input
           ref={fileRef}
           type="file"
-          accept="image/*"
+          accept={INPUT_ACCEPT}
           multiple
           onChange={handleFileInput}
           className="hidden"
@@ -293,9 +303,11 @@ export function ImageCompressor() {
             : "Click or drop images here"}
         </p>
         <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">
-          Supports JPEG, PNG, WebP, AVIF, GIF, BMP, TIFF
+          Supports JPEG, PNG, WebP &middot; 50MB total limit
         </p>
       </div>
+
+      {error && <p className="text-sm text-red-500">{error}</p>}
 
       {images.length > 0 && (
         <>

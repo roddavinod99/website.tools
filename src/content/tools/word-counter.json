@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Word counter computing 12+ statistics: words, characters (with/without spaces), sentences, paragraphs, lines, syllables, average word length, average sentence length, unique words, and longest/shortest word. Includes readability scores (Flesch-Kincaid, Gunning Fog), word frequency table with counts, keyword density analysis, letter density distribution chart, estimated reading time (slow/average/fast), and a word goal progress bar with configurable target.",
+  "whyItExists": "Basic word counters miss important metrics like readability, keyword density, and reading time. This tool provides a comprehensive dashboard so writers and editors can assess all aspects of their text in a single view.",
+  "whoShouldUse": "Writers, editors, SEO content strategists, students, and anyone who needs detailed word-level analytics for essays, articles, reports, or creative writing.",
+  "useCases": [
+    "Track word count progress toward a daily writing goal with the goal progress bar",
+    "Analyze keyword density in a blog post to ensure target keywords are not overused",
+    "Review the word frequency table to identify overused words and vary vocabulary",
+    "Calculate reading time for an article to match the target audience's attention span",
+    "Check readability scores to ensure content matches the desired grade level",
+    "Use the letter density chart to identify character distribution for typography analysis"
+  ],
+  "instructions": [
+    "Paste or type text into the input area; all statistics update in real time.",
+    "Scroll through the Stats section to see words, characters, sentences, paragraphs, lines, and syllables.",
+    "Set a word goal target in the Goal section — the progress bar fills and turns green when reached.",
+    "Review the Word Frequency table sorted by frequency (highest first) to see which words are most common.",
+    "Check Keyword Density by entering a target keyword; the tool shows its occurrence count and density percentage.",
+    "View the Reading Time section showing estimated read time at slow (150 wpm), average (250 wpm), and fast (350 wpm) speeds."
+  ],
+  "examples": [
+    "Input: \"The quick brown fox jumps over the lazy dog. This sentence has exactly ten words.\" → Stats: 15 words, 72 chars, 2 sentences, 1 paragraph; Avg word length: 3.9; Reading time: ~3 seconds (average)",
+    "Input: \"SEO SEO SEO content writing tips for SEO bloggers\" with keyword \"SEO\" → Word freq: SEO=4, writing=1...; Keyword density: SEO = 44.4% (4 of 9 words)"
+  ],
+  "bestPractices": [
+    "Set a word goal before starting to write and use the progress bar for motivation",
+    "Check keyword density for your primary and secondary keywords — aim for 1-3% density for SEO",
+    "Use the word frequency table to identify filler words (very, really, just, that) for editing",
+    "Use reading time to set reader expectations — aim for 5-7 minutes for blog posts",
+    "Track average sentence length — sentences above 25 words may harm readability scores"
+  ],
+  "commonMistakes": [
+    "Counting hyphenated compound words as one vs. two words — the counter treats them as one word",
+    "Assuming reading time is fixed — it varies by reading speed; check all three speeds (150/250/350 wpm)",
+    "Ignoring readability scores entirely — high word count with low readability wastes readers' time",
+    "Treating all characters equally — CJK characters and emoji are each counted as one character",
+    "Forgetting to check unique word count — high total words + low unique words = repetitive vocabulary"
+  ],
+  "faq": [
+    "How are words defined? Words are sequences of characters separated by whitespace or punctuation. Hyphenated compounds count as one word.",
+    "What readability formulas are used? Flesch-Kincaid Grade Level and Gunning Fog Index — both output a US school grade level (e.g., 8.5 = 8th grade).",
+    "Does the counter handle non-English text? Yes — Unicode text including CJK, Arabic, and Cyrillic is supported. Syllable counting works best for English.",
+    "Can I track multiple word goals? The tool supports one word goal at a time; reset it when starting a new document."
+  ]
+}

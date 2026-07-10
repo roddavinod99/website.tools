@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Analyzes and improves AI prompts across 8 improvement dimensions (clarity, specificity, context, structure, goal orientation, constraints, persona, formatting). Provides a side-by-side diff view comparing original and improved prompts with explanation panels for each change. Features tone adjustment and maintains an improvement history.",
+  "whyItExists": "Poorly written prompts lead to vague, irrelevant, or incorrect AI responses. Helps users identify weaknesses in their prompts and learn prompt engineering by showing concrete before/after improvements with explanations.",
+  "whoShouldUse": "AI users who want better results from their prompts, prompt engineering learners, teams standardizing AI interaction quality, and content creators optimizing AI output.",
+  "useCases": [
+    "Improve vague or unclear prompts to get more specific and actionable responses from AI assistants",
+    "Learn prompt engineering techniques by reviewing before/after comparisons and explanation panels",
+    "Standardize team AI prompts by improving clarity, structure, and goal orientation for consistent results",
+    "Optimize prompts for specific AI models by adjusting tone, persona, and format dimensions",
+    "Refine code-generation prompts with better constraints and specificity for more accurate code output",
+    "Create a personal library of improved prompt patterns through the history feature for future reference"
+  ],
+  "instructions": [
+    "Paste your existing prompt into the input editor; the tool automatically analyzes it across 8 dimensions",
+    "Review the dimension scores (1-10) displayed as bars for clarity, specificity, context, structure, goal orientation, constraints, persona, and formatting",
+    "Use the tone adjustment slider to target a specific tone (Professional, Casual, Academic, Friendly) for the improved prompt",
+    "Click \"Improve\" to generate the enhanced version; the side-by-side diff view highlights changes with color coding",
+    "Click any highlighted change to see an explanation panel describing why the improvement was made and what it achieves",
+    "Save improved prompts to history; revisit past improvements to track your prompt engineering progress"
+  ],
+  "examples": [
+    "Original: \"Write about AI\" -> Improved: \"Write a comprehensive overview of artificial intelligence covering key concepts like machine learning, neural networks, and natural language processing. Target audience: general readers. Format: informative article with clear section headings.\"",
+    "Original: \"Fix my code\" -> Improved: \"Review the following [language] code and identify bugs, performance issues, and style improvements. Provide corrected code snippets with explanations for each change. Code: [paste code here]\""
+  ],
+  "bestPractices": [
+    "Use the dimension scores to identify the weakest aspects of your prompt and focus on those areas",
+    "Read the explanation panels for each change to learn why certain phrasing yields better AI responses",
+    "Experiment with different tones to see how the same base prompt can be adapted for different audiences",
+    "Use the improvement history to track which patterns consistently produce better results across different prompts",
+    "Apply the improved prompt directly, but customize the context since the tool adds generic placeholders"
+  ],
+  "commonMistakes": [
+    "Expecting the tool to fix fundamentally flawed or contradictory prompts rather than just improving structure",
+    "Not reviewing the improved prompt and applying it blindly; the tool provides suggestions, not perfect solutions",
+    "Focusing only on the final improved prompt without learning from the side-by-side diff explanations",
+    "Over-formatting prompts with excessive structure that makes them rigid and unnatural",
+    "Using the same improvement pattern for every prompt instead of adapting based on the specific use case"
+  ],
+  "faq": [
+    "How does the tool calculate dimension scores? Scores are based on linguistic analysis of your prompt's word choice, structure, specificity markers, and goal clarity.",
+    "Can I improve prompts for specific AI models? The tool optimizes for general AI prompt effectiveness; some models may benefit from additional model-specific tuning.",
+    "Is the original prompt stored anywhere? Improvement history is stored in localStorage; original and improved versions are saved for comparison.",
+    "How does tone adjustment work? The tool rewrites the prompt using vocabulary, sentence structure, and formality level appropriate for the selected tone."
+  ]
+}

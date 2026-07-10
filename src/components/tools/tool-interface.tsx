@@ -47,7 +47,7 @@ import { UnitConverter } from "./unit-converter";
 import { CaseConverter } from "./case-converter";
 import { BaseConverter } from "./base-converter";
 import { NumberToWords } from "./number-to-words";
-import { JsonToTypeScript } from "./json-to-typescript";
+import { JsonToTypescript } from "./json-to-typescript";
 import { JsonToGo } from "./json-to-go";
 
 // New Image Tools
@@ -86,6 +86,11 @@ import { MarkdownPreview } from "./markdown-preview";
 import { SlugGenerator } from "./slug-generator";
 import { StringLength } from "./string-length";
 import { JsonSchemaGenerator } from "./json-schema-generator";
+import { DNSLookup } from "./dns-lookup";
+import { IPLookup } from "./ip-lookup";
+import { JSONBeautifier } from "./json-beautifier";
+import { JSONMinifier } from "./json-minifier";
+import { JSONValidator } from "./json-validator";
 
 const toolComponents: Record<string, React.ComponentType> = {
   // Existing
@@ -134,7 +139,7 @@ const toolComponents: Record<string, React.ComponentType> = {
   "case-converter": CaseConverter,
   "base-converter": BaseConverter,
   "number-to-words": NumberToWords,
-  "json-to-typescript": JsonToTypeScript,
+  "json-to-typescript": JsonToTypescript,
   "json-to-go": JsonToGo,
 
   // New Image Tools
@@ -154,6 +159,9 @@ const toolComponents: Record<string, React.ComponentType> = {
   "yaml-formatter": YAMLFormatter,
   "text-analyzer": TextAnalyzer,
   "json-diff": JSONDiff,
+  "json-beautifier": JSONBeautifier,
+  "json-minifier": JSONMinifier,
+  "json-validator": JSONValidator,
 
   // New Security
   "jwt-generator": JwtGenerator,
@@ -173,6 +181,8 @@ const toolComponents: Record<string, React.ComponentType> = {
   "slug-generator": SlugGenerator,
   "string-length": StringLength,
   "json-schema-generator": JsonSchemaGenerator,
+  "dns-lookup": DNSLookup,
+  "ip-lookup": IPLookup,
 };
 
 interface Props {

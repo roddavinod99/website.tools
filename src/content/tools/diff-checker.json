@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Compares two text inputs highlighting differences in side-by-side or unified view at word, line, or character granularity. Supports ignoring whitespace and case differences, file upload for both inputs, downloading the diff as a .patch file, and line numbering with added/removed/modified counts in a summary bar.",
+  "whyItExists": "Comparing text versions is a fundamental development task that extends beyond version control. A standalone diff checker with configurable granularity and exportable patches handles arbitrary text comparison without committing.",
+  "whoShouldUse": "Software developers reviewing code changes, writers comparing document revisions, data engineers verifying transformations, QA engineers comparing API responses, and anyone tracking changes between file versions.",
+  "useCases": [
+    "Compare two versions of a config file to understand deployment changes",
+    "Diff the output of two API endpoints to verify identical data after refactoring",
+    "Compare a student's code submission against the original template",
+    "Review changes between document drafts at character level for proofreading",
+    "Download a .patch file of changes for sharing with a colleague",
+    "Compare minified vs original CSS to verify no functional changes"
+  ],
+  "instructions": [
+    "Paste original text into left panel and modified text into right panel — or upload files via drag-and-drop",
+    "Select granularity: 'Word' (default), 'Line', or 'Character'",
+    "Configure options: 'Ignore Whitespace', 'Ignore Case', 'Trim Lines'",
+    "Choose view mode: 'Side-by-Side' or 'Unified' (single view with inline changes)",
+    "Review summary bar — shows added, removed, and unchanged counts",
+    "Click 'Download Patch' for .patch file compatible with git apply, or 'Swap' to exchange inputs"
+  ],
+  "examples": [
+    "Original: 'Hello World' | Changed: 'Hello Earth' | Word => Shows 'World' deleted, 'Earth' inserted",
+    "Original: 'function add(a,b){return a+b}' | Changed: 'function add(a, b) { return a + b; }' | Ignore Whitespace ON => 'No differences'"
+  ],
+  "bestPractices": [
+    "Use Line granularity for code diffs, Word for prose, Character for exact string debugging",
+    "Enable 'Ignore Whitespace' when comparing refactored code with only indentation changes",
+    "Download .patch files for sharing changes outside version control",
+    "Use 'Swap' to reverse comparison direction without re-pasting",
+    "For very large files (>10 MB), stick to line-level diff to avoid performance issues"
+  ],
+  "commonMistakes": [
+    "Using line-level diff on minified single-line code — switch to word or character level",
+    "Forgetting to enable 'Ignore Whitespace' for cross-OS file comparisons (CRLF vs LF)",
+    "Relying on diff checker for binary files — designed for text only",
+    "Pasting very large inputs (>100 MB) — browser may freeze",
+    "Assuming 'No differences' with Ignore Case means strings are identical — case may still matter in your context"
+  ],
+  "faq": [
+    "What algorithm is used? — Myers diff algorithm, the same algorithm used by Git.",
+    "Can I compare cross-OS files? — Yes, but enable 'Ignore Whitespace' for CRLF vs LF.",
+    "How to apply a .patch file? — 'git apply <file>.patch' or 'patch -p0 < <file>.patch'.",
+    "Character limit? — ~500,000 chars in line mode. Character-level diff has ~50,000 char limit."
+  ]
+}

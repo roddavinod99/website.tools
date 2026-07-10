@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts numbers between any two bases from binary (base-2) to base-64 with arbitrary precision using JavaScript BigInt. Features include auto-detection of common prefixes (0b, 0o, 0x), two's complement representation for negative numbers, ASCII interpretation showing what bytes the number represents as characters, step-by-step conversion showing the division algorithm, and support for fractional input with configurable precision.",
+  "whyItExists": "Developers frequently need to convert between number bases for low-level data, bit manipulation, memory addresses, or network protocols. A single tool handling arbitrary bases, large numbers (BigInt), and signed representations eliminates context-switching between specialized calculators.",
+  "whoShouldUse": "Systems programmers (Rust, C, C++) working with binary protocols, embedded engineers reading register values, security researchers analyzing memory dumps, computer science students, and web developers interpreting color codes or bitfields.",
+  "useCases": [
+    "Convert a hexadecimal memory address (0x7FFF) to decimal for pointer arithmetic",
+    "Interpret a binary bitmask (11010110) in decimal and hexadecimal for network config",
+    "Check two's complement representation of -42 in 8-bit binary for embedded programming",
+    "Decode a base-36 shortened URL hash back to its numeric ID",
+    "Interpret a large decimal as ASCII bytes to find embedded text in numeric data",
+    "Follow step-by-step division to understand base conversion for CS homework"
+  ],
+  "instructions": [
+    "Enter your number — prefixes like 0b, 0o, 0x are auto-detected, or manually select input base",
+    "Select the output base from the dropdown (base-2 through base-64)",
+    "Toggle options: 'Show Steps', 'ASCII Interpretation', and 'Two's Complement' for signed negatives",
+    "Click 'Convert' or press Enter — result appears with step-by-step breakdown if enabled",
+    "For fractional numbers (e.g. 12.75), both integer and fractional parts are converted and combined",
+    "Copy the result or copy a specific step from the step list for documentation"
+  ],
+  "examples": [
+    "Input: '0xFF' | To: Decimal | Auto-detect => Output: '255' (auto-detects 0x prefix)",
+    "Input: '-42' | To: Binary 8-bit | Two's Complement ON => Output: '11010110'"
+  ],
+  "bestPractices": [
+    "Enable 'Show Steps' when debugging conversion logic or teaching the algorithm",
+    "Use two's complement mode for negative numbers when working with signed integer types",
+    "Enable ASCII interpretation when analyzing numeric data with possible embedded text strings",
+    "For very large numbers (over 2^53), ensure BigInt mode is active — regular Number cannot represent these safely",
+    "Use base-36 for compact alphanumeric output, base-64 for maximum density"
+  ],
+  "commonMistakes": [
+    "Forgetting to prefix hex with '0x' or binary with '0b' — without prefixes input is treated as decimal",
+    "Assuming two's complement is needed for positive numbers — it only matters for negative values",
+    "Confusing 'input base' with 'prefix detection' — if you set base-16 manually but type '0xFF', the 0x is literal",
+    "Using this for floating-point IEEE 754 representation — it handles integer/fractional but not float format",
+    "Not selecting a wide enough output width for two's complement (e.g. -127 in 8 bits vs 16 bits)"
+  ],
+  "faq": [
+    "What is the maximum input size? — BigInt supports arbitrarily large integers limited only by memory.",
+    "How does two's complement work for non-8-bit widths? — The tool uses output base to determine bit width.",
+    "Can I convert fractional numbers like 3.14159? — Yes, both integer and fractional parts are converted separately.",
+    "What does ASCII interpretation show? — Groups the number into bytes and maps each to its ASCII character."
+  ]
+}

@@ -26,6 +26,7 @@ interface Analysis {
   letterDensity: { letter: string; count: number; percent: number }[];
   sentiment: { score: number; label: string; comparative: number };
   language: string;
+  languageScores: { name: string; score: number; confidence: number }[];
   emotions: { label: string; score: number }[];
   classification: { formality: string; domain: string };
   entities: { text: string; type: string }[];
@@ -33,6 +34,7 @@ interface Analysis {
   typeTokenRatio: number;
   vocabLevels: { basic: number; intermediate: number; advanced: number };
   suggestions: string[];
+  charDensity: { char: string; count: number; percent: number }[];
 }
 
 const POSITIVE_WORDS = new Set(["good", "great", "excellent", "amazing", "wonderful", "fantastic", "happy", "love", "beautiful", "best", "positive", "success", "joy", "delight", "brilliant", "awesome", "nice", "pleased", "perfect", "grateful"]);
@@ -48,6 +50,15 @@ const LANGUAGE_SIGNATURES: { pattern: RegExp; name: string }[] = [
   { pattern: /[а-яё]{3,}/i, name: "Russian" },
   { pattern: /[가-힣]{2,}/, name: "Korean" },
   { pattern: /[一-龠]{2,}/, name: "Chinese/Japanese" },
+];
+
+const NGRAM_PROFILES: { name: string; trigrams: Record<string, number> }[] = [
+  { name: "English", trigrams: { the: 0.18, and: 0.08, ing: 0.06, ent: 0.04, ion: 0.04, tio: 0.03, for: 0.03, our: 0.02, thi: 0.02, ith: 0.02 } },
+  { name: "French", trigrams: { les: 0.12, des: 0.10, ent: 0.08, ion: 0.06, our: 0.05, ant: 0.05, eux: 0.04, ait: 0.04, ans: 0.03, est: 0.03 } },
+  { name: "German", trigrams: { der: 0.14, ein: 0.08, die: 0.07, und: 0.07, ich: 0.05, den: 0.05, sch: 0.04, gen: 0.04, che: 0.03, nen: 0.03 } },
+  { name: "Spanish", trigrams: { los: 0.10, las: 0.08, ent: 0.07, que: 0.06, del: 0.05, par: 0.04, con: 0.04, est: 0.04, por: 0.03, com: 0.03 } },
+  { name: "Italian", trigrams: { del: 0.09, che: 0.08, lle: 0.07, ent: 0.06, deg: 0.05, gli: 0.04, are: 0.04, ere: 0.03, nel: 0.03, con: 0.03 } },
+  { name: "Russian", trigrams: { ова: 0.08, его: 0.07, нет: 0.06, она: 0.05, про: 0.04, дру: 0.04, ест: 0.03, ить: 0.03, как: 0.03, был: 0.02 } },
 ];
 
 const EMOTION_KEYWORDS: Record<string, string[]> = {
@@ -78,6 +89,35 @@ function countSyllables(word: string): number {
 const BASIC_WORDS = new Set(["the", "a", "an", "is", "are", "was", "were", "be", "been", "have", "has", "had", "do", "does", "did", "can", "could", "will", "would", "shall", "should", "may", "might", "must", "i", "you", "he", "she", "it", "we", "they", "this", "that", "these", "those", "and", "or", "but", "not", "if", "with", "for", "on", "in", "at", "to", "from", "by", "about", "of", "as", "into", "through", "during", "before", "after", "above", "below", "up", "down", "out", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "each", "every", "both", "few", "more", "most", "other", "some", "such", "no", "nor", "only", "own", "same", "so", "than", "too", "very", "just", "also", "now", "man", "woman", "child", "time", "year", "day", "way", "thing", "life", "hand", "part", "place", "case", "week", "work", "point", "world", "school", "state", "family", "group", "number", "night", "water", "people", "long", "good", "new", "first", "last", "big", "small", "high", "old", "great", "right", "left", "early", "young", "important", "public", "come", "get", "give", "go", "keep", "let", "make", "put", "seem", "take", "know", "see", "think", "look", "want", "find", "tell", "ask", "try", "need", "feel", "call", "show", "use", "like", "say", "start", "run", "move", "live", "believe", "hold", "bring", "happen", "write", "provide", "sit", "stand", "set", "meet", "pay", "include", "continue", "set", "change", "play", "turn", "lead", "understand", "watch", "follow", "stop", "create", "speak", "read", "allow", "add", "spend", "grow", "open", "walk", "win", "teach", "offer", "remember", "love", "consider", "appear", "buy", "wait", "serve", "die", "send", "expect", "build", "stay", "fall", "cut", "reach", "kill", "remain", "suggest", "raise", "pass", "sell", "require", "report", "decide", "pull", "carry", "hope", "develop", "produce", "receive", "agree", "support", "start", "finish", "wish", "thank"]);
 
 const ADVANCED_WORDS = new Set(["paradigm", "pragmatic", "quintessential", "ubiquitous", "ephemeral", "serendipity", "dichotomy", "anomaly", "synergy", "leverage", "streamline", "optimize", "facilitate", "implement", "utilize", "conceptualize", "synthesize", "extrapolate", "articulate", "elucidate", "juxtapose", "precipitate", "amalgamate", "conglomerate", "idiosyncratic", "heterogeneous", "homogeneous", "disparate", "concomitant", "perfunctory", "superfluous", "unequivocal", "ambivalent", "capricious", "recalcitrant", "obfuscate", "pernicious", "benevolent", "magnanimous", "fortuitous"]);
+
+function detectLanguageNgram(text: string): { name: string; score: number; confidence: number }[] {
+  const clean = text.toLowerCase().replace(/[^a-z\s]/g, "").replace(/\s+/g, " ");
+  const trigrams: Record<string, number> = {};
+  let total = 0;
+  for (let i = 0; i < clean.length - 2; i++) {
+    const tri = clean.slice(i, i + 3);
+    if (/[a-z]{3}/.test(tri)) {
+      trigrams[tri] = (trigrams[tri] || 0) + 1;
+      total++;
+    }
+  }
+  if (total === 0) return [];
+  const scores = NGRAM_PROFILES.map((profile) => {
+    let score = 0;
+    for (const [tri, freq] of Object.entries(profile.trigrams)) {
+      const actual = (trigrams[tri] || 0) / total;
+      score += Math.min(freq, actual) * 10;
+    }
+    return { name: profile.name, score, confidence: 0 };
+  });
+  scores.sort((a, b) => b.score - a.score);
+  const maxScore = scores[0]?.score || 1;
+  const top = scores.slice(0, 3);
+  for (const s of top) {
+    s.confidence = Math.min(100, Math.round((s.score / maxScore) * 100));
+  }
+  return top;
+}
 
 function analyzeText(text: string): Analysis {
   const t = text;
@@ -121,6 +161,8 @@ function analyzeText(text: string): Analysis {
   for (const c of t.toLowerCase()) { if (/[a-z]/.test(c)) { letterCounts[c] = (letterCounts[c] || 0) + 1; totalLetters++; } }
   const letterDensity = Object.entries(letterCounts).map(([letter, count]) => ({ letter, count, percent: totalLetters > 0 ? parseFloat(((count / totalLetters) * 100).toFixed(1)) : 0 })).sort((a, b) => b.count - a.count);
 
+  const charDensity = Object.entries(charFreqMap).map(([char, count]) => ({ char, count, percent: chars > 0 ? parseFloat(((count / chars) * 100).toFixed(2)) : 0 })).sort((a, b) => b.count - a.count).slice(0, 15);
+
   let sentimentScore = 0;
   let posCount = 0;
   let negCount = 0;
@@ -132,7 +174,9 @@ function analyzeText(text: string): Analysis {
   const sentimentLabel = sentimentScore > 0 ? "Positive" : sentimentScore < 0 ? "Negative" : "Neutral";
   const comparative = wordList.length > 0 ? parseFloat((sentimentScore / wordList.length).toFixed(3)) : 0;
 
-  const detectedLang = LANGUAGE_SIGNATURES.find((l) => l.pattern.test(t))?.name || "Unknown";
+  const detectedSig = LANGUAGE_SIGNATURES.find((l) => l.pattern.test(t));
+  const detectedLang = detectedSig?.name || "Unknown";
+  const languageScores = detectLanguageNgram(t).length > 0 ? detectLanguageNgram(t) : [{ name: detectedLang, score: 100, confidence: 100 }];
 
   const emotionScores: Record<string, number> = { joy: 0, sadness: 0, anger: 0, fear: 0, surprise: 0 };
   for (const w of wordList) {
@@ -188,8 +232,8 @@ function analyzeText(text: string): Analysis {
     uniqueWords, longestWord: longest, shortestWord: shortest, wordFrequency: wordFreq, charFrequency: charFreq,
     fleschKincaid: fk, fleschReadingEase: fre, gunningFog: fog, keywordDensity, letterDensity,
     sentiment: { score: sentimentScore, label: sentimentLabel, comparative },
-    language: detectedLang, emotions, classification: { formality, domain }, entities,
-    lexicalDensity, typeTokenRatio, vocabLevels, suggestions,
+    language: detectedLang, languageScores, emotions, classification: { formality, domain }, entities,
+    lexicalDensity, typeTokenRatio, vocabLevels, suggestions, charDensity,
   };
 }
 
@@ -274,8 +318,12 @@ export function TextAnalyzer() {
 
             <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Classification</p>
-              <div className="flex gap-2 mb-1">
-                <span className="rounded bg-surface-200 dark:bg-dark-border px-2 py-0.5 text-xs text-surface-700 dark:text-dark-text">{analysis.language}</span>
+              <div className="flex flex-wrap gap-2 mb-1">
+                {analysis.languageScores.map((ls, i) => (
+                  <span key={i} className="rounded bg-surface-200 dark:bg-dark-border px-2 py-0.5 text-xs text-surface-700 dark:text-dark-text">
+                    {ls.name} <span className="text-surface-400 dark:text-dark-muted">({ls.confidence}%)</span>
+                  </span>
+                ))}
                 <span className="rounded bg-surface-200 dark:bg-dark-border px-2 py-0.5 text-xs text-surface-700 dark:text-dark-text">{analysis.classification.formality}</span>
                 <span className="rounded bg-surface-200 dark:bg-dark-border px-2 py-0.5 text-xs text-surface-700 dark:text-dark-text">{analysis.classification.domain}</span>
               </div>
@@ -344,7 +392,7 @@ export function TextAnalyzer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Top Words</p>
               <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
@@ -352,6 +400,17 @@ export function TextAnalyzer() {
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text">{w}</span>
                     <span className="text-surface-500 dark:text-dark-muted">{c}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Density</p>
+              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+                {analysis.charDensity.map((c) => (
+                  <div key={c.char} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
+                    <span className="text-surface-900 dark:text-dark-text">{c.char === " " ? "␣" : c.char === "\n" ? "↵" : c.char}</span>
+                    <span className="text-surface-500 dark:text-dark-muted">{c.count} ({c.percent}%)</span>
                   </div>
                 ))}
               </div>

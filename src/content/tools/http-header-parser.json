@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Parses HTTP request and response headers with automatic categorization into request, response, entity, and general headers. Includes a security audit that flags missing security headers (like CSP, HSTS, X-Frame-Options), a header builder for constructing custom headers, and cURL/Fetch export of the header configuration. Validates header syntax against RFC standards.",
+  "whyItExists": "Debugging HTTP headers manually is tedious and security issues like missing CSP or HSTS headers are easy to overlook. This tool centralizes header inspection, security auditing, and code generation in one place to streamline web development and security analysis.",
+  "whoShouldUse": "Web developers debugging API responses, security engineers auditing HTTP security headers, and QA engineers testing server configurations.",
+  "useCases": [
+    "Parse response headers from a cURL command output to understand the server configuration",
+    "Run a security audit on your API's response headers to identify missing security protections",
+    "Build a custom set of HTTP headers using the builder and export as a cURL command",
+    "Validate a custom header string for RFC compliance before adding it to a server config",
+    "Copy the parsed headers as a Fetch API call with headers included for testing in the browser console"
+  ],
+  "instructions": [
+    "Paste raw HTTP headers (from browser dev tools, cURL -v output, or server logs) into the input area",
+    "View the categorized output: each header is grouped as request, response, entity, or general",
+    "Click the Security Audit button to scan for missing security headers; results highlight what is absent and provide recommendations",
+    "Use the Header Builder tab to construct headers manually with key-value pair inputs",
+    "Export the header set as a cURL command or a Fetch API JavaScript snippet",
+    "Header validation is automatic; invalid headers are flagged with an explanation of the RFC violation"
+  ],
+  "examples": [
+    "Input: 'Content-Type: text/html\\nX-Frame-Options: DENY\\nStrict-Transport-Security: max-age=31536000' categorized as entity/response/response with security audit showing HSTS present, CSP missing.",
+    "Input: 'Content-Type: application/json' built in Header Builder, exported as Fetch: 'fetch(url, {headers: {\"Content-Type\": \"application/json\"}})'"
+  ],
+  "bestPractices": [
+    "Run the security audit against all your API endpoints to ensure consistent security header coverage",
+    "Use the builder to standardize headers across microservices and export as shared config",
+    "Always validate custom headers before adding them to production server configurations",
+    "Export to cURL when sharing reproductions of header-related issues with colleagues"
+  ],
+  "commonMistakes": [
+    "Pasting headers with line breaks that don't follow HTTP/1.1 CRLF format, causing parse errors",
+    "Assuming the security audit covers all possible security headers; it covers the OWASP recommended set",
+    "Using the builder but forgetting to include required headers like Content-Type or Host",
+    "Exporting to Fetch without checking if the target environment supports the generated syntax"
+  ],
+  "faq": [
+    "What security headers does the audit check? It checks CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, and more.",
+    "Can I parse headers from a HAR file? Yes, extract the headers section from the HAR JSON and paste them.",
+    "Does it support HTTP/2 pseudo-headers? Yes, :method, :path, :scheme, :authority are parsed correctly.",
+    "Can I export as Python requests code? Currently supports cURL and Fetch export; Python coming soon."
+  ]
+}

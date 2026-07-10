@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useCallback } from "react";
 
@@ -15,7 +15,7 @@ interface CategoryDef {
   formula?: string;
 }
 
-type CategoryKey = "length" | "mass" | "volume" | "temperature" | "area" | "speed" | "time" | "data" | "pressure" | "energy" | "frequency" | "angle" | "fuelEconomy";
+type CategoryKey = "length" | "mass" | "volume" | "temperature" | "area" | "speed" | "time" | "data" | "pressure" | "energy" | "power" | "frequency" | "angle" | "fuelEconomy";
 
 const categories: Record<CategoryKey, CategoryDef> = {
   length: {
@@ -29,7 +29,7 @@ const categories: Record<CategoryKey, CategoryDef> = {
       { label: "Inches", value: "in", toBase: (n) => n * 0.0254, fromBase: (n) => n / 0.0254 },
       { label: "Centimeters", value: "cm", toBase: (n) => n * 0.01, fromBase: (n) => n / 0.01 },
       { label: "Millimeters", value: "mm", toBase: (n) => n * 0.001, fromBase: (n) => n / 0.001 },
-      { label: "Micrometers", value: "µm", toBase: (n) => n * 1e-6, fromBase: (n) => n / 1e-6 },
+      { label: "Micrometers", value: "um", toBase: (n) => n * 1e-6, fromBase: (n) => n / 1e-6 },
       { label: "Nanometers", value: "nm", toBase: (n) => n * 1e-9, fromBase: (n) => n / 1e-9 },
       { label: "Nautical Miles", value: "nmi", toBase: (n) => n * 1852, fromBase: (n) => n / 1852 },
       { label: "Light Years", value: "ly", toBase: (n) => n * 9.461e15, fromBase: (n) => n / 9.461e15 },
@@ -62,7 +62,7 @@ const categories: Record<CategoryKey, CategoryDef> = {
     ],
   },
   temperature: {
-    label: "Temperature", formula: "°C = (°F - 32) × 5/9",
+    label: "Temperature", formula: "C = (F - 32) x 5/9",
     units: [
       { label: "Celsius", value: "c", toBase: (n) => n, fromBase: (n) => n },
       { label: "Fahrenheit", value: "f", toBase: (n) => (n - 32) * 5 / 9, fromBase: (n) => n * 9 / 5 + 32 },
@@ -88,7 +88,7 @@ const categories: Record<CategoryKey, CategoryDef> = {
       { label: "km/h", value: "kmh", toBase: (n) => n / 3.6, fromBase: (n) => n * 3.6 },
       { label: "mph", value: "mph", toBase: (n) => n * 0.44704, fromBase: (n) => n / 0.44704 },
       { label: "Knots", value: "kn", toBase: (n) => n * 0.514444, fromBase: (n) => n / 0.514444 },
-      { label: "Mach (20°C)", value: "mach", toBase: (n) => n * 343, fromBase: (n) => n / 343 },
+      { label: "Mach (20 C)", value: "mach", toBase: (n) => n * 343, fromBase: (n) => n / 343 },
     ],
   },
   time: {
@@ -96,7 +96,7 @@ const categories: Record<CategoryKey, CategoryDef> = {
     units: [
       { label: "Seconds", value: "s", toBase: (n) => n, fromBase: (n) => n },
       { label: "Milliseconds", value: "ms", toBase: (n) => n / 1000, fromBase: (n) => n * 1000 },
-      { label: "Microseconds", value: "µs", toBase: (n) => n / 1e6, fromBase: (n) => n * 1e6 },
+      { label: "Microseconds", value: "us", toBase: (n) => n / 1e6, fromBase: (n) => n * 1e6 },
       { label: "Nanoseconds", value: "ns", toBase: (n) => n / 1e9, fromBase: (n) => n * 1e9 },
       { label: "Minutes", value: "min", toBase: (n) => n * 60, fromBase: (n) => n / 60 },
       { label: "Hours", value: "h", toBase: (n) => n * 3600, fromBase: (n) => n / 3600 },
@@ -151,7 +151,7 @@ const categories: Record<CategoryKey, CategoryDef> = {
     ],
   },
   angle: {
-    label: "Angle", formula: "180° = π rad",
+    label: "Angle", formula: "180 deg = pi rad",
     units: [
       { label: "Degrees", value: "deg", toBase: (n) => n, fromBase: (n) => n },
       { label: "Radians", value: "rad", toBase: (n) => n * 180 / Math.PI, fromBase: (n) => n * Math.PI / 180 },
@@ -167,6 +167,16 @@ const categories: Record<CategoryKey, CategoryDef> = {
       { label: "mpg (US)", value: "mpg", toBase: (n) => 235.215 / n, fromBase: (n) => 235.215 / n },
       { label: "mpg (UK)", value: "mpguk", toBase: (n) => 282.481 / n, fromBase: (n) => 282.481 / n },
       { label: "km/L", value: "kml", toBase: (n) => 100 / n, fromBase: (n) => 100 / n },
+    ],
+  },
+  power: {
+    label: "Power", formula: "1 W = 1 J/s",
+    units: [
+      { label: "Watts", value: "w", toBase: (n) => n, fromBase: (n) => n },
+      { label: "Kilowatts", value: "kw", toBase: (n) => n * 1000, fromBase: (n) => n / 1000 },
+      { label: "Megawatts", value: "mw", toBase: (n) => n * 1e6, fromBase: (n) => n / 1e6 },
+      { label: "Horsepower", value: "hp", toBase: (n) => n * 745.7, fromBase: (n) => n / 745.7 },
+      { label: "BTU/hour", value: "btuh", toBase: (n) => n * 0.293071, fromBase: (n) => n / 0.293071 },
     ],
   },
 };
@@ -186,6 +196,7 @@ export function UnitConverter() {
   const [fromUnit, setFromUnit] = useState("m");
   const [toUnit, setToUnit] = useState("km");
   const [value, setValue] = useState("1");
+  const [precision, setPrecision] = useState(10);
   const [sciNotation, setSciNotation] = useState(false);
   const [batchInput, setBatchInput] = useState("");
   const [batchResults, setBatchResults] = useState<string[]>([]);
@@ -194,7 +205,6 @@ export function UnitConverter() {
 
   const current = categories[category];
 
-  // Reset from/to on category change
   const handleCategoryChange = (cat: CategoryKey) => {
     setCategory(cat);
     setFromUnit(categories[cat].units[0]!.value);
@@ -214,8 +224,8 @@ export function UnitConverter() {
     if (sciNotation) return raw.toExponential(6);
     if (category === "temperature") return raw.toFixed(2);
     if (Math.abs(raw) < 0.001 || Math.abs(raw) > 1e9) return raw.toExponential(6);
-    return raw.toPrecision(10).replace(/\.?0+$/, "");
-  }, [value, fromDef, toDef, sciNotation, category]);
+    return raw.toPrecision(precision).replace(/\.?0+$/, "");
+  }, [value, fromDef, toDef, sciNotation, category, precision]);
 
   const resultNum = useMemo(() => {
     if (!value || !fromDef || !toDef) return 0;
@@ -224,10 +234,7 @@ export function UnitConverter() {
     return toDef.fromBase(fromDef.toBase(num));
   }, [value, fromDef, toDef]);
 
-  const swap = useCallback(() => {
-    setFromUnit(toUnit);
-    setToUnit(fromUnit);
-  }, [toUnit, fromUnit]);
+  const swap = useCallback(() => { setFromUnit(toUnit); setToUnit(fromUnit); }, [toUnit, fromUnit]);
 
   const copy = useCallback(async (text: string) => {
     await navigator.clipboard.writeText(text);
@@ -243,10 +250,10 @@ export function UnitConverter() {
       if (isNaN(n)) return `Invalid: ${line}`;
       const base = fromDef.toBase(n);
       const raw = toDef.fromBase(base);
-      return `${n} ${fromUnit} = ${raw.toPrecision(10).replace(/\.?0+$/, "")} ${toUnit}`;
+      return `${n} ${fromUnit} = ${raw.toPrecision(precision).replace(/\.?0+$/, "")} ${toUnit}`;
     });
     setBatchResults(results);
-  }, [batchInput, fromDef, toDef, fromUnit, toUnit]);
+  }, [batchInput, fromDef, toDef, fromUnit, toUnit, precision]);
 
   const toggleFavorite = useCallback(() => {
     const key = `${category}:${fromUnit}>${toUnit}`;
@@ -261,15 +268,13 @@ export function UnitConverter() {
   const formulaText = useMemo(() => {
     if (!fromDef || !toDef) return "";
     if (category === "temperature") {
-      if (fromUnit === "c" && toUnit === "f") return "°F = (°C × 9/5) + 32";
-      if (fromUnit === "f" && toUnit === "c") return "°C = (°F - 32) × 5/9";
-      if (fromUnit === "c" && toUnit === "k") return "K = °C + 273.15";
-      if (fromUnit === "k" && toUnit === "c") return "°C = K - 273.15";
+      if (fromUnit === "c" && toUnit === "f") return "F = (C x 9/5) + 32";
+      if (fromUnit === "f" && toUnit === "c") return "C = (F - 32) x 5/9";
+      if (fromUnit === "c" && toUnit === "k") return "K = C + 273.15";
+      if (fromUnit === "k" && toUnit === "c") return "C = K - 273.15";
     }
-    if (category === "fuelEconomy") {
-      return current.formula || "";
-    }
-    return `${toDef.label} = ${value} ${fromDef.label} × (${fromDef.value} → base → ${toDef.value})`;
+    if (category === "fuelEconomy") return current.formula || "";
+    return `${toDef.label} = ${value} ${fromDef.label} x conversion factor`;
   }, [category, fromUnit, toUnit, fromDef, toDef, value, current.formula]);
 
   return (
@@ -277,31 +282,19 @@ export function UnitConverter() {
       <div className="grid grid-cols-3 gap-3">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Category</label>
-          <select
-            value={category}
-            onChange={(e) => handleCategoryChange(e.target.value as CategoryKey)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          >
+          <select value={category} onChange={(e) => handleCategoryChange(e.target.value as CategoryKey)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {Object.entries(categories).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">From</label>
-          <select
-            value={fromUnit}
-            onChange={(e) => setFromUnit(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          >
+          <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {current.units.map((u) => <option key={u.value} value={u.value}>{u.label} ({u.value})</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">To</label>
-          <select
-            value={toUnit}
-            onChange={(e) => setToUnit(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          >
+          <select value={toUnit} onChange={(e) => setToUnit(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {current.units.map((u) => <option key={u.value} value={u.value}>{u.label} ({u.value})</option>)}
           </select>
         </div>
@@ -310,53 +303,32 @@ export function UnitConverter() {
       <div className="flex gap-2 items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Value</label>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter value..."
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          />
+          <input type="text" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Enter value..." className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
-        <button
-          onClick={swap}
-          title="Swap units"
-          className="rounded-lg border border-surface-200 px-3 py-2 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
-        >
-          ⇄
-        </button>
-        <button
-          onClick={toggleFavorite}
-          className={`rounded-lg px-3 py-2 text-sm transition-colors ${isFavorite ? "bg-yellow-100 text-yellow-700 border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}
-        >
-          {isFavorite ? "★" : "☆"}
-        </button>
+        <button onClick={swap} title="Swap units" className="rounded-lg border border-surface-200 px-3 py-2 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Swap units">Swap</button>
+        <button onClick={toggleFavorite} className={`rounded-lg px-3 py-2 text-sm transition-colors ${isFavorite ? "bg-yellow-100 text-yellow-700 border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>{isFavorite ? "Star" : "Star"}</button>
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-surface-700 dark:text-dark-text">Precision:</label>
+          <input type="range" min={1} max={15} value={precision} onChange={(e) => setPrecision(Number(e.target.value))} className="w-20 accent-brand-500" />
+          <span className="text-xs text-surface-500 dark:text-dark-muted w-6">{precision}</span>
+        </div>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={sciNotation} onChange={(e) => setSciNotation(e.target.checked)} className="accent-brand-500" />
-          Scientific Notation
+          <input type="checkbox" checked={sciNotation} onChange={(e) => setSciNotation(e.target.checked)} className="accent-brand-500" /> Scientific Notation
         </label>
-        {favorites.length > 0 && (
-          <div className="text-xs text-surface-400 dark:text-dark-muted">
-            {favorites.length} favorite{favorites.length !== 1 ? "s" : ""}
-          </div>
-        )}
+        {favorites.length > 0 && <div className="text-xs text-surface-400 dark:text-dark-muted">{favorites.length} favorite{favorites.length !== 1 ? "s" : ""}</div>}
       </div>
 
       {result && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Result</label>
           <div className="flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 p-3 dark:border-brand-700 dark:bg-brand-900/20">
-            <code className="flex-1 text-lg font-bold font-mono text-surface-900 dark:text-dark-text select-all">
-              {result} {toUnit}
-            </code>
-            <button onClick={() => copy(result + " " + toUnit)} className="text-xs text-brand-500 hover:text-brand-600 transition-colors">Copy</button>
+            <code className="flex-1 text-lg font-bold font-mono text-surface-900 dark:text-dark-text select-all">{result} {toUnit}</code>
+            <button onClick={() => copy(result + " " + toUnit)} className="text-xs text-brand-500 hover:text-brand-600 transition-colors" aria-label="Copy result">Copy</button>
           </div>
-          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">
-            {value} {fromUnit} = {resultNum.toPrecision(10).replace(/\.?0+$/, "")} {toUnit}
-          </p>
+          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">{value} {fromUnit} = {resultNum.toPrecision(precision).replace(/\.?0+$/, "")} {toUnit}</p>
           <p className="mt-0.5 text-xs text-surface-400 dark:text-dark-muted italic">{formulaText}</p>
         </div>
       )}
@@ -368,15 +340,7 @@ export function UnitConverter() {
             {favorites.map((fav) => {
               const [cat, units] = fav.split(":");
               const [fromF, toF] = units!.split(">");
-              return (
-                <button
-                  key={fav}
-                  onClick={() => { setCategory(cat as CategoryKey); setFromUnit(fromF!); setToUnit(toF!); }}
-                  className="rounded-full bg-surface-100 px-2.5 py-0.5 text-xs text-surface-700 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors"
-                >
-                  {cat}: {fromF} → {toF}
-                </button>
-              );
+              return <button key={fav} onClick={() => { setCategory(cat as CategoryKey); setFromUnit(fromF!); setToUnit(toF!); }} className="rounded-full bg-surface-100 px-2.5 py-0.5 text-xs text-surface-700 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors">{cat}: {fromF} to {toF}</button>;
             })}
           </div>
         </div>
@@ -384,26 +348,15 @@ export function UnitConverter() {
 
       <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
         <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Batch Convert</p>
-        <textarea
-          value={batchInput}
-          onChange={(e) => setBatchInput(e.target.value)}
-          placeholder="Paste values, one per line&#10;e.g.&#10;1&#10;2.5&#10;100"
-          rows={3}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
-        />
-        <button onClick={handleBatch} className="mt-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
-          Convert Batch
-        </button>
+        <textarea value={batchInput} onChange={(e) => setBatchInput(e.target.value)} placeholder="Paste values, one per line" rows={3} className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+        <button onClick={handleBatch} className="mt-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Convert Batch</button>
         {batchResults.length > 0 && (
           <div className="mt-2 max-h-32 overflow-y-auto space-y-1">
-            {batchResults.map((r, i) => (
-              <div key={i} className="rounded border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                {r}
-              </div>
-            ))}
+            {batchResults.map((r, i) => <div key={i} className="rounded border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{r}</div>)}
           </div>
         )}
       </div>
+      <p className="text-xs text-surface-400 dark:text-dark-muted">All conversions done client-side</p>
     </div>
   );
 }

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "URL parser that breaks down any URL into its full component structure (protocol, host, port, pathname, search, hash, username, password, origin). Displays query parameters in a table with encoded/decoded value toggle, includes a URL builder for constructing URLs from components, supports encoding/decoding individual components, URL normalization (lowercase host, remove default ports, etc.), and resolves relative URLs against a base URL.",
+  "whyItExists": "URLs contain many components and complex query strings that are hard to dissect manually. This tool provides a structured breakdown, query parameter table, and URL builder so developers can inspect, modify, and construct URLs with confidence.",
+  "whoShouldUse": "Web developers, API integrators, security analysts, and anyone who works with URL parsing, manipulation, or debugging.",
+  "useCases": [
+    "Break down a complex URL to understand its components (protocol, host, query, hash)",
+    "Parse query string parameters from a callback URL and see both encoded and decoded values",
+    "Build a URL from scratch using the URL builder by filling in component fields",
+    "Normalize a user-entered URL for consistent storage (lowercase host, remove default port)",
+    "Resolve a relative URL (e.g., \"./about\") against a base URL to get the absolute URL",
+    "Encode or decode individual components of a URL to fix encoding issues"
+  ],
+  "instructions": [
+    "Paste a full URL into the input field; the parsed components appear immediately in a structured breakdown.",
+    "Scroll to the Query Parameters table to see each parameter with its name, encoded value, and decoded value.",
+    "Toggle the Show Decoded switch in the query table to see all decoded values at once.",
+    "Use the URL Builder tab to construct a URL by filling in protocol, host, port, path, query, and hash fields.",
+    "Click Normalize to lowercase the host, remove default ports (80/443), and decode unnecessary percent-encoding.",
+    "In the Resolve tab, enter a base URL and a relative URL to compute the absolute result."
+  ],
+  "examples": [
+    "Input: \"https://user:pass@api.example.com:8080/path/to/resource?name=hello%20world&page=1#section\" → Components: protocol https, host api.example.com, port 8080, username user, pathname /path/to/resource, query parameters [{name: \"hello world\"}, {page: \"1\"}], hash #section",
+    "Input: base \"https://example.com/docs/\" and relative \"../images/logo.png\" → Resolved: \"https://example.com/images/logo.png\""
+  ],
+  "bestPractices": [
+    "Use the query parameter table to inspect encoded values — many APIs double-encode query strings",
+    "Check the decoded column in the query table to detect potentially malicious or malformed values",
+    "Use the URL builder when constructing APIs endpoints to ensure all components are correctly placed",
+    "Normalize URLs before storing them in a database to avoid duplicate entries for the same resource",
+    "Use relative URL resolution to validate href attributes in HTML documents during migration"
+  ],
+  "commonMistakes": [
+    "Assuming the port is always present — it is omitted for default ports (80 for HTTP, 443 for HTTPS)",
+    "Treating the query string as a JSON object — duplicate keys are valid in URLs and appear as separate rows",
+    "Forgetting that hash fragments are never sent to the server — they are client-side only",
+    "Using the full URL parser for relative URLs — it requires an absolute URL; use the Resolve tab instead",
+    "Overlooking the username:password@ syntax — modern browsers hide it, but the parser exposes it"
+  ],
+  "faq": [
+    "Can it parse URLs without a protocol (e.g., \"example.com/path\")? No — a protocol is required. Prepend \"https://\" to parse protocol-relative URLs.",
+    "What happens with internationalized domain names (IDN)? They are shown punycode-encoded (xn--) in the host field and decoded in a separate label.",
+    "Are URL fragments retained during normalization? Yes — fragments are preserved unless explicitly removed via an option.",
+    "How are duplicate query parameters displayed? Each occurrence is shown as a separate row in the query table with its original order preserved."
+  ]
+}

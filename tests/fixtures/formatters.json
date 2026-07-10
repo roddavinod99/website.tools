@@ -1,0 +1,9 @@
+[
+  { "slug": "html-formatter", "category": "Formatters", "name": "HTML Formatter", "input": "<div><p>Hello</p></div>", "action": "Format", "expect": "output" },
+  { "slug": "css-formatter", "category": "Formatters", "name": "CSS Formatter", "input": "body{margin:0;padding:0}", "action": "Format", "expect": "output" },
+  { "slug": "js-minifier", "category": "Formatters", "name": "JS Minifier", "input": "function add(a,b){return a+b}", "action": "Minify", "expect": "output" },
+  { "slug": "sql-formatter", "category": "Formatters", "name": "SQL Formatter", "input": "SELECT * FROM users WHERE id=1", "action": "Format", "expect": "output" },
+  { "slug": "xml-formatter", "category": "Formatters", "name": "XML Formatter", "input": "<root><item id=\"1\">val</item></root>", "action": "Format", "expect": "output" },
+  { "slug": "yaml-formatter", "category": "Formatters", "name": "YAML Formatter", "input": "name: test\nage: 30\n", "action": "Format", "expect": "output" },
+  { "slug": "text-analyzer", "category": "Formatters", "name": "Text Analyzer", "input": "This is a sample text for analysis. It has multiple sentences! And some questions?", "action": "Analyze", "expect": "output" }
+]

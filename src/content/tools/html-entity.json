@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Encodes and decodes HTML entities with named, numeric, and hex reference modes. Provides body and attribute content presets that follow HTML spec escaping rules, a searchable entity reference table, and quick-insert buttons for common entities like &amp; &lt; &gt; &quot; &apos;.",
+  "whyItExists": "Handling HTML entities manually leads to XSS vulnerabilities and rendering bugs when user-generated content contains special characters. This tool ensures proper encoding based on context (body vs attribute) and makes it easy to look up or insert any HTML entity.",
+  "whoShouldUse": "Frontend developers sanitizing user input, content authors preparing HTML with special characters, and security engineers auditing XSS prevention in templates.",
+  "useCases": [
+    "Encode user-submitted content before rendering in HTML to prevent XSS attacks",
+    "Decode HTML entity strings from an API response back to readable text",
+    "Use body preset for content inside <div> tags and attribute preset for values in href=\"...\"",
+    "Look up the entity reference for a specific Unicode character like a copyright symbol",
+    "Use quick-insert buttons to add common entities while editing HTML content"
+  ],
+  "instructions": [
+    "Type or paste text in the input area; the encoded/decoded output updates in real time",
+    "Select encoding mode: named (&amp;), numeric (&#38;), or hex (&#x26;) reference style",
+    "Choose a preset: Body (encodes < > &) or Attribute (encodes < > & \" ') for context-appropriate escaping",
+    "Use the entity reference table to search for any Unicode character by name, code point, or entity",
+    "Click quick-insert buttons to instantly insert common entities like &copy; or &mdash;",
+    "Use the decode mode to convert entity-encoded text back to plain characters"
+  ],
+  "examples": [
+    "Input: '<script>alert(1)</script>' with body preset. Output: '&lt;script&gt;alert(1)&lt;/script&gt;'",
+    "Input: '© 2024 My Company' with hex mode encode. Output: '&#xa9; 2024 My Company'"
+  ],
+  "bestPractices": [
+    "Always use the attribute preset when encoding values that will appear in HTML attributes to escape quotes",
+    "Use named entities for readability in hand-coded HTML; use numeric for broader compatibility",
+    "Never double-encode content; if content was already entity-encoded, use decode first",
+    "Bookmark the entity reference table for quick lookup of obscure Unicode entities"
+  ],
+  "commonMistakes": [
+    "Using body encoding for attribute values, leaving quotes unescaped and vulnerable to injection",
+    "Encoding an already-encoded string, resulting in double-encoded output like &amp;lt;",
+    "Using a preset that does not match the target context, such as attribute for a text node",
+    "Assuming all browsers handle hex entities identically; numeric is safer for legacy support"
+  ],
+  "faq": [
+    "What is the difference between named, numeric, and hex entities? Named use &amp; etc, numeric use &#38;, hex use &#x26;. All render the same character.",
+    "Why does the attribute preset also escape quotes? Quotes delimit attribute values and must be escaped to prevent breaking the HTML.",
+    "Can I decode HTML entities from an RSS feed? Yes, paste the feed content and switch to decode mode.",
+    "Is the entity reference table searchable? Yes, type a character name, entity name, or code point to filter."
+  ]
+}

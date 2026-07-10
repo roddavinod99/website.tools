@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Timestamp converter with auto-detection of Unix (seconds/milliseconds), ISO 8601, and human-readable date formats. Converts to 11 different output formats including Unix seconds, Unix milliseconds, ISO 8601, RFC 2822, UTC string, locale date/time strings, relative time (\"2 hours ago\"), and Japanese/Chinese date formats. Features a timezone selector, Now button, countdown timer to a target timestamp, diff calculator between two timestamps, and leap year detection.",
+  "whyItExists": "Timestamps appear in many formats across APIs, databases, and logs — converting between them manually is tedious and error-prone. This tool detects the input format automatically and provides every common output format in one view.",
+  "whoShouldUse": "Backend developers, API integrators, database administrators, QA engineers, and anyone working with time data across different systems and timezones.",
+  "useCases": [
+    "Convert a Unix timestamp from an API response to a human-readable date for debugging",
+    "Generate an ISO 8601 string from a local date for a JSON payload",
+    "Calculate the time difference between two Unix timestamps in seconds/minutes/hours/days",
+    "Count down to a specific date (e.g., product launch) to see remaining time",
+    "Check if a given year is a leap year for date validation logic",
+    "Convert a timestamp between timezones (e.g., UTC to Asia/Tokyo)"
+  ],
+  "instructions": [
+    "Paste or type a timestamp into the input field — the tool auto-detects Unix (seconds/milliseconds), ISO 8601, or human-readable format.",
+    "View the 11 output formats in the results grid, each labeled with its format name.",
+    "Select a target timezone from the dropdown to convert all outputs to that timezone.",
+    "Click the Now button to insert the current Unix timestamp (in seconds) into the input.",
+    "Use the Diff tab to enter two timestamps and see the difference in seconds, minutes, hours, days, and weeks.",
+    "Switch to the Countdown tab to set a future timestamp and watch a live countdown timer."
+  ],
+  "examples": [
+    "Input: \"1735689600\" (auto-detected as Unix seconds) → Outputs include: ISO 8601 \"2025-01-01T00:00:00.000Z\", RFC 2822 \"Wed, 01 Jan 2025 00:00:00 +0000\", relative \"1 year ago\"",
+    "Input: \"2025-12-25T14:30:00\" with timezone America/New_York → Outputs include: Unix seconds 1735677000, Japan time \"2025-12-26 04:30:00 JST\""
+  ],
+  "bestPractices": [
+    "Always verify auto-detected format — Unix seconds vs. milliseconds (10 digits vs. 13 digits) can be ambiguous",
+    "Use the Now button for quick insertion of the current time when testing",
+    "Use the Diff calculator to validate time-based business logic like expiry windows",
+    "Select the correct timezone before converting to avoid off-by-one day errors",
+    "Check leap year detection when writing date validation for birthdates or contract dates"
+  ],
+  "commonMistakes": [
+    "Confusing Unix seconds (10 digits) with Unix milliseconds (13 digits) — using the wrong unit shifts the date by decades",
+    "Assuming ISO 8601 always includes timezone offset — local-time ISO strings lack \"Z\" or offset",
+    "Forgetting that JavaScript Date.getTime() returns milliseconds, not seconds",
+    "Using the wrong timezone for daylight saving date ranges — the tool applies DST rules automatically",
+    "Misreading relative time for future dates — \"in 2 hours\" vs. \"2 hours ago\""
+  ],
+  "faq": [
+    "What is the difference between Unix seconds and Unix milliseconds? Unix seconds = seconds since epoch (Jan 1, 1970); milliseconds = that value × 1000. A typical 10-digit number is seconds; a 13-digit number is milliseconds.",
+    "Does the tool handle timezone abbreviations like PST/EST? Use IANA timezone names (e.g., America/Los_Angeles) — ambiguous abbreviations are not supported.",
+    "How accurate is the countdown timer? The countdown refreshes every second and is synchronized with the system clock.",
+    "Can I convert dates before 1970? Yes — Unix timestamps can represent dates from 1901 to 2038 (32-bit) and beyond (64-bit timestamps handled)."
+  ]
+}

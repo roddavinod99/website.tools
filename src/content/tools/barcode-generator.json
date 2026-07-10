@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates barcodes in Code 128, EAN-13, UPC-A, QR Code, Data Matrix, and PDF417 formats. Customize size, color, and text display options. Download as SVG or PNG with batch generation support.",
+  "whyItExists": "Barcodes bridge physical products with digital systems. This tool provides instant barcode generation without external dependencies or paid software.",
+  "whoShouldUse": "E-commerce developers, inventory managers, product designers, and anyone needing to generate barcodes for labels, packaging, or tracking systems.",
+  "useCases": [
+    "Generate EAN-13 barcodes for retail product packaging",
+    "Create Code 128 barcodes for warehouse inventory tracking",
+    "Generate UPC-A barcodes for North American retail products",
+    "Create PDF417 barcodes for shipping labels and ID cards",
+    "Batch generate multiple barcodes for product catalogs",
+    "Design QR Code barcodes for digital product packaging"
+  ],
+  "instructions": [
+    "Select the barcode symbology from the dropdown (Code 128, EAN-13, UPC-A, QR Code, etc.)",
+    "Enter the data to encode — numeric only for EAN/UPC, alphanumeric for Code 128 and QR",
+    "Customize appearance: bar color, background color, text label, width, and height",
+    "Click Generate and preview the barcode; ensure it scans correctly with a barcode scanner app",
+    "Download as SVG (vector) for print or PNG (raster) for web",
+    "Use batch mode to generate multiple barcodes at once with sequential data"
+  ],
+  "examples": [
+    "Input: Code 128, Data \"ABC-12345\", Black bars, White background -> Output: SVG barcode image that scans as \"ABC-12345\"",
+    "Input: EAN-13, Data \"590123456789\" -> Output: EAN-13 barcode with checksum digit, ready for retail packaging"
+  ],
+  "bestPractices": [
+    "Always test generated barcodes with a real scanner before production use",
+    "Use SVG format for print applications to ensure crisp output at any size",
+    "Include human-readable text below the barcode for fallback identification",
+    "Ensure sufficient quiet zone (white space) around the barcode — minimum 10x the module width",
+    "Match the barcode symbology to your industry standard (EAN for retail, Code 128 for logistics)"
+  ],
+  "commonMistakes": [
+    "Using the wrong symbology for the data type (e.g., putting letters in a numeric-only format)",
+    "Making barcodes too small for reliable scanning — minimum size varies by symbology",
+    "Forgetting the quiet zone around the barcode, causing scanning failures",
+    "Not verifying the checksum digit (most formats calculate this automatically)",
+    "Using low contrast colors that barcode scanners cannot distinguish"
+  ],
+  "faq": [
+    "What is the difference between EAN-13 and UPC-A? — EAN-13 is used globally with 13 digits; UPC-A is the North American standard with 12 digits. They are interchangeable with a leading zero.",
+    "Can I generate QR codes instead of linear barcodes? — Yes, select QR Code from the symbology dropdown for matrix-style 2D barcodes.",
+    "What is the quiet zone? — The blank margin around the barcode required for reliable scanning. Minimum 10x the narrow bar width on each side.",
+    "Are the barcodes compliant with GS1 standards? — Yes, the generated barcodes follow GS1 specifications for retail and logistics use."
+  ]
+}

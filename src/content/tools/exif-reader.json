@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Extracts EXIF metadata from images (JPEG, TIFF, WebP, PNG) organized into four categories: Camera (make, model, lens, software), Photo Settings (aperture, shutter speed, ISO, focal length, flash), GPS (latitude, longitude, altitude, direction), and Image Info (resolution, file size, color space, date taken). Supports copying full EXIF as JSON or CSV, stripping EXIF from images, and anonymizing GPS coordinates to configurable precision.",
+  "whyItExists": "EXIF data contains valuable information for photographers and forensic analysis but also poses privacy risks. A tool that both extracts and selectively removes EXIF gives users control over what metadata they share while providing organized access to technical photo details.",
+  "whoShouldUse": "Photographers auditing camera settings, digital forensics investigators examining image provenance, web developers building photo management tools, privacy-conscious users sanitizing images before sharing, and QA engineers verifying image metadata.",
+  "useCases": [
+    "Extract camera/lens info from a JPEG to document equipment used for a shoot",
+    "Check GPS coordinates embedded in a photo to verify geotagging accuracy",
+    "Strip all EXIF data before uploading to a public website for privacy",
+    "Export EXIF as JSON for automated ingestion into a photo management database",
+    "Anonymize GPS to nearest 0.1 degrees (~11 km) for approximate location sharing",
+    "Review photo settings (aperture, shutter, ISO) to understand capture technique"
+  ],
+  "instructions": [
+    "Drag-and-drop an image (JPEG, TIFF, WebP, PNG) or click to browse",
+    "EXIF data is automatically extracted into collapsible category panels: Camera, Photo Settings, GPS, Image Info",
+    "Browse extracted data — each category shows labeled fields. GPS includes a map link if available",
+    "Click 'Copy as JSON' or 'Copy as CSV' for structured export",
+    "Click 'Strip EXIF' to generate a modified copy with all metadata removed",
+    "For GPS anonymization, set precision (0.01, 0.1, 1.0 degrees) and click 'Anonymize GPS'"
+  ],
+  "examples": [
+    "Input: 'DSC_1234.jpg' (Nikon D850) => Camera: 'NIKON D850, 24-70mm f/2.8E' | Settings: 'f/2.8, 1/125s, ISO 400, 50mm' | GPS: '40.7484° N, 73.9857° W'",
+    "Input: Image with GPS | Anonymize 0.1° => Original '40.7484, -73.9857' → Anonymized '40.7, -74.0'"
+  ],
+  "bestPractices": [
+    "Always strip EXIF before uploading to public websites unless intentionally sharing metadata",
+    "Use GPS anonymization at 0.1° for social media — gives city-level area without exact location",
+    "Export EXIF as JSON for automated photo management workflows",
+    "Check 'Date Taken' to verify camera clock accuracy — incorrect clocks produce misleading timestamps",
+    "Use CSV export for spreadsheet-based data analysis across multiple photos"
+  ],
+  "commonMistakes": [
+    "Assuming PNG files contain EXIF — many don't. JPEGs have the most comprehensive support.",
+    "Trusting GPS without checking accuracy — consumer GPS is accurate to 5-15 meters",
+    "Forgetting stripped EXIF cannot be recovered — always keep original files backed up",
+    "Using anonymization on already-shared images — original GPS may already be scraped",
+    "Overlooking 'Software' field — reveals editing software used (Photoshop, Lightroom, GIMP)"
+  ],
+  "faq": [
+    "What EXIF tags are not shown? — Private maker notes and proprietary manufacturer tags are not displayed but are stripped.",
+    "Can I edit EXIF instead of just reading/stripping? — Use the EXIF Transfer tool for editing. This tool focuses on reading and removal.",
+    "Does this support RAW files (NEF, CR2, ARW)? — No, only JPEG, TIFF, WebP, and PNG. Convert RAW first.",
+    "Is stripping 100% effective? — Standard EXIF, IPTC, and XMP are removed. Some proprietary formats may remain."
+  ]
+}

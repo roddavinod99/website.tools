@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts numeric values to their word representation using Intl.NumberFormat and Indian numbering systems (lakh/crore). Supports currency mode for 5 major currencies (USD, EUR, GBP, INR, JPY) plus custom currencies, ordinal numbers, Roman numerals, scientific notation display, BigInt for large numbers, and a numeric breakdown showing place values.",
+  "whyItExists": "Financial applications, legal documents, and educational tools often need numbers expressed as words. Handles the complexity of different numbering systems (Western vs Indian), currency formatting, and large number representation that developers shouldn't implement from scratch.",
+  "whoShouldUse": "Financial software developers, accounting application engineers, educational content creators, invoice/check generation systems developers, and localization engineers.",
+  "useCases": [
+    "Generate written amounts for checks and invoices in financial applications",
+    "Convert financial figures to words in legal and contract documents",
+    "Display large numbers in accessible format for educational math applications",
+    "Format currency amounts in words across different currency types for international payments",
+    "Convert numbers to Roman numerals for historical dating, chapter numbering, or event naming",
+    "Display number breakdown with place values (hundreds, thousands, lakhs) for educational math tools"
+  ],
+  "instructions": [
+    "Enter a numeric value in the input field (supports integers, decimals, and negative numbers)",
+    "Select the numbering system: Western (thousands/millions) or Indian (lakhs/crores) for appropriate word output",
+    "Enable Currency mode and select a currency (USD, EUR, GBP, INR, JPY) or define a custom currency symbol/name",
+    "Toggle Ordinal mode to convert numbers to ordinal words (first, second, third) instead of cardinal",
+    "Enable Roman numerals for conversion to Roman numeral format (I, V, X, L, C, D, M) up to 3999",
+    "Use scientific notation toggle to see the number in exponential format; the breakdown panel shows place values"
+  ],
+  "examples": [
+    "Input: 1234567, Western system -> Output: \"One Million Two Hundred Thirty-Four Thousand Five Hundred Sixty-Seven\"",
+    "Input: 1234567, Indian system, INR currency -> Output: \"Twelve Lakh Thirty-Four Thousand Five Hundred Sixty-Seven Rupees\" or with currency: \"₹ Twelve Lakh Thirty-Four Thousand Five Hundred Sixty-Seven Only\""
+  ],
+  "bestPractices": [
+    "Use Indian numbering system for applications targeting Indian users and financial systems",
+    "Enable currency mode for any financial document generation to get proper currency name placement",
+    "Test with edge cases like zero, negative numbers, and very large numbers (BigInt) to ensure correct output",
+    "Use the numeric breakdown panel to verify the number is being interpreted correctly before generating words",
+    "For Roman numerals, remember the limit is 3999; larger numbers use an overline notation that may not be supported"
+  ],
+  "commonMistakes": [
+    "Using Western numbering for Indian financial contexts where lakh/crore is legally required",
+    "Assuming ordinal conversion works for all numbers; some numbers have irregular ordinal forms (first, not oneth)",
+    "Forgetting that decimal values need special handling in currency mode (e.g., \"One Hundred Twenty-Three Dollars and Forty-Five Cents\")",
+    "Not testing with zero (\"Zero\") and negative numbers (\"Negative Forty-Two\") which have specific word forms",
+    "Using the tool for programming identifiers which should use numeric values, not word representations"
+  ],
+  "faq": [
+    "What is the maximum number supported? BigInt support handles numbers up to 10^308 and beyond; practical limits depend on the number of words generated.",
+    "How are decimals handled in currency mode? Decimals are shown as fractional currency units (e.g., \"Forty-Five Cents\" for USD, \"Seventy-Five Paise\" for INR).",
+    "Does it support all Indian numbering units? Yes, including lakh (10^5), crore (10^7), arab (10^9), kharab (10^11), and higher.",
+    "Can it convert negative numbers? Yes, negative numbers are prefixed with \"Negative\" in the word output."
+  ]
+}

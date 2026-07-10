@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 
 type Mode = "match" | "replace" | "split";
 
@@ -14,17 +14,19 @@ interface MatchResult {
   isLookbehind: boolean;
 }
 
+interface HistoryEntry { pattern: string; flags: string; timestamp: number }
+
 const COMMON_PATTERNS = [
   { label: "Email", pattern: "^[\\w.-]+@[\\w.-]+\\.\\w{2,}$" },
   { label: "URL", pattern: "https?://[\\w.-]+(:\\d+)?(/\\S*)?" },
   { label: "Phone (US)", pattern: "\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}" },
   { label: "IP v4", pattern: "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b" },
   { label: "Date (ISO)", pattern: "\\d{4}-\\d{2}-\\d{2}" },
-  { label: "Hex Color", pattern: "#?([a-fA-F0-9]{3}|[a-fA-F0-9]{6})\\b" },
-  { label: "Credit Card", pattern: "\\b\\d{4}[ -]?\\d{4}[ -]?\\d{4}[ -]?\\d{4}\\b" },
-  { label: "UUID", pattern: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" },
   { label: "HTML Tag", pattern: "<[^>]+>" },
-  { label: "Whitespace", pattern: "\\s+" },
+  { label: "Credit Card", pattern: "\\b\\d{4}[ -]?\\d{4}[ -]?\\d{4}[ -]?\\d{4}\\b" },
+  { label: "Password", pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$" },
+  { label: "Hex Color", pattern: "#?([a-fA-F0-9]{3}|[a-fA-F0-9]{6})\\b" },
+  { label: "UUID", pattern: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" },
 ];
 
 const CHEAT_SHEET_ITEMS = [
@@ -57,6 +59,8 @@ const FLAGS = [
   { id: "s", label: "s", tooltip: "Dot all" },
   { id: "u", label: "u", tooltip: "Unicode" },
   { id: "y", label: "y", tooltip: "Sticky" },
+  { id: "x", label: "x", tooltip: "Extended (free-spacing)" },
+  { id: "A", label: "A", tooltip: "Anchored" },
 ];
 
 function escapeRegex(str: string): string {
@@ -78,8 +82,17 @@ export function RegexTester() {
   const [autoEscape, setAutoEscape] = useState(false);
   const [showCheatSheet, setShowCheatSheet] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(-1);
   const resultRef = useRef<HTMLDivElement>(null);
+
+  const [history, setHistory] = useState<HistoryEntry[]>(() => {
+    try { const s = localStorage.getItem("regex-history"); return s ? JSON.parse(s) : []; } catch { return []; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("regex-history", JSON.stringify(history.slice(0, 20)));
+  }, [history]);
 
   const activePattern = autoEscape ? escapeRegex(pattern) : pattern;
 
@@ -169,12 +182,43 @@ export function RegexTester() {
     setFlags((prev) => prev.includes(flag) ? prev.replace(flag, "") : prev + flag);
   };
 
-  const insertPattern = (pat: string) => setPattern(pat);
+  const insertPattern = (pat: string) => {
+    setPattern(pat);
+    setHistory(prev => {
+      const next = [{ pattern: pat, flags, timestamp: Date.now() }, ...prev.filter(e => e.pattern !== pat)].slice(0, 20);
+      return next;
+    });
+  };
 
   const copy = async (text: string, idx: number) => {
     await navigator.clipboard.writeText(text);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(-1), 2000);
+  };
+
+  const exportResults = () => {
+    if (mode === "match") {
+      const data = JSON.stringify(matches, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href = url; a.download = "regex-matches.json"; a.click();
+      URL.revokeObjectURL(url);
+    } else if (mode === "replace" && replaceResult !== null) {
+      const blob = new Blob([replaceResult], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href = url; a.download = "regex-replace-result.txt"; a.click();
+      URL.revokeObjectURL(url);
+    } else if (mode === "split" && splitResult) {
+      const blob = new Blob([splitResult.join("\n")], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href = url; a.download = "regex-split-result.txt"; a.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const loadHistory = (entry: HistoryEntry) => {
+    setPattern(entry.pattern);
+    setFlags(entry.flags);
   };
 
   const matchCount = matches.length;
@@ -194,6 +238,8 @@ export function RegexTester() {
         <div className="flex items-center justify-between mb-1">
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Regex Pattern</label>
           <div className="flex gap-1">
+            <button onClick={() => setShowHistory(!showHistory)}
+              className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">History</button>
             <button onClick={() => setShowLibrary(!showLibrary)}
               className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Library</button>
             <button onClick={() => setShowCheatSheet(!showCheatSheet)}
@@ -221,6 +267,20 @@ export function RegexTester() {
           <p className="mt-1 text-xs text-red-500 dark:text-red-400">{validationError}</p>
         )}
       </div>
+
+      {showHistory && history.length > 0 && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1.5 px-1">Pattern History</p>
+          <div className="flex flex-wrap gap-1">
+            {history.map((h, i) => (
+              <button key={i} onClick={() => loadHistory(h)}
+                className="rounded bg-white dark:bg-dark-bg border border-surface-200 dark:border-dark-border px-2 py-1 text-xs font-mono text-surface-700 dark:text-dark-text hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors">
+                /{h.pattern.length > 25 ? h.pattern.slice(0, 25) + "..." : h.pattern}/{h.flags}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {showLibrary && (
         <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
@@ -321,6 +381,7 @@ export function RegexTester() {
             <div className="flex gap-1">
               <button onClick={() => copy(pattern, 0)} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Copy Regex</button>
               <button onClick={() => copy(JSON.stringify(matches, null, 2), 1)} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Copy Matches</button>
+              <button onClick={exportResults} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Export</button>
             </div>
           </div>
           <div className="space-y-1 max-h-80 overflow-y-auto">
@@ -368,6 +429,10 @@ export function RegexTester() {
       {regex && testText && mode === "match" && matches.length === 0 && (
         <p className="text-sm text-surface-400 dark:text-dark-muted italic">No matches found</p>
       )}
+
+      <p className="text-[10px] text-surface-400 dark:text-dark-muted text-center">
+        All processing is done client-side. Your data never leaves your browser.
+      </p>
     </div>
   );
 }

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates QR codes for 8 content types (URL, email, phone, SMS, WiFi, vCard, location, plain text) with 4 error correction levels (L/M/Q/H) for damage tolerance. Features logo overlay placement, custom color pickers for foreground/background, cell size and margin configuration, multiple output formats (SVG, PNG, JPEG), batch history with export, and copy-image functionality.",
+  "whyItExists": "QR codes are ubiquitous for contactless sharing, marketing, and authentication. Provides a comprehensive generator supporting various data types with design customization that goes beyond basic black-and-white QR codes.",
+  "whoShouldUse": "Marketing professionals, event organizers, business owners, software developers integrating QR functionality, and anyone needing custom-styled QR codes for sharing information.",
+  "useCases": [
+    "Generate QR codes for URLs to drive traffic to websites, landing pages, or app store links",
+    "Create WiFi credential QR codes for guest network access in offices, cafes, and hotels",
+    "Generate vCard QR codes for digital business cards at networking events and conferences",
+    "Create location QR codes with coordinates for mapping and navigation integration",
+    "Design branded QR codes with logo overlays and custom colors for marketing materials",
+    "Generate batch QR codes for event check-in, inventory tracking, or asset labeling systems"
+  ],
+  "instructions": [
+    "Select the QR content type from 8 options: URL, Email, Phone, SMS, WiFi, vCard, Location, or Plain Text",
+    "Fill in the data fields specific to the selected type (e.g., for WiFi: SSID, password, encryption type)",
+    "Choose the error correction level: L (7%), M (15%), Q (25%), or H (30%) data recovery; higher levels allow larger logos",
+    "Customize appearance: set foreground/background colors using the color pickers, adjust cell size (1-10) and margin (0-4)",
+    "Optionally upload a logo image for center overlay; the tool automatically determines the max logo size based on ECC level",
+    "Select output format: SVG (scalable), PNG (with transparency), or JPEG (white background); download or copy to clipboard"
+  ],
+  "examples": [
+    "Input: Type=WiFi, SSID=\"GuestNetwork\", password=\"securepass\", ECC=H -> Output: QR code that, when scanned, prompts to connect to GuestNetwork with the provided password",
+    "Input: Type=URL, content=\"https://example.com\", colors=#FF0000 (foreground), #FFFFFF (background), logo=uploaded.png -> Output: Red QR code with center logo, scannable to example.com"
+  ],
+  "bestPractices": [
+    "Use error correction level H (30%) when adding a logo overlay to ensure the QR code remains scannable",
+    "Maintain high contrast between foreground and background colors to ensure reliable scanning (avoid light-on-light)",
+    "Test generated QR codes with multiple scanner apps before printing on materials or publishing",
+    "Use SVG format for print materials (posters, business cards) since it scales without quality loss",
+    "Keep the QR code size reasonable (at least 2cm x 2cm for print, 150x150px for digital) to ensure scanability"
+  ],
+  "commonMistakes": [
+    "Using low error correction (L/M) with a logo overlay, making the QR code unscannable due to data loss",
+    "Choosing low-contrast color combinations like light gray on white that scanners cannot read",
+    "Making QR codes too small (under 1cm) on printed materials where scanning distance is more than a few inches",
+    "Not testing the generated QR code before mass production, discovering issues after printing",
+    "Over-customizing with multiple colors and gradients that interfere with the QR code's timing patterns"
+  ],
+  "faq": [
+    "Can I scan QR codes with this tool? No, this is a generator only; use a separate scanner app or tool for decoding.",
+    "What's the maximum data capacity? Depends on version and ECC level; URL QR codes typically handle up to ~3KB of data.",
+    "Does the logo overlay affect scanability? Yes, higher ECC levels compensate for logo-related data loss; use at least level Q (25%) with logos.",
+    "Are the generated QR codes standard compliant? Yes, they follow ISO/IEC 18004 standards for QR Code symbology."
+  ]
+}

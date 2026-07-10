@@ -1,4 +1,6 @@
-"use client";
+ "use client";
+
+import { useEffect } from "react";
 
 export default function Error({
   error,
@@ -7,6 +9,10 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    console.error("Unhandled error:", error);
+  }, [error]);
+
   return (
     <div className="container py-20 text-center">
       <h1 className="text-6xl font-bold text-surface-300 dark:text-dark-border">Error</h1>
@@ -14,7 +20,7 @@ export default function Error({
         Something went wrong
       </h2>
       <p className="mt-2 text-surface-500 dark:text-dark-muted">
-        {error.message || "An unexpected error occurred."}
+        An unexpected error occurred. Please try again.
       </p>
       <button
         onClick={reset}

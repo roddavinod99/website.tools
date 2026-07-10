@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
+import hljs from "highlight.js";
 
 type Theme = "github" | "dark" | "solarized";
 
@@ -29,6 +30,15 @@ const EMOJI_MAP: Record<string, string> = {
   ":star:": "⭐", ":zap:": "⚡", ":ship:": "🚢", ":memo:": "📝",
 };
 
+function highlightCode(code: string, lang: string): string {
+  if (lang && hljs.getLanguage(lang)) {
+    try {
+      return hljs.highlight(code, { language: lang }).value;
+    } catch {}
+  }
+  return escapeHtml(code);
+}
+
 function renderMarkdown(text: string): string {
   let html = escapeHtml(text);
 
@@ -49,14 +59,20 @@ function renderMarkdown(text: string): string {
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
 
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
-    const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted">${escapeHtml(lang)}</span>` : "";
-    return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${escapeHtml(code.trim())}</code></pre></div>`;
+    const trimmed = code.trim();
+    const highlighted = highlightCode(trimmed, lang);
+    const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted uppercase">${escapeHtml(lang)}</span>` : "";
+    return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
   });
 
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-brand-500 underline hover:opacity-80">$1</a>');
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-2" />');
 
-  html = html.replace(/^> (.+)$/gm, "<blockquote class='border-l-4 border-surface-300 dark:border-dark-border pl-4 italic text-surface-600 dark:text-dark-muted my-2'>$1</blockquote>");
+  html = html.replace(/^(> .+)$/gm, (match) => {
+    const lines = match.split("\n").map(l => l.replace(/^> /, "").replace(/^>$/, ""));
+    const content = lines.join("<br/>");
+    return `<blockquote class='border-l-4 border-surface-300 dark:border-dark-border pl-4 italic text-surface-600 dark:text-dark-muted my-2'>${content}</blockquote>`;
+  });
 
   html = html.replace(/^- \[x\] (.+)$/gim, '<li class="flex items-center gap-2"><input type="checkbox" checked disabled class="accent-brand-500" /> <del>$1</del></li>');
   html = html.replace(/^- \[ \] (.+)$/gim, '<li class="flex items-center gap-2"><input type="checkbox" disabled class="accent-brand-500" /> $1</li>');
@@ -64,14 +80,23 @@ function renderMarkdown(text: string): string {
   html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
 
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class='list-disc pl-5 my-2 space-y-1'>$&</ul>");
+  html = html.replace(/(?:<li>.*<\/li>(?:\n)?)+/g, (match) => {
+    if (match.includes('type="checkbox"')) {
+      return `<ul class="list-none pl-5 my-2 space-y-1">${match}</ul>`;
+    }
+    return `<ul class="list-disc pl-5 my-2 space-y-1">${match}</ul>`;
+  });
+
+  html = html.replace(/(?:<li>(?:\d+\.\s)?.*<\/li>(?:\n)?)+/g, "<ol class='list-decimal pl-5 my-2 space-y-1'>$&</ol>");
 
   html = html.replace(/^---$/gm, "<hr class='my-4 border-surface-200 dark:border-dark-border' />");
 
   html = html.replace(/^\[(.+?)\]:\s*(.+)$/gm, "");
 
+  html = html.replace(/(https?:\/\/[^\s<'"()]+[^\s<'"().,;:!?])/g, '<a href="$1" class="text-brand-500 underline hover:opacity-80">$1</a>');
+
   html = html.replace(/\n\n/g, "</p><p class='my-2'>");
-  html = html.replace(/^(?!<[hupodib])/gm, "");
+  html = html.replace(/^(?!<[hupodibta])/gm, "");
 
   const tableRegex = /\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/g;
   html = html.replace(tableRegex, (_, header: string, body: string) => {
@@ -126,6 +151,7 @@ export function MarkdownPreview() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [splitPos, setSplitPos] = useState(50);
   const isDragging = useRef(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const wordCount = useMemo(() => input.trim() ? input.trim().split(/\s+/).length : 0, [input]);
   const readingTime = useMemo(() => Math.max(1, Math.ceil(wordCount / 200)), [wordCount]);
@@ -153,7 +179,7 @@ export function MarkdownPreview() {
   };
 
   const downloadHtml = () => {
-    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Document</title></head><body>${renderMarkdown(input)}</body></html>`;
+    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Document</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body>${renderMarkdown(input)}</body></html>`;
     const blob = new Blob([fullHtml], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a"); a.href = url; a.download = "document.html"; a.click();
@@ -168,15 +194,32 @@ export function MarkdownPreview() {
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault(); setDragOver(false);
-    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/") || f.name.endsWith(".md") || f.name.endsWith(".markdown"));
     if (files.length > 0) {
       const reader = new FileReader();
       reader.onload = () => {
-        const imgSyntax = `![${files[0].name}](${reader.result})`;
-        setInput(prev => prev + "\n" + imgSyntax);
+        const result = reader.result as string;
+        if (files[0].name.endsWith(".md") || files[0].name.endsWith(".markdown")) {
+          setInput(result);
+        } else {
+          const imgSyntax = `![${files[0].name}](${result})`;
+          setInput(prev => prev + "\n" + imgSyntax);
+        }
       };
-      reader.readAsDataURL(files[0]);
+      if (files[0].name.endsWith(".md") || files[0].name.endsWith(".markdown")) {
+        reader.readAsText(files[0]);
+      } else {
+        reader.readAsDataURL(files[0]);
+      }
     }
+  };
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setInput(reader.result as string);
+    reader.readAsText(file);
   };
 
   const handleMouseDown = () => { isDragging.current = true; };
@@ -238,6 +281,11 @@ export function MarkdownPreview() {
         <button onClick={() => handleCopy("html")} className="hover:text-brand-500 transition-colors">Copy HTML</button>
         <button onClick={downloadMd} className="hover:text-brand-500 transition-colors">.md</button>
         <button onClick={downloadHtml} className="hover:text-brand-500 transition-colors">.html</button>
+      </div>
+
+      <div className="flex items-center gap-2 text-xs">
+        <input ref={fileRef} type="file" accept=".md,.markdown" onChange={handleFile} className="hidden" />
+        <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 rounded border border-surface-200 px-2 py-1 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">Upload .md</button>
       </div>
 
       <div ref={containerRef} className="relative flex rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden" style={{ minHeight: "400px" }}>

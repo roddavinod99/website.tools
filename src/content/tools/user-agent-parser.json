@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "User agent parser that extracts browser name/version, rendering engine (Blink, WebKit, Gecko, Trident), operating system (name, version, architecture), device type (mobile, tablet, desktop, TV, console), and bot/crawler detection. Includes 10 preset user agent strings (Chrome, Firefox, Safari, Edge, Googlebot, Bingbot, etc.), side-by-side UA comparison, and one-click copy as JSON.",
+  "whyItExists": "User agent strings are long, cryptic, and inconsistently formatted. This tool parses them into readable structured data so developers can make device-specific or browser-specific decisions without manually parsing UA strings.",
+  "whoShouldUse": "Web developers, analytics engineers, QA testers, and anyone who needs to understand what browser, OS, or device is behind a user agent string for debugging or analytics.",
+  "useCases": [
+    "Parse a real user agent from server logs to identify the visitor's browser and OS",
+    "Compare two user agent strings side-by-side to find differences in browser version or platform",
+    "Detect if a user agent belongs to a known bot or crawler (Googlebot, Bingbot, etc.)",
+    "Load preset UAs for Chrome, Firefox, Safari, Edge to test parsing accuracy",
+    "Copy the parsed result as JSON for integration into an analytics pipeline",
+    "Determine if the device is mobile, tablet, or desktop from the user agent string"
+  ],
+  "instructions": [
+    "Paste a user agent string into the input field; the parsed result updates automatically.",
+    "Review the parsed fields: Browser (name, version, engine), OS (name, version, architecture), Device (type, vendor, model), and Bot (boolean + name).",
+    "Click a preset button (Chrome, Firefox, Safari, Edge, Googlebot, Bingbot, etc.) to load a sample UA string.",
+    "Use the Compare button to load the UA string into a side-by-side comparison view with another UA.",
+    "Click Copy JSON to copy the entire parsed result as a JSON object to your clipboard.",
+    "Check the Bot Detection section to see if the UA is identified as a known crawler with its specific name."
+  ],
+  "examples": [
+    "Input: \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\" → Browser: Chrome 120, Engine: Blink 120, OS: Windows 10 64-bit, Device: Desktop, Bot: No",
+    "Input: \"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\" → Browser: Googlebot 2.1, OS: unknown, Device: unknown, Bot: Yes (Googlebot)"
+  ],
+  "bestPractices": [
+    "Use parsed OS and device data for analytics segmentation, not for feature detection (use feature detection instead)",
+    "Compare multiple UA presets to understand how different browsers format their user agent strings",
+    "Use the JSON export to feed parsed UA data into data warehouses or analytics platforms",
+    "Check bot detection when filtering traffic — some legitimate UAs may not be in the bot list",
+    "Test with real user agents from production logs, not just the presets"
+  ],
+  "commonMistakes": [
+    "Using user agent detection for feature availability — use feature detection APIs (e.g., Modernizr) instead",
+    "Assuming a mobile user agent always means a mobile screen — tablets also send mobile UAs in some modes",
+    "Treating the browser version number as a simple integer — versions can be semantic (e.g., 120.0.6099.109)",
+    "Relying solely on user agent for bot detection — some bots disguise their UA as a real browser",
+    "Confusing the rendering engine with the browser — Safari uses WebKit, Chrome uses Blink (forked from WebKit)"
+  ],
+  "faq": [
+    "Can it parse iOS user agents? Yes — iOS Safari, Chrome, and other browsers are parsed correctly with OS name \"iOS\" and device model like \"iPhone\" or \"iPad\".",
+    "How accurate is bot detection? It detects over 50 known crawlers (Googlebot, Bingbot, DuckDuckBot, Yandex, Baidu, Slurp, etc.) by matching patterns in the UA string.",
+    "Does it support custom UA databases? Not yet — the parser uses a built-in rule set updated for modern browsers.",
+    "What does \"engine\" mean? Engine is the browser rendering engine (Blink, WebKit, Gecko, Trident) which determines CSS/HTML feature support independent of the browser vendor."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "String length calculator displaying three measurements: code points (Unicode characters), UTF-16 code units (JavaScript string length), and UTF-8 bytes (storage size). Breaks down character types into letters, digits, spaces, punctuation, and emoji with counts and percentages. Includes limit checks for SMS (160/70 GSM), Twitter (280), Instagram caption (2200), and Facebook post (63206).",
+  "whyItExists": "String length semantics vary across contexts — JavaScript uses UTF-16, databases use UTF-8, SMS uses GSM-7. This tool surfaces all relevant measurements simultaneously and alerts users when they exceed platform limits.",
+  "whoShouldUse": "Frontend developers, content creators, SMS/messaging engineers, and anyone building character-limited UIs or validating input field constraints.",
+  "useCases": [
+    "Check if a tweet exceeds the 280-character limit before posting",
+    "Verify an SMS message fits within 160 GSM-7 characters or switches to UCS-2",
+    "Debug an emoji-heavy string that has unexpected length in JavaScript vs. database storage",
+    "Analyze the composition of a password or username to count letters, digits, and special chars",
+    "Ensure an Instagram caption stays under the 2200-character limit",
+    "Determine the UTF-8 byte size of a string for a VARCHAR column in MySQL"
+  ],
+  "instructions": [
+    "Type or paste text into the input area; all measurements update in real time.",
+    "Read the three measurement lines: code points (Unicode), UTF-16 units (JS length), UTF-8 bytes.",
+    "Review the character type breakdown section showing counts and percentages for letters, digits, spaces, punctuation, and emoji.",
+    "Check the limit bars — SMS, Twitter, Instagram, Facebook — which turn red when the text exceeds the platform limit.",
+    "Hover over any emoji character to see its Unicode code point and name.",
+    "Use the clear button to reset the input and all measurements."
+  ],
+  "examples": [
+    "Input: \"Hello, world! 😊\" → code points: 15, UTF-16: 16 (😊 is surrogate pair), UTF-8: 19 bytes; char breakdown shows 11 letters, 1 digit, 2 punctuation, 1 space, 1 emoji",
+    "Input: \"a\" repeated 161 times → code points/UTF-16/UTF-8 all 161; SMS limit: 160 limit exceeded (1 char over 7-bit GSM limit)"
+  ],
+  "bestPractices": [
+    "Use UTF-16 units (JavaScript .length) when validating frontend input fields",
+    "Use UTF-8 bytes when defining database column sizes (e.g., VARCHAR(255) stores 255 bytes, not chars)",
+    "Be aware that emoji may use 2–16 bytes in UTF-8 and 2 code units in UTF-16 (surrogate pairs)",
+    "Check the SMS GSM-7 vs. UCS-2 status — special characters may force the entire message to UCS-2, halving the limit",
+    "Use the character breakdown to understand the composition of user-generated content for analytics"
+  ],
+  "commonMistakes": [
+    "Assuming JavaScript .length equals character count when emoji or combining marks are present",
+    "Using code point count for database column sizing — databases use byte counts, not character counts",
+    "Forgetting that SMS messages >70 characters in UCS-2 (non-GSM characters) count as multi-part",
+    "Counting newlines as one character — some systems count \\r\\n as 2",
+    "Ignoring zero-width joiners (ZWJ) and variation selectors which affect display but may be invisible in counts"
+  ],
+  "faq": [
+    "Why does 😊 count as 2 in JavaScript but 1 code point? Emoji outside the Basic Multilingual Plane use surrogate pairs — 2 UTF-16 code units for 1 code point.",
+    "What is the difference between code points and UTF-8 bytes? Code points are Unicode characters; UTF-8 bytes are how those characters are stored — ASCII is 1 byte, extended Latin 2 bytes, CJK 3 bytes, emoji up to 4 bytes.",
+    "How does SMS length work? 7-bit GSM characters allow 160; UCS-2 characters allow 70. If any non-GSM character is present, the entire message switches to UCS-2 (70 char limit).",
+    "Are control characters counted? Yes — tabs, newlines, and other control characters are included in all measurements and listed under the \"other\" category."
+  ]
+}

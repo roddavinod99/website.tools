@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Computes file checksums using MD5, SHA-1, SHA-256, SHA-384, SHA-512, and SHA-224 algorithms. Supports drag-and-drop for quick file loading, a compare mode to verify checksums against expected values, and a real-time progress bar for large files. Batch processing handles multiple files simultaneously, and results can be saved as CSV or JSON.",
+  "whyItExists": "Verifying file integrity is critical when downloading software, transferring data, or storing backups, but doing it manually with command-line tools is cumbersome and error-prone. This tool provides a visual interface with batch support, making it easy to generate and verify checksums for multiple files at once without memorizing terminal commands.",
+  "whoShouldUse": "Software developers verifying downloads, system administrators auditing file integrity, and anyone who needs to quickly generate or verify checksums across multiple files.",
+  "useCases": [
+    "Verify a downloaded ISO or installer against its published SHA-256 hash",
+    "Generate checksums for all files in a release directory before distribution",
+    "Compare two directories of files to check for differences using hash comparison",
+    "Audit backup integrity by generating checksums before and after archival",
+    "Use text mode to hash raw strings rather than files for quick verification",
+    "Export a batch of file hashes to CSV for documentation or compliance reporting"
+  ],
+  "instructions": [
+    "Drag and drop files onto the upload area, or click to browse and select multiple files",
+    "Choose the hash algorithm from the dropdown (MD5, SHA-1, SHA-256, SHA-384, SHA-512, or SHA-224)",
+    "Click the hash button to start processing; observe the progress bar for large files",
+    "Enable compare mode by pasting an expected hash value to instantly match against results",
+    "Switch to text mode to hash raw input strings instead of files",
+    "Click Save to export all checksums as CSV or JSON for record-keeping"
+  ],
+  "examples": [
+    "Input: Drag file 'ubuntu.iso' and select SHA-256. Output: 'ubuntu.iso | SHA-256 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'",
+    "Input: Drag 5 files in batch mode with SHA-512 selected. Output: Table with 5 rows showing filename and corresponding hash, saved as CSV."
+  ],
+  "bestPractices": [
+    "Always use SHA-256 or SHA-512 for security-critical verification; avoid MD5 for integrity checks",
+    "Use batch mode when distributing multiple files so users can verify all at once",
+    "Export results as JSON when you need machine-readable output for CI/CD pipelines",
+    "Use compare mode by pasting hashes from the publisher's website to automate verification"
+  ],
+  "commonMistakes": [
+    "Using MD5 for security-sensitive verification where collision resistance is required",
+    "Forgetting to select the same algorithm that the publisher used for their published hash",
+    "Overlooking the progress bar thinking the tool hung on very large files",
+    "Comparing mixed-case hashes when the tool outputs lowercase; use case-insensitive comparison"
+  ],
+  "faq": [
+    "Can I hash files larger than 2GB? Yes, the tool streams the file and handles large files with a progress bar.",
+    "Does the tool compare hashes automatically? Yes, enable compare mode and paste the expected hash for instant matching.",
+    "What format does CSV export use? Each row is filename, algorithm, hash, and timestamp.",
+    "Can I hash text instead of files? Yes, switch to text mode and type or paste the string."
+  ]
+}

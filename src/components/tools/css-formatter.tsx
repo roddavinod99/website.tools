@@ -1,25 +1,26 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Copy, Download, Trash2, RefreshCw, Minimize } from "lucide-react";
+import { Copy, Download, Trash2, RefreshCw, Minimize, Upload } from "lucide-react";
 
-type Indent = "2" | "4" | "tab";
+type IndentType = "spaces" | "tabs";
 type OutputMode = "expanded" | "compact" | "compressed";
 type VendorOrder = "keep" | "prepend-alpha";
 type ColorFormat = "none" | "hex-to-named" | "rgb-to-hex" | "hex-to-rgb";
-
-const INDENT_MAP: Record<Indent, string> = { "2": "  ", "4": "    ", tab: "\t" };
+type BracePlacement = "same-line" | "new-line";
+type SelFormat = "each-line" | "compact";
+type EmptyLines = "preserve" | "remove" | "condense";
 
 function propSortKey(p: string): string {
   const prefixed = /^(-\w+-)?(.+)/.exec(p);
   return prefixed ? `${prefixed[2] || p}` : p;
 }
 
-function formatBlock(rules: string[], indent: string, mode: OutputMode, sortProps: boolean, trailingSemi: boolean, colorFormat: ColorFormat): string[] {
+function formatBlock(rules: string[], indent: string, mode: OutputMode, sortProps: boolean, trailingSemi: boolean, colorFormat: ColorFormat, bracePlacement: BracePlacement, selFormat: SelFormat): string[] {
   return rules.map((rule) => {
     const idx = rule.indexOf("{");
     if (idx === -1) return rule;
-    const selector = rule.slice(0, idx).trim();
+    let selector = rule.slice(0, idx).trim();
     const body = rule.slice(idx + 1, rule.lastIndexOf("}")).trim();
     if (!body) return mode === "compressed" ? "" : `${selector} {}`;
     let props = body.split(";").filter(Boolean).map((p) => p.trim());
@@ -31,10 +32,14 @@ function formatBlock(rules: string[], indent: string, mode: OutputMode, sortProp
       if (colorFormat === "hex-to-rgb") p = p.replace(/#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g, hexToRgb);
       return p;
     });
+    if (selFormat === "each-line") {
+      selector = selector.split(",").map((s) => s.trim()).join(",\n");
+    }
+    const braceOpen = bracePlacement === "same-line" ? " {" : "\n{";
     if (mode === "compressed") return `${selector}{${props.join(";")}${trailingSemi ? ";" : ""}}`;
-    if (mode === "compact") return `${selector} { ${props.join("; ")}${trailingSemi ? ";" : ""} }`;
+    if (mode === "compact") return `${selector}${braceOpen} ${props.join("; ")}${trailingSemi ? ";" : ""} }`;
     const bodyFormatted = props.map((p) => `${indent}${p}${trailingSemi ? ";" : ""}`).join("\n");
-    return `${selector} {\n${bodyFormatted}\n}`;
+    return `${selector}${braceOpen}\n${bodyFormatted}\n}`;
   }).filter(Boolean);
 }
 
@@ -61,12 +66,34 @@ function hexToRgb(m: string): string {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+function validateCSS(css: string): string[] {
+  const errors: string[] = [];
+  const lines = css.split("\n");
+  let braceDepth = 0;
+  let parenDepth = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    for (const c of line) {
+      if (c === "{") braceDepth++;
+      if (c === "}") braceDepth--;
+      if (c === "(") parenDepth++;
+      if (c === ")") parenDepth--;
+    }
+    if (braceDepth < 0) { errors.push(`Line ${i + 1}: Unbalanced closing brace`); braceDepth = 0; }
+    if (parenDepth < 0) { errors.push(`Line ${i + 1}: Unbalanced closing parenthesis`); parenDepth = 0; }
+  }
+  if (braceDepth > 0) errors.push(`Unclosed brace at end of file (${braceDepth} open)`);
+  if (parenDepth > 0) errors.push(`Unclosed parenthesis at end of file (${parenDepth} open)`);
+  return errors;
+}
+
 export function CSSFormatter() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);
-  const [indentW, setIndentW] = useState<Indent>("2");
+  const [indentSize, setIndentSize] = useState<number>(2);
+  const [indentType, setIndentType] = useState<IndentType>("spaces");
   const [outputMode, setOutputMode] = useState<OutputMode>("expanded");
   const [sortProps, setSortProps] = useState(true);
   const [sortSelectors, setSortSelectors] = useState(false);
@@ -76,7 +103,15 @@ export function CSSFormatter() {
   const [trailingSemi, setTrailingSemi] = useState(true);
   const [vendorOrder, setVendorOrder] = useState<VendorOrder>("keep");
   const [colorFormat, setColorFormat] = useState<ColorFormat>("none");
+  const [bracePlacement, setBracePlacement] = useState<BracePlacement>("same-line");
+  const [selFormat, setSelFormat] = useState<SelFormat>("compact");
+  const [emptyLines, setEmptyLines] = useState<EmptyLines>("remove");
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const getIndent = useCallback(() => {
+    return indentType === "tabs" ? "\t" : " ".repeat(indentSize);
+  }, [indentSize, indentType]);
 
   const format = useCallback(() => {
     try {
@@ -84,6 +119,13 @@ export function CSSFormatter() {
       if (removeCmts) css = css.replace(/\/\*[\s\S]*?\*\//g, "");
       css = css.replace(/@import\s+url\([^)]+\);/g, (m) => `\n${m}`);
       const isScss = /\$[\w-]+\s*:/.test(css) || /@(mixin|include|extend)/.test(css);
+
+      if (emptyLines === "remove") {
+        css = css.replace(/\n{3,}/g, "\n\n");
+      } else if (emptyLines === "condense") {
+        css = css.replace(/\n{3,}/g, "\n\n");
+      }
+
       const atRules: string[] = [];
       css = css.replace(/@[^{]+{[\s\S]*?(?=@|$)}/g, (m) => { atRules.push(m); return ""; });
       const imports: string[] = [];
@@ -133,24 +175,31 @@ export function CSSFormatter() {
         });
       }
 
-      const indent = INDENT_MAP[indentW];
+      const indent = getIndent();
       const formattedImports = imports.join("\n");
       const formattedAtRules = atRules.join("\n\n");
-      const formatted = formatBlock(rules, indent, outputMode, sortProps, trailingSemi, colorFormat).join("\n\n");
+      const formatted = formatBlock(rules, indent, outputMode, sortProps, trailingSemi, colorFormat, bracePlacement, selFormat).join("\n\n");
       const result = [formattedImports, formattedAtRules, formatted].filter(Boolean).join("\n\n");
+
+      const valErrors = validateCSS(input);
+      if (valErrors.length > 0) {
+        setError(valErrors.join("; "));
+        setErrorLine(null);
+      } else {
+        setError("");
+        setErrorLine(null);
+      }
 
       if (isScss) {
         setOutput(result + "\n\n/* SCSS syntax detected — hints preserved */");
       } else {
         setOutput(result);
       }
-      setError("");
-      setErrorLine(null);
     } catch (e) {
       setError((e as Error).message);
       setErrorLine(null);
     }
-  }, [input, indentW, outputMode, sortProps, sortSelectors, removeEmpty, removeDuplicates, removeCmts, trailingSemi, vendorOrder, colorFormat]);
+  }, [input, getIndent, outputMode, sortProps, sortSelectors, removeEmpty, removeDuplicates, removeCmts, trailingSemi, vendorOrder, colorFormat, bracePlacement, selFormat, emptyLines]);
 
   const minify = useCallback(() => {
     try {
@@ -177,23 +226,43 @@ export function CSSFormatter() {
   }, [output]);
   const clear = useCallback(() => { setInput(""); setOutput(""); setError(""); setErrorLine(null); }, []);
 
-  const inputChars = input.length;
-  const saved = inputChars - (output ? output.length : 0);
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setInput(reader.result as string);
+    reader.readAsText(file);
+  };
+
+  const inputBytes = new TextEncoder().encode(input).length;
+  const outputBytes = output ? new TextEncoder().encode(output).length : 0;
+  const compressionRatio = inputBytes > 0 ? ((1 - outputBytes / inputBytes) * 100).toFixed(1) : "0.0";
 
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">CSS Input</label>
+        <div className="flex items-center justify-between mb-1">
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text">CSS Input</label>
+          <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"><Upload className="w-3 h-3" /> Upload .css</button>
+          <input ref={fileRef} type="file" accept=".css" onChange={handleFile} className="hidden" />
+        </div>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="body { color: red; font-size: 14px; }" rows={8} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
         <div>
-          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent</label>
-          <select value={indentW} onChange={(e) => setIndentW(e.target.value as Indent)}
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent type</label>
+          <select value={indentType} onChange={(e) => setIndentType(e.target.value as IndentType)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option>
+            <option value="spaces">Spaces</option><option value="tabs">Tabs</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent size</label>
+          <select value={indentSize} onChange={(e) => setIndentSize(Number(e.target.value))}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value={2}>2</option><option value={4}>4</option>
           </select>
         </div>
         <div>
@@ -201,6 +270,20 @@ export function CSSFormatter() {
           <select value={outputMode} onChange={(e) => setOutputMode(e.target.value as OutputMode)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="expanded">Expanded</option><option value="compact">Compact</option><option value="compressed">Compressed</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Brace placement</label>
+          <select value={bracePlacement} onChange={(e) => setBracePlacement(e.target.value as BracePlacement)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="same-line">Same line</option><option value="new-line">New line</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Selector format</label>
+          <select value={selFormat} onChange={(e) => setSelFormat(e.target.value as SelFormat)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="compact">Compact</option><option value="each-line">Each on new line</option>
           </select>
         </div>
         <div>
@@ -222,6 +305,13 @@ export function CSSFormatter() {
           <select value={trailingSemi ? "add" : "remove"} onChange={(e) => setTrailingSemi(e.target.value === "add")}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="add">Add</option><option value="remove">Remove</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Empty lines</label>
+          <select value={emptyLines} onChange={(e) => setEmptyLines(e.target.value as EmptyLines)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="preserve">Preserve</option><option value="remove">Remove</option><option value="condense">Condense</option>
           </select>
         </div>
       </div>
@@ -263,7 +353,9 @@ export function CSSFormatter() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Output</label>
-            <span className="text-xs text-surface-400 dark:text-dark-muted">{saved > 0 ? `${saved}B saved` : `${Math.abs(saved)}B larger`}</span>
+            <span className="text-xs text-surface-400 dark:text-dark-muted">
+              {inputBytes.toLocaleString()}B → {outputBytes.toLocaleString()}B ({compressionRatio}% {parseFloat(compressionRatio) >= 0 ? "saved" : "larger"})
+            </span>
           </div>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-80 whitespace-pre-wrap break-all">{output}</pre>
         </div>

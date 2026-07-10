@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Calculates IPv4 subnet details from a CIDR notation or IP/mask input, showing network address, broadcast address, usable host range, and total host count. Detects address class (A/B/C) and type (private, public, loopback, etc.), displays a binary view of the address and mask, and supports subnetting/supernetting calculations. Also handles IPv6 expand and compress formatting.",
+  "whyItExists": "Network engineers constantly need to compute subnet boundaries, host ranges, and addressing details, but doing binary math by hand is slow and error-prone. This tool automates subnet calculations with clear visual output and also handles IPv6 address formatting.",
+  "whoShouldUse": "Network administrators planning IP allocations, DevOps engineers configuring VPC subnets, and students learning subnetting concepts.",
+  "useCases": [
+    "Calculate the usable host range for a /24 subnet when assigning static IPs in an office network",
+    "Determine if two IP addresses are in the same subnet by checking network addresses",
+    "Subnet a /22 into smaller /26 subnets for a multi-tier application deployment",
+    "Expand a compressed IPv6 address like ::1 to its full notation for configuration files",
+    "Check if an IP is private or public when troubleshooting routing issues"
+  ],
+  "instructions": [
+    "Enter an IPv4 address with CIDR notation (e.g., 192.168.1.0/24) or a subnet mask (e.g., 255.255.255.0)",
+    "View the calculated network address, broadcast address, and usable host range",
+    "Check the class/type detection to see if the address is private, public, loopback, or reserved",
+    "Toggle the binary view to see the address and mask in binary format for learning or debugging",
+    "Use the subnet calculator to divide a network into smaller subnets (subnetting)",
+    "Switch to IPv6 mode to expand (::1 → 0000:0000:0000:0000:0000:0000:0000:0001) or compress an IPv6 address"
+  ],
+  "examples": [
+    "Input: '192.168.1.0/24'. Output: Network: 192.168.1.0, Broadcast: 192.168.1.255, Usable: 192.168.1.1-192.168.1.254 (254 hosts), Class C, Private.",
+    "Input: '10.0.0.0/8' subnet to /16. Output: 256 subnets, each with 65,534 usable hosts, network and broadcast listed per subnet."
+  ],
+  "bestPractices": [
+    "Use CIDR notation for consistency; avoid classful addressing for modern network planning",
+    "Always subtract 2 from the total host count for network and broadcast addresses",
+    "Use the binary view to verify subnet boundaries when troubleshooting connectivity issues",
+    "For IPv6, always expand addresses before copying into config files to avoid typos"
+  ],
+  "commonMistakes": [
+    "Forgetting to exclude the network and broadcast addresses from assignable host pools",
+    "Using /31 or /32 subnets without knowing they have 0 usable hosts for standard addressing",
+    "Confusing CIDR prefix length with subnet mask octets (e.g., /24 ≠ 255.0.0.0)",
+    "Not accounting for reserved addresses in cloud VPCs (AWS/GCP reserve 3-5 IPs per subnet)"
+  ],
+  "faq": [
+    "Does this work for IPv6 subnets? The calculator handles IPv6 expand/compress; full subnet calculation is IPv4.",
+    "What is the difference between subnetting and supernetting? Subnetting splits a network into smaller ones; supernetting combines multiple networks into a larger one.",
+    "How does class/type detection work? It identifies Class A (1-126), B (128-191), C (192-223) and special ranges like private (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).",
+    "Can I calculate the subnet for a host IP without CIDR? Enter the IP and mask separately, e.g., 192.168.1.50 with mask 255.255.255.0."
+  ]
+}

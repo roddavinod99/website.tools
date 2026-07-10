@@ -31,11 +31,33 @@ const PRESETS: Preset[] = [
   { label: "Icon (192x192)", width: 192, height: 192, category: "Icons" },
 ];
 
+const SOCIAL_BUTTONS: { label: string; w: number; h: number }[] = [
+  { label: "Instagram", w: 1080, h: 1080 },
+  { label: "Facebook", w: 1200, h: 630 },
+  { label: "Twitter", w: 1200, h: 675 },
+  { label: "LinkedIn", w: 1200, h: 627 },
+  { label: "YouTube", w: 1280, h: 720 },
+  { label: "HD", w: 1920, h: 1080 },
+];
+
+const ASPECT_RATIOS: { label: string; ratio: number }[] = [
+  { label: "16:9", ratio: 16 / 9 },
+  { label: "4:3", ratio: 4 / 3 },
+  { label: "1:1", ratio: 1 },
+  { label: "3:2", ratio: 3 / 2 },
+  { label: "Custom", ratio: 0 },
+];
+
 const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
   { value: "image/png", label: "PNG", ext: "png" },
   { value: "image/jpeg", label: "JPEG", ext: "jpg" },
   { value: "image/webp", label: "WebP", ext: "webp" },
 ];
+
+const INPUT_ACCEPT = "image/jpeg,image/png,image/gif,image/webp,image/bmp";
+const MAX_FILES = 20;
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
+const MAX_HISTORY = 5;
 
 interface ImageEntry {
   id: string;
@@ -66,8 +88,111 @@ function readImageFile(file: File): Promise<{ url: string; width: number; height
   });
 }
 
+function crc32(data: Uint8Array): number {
+  let crc = 0xffffffff;
+  const table = new Int32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let j = 0; j < 8; j++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    table[i] = c;
+  }
+  for (let i = 0; i < data.length; i++) crc = table[(crc ^ data[i]) & 0xff] ^ (crc >>> 8);
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function dosDateTime(date: Date): [number, number] {
+  const d = date.getDate(), m = date.getMonth() + 1, y = date.getFullYear();
+  const h = date.getHours(), min = date.getMinutes(), s = date.getSeconds();
+  const datePart = ((y - 1980) << 9) | (m << 5) | d;
+  const timePart = (h << 11) | (min << 5) | Math.floor(s / 2);
+  return [timePart, datePart];
+}
+
+async function createZIP(files: { name: string; data: Blob }[]): Promise<Blob> {
+  const encoder = new TextEncoder();
+  const chunks: Uint8Array[] = [];
+  const centralEntries: Uint8Array[] = [];
+  let localOffset = 0;
+
+  for (const file of files) {
+    const nameBytes = encoder.encode(file.name);
+    const dataBytes = new Uint8Array(await file.data.arrayBuffer());
+    const crc = crc32(dataBytes);
+
+    const localHeader = new ArrayBuffer(30 + nameBytes.length);
+    const lh = new Uint8Array(localHeader);
+    const lhDV = new DataView(localHeader);
+
+    lhDV.setUint32(0, 0x04034b50, true);
+    lhDV.setUint16(4, 20, true);
+    lhDV.setUint16(6, 0, true);
+    lhDV.setUint16(8, 0, true);
+    const [time, date] = dosDateTime(new Date());
+    lhDV.setUint16(10, time, true);
+    lhDV.setUint16(12, date, true);
+    lhDV.setUint32(14, crc, true);
+    lhDV.setUint32(18, dataBytes.length, true);
+    lhDV.setUint32(22, dataBytes.length, true);
+    lhDV.setUint16(26, nameBytes.length, true);
+    lh.set(nameBytes, 30);
+
+    chunks.push(lh);
+    chunks.push(dataBytes);
+
+    const centralHeader = new ArrayBuffer(46 + nameBytes.length);
+    const ch = new Uint8Array(centralHeader);
+    const chDV = new DataView(centralHeader);
+
+    chDV.setUint32(0, 0x02014b50, true);
+    chDV.setUint16(4, 20, true);
+    chDV.setUint16(6, 20, true);
+    chDV.setUint16(8, 0, true);
+    chDV.setUint16(10, 0, true);
+    const [time2, date2] = dosDateTime(new Date());
+    chDV.setUint16(12, time2, true);
+    chDV.setUint16(14, date2, true);
+    chDV.setUint32(16, crc, true);
+    chDV.setUint32(20, dataBytes.length, true);
+    chDV.setUint32(24, dataBytes.length, true);
+    chDV.setUint16(28, nameBytes.length, true);
+    chDV.setUint16(30, 0, true);
+    chDV.setUint16(32, 0, true);
+    chDV.setUint16(34, 0, true);
+    chDV.setUint16(36, 0, true);
+    chDV.setUint32(38, 0, true);
+    chDV.setUint32(42, localOffset, true);
+    ch.set(nameBytes, 46);
+
+    centralEntries.push(ch);
+    localOffset += 30 + nameBytes.length + dataBytes.length;
+  }
+
+  const centralSize = centralEntries.reduce((s, e) => s + e.length, 0);
+  const centralOffset = chunks.reduce((s, e) => s + e.length, 0);
+
+  const eocd = new ArrayBuffer(22);
+  const eocdDV = new DataView(eocd);
+  eocdDV.setUint32(0, 0x06054b50, true);
+  eocdDV.setUint16(4, 0, true);
+  eocdDV.setUint16(6, 0, true);
+  eocdDV.setUint16(8, files.length, true);
+  eocdDV.setUint16(10, files.length, true);
+  eocdDV.setUint32(12, centralSize, true);
+  eocdDV.setUint32(16, centralOffset, true);
+  eocdDV.setUint16(20, 0, true);
+
+  const allParts = [...chunks, ...centralEntries, new Uint8Array(eocd)];
+  const totalLen = allParts.reduce((s, e) => s + e.length, 0);
+  const result = new Uint8Array(totalLen);
+  let pos = 0;
+  for (const part of allParts) { result.set(part, pos); pos += part.length; }
+
+  return new Blob([result], { type: "application/zip" });
+}
+
 export function ImageResizer() {
   const [images, setImages] = useState<ImageEntry[]>([]);
+  const [history, setHistory] = useState<ImageEntry[]>([]);
   const [width, setWidth] = useState(800);
   const [height, setHeight] = useState(600);
   const [unit, setUnit] = useState<UnitType>("px");
@@ -80,6 +205,8 @@ export function ImageResizer() {
   const [maxFileSize, setMaxFileSize] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string>("");
+  const [aspectRatioMode, setAspectRatioMode] = useState<string>("Custom");
+  const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -88,24 +215,30 @@ export function ImageResizer() {
   const toPixels = useCallback(
     (val: number, origDim: number): number => {
       switch (unit) {
-        case "percent":
-          return Math.round(origDim * (val / 100));
-        case "cm":
-          return Math.round((val / 2.54) * DPI);
-        case "inch":
-          return Math.round(val * DPI);
-        default:
-          return val;
+        case "percent": return Math.round(origDim * (val / 100));
+        case "cm": return Math.round((val / 2.54) * DPI);
+        case "inch": return Math.round(val * DPI);
+        default: return val;
       }
     },
     [unit]
   );
 
   const handleFiles = useCallback(async (fileList: FileList) => {
+    setError("");
+    const totalSize = images.reduce((s, i) => s + i.file.size, 0);
     const newEntries: ImageEntry[] = [];
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
-      if (!file.type.startsWith("image/")) continue;
+      if (!file.type.match(/^image\/(jpeg|png|gif|webp|bmp)$/)) continue;
+      if (images.length + newEntries.length >= MAX_FILES) {
+        setError("Maximum 20 files allowed");
+        break;
+      }
+      if (totalSize + file.size > MAX_TOTAL_SIZE) {
+        setError("Total size exceeds 50MB limit");
+        break;
+      }
       const info = await readImageFile(file);
       newEntries.push({
         id: crypto.randomUUID(),
@@ -117,7 +250,7 @@ export function ImageResizer() {
       });
     }
     setImages((prev) => [...prev, ...newEntries]);
-  }, []);
+  }, [images]);
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) handleFiles(e.target.files);
@@ -137,6 +270,21 @@ export function ImageResizer() {
     setHeight(preset.height);
     setUnit("px");
   }, []);
+
+  const applySocialButton = useCallback((w: number, h: number) => {
+    setWidth(w);
+    setHeight(h);
+    setUnit("px");
+    setSelectedPreset("");
+  }, []);
+
+  const applyAspectRatio = useCallback((label: string, ratio: number) => {
+    setAspectRatioMode(label);
+    if (ratio > 0) {
+      const w = width || 800;
+      setHeight(Math.round(w / ratio));
+    }
+  }, [width]);
 
   const resizeImage = useCallback(
     async (entry: ImageEntry): Promise<ImageEntry> => {
@@ -182,12 +330,8 @@ export function ImageResizer() {
           break;
         }
         case "fill": {
-          const ratioX = targetW / img.width;
-          const ratioY = targetH / img.height;
-          drawW = Math.round(img.width * ratioX);
-          drawH = Math.round(img.height * ratioY);
-          offsetX = 0;
-          offsetY = 0;
+          drawW = targetW;
+          drawH = targetH;
           break;
         }
         default:
@@ -211,11 +355,7 @@ export function ImageResizer() {
       canvas.width = Math.max(1, outW);
       canvas.height = Math.max(1, outH);
       const ctx = canvas.getContext("2d")!;
-      if (fitMode === "cover") {
-        ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
-      } else {
-        ctx.drawImage(img, 0, 0, drawW, drawH);
-      }
+      ctx.drawImage(img, fitMode === "cover" ? offsetX : 0, fitMode === "cover" ? offsetY : 0, drawW, drawH);
 
       const qualityVal = quality / 100;
       let blob = await new Promise<Blob | null>((resolve) =>
@@ -253,6 +393,11 @@ export function ImageResizer() {
     setImages((prev) => prev.map((img) => ({ ...img, processing: true })));
     const results = await Promise.all(images.map((entry) => resizeImage(entry)));
     setImages(results);
+    setHistory((prev) => {
+      const completed = results.filter((r) => r.outputUrl);
+      const combined = [...completed, ...prev].slice(0, MAX_HISTORY);
+      return combined;
+    });
   }, [images, resizeImage]);
 
   const removeImage = (id: string) => {
@@ -285,6 +430,25 @@ export function ImageResizer() {
     });
   };
 
+  const downloadAllAsZip = useCallback(async () => {
+    const ext = FORMAT_OPTIONS.find((f) => f.value === format)?.ext || "png";
+    const entries = images.filter((e) => e.outputUrl);
+    const zipFiles = await Promise.all(
+      entries.map(async (entry) => {
+        const base = entry.file.name.replace(/\.[^.]+$/, "");
+        const resp = await fetch(entry.outputUrl!);
+        const blob = await resp.blob();
+        return { name: `${base}${suffix}.${ext}`, data: blob };
+      })
+    );
+    const zipBlob = await createZIP(zipFiles);
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(zipBlob);
+    link.download = "resized-images.zip";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }, [images, format, suffix]);
+
   const hasOutput = images.some((img) => img.outputUrl);
   const categorizedPresets = PRESETS.reduce<Record<string, Preset[]>>((acc, p) => {
     (acc[p.category] = acc[p.category] || []).push(p);
@@ -305,17 +469,51 @@ export function ImageResizer() {
             : "border-surface-200 bg-white hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface"
         }`}
       >
-        <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFileInput} className="hidden" />
+        <input ref={fileRef} type="file" accept={INPUT_ACCEPT} multiple onChange={handleFileInput} className="hidden" />
         <svg className="mb-2 h-8 w-8 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         <p className="text-sm text-surface-500 dark:text-dark-muted">
           {images.length > 0 ? `${images.length} image(s) selected` : "Click or drop images here"}
         </p>
+        <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">JPEG, PNG, GIF, WebP, BMP &middot; Max 20 files &middot; 50MB total</p>
       </div>
+
+      {error && <p className="text-sm text-red-500">{error}</p>}
 
       {images.length > 0 && (
         <>
+          <div className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+            <label className="mb-2 block text-xs font-medium text-surface-500 dark:text-dark-muted">Quick Social Media Presets</label>
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {SOCIAL_BUTTONS.map((btn) => (
+                <button
+                  key={btn.label}
+                  onClick={() => applySocialButton(btn.w, btn.h)}
+                  className="rounded-lg border border-surface-200 px-2.5 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+                >
+                  {btn.label} ({btn.w}x{btn.h})
+                </button>
+              ))}
+            </div>
+            <label className="mb-2 block text-xs font-medium text-surface-500 dark:text-dark-muted">Aspect Ratio Presets</label>
+            <div className="flex flex-wrap gap-1.5">
+              {ASPECT_RATIOS.map((ar) => (
+                <button
+                  key={ar.label}
+                  onClick={() => applyAspectRatio(ar.label, ar.ratio)}
+                  className={`rounded-lg border px-2.5 py-1 text-xs transition-colors ${
+                    aspectRatioMode === ar.label
+                      ? "border-brand-500 bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-400"
+                      : "border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+                  }`}
+                >
+                  {ar.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
             <label className="mb-2 block text-xs font-medium text-surface-500 dark:text-dark-muted">Preset Dimensions</label>
             <div className="flex flex-wrap gap-1.5">
@@ -336,9 +534,7 @@ export function ImageResizer() {
                         }`}
                       >
                         {p.label}
-                        <span className="ml-1 text-surface-400">
-                          ({p.width}x{p.height})
-                        </span>
+                        <span className="ml-1 text-surface-400">({p.width}x{p.height})</span>
                       </button>
                     ))}
                   </div>
@@ -368,11 +564,7 @@ export function ImageResizer() {
               title="Maintain aspect ratio"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {keepRatio ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8m0 0v8m0-8L8 16" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8m0 0v8m0-8L8 16" />
-                )}
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8m0 0v8m0-8L8 16" />
               </svg>
             </button>
             <div>
@@ -406,9 +598,9 @@ export function ImageResizer() {
                 className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 <option value="exact">Exact</option>
-                <option value="contain">Contain</option>
-                <option value="cover">Cover</option>
-                <option value="fill">Fill</option>
+                <option value="contain">Fit (Contain)</option>
+                <option value="cover">Crop (Cover)</option>
+                <option value="fill">Fill (Stretch)</option>
               </select>
             </div>
             <div>
@@ -480,12 +672,20 @@ export function ImageResizer() {
               Resize {images.length > 1 ? `All (${images.length})` : ""}
             </button>
             {hasOutput && (
-              <button
-                onClick={downloadAll}
-                className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
-              >
-                Download All
-              </button>
+              <>
+                <button
+                  onClick={downloadAll}
+                  className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                >
+                  Download All
+                </button>
+                <button
+                  onClick={downloadAllAsZip}
+                  className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                >
+                  Download as ZIP
+                </button>
+              </>
             )}
             <button
               onClick={clearAll}
@@ -517,9 +717,7 @@ export function ImageResizer() {
                 <div className="mb-2 text-xs text-surface-500 dark:text-dark-muted">
                   Original: {entry.originalWidth}x{entry.originalHeight}
                   {entry.outputWidth && entry.outputHeight && (
-                    <span className="ml-2 text-brand-500">
-                      → {entry.outputWidth}x{entry.outputHeight}
-                    </span>
+                    <span className="ml-2 text-brand-500">→ {entry.outputWidth}x{entry.outputHeight}</span>
                   )}
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -542,16 +740,12 @@ export function ImageResizer() {
                         className="max-h-28 w-full rounded border border-surface-200 object-contain dark:border-dark-border"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center text-xs text-surface-300 dark:text-dark-muted">
-                        Not resized
-                      </div>
+                      <div className="flex h-full items-center justify-center text-xs text-surface-300 dark:text-dark-muted">Not resized</div>
                     )}
                   </div>
                 </div>
                 {entry.outputSize && (
-                  <div className="mt-2 text-xs text-surface-500 dark:text-dark-muted">
-                    Size: {formatSize(entry.outputSize)}
-                  </div>
+                  <div className="mt-2 text-xs text-surface-500 dark:text-dark-muted">Size: {formatSize(entry.outputSize)}</div>
                 )}
                 {entry.outputUrl && (
                   <button
@@ -564,6 +758,31 @@ export function ImageResizer() {
               </div>
             ))}
           </div>
+
+          {history.length > 0 && (
+            <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+              <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
+                Processing History (last {history.length})
+              </summary>
+              <div className="grid gap-3 border-t border-surface-200 p-3 sm:grid-cols-2 lg:grid-cols-3 dark:border-dark-border">
+                {history.map((entry) => (
+                  <div key={entry.id} className="flex items-center gap-3 rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+                    <img
+                      src={entry.outputUrl || entry.originalUrl}
+                      alt=""
+                      className="h-10 w-10 rounded border border-surface-100 object-contain dark:border-dark-border"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-xs font-medium text-surface-700 dark:text-dark-text">{entry.file.name}</p>
+                      <p className="text-[10px] text-surface-400">
+                        {entry.outputWidth}x{entry.outputHeight} &middot; {entry.outputSize ? formatSize(entry.outputSize) : ""}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
         </>
       )}
     </div>

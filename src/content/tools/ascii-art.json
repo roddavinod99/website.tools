@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates ASCII art text from user input using 18 built-in fonts (ANSI Shadow, Big, Block, Bubble, Digital, Doom, Isometric1, Larry 3D, Mini, Ogre, Puffy, Rectangles, Slavic, Small, Soft, Standard, Star Wars, and Twisted). Advanced features include color selection, letter spacing adjustment, horizontal/vertical flipping, reverse video mode, history tracking of recent generations, and the ability to copy output directly to clipboard.",
+  "whyItExists": "ASCII art adds retro visual flair to terminal applications, source code headers, documentation, and README files. Developers need a quick way to generate consistent, font-rich ASCII art without installing separate command-line tools or visiting third-party websites.",
+  "whoShouldUse": "Backend developers, CLI tool authors, open-source maintainers, and anyone who wants to add eye-catching text banners to their terminal output or project documentation.",
+  "useCases": [
+    "Generate a large ASCII banner for a CLI tool's --help output",
+    "Create a styled header for source code comments or license files",
+    "Add retro-themed text to game menus or splash screens",
+    "Design custom ASCII logos for GitHub repository README files",
+    "Produce flipped or reversed text for artistic designs",
+    "Rapidly preview 18 fonts to pick the right style for a project"
+  ],
+  "instructions": [
+    "Type or paste your desired text into the input field (up to 50 characters recommended for best rendering)",
+    "Select one of the 18 available fonts from the font dropdown — the preview updates instantly",
+    "Customize appearance using color picker, letter spacing slider, horizontal flip, vertical flip, and reverse video toggle",
+    "Use the copy button to copy the rendered ASCII art to your clipboard, or access your generation history from the history panel",
+    "For multi-line output, click 'Add Line' to generate separate styled lines that stack vertically",
+    "Export your artwork as plain text or PNG for use in presentations, documentation, or merchandise"
+  ],
+  "examples": [
+    "Input: 'HELLO' | Font: 'Standard' | Color: Cyan => Outputs a clean monospaced 'HELLO' in Standard font with cyan ANSI color codes",
+    "Input: 'DEV' | Font: 'ANSI Shadow' | Flip: Horizontal => Outputs a mirrored 'DEV' in ANSI Shadow font with dramatic shadow effect"
+  ],
+  "bestPractices": [
+    "Keep input under 20 characters for most fonts to avoid line wrapping in standard 80-column terminals",
+    "Use monospace fonts (like Standard or Small) for terminal output; decorative fonts work best for visual media",
+    "Pair flip horizontal with reverse video for a mirror-reflection effect",
+    "Save frequently used font+color combinations by noting them in your project style guide",
+    "Use the history feature to recall and reuse past designs without retyping input"
+  ],
+  "commonMistakes": [
+    "Using very long input strings that produce unreadably wide output for the target display area",
+    "Forgetting that decorative fonts (like Doom or Isometric1) require proportional spacing — letter spacing adjustments may distort them",
+    "Applying color when the output is destined for a non-ANSI environment — color codes will appear as raw escape sequences",
+    "Overusing flip and reverse simultaneously, producing output harder to read than the original",
+    "Not testing the rendered width across different terminal emulators that render character widths differently"
+  ],
+  "faq": [
+    "Can I use custom fonts? — 18 built-in fonts are available. Custom font upload is not supported.",
+    "Why does my art look misaligned? — ASCII art relies on fixed-width characters. Ensure your display uses a monospace font.",
+    "Is there a character limit? — No hard limit, but inputs over 50 characters produce very wide output.",
+    "Can I save my creations? — Use copy to save to clipboard. Last 50 generations are stored in history."
+  ]
+}

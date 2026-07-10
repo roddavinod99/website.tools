@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Transforms JSON objects into well-formed XML with configurable root element names, case conversion (camelCase, snake_case, kebab-case, PascalCase), and intelligent array handling (wrapped/unwrapped). Supports attribute detection via @ prefix, CDATA sections for text-heavy content, and XML declaration toggle.",
+  "whyItExists": "Many legacy systems, SOAP APIs, and configuration formats still require XML despite JSON's dominance. This tool provides a reliable bridge for data migration, API integration, and cross-format compatibility without manual XML authoring.",
+  "whoShouldUse": "Backend developers working with SOAP APIs, ETL pipeline engineers, DevOps automating XML configuration generation, and anyone migrating data from JSON to XML-based systems.",
+  "useCases": [
+    "Convert JSON API responses to XML for SOAP-based web service consumption",
+    "Generate XML configuration files (like Ant, Maven, or Spring XML) from JSON templates",
+    "Transform JSON data exports into XML format for legacy system imports",
+    "Create XML sitemaps from JSON-structured website data",
+    "Convert JSON test fixtures to XML for testing XML-parsing code paths",
+    "Generate RSS/Atom feed XML from JSON blog post data structures"
+  ],
+  "instructions": [
+    "Paste your JSON object into the input editor; the tool validates JSON syntax and parses the structure",
+    "Set the root element name in the configuration panel (defaults to \"root\" if not specified)",
+    "Configure array handling: choose \"wrapped\" (arrays get a parent wrapper element) or \"unwrapped\" (repeat the element name)",
+    "Enable attribute detection: keys prefixed with @ become XML attributes; nested objects become child elements",
+    "Toggle options: XML declaration, CDATA wrapping for long text, and case conversion for element names",
+    "Click \"Convert\" and review the XML preview; copy the result or download as .xml file"
+  ],
+  "examples": [
+    "Input: {\"person\":{\"@id\":1,\"name\":\"Alice\",\"roles\":[\"admin\",\"user\"]}} with array handling=wrapped -> Output: <?xml version=\"1.0\" encoding=\"UTF-8\"?><person id=\"1\"><name>Alice</name><roles><role>admin</role><role>user</role></roles></person>",
+    "Input: {\"data\":{\"content\":\"Hello <world>\"}} with CDATA enabled -> Output: <?xml version=\"1.0\"?><data><content><![CDATA[Hello <world>]]></content></data>"
+  ],
+  "bestPractices": [
+    "Use the @ prefix convention for attributes to keep the JSON intuitive and avoid manual XML attribute placement",
+    "Enable CDATA for fields containing HTML, special characters, or any content with angle brackets",
+    "Use \"unwrapped\" array style for simpler XML output when you don't need intermediate wrapper elements",
+    "Always specify a descriptive root element name instead of using the default \"root\" for production use",
+    "Preview the output with the XML declaration enabled to ensure encoding and version info are correct"
+  ],
+  "commonMistakes": [
+    "Forgetting to prefix attributes with @ and then wondering why they appear as child elements instead",
+    "Using JSON arrays where the target XML schema expects single elements (check the array handling setting)",
+    "Not enabling CDATA for fields containing HTML or XML content, resulting in malformed output",
+    "Assuming nested key names are automatically sanitized; XML element names have stricter rules than JSON keys",
+    "Setting case conversion that conflicts with the target system's XML naming conventions or DTD"
+  ],
+  "faq": [
+    "Can I control the XML namespace (xmlns) generation? Namespace support is not automatic; you can add xmlns attributes using the @ prefix convention.",
+    "What happens if my JSON key starts with a number? The tool prepends an underscore or allowed character since XML elements cannot start with digits.",
+    "How is the XML declaration handled? You can toggle it on/off; when enabled it includes version and encoding attributes.",
+    "Does it support mixed content (text with child elements)? Not directly; use CDATA for text-heavy nodes that need to coexist with element children."
+  ]
+}

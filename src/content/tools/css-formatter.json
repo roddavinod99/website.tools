@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Formats and beautifies CSS code with three output modes (expanded, compact, compressed). Includes options to sort properties alphabetically or by type, sort selectors alphabetically, remove duplicate rules and properties, strip comments, control vendor prefix ordering, and convert color formats (HEX to RGBA, HSL, or named colors).",
+  "whyItExists": "CSS codebases maintained by multiple developers quickly accumulate inconsistent formatting, duplicates, and mixed color formats. A comprehensive formatter restores consistency, reduces file size, and makes code easier to navigate without altering behavior.",
+  "whoShouldUse": "Frontend developers maintaining large CSS/SCSS codebases, teams enforcing style guidelines, web designers cleaning up exported CSS, and anyone bundling CSS for production.",
+  "useCases": [
+    "Format a minified CSS file back into readable expanded form for debugging",
+    "Sort all CSS properties consistently before committing to enforce team standards",
+    "Remove duplicate CSS rules and properties from an accumulated stylesheet",
+    "Convert all HEX colors in a stylesheet to RGBA for easier opacity manipulation",
+    "Reorder vendor prefixes to spec-compliant order for consistency",
+    "Strip all comments from CSS before deployment to reduce file size"
+  ],
+  "instructions": [
+    "Paste CSS or upload a .css file via drag-and-drop",
+    "Select output format: Expanded (one prop per line), Compact (one line per rule), or Compressed (single line)",
+    "Configure sorting: toggle 'Sort Properties' (Alphabetical or By Type), 'Sort Selectors', and 'Remove Duplicates'",
+    "Enable 'Remove Comments' and configure 'Vendor Prefix Order' to your preferred standard",
+    "Use color format converter — choose target format and all matching colors are converted",
+    "Click 'Format' — output appears with summary of changes (sorted, comments removed, duplicates eliminated)",
+    "Copy formatted CSS or download as .css file"
+  ],
+  "examples": [
+    "Input: 'a{color:#ff6600;margin:0;padding:0;color:#f60}' | Expanded + Sort + Remove Dupes => Output: 'a {\\n  color: #ff6600;\\n  margin: 0;\\n  padding: 0;\\n}'",
+    "Input: '/* comment */ .foo{background:red}' | Compressed + Strip Comments => Output: '.foo{background:red}'"
+  ],
+  "bestPractices": [
+    "Use Expanded mode during dev, Compressed for production",
+    "Enable 'Remove Duplicates' to catch copy-paste errors — the tool logs each removal",
+    "Sort properties 'By Type' for logical grouping matching how developers read CSS",
+    "Convert all colors to consistent format before committing",
+    "Run formatter as part of CI pipeline"
+  ],
+  "commonMistakes": [
+    "Removing comments from stylesheets that rely on section markers",
+    "Sorting alphabetically when team convention is type-based grouping",
+    "Assuming compressed output is always smaller — gzip often compresses expanded CSS better",
+    "Converting RGBA to HEX without verifying alpha is 1 — transparency is lost",
+    "Using formatter on minified frameworks — may trigger browser bugs if prefixes are reordered"
+  ],
+  "faq": [
+    "Does this handle SCSS? — Standard CSS only. Pre-compile SCSS first.",
+    "What order are vendor prefixes sorted in? — Spec-Compliant: -webkit-, -moz-, -ms-, -o-. Alphabetical: -moz-, -ms-, -o-, -webkit-.",
+    "Can I convert colors conditionally? — No, applies to ALL matching colors. Edit manually for selective conversion.",
+    "Does it fix invalid CSS? — Valid CSS is preserved. Invalid CSS may be dropped."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Provides bidirectional conversion between JSON and YAML with indentation control (2 or 4 spaces), configurable quote styles (single, double, or none for strings), and null value representation options. Supports block scalar styles for multiline strings and custom line width wrapping.",
+  "whyItExists": "YAML is widely used for configuration files in DevOps (Kubernetes, Docker Compose, CI/CD pipelines) while JSON is common for data interchange. Offers seamless conversion in both directions to avoid format lock-in.",
+  "whoShouldUse": "DevOps engineers, cloud infrastructure developers, CI/CD pipeline maintainers, and anyone working with configuration-as-code needing to switch between JSON and YAML formats.",
+  "useCases": [
+    "Convert JSON Docker Compose or Kubernetes manifests to YAML for deployment workflows",
+    "Translate YAML CI/CD configuration files to JSON for programmatic processing or validation",
+    "Migrate JSON configuration files to YAML for improved readability in infrastructure-as-code projects",
+    "Transform JSON API responses into YAML for configuration-driven applications",
+    "Convert YAML Ansible playbooks to JSON for integration with JSON-based tooling",
+    "Standardize configuration files across a polyglot codebase with mixed JSON and YAML usage"
+  ],
+  "instructions": [
+    "Select the conversion direction (JSON to YAML or YAML to JSON) using the toggle at the top",
+    "Paste your source data into the input editor; the tool auto-detects the format and validates syntax",
+    "Configure output settings: indentation (2 or 4 spaces), string quote style (single/double/none), and null representation (null/~/null literal)",
+    "For multiline strings, enable block scalar style to output literal blocks (|) instead of quoted strings",
+    "Set the maximum line width for wrapping long string values; disable for no wrapping",
+    "Click \"Convert\" and review the formatted output; copy or download the result; use \"Swap\" to reverse direction"
+  ],
+  "examples": [
+    "Input JSON: {\"name\":\"Alice\",\"age\":30,\"address\":{\"city\":\"NYC\"}} with indent=2 -> Output YAML:\\nname: Alice\\nage: 30\\naddress:\\n  city: NYC",
+    "Input YAML: \"name: Bob\\npreferences:\\n  - color: red\\n  - color: blue\" -> Output JSON: {\"name\":\"Bob\",\"preferences\":[{\"color\":\"red\"},{\"color\":\"blue\"}]}"
+  ],
+  "bestPractices": [
+    "Use 2-space indentation for YAML output to align with Kubernetes and most DevOps YAML conventions",
+    "Set null representation to \"null\" literal for explicit nulls rather than leaving keys absent",
+    "Enable block scalar style when converting strings with embedded newlines to preserve formatting",
+    "Always verify the output YAML with a linter after conversion to catch any syntax issues from edge cases",
+    "Use \"none\" quote style for simple strings that don't contain special YAML characters like : or #"
+  ],
+  "commonMistakes": [
+    "Assuming all YAML is valid YAML 1.1; the tool uses YAML 1.2 which changes some boolean interpretations",
+    "Using \"none\" quote style for strings containing colons or hash symbols, breaking the YAML structure",
+    "Expecting comments in YAML to survive conversion; comments are dropped when converting to and from JSON",
+    "Forgetting that YAML interprets \"yes\"/\"no\"/\"on\"/\"off\" as booleans; quote these strings explicitly",
+    "Not checking for duplicate keys in YAML input, which YAML allows but JSON does not"
+  ],
+  "faq": [
+    "Does the conversion preserve the original data structure perfectly? Yes, the conversion is lossless for data; however, YAML comments and some formatting nuances are not preserved.",
+    "Can it handle large multi-document YAML (with --- separators)? Yes, each document is processed independently.",
+    "How does it handle YAML anchors and aliases? Anchors and aliases are resolved to their actual values; the reference structure is not preserved.",
+    "What YAML version does this use? The tool follows the YAML 1.2 specification, which changes boolean parsing rules from YAML 1.1."
+  ]
+}

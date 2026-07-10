@@ -1,0 +1,44 @@
+{
+  "whatItDoes": "Converts XML documents to JSON with configurable attribute handling (prefix, flatten, or promote), array detection for repeated elements, namespace stripping, and CDATA content extraction. Supports element-to-object or element-to-array mapping and preserves XML hierarchy in the JSON structure.",
+  "whyItExists": "Modern APIs, frontend frameworks, and databases favor JSON over XML, but many legacy systems, SOAP services, and configuration files still use XML. This tool bridges the gap for data migration and integration without manual XML traversal.",
+  "whoShouldUse": "Frontend developers consuming SOAP XML APIs, data migration engineers moving from XML to JSON databases, DevOps converting XML configs to JSON, and anyone integrating XML-based services with JSON-native tools.",
+  "useCases": [
+    "Convert SOAP XML API responses to JSON for frontend consumption in React or Vue apps",
+    "Migrate XML configuration files (like Ant or Maven POM) to JSON equivalents",
+    "Transform XML data exports from legacy systems into JSON for modern data pipelines",
+    "Parse XML sitemaps into JSON for programmatic analysis and reporting",
+    "Convert RSS/Atom feed XML to JSON for easier processing in JavaScript applications",
+    "Extract and restructure XML test fixtures into JSON for testing JSON-parsing code paths"
+  ],
+  "instructions": [
+    "Paste your XML content into the input editor; the tool parses the XML structure and validates well-formedness",
+    "Configure attribute handling: choose \"@ prefix\" (XML attributes become @attr keys), \"flatten\" (merge with elements), or \"promote\" (attrs at top level)",
+    "Enable array detection — repeated sibling elements with the same name become JSON arrays instead of overwriting",
+    "Toggle options: strip XML namespaces, extract CDATA as plain text, preserve comments, or handle empty elements as null",
+    "Click \"Convert\" and review the JSON preview; copy or download the result"
+  ],
+  "examples": [
+    "Input: '<root><item id=\"1\"><name>Alice</name></item><item id=\"2\"><name>Bob</name></item></root>' with array detection -> Output: {\"root\":{\"item\":[{\"@id\":\"1\",\"name\":\"Alice\"},{\"@id\":\"2\",\"name\":\"Bob\"}]}}",
+    "Input: '<data><![CDATA[Hello <world>]]></data>' with CDATA extraction -> Output: {\"data\":\"Hello <world>\"}"
+  ],
+  "bestPractices": [
+    "Enable array detection for XML with repeated elements to avoid data loss (without it, only the last element is kept)",
+    "Use @ prefix attribute handling for clear visual separation between XML attributes and child elements in JSON",
+    "Strip namespaces when converting XML from different sources to produce consistent JSON output",
+    "Preview a small XML sample first to verify the conversion settings match the expected structure",
+    "Check that empty XML elements are handled correctly — choose between null, empty string, or omitted in settings"
+  ],
+  "commonMistakes": [
+    "Forgetting to enable array detection for XML with repeated elements, causing data to be silently overwritten",
+    "Assuming XML attributes and child elements have the same JSON mapping without checking the attribute handling setting",
+    "Not stripping XML namespaces, resulting in verbose JSON keys like \"ns0:element\"",
+    "Expecting XML comments to be preserved when the preserve comments option is off",
+    "Using this tool on XML files larger than memory limits — consider chunking large XML documents"
+  ],
+  "faq": [
+    "What XML features are supported? Well-formed XML, attributes, CDATA, processing instructions, namespaces, comments, and mixed content.",
+    "How are XML namespaces handled? They can be stripped (flattened) or preserved as prefix:localname keys.",
+    "What happens to XML attributes? They can be prefixed with @, flattened with elements, or promoted to top-level keys.",
+    "Does it handle XSD or DTD schemas? No, this is a structural converter — validation against schemas is not supported."
+  ]
+}

@@ -1,0 +1,11 @@
+[
+  { "slug": "markdown-to-html", "category": "Converters", "name": "Markdown to HTML", "input": "# Hello\nThis is **bold**", "action": "Convert", "expect": "output" },
+  { "slug": "html-to-markdown", "category": "Converters", "name": "HTML to Markdown", "input": "<h1>Hello</h1><p>This is <strong>bold</strong></p>", "action": "Convert", "expect": "output" },
+  { "slug": "toml-converter", "category": "Converters", "name": "TOML Converter", "input": "title = \"TOML Example\"\n[owner]\nname = \"Tom\"\n", "action": "Convert", "expect": "output" },
+  { "slug": "timestamp-converter", "category": "Converters", "name": "Timestamp Converter", "input": "1700000000", "action": "Convert", "expect": "output" },
+  { "slug": "color-converter", "category": "Converters", "name": "Color Converter", "input": "#ff6600", "action": "Convert", "expect": "output" },
+  { "slug": "unit-converter", "category": "Converters", "name": "Unit Converter", "input": "100", "action": "Convert", "expect": "output" },
+  { "slug": "case-converter", "category": "Converters", "name": "Case Converter", "input": "hello world", "action": "Convert", "expect": "output" },
+  { "slug": "base-converter", "category": "Converters", "name": "Base Converter", "input": "255", "action": "Convert", "expect": "output" },
+  { "slug": "number-to-words", "category": "Converters", "name": "Number to Words", "input": "1234", "action": "Convert", "expect": "output" }
+]

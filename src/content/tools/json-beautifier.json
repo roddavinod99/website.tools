@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Beautifies JSON with 5 syntax themes for the output, configurable indentation, key sorting, bracket padding, and quote style (double vs single). Handles trailing commas gracefully, supports JS object literal and JSONP output formats, and includes a side-by-side diff view between original and beautified JSON.",
+  "whyItExists": "Raw minified JSON from APIs or config files is unreadable, and different projects use different formatting conventions. This tool not only pretty-prints JSON but also transforms it between formats (JS object, JSONP) and themes it for readability.",
+  "whoShouldUse": "API developers inspecting JSON responses, configuration file maintainers, and teams enforcing consistent JSON formatting across projects.",
+  "useCases": [
+    "Beautify a minified JSON API response for debugging with syntax highlighting and line numbers",
+    "Convert a JSON file to a JavaScript object literal for embedding in Node.js or browser code",
+    "Wrap JSON in a JSONP callback function for cross-origin script tag loading",
+    "Sort JSON keys alphabetically to enforce a consistent key order across team config files",
+    "Use the side-by-side diff to compare a JSON file before and after formatting changes"
+  ],
+  "instructions": [
+    "Paste raw JSON into the input area or upload a .json file",
+    "Select a theme from 5 options (e.g., light, dark, monokai, github, solarized)",
+    "Set indent size (2, 4 spaces or tabs), toggle bracket padding, and choose quote style (double or single)",
+    "Enable sort keys to alphabetically order all JSON keys",
+    "Select output format: JSON, JS Object Literal, or JSONP (with callback name input)",
+    "Toggle trailing commas on or off; use side-by-side view to compare original vs output"
+  ],
+  "examples": [
+    "Input: '{\"z\":1,\"a\":2}' with sort keys and 2-space indent. Output: '{\\n  \"a\": 2,\\n  \"z\": 1\\n}'",
+    "Input: '{name:\"test\"}' with JS Object Literal mode. Output: '{name: \"test\"}' (unquoted keys if valid identifiers)."
+  ],
+  "bestPractices": [
+    "Use the side-by-side diff when migrating JSON files between formatting standards to verify changes",
+    "Sort keys for configuration files where key order matters for readability",
+    "Use JS Object Literal format when pasting JSON into scripts to avoid redundant quotes on keys",
+    "Enable bracket padding for a more modern, spaced-out JSON style that some teams prefer"
+  ],
+  "commonMistakes": [
+    "Using JS Object Literal output when you need valid JSON for an API endpoint",
+    "Enabling trailing commas in JSON mode, which produces invalid JSON",
+    "Applying sort keys to JSON that preserves insertion order for some purpose",
+    "Choosing a theme that doesn't provide enough contrast in the target viewing environment"
+  ],
+  "faq": [
+    "What are the 5 themes? Light, Dark, Monokai, GitHub, and Solarized (both light and dark variants).",
+    "Does it validate JSON before formatting? Yes, invalid JSON is flagged with a parse error message.",
+    "Can I convert JSON to YAML? No, this tool focuses on JSON and JS object formats.",
+    "What is JSONP output? It wraps the JSON in a callback function: callbackName({\"key\":\"value\"})"
+  ]
+}

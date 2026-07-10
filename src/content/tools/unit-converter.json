@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Unit converter covering 13 categories: Length, Mass, Volume, Temperature, Area, Speed, Time, Data Storage, Pressure, Energy, Frequency, Angle, and Fuel Economy. Displays the conversion formula used, supports swapping source/target units, saves favorite conversions, and includes a batch convert mode for converting a single value to all units in a category at once.",
+  "whyItExists": "Unit conversion requires knowing exact conversion factors and handling many unit systems. This tool centralizes all common categories with formula transparency so users can verify calculations and convert across any pair of units.",
+  "whoShouldUse": "Engineers, scientists, students, travelers, cooks, and anyone who needs to convert measurements between different unit systems (metric, imperial, etc.).",
+  "useCases": [
+    "Convert kilometers to miles for a road trip distance calculation",
+    "Convert Celsius to Fahrenheit with the formula displayed for verification",
+    "Batch-convert 100 MB to all data storage units (KB, GB, TB, etc.)",
+    "Swap gallons and liters for a recipe measurement",
+    "Save a frequently used conversion (e.g., pounds to kilograms) to the favorites panel",
+    "Compare fuel economy between mpg and L/100km for car shopping"
+  ],
+  "instructions": [
+    "Select a category from the 13 options (Length, Mass, Volume, etc.) using the icon grid.",
+    "Enter a value in the source input; select the source and target units from their respective dropdowns.",
+    "View the converted result with the mathematical formula shown below (e.g., \"°C × 9/5 + 32 = °F\").",
+    "Click the swap button to exchange source and target units.",
+    "Click the star icon to save the current conversion pair to your favorites for quick access.",
+    "Use Batch Convert to see the input value converted to all units in the category in a single table."
+  ],
+  "examples": [
+    "Input: Category Temperature, 100°C → °F → Output: 212°F, formula: (100 × 9/5) + 32 = 212",
+    "Input: Category Data Storage, 1024 MB, Batch Convert → Output table: 0.0009766 TB, 1 GB, 1024 MB, 1073741824 bytes, etc."
+  ],
+  "bestPractices": [
+    "Use Batch Convert when you need a value in multiple units (e.g., recipe scaling)",
+    "Favorite conversions you use daily (e.g., cm ↔ inches, kg ↔ lbs) for one-click access",
+    "Verify the formula shown to ensure you understand the conversion factor",
+    "Double-check the category — Speed (km/h ↔ mph) and Fuel Economy (L/100km ↔ mpg) are different",
+    "Use the swap button to quickly reverse a conversion rather than re-selecting units"
+  ],
+  "commonMistakes": [
+    "Confusing Mass (kg, lb) with Force (N, lbf) — they share the \"pound\" name but are different categories",
+    "Using the wrong Temperature scale — Fahrenheit and Celsius use linear offsets, not just factors",
+    "Assuming 1 MB = 1000 KB (SI) vs. 1024 KB (binary) — the tool shows both where applicable",
+    "Mixing US liquid volume (cups, fluid oz) with imperial volume (UK pints) — they differ",
+    "Forgetting that Frequency (Hz) and Angular Velocity (rad/s) are related but not directly convertible without context"
+  ],
+  "faq": [
+    "Does the converter handle binary prefixes (KiB, MiB) vs. decimal prefixes (KB, MB)? Yes — Data Storage shows both binary and decimal values in batch mode.",
+    "Are conversion formulas always exact? Most are exact by definition (e.g., 1 inch = 25.4 mm). Some, like temperature, use exact formulas.",
+    "Can I add custom units or categories? Custom units are not supported yet — use favorites to save frequently used conversion pairs.",
+    "What precision is used? Results are displayed with up to 10 significant figures; very large or small numbers use scientific notation."
+  ]
+}

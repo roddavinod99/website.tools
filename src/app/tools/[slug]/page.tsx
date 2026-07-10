@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { allTools, siteConfig, categories } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ToolInterface } from "@/components/tools/tool-interface";
+import { ShareButtons } from "@/components/tools/share-buttons";
 import Link from "next/link";
 import {
-  Copy, Share2, CircleCheck, CircleAlert,
+  CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
 } from "lucide-react";
 
@@ -49,12 +49,17 @@ export default async function ToolPage({ params }: Props) {
   const tool = allTools.find((t) => t.slug === slug);
   if (!tool) notFound();
 
-  const content = getToolContent(slug);
+  const content = await getToolContent(slug);
   if (!content) notFound();
 
-  const relatedTools = allTools
+  const sameCategory = allTools
     .filter((t) => t.category === tool.category && t.id !== tool.id)
     .slice(0, 4);
+
+  const popularTools = allTools
+    .filter((t) => t.id !== tool.id && !sameCategory.find((st) => st.id === t.id))
+    .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+    .slice(0, 3);
 
   const categoryObj = categories.find((c) => c.name === tool.category);
 
@@ -80,6 +85,40 @@ export default async function ToolPage({ params }: Props) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 2, name: "Tools", item: `${siteConfig.url}/tools` },
+              { "@type": "ListItem", position: 3, name: tool.name },
+            ],
+          }),
+        }}
+      />
+      {content.faq.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: content.faq.map((item) => {
+                const q = item.includes(" — ") ? item.split(" — ")[0] : item.split(" | A:")[0];
+                const a = item.includes(" — ") ? item.split(" — ").slice(1).join(" — ") : item.split(" | A:")[1] || "";
+                return {
+                  "@type": "Question",
+                  name: q,
+                  acceptedAnswer: { "@type": "Answer", text: a },
+                };
+              }),
+            }),
+          }}
+        />
+      )}
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-8">
           <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
@@ -238,22 +277,52 @@ export default async function ToolPage({ params }: Props) {
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Related Tools</h2>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {relatedTools.map((rt) => (
-                <Link
-                  key={rt.id}
-                  href={`/tools/${rt.slug}`}
-                  className="group rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-                >
-                  <h3 className="font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                    {rt.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                    {rt.description}
-                  </p>
-                </Link>
-              ))}
-            </div>
+            {sameCategory.length > 0 && (
+              <>
+                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                  Same Category — {tool.category}
+                </h3>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {sameCategory.map((rt) => (
+                    <Link
+                      key={rt.id}
+                      href={`/tools/${rt.slug}`}
+                      className="group rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    >
+                      <h3 className="font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                        {rt.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                        {rt.description}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+            {popularTools.length > 0 && (
+              <>
+                <h3 className="mt-8 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                  Popular Tools
+                </h3>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {popularTools.map((rt) => (
+                    <Link
+                      key={rt.id}
+                      href={`/tools/${rt.slug}`}
+                      className="group rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    >
+                      <h3 className="font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                        {rt.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                        {rt.description}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -295,14 +364,7 @@ export default async function ToolPage({ params }: Props) {
       <section className="container py-12">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Copy className="h-3.5 w-3.5" /> Copy URL
-            </Button>
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Share2 className="h-3.5 w-3.5" /> Share
-            </Button>
-          </div>
+          <ShareButtons />
         </div>
       </section>
     </>

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Transfers EXIF metadata from a source image to a target image with selective field inclusion. Users can transfer all metadata, filter by category (Camera info, Date/Time stamps, GPS coordinates), or select individual custom fields. The transferred metadata is applied to a copy of the target image, preserving both originals.",
+  "whyItExists": "When editing images in software that strips or alters EXIF, original metadata is lost. A dedicated transfer tool allows restoring EXIF from the original to the edited version, or selectively copying metadata between images for batch organization.",
+  "whoShouldUse": "Photographers editing in software that strips EXIF, photo archivists standardizing metadata across collections, web developers batch-processing images for e-commerce, and forensic analysts transferring verified timestamps.",
+  "useCases": [
+    "Transfer camera/lens metadata from original JPEG to retouched version after editing software stripped EXIF",
+    "Copy GPS coordinates from one geotagged image to others taken at the same location",
+    "Transfer date/time stamps from originals to batch-processed versions for correct chronological sorting",
+    "Restore camera settings (aperture, shutter, ISO) to derivative images saved without metadata",
+    "Selectively copy only Copyright and Artist fields for consistent attribution",
+    "Transfer ALL metadata from source to batch of edited images for consistent archives"
+  ],
+  "instructions": [
+    "Upload 'Source' image (with EXIF data to copy) by dragging to Source area",
+    "Upload 'Target' image (to receive metadata) by dragging to Target area",
+    "Choose scope: 'All Fields', 'By Category' (Camera, Date/Time, GPS, Image Info), or 'Custom' (select specific EXIF tags)",
+    "Click 'Preview Transfer' to see which fields will be transferred — shows source vs target diff",
+    "Click 'Execute Transfer' — new image file is generated and downloaded automatically",
+    "Verify with EXIF Reader tool to confirm metadata was applied correctly"
+  ],
+  "examples": [
+    "Source: 'original.jpg' (Make=NIKON, Model=D850, Lens=24-70mm) | Target: 'edited.jpg' (no EXIF) | Scope: All Fields => Output: 'edited_with_exif.jpg' with source metadata",
+    "Source: 'geotagged.jpg' (GPS: 40.7484, -73.9857) | Target: ['batch1.jpg', 'batch2.jpg'] | Scope: GPS Only => Outputs with GPS from source, original other metadata preserved"
+  ],
+  "bestPractices": [
+    "Always preview before executing — verify which fields will be overwritten vs retained",
+    "Test on a single file pair first before batch operations",
+    "Use 'Custom' to copy specific settings without overwriting target's date or GPS",
+    "Keep source images backed up for recovery if transfer corrupts metadata",
+    "Verify with EXIF Reader after transfer — different formats have different EXIF tag support"
+  ],
+  "commonMistakes": [
+    "Transferring GPS from a source taken at a different location",
+    "Assuming 'All Fields' transfers every possible tag — proprietary maker notes are skipped",
+    "Using JPEG source with PNG target — PNGs have limited EXIF support",
+    "Overwriting target's date/time stamps without checking first",
+    "Transferring to a target edited on a different camera — creates confusing metadata trails"
+  ],
+  "faq": [
+    "Does this modify original files? — No. Original files are never modified. A new file is generated.",
+    "Can I transfer between different formats? — Yes (JPEG to PNG, TIFF to JPEG, etc.), but target must support the tags being transferred.",
+    "What if a field exists on both? — Source value overwrites target for fields in selected scope. Others remain unchanged.",
+    "Can I transfer to multiple files at once? — One target at a time. Source stays uploaded while swapping targets."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Encodes and decodes Base64 data with automatic input detection (plain text vs. Base64 string). Supports standard Base64, base64url (URL-safe), data URI generation for images/media, and four character encodings (UTF-8, ASCII, UTF-16LE, UTF-16BE). Includes file drag-and-drop, batch mode for processing multiple items, and real-time character count comparison.",
+  "whyItExists": "Base64 encoding is essential for embedding binary data in text-based formats like JSON, HTML, CSS, and URLs. A reliable multi-format tool handles edge cases like URL safety, encoding variants, and batch operations without switching between utilities.",
+  "whoShouldUse": "Web developers, API designers, software engineers working with binary data transmission, and anyone embedding images or files in text-based formats.",
+  "useCases": [
+    "Encode an image to a data URI for inline embedding in CSS or HTML",
+    "Decode a JWT token's payload (base64url-encoded) for inspection",
+    "Convert a binary file to Base64 for transmission in a JSON API payload",
+    "Batch-encode multiple small files for bundling into a single configuration file",
+    "Use base64url encoding to generate URL-safe tokens without padding",
+    "Verify whether a given string is valid Base64 using auto-detect"
+  ],
+  "instructions": [
+    "Paste your input text or drag-and-drop a file — auto-detects if input is plain text (to encode) or Base64 (to decode)",
+    "Select character encoding: UTF-8 (default), ASCII, UTF-16LE, or UTF-16BE",
+    "Choose output format: Standard Base64, Base64 URL, or Data URI (prepends correct MIME type)",
+    "Click 'Encode' or 'Decode' — result appears with size comparison showing input vs. output byte count",
+    "For batch mode, switch to 'Batch' tab and enter multiple values (one per line) — each processed independently",
+    "Copy individual results or entire batch output, or use 'Download' to save as a text file"
+  ],
+  "examples": [
+    "Input: 'Hello World' | Encode | UTF-8 | Standard => Output: 'SGVsbG8gV29ybGQ=' (standard Base64 with padding)",
+    "Input: 'SGVsbG8gV29ybGQ' | Decode | Auto-detect => Output: 'Hello World' (decoded without padding)"
+  ],
+  "bestPractices": [
+    "Use base64url when encoding data for URLs or filenames to avoid '+/=' characters that need percent-encoding",
+    "For large files (10+ MB), consider chunked encoding to avoid memory issues",
+    "When embedding images in CSS, use data URI output format — prepends correct 'data:image/...;base64,' prefix",
+    "Verify output size: Base64 inflates data by ~33% — ensure your transport medium can handle the overhead",
+    "Use UTF-16LE or UTF-16BE only when targeting legacy systems requiring those encodings"
+  ],
+  "commonMistakes": [
+    "Using standard Base64 in URLs without switching to base64url — '+' and '/' break URL parsing",
+    "Decoding a Base64 string without verifying validity — garbage input produces garbage output",
+    "Forgetting Base64 is encoding, not encryption — never use it to protect sensitive data",
+    "Selecting wrong character encoding when encoding, causing garbled decoded output on the receiving end",
+    "Dragging very large files without monitoring output size — some browsers may freeze or crash"
+  ],
+  "faq": [
+    "What is the difference between Base64 and base64url? — Base64 uses '+/=' which are not URL-safe. base64url uses '-_' and strips padding.",
+    "Can I encode images with this tool? — Yes, drag-and-drop any image file. The tool encodes it and optionally adds data URI header.",
+    "How do I process multiple files at once? — Switch to 'Batch' mode and paste multiple values or use multi-file upload.",
+    "Does the tool support streaming for large files? — Files are processed in memory. For >50 MB, use a command-line tool."
+  ]
+}

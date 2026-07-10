@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Compares two JSON documents side by side with three view modes: side-by-side, unified, and tree view. Supports value-only diff to ignore structural changes, detects array element moves, and shows a 5-stat summary (added, removed, changed, moved, unchanged). Includes a merge mode for combining changes and supports drag-and-drop upload of JSON files. Can copy the result as a JSON Patch (RFC 6902).",
+  "whyItExists": "Tracking JSON changes across API versions, configuration iterations, or data migrations is essential but difficult to do manually. This tool provides multiple visualization modes and a statistical summary so you can understand exactly what changed at a glance.",
+  "whoShouldUse": "Backend developers tracking API response changes, DevOps engineers comparing config files, and data engineers validating ETL pipeline output.",
+  "useCases": [
+    "Compare two API responses to verify a refactor didn't change the output structure",
+    "Track configuration drift between staging and production JSON config files",
+    "Use tree view to understand deep structural changes in nested JSON documents",
+    "Enable array move detection to identify reordered items in a JSON array",
+    "Generate a JSON Patch from the diff to apply changes programmatically"
+  ],
+  "instructions": [
+    "Paste or drag-drop JSON file A (original) and JSON file B (modified) into the respective areas",
+    "Select view mode: Side-by-side (left/right), Unified (inline with +/-), or Tree (hierarchical)",
+    "Toggle value-only diff to see only value changes, ignoring key additions or removals",
+    "Review the 5-stat summary showing counts of added, removed, changed, moved, and unchanged nodes",
+    "Enable merge mode to selectively apply changes from B to A with manual confirmation",
+    "Click Copy JSON Patch to get an RFC 6902 patch document for automated application"
+  ],
+  "examples": [
+    "Input A: '{\"name\":\"John\",\"age\":30}', Input B: '{\"name\":\"Jane\",\"age\":31}'. Output: name changed (John→Jane), age changed (30→31), 0 added, 0 removed, 0 moved.",
+    "Input A: '[1,2,3]', Input B: '[3,1,2]' with move detection. Output: '3 moved from index 2 to index 0', resulting in 1 move detected."
+  ],
+  "bestPractices": [
+    "Use tree view for deeply nested JSON to understand structural drifts at a glance",
+    "Enable array move detection for comparing sorted lists where order may change legitimately",
+    "Use merge mode when selectively porting changes between configuration versions",
+    "Export JSON Patch when you need to apply diffs in CI/CD pipelines automatically"
+  ],
+  "commonMistakes": [
+    "Expecting side-by-side mode to show identical structures; it aligns by key path not by line",
+    "Not enabling array move detection and seeing all moved items as removed+added instead",
+    "Assuming the 5-stat summary counts individual values; it counts leaf nodes and structural nodes",
+    "Pasting extremely large JSON and expecting instant diff; very large files may cause slowdowns"
+  ],
+  "faq": [
+    "What does the 5-stat summary show? Added keys, removed keys, changed values, moved array items, and unchanged nodes.",
+    "Can I diff JSON from two different files? Yes, drag-and-drop files A and B into their respective upload areas.",
+    "What is JSON Patch (RFC 6902)? A standard format describing changes as an array of operations: add, remove, replace, move, copy.",
+    "Does it handle large files? Files up to ~10MB are handled well; larger files may need server-side processing."
+  ]
+}

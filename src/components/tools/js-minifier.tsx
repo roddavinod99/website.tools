@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Copy, Download, Trash2, Minimize, Maximize } from "lucide-react";
+import { Copy, Download, Trash2, Minimize, Maximize, Upload } from "lucide-react";
 
 type Indent = "2" | "4" | "tab";
 type OutputCompat = "es5" | "es6";
+type Semicolons = "add" | "remove" | "preserve";
+type QuotePref = "single" | "double" | "preserve";
+type Preset = "aggressive" | "safe" | "readable";
 
 const INDENT_MAP: Record<Indent, string> = { "2": "  ", "4": "    ", tab: "\t" };
 const RESERVED = new Set(["arguments", "async", "await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "implements", "import", "in", "instanceof", "interface", "let", "new", "null", "of", "package", "private", "protected", "public", "return", "static", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield"]);
@@ -23,16 +26,53 @@ export function JSMinifier() {
   const [wrapLength, setWrapLength] = useState(0);
   const [outputCompat, setOutputCompat] = useState<OutputCompat>("es6");
   const [mode, setMode] = useState<"minify" | "beautify">("minify");
+  const [semicolons, setSemicolons] = useState<Semicolons>("preserve");
+  const [quotePref, setQuotePref] = useState<QuotePref>("preserve");
+  const [preset, setPreset] = useState<Preset>("safe");
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const minify = useCallback(() => {
     try {
       let code = input;
+
+      if (preset === "aggressive") {
+        setRemoveCmts(true);
+        setRemoveConsole(true);
+        setRemoveDebugger(true);
+        setSemicolons("remove");
+      } else if (preset === "readable") {
+        setRemoveCmts(false);
+        setRemoveConsole(false);
+        setRemoveDebugger(false);
+        setSemicolons("add");
+        setWrapLength(80);
+      } else {
+        setSemicolons("preserve");
+      }
+
       if (removeDebugger) code = code.replace(/\bdebugger\s*;/g, "");
       if (removeConsole) code = code.replace(/\bconsole\s*\.\s*\w+\s*\([^)]*\)\s*;?\s*/g, "");
       if (removeCmts) code = code.replace(/\/\/.*$/gm, "").replace(/\/\*[\s\S]*?\*\//g, "");
 
-      // simple variable name shortening
+      if (semicolons === "remove") {
+        code = code.replace(/;\s*([\n\r}])/g, "$1");
+      } else if (semicolons === "add") {
+        code = code.replace(/(\w+)\s*\n/g, "$1;\n");
+      }
+
+      if (quotePref === "single") {
+        code = code.replace(/"([^"\\]*(?:\\.[^"\\]*)*)"/g, (m, inner) => {
+          if (inner.includes("'") && !inner.includes('"')) return m;
+          return `'${inner.replace(/'/g, "\\'")}'`;
+        });
+      } else if (quotePref === "double") {
+        code = code.replace(/'([^'\\]*(?:\\.[^'\\]*)*)'/g, (m, inner) => {
+          if (inner.includes('"') && !inner.includes("'")) return m;
+          return `"${inner.replace(/"/g, '\\"')}"`;
+        });
+      }
+
       const nameShorten = outputCompat === "es6";
       const toPreserve = new Set(preserveNames.split(",").map((s) => s.trim()).filter(Boolean));
       if (nameShorten) {
@@ -61,14 +101,13 @@ export function JSMinifier() {
         .replace(/\t/g, "")
         .trim();
 
-      // fix spacing issues from the greedy regex
       code = code.replace(/(\d)\s+(\d)/g, "$1 $2");
       code = code.replace(/(\w)(\s*)(\d)/g, "$1 $3");
       code = code.replace(/!important/g, "!important");
 
       if (outputCompat === "es5") {
         code = code.replace(/\bconst\b/g, "var").replace(/\blet\b/g, "var").replace(/=>/g, "function");
-        code = code.replace(/`[^`]*`/g, (m) => m.replace(/\$\{/g, "{")); // rough template literal to string concat
+        code = code.replace(/`[^`]*`/g, (m) => m.replace(/\$\{/g, "{"));
       }
 
       setOutput(code);
@@ -78,7 +117,7 @@ export function JSMinifier() {
       setError((e as Error).message);
       setOutput("");
     }
-  }, [input, removeCmts, removeConsole, removeDebugger, preserveNames, outputCompat]);
+  }, [input, removeCmts, removeConsole, removeDebugger, preserveNames, outputCompat, semicolons, quotePref, preset]);
 
   const beautify = useCallback(() => {
     try {
@@ -138,9 +177,17 @@ export function JSMinifier() {
     if (!output) return;
     const blob = new Blob([output], { type: "text/javascript" });
     const url = URL.createObjectURL(blob); const a = document.createElement("a");
-    a.href = url; a.download = `script.${mode === "minify" ? "min" : ""}.js`; a.click(); URL.revokeObjectURL(url);
+    a.href = url; a.download = `script.${mode === "minify" ? "min." : ""}js`; a.click(); URL.revokeObjectURL(url);
   }, [output, mode]);
   const clear = useCallback(() => { setInput(""); setOutput(""); setError(""); setErrorLine(null); setErrorCol(null); }, []);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setInput(reader.result as string);
+    reader.readAsText(file);
+  };
 
   const inputBytes = new TextEncoder().encode(input).length;
   const outputBytes = output ? new TextEncoder().encode(output).length : 0;
@@ -150,14 +197,25 @@ export function JSMinifier() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JavaScript Input</label>
+        <div className="flex items-center justify-between mb-1">
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text">JavaScript Input</label>
+          <button onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"><Upload className="w-3 h-3" /> Upload .js</button>
+          <input ref={fileRef} type="file" accept=".js" onChange={handleFile} className="hidden" />
+        </div>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="function hello() { console.log('world'); }" rows={8} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         <div>
-          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent (beautify)</label>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Preset</label>
+          <select value={preset} onChange={(e) => setPreset(e.target.value as Preset)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="safe">Safe</option><option value="aggressive">Aggressive</option><option value="readable">Readable</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent</label>
           <select value={indentW} onChange={(e) => setIndentW(e.target.value as Indent)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option>
@@ -171,14 +229,23 @@ export function JSMinifier() {
           </select>
         </div>
         <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Semicolons</label>
+          <select value={semicolons} onChange={(e) => setSemicolons(e.target.value as Semicolons)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="preserve">Preserve</option><option value="add">Add</option><option value="remove">Remove</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Quotes</label>
+          <select value={quotePref} onChange={(e) => setQuotePref(e.target.value as QuotePref)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="preserve">Preserve</option><option value="single">Single</option><option value="double">Double</option>
+          </select>
+        </div>
+        <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Wrap at</label>
           <input type="number" min={0} max={200} value={wrapLength} onChange={(e) => setWrapLength(Number(e.target.value))}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" placeholder="0=off" />
-        </div>
-        <div className="col-span-2">
-          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Preserve names (comma-separated)</label>
-          <input value={preserveNames} onChange={(e) => setPreserveNames(e.target.value)}
-            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" placeholder="myVar, myFunc" />
         </div>
       </div>
 
@@ -192,6 +259,12 @@ export function JSMinifier() {
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
           <input type="checkbox" checked={removeDebugger} onChange={(e) => setRemoveDebugger(e.target.checked)} className="rounded border-surface-300" /> Remove debugger
         </label>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <label className="text-xs text-surface-500 dark:text-dark-muted mr-1">Preserve names:</label>
+        <input value={preserveNames} onChange={(e) => setPreserveNames(e.target.value)}
+          className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" placeholder="myVar, myFunc" />
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

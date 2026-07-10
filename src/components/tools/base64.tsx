@@ -6,6 +6,8 @@ type Mode = "encode" | "decode";
 type OutputFormat = "plain" | "datauri" | "base64url";
 type CharEncoding = "utf-8" | "ascii" | "utf-16" | "latin-1";
 
+const TEXT_MIME_TYPES = ["text/plain", "application/json", "text/csv", "application/xml", "text/xml"];
+
 function encodeChar(str: string, enc: CharEncoding): string {
   if (enc === "ascii") {
     const bytes = new Uint8Array(str.length);
@@ -50,16 +52,11 @@ function decodeChar(str: string, enc: CharEncoding): string {
   return decodeURIComponent(escape(raw));
 }
 
-function detectBase64(input: string): boolean {
-  if (input.length < 4) return false;
-  const cleaned = input.replace(/\s/g, "");
-  return /^[A-Za-z0-9+/]*={0,2}$/.test(cleaned) && cleaned.length % 4 === 0;
-}
-
 export function Base64Tool() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
+  const [validationMsg, setValidationMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [mode, setMode] = useState<Mode>("encode");
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("plain");
   const [charEncoding, setCharEncoding] = useState<CharEncoding>("utf-8");
@@ -67,6 +64,7 @@ export function Base64Tool() {
 
   const convert = useCallback(() => {
     setError("");
+    setValidationMsg(null);
     if (!input.trim()) { setOutput(""); return; }
     try {
       if (mode === "encode") {
@@ -88,6 +86,11 @@ export function Base64Tool() {
           cleaned = cleaned.replace(/-/g, "+").replace(/_/g, "/");
           while (cleaned.length % 4 !== 0) cleaned += "=";
         }
+        if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
+          setValidationMsg({ ok: false, text: "Input contains invalid Base64 characters" });
+        } else {
+          setValidationMsg({ ok: true, text: `Valid Base64 string (${cleaned.length} chars)` });
+        }
         setOutput(decodeChar(cleaned, charEncoding));
       }
     } catch (e) {
@@ -104,9 +107,6 @@ export function Base64Tool() {
 
   const handleInputChange = (val: string) => {
     setInput(val);
-    if (val && detectBase64(val) && mode === "encode") {
-      setMode("decode");
-    }
   };
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
@@ -141,6 +141,30 @@ export function Base64Tool() {
       setOutputFormat("datauri");
     };
     reader.readAsDataURL(file);
+  }, []);
+
+  const handleFileUpload = useCallback(() => {
+    const inputEl = document.createElement("input");
+    inputEl.type = "file";
+    inputEl.accept = ".txt,.json,.csv,.xml,text/plain,application/json,text/csv,text/xml";
+    inputEl.onchange = () => {
+      const file = inputEl.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const content = reader.result as string;
+        setInput(content);
+        setMode("encode");
+      };
+      if (TEXT_MIME_TYPES.some((m) => file.type.includes(m.split("/")[1]))) {
+        reader.readAsText(file);
+      } else {
+        reader.readAsDataURL(file);
+        setMode("decode");
+        setOutputFormat("datauri");
+      }
+    };
+    inputEl.click();
   }, []);
 
   const handleDecodedFileDownload = () => {
@@ -182,6 +206,9 @@ export function Base64Tool() {
           <option value="utf-16">UTF-16</option>
           <option value="latin-1">Latin-1</option>
         </select>
+        <button onClick={handleFileUpload} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+          Upload File
+        </button>
       </div>
 
       <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()}>
@@ -193,9 +220,17 @@ export function Base64Tool() {
           rows={5} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         {!input && (
-          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">Drag & drop a file to convert to data URI</p>
+          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">Drag & drop a file or use Upload File button</p>
         )}
       </div>
+
+      {validationMsg && mode === "decode" && (
+        <div className={`rounded-lg border p-3 ${validationMsg.ok ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20"}`}>
+          <p className={`text-sm ${validationMsg.ok ? "text-green-700 dark:text-green-400" : "text-amber-700 dark:text-amber-400"}`}>
+            {validationMsg.text}
+          </p>
+        </div>
+      )}
 
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">

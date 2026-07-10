@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Converts text to hexadecimal and hex back to text with multiple formatting options including lowercase, uppercase, space-separated, continuous, and 0x-prefixed. Shows binary and decimal values per byte alongside the hex output, displays byte offsets for file analysis, converts files to hex, and supports XOR operations with a key for basic encryption.",
+  "whyItExists": "Developers working with binary data, network protocols, or low-level debugging often need to inspect or manipulate hex representations, but existing tools are too simple or CLI-based. This tool provides a complete hex workspace with multiple views and XOR operations in a visual interface.",
+  "whoShouldUse": "Embedded systems engineers, network protocol developers, reverse engineers, and anyone working with binary file formats or low-level data inspection.",
+  "useCases": [
+    "Convert a binary file to hex for manual inspection of magic bytes or headers",
+    "Decode a hex string from a network protocol dump back into readable text",
+    "Analyze byte-by-byte with the binary and decimal column to understand flag bits in a protocol",
+    "Apply XOR with a key to obfuscated data in a CTF challenge or malware analysis",
+    "View byte offsets while inspecting a file to identify specific positions in the data structure"
+  ],
+  "instructions": [
+    "Type or paste text in the input area to see its hex representation update in real time",
+    "Choose output format: lowercase, uppercase, space-separated, continuous (no spaces), or 0x-prefixed (e.g. 0xFF)",
+    "Toggle the binary and decimal column to see per-byte values in both binary and decimal formats",
+    "Enable byte offsets to see the position of each byte in the sequence for file analysis",
+    "Switch to file-to-hex mode by dragging a file onto the area to convert its entire content",
+    "Enter a XOR key value to apply bitwise XOR to each byte for basic obfuscation or deobfuscation"
+  ],
+  "examples": [
+    "Input: 'Hello' with uppercase space-separated. Output: '48 65 6C 6C 6F' with binary column showing '01001000 01100101 01101100 01101100 01101111'",
+    "Input: '48656C6C6F' (continuous mode) with hex-to-text. Output: 'Hello'"
+  ],
+  "bestPractices": [
+    "Use 0x-prefixed format when writing C/C++ byte arrays or embedded firmware constants",
+    "Enable binary column when analyzing protocol flag bytes to see individual bit values",
+    "Use XOR with care; repeat the key length across data and use the same key to reverse",
+    "File-to-hex mode is ideal for inspecting file headers without needing a full hex editor"
+  ],
+  "commonMistakes": [
+    "Confusing the hex-to-text direction; always confirm which conversion mode is active",
+    "Applying XOR with a key that contains non-hex characters without proper encoding",
+    "Using continuous mode output to paste into a tool that expects space-separated hex bytes",
+    "Not accounting for byte order (endianness) when interpreting multi-byte hex values"
+  ],
+  "faq": [
+    "Can I convert large files to hex? Yes, but very large files may take time; the tool processes in chunks.",
+    "What does XOR with a key do? It applies a bitwise exclusive-or of each byte with the key byte for obfuscation.",
+    "Does the tool handle UTF-8 characters? Yes, multi-byte UTF-8 characters are properly encoded to hex.",
+    "Can I switch between text-to-hex and hex-to-text without clearing input? Yes, the conversion is bidirectional."
+  ]
+}

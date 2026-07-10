@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "XML formatter supporting indent options of 2 spaces, 4 spaces, or tabs with minification mode that strips all whitespace. Removes XML comments optionally, controls self-closing element style (<tag/> vs. <tag></tag>), sorts attributes alphabetically, chooses single or double quotes for attribute values, toggles XML declaration inclusion, and validates well-formedness with error reporting.",
+  "whyItExists": "XML files from different sources have wildly inconsistent formatting. This tool normalizes any XML to a consistent style while validating its structure, helping teams maintain readable and uniform XML across their projects.",
+  "whoShouldUse": "Backend developers, configuration engineers, DevOps practitioners, and anyone who creates or maintains XML configuration files, data exchanges, or SOAP messages.",
+  "useCases": [
+    "Format a minified XML API response into readable indented XML for debugging",
+    "Minify an XML config file before deployment to save space in a container image",
+    "Sort attributes alphabetically in all elements for consistent markup",
+    "Strip comments from an XML file before sharing it with external partners",
+    "Validate an XML string for well-formedness with precise error line/column reporting",
+    "Standardize attribute quotes from single to double across an entire XML document"
+  ],
+  "instructions": [
+    "Paste or type XML content into the input area.",
+    "Select indent: 2 spaces, 4 spaces, or tab.",
+    "Toggle options: Remove Comments (strips <!-- -->), Self-Closing (/> vs. <tag></tag>), Sort Attributes (alphabetical), Quote Style (single or double), and XML Declaration (include <?xml?> or not).",
+    "Click Format to process; the formatted output appears in the result panel.",
+    "Check the Validation section for well-formedness status — errors show line number, column, and description.",
+    "Click Copy to copy the formatted XML or Download to save as .xml file."
+  ],
+  "examples": [
+    "Input: \"<root><item id=\\\"1\\\" name=\\\"test\\\"><![CDATA[hello]]></item></root>\" (2-space indent, sort attributes, double quotes) → Output: \"<root>\\n  <item id=\\\"1\\\" name=\\\"test\\\">\\n    <![CDATA[hello]]>\\n  </item>\\n</root>\"",
+    "Input: invalid XML \"<root><item>text</item>\" → Validation: \"Error at line 1 column 23: XML document must have a root element that encloses all content\""
+  ],
+  "bestPractices": [
+    "Always validate XML after formatting — formatting can surface hidden well-formedness issues",
+    "Use Sort Attributes for large configuration files to make attributes predictable",
+    "Remove comments before sharing XML externally to avoid leaking internal notes",
+    "Use 2-space indent for deeply nested XML to keep line lengths reasonable",
+    "Use Self-Closing style for empty elements to reduce file size"
+  ],
+  "commonMistakes": [
+    "Assuming formatted XML is always valid — formatting does not fix well-formedness errors",
+    "Using tabs for indent in XML that will be processed by tools expecting spaces (or vice versa)",
+    "Removing the XML declaration when it is required by the consuming parser",
+    "Forgetting to handle CDATA sections — the formatter preserves them but does not validate their content",
+    "Sorting attributes in XML where attribute order is semantically meaningful (rare, but possible)"
+  ],
+  "faq": [
+    "Does it preserve CDATA sections? Yes — CDATA sections are preserved and indented as block content.",
+    "What validation checks are performed? Well-formedness checks: matching start/end tags, proper nesting, valid attribute syntax, entity references, and encoding declarations.",
+    "Can it format XML without a root element? No — the input must be well-formed XML with a single root element.",
+    "Does it handle namespaces? Yes — namespace prefixes and xmlns attributes are preserved and sorted along with other attributes."
+  ]
+}

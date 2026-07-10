@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Generates JSON Schema from sample JSON input, supporting Draft-07 and 2020-12 schema versions. Automatically detects string formats (email, date, uri, etc.) and patterns, identifies potential enums from repeated values, and generates examples from the input data. Allows toggling validation keywords like required, minimum, maximum, and patternProperties.",
+  "whyItExists": "Writing JSON Schema by hand is tedious and error-prone, especially for complex nested objects. This tool infers the schema structure from sample data, auto-detects constraints like formats and enums, and lets you toggle validation rules so you can generate schemas that match your actual data.",
+  "whoShouldUse": "API developers documenting request/response schemas, data engineers validating JSON datasets, and teams adopting OpenAPI or schema-driven development.",
+  "useCases": [
+    "Generate a Draft-07 schema from a sample API response to document the endpoint",
+    "Infer string formats like email and date-time from sample data for validation purposes",
+    "Detect enum values from a set of samples to restrict API input fields to valid options",
+    "Generate an example value from the input to include in the schema documentation",
+    "Toggle required properties on/off to create a looser schema for partial updates"
+  ],
+  "instructions": [
+    "Paste valid JSON sample data into the input area",
+    "Select the schema version: Draft-07 or 2020-12",
+    "Toggle format detection on/off to auto-detect email, date, uri, ipv4, etc.",
+    "Toggle enum detection to identify repeated string values as enum constraints",
+    "Toggle individual validation keywords: required, minimum, maximum, patternProperties, etc.",
+    "Click Generate to produce the JSON Schema; copy or download the result"
+  ],
+  "examples": [
+    "Input: '{\"email\":\"test@example.com\",\"age\":25}' with Draft-07, format detection on. Output: Schema with 'email' type string format email, 'age' type integer minimum 0.",
+    "Input: '{\"role\":\"admin\"}, {\"role\":\"user\"}, {\"role\":\"admin\"}' with enum detection on. Output: Schema with 'role' type string and enum [\"admin\", \"user\"]."
+  ],
+  "bestPractices": [
+    "Provide multiple sample JSON documents when possible; more samples lead to better enum and type detection",
+    "Use Draft-07 for broader compatibility; use 2020-12 for new features like dependentRequired",
+    "Review the generated schema manually to adjust constraints that may be too strict or too loose",
+    "Enable format detection for API schemas to validate common patterns like email and URL"
+  ],
+  "commonMistakes": [
+    "Providing only one sample and expecting accurate enum detection (needs multiple distinct values)",
+    "Using auto-generated schemas without review, which may infer overly permissive types (e.g., anyOf)",
+    "Forgetting to toggle validation keywords off for schemas that should accept flexible input",
+    "Generating a schema from empty or null values, resulting in an {type: null} schema"
+  ],
+  "faq": [
+    "Can it generate a schema from multiple JSON samples? Paste them sequentially or as an array of samples.",
+    "What is the difference between Draft-07 and 2020-12? 2020-12 adds vocabularies, new keywords like dependentRequired, and changes how $defs works.",
+    "Does it detect nested objects? Yes, it recursively generates schema for nested objects and arrays.",
+    "Can I exclude certain fields from the schema? Post-edit the generated schema or use a tool like json-path-finder to identify field paths first."
+  ]
+}

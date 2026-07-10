@@ -1,0 +1,13 @@
+[
+  { "slug": "regex-tester", "category": "Utilities", "name": "Regex Tester", "input": "hello world", "pattern": "hello", "action": "Test", "expect": "output" },
+  { "slug": "diff-checker", "category": "Utilities", "name": "Diff Checker", "input": "line1\nline2\nline3", "input2": "line1\nline2 modified\nline3", "action": "Compare", "expect": "diff" },
+  { "slug": "word-counter", "category": "Utilities", "name": "Word Counter", "input": "The quick brown fox jumps over the lazy dog", "action": "Count", "expect": "output" },
+  { "slug": "text-sorter", "category": "Utilities", "name": "Text Sorter", "input": "banana\napple\ncherry", "action": "Sort", "expect": "output" },
+  { "slug": "http-header-parser", "category": "Utilities", "name": "HTTP Header Parser", "input": "Content-Type: application/json\nAuthorization: Bearer token123", "action": "Parse", "expect": "output" },
+  { "slug": "user-agent-parser", "category": "Utilities", "name": "User Agent Parser", "input": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", "action": "Parse", "expect": "output" },
+  { "slug": "ip-calculator", "category": "Utilities", "name": "IP Calculator", "input": "192.168.1.0/24", "action": "Calculate", "expect": "output" },
+  { "slug": "markdown-preview", "category": "Utilities", "name": "Markdown Preview", "input": "# Hello\n- item 1\n- item 2", "action": "Preview", "expect": "output" },
+  { "slug": "string-length", "category": "Utilities", "name": "String Length", "input": "Hello World!", "action": "Calculate", "expect": "output" },
+  { "slug": "dns-lookup", "category": "Utilities", "name": "DNS Lookup", "input": "example.com", "action": "Lookup", "expect": "output" },
+  { "slug": "ip-lookup", "category": "Utilities", "name": "IP Lookup", "input": "8.8.8.8", "action": "Lookup", "expect": "output" }
+]

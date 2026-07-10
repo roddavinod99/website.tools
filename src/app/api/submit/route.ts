@@ -25,8 +25,16 @@ function sanitize(val: unknown, maxLen = MAX_FIELD_LENGTH): unknown {
 
 export async function POST(request: Request) {
   const origin = request.headers.get("origin") || request.headers.get("referer") || "";
-  if (origin && !origin.includes(new URL(request.url).host)) {
-    return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
+  if (origin) {
+    try {
+      const originHost = new URL(origin).hostname;
+      const expectedHost = new URL(request.url).hostname;
+      if (originHost !== expectedHost) {
+        return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
+      }
+    } catch {
+      return NextResponse.json({ error: "Invalid origin header" }, { status: 400 });
+    }
   }
 
   const contentType = request.headers.get("content-type") || "";

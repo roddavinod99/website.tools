@@ -7,6 +7,8 @@ interface LengthInfo {
   utf16Units: number;
   utf8Bytes: number;
   utf16Bytes: number;
+  asciiBytes: number;
+  graphemeClusters: number;
   words: number;
   lines: number;
   nonEmptyLines: number;
@@ -29,17 +31,72 @@ interface LengthInfo {
   fitsTwitter: boolean;
   fitsFacebook: boolean;
   fitsInstagram: boolean;
+  surrogatePairs: number;
+  surrogateChars: string[];
+  combiningMarks: number;
+  combiningChars: string[];
 }
 
 function getEmojiRegex(): RegExp {
   return /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{231A}-\u{231B}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{25AA}-\u{25AB}\u{25B6}\u{25C0}\u{25FB}-\u{25FE}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{2B50}\u{2B55}\u{3030}\u{303D}\u{3297}\u{3299}]/gu;
 }
 
+function countGraphemeClusters(text: string): number {
+  if (typeof Intl !== "undefined" && Intl.Segmenter) {
+    try {
+      const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+      return [...segmenter.segment(text)].length;
+    } catch {}
+  }
+  return [...text].length;
+}
+
+function findSurrogatePairs(text: string): { count: number; chars: string[] } {
+  const chars: string[] = [];
+  let count = 0;
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code >= 0xD800 && code <= 0xDBFF) {
+      if (i + 1 < text.length) {
+        const next = text.charCodeAt(i + 1);
+        if (next >= 0xDC00 && next <= 0xDFFF) {
+          count++;
+          chars.push(text.slice(i, i + 2));
+          i++;
+        }
+      }
+    }
+  }
+  return { count, chars };
+}
+
+function findCombiningMarks(text: string): { count: number; chars: string[] } {
+  const chars: string[] = [];
+  let count = 0;
+  for (const ch of text) {
+    const code = ch.codePointAt(0)!;
+    if ((code >= 0x0300 && code <= 0x036F) ||
+        (code >= 0x1AB0 && code <= 0x1AFF) ||
+        (code >= 0x1DC0 && code <= 0x1DFF) ||
+        (code >= 0x20D0 && code <= 0x20FF) ||
+        (code >= 0xFE00 && code <= 0xFE0F) ||
+        (code >= 0xFE20 && code <= 0xFE2F)) {
+      count++;
+      chars.push(ch);
+    }
+  }
+  return { count, chars };
+}
+
 function analyzeString(text: string): LengthInfo {
   const codePoints = [...text].length;
   const utf16Units = text.length;
-  const utf8Bytes = new TextEncoder().encode(text).length;
+  const encoder = new TextEncoder();
+  const utf8Bytes = encoder.encode(text).length;
   const utf16Bytes = utf16Units * 2;
+  const asciiBytes = [...text].every(c => c.charCodeAt(0) < 128) ? utf8Bytes : 0;
+
+  const graphemeClusters = countGraphemeClusters(text);
 
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
   const lines = text ? text.split("\n").length : 0;
@@ -49,8 +106,8 @@ function analyzeString(text: string): LengthInfo {
   const isWhitespaceOnly = text.trim().length === 0 && text.length > 0;
 
   const asciiCodes = [...text].map((c) => c.charCodeAt(0)).join(" ");
-  const hexBytes = new TextEncoder().encode(text).reduce((acc, b) => acc + b.toString(16).padStart(2, "0").toUpperCase() + " ", "").trim();
-  const binary = new TextEncoder().encode(text).reduce((acc, b) => acc + b.toString(2).padStart(8, "0") + " ", "").trim();
+  const hexBytes = encoder.encode(text).reduce((acc, b) => acc + b.toString(16).padStart(2, "0").toUpperCase() + " ", "").trim();
+  const binary = encoder.encode(text).reduce((acc, b) => acc + b.toString(2).padStart(8, "0") + " ", "").trim();
 
   const letters = (text.match(/[a-zA-Z]/g) || []).length;
   const digits = (text.match(/[0-9]/g) || []).length;
@@ -65,6 +122,9 @@ function analyzeString(text: string): LengthInfo {
     return `U+${cp.toString(16).toUpperCase().padStart(4, "0")} ${c}`;
   });
 
+  const { count: surrogatePairs, chars: surrogateChars } = findSurrogatePairs(text);
+  const { count: combiningMarks, chars: combiningChars } = findCombiningMarks(text);
+
   const hasInvalidUtf8 = false;
 
   const fitsSms = utf8Bytes <= 160;
@@ -73,12 +133,14 @@ function analyzeString(text: string): LengthInfo {
   const fitsInstagram = utf16Units <= 2200;
 
   return {
-    codePoints, utf16Units, utf8Bytes, utf16Bytes,
+    codePoints, utf16Units, utf8Bytes, utf16Bytes, asciiBytes,
+    graphemeClusters,
     words, lines, nonEmptyLines, charsNoSpaces, isEmpty, isWhitespaceOnly,
     asciiCodes, hexBytes, binary,
     letters, digits, spaces, punctuation, symbols,
     emojiCount, emojiList, codePointsDisplay, hasInvalidUtf8,
     fitsSms, fitsTwitter, fitsFacebook, fitsInstagram,
+    surrogatePairs, surrogateChars, combiningMarks, combiningChars,
   };
 }
 
@@ -90,7 +152,7 @@ const LIMITS = [
 ];
 
 export function StringLength() {
-  const [input, setInput] = useState("Hello, world!");
+  const [input, setInput] = useState("Hello, world! 👋");
   const [showRepr, setShowRepr] = useState(true);
   const [copied, setCopied] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -100,9 +162,11 @@ export function StringLength() {
   const copyInfo = async () => {
     const lines = [
       `Code Points: ${info.codePoints}`,
-      `UTF-16 Units: ${info.utf16Units}`,
+      `UTF-16 Units (characters): ${info.utf16Units}`,
+      `Grapheme Clusters: ${info.graphemeClusters}`,
       `UTF-8 Bytes: ${info.utf8Bytes}`,
       `UTF-16 Bytes: ${info.utf16Bytes}`,
+      `ASCII Bytes: ${info.asciiBytes > 0 ? info.asciiBytes : 'N/A (non-ASCII chars)'}`,
       `Words: ${info.words}`,
       `Lines: ${info.lines}`,
       `Non-empty Lines: ${info.nonEmptyLines}`,
@@ -115,6 +179,8 @@ export function StringLength() {
       `Punctuation: ${info.punctuation}`,
       `Symbols: ${info.symbols}`,
       `Emoji Count: ${info.emojiCount}`,
+      `Surrogate Pairs: ${info.surrogatePairs}`,
+      `Combining Marks: ${info.combiningMarks}`,
       `SMS (160): ${info.fitsSms ? "Yes" : "No"}`,
       `Twitter (280): ${info.fitsTwitter ? "Yes" : "No"}`,
     ];
@@ -151,8 +217,8 @@ export function StringLength() {
         {[
           { label: "Code Points", value: info.codePoints },
           { label: "UTF-16 Units", value: info.utf16Units },
+          { label: "Grapheme Clusters", value: info.graphemeClusters },
           { label: "UTF-8 Bytes", value: info.utf8Bytes },
-          { label: "UTF-16 Bytes", value: info.utf16Bytes },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
             <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{s.value.toLocaleString()}</div>
@@ -163,13 +229,13 @@ export function StringLength() {
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {[
+          { label: "UTF-16 Bytes", value: info.utf16Bytes },
+          { label: "ASCII Bytes", value: info.asciiBytes > 0 ? info.asciiBytes : "Mixed" },
           { label: "Words", value: info.words },
           { label: "Lines", value: info.lines },
-          { label: "Non-empty Lines", value: info.nonEmptyLines },
-          { label: "No Spaces", value: info.charsNoSpaces },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
-            <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{s.value.toLocaleString()}</div>
+            <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{typeof s.value === "number" ? s.value.toLocaleString() : s.value}</div>
             <div className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</div>
           </div>
         ))}
@@ -177,6 +243,8 @@ export function StringLength() {
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {[
+          { label: "Non-empty Lines", value: info.nonEmptyLines },
+          { label: "No Spaces", value: info.charsNoSpaces },
           { label: "Status", value: info.isEmpty ? "Empty" : info.isWhitespaceOnly ? "Whitespace" : "Has content" },
           { label: "Letters", value: info.letters },
           { label: "Digits", value: info.digits },
@@ -184,6 +252,8 @@ export function StringLength() {
           { label: "Punctuation", value: info.punctuation },
           { label: "Symbols", value: info.symbols },
           { label: "Emoji", value: info.emojiCount },
+          { label: "Surrogate Pairs", value: info.surrogatePairs },
+          { label: "Combining Marks", value: info.combiningMarks },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
             <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{s.value}</div>
@@ -191,6 +261,29 @@ export function StringLength() {
           </div>
         ))}
       </div>
+
+      {info.surrogatePairs > 0 && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-2 dark:border-amber-800 dark:bg-amber-900/20">
+          <p className="text-xs font-medium text-amber-700 dark:text-amber-400 mb-1">Surrogate Pairs Detected ({info.surrogatePairs})</p>
+          <div className="flex flex-wrap gap-1 text-xs text-amber-600 dark:text-amber-300">
+            {[...new Set(info.surrogateChars)].slice(0, 10).map((c, i) => (
+              <span key={i} className="text-lg">{c}</span>
+            ))}
+            {info.surrogateChars.length > 10 && <span className="text-surface-400">+{info.surrogateChars.length - 10} more</span>}
+          </div>
+        </div>
+      )}
+
+      {info.combiningMarks > 0 && (
+        <div className="rounded-lg border border-purple-200 bg-purple-50 p-2 dark:border-purple-800 dark:bg-purple-900/20">
+          <p className="text-xs font-medium text-purple-700 dark:text-purple-400 mb-1">Combining Marks Detected ({info.combiningMarks})</p>
+          <div className="flex flex-wrap gap-1 text-xs text-purple-600 dark:text-purple-300">
+            {[...new Set(info.combiningChars)].slice(0, 10).map((c, i) => (
+              <span key={i} className="text-lg">{c} U+{c.codePointAt(0)!.toString(16).toUpperCase()}</span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {info.emojiList.length > 0 && (
         <div className="flex flex-wrap gap-1 text-xs">

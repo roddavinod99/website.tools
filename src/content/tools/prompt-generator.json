@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates structured AI prompts across 6 categories (Creative, Technical, Business, Educational, Personal, Analytical) with pre-built use case templates and dynamic context inputs. Offers tone and format selection (concise, detailed, step-by-step, bulleted) and maintains generation history with favorites/bookmarking for frequently used prompt templates.",
+  "whyItExists": "Crafting effective AI prompts requires specific structures and context that many users struggle with. Provides templated, category-specific prompts with customizable parameters to help users get better results from AI systems without learning prompt engineering.",
+  "whoShouldUse": "AI tool users, content creators, students, business professionals, and anyone who regularly interacts with AI assistants and wants more consistent, effective prompts.",
+  "useCases": [
+    "Generate creative writing prompts for storytelling, poetry, or content creation with specific parameters",
+    "Create technical prompts for code generation, debugging, or architecture discussions with context injection",
+    "Build business prompts for strategy analysis, market research, or report generation with industry context",
+    "Generate educational prompts for tutoring, lesson planning, or explanation requests at different levels",
+    "Create analytical prompts for data interpretation, pros/cons analysis, or decision frameworks",
+    "Reuse favorite prompt templates for recurring tasks like weekly reports, standup notes, or code reviews"
+  ],
+  "instructions": [
+    "Select a category from the 6 available options (Creative, Technical, Business, Educational, Personal, Analytical)",
+    "Choose a use case template within the category (e.g., under Technical: Code Review, Debug Help, Architecture Design)",
+    "Fill in the context input fields specific to the use case (e.g., programming language, project description, error details)",
+    "Select tone (Professional, Casual, Academic) and output format (Concise, Detailed, Step-by-Step, Bulleted)",
+    "Click \"Generate\" to create the structured prompt; review and make manual edits if needed",
+    "Save effective prompts to Favorites using the bookmark icon; access history via the History tab for regeneration"
+  ],
+  "examples": [
+    "Category: Technical, Use Case: Code Review, Context: Python, Flask app, auth bug -> Output: \"You are a senior Python developer. Review this Flask authentication code for security vulnerabilities...\"",
+    "Category: Business, Use Case: Market Analysis, Context: SaaS product, B2B, midwest US -> Output: \"Conduct a market analysis for a B2B SaaS product targeting midwest US businesses...\""
+  ],
+  "bestPractices": [
+    "Fill in as many context fields as possible; more specific context produces more tailored and useful prompts",
+    "Save prompts that consistently produce good results to Favorites for reuse without re-entering context",
+    "Experiment with different tones for the same category to see how the AI response varies",
+    "Use the Step-by-Step format for technical and troubleshooting prompts to get structured responses",
+    "Review and manually customize generated prompts before using them; the AI output is a starting point, not final"
+  ],
+  "commonMistakes": [
+    "Using vague or minimal context and getting generic prompts that don't produce useful results",
+    "Selecting a category that doesn't match the actual task, leading to irrelevant prompt structure",
+    "Not reviewing generated prompts before use; the tool creates templates that may need refinement",
+    "Saving too many favorites without organization, making it hard to find the right template later",
+    "Relying solely on generated prompts without learning prompt engineering principles to improve over time"
+  ],
+  "faq": [
+    "Can I create custom categories or use cases? Pre-defined categories and use cases are provided; custom structures can be built by starting from a similar template.",
+    "Are the prompts saved locally or in the cloud? History and favorites are stored in browser localStorage; clearing browser data will erase them.",
+    "How many context fields can I fill in? Each use case has 3-5 context fields; you can also add custom context in the free-form text area.",
+    "Does the tool support non-English prompts? Yes, enter context in any language; the generated prompt will match the input language."
+  ]
+}

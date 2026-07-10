@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts text between 13 case variants including camelCase, PascalCase, snake_case, kebab-case, Title Case, UPPER CASE, lower case, CONSTANT_CASE, Train-Case, Dot.Case, Sentence case, sWAP cASE, and aLtErNaTiNg cAsE. Displays all variants simultaneously in real-time with individual copy buttons for each variant and a character/word count summary.",
+  "whyItExists": "Different programming languages enforce different naming conventions (camelCase for JS, snake_case for Python, kebab-case for CSS). Developers need to convert between conventions quickly when moving between projects or refactoring codebases without manual search-and-replace operations.",
+  "whoShouldUse": "Full-stack developers working across multiple languages, API designers normalizing field names, database administrators mapping between conventions, and anyone refactoring large codebases with inconsistent naming.",
+  "useCases": [
+    "Convert a database column in snake_case to camelCase for a JavaScript API response",
+    "Rename Python variables from camelCase to PEP 8-compliant snake_case",
+    "Generate CONSTANT_CASE environment variable names from a plain English description",
+    "Reformat filenames from Title Case to kebab-case for URL slug generation",
+    "Create Train-Case CSS class names from a camelCase React component name",
+    "Quickly produce all possible case variants of a function name for documentation"
+  ],
+  "instructions": [
+    "Type or paste your source text — all 13 case variants update in real-time as you type",
+    "Browse the grid of all variants, each clearly labeled with its case type name",
+    "Click the copy icon next to any variant to copy it to clipboard — each has its own copy button",
+    "Toggle 'Apply to Multi-Word' for camelCase/PascalCase to join or preserve spaces",
+    "Use the character/word count display to monitor input length",
+    "For bulk conversion, paste a list (one per line) — each line processed independently in a table"
+  ],
+  "examples": [
+    "Input: 'hello world example' => Outputs: camelCase 'helloWorldExample', snake_case 'hello_world_example', kebab-case 'hello-world-example', and 10 more variants",
+    "Input: 'userID-field' => Outputs: camelCase 'userIdField', snake_case 'user_id_field', Title Case 'User ID Field'"
+  ],
+  "bestPractices": [
+    "Use the live preview to verify your chosen variant before copying — catches edge cases like leading digits",
+    "For multi-line input, process one line at a time for clean results",
+    "Use Dot.Case for config keys (NestJS, Java properties) and kebab-case for URL slugs",
+    "Remember camelCase starts lowercase, PascalCase starts uppercase — mixing them is a common bug",
+    "Review acronyms manually — the tool applies standard rules without special acronym handling"
+  ],
+  "commonMistakes": [
+    "Assuming UPPER CASE and CONSTANT_CASE are the same — CONSTANT_CASE inserts underscores between words",
+    "Using snake_case where kebab-case is expected or vice versa",
+    "Not cleaning the input of special characters — @, #, $ may cause unexpected word boundaries",
+    "Forgetting Sentence case capitalizes only the first word of the entire input",
+    "Relying on swap case or alternating case for serious purposes — these are novelty formats"
+  ],
+  "faq": [
+    "Does this handle acronyms like 'HTML'? — In camelCase they become 'html', in PascalCase 'Html'. Standard rules apply.",
+    "Can I convert an entire file? — Yes, paste the whole file. For code, use single identifiers for best results.",
+    "Why are some variants identical for single words? — Single-word inputs naturally produce the same output across many variants.",
+    "Is there a way to preserve abbreviations? — Not automatically. Edit the output after conversion."
+  ]
+}

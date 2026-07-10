@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { Upload } from "lucide-react";
 
-type Delimiter = "comma" | "tab" | "semicolon" | "pipe" | "custom";
+type Delimiter = "comma" | "tab" | "semicolon" | "pipe" | "space" | "custom";
 type QuoteChar = "double" | "single" | "none";
 type OutputFormat = "objects" | "arrays" | "keyed" | "minified";
 
@@ -12,16 +13,13 @@ function detectDelimiter(firstLine: string): Delimiter {
     { d: "tab" as Delimiter, c: (firstLine.match(/\t/g) || []).length },
     { d: "semicolon" as Delimiter, c: (firstLine.match(/;/g) || []).length },
     { d: "pipe" as Delimiter, c: (firstLine.match(/\|/g) || []).length },
+    { d: "space" as Delimiter, c: (firstLine.match(/ /g) || []).length },
   ];
   counts.sort((a, b) => b.c - a.c);
   return counts[0].c > 0 ? counts[0].d : "comma";
 }
 
-function parseCSV(
-  text: string,
-  delimiter: string,
-  quoteChar: string,
-): string[][] {
+function parseCSV(text: string, delimiter: string, quoteChar: string, escapeChar: string): string[][] {
   const rows: string[][] = [];
   let current: string[] = [];
   let field = "";
@@ -31,6 +29,7 @@ function parseCSV(
   while (i < text.length) {
     const ch = text[i];
     const next = text[i + 1];
+    if (escapeChar && ch === escapeChar && next) { field += next; i += 2; continue; }
     if (quote && ch === quote) {
       if (inQuotes && next === quote) { field += quote; i += 2; continue; }
       inQuotes = !inQuotes; i++; continue;
@@ -57,14 +56,18 @@ export function CsvToJson() {
   const [delimiter, setDelimiter] = useState<Delimiter>("comma");
   const [customDelim, setCustomDelim] = useState("|");
   const [quoteChar, setQuoteChar] = useState<QuoteChar>("double");
+  const [escapeChar, setEscapeChar] = useState("\\");
   const [firstRowHeaders, setFirstRowHeaders] = useState(true);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("objects");
+  const [prettyPrint, setPrettyPrint] = useState(true);
+  const [indentSize, setIndentSize] = useState(2);
   const [encodeNonAscii, setEncodeNonAscii] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [colCount, setColCount] = useState(0);
   const [preview, setPreview] = useState<string[][]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
   const dropRef = useRef<HTMLDivElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const convert = useCallback(() => {
     const getDelimStr = () => {
@@ -73,6 +76,7 @@ export function CsvToJson() {
         case "tab": return "\t";
         case "semicolon": return ";";
         case "pipe": return "|";
+        case "space": return " ";
         case "custom": return customDelim;
       }
     };
@@ -81,7 +85,7 @@ export function CsvToJson() {
 
     if (!input.trim()) { setOutput(""); setError(""); setRowCount(0); setColCount(0); setPreview([]); return; }
     try {
-      const rows = parseCSV(input, getDelimStr(), quoteMap[quoteChar]);
+      const rows = parseCSV(input, getDelimStr(), quoteMap[quoteChar], escapeChar);
       if (rows.length === 0) throw new Error("No data rows found");
       const cols = rows[0].length;
       for (let r = 1; r < rows.length; r++) {
@@ -120,7 +124,7 @@ export function CsvToJson() {
           break;
         }
       }
-      let json = JSON.stringify(result, null, outputFormat === "minified" ? undefined : 2);
+      let json = JSON.stringify(result, null, prettyPrint ? indentSize : undefined);
       if (encodeNonAscii) json = json.replace(/[\u0080-\uffff]/g, (ch) => `\\u${ch.charCodeAt(0).toString(16).padStart(4, "0")}`);
       setOutput(json);
       setError("");
@@ -128,7 +132,7 @@ export function CsvToJson() {
       setError(e instanceof Error ? e.message : "Conversion failed");
       setOutput("");
     }
-  }, [input, delimiter, customDelim, quoteChar, firstRowHeaders, outputFormat, encodeNonAscii]);
+  }, [input, delimiter, customDelim, quoteChar, escapeChar, firstRowHeaders, outputFormat, prettyPrint, indentSize, encodeNonAscii]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -149,11 +153,19 @@ export function CsvToJson() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file && file.type === "text/csv" && file.name.endsWith(".csv")) {
+    if (file && file.name.endsWith(".csv")) {
       const reader = new FileReader();
       reader.onload = () => setInput(reader.result as string);
       reader.readAsText(file);
     }
+  };
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) { setError("File exceeds 10MB limit"); return; }
+    const reader = new FileReader();
+    reader.onload = () => { setInput(reader.result as string); };
+    reader.readAsText(file);
   };
   const fileSize = new TextEncoder().encode(input).length;
 
@@ -164,8 +176,11 @@ export function CsvToJson() {
         <textarea value={input} onChange={(e) => { const val = e.target.value; setInput(val); if (val.trim()) { const first = val.trim().split("\n")[0]; if (first) setDelimiter(detectDelimiter(first)); } }} placeholder="name,age,city&#10;Alice,30,NYC&#10;Bob,25,LA" rows={6} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         <div className="flex justify-between text-xs text-surface-400 dark:text-dark-muted">
-          <span>{rowCount > 0 && `${rowCount} rows, ${colCount} cols`}</span>
-          <span>{fileSize > 0 && `${(fileSize / 1024).toFixed(1)} KB`}</span>
+          <span>
+            <input ref={fileRef} type="file" accept=".csv" onChange={handleFile} className="hidden" />
+            <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 text-brand-500 hover:text-brand-600" aria-label="Upload CSV file"><Upload className="w-3 h-3" /> Upload CSV</button>
+          </span>
+          <span>{rowCount > 0 && `${rowCount} rows, ${colCount} cols`} {fileSize > 0 && `(${(fileSize / 1024).toFixed(1)} KB)`}</span>
         </div>
       </div>
 
@@ -178,6 +193,7 @@ export function CsvToJson() {
             <option value="tab">Tab</option>
             <option value="semicolon">Semicolon (;)</option>
             <option value="pipe">Pipe (|)</option>
+            <option value="space">Space</option>
             <option value="custom">Custom</option>
           </select>
           {delimiter === "custom" && (
@@ -192,6 +208,10 @@ export function CsvToJson() {
             <option value="single">Single</option>
             <option value="none">None</option>
           </select>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <label className="text-xs text-surface-500 dark:text-dark-muted">Escape:</label>
+          <input value={escapeChar} onChange={(e) => setEscapeChar(e.target.value)} maxLength={1} placeholder="\\" className="w-10 rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-500 dark:text-dark-muted">Output:</label>
@@ -209,6 +229,19 @@ export function CsvToJson() {
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
           <input type="checkbox" checked={firstRowHeaders} onChange={(e) => setFirstRowHeaders(e.target.checked)} className="rounded border-surface-300" /> First row as headers
         </label>
+        <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
+          <input type="checkbox" checked={prettyPrint} onChange={(e) => setPrettyPrint(e.target.checked)} className="rounded border-surface-300" /> Pretty print
+        </label>
+        {prettyPrint && (
+          <div className="flex items-center gap-1">
+            <label className="text-xs text-surface-500 dark:text-dark-muted">Indent:</label>
+            <select value={indentSize} onChange={(e) => setIndentSize(Number(e.target.value))} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              <option value={2}>2</option>
+              <option value={4}>4</option>
+              <option value={8}>8</option>
+            </select>
+          </div>
+        )}
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
           <input type="checkbox" checked={encodeNonAscii} onChange={(e) => setEncodeNonAscii(e.target.checked)} className="rounded border-surface-300" /> Encode non-ASCII
         </label>
@@ -239,8 +272,8 @@ export function CsvToJson() {
       )}
 
       <div className="flex gap-2">
-        <button onClick={copy} disabled={!output} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors">Copy JSON</button>
-        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download JSON</button>
+        <button onClick={copy} disabled={!output} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors" aria-label="Copy JSON">Copy JSON</button>
+        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download JSON">Download JSON</button>
         <button onClick={clear} className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors">Clear</button>
       </div>
 

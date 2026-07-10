@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "A visual cron expression builder that constructs cron schedules from human-friendly controls and displays the expression in real-time. Includes preset buttons (@yearly, @monthly, @weekly, @daily, @hourly), a human-readable description, a table showing the next 10 execution times, timezone selection, 6-field cron support (with seconds), @macro expansion, favorites/saved expressions, and export as systemd timer or crontab format.",
+  "whyItExists": "Cron expressions are notoriously error-prone to write by hand — a misplaced asterisk can cause a job to run too frequently or never. A visual builder eliminates syntax errors, provides immediate feedback through descriptions and execution preview, and supports multiple cron variants for the full spectrum of scheduling needs.",
+  "whoShouldUse": "DevOps engineers managing scheduled jobs, backend developers setting up cron tasks, system administrators automating maintenance scripts, and anyone learning cron syntax.",
+  "useCases": [
+    "Build a cron expression for daily database backup at 3:30 AM (30 3 * * *) without memorizing field order",
+    "Schedule a job for the first Monday of every month using advanced day-of-week positioning",
+    "Preview next 10 execution times to verify quarterly report job runs on correct dates",
+    "Convert a cron expression to systemd timer format for a modern Linux deployment",
+    "Save a library of common cron expressions as favorites (nightly builds, weekly reports, health checks)",
+    "Debug an existing cron expression by pasting it in to see human-readable description and next run times"
+  ],
+  "instructions": [
+    "Use the visual form to set minute, hour, day-of-month, month, and day-of-week — dropdowns prevent invalid entries",
+    "Select from preset buttons (@yearly, @monthly, @weekly, @daily, @hourly) to auto-populate fields",
+    "Toggle '6-Field Mode' to add seconds precision (format: sec min hour dom mon dow)",
+    "Read the human-readable description — updates in real-time explaining the schedule in plain English",
+    "View 'Next 10 Executions' table to validate the schedule — shows exact dates/times in selected timezone",
+    "Save expression as favorite with custom name, or export as crontab entry or systemd timer unit"
+  ],
+  "examples": [
+    "Config: Every weekday at 9:00 AM => Expression: '0 9 * * 1-5' | Description: 'At 09:00 AM, Monday through Friday'",
+    "Config: First Monday of every month at 2:30 AM => Expression: '30 2 * * 1#1' | Next 10: Shows each first Monday at 02:30"
+  ],
+  "bestPractices": [
+    "Always check 'Next 10 Executions' before deploying — catches off-by-one and DST issues",
+    "Use timezone selection when scheduling across servers in different timezones",
+    "Save frequently used expressions as favorites with descriptive names",
+    "For jobs every few minutes, use 'Every N Minutes' option — generates correct '*/N' syntax",
+    "Use 6-field mode only when sub-minute precision is needed — most cron implementations don't support seconds"
+  ],
+  "commonMistakes": [
+    "Confusing day-of-month (field 3) with day-of-week (field 5) — both set means both must match",
+    "Using '0 * * * *' expecting every hour — correct. But '*/1 * * * *' runs every minute, often unintended",
+    "Forgetting cron uses server-local time — scheduling for 14:00 may not be 2 PM in your timezone",
+    "Using @daily (0 0 * * *) when meaning @midnight — they are the same, but expectations may differ",
+    "Copying systemd format into crontab — syntax differs; use correct export format for your target system"
+  ],
+  "faq": [
+    "5-field vs 6-field cron? — Standard uses 5 fields. 6-field adds seconds at the beginning. Not all systems support 6-field.",
+    "How are @macros expanded? — @yearly = 0 0 1 1 *, @monthly = 0 0 1 * *, @daily = 0 0 * * *, @hourly = 0 * * * *",
+    "Can I export to systemd? — Yes, click 'Export as Systemd Timer' for OnCalendar= syntax.",
+    "Do next 10 executions account for DST? — Yes, timezone-aware calculation handles daylight saving transitions."
+  ]
+}

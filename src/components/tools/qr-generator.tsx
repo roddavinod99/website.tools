@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 type ECCLevel = "L" | "M" | "Q" | "H";
 type OutputFormat = "png" | "svg" | "jpeg";
 type QRType = "url" | "text" | "email" | "phone" | "sms" | "wifi" | "vcard" | "location";
+type DotShape = "square" | "circle" | "rounded";
 
 const ECC_LABELS: Record<ECCLevel, string> = { L: "Low (7%)", M: "Medium (15%)", Q: "Quartile (25%)", H: "High (30%)" };
 
@@ -66,23 +67,59 @@ export function QRGenerator() {
   const [ecc, setEcc] = useState<ECCLevel>("M");
   const [fgColor, setFgColor] = useState("#2B5748");
   const [bgColor, setBgColor] = useState("#FFFFFF");
+  const [useGradient, setUseGradient] = useState(false);
+  const [gradientStart, setGradientStart] = useState("#2B5748");
+  const [gradientEnd, setGradientEnd] = useState("#1A8FE3");
+  const [dotShape, setDotShape] = useState<DotShape>("square");
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("png");
   const [cellSize, setCellSize] = useState(8);
   const [margin, setMargin] = useState(4);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [includeLogo, setIncludeLogo] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
+  const [qrSvg, setQrSvg] = useState<string | null>(null);
   const [history, setHistory] = useState<string[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // Extra fields for specific QR types
   const [extra, setExtra] = useState<Record<string, string>>({});
 
   const getEffectiveInput = useCallback(() => {
     if (!input.trim()) return "";
     return formatQRData(qrType, input.trim(), extra);
   }, [input, qrType, extra]);
+
+  const generateSvgString = useCallback((matrix: boolean[][], mSize: number, padding: number): string => {
+    const size = mSize * cellSize + padding * 2;
+    const fg = useGradient ? undefined : fgColor;
+    const bg = bgColor;
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+    svg += `<rect width="${size}" height="${size}" fill="${bg}"/>`;
+    if (useGradient) {
+      svg += `<defs><linearGradient id="qrGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${gradientStart}"/><stop offset="100%" stop-color="${gradientEnd}"/></linearGradient></defs>`;
+    }
+    const fill = useGradient ? "url(#qrGrad)" : fg;
+    const r = dotShape === "rounded" ? Math.max(1, Math.floor(cellSize / 4)) : 0;
+    for (let row = 0; row < mSize; row++) {
+      for (let col = 0; col < mSize; col++) {
+        if (matrix[row]?.[col]) {
+          const x = padding + col * cellSize;
+          const y = padding + row * cellSize;
+          if (dotShape === "circle") {
+            const cx = x + cellSize / 2;
+            const cy = y + cellSize / 2;
+            svg += `<circle cx="${cx}" cy="${cy}" r="${cellSize / 2}" fill="${fill}"/>`;
+          } else if (dotShape === "rounded") {
+            svg += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="${r}" ry="${r}" fill="${fill}"/>`;
+          } else {
+            svg += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="${fill}"/>`;
+          }
+        }
+      }
+    }
+    svg += "</svg>";
+    return svg;
+  }, [cellSize, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape]);
 
   const generate = useCallback(() => {
     const data = getEffectiveInput();
@@ -99,14 +136,39 @@ export function QRGenerator() {
 
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, size, size);
-    ctx.fillStyle = fgColor;
+
+    const fg = useGradient ? undefined : fgColor;
+    let gradient: CanvasGradient | null = null;
+    if (useGradient) {
+      gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, gradientStart);
+      gradient.addColorStop(1, gradientEnd);
+    }
+
     for (let r = 0; r < mSize; r++) {
       for (let c = 0; c < mSize; c++) {
         if (matrix[r]?.[c]) {
-          ctx.fillRect(padding + c * cellSize, padding + r * cellSize, cellSize, cellSize);
+          const x = padding + c * cellSize;
+          const y = padding + r * cellSize;
+          ctx.fillStyle = gradient || fg || "#000";
+          if (dotShape === "circle") {
+            ctx.beginPath();
+            ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize / 2, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (dotShape === "rounded") {
+            const r2 = Math.max(1, Math.floor(cellSize / 4));
+            ctx.beginPath();
+            ctx.roundRect(x, y, cellSize, cellSize, r2);
+            ctx.fill();
+          } else {
+            ctx.fillRect(x, y, cellSize, cellSize);
+          }
         }
       }
     }
+
+    const svgString = generateSvgString(matrix, mSize, padding);
+    setQrSvg(svgString);
 
     if (includeLogo && logoUrl) {
       const logoSize = mSize * cellSize * 0.25;
@@ -129,25 +191,34 @@ export function QRGenerator() {
       };
       img.src = logoUrl;
     } else {
-      const dataUrl = canvas.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`);
-      setQrDataUrl(dataUrl);
+      if (outputFormat === "svg") {
+        setQrDataUrl("data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgString))));
+      } else {
+        const dataUrl = canvas.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`);
+        setQrDataUrl(dataUrl);
+      }
     }
 
     if (input.trim()) {
       setHistory((prev) => { const next = [input.trim(), ...prev.filter(h => h !== input.trim())].slice(0, 20); return next; });
     }
-  }, [getEffectiveInput, ecc, fgColor, bgColor, cellSize, margin, outputFormat, includeLogo, logoUrl, input]);
+  }, [getEffectiveInput, ecc, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape, cellSize, margin, outputFormat, includeLogo, logoUrl, input, generateSvgString]);
 
-  useEffect(() => { if (input.trim()) generate(); }, [generate, input]);
+  useEffect(() => {
+    if (input.trim()) {
+      const id = requestAnimationFrame(generate);
+      return () => cancelAnimationFrame(id);
+    }
+  }, [generate, input]);
 
   const download = useCallback(() => {
     if (!qrDataUrl) return;
     const link = document.createElement("a");
-    const ext = outputFormat;
+    const ext = outputFormat === "svg" && qrSvg ? "svg" : outputFormat;
     link.download = `qrcode.${ext}`;
     link.href = qrDataUrl;
     link.click();
-  }, [qrDataUrl, outputFormat]);
+  }, [qrDataUrl, outputFormat, qrSvg]);
 
   const copyToClipboard = useCallback(async () => {
     if (!qrDataUrl) return;
@@ -162,7 +233,6 @@ export function QRGenerator() {
 
   return (
     <div className="space-y-6">
-      {/* QR Type Selector */}
       <div className="flex flex-wrap gap-2">
         {(["url", "text", "email", "phone", "sms", "wifi", "vcard", "location"] as QRType[]).map((t) => (
           <button key={t} onClick={() => setQrType(t)}
@@ -172,7 +242,6 @@ export function QRGenerator() {
         ))}
       </div>
 
-      {/* Input Section */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
@@ -183,7 +252,6 @@ export function QRGenerator() {
             className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
 
-        {/* Extra fields based on type */}
         {qrType === "email" && (
           <div>
             <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Subject</label>
@@ -261,7 +329,6 @@ export function QRGenerator() {
         )}
       </div>
 
-      {/* Advanced Options */}
       <details className="rounded-lg border border-surface-200 dark:border-dark-border">
         <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">Advanced Options</summary>
         <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4 border-t border-surface-200 dark:border-dark-border">
@@ -288,6 +355,15 @@ export function QRGenerator() {
             <input type="range" min={1} max={8} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))} className="w-full accent-brand-500" />
           </div>
           <div>
+            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Dot Shape</label>
+            <select value={dotShape} onChange={(e) => setDotShape(e.target.value as DotShape)}
+              className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+              <option value="rounded">Rounded</option>
+            </select>
+          </div>
+          <div>
             <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Foreground Color</label>
             <div className="flex items-center gap-2">
               <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
@@ -301,6 +377,30 @@ export function QRGenerator() {
               <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
           </div>
+          <div className="flex items-end">
+            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" checked={useGradient} onChange={(e) => setUseGradient(e.target.checked)} className="accent-brand-500" />
+              Gradient colors
+            </label>
+          </div>
+          {useGradient && (
+            <>
+              <div>
+                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Gradient Start</label>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                  <input type="text" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Gradient End</label>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                  <input type="text" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                </div>
+              </div>
+            </>
+          )}
           <div className="flex items-end">
             <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
               <input type="checkbox" checked={includeLogo} onChange={(e) => setIncludeLogo(e.target.checked)} className="accent-brand-500" />
@@ -319,7 +419,6 @@ export function QRGenerator() {
 
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Preview & Actions */}
       {qrDataUrl && (
         <div className="space-y-4">
           <div className="flex justify-center">
@@ -341,7 +440,6 @@ export function QRGenerator() {
         </div>
       )}
 
-      {/* History */}
       {history.length > 1 && (
         <details className="rounded-lg border border-surface-200 dark:border-dark-border">
           <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">

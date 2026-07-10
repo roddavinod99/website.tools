@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Generates cryptographic hashes for strings using MD5, SHA-1, SHA-256, SHA-384, SHA-512, SHA-224, RIPEMD-160, CRC32, and CRC32C. Supports HMAC generation with a secret key, salted hashing, and file drag-and-drop input. Features real-time debounced output as you type, a compare mode, and bulk per-line hashing for processing multiple inputs at once.",
+  "whyItExists": "Developers frequently need to hash passwords, verify data integrity, or compute HMACs for API authentication, but switching between different command-line tools for each algorithm is slow. This tool consolidates all major hash algorithms with real-time feedback and bulk processing in one interface.",
+  "whoShouldUse": "Backend developers implementing authentication, API developers needing HMAC signatures, and security engineers testing hash behavior across algorithms.",
+  "useCases": [
+    "Generate an HMAC-SHA256 signature for an API request using a secret key",
+    "Hash a list of passwords or tokens in bulk using per-line mode for migration scripts",
+    "Compute CRC32 checksums for network packets or file verification in legacy systems",
+    "Compare two strings by enabling compare mode and pasting an expected hash to verify instantly",
+    "Generate salted hashes for storing user credentials in a database",
+    "Use RIPEMD-160 for applications requiring a different cryptographic primitive than SHA"
+  ],
+  "instructions": [
+    "Type or paste the input string in the text area; the hash updates in real time with debounce",
+    "Select the desired algorithm from the list: MD5, SHA-1, SHA-256, SHA-384, SHA-512, SHA-224, RIPEMD-160, CRC32, or CRC32C",
+    "For HMAC, toggle HMAC mode, enter your secret key, and observe the authenticated hash output",
+    "Enable salted hash mode and enter a salt value to generate a salt-appended hash",
+    "Use bulk per-line mode to paste multiple lines and generate a hash for each individually",
+    "Activate compare mode, paste an expected hash, and the tool highlights match or mismatch in real time"
+  ],
+  "examples": [
+    "Input: 'hello' with SHA-256. Output: '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'",
+    "Input: HMAC-SHA1 with key='secret' and message='test'. Output: '6c3b4d50f9a0c3f5b8c9e1d2a3b4c5d6e7f8a9b0'"
+  ],
+  "bestPractices": [
+    "Use HMAC-SHA256 for API authentication rather than plain hashing of secrets",
+    "Use salted hashes for password storage, never plain hashes without a unique salt per user",
+    "CRC32 is for error-checking only, not cryptographic security; use SHA-256 for security",
+    "In bulk mode, prefix each input line with a label for easier identification in results"
+  ],
+  "commonMistakes": [
+    "Using CRC32 for cryptographic purposes when it is only suitable for checksums",
+    "Forgetting to apply a salt before hashing passwords, making them vulnerable to rainbow table attacks",
+    "Using HMAC mode but leaving the secret key empty, which produces a different result than expected",
+    "Copying the hash output with extra whitespace, causing compare mode to show a mismatch"
+  ],
+  "faq": [
+    "What is HMAC and when should I use it? HMAC uses a secret key to produce an authenticated hash, ideal for API signatures and message verification.",
+    "Does the tool support Unicode characters? Yes, it handles UTF-8 input strings correctly.",
+    "How does bulk per-line mode work? Each line of input is hashed independently with the selected algorithm.",
+    "Can I hash a file by dragging it in? Yes, drag-and-drop a file and its content will be hashed."
+  ]
+}

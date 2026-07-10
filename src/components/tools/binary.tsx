@@ -3,22 +3,33 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 type Mode = "encode" | "decode";
-type OutputStyle = "space" | "continuous";
-type BitMode = "7bit" | "8bit";
+type SeparatorType = "space" | "none" | "comma" | "custom";
+type GroupMode = "8bit" | "4bit" | "continuous";
 
-function textToBinary(str: string, outputStyle: OutputStyle, bitMode: BitMode): string {
-  const bits = bitMode === "7bit" ? 7 : 8;
-  return str.split("").map((char) => {
-    let code = char.charCodeAt(0);
-    if (bitMode === "7bit") code &= 0x7f;
-    return code.toString(2).padStart(bits, "0");
-  }).join(outputStyle === "space" ? " " : "");
+function getSeparator(sep: SeparatorType, custom: string): string {
+  if (sep === "space") return " ";
+  if (sep === "none") return "";
+  if (sep === "comma") return ", ";
+  return custom;
 }
 
-function binaryToText(bin: string, bitMode: BitMode): string {
+function textToBinary(str: string, separator: SeparatorType, groupMode: GroupMode, customSep: string): string {
+  const sep = getSeparator(separator, customSep);
+  const bits = groupMode === "8bit" ? 8 : groupMode === "4bit" ? 4 : 8;
+  const continuous = groupMode === "continuous";
+  return str.split("").map((char) => {
+    const code = char.charCodeAt(0);
+    if (bits === 4) {
+      return code.toString(2).padStart(8, "0").match(/.{4}/g)!.join(sep);
+    }
+    return code.toString(2).padStart(bits, "0");
+  }).join(continuous ? "" : sep);
+}
+
+function binaryToText(bin: string, groupMode: GroupMode): string {
   const cleaned = bin.replace(/[^01]/g, "");
   if (!cleaned) throw new Error("No valid binary digits found");
-  const bits = bitMode === "7bit" ? 7 : 8;
+  const bits = groupMode === "8bit" ? 8 : groupMode === "4bit" ? 4 : 8;
   if (cleaned.length % bits !== 0) {
     throw new Error(`Binary length (${cleaned.length}) is not a multiple of ${bits} bits`);
   }
@@ -43,8 +54,9 @@ export function Binary() {
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [mode, setMode] = useState<Mode>("encode");
-  const [outputStyle, setOutputStyle] = useState<OutputStyle>("space");
-  const [bitMode, setBitMode] = useState<BitMode>("8bit");
+  const [separator, setSeparator] = useState<SeparatorType>("space");
+  const [customSep, setCustomSep] = useState("");
+  const [groupMode, setGroupMode] = useState<GroupMode>("8bit");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const convert = useCallback(() => {
@@ -52,15 +64,15 @@ export function Binary() {
     if (!input.trim()) { setOutput(""); return; }
     try {
       if (mode === "encode") {
-        setOutput(textToBinary(input, outputStyle, bitMode));
+        setOutput(textToBinary(input, separator, groupMode, customSep));
       } else {
-        setOutput(binaryToText(input, bitMode));
+        setOutput(binaryToText(input, groupMode));
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Conversion failed");
       setOutput("");
     }
-  }, [input, mode, outputStyle, bitMode]);
+  }, [input, mode, separator, groupMode, customSep]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -75,15 +87,15 @@ export function Binary() {
     return input.split("").map((char) => ({
       char,
       code: char.charCodeAt(0),
-      binary: char.charCodeAt(0).toString(2).padStart(bitMode === "7bit" ? 7 : 8, "0"),
+      binary: char.charCodeAt(0).toString(2).padStart(8, "0"),
       hex: charToHex(char),
       octal: charToOctal(char),
     }));
-  }, [input, mode, bitMode]);
+  }, [input, mode]);
 
   const bitLength = useMemo(() => {
     if (!output) return 0;
-    return output.replace(/\s/g, "").length;
+    return output.replace(/[\s,]/g, "").length;
   }, [output]);
 
   const handleFileConvert = useCallback(() => {
@@ -96,18 +108,23 @@ export function Binary() {
       reader.onload = () => {
         const arrayBuffer = reader.result as ArrayBuffer;
         const bytes = new Uint8Array(arrayBuffer);
-        const bits = bitMode === "7bit" ? 7 : 8;
+        const sep = getSeparator(separator, customSep);
+        const bits = groupMode === "8bit" ? 8 : groupMode === "4bit" ? 4 : 8;
+        const continuous = groupMode === "continuous";
         const binaryStr = Array.from(bytes).map((b) => {
-          const val = bitMode === "7bit" ? b & 0x7f : b;
+          const val = b;
+          if (bits === 4) {
+            return val.toString(2).padStart(8, "0").match(/.{4}/g)!.join(sep);
+          }
           return val.toString(2).padStart(bits, "0");
-        }).join(outputStyle === "space" ? " " : "");
+        }).join(continuous ? "" : sep);
         setInput(`[File: ${file.name}]`);
         setOutput(binaryStr);
       };
       reader.readAsArrayBuffer(file);
     };
     inputEl.click();
-  }, [bitMode, outputStyle]);
+  }, [separator, groupMode, customSep]);
 
   return (
     <div className="space-y-4">
@@ -121,16 +138,22 @@ export function Binary() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {(["space", "continuous"] as OutputStyle[]).map((s) => (
-          <button key={s} onClick={() => setOutputStyle(s)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${outputStyle === s ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
-            {s === "space" ? "Space-separated" : "Continuous"}
-          </button>
-        ))}
-        {(["7bit", "8bit"] as BitMode[]).map((b) => (
-          <button key={b} onClick={() => setBitMode(b)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${bitMode === b ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
-            {b === "7bit" ? "7-bit ASCII" : "8-bit Byte"}
+        <select value={separator} onChange={(e) => setSeparator(e.target.value as SeparatorType)}
+          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <option value="space">Space</option>
+          <option value="none">None</option>
+          <option value="comma">Comma</option>
+          <option value="custom">Custom</option>
+        </select>
+        {separator === "custom" && (
+          <input type="text" value={customSep} onChange={(e) => setCustomSep(e.target.value)}
+            placeholder="separator"
+            className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+        )}
+        {(["8bit", "4bit", "continuous"] as GroupMode[]).map((g) => (
+          <button key={g} onClick={() => setGroupMode(g)}
+            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${groupMode === g ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            {g === "8bit" ? "8-bit Blocks" : g === "4bit" ? "4-bit Nibbles" : "Continuous"}
           </button>
         ))}
         {mode === "encode" && (
@@ -169,7 +192,7 @@ export function Binary() {
       {output && (
         <div className="flex gap-3 text-xs text-surface-500 dark:text-dark-muted">
           <span>Bit length: {bitLength}</span>
-          <span>Byte length: {Math.ceil(bitLength / parseInt(bitMode))}</span>
+          <span>Byte equivalent: {Math.ceil(bitLength / 8)}</span>
         </div>
       )}
 

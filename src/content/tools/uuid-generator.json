@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "UUID generator supporting versions v4 (random), v7 (time-ordered), and v1 (MAC-based timestamp). Generates bulk UUIDs up to 10,000 with a progress bar, supports format options (hyphens, uppercase, curly braces, base64), exports generated UUIDs as JSON, CSV, or TSV. Includes UUID validation (checking format and version), Snowflake ID generation (with custom worker/datacenter ID), NanoID generation (custom alphabet and length), and an auto-refresh timer.",
+  "whyItExists": "Generating UUIDs for databases, APIs, and distributed systems requires both individual and bulk creation with specific formatting and export needs. This tool provides all common UUID versions plus Snowflake and NanoID in a single interface.",
+  "whoShouldUse": "Backend developers, database architects, systems engineers, and anyone who needs UUIDs, Snowflake IDs, or NanoIDs for primary keys, distributed tracing, or unique identifiers.",
+  "useCases": [
+    "Generate a single v4 UUID for a new database record's primary key",
+    "Generate 5000 v7 UUIDs (time-ordered) for bulk insert into a PostgreSQL table with better index performance",
+    "Validate a UUID string from an API request to ensure it matches the expected version",
+    "Generate a Snowflake ID with custom worker and datacenter IDs for distributed logging",
+    "Create NanoIDs with a custom alphabet for short, URL-safe identifiers",
+    "Export generated UUIDs as CSV for importing into a spreadsheet or database batch job"
+  ],
+  "instructions": [
+    "Select a UUID version: v4 (random), v7 (time-ordered), or v1 (MAC-based).",
+    "Set the quantity (1–10,000) using the slider or numeric input; a progress bar shows generation progress.",
+    "Choose format options: hyphens on/off, uppercase/lowercase, wrap in curly braces, or output as base64.",
+    "Click Generate to produce the UUIDs; the list appears in the output area with a copy-all button.",
+    "Click Export and choose JSON, CSV, or TSV format to download the UUIDs as a file.",
+    "Switch to Snowflake or NanoID tabs to generate those identifier types with their specific options."
+  ],
+  "examples": [
+    "Input: v4, 1 UUID, hyphens, lower → Output: \"550e8400-e29b-41d4-a716-446655440000\"",
+    "Input: v7, 3 UUIDs, no hyphens, upper → Output: [\"018F9A2B3C4D5E6F7A8B9C0D\", \"018F9A2B3C4D5E6F7A8B9C0E\", \"018F9A2B3C4D5E6F7A8B9C0F\"]"
+  ],
+  "bestPractices": [
+    "Use v7 UUIDs for database primary keys — their time-ordered nature improves B-tree index performance",
+    "Use v4 UUIDs when unpredictability is required (e.g., security tokens, session IDs)",
+    "Use Snowflake IDs when you need a time-sortable 64-bit integer instead of a 128-bit UUID",
+    "Validate UUIDs from external sources before using them in database queries to prevent injection",
+    "Use the auto-refresh timer when you need a constantly updated test UUID during development"
+  ],
+  "commonMistakes": [
+    "Using v1 UUIDs in security contexts — they include the MAC address and timestamp, which can be exploited",
+    "Assuming all UUIDs are 36 characters with hyphens — format varies by application",
+    "Using UUIDs as primary keys in large tables without considering index bloat (v7 helps with this)",
+    "Generating too many UUIDs client-side (browser may hang above 50,000 — limit is 10,000 for safety)",
+    "Forgetting that Snowflake IDs require unique worker/datacenter IDs to avoid collisions in distributed systems"
+  ],
+  "faq": [
+    "What is the difference between v4, v7, and v1 UUIDs? v4 is fully random; v7 is time-ordered (first 48 bits = timestamp) with random suffix; v1 uses MAC address + timestamp for uniqueness.",
+    "Can v7 UUIDs be sorted by creation time? Yes — the time-ordered prefix means v7 UUIDs sort chronologically, improving database index performance.",
+    "What is a Snowflake ID? A 64-bit ID popularized by Twitter: 41-bit timestamp + 10-bit worker ID + 12-bit sequence. It fits in a 64-bit integer and is time-sortable.",
+    "What is NanoID? A compact, URL-safe, customizable unique ID. Unlike UUIDs, you choose the alphabet and length (default: 21 characters with A-Za-z0-9_-)."
+  ]
+}

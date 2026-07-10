@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allTools, siteConfig } from "@/lib/constants";
+import { allTools, siteConfig, TOOL_COUNT } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search DevStackIO tools and resources.",
+  description: "Search DevStackIO tools and resources. Find the right developer tool for your needs.",
   alternates: { canonical: `${siteConfig.url}/search` },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 interface Props {
@@ -46,7 +50,7 @@ export default async function SearchPage({ searchParams }: Props) {
           <input
             name="q"
             defaultValue={q || ""}
-            placeholder="Search 70 tools..."
+            placeholder={`Search ${TOOL_COUNT} tools...`}
             className="flex h-12 w-full rounded-lg border border-surface-200 bg-white pl-10 pr-4 text-base text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </form>

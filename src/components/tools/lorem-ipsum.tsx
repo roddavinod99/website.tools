@@ -2,10 +2,11 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 
-type Unit = "paragraphs" | "sentences" | "words" | "bytes";
+type Unit = "paragraphs" | "sentences" | "words" | "characters" | "bytes";
 type ParagraphStyle = "standard" | "short" | "medium" | "long";
 type StartingText = "lorem" | "cicero" | "custom";
 type CodeSampleType = "none" | "html" | "css" | "js" | "json" | "sql";
+type IpsumStyle = "lorem" | "tech" | "hipster" | "cicero";
 
 const LOREM_WORDS = [
   "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
@@ -19,6 +20,28 @@ const LOREM_WORDS = [
   "est", "laborum",
 ];
 
+const TECH_WORDS = [
+  "api", "async", "await", "backend", "cache", "callback", "cloud", "cluster",
+  "container", "database", "deploy", "docker", "endpoint", "encryption", "event",
+  "firewall", "framework", "frontend", "gateway", "hash", "http", "https", "inline",
+  "instance", "interface", "javascript", "json", "kernel", "lambda", "latency",
+  "library", "load", "microservice", "middleware", "module", "namespace", "network",
+  "node", "npm", "parse", "pipeline", "protocol", "proxy", "query", "queue",
+  "request", "response", "route", "scalable", "schema", "sdk", "server", "socket",
+  "state", "store", "stream", "string", "syntax", "thread", "token", "url",
+  "variable", "virtual", "webhook", "websocket", "worker", "xml", "yaml", "zero",
+];
+
+const HIPSTER_WORDS = [
+  "artisan", "authentic", "biodynamic", "blog", "brew", "chill", "craft", "creative",
+  "curated", "dreamy", "echo", "ethical", "fair", "farm", "fermented", "folk",
+  "free", "fusion", "gluten", "handmade", "hip", "humble", "indie", "kale",
+  "kombucha", "local", "minimal", "natural", "nomad", "organic", "passion",
+  "photo", "pixel", "plant", "pour", "raw", "recycle", "retro", "roast",
+  "rustic", "sailor", "small", "soul", "sourdough", "sustainable", "tiny",
+  "toast", "upcycle", "urban", "vegan", "vibe", "vintage", "wooden", "yoga",
+];
+
 const CICERO_START = "Quo usque tandem abutere, Catilina, patientia nostra? quam diu etiam furor iste tuus nos eludet? quem ad finem sese effrenata iactabit audacia?";
 
 const PARAGRAPH_LENGTHS: Record<ParagraphStyle, [number, number]> = {
@@ -28,60 +51,26 @@ const PARAGRAPH_LENGTHS: Record<ParagraphStyle, [number, number]> = {
   long: [8, 16],
 };
 
-const RICH_WORDS = [
-  { w: "lorem", bold: false }, { w: "ipsum", bold: true }, { w: "dolor", bold: false },
-  { w: "sit", bold: false }, { w: "amet", bold: false }, { w: "consectetur", bold: false },
-  { w: "adipiscing", bold: false }, { w: "elit", bold: false }, { w: "sed", bold: false },
-  { w: "do", bold: false }, { w: "eiusmod", bold: false }, { w: "tempor", bold: true },
-  { w: "incididunt", bold: false }, { w: "ut", bold: false }, { w: "labore", bold: false },
-  { w: "et", bold: false }, { w: "dolore", bold: false }, { w: "magna", bold: false },
-  { w: "aliqua", bold: false }, { w: "enim", bold: false }, { w: "ad", bold: false },
-  { w: "minim", bold: false }, { w: "veniam", bold: true }, { w: "quis", bold: false },
-  { w: "nostrud", bold: false }, { w: "exercitation", bold: false }, { w: "ullamco", bold: false },
-  { w: "laboris", bold: false }, { w: "nisi", bold: false }, { w: "ut", bold: false },
-  { w: "aliquip", bold: false }, { w: "ex", bold: false }, { w: "ea", bold: false },
-  { w: "commodo", bold: false }, { w: "consequat", bold: false }, { w: "duis", bold: false },
-  { w: "aute", bold: false }, { w: "irure", bold: false }, { w: "dolor", bold: false },
-  { w: "in", bold: false }, { w: "reprehenderit", bold: false }, { w: "in", bold: false },
-  { w: "voluptate", bold: true }, { w: "velit", bold: false }, { w: "esse", bold: false },
-  { w: "cillum", bold: false }, { w: "dolore", bold: false }, { w: "eu", bold: false },
-  { w: "fugiat", bold: false }, { w: "nulla", bold: false }, { w: "pariatur", bold: false },
-  { w: "excepteur", bold: false }, { w: "sint", bold: false }, { w: "occaecat", bold: false },
-  { w: "cupidatat", bold: true }, { w: "non", bold: false }, { w: "proident", bold: false },
-  { w: "sunt", bold: false }, { w: "in", bold: false }, { w: "culpa", bold: false },
-  { w: "qui", bold: false }, { w: "officia", bold: false }, { w: "deserunt", bold: false },
-  { w: "mollit", bold: false }, { w: "anim", bold: false }, { w: "id", bold: false },
-  { w: "est", bold: false }, { w: "laborum", bold: false },
-];
-
 const CAP = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-function makeWords(n: number): string[] {
-  return Array.from({ length: n }, () => LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)]);
+function pickWord(dict: string[]): string {
+  return dict[Math.floor(Math.random() * dict.length)];
 }
 
-function makeSentence(minW: number, maxW: number, rich?: boolean): string {
+function makeWords(n: number, dict: string[]): string[] {
+  return Array.from({ length: n }, () => pickWord(dict));
+}
+
+function makeSentence(minW: number, maxW: number, dict: string[]): string {
   const n = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
-  if (rich) {
-    const words = Array.from({ length: n }, () => RICH_WORDS[Math.floor(Math.random() * RICH_WORDS.length)]);
-    const parts = words.map((w, i) => {
-      let t = w.w;
-      if (i === 0) t = CAP(t);
-      if (w.bold) t = `<strong>${t}</strong>`;
-      if (Math.random() < 0.08) t = `<a href="#">${t}</a>`;
-      if (Math.random() < 0.05) t = `<em>${t}</em>`;
-      return t;
-    });
-    return parts.join(" ") + ".";
-  }
-  const words = makeWords(n);
+  const words = makeWords(n, dict);
   words[0] = CAP(words[0]);
   return words.join(" ") + ".";
 }
 
-function makeParagraph(minS: number, maxS: number, rich?: boolean): string {
+function makeParagraph(minS: number, maxS: number, dict: string[]): string {
   const n = Math.floor(Math.random() * (maxS - minS + 1)) + minS;
-  return Array.from({ length: n }, () => makeSentence(8, 20, rich)).join(" ");
+  return Array.from({ length: n }, () => makeSentence(8, 20, dict)).join(" ");
 }
 
 function makeCodeSample(type: CodeSampleType): string {
@@ -95,13 +84,21 @@ function makeCodeSample(type: CodeSampleType): string {
   }
 }
 
+function getDict(style: IpsumStyle): string[] {
+  switch (style) {
+    case "tech": return TECH_WORDS;
+    case "hipster": return HIPSTER_WORDS;
+    case "cicero": return LOREM_WORDS;
+    default: return LOREM_WORDS;
+  }
+}
+
 export function LoremIpsum() {
   const [unit, setUnit] = useState<Unit>("paragraphs");
   const [count, setCount] = useState(3);
   const [starting, setStarting] = useState<StartingText>("lorem");
   const [customStart, setCustomStart] = useState("");
   const [paragraphStyle, setParagraphStyle] = useState<ParagraphStyle>("standard");
-  const [richFormatting, setRichFormatting] = useState(false);
   const [htmlOutput, setHtmlOutput] = useState(false);
   const [markdownOutput, setMarkdownOutput] = useState(false);
   const [codeSample, setCodeSample] = useState<CodeSampleType>("none");
@@ -110,6 +107,8 @@ export function LoremIpsum() {
   const [copied, setCopied] = useState(false);
   const [charCount, setCharCount] = useState(0);
   const [wordCount, setWordCount] = useState(0);
+  const [ipsumStyle, setIpsumStyle] = useState<IpsumStyle>("lorem");
+  const [loremStart, setLoremStart] = useState(true);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -123,48 +122,57 @@ export function LoremIpsum() {
       return;
     }
 
+    const dict = getDict(ipsumStyle);
     let result = "";
     if (unit === "bytes") {
-      const text = makeSentence(5, 15);
+      const text = makeSentence(5, 15, dict);
       const encoded = new TextEncoder().encode(text);
       result = Array.from(encoded).map((b) => b.toString(16).padStart(2, "0")).join(" ");
     } else if (unit === "words") {
-      const words = makeWords(count);
+      const words = makeWords(count, dict);
       words[0] = CAP(words[0]);
       result = words.join(" ") + ".";
       if (htmlOutput) result = `<p>${result}</p>`;
+    } else if (unit === "characters") {
+      let text = "";
+      while (text.length < count) {
+        text += makeSentence(8, 20, dict) + " ";
+      }
+      result = text.slice(0, count);
+      if (htmlOutput) result = `<p>${result}</p>`;
     } else if (unit === "sentences") {
-      const sents = Array.from({ length: count }, () => makeSentence(8, 20, richFormatting));
+      const sents = Array.from({ length: count }, () => makeSentence(8, 20, dict));
       result = sents.join(" ");
       if (htmlOutput) result = sents.map((s) => `<p>${s}</p>`).join("\n");
       else if (markdownOutput) result = sents.map((s) => `${s}\n`).join("");
     } else {
       const [minS, maxS] = PARAGRAPH_LENGTHS[paragraphStyle];
       const paras: string[] = [];
-      if (starting === "lorem") {
+      const totalParas = count;
+      let startIdx = 0;
+      if (loremStart && ipsumStyle === "lorem") {
         paras.push("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        startIdx = 1;
       } else if (starting === "cicero") {
         paras.push(CICERO_START);
+        startIdx = 1;
       } else if (starting === "custom" && customStart.trim()) {
         paras.push(customStart.trim());
+        startIdx = 1;
       }
-      const startCount = starting !== "lorem" && starting !== "cicero" && !customStart.trim() ? 0 : 1;
-      const remaining = count - startCount;
-      for (let i = 0; i < Math.max(0, remaining); i++) {
-        paras.push(makeParagraph(minS, maxS, richFormatting));
+      for (let i = 0; i < totalParas - startIdx; i++) {
+        paras.push(makeParagraph(minS, maxS, dict));
       }
       if (htmlOutput) result = paras.map((p) => `<p>${p}</p>`).join("\n");
       else if (markdownOutput) {
-        let md = paras.map((p) => `${p}\n`).join("");
-        if (richFormatting) md = md.replace(/<strong>(.*?)<\/strong>/g, "**$1**").replace(/<em>(.*?)<\/em>/g, "*$1*").replace(/<a href="#">(.*?)<\/a>/g, "[$1](#)");
-        result = md;
+        result = paras.map((p) => `${p}\n`).join("");
       } else result = paras.join("\n\n");
     }
     setOutput(result);
     setCharCount(result.length);
     setWordCount(result.split(/\s+/).filter(Boolean).length);
     setHistory((p) => [result.slice(0, 200), ...p].slice(0, 20));
-  }, [unit, count, starting, customStart, paragraphStyle, richFormatting, htmlOutput, markdownOutput, codeSample]);
+  }, [unit, count, starting, customStart, paragraphStyle, htmlOutput, markdownOutput, codeSample, ipsumStyle, loremStart]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -196,12 +204,23 @@ export function LoremIpsum() {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-3">
         <div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Style</label>
+          <select value={ipsumStyle} onChange={(e) => setIpsumStyle(e.target.value as IpsumStyle)}
+            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="lorem">Lorem Ipsum (classic)</option>
+            <option value="tech">Tech Ipsum</option>
+            <option value="hipster">Hipster Ipsum</option>
+            <option value="cicero">Cicero (original Latin)</option>
+          </select>
+        </div>
+        <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Type</label>
           <select value={unit} onChange={(e) => setUnit(e.target.value as Unit)}
             className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="paragraphs">Paragraphs</option>
             <option value="sentences">Sentences</option>
             <option value="words">Words</option>
+            <option value="characters">Characters</option>
             <option value="bytes">Bytes (hex)</option>
           </select>
         </div>
@@ -255,10 +274,12 @@ export function LoremIpsum() {
       )}
 
       <div className="flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={richFormatting} onChange={(e) => setRichFormatting(e.target.checked)} className="accent-brand-500" />
-          Rich formatting
-        </label>
+        {unit === "paragraphs" && ipsumStyle === "lorem" && (
+          <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+            <input type="checkbox" checked={loremStart} onChange={(e) => setLoremStart(e.target.checked)} className="accent-brand-500" />
+            Start with &ldquo;Lorem ipsum dolor sit amet&hellip;&rdquo;
+          </label>
+        )}
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
           <input type="checkbox" checked={htmlOutput} onChange={(e) => setHtmlOutput(e.target.checked)} className="accent-brand-500" />
           HTML tags

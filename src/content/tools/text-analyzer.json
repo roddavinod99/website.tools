@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Comprehensive text analyzer computing 15+ statistics: characters (with/without spaces), words, sentences, paragraphs, lines, syllables, and average word/sentence length. Calculates readability scores (Flesch-Kincaid, Gunning Fog, SMOG, Coleman-Liau), performs sentiment analysis (positive/negative/neutral), language detection, emotion detection (anger/joy/sadness/fear/surprise), named entity recognition (persons, organizations, locations, dates), vocabulary analysis (unique words, lexical density), and provides writing suggestions.",
+  "whyItExists": "Manually computing readability, sentiment, and language metrics is impractical. This tool aggregates dozens of text analytics into one interface so writers and editors can assess tone, complexity, and quality instantly.",
+  "whoShouldUse": "Content writers, editors, SEO analysts, linguists, students, and anyone who needs quantitative and qualitative analysis of written text.",
+  "useCases": [
+    "Evaluate the readability of a blog post to ensure it matches the target audience's reading level",
+    "Detect the language of an unknown text sample before translation or routing",
+    "Analyze sentiment and emotion in customer feedback or product reviews",
+    "Identify named entities in a legal or news document for quick fact extraction",
+    "Track vocabulary diversity and lexical density across multiple drafts of an article",
+    "Get writing suggestions to improve clarity, conciseness, and grammar in a piece of content"
+  ],
+  "instructions": [
+    "Paste or type text into the input area; statistics update in real time as you type.",
+    "Scroll through the Stats section to view character, word, sentence, paragraph, and line counts.",
+    "Read the Readability section to see scores for Flesch-Kincaid, Gunning Fog, SMOG, and Coleman-Liau — each with a grade-level interpretation.",
+    "Review the Sentiment section showing positive/negative/neutral percentages and an overall sentiment label.",
+    "Check Language Detection for the detected language and confidence score.",
+    "Explore the Entities tab to see extracted persons, organizations, locations, and dates with their frequency."
+  ],
+  "examples": [
+    "Input: \"The quick brown fox jumps over the lazy dog. It was a sunny day in the forest.\" → Stats: 14 words, 2 sentences, 68 chars; Flesch-Kincaid: 5.2 grade; Sentiment: neutral; Language: English; Entities: none detected",
+    "Input: \"Apple Inc. announced on January 15, 2025 that Tim Cook would visit Beijing. This delighted investors.\" → Entities: [Apple Inc. (ORG), Tim Cook (PERSON), Beijing (LOC), January 15, 2025 (DATE)]; Sentiment: positive; Emotion: joy detected"
+  ],
+  "bestPractices": [
+    "Use readability scores to target specific grade levels — 6-8th grade for general audiences, 9-12th grade for professional content",
+    "Combine sentiment and emotion analysis for a more nuanced understanding of text tone",
+    "Run named entity recognition on extracted text to quickly catalog people, places, and organizations",
+    "Track lexical density across revisions to ensure vocabulary is not becoming too repetitive",
+    "Use writing suggestions as a guide, not a rule — preserve your unique voice and style"
+  ],
+  "commonMistakes": [
+    "Assuming Flesch-Kincaid is the only readability metric — use all four for a complete picture",
+    "Treating sentiment analysis as 100% accurate — it can miss sarcasm, irony, and cultural context",
+    "Using language detection on very short texts (<10 characters) — confidence drops significantly",
+    "Ignoring the entity count column to determine which entities are most discussed, not just present",
+    "Over-relying on writing suggestions that may strip personality or domain-specific terminology"
+  ],
+  "faq": [
+    "How is the Flesch-Kincaid score calculated? 206.835 - 1.015 × (words/sentences) - 84.6 × (syllables/words). Scores 90-100 = very easy, 0-30 = very difficult.",
+    "What languages does language detection support? Over 50 languages including English, Spanish, French, German, Chinese, Arabic, and Russian, using a neural language identification model.",
+    "Can I analyze a PDF or document file? Paste the extracted text — file upload with text extraction is on the roadmap.",
+    "Are entity recognitions stored or sent to a server? All processing is done client-side in the browser; no data is transmitted externally."
+  ]
+}

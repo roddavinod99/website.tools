@@ -74,6 +74,16 @@ function formatCompactArray(json: string): string {
   });
 }
 
+function getErrorLineCol(input: string, msg: string): { line: number; col: number } | null {
+  const lc = msg.match(/position\s+(\d+)/) || msg.match(/at\s+(\d+)/);
+  if (lc) {
+    const pos = parseInt(lc[1], 10);
+    const before = input.slice(0, pos);
+    return { line: before.split("\n").length, col: pos - before.lastIndexOf("\n") };
+  }
+  return null;
+}
+
 export function JSONFormatter() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -113,13 +123,8 @@ export function JSONFormatter() {
     } catch (e) {
       const msg = (e as Error).message;
       setError(msg);
-      const lc = msg.match(/position\s+(\d+)/) || msg.match(/at\s+(\d+)/);
-      if (lc) {
-        const pos = parseInt(lc[1], 10);
-        const before = input.slice(0, pos);
-        setErrorLine(before.split("\n").length);
-        setErrorCol(pos - before.lastIndexOf("\n"));
-      }
+      const lc = getErrorLineCol(input, msg);
+      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
       setOutput("");
     }
   }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays]);
@@ -131,7 +136,26 @@ export function JSONFormatter() {
       setErrorLine(null);
       setErrorCol(null);
     } catch (e) {
-      setError((e as Error).message);
+      const msg = (e as Error).message;
+      setError(msg);
+      const lc = getErrorLineCol(input, msg);
+      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+      setOutput("");
+    }
+  }, [input]);
+
+  const validate = useCallback(() => {
+    try {
+      JSON.parse(input);
+      setError("");
+      setErrorLine(null);
+      setErrorCol(null);
+      setOutput("JSON is valid.");
+    } catch (e) {
+      const msg = (e as Error).message;
+      setError(msg);
+      const lc = getErrorLineCol(input, msg);
+      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
       setOutput("");
     }
   }, [input]);
@@ -202,6 +226,7 @@ export function JSONFormatter() {
       <div className="flex flex-wrap items-center gap-2">
         <button onClick={format} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Format</button>
         <button onClick={minify} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Minify</button>
+        <button onClick={validate} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Validate</button>
         <button onClick={() => copy(output)} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy Formatted</button>
         <button onClick={() => copy(JSON.stringify(JSON.parse(input || "{}")))} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy Minified</button>
         <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download</button>

@@ -101,7 +101,6 @@ export function JSONDiff() {
   const [mergeMode, setMergeMode] = useState(false);
   const [mergedData, setMergedData] = useState<string>("");
   const [, setMergeChoices] = useState<Record<string, "left" | "right">>({}); // choices tracked via setMergeChoices
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dropRef = useRef<HTMLDivElement>(null);
 
   const diff = useMemo(() => {
@@ -137,14 +136,6 @@ export function JSONDiff() {
     }
     return JSON.stringify(patch, null, 2);
   }, [diff]);
-
-  useEffect(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      try { JSON.parse(left); JSON.parse(right); } catch {}
-    }, 300);
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-  }, [left, right]);
 
   const copyPatch = useCallback(async () => { await navigator.clipboard.writeText(jsonPatch); }, [jsonPatch]);
   const copyUnified = useCallback(async () => { await navigator.clipboard.writeText(unifiedText); }, [unifiedText]);

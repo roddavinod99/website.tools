@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useCallback } from "react";
 
@@ -78,7 +78,7 @@ function toAscii(bigint: bigint): string {
     if (code >= 32 && code <= 126) result += String.fromCharCode(code);
     else result += ".";
   }
-  return result || "—";
+  return result || "\u2014";
 }
 
 function formatLarge(num: bigint): string {
@@ -135,7 +135,7 @@ export function BaseConverter() {
   }, [binaryStr, bitLength]);
 
   const ascii = useMemo(() => {
-    if (decimalValue === null) return "—";
+    if (decimalValue === null) return "\u2014";
     return toAscii(decimalValue < BigInt(0) ? -decimalValue : decimalValue);
   }, [decimalValue]);
 
@@ -252,7 +252,7 @@ export function BaseConverter() {
             <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
               <div className="flex gap-3 items-end">
                 <div>
-                  <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Custom Base (2–64)</label>
+                  <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Custom Base (2-64)</label>
                   <input
                     type="number"
                     min={2}
@@ -265,7 +265,7 @@ export function BaseConverter() {
                 <div className="flex-1">
                   <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Result (base-{customBase})</label>
                   <code className="block rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm font-mono text-surface-900 select-all dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                    {customResult || "—"}
+                    {customResult || "\u2014"}
                   </code>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export function BaseConverter() {
                 className="w-16 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
             </div>
-            <code className="text-sm font-mono text-surface-900 dark:text-dark-text select-all">{twosComp || "—"}</code>
+            <code className="text-sm font-mono text-surface-900 dark:text-dark-text select-all">{twosComp || "\u2014"}</code>
           </div>
 
           <div className="border-t border-surface-200 pt-3 dark:border-dark-border">

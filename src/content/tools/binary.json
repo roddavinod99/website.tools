@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts text to binary and binary to text with fine-grained control over format. Features include space-separated (byte-divided) and continuous (no spaces) output modes, 7-bit vs 8-bit byte width selection, optional hex and octal representation alongside each character, and file-to-binary conversion with drag-and-drop upload.",
+  "whyItExists": "Understanding binary representation is fundamental to computer science and low-level programming. A flexible converter that handles both directions with configurable byte width and multiple output formats is essential for developers working with serialization, networking protocols, or educational content.",
+  "whoShouldUse": "Computer science educators and students, embedded systems developers, security researchers analyzing raw byte streams, and anyone debugging binary serialization or deserialization issues.",
+  "useCases": [
+    "Convert a text string to binary to understand character-to-bit mapping for a tutorial",
+    "Decode a binary string from a sensor or serial device back to human-readable text",
+    "Toggle between 7-bit ASCII and 8-bit extended ASCII to compare representations",
+    "Use hex+octal per-char view to understand relationships between binary, hex, and octal",
+    "Convert a binary file's first few bytes to see its magic number/header",
+    "Create binary representation of configuration data for hardware programming exercises"
+  ],
+  "instructions": [
+    "Select conversion direction: 'Text to Binary' or 'Binary to Text'",
+    "Paste input or drag-and-drop a file",
+    "Configure options: 7-bit or 8-bit width, Space-Separated vs Continuous output format",
+    "Toggle 'Show Hex & Octal' for supplementary columns showing hex and octal per byte",
+    "Click 'Convert' — result appears with count of characters/bytes converted",
+    "Copy result or use 'Download Binary' to save as .txt file"
+  ],
+  "examples": [
+    "Input: 'Hi' | Text to Binary | 8-bit | Space-Separated => Output: '01001000 01101001'",
+    "Input: '01001000 01101001' | Binary to Text | 8-bit => Output: 'Hi'"
+  ],
+  "bestPractices": [
+    "Use 7-bit mode for standard English alphabet, digits, and punctuation only",
+    "For non-English characters (accents, symbols), use 8-bit mode or UTF-8 input",
+    "Use Space-Separated output for readability; Continuous for compact storage or transmission",
+    "Enable 'Show Hex & Octal' when teaching number system relationships",
+    "When converting binary back to text, match the width (7 vs 8 bit) used during encoding"
+  ],
+  "commonMistakes": [
+    "Using 7-bit mode to encode non-ASCII characters — they require 8-bit and will be truncated",
+    "Providing binary with spaces when expecting continuous mode or vice versa",
+    "Assuming 8-bit binary corresponds to UTF-8 — tool treats bytes as Latin-1, not variable-length UTF-8",
+    "Forgetting leading zeros — 7-bit outputs 7 bits, 8-bit outputs 8; decoding with wrong width shifts bits",
+    "Dragging very large files (>100 MB) — binary representation inflates data 8x"
+  ],
+  "faq": [
+    "Does this support UTF-8 input? — It treats input as UTF-8 then converts each byte individually.",
+    "What is 7-bit vs 8-bit? — 7-bit uses ASCII range (0-127), 8-bit extends to Latin-1 (0-255).",
+    "Can I convert a file to binary? — Yes, drag-and-drop any file. Reads as text or raw bytes.",
+    "How do I decode binary without spaces? — Select 'Continuous' mode; tool auto-groups into 7/8-bit chunks."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Real-time Markdown preview with a split-pane view for source and rendered content, supporting GitHub Flavored Markdown (tables, task lists, fenced code blocks, emoji shortcodes). Offers three visual themes, an HTML source toggle, inline formatting toolbar, word/character count, auto-save, and drag-and-drop image insertion.",
+  "whyItExists": "Developers and writers need to verify Markdown rendering before publishing to platforms like GitHub, GitLab, or documentation sites. Provides accurate GFM preview with formatting tools to ensure correct rendering without switching contexts.",
+  "whoShouldUse": "GitHub users, documentation authors, technical writers, and anyone who writes Markdown for platforms that use GFM-style rendering.",
+  "useCases": [
+    "Preview GitHub README.md files before committing to ensure correct rendering of GFM features",
+    "Edit and preview documentation with task lists, tables, and fenced code blocks for accuracy",
+    "Verify Markdown blog posts render correctly across different platforms and themes",
+    "Review emoji shortcodes and their rendered output in GFM context",
+    "Collaboratively review Markdown content using the live preview during pair documentation sessions",
+    "Test Markdown formatting edge cases like nested lists, code blocks within lists, and complex tables"
+  ],
+  "instructions": [
+    "Enter or paste Markdown in the left editor pane; the right pane renders the HTML preview in real-time",
+    "Use the toolbar for formatting assistance: bold, italic, headings, links, images, code blocks, and lists",
+    "Toggle the HTML source view to see the generated HTML code alongside the rendered preview",
+    "Select a theme (Light, Dark, or GitHub-like) to preview how content will look on different platforms",
+    "Drag and drop image files from your file system into the editor to insert image Markdown references",
+    "Monitor auto-save indicator in the status bar; use the export button to download the Markdown or HTML output"
+  ],
+  "examples": [
+    "Input: \"- [x] Completed task\\n- [ ] Pending task\" -> Preview: Renders a task list with checked and unchecked items",
+    "Input: \":sparkles: Hello World :rocket:\" -> Preview: Renders sparkles and rocket emoji icons"
+  ],
+  "bestPractices": [
+    "Use the GitHub theme for the most accurate preview of how content will render on GitHub.com",
+    "Toggle HTML view periodically to verify complex formatting like nested tables are structurally correct",
+    "Use task list formatting (- [ ] / - [x]) for documentation checklists and project planning",
+    "Test emoji rendering with common shortcodes before publishing to ensure cross-platform compatibility",
+    "Use the auto-save feature for long documents and periodically export a backup copy"
+  ],
+  "commonMistakes": [
+    "Assuming all Markdown renderers support the same features; GFM features may not work on all platforms",
+    "Using too many heading levels (H1-H6) in a single document, which hurts readability and navigation",
+    "Creating task lists without proper spacing (must have space after - and brackets), causing rendering failure",
+    "Forgetting that emoji rendering varies by platform; GitHub supports shortcodes, other platforms may not",
+    "Nesting code blocks inside list items without proper indentation, causing broken rendering"
+  ],
+  "faq": [
+    "Does it render LaTeX math expressions? Not natively, but code blocks can be used for LaTeX source.",
+    "Can I preview in mobile viewport? A responsive preview toggle is available to simulate mobile rendering.",
+    "How does drag-drop image insertion work? Dropped images are converted to Markdown image syntax with a relative path placeholder.",
+    "Does the auto-save persist across browser sessions? Yes, content is saved to localStorage and restored on return."
+  ]
+}

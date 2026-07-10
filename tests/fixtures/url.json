@@ -1,0 +1,5 @@
+[
+  { "slug": "url-encoder", "category": "Encoders", "name": "URL Encoder/Decoder", "input": "https://example.com/path?name=test&value=hello world", "action": "Encode", "expect": "output" },
+  { "slug": "url-parser", "category": "Utilities", "name": "URL Parser", "input": "https://example.com:8080/path?q=search#hash", "action": "Parse", "expect": "output" },
+  { "slug": "slug-generator", "category": "Utilities", "name": "Slug Generator", "input": "Hello World Test!", "action": "Generate", "expect": "output" }
+]

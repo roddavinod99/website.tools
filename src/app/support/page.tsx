@@ -12,7 +12,7 @@ const supportOptions = [
   { title: "Documentation", description: "Browse our guides and tutorials", icon: BookOpen, href: "/guides" },
   { title: "Report a Bug", description: "Found something broken?", icon: Bug, href: "/report-bug" },
   { title: "Feature Request", description: "Suggest a new tool or improvement", icon: MessageSquare, href: "/feature-request" },
-  { title: "Contact Us", description: "Get in touch with our team", icon: Mail, href: "mailto:support@devstackio.com" },
+  { title: "Contact Us", description: "Get in touch with our team", icon: Mail, href: "/contact" },
 ];
 
 export default function SupportPage() {

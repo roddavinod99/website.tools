@@ -15,6 +15,7 @@ interface WordStats {
   readingTime: string;
   speakingTime: string;
   uniqueWords: number;
+  lexicalDiversity: number;
   longestWord: string;
   shortestWord: string;
   wordFrequency: [string, number][];
@@ -53,6 +54,16 @@ function computeReadability(stats: { words: number; sentences: number; syllables
   return { fleschKincaid: Math.max(0, parseFloat(fk.toFixed(1))), fleschReadingEase: Math.max(0, Math.min(100, parseFloat(fre.toFixed(1)))), gunningFog: Math.max(0, parseFloat(fog.toFixed(1))) };
 }
 
+function fleschLabel(score: number): string {
+  if (score >= 90) return "Very Easy";
+  if (score >= 80) return "Easy";
+  if (score >= 70) return "Fairly Easy";
+  if (score >= 60) return "Standard";
+  if (score >= 50) return "Fairly Difficult";
+  if (score >= 30) return "Difficult";
+  return "Very Confusing";
+}
+
 export function WordCounter() {
   const [text, setText] = useState("");
   const [includeHtml, setIncludeHtml] = useState(true);
@@ -79,11 +90,11 @@ export function WordCounter() {
 
     const freq: Record<string, number> = {};
     wordList.forEach((w) => { freq[w] = (freq[w] || 0) + 1; });
-    const wordFreq = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const wordFreq = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 20);
 
     const charFreqMap: Record<string, number> = {};
     for (const c of t) { charFreqMap[c] = (charFreqMap[c] || 0) + 1; }
-    const charFreq = Object.entries(charFreqMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const charFreq = Object.entries(charFreqMap).sort((a, b) => b[1] - a[1]).slice(0, 20);
 
     const avgWordLength = words > 0 ? parseFloat((charsNoSpace / words).toFixed(1)) : 0;
     const avgSentenceLength = sentences > 0 ? parseFloat((words / sentences).toFixed(1)) : 0;
@@ -112,12 +123,13 @@ export function WordCounter() {
     })).sort((a, b) => b.count - a.count);
 
     const progressPercent = wordGoal > 0 ? Math.min(100, parseFloat(((words / wordGoal) * 100).toFixed(0))) : 0;
+    const lexicalDiversity = totalWords > 0 ? parseFloat(((uniqueWords / totalWords) * 100).toFixed(1)) : 0;
 
     return {
       words, chars, charsNoSpace, sentences, paragraphs, lines,
       avgWordLength, avgSentenceLength, syllables: totalSyllables,
       readingTime: readingTimeStr, speakingTime: speakingTimeStr,
-      uniqueWords, longestWord: longest, shortestWord: shortest,
+      uniqueWords, lexicalDiversity, longestWord: longest, shortestWord: shortest,
       wordFrequency: wordFreq, charFrequency: charFreq,
       fleschKincaid: readability.fleschKincaid,
       fleschReadingEase: readability.fleschReadingEase,
@@ -143,13 +155,14 @@ export function WordCounter() {
       `Paragraphs: ${stats.paragraphs}`,
       `Lines: ${stats.lines}`,
       `Unique Words: ${stats.uniqueWords}`,
+      `Lexical Diversity: ${stats.lexicalDiversity}%`,
       `Avg Word Length: ${stats.avgWordLength}`,
       `Avg Sentence Length: ${stats.avgSentenceLength}`,
       `Syllables: ${stats.syllables}`,
       `Reading Time: ${stats.readingTime}`,
       `Speaking Time: ${stats.speakingTime}`,
       `Flesch-Kincaid Grade: ${stats.fleschKincaid}`,
-      `Flesch Reading Ease: ${stats.fleschReadingEase}`,
+      `Flesch Reading Ease: ${stats.fleschReadingEase} (${fleschLabel(stats.fleschReadingEase)})`,
       `Gunning Fog: ${stats.gunningFog}`,
       `Longest Word: ${stats.longestWord}`,
       `Shortest Word: ${stats.shortestWord}`,
@@ -186,11 +199,11 @@ export function WordCounter() {
               { label: "Paragraphs", value: stats.paragraphs },
               { label: "Lines", value: stats.lines },
               { label: "Unique Words", value: stats.uniqueWords },
+              { label: "Lexical Diversity", value: `${stats.lexicalDiversity}%` },
               { label: "Syllables", value: stats.syllables },
               { label: "Reading Time", value: stats.readingTime },
               { label: "Speaking Time", value: stats.speakingTime },
               { label: "Avg Word Len", value: stats.avgWordLength },
-              { label: "Avg Sent Len", value: stats.avgSentenceLength },
             ].map((s) => (
               <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
                 <div className="text-lg font-bold text-brand-500">{s.value}</div>
@@ -205,7 +218,7 @@ export function WordCounter() {
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { label: "Flesch-Kincaid", value: stats.fleschKincaid, max: 20 },
-                  { label: "Reading Ease", value: stats.fleschReadingEase, max: 100 },
+                  { label: `Reading Ease (${fleschLabel(stats.fleschReadingEase)})`, value: stats.fleschReadingEase, max: 100 },
                   { label: "Gunning Fog", value: stats.gunningFog, max: 20 },
                 ].map((r) => (
                   <div key={r.label} className="rounded border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
@@ -216,6 +229,16 @@ export function WordCounter() {
               </div>
             </div>
 
+            <div>
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Grade Level</p>
+              <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
+                <div className="text-lg font-bold text-brand-500">{stats.fleschKincaid}</div>
+                <div className="text-[10px] text-surface-500 dark:text-dark-muted">Flesch-Kincaid Grade Level</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Word Goal</p>
               <div className="flex items-center gap-2 mb-1">
@@ -229,12 +252,20 @@ export function WordCounter() {
               </div>
               <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-0.5">{stats.progressPercent}% complete</p>
             </div>
+
+            <div>
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Avg Sentence Length</p>
+              <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
+                <div className="text-lg font-bold text-brand-500">{stats.avgSentenceLength}</div>
+                <div className="text-[10px] text-surface-500 dark:text-dark-muted">words per sentence</div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Word Frequency (Top 10)</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-40 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Word Frequency (Top 20)</p>
+              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {stats.wordFrequency.map(([w, c]) => (
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text truncate">{w}</span>
@@ -245,11 +276,25 @@ export function WordCounter() {
             </div>
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Keyword Density (%)</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-40 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {stats.keywordDensity.map(([w, d]) => (
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text truncate">{w}</span>
                     <span className="text-brand-500 shrink-0 ml-2">{d}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Frequency (Top 20)</p>
+            <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
+                {stats.charFrequency.map(([c, n]) => (
+                  <div key={c} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
+                    <span className="text-surface-900 dark:text-dark-text">{c === " " ? <span className="text-surface-400">[space]</span> : c}</span>
+                    <span className="text-surface-500 dark:text-dark-muted shrink-0 ml-2">{n}</span>
                   </div>
                 ))}
               </div>
@@ -272,7 +317,7 @@ export function WordCounter() {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             <div className="rounded border border-surface-200 bg-surface-50 p-2 text-xs dark:border-dark-border dark:bg-dark-surface">
               <span className="text-surface-500 dark:text-dark-muted">Longest: </span>
               <span className="font-mono text-surface-900 dark:text-dark-text">{stats.longestWord || "-"}</span>
@@ -286,6 +331,10 @@ export function WordCounter() {
               Copy Stats
             </button>
           </div>
+
+          <p className="text-[10px] text-surface-400 dark:text-dark-muted text-center">
+            Word counting supports English text. Results may vary for other languages.
+          </p>
         </>
       )}
 

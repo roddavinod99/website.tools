@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "A full-featured Markdown editor with split-pane live preview showing rendered output alongside the source. Includes a formatting toolbar (bold, italic, heading, link, image, code, table), three visual themes, auto-save to localStorage, real-time word/character count, line numbers, a table helper for grid creation, and fullscreen mode.",
+  "whyItExists": "Writing Markdown with live preview is essential for content creation, documentation, and note-taking. Combines the power of raw Markdown authoring with instant visual feedback and formatting assistance for productive writing workflows.",
+  "whoShouldUse": "Technical writers, documentation maintainers, developers writing README files, bloggers using Markdown, and anyone who regularly edits Markdown-formatted content.",
+  "useCases": [
+    "Write and preview GitHub README files and project documentation with real-time rendering",
+    "Create and format blog posts with Markdown using the toolbar for quick formatting insertion",
+    "Take formatted notes with live preview during meetings or research sessions",
+    "Build and edit documentation sites with consistent Markdown formatting and table structures",
+    "Draft and preview Markdown emails or newsletters with formatting and link insertion",
+    "Collaborate on Markdown content by sharing the auto-saved content across sessions"
+  ],
+  "instructions": [
+    "Type or paste Markdown into the left editor pane; the right pane shows a live rendered preview that updates on each keystroke",
+    "Use the toolbar buttons for common formatting: Bold (Ctrl+B), Italic (Ctrl+I), Headings (H1-H6), Links, Images, Code blocks, and Tables",
+    "Create tables with the Table Helper button: specify rows/columns; the tool generates the Markdown table syntax",
+    "Switch themes via the theme selector (Light, Dark, or Sepia) to match your visual preference",
+    "Monitor the word and character count in the status bar; use fullscreen mode for distraction-free writing",
+    "Content auto-saves to browser localStorage; restore on return or use the export button to download as .md file"
+  ],
+  "examples": [
+    "Input toolbar action: Click Bold button -> Inserts: \"**bold text**\" with cursor between the asterisks",
+    "Input: \"| Col1 | Col2 |\\n|------|------|\\n| A | B |\" -> Preview: Renders a Markdown table with two columns and one row"
+  ],
+  "bestPractices": [
+    "Use keyboard shortcuts (Ctrl+B/I for bold/italic) to stay in flow without reaching for the toolbar",
+    "Save important content externally; auto-save uses localStorage which can be cleared",
+    "Use the table helper for complex tables rather than writing Markdown grid syntax manually",
+    "Switch to fullscreen mode when doing focused long-form writing to reduce distractions",
+    "Preview images and links by inserting them and verifying the rendered output in the preview pane"
+  ],
+  "commonMistakes": [
+    "Relying solely on the toolbar when keyboard shortcuts would be faster for frequent formatting",
+    "Forgetting that auto-save is browser-specific; clearing browser data will lose unsaved work",
+    "Using broken image or link syntax and not checking the red indicator in the preview pane",
+    "Applying heading formatting (multiple #) without a space after the #, which doesn't render as a heading",
+    "Not using the table helper and making manual table syntax errors with misaligned columns"
+  ],
+  "faq": [
+    "Does it support GitHub Flavored Markdown (GFM)? Yes, including task lists, tables, strikethrough, and emoji shortcodes.",
+    "Is there an undo/redo feature? Yes, Ctrl+Z and Ctrl+Y are supported for unlimited undo/redo in the editor.",
+    "Can I drag-and-drop images? Yes, images can be dragged from your file system to insert the image reference Markdown.",
+    "Is the preview scroll-synced with the editor? Yes, scrolling one pane will attempt to keep the other synced to the same relative position."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Minifies CSS with five configurable options: color compression (shortening #FF6600 to #f60), merging identical rules, merging adjacent identical selectors, removing unnecessary quotes, and clearing empty rules. Displays live size comparison with original vs minified byte count and percentage savings, plus side-by-side visual diff of before/after content.",
+  "whyItExists": "CSS file size directly impacts page load performance. A dedicated minifier with granular control over optimizations lets developers balance compression ratio against readability for their specific deployment scenario.",
+  "whoShouldUse": "Web performance engineers optimizing Core Web Vitals, frontend developers bundling assets for production, CMS developers minifying user-submitted CSS, and anyone deploying CSS to bandwidth-constrained environments.",
+  "useCases": [
+    "Minify a 50 KB design system CSS before deploying to production for ~25% size reduction",
+    "Enable color compression on a stylesheet with longhand hex colors",
+    "Merge adjacent identical selectors duplicated during development",
+    "Use size comparison to report CSS budget compliance in a performance audit",
+    "Minify user-submitted CSS in a CMS before saving to database",
+    "Remove empty rules and unnecessary quotes from generated CSS"
+  ],
+  "instructions": [
+    "Paste CSS or upload a .css file — minified output updates in real-time",
+    "Toggle options: 'Compress Colors', 'Merge Rules', 'Merge Adjacent', 'Remove Quotes', 'Clear Empty Rules'",
+    "Monitor the size comparison bar — updates with each toggle change",
+    "Review side-by-side diff view to see exactly what changed",
+    "Click 'Copy Minified' or 'Download' to save as .min.css",
+    "Use 'Copy Stats' to copy size comparison data for reporting"
+  ],
+  "examples": [
+    "Input: 'a { color: #ff6600; background: #ffffff; }' | Compress Colors ON => Output: 'a{color:#f60;background:#fff}'",
+    "Input: '.foo { color: red; } .bar { color: red; }' | Merge Rules ON => Output: '.foo,.bar{color:red}'"
+  ],
+  "bestPractices": [
+    "Enable all optimizations for maximum compression — none change CSS behavior",
+    "Use size comparison to track CSS budget over time — aim for under 100 KB critical CSS",
+    "Run test suite after minifying to verify no selectors were incorrectly merged",
+    "Keep original unminified source in repo — minify during build, never edit minified files directly",
+    "Combine minification with gzip for 70-80% total reduction"
+  ],
+  "commonMistakes": [
+    "Assuming minified CSS is always smaller — extremely short CSS may be same size",
+    "Using minified output as source of truth for further edits",
+    "Enabling 'Merge Rules' on CSS with complex media queries — verify output carefully",
+    "Forgetting color compression only works on colors with exact shorthand equivalents",
+    "Relying solely on minification — also consider code splitting and critical CSS extraction"
+  ],
+  "faq": [
+    "Typical compression ratio? — 60-70% of original size. With gzip, 70-80% total.",
+    "Does color compression change appearance? — No. #FF6600 and #f60 are identical in every browser.",
+    "Can I reverse minification? — No, it's lossy for formatting. Use CSS Formatter to beautify but comments are lost.",
+    "Does this handle @import and url()? — Yes, preserves them. 'Remove Quotes' strips unnecessary url() quotes."
+  ]
+}

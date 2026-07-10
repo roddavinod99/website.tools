@@ -3,11 +3,18 @@
 import { useState, useRef, useMemo } from "react";
 import { sanitize } from "@/lib/sanitize";
 
-type FigletFont = "standard" | "thick" | "bubble" | "block" | "digital" | "script" | "shadow" | "slant" | "speed" | "banner" | "doh" | "isometric1" | "isometric2" | "isometric3" | "dots" | "avatar" | "pagga" | "smscript";
+type FigletFont = "standard" | "big" | "small" | "doom" | "thick" | "bubble" | "block" | "digital" | "script" | "shadow" | "slant" | "speed" | "banner" | "doh" | "isometric1" | "isometric2" | "isometric3" | "dots" | "avatar" | "pagga" | "smscript";
 
-const FONT_NAMES: FigletFont[] = [
-  "standard", "thick", "bubble", "block", "digital", "script", "shadow", "slant",
-  "speed", "banner", "doh", "isometric1", "isometric2", "isometric3", "dots", "avatar", "pagga", "smscript",
+type FontCategory = "standard" | "block" | "decorative" | "script" | "small";
+
+type LayoutMode = "default" | "full" | "fitted" | "smushing";
+
+const FONT_CATEGORIES: { label: string; id: FontCategory; fonts: FigletFont[] }[] = [
+  { label: "Standard", id: "standard", fonts: ["standard", "thick", "shadow", "slant"] },
+  { label: "Block", id: "block", fonts: ["block", "banner", "avatar", "pagga"] },
+  { label: "Decorative", id: "decorative", fonts: ["big", "doom", "bubble", "digital", "doh", "isometric1", "isometric2", "isometric3", "dots"] },
+  { label: "Script", id: "script", fonts: ["script", "smscript"] },
+  { label: "Small", id: "small", fonts: ["speed", "small"] },
 ];
 
 const FONT_MAP: Record<string, Record<string, string[]>> = {
@@ -58,6 +65,9 @@ const FONT_MAP: Record<string, Record<string, string[]>> = {
 
 const STYLE_VARIANTS: Record<string, { width: number; height: number; chars: string }> = {
   standard: { width: 5, height: 5, chars: "#" },
+  big: { width: 7, height: 7, chars: "#" },
+  small: { width: 4, height: 3, chars: "#" },
+  doom: { width: 6, height: 6, chars: "@" },
   thick: { width: 7, height: 7, chars: "@" },
   bubble: { width: 5, height: 5, chars: "O" },
   block: { width: 5, height: 5, chars: "#" },
@@ -77,35 +87,132 @@ const STYLE_VARIANTS: Record<string, { width: number; height: number; chars: str
   smscript: { width: 4, height: 4, chars: "o" },
 };
 
+const BIG_FONT: Record<string, string[]> = {
+  A: ["   ##   ", "  #  #  ", " #    # ", "#      #", "########", "#      #", "#      #"],
+  B: ["####### ", "#      #", "#      #", "####### ", "#      #", "#      #", "####### "],
+  C: [" ###### ", "#      #", "#       ", "#       ", "#       ", "#      #", " ###### "],
+  D: ["####### ", "#      #", "#      #", "#      #", "#      #", "#      #", "####### "],
+  E: ["########", "#       ", "#       ", "####### ", "#       ", "#       ", "########"],
+  F: ["########", "#       ", "#       ", "####### ", "#       ", "#       ", "#       "],
+  G: [" ###### ", "#      #", "#       ", "#   ####", "#      #", "#      #", " ###### "],
+  H: ["#      #", "#      #", "#      #", "########", "#      #", "#      #", "#      #"],
+  I: ["########", "   ##   ", "   ##   ", "   ##   ", "   ##   ", "   ##   ", "########"],
+  J: ["########", "    #   ", "    #   ", "    #   ", "    #   ", "#   #   ", " ###    "],
+  K: ["#      #", "#     # ", "#    #  ", "####    ", "#    #  ", "#     # ", "#      #"],
+  L: ["#       ", "#       ", "#       ", "#       ", "#       ", "#       ", "########"],
+  M: ["#      #", "##    ##", "##    ##", "# #  # #", "#  ##  #", "#      #", "#      #"],
+  N: ["#      #", "##     #", "##     #", "# #    #", "#  #   #", "#   #  #", "#    ## #"],
+  O: ["  ####  ", " #    # ", "#      #", "#      #", "#      #", " #    # ", "  ####  "],
+  P: ["####### ", "#      #", "#      #", "####### ", "#       ", "#       ", "#       "],
+  Q: ["  ####  ", " #    # ", "#      #", "#      #", "#   #  #", " #  # # ", "  ### # "],
+  R: ["####### ", "#      #", "#     # ", "#####   ", "#    #  ", "#     # ", "#      #"],
+  S: [" ###### ", "#      #", "#       ", " #####  ", "      # ", "#      #", " ###### "],
+  T: ["########", "   ##   ", "   ##   ", "   ##   ", "   ##   ", "   ##   ", "   ##   "],
+  U: ["#      #", "#      #", "#      #", "#      #", "#      #", "#      #", " ###### "],
+  V: ["#      #", "#      #", "#      #", "#      #", " #    # ", "  #  #  ", "   ##   "],
+  W: ["#      #", "#      #", "#  ##  #", "# #  # #", "##    ##", "##    ##", "#      #"],
+  X: ["#      #", " #    # ", "  #  #  ", "   ##   ", "  #  #  ", " #    # ", "#      #"],
+  Y: ["#      #", " #    # ", "  #  #  ", "   ##   ", "   ##   ", "   ##   ", "   ##   "],
+  Z: ["########", "      # ", "     #  ", "    #   ", "   #    ", "  #     ", "########"],
+};
+
+const SMALL_FONT: Record<string, string[]> = {
+  A: [" # ", "# #", "###"],
+  B: ["## ", "# #", "## "],
+  C: [" ##", "#  ", " ##"],
+  D: ["## ", "# #", "## "],
+  E: ["###", "## ", "###"],
+  F: ["###", "## ", "#  "],
+  G: [" ##", "# #", " ##"],
+  H: ["# #", "###", "# #"],
+  I: [" # ", " # ", " # "],
+  J: ["  #", "  #", "## "],
+  K: ["# #", "## ", "# #"],
+  L: ["#  ", "#  ", "###"],
+  M: ["# #", "###", "# #"],
+  N: ["# #", "###", "# #"],
+  O: [" # ", "# #", " # "],
+  P: ["## ", "# #", "#  "],
+  Q: [" # ", "# #", " ##"],
+  R: ["## ", "# #", "# #"],
+  S: [" ##", " # ", "## "],
+  T: ["###", " # ", " # "],
+  U: ["# #", "# #", "###"],
+  V: ["# #", "# #", " # "],
+  W: ["# #", "###", "# #"],
+  X: ["# #", " # ", "# #"],
+  Y: ["# #", " # ", " # "],
+  Z: ["###", " # ", "###"],
+};
+
+const DOOM_FONT: Record<string, string[]> = {
+  A: ["  @@  ", " @  @ ", "@    @", "@    @", "@@@@@@", "@    @", "@    @"],
+  B: ["@@@@@ ", "@    @", "@    @", "@@@@@ ", "@    @", "@    @", "@@@@@ "],
+  C: [" @@@@ ", "@    @", "@     ", "@     ", "@     ", "@    @", " @@@@ "],
+  D: ["@@@@@ ", "@    @", "@    @", "@    @", "@    @", "@    @", "@@@@@ "],
+  E: ["@@@@@@", "@     ", "@     ", "@@@@@ ", "@     ", "@     ", "@@@@@@"],
+  F: ["@@@@@@", "@     ", "@     ", "@@@@@ ", "@     ", "@     ", "@     "],
+  G: [" @@@@ ", "@    @", "@     ", "@  @@@", "@    @", "@    @", " @@@@ "],
+  H: ["@    @", "@    @", "@    @", "@@@@@@", "@    @", "@    @", "@    @"],
+  I: ["@@@@@@", "  @@  ", "  @@  ", "  @@  ", "  @@  ", "  @@  ", "@@@@@@"],
+  J: ["@@@@@@", "   @  ", "   @  ", "   @  ", "   @  ", "@  @  ", " @@   "],
+  K: ["@    @", "@   @ ", "@  @  ", "@@@   ", "@  @  ", "@   @ ", "@    @"],
+  L: ["@     ", "@     ", "@     ", "@     ", "@     ", "@     ", "@@@@@@"],
+  M: ["@    @", "@@  @@", "@@  @@", "@ @@ @", "@    @", "@    @", "@    @"],
+  N: ["@    @", "@@   @", "@@   @", "@ @  @", "@  @ @", "@   @@", "@    @"],
+  O: [" @@@@ ", "@    @", "@    @", "@    @", "@    @", "@    @", " @@@@ "],
+  P: ["@@@@@ ", "@    @", "@    @", "@@@@@ ", "@     ", "@     ", "@     "],
+  Q: [" @@@@ ", "@    @", "@    @", "@    @", "@  @ @", "@   @@", " @@@@ "],
+  R: ["@@@@@ ", "@    @", "@    @", "@@@@@ ", "@   @ ", "@    @", "@    @"],
+  S: [" @@@@ ", "@    @", "@     ", " @@@  ", "    @ ", "@    @", " @@@@ "],
+  T: ["@@@@@@", "  @@  ", "  @@  ", "  @@  ", "  @@  ", "  @@  ", "  @@  "],
+  U: ["@    @", "@    @", "@    @", "@    @", "@    @", "@    @", " @@@@ "],
+  V: ["@    @", "@    @", "@    @", "@    @", " @  @ ", "  @@  ", "  @@  "],
+  W: ["@    @", "@    @", "@  @@ @", "@ @  @", "@@    @", "@@    @", "@    @"],
+  X: ["@    @", " @  @ ", "  @@  ", "  @@  ", "  @@  ", " @  @ ", "@    @"],
+  Y: ["@    @", " @  @ ", "  @@  ", "  @@  ", "  @@  ", "  @@  ", "  @@  "],
+  Z: ["@@@@@@", "    @ ", "   @  ", "  @   ", " @    ", "@     ", "@@@@@@"],
+};
+
 function renderFigletish(
   text: string,
   font: FigletFont,
-  widthAdj: number,
+  widthMax: number,
   letterSpacing: number,
   charSet: string,
+  layout: LayoutMode,
 ): string {
   const style = STYLE_VARIANTS[font] || STYLE_VARIANTS.standard;
-  const fontData = FONT_MAP.standard;
+  let fontData = FONT_MAP.standard;
+  if (font === "big") fontData = BIG_FONT;
+  else if (font === "small") fontData = SMALL_FONT;
+  else if (font === "doom") fontData = DOOM_FONT;
   const h = style.height;
   const lines: string[] = Array(h).fill("");
   const ch = charSet || style.chars;
+  let spacing = letterSpacing;
+  if (layout === "fitted") spacing = 0;
+  else if (layout === "smushing") spacing = -1;
+  else if (layout === "full") spacing = Math.max(2, letterSpacing);
   for (const rawChar of text.toUpperCase()) {
     const art = fontData[rawChar] || fontData["?"] || Array(h).fill("     ");
     for (let row = 0; row < h; row++) {
-      const replaced = (art[row] || "").replace(/[#@OX\*\.o]/g, (m) => {
+      const artRow = art[row] || "";
+      let replaced = artRow.replace(/[#@OX\*\.o]/g, (m) => {
         if (m === " ") return " ";
         return ch.length > 0 ? ch[0] : m;
       });
-      const spaced = widthAdj !== 1 ? adjustWidth(replaced, widthAdj) : replaced;
-      lines[row] += spaced + " ".repeat(Math.max(0, letterSpacing));
+      if (layout === "smushing") {
+        replaced = replaced.replace(/./g, (c) => c === " " ? "" : c);
+      }
+      if (widthMax > 0 && replaced.length > widthMax) {
+        replaced = replaced.slice(0, widthMax);
+      }
+      const gap = spacing > 0 ? " ".repeat(spacing) : (spacing < 0 ? "" : " ");
+      lines[row] += replaced + gap;
     }
   }
   return lines.join("\n");
-}
-
-function adjustWidth(line: string, factor: number): string {
-  if (factor <= 0.5) return line.replace(/..?/g, "$&");
-  return line.split("").map((c) => c + " ".repeat(Math.round(factor - 1))).join("");
 }
 
 const ANSI_COLORS: Record<string, string> = {
@@ -122,6 +229,7 @@ export function AsciiArt() {
   const [input, setInput] = useState("");
   const [font, setFont] = useState<FigletFont>("standard");
   const [widthAdj, setWidthAdj] = useState(1);
+  const [widthMax, setWidthMax] = useState(0);
   const [charSet, setCharSet] = useState("#");
   const [color, setColor] = useState("none");
   const [bgStyle, setBgStyle] = useState<"transparent" | "filled">("transparent");
@@ -130,13 +238,22 @@ export function AsciiArt() {
   const [flipH, setFlipH] = useState(false);
   const [flipV, setFlipV] = useState(false);
   const [letterSpacing, setLetterSpacing] = useState(1);
+  const [layout, setLayout] = useState<LayoutMode>("default");
   const [history, setHistory] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const preRef = useRef<HTMLPreElement>(null);
 
   const { output, lineCount, charCount } = useMemo(() => {
     if (!input.trim()) return { output: "", lineCount: 0, charCount: 0 };
-    const art = renderFigletish(input, font, widthAdj, letterSpacing, charSet);
+    let art = renderFigletish(input, font, widthMax, letterSpacing, charSet, layout);
+    if (widthAdj !== 1) {
+      const lines = art.split("\n");
+      art = lines.map((l) => {
+        const factor = widthAdj;
+        if (factor <= 0.5) return l;
+        return l.split("").map((c) => c + " ".repeat(Math.round(factor - 1))).join("");
+      }).join("\n");
+    }
     const lines = art.split("\n").filter(Boolean);
     if (flipH) {
       const maxLen = Math.max(...lines.map((l) => l.length));
@@ -159,7 +276,7 @@ export function AsciiArt() {
       result = result.split("").map((c) => c === " " ? "#" : " ").join("");
     }
     return { output: result, lineCount: lines.length, charCount: result.length };
-  }, [input, font, widthAdj, charSet, color, bgStyle, reverseVideo, slogan, flipH, flipV, letterSpacing]);
+  }, [input, font, widthAdj, widthMax, charSet, color, bgStyle, reverseVideo, slogan, flipH, flipV, letterSpacing, layout]);
 
   const copy = async () => {
     if (!output) return;
@@ -190,6 +307,8 @@ export function AsciiArt() {
     return output.split("\n").map((l) => `<span style="color:${c}">${l.replace(/</g, "&lt;")}</span>`).join("\n");
   }, [output, color]);
 
+  const fontCategories = FONT_CATEGORIES;
+
   return (
     <div className="space-y-4">
       <div>
@@ -204,15 +323,25 @@ export function AsciiArt() {
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Font</label>
           <select value={font} onChange={(e) => setFont(e.target.value as FigletFont)}
             className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            {FONT_NAMES.map((f) => (<option key={f} value={f}>{f}</option>))}
+            {fontCategories.map((cat) => (
+              <optgroup key={cat.id} label={cat.label}>
+                {cat.fonts.map((f) => (<option key={f} value={f}>{f}</option>))}
+              </optgroup>
+            ))}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Width</label>
+          <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Width Adj</label>
           <input type="range" min={0.5} max={3} step={0.25} value={widthAdj}
             onChange={(e) => setWidthAdj(parseFloat(e.target.value))}
             className="w-full accent-brand-500" />
           <span className="text-xs text-surface-500 dark:text-dark-muted">{widthAdj}x</span>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Max Width</label>
+          <input type="number" min={0} max={500} value={widthMax}
+            onChange={(e) => setWidthMax(Math.max(0, parseInt(e.target.value) || 0))}
+            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Char</label>
@@ -239,6 +368,16 @@ export function AsciiArt() {
             onChange={(e) => setLetterSpacing(parseInt(e.target.value))}
             className="w-full accent-brand-500" />
           <span className="text-xs text-surface-500 dark:text-dark-muted">{letterSpacing}</span>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Layout</label>
+          <select value={layout} onChange={(e) => setLayout(e.target.value as LayoutMode)}
+            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="default">Default</option>
+            <option value="full">Full</option>
+            <option value="fitted">Fitted</option>
+            <option value="smushing">Smushing</option>
+          </select>
         </div>
       </div>
 

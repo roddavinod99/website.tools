@@ -1,16 +1,17 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Copy, RefreshCw, Minimize, ArrowLeftRight, Trash2 } from "lucide-react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { Copy, Download, Trash2, RefreshCw, Minimize, ArrowLeftRight, ShieldCheck } from "lucide-react";
 
-type Indent = "2" | "4" | "tab";
+type Indent = "2" | "4" | "8";
 type QuoteStyle = "single" | "double" | "minimal";
 type NullRep = "null" | "~" | "empty";
 type BoolFormat = "truefalse" | "yesno" | "onoff";
+type Schema = "core" | "json" | "yaml11";
 
 const BOOL_VALUES: Record<string, string[]> = { truefalse: ["true", "false"], yesno: ["yes", "no"], onoff: ["on", "off"] };
 const NULL_VALUES: Record<NullRep, string> = { null: "null", "~": "~", empty: "" };
-const INDENT_MAP: Record<Indent, string> = { "2": "  ", "4": "    ", tab: "  " };
+const INDENT_MAP: Record<Indent, string> = { "2": "  ", "4": "    ", "8": "        " };
 
 function toYaml(obj: unknown, indent: string, depth: number, quoteStyle: QuoteStyle, nullRep: NullRep, boolFormat: BoolFormat, lineWidth: number): string {
   const pad = indent.repeat(depth);
@@ -72,6 +73,32 @@ function parseYamlLine(line: string): [string, unknown] | null {
   return [key, val];
 }
 
+interface Complexity {
+  depth: number;
+  keyCount: number;
+}
+
+function analyzeComplexity(obj: unknown, depth: number = 0): Complexity {
+  if (typeof obj !== "object" || obj === null) return { depth, keyCount: 0 };
+  if (Array.isArray(obj)) {
+    let maxDepth = depth;
+    let totalKeys = 0;
+    for (const item of obj) {
+      const sub = analyzeComplexity(item, depth + 1);
+      maxDepth = Math.max(maxDepth, sub.depth);
+      totalKeys += sub.keyCount;
+    }
+    return { depth: maxDepth, keyCount: totalKeys };
+  }
+  const entries = Object.entries(obj as Record<string, unknown>);
+  let maxDepth = depth;
+  for (const [, val] of entries) {
+    const sub = analyzeComplexity(val, depth + 1);
+    maxDepth = Math.max(maxDepth, sub.depth);
+  }
+  return { depth: maxDepth, keyCount: entries.length };
+}
+
 export function YAMLFormatter() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -85,6 +112,8 @@ export function YAMLFormatter() {
   const [nullRep, setNullRep] = useState<NullRep>("null");
   const [boolFormat, setBoolFormat] = useState<BoolFormat>("truefalse");
   const [showJson, setShowJson] = useState(false);
+  const [sortKeysYaml, setSortKeysYaml] = useState(false);
+  const [schema, setSchema] = useState<Schema>("core");
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
 
   const convertYamlToJson = useCallback((yaml: string): string => {
@@ -137,13 +166,28 @@ export function YAMLFormatter() {
 
   const format = useCallback(() => {
     try {
+      if (input.length > 1024 * 1024) {
+        setError("Input exceeds 1MB limit. Please reduce the input size.");
+        setOutput("");
+        return;
+      }
       let obj: unknown;
       let parsedAsYaml = false;
       try { obj = JSON.parse(input); } catch {
         obj = JSON.parse(convertYamlToJson(input));
         parsedAsYaml = true;
       }
-      const indent = indentW === "tab" ? "  " : INDENT_MAP[indentW];
+      if (sortKeysYaml && typeof obj === "object" && obj !== null) {
+        obj = JSON.parse(JSON.stringify(obj), (_, v) => {
+          if (v && typeof v === "object" && !Array.isArray(v)) {
+            const sorted: Record<string, unknown> = {};
+            for (const k of Object.keys(v).sort()) sorted[k] = v[k];
+            return sorted;
+          }
+          return v;
+        });
+      }
+      const indent = INDENT_MAP[indentW] || "  ";
       const yaml = toYaml(obj, indent, 0, quoteStyle, nullRep, boolFormat, lineWidth);
       setOutput(yaml);
       setJsonOutput(parsedAsYaml ? input : JSON.stringify(obj, null, 2));
@@ -161,7 +205,7 @@ export function YAMLFormatter() {
       }
       setOutput("");
     }
-  }, [input, indentW, quoteStyle, lineWidth, nullRep, boolFormat, convertYamlToJson]);
+  }, [input, indentW, quoteStyle, lineWidth, nullRep, boolFormat, sortKeysYaml, convertYamlToJson]);
 
   const toJson = useCallback(() => {
     try {
@@ -194,6 +238,31 @@ export function YAMLFormatter() {
     }
   }, [input, convertYamlToJson]);
 
+  const validate = useCallback(() => {
+    try {
+      if (input.length > 1024 * 1024) {
+        setError("Input exceeds 1MB limit. Please reduce the input size.");
+        setOutput("");
+        return;
+      }
+      let obj: unknown;
+      try { obj = JSON.parse(input); } catch {
+        obj = JSON.parse(convertYamlToJson(input));
+      }
+      if (obj !== null && typeof obj === "object") {
+        setError("");
+        setErrorLine(null); setErrorCol(null);
+        setOutput("Input is valid YAML/JSON.");
+      } else {
+        setOutput("Input parsed successfully.");
+      }
+    } catch (e) {
+      const msg = (e as Error).message;
+      setError(msg);
+      setOutput("");
+    }
+  }, [input, convertYamlToJson]);
+
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => { if (input.trim()) format(); }, 400);
@@ -201,7 +270,24 @@ export function YAMLFormatter() {
   }, [input, format]);
 
   const copy = useCallback(async (text: string) => { if (text) await navigator.clipboard.writeText(text); }, []);
+  const download = useCallback(() => {
+    if (!output) return;
+    const blob = new Blob([output], { type: "text/yaml" });
+    const url = URL.createObjectURL(blob); const a = document.createElement("a");
+    a.href = url; a.download = "formatted.yaml"; a.click(); URL.revokeObjectURL(url);
+  }, [output]);
   const clear = useCallback(() => { setInput(""); setOutput(""); setJsonOutput(""); setError(""); setErrorLine(null); setErrorCol(null); }, []);
+
+  const complexity = useMemo(() => {
+    if (!output) return null;
+    try {
+      let obj: unknown;
+      try { obj = JSON.parse(input); } catch { return null; }
+      return analyzeComplexity(obj);
+    } catch { return null; }
+  }, [input, output]);
+
+  const schemaLabel: Record<Schema, string> = { core: "Core Schema", json: "JSON Schema", yaml11: "YAML 1.1" };
 
   return (
     <div className="space-y-4">
@@ -209,14 +295,17 @@ export function YAMLFormatter() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">YAML / JSON Input</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="key: value&#10;nested:&#10;  foo: bar" rows={8} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+        {input.length > 1024 * 1024 && (
+          <p className="text-xs text-red-500 mt-1">Input exceeds 1MB limit - processing may be slow.</p>
+        )}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Indent</label>
           <select value={indentW} onChange={(e) => setIndentW(e.target.value as Indent)}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="2">2 spaces</option><option value="4">4 spaces</option>
+            <option value="2">2 spaces</option><option value="4">4 spaces</option><option value="8">8 spaces</option>
           </select>
         </div>
         <div>
@@ -241,20 +330,43 @@ export function YAMLFormatter() {
           </select>
         </div>
         <div>
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Schema</label>
+          <select value={schema} onChange={(e) => setSchema(e.target.value as Schema)}
+            className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value="core">Core</option><option value="json">JSON</option><option value="yaml11">YAML 1.1</option>
+          </select>
+        </div>
+        <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Wrap at</label>
           <input type="number" min={0} max={200} value={lineWidth} onChange={(e) => setLineWidth(Number(e.target.value))}
             className="w-full rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" placeholder="0=off" />
         </div>
       </div>
 
+      <div className="flex flex-wrap items-center gap-3">
+        <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
+          <input type="checkbox" checked={sortKeysYaml} onChange={(e) => setSortKeysYaml(e.target.checked)} className="rounded border-surface-300" /> Sort keys
+        </label>
+      </div>
+
       <div className="flex flex-wrap items-center gap-2">
         <button onClick={format} className="inline-flex items-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"><RefreshCw className="w-3.5 h-3.5" /> To YAML</button>
         <button onClick={toJson} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><ArrowLeftRight className="w-3.5 h-3.5" /> To JSON</button>
         <button onClick={minify} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><Minimize className="w-3.5 h-3.5" /> Minify</button>
+        <button onClick={validate} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><ShieldCheck className="w-3.5 h-3.5" /> Validate</button>
         <button onClick={() => copy(output)} disabled={!output} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><Copy className="w-3.5 h-3.5" /> Copy YAML</button>
         <button onClick={() => copy(jsonOutput)} disabled={!jsonOutput} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><Copy className="w-3.5 h-3.5" /> Copy JSON</button>
+        <button onClick={download} disabled={!output} className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"><Download className="w-3.5 h-3.5" /> Download</button>
         <button onClick={clear} className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"><Trash2 className="w-3.5 h-3.5" /> Clear</button>
       </div>
+
+      {complexity && output && (
+        <div className="flex gap-3 text-xs text-surface-500 dark:text-dark-muted">
+          <span>Max depth: {complexity.depth}</span>
+          <span>Keys: {complexity.keyCount}</span>
+          <span>Schema: {schemaLabel[schema]}</span>
+        </div>
+      )}
 
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">

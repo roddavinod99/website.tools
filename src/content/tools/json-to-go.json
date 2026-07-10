@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates Go struct definitions from JSON input, creating nested structs, arrays, and maps with proper Go types. Supports custom JSON tags in snake_case or camelCase, omitempty for optional fields, and \"inline\" flattening for embedded structs.",
+  "whyItExists": "Manually writing Go structs for complex JSON APIs is tedious and error-prone, especially with deeply nested objects. Automates the mapping between JSON schemas and Go type definitions, saving development time and reducing bugs.",
+  "whoShouldUse": "Go developers working with REST APIs, microservices, or any JSON-based data interchange who need to quickly scaffold struct definitions.",
+  "useCases": [
+    "Generate Go structs from third-party API JSON responses for unmarshaling",
+    "Create configuration structs from JSON config file samples",
+    "Scaffold data models from JSON schema definitions or example payloads",
+    "Rapidly prototype Go programs that consume JSON webhook payloads",
+    "Convert Swagger/OpenAPI JSON examples into Go type definitions",
+    "Bridge JSON test fixtures into Go test structs for unit testing"
+  ],
+  "instructions": [
+    "Paste your JSON input into the editor; the tool auto-detects and parses the structure",
+    "Toggle struct options: JSON tags (snake_case/camelCase/disabled), omitempty for optional fields, and \"inline\" for flattening nested objects",
+    "Set the package name (default \"main\") and optionally enable exporting types (uppercase first letter)",
+    "Configure type preference for numbers (float64 vs int) and time fields (string vs time.Time)",
+    "Click \"Generate\" and review the output; nested objects become separate struct types with proper references",
+    "Copy the generated Go code to your editor or use the \"Copy\" button; refine by adjusting options and regenerating"
+  ],
+  "examples": [
+    "Input: {\"name\":\"Alice\",\"age\":30,\"address\":{\"city\":\"NYC\"}} -> Output: type Address struct { City string `json:\"city\"` }\\ntype Person struct { Name string `json:\"name\"` Age int `json:\"age\"` Address Address `json:\"address\"` }",
+    "Input: {\"metadata\":{\"created\":\"2024-01-01T00:00:00Z\"}} with timeType=time.Time -> Output: type Metadata struct { Created time.Time `json:\"created\"` }"
+  ],
+  "bestPractices": [
+    "Use representative JSON samples that include all optional fields to generate complete structs",
+    "Enable omitempty only for fields you expect to be absent; it adds pointer types for optional values",
+    "Set the package name to match your Go module structure rather than using the default \"main\"",
+    "Review generated types for ambiguous numeric fields and manually adjust int vs float64 as needed",
+    "For large JSON payloads, generate structs in sections and compose them manually for cleaner organization"
+  ],
+  "commonMistakes": [
+    "Assuming the tool handles oneOf/anyOf schema patterns; it generates structs from concrete JSON, not schemas",
+    "Forgetting to enable \"omitempty\" and then getting errors when fields are missing from actual JSON",
+    "Using a single simple JSON sample that misses edge cases like null values or empty arrays",
+    "Expecting the tool to handle polymorphic fields or union types not present in standard JSON",
+    "Not adjusting the package name and then getting import conflicts in multi-package projects"
+  ],
+  "faq": [
+    "Does it support nested objects? Yes, each level of nesting becomes its own struct type with proper Go composition.",
+    "Can I generate time.Time fields for date strings? Yes, toggle the timeType option to convert matching patterns to time.Time instead of string.",
+    "What about nullable fields? Enable omitempty to mark fields as optional, and null values in JSON will be represented as pointer types where appropriate.",
+    "Does it generate JSON tags with dashes or underscores? You can choose between snake_case, camelCase, or disable JSON tags entirely."
+  ]
+}

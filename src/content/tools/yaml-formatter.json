@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Formats, validates, and minifies YAML content with configurable indentation, key sorting, and syntax validation. Detects YAML-to-JSON conversion for programmatic use, supports multi-document YAML streams, and provides detailed error messages for malformed YAML.",
+  "whyItExists": "YAML is widely used for configuration files (Docker Compose, Kubernetes, CI/CD pipelines) but is notoriously sensitive to indentation errors. This tool helps developers validate, format, and convert YAML without hunting for invisible whitespace bugs.",
+  "whoShouldUse": "DevOps engineers managing Kubernetes or Docker Compose configs, CI/CD pipeline maintainers, Python developers using YAML for configuration, and anyone debugging YAML formatting issues.",
+  "useCases": [
+    "Format a poorly indented docker-compose.yml file to make it readable and consistent",
+    "Validate YAML syntax before deploying to production to catch indentation bugs early",
+    "Convert YAML to JSON for programmatic consumption in JavaScript/Python scripts",
+    "Minify YAML by removing comments and whitespace for smaller file sizes in deployment",
+    "Sort keys alphabetically to enforce consistent key ordering across team config files"
+  ],
+  "instructions": [
+    "Paste or upload your YAML content into the input area",
+    "Set indent size (2 or 4 spaces) — YAML does not support tabs for indentation",
+    "Toggle validation: the tool checks for common YAML errors (mixed indentation, trailing spaces, duplicate keys)",
+    "Select output format: Formatted YAML, Minified YAML, or JSON",
+    "Enable key sorting to alphabetically order top-level keys",
+    "Click \"Format\" and review the output; copy or download the result"
+  ],
+  "examples": [
+    "Input: 'services:  web:    image: nginx' with 2-space indent. Output: 'services:\\n  web:\\n    image: nginx'",
+    "Input: 'name: \"hello\"\\ncount: 3' with sort keys. Output: 'count: 3\\nname: \"hello\"'"
+  ],
+  "bestPractices": [
+    "Always validate YAML before committing to version control — indentation bugs are hard to spot visually",
+    "Use 2-space indentation consistently, the most common standard across YAML projects",
+    "Run YAML through this tool after merging PRs to catch formatting regressions",
+    "Convert to JSON when debugging YAML parsing issues — JSON's strict syntax makes errors more obvious"
+  ],
+  "commonMistakes": [
+    "Using tabs instead of spaces for indentation, which causes a YAML parsing error",
+    "Inconsistent indentation depth within the same file (mixing 2-space and 4-space blocks)",
+    "Forgetting to quote strings with special characters like colons, hashes, or brackets",
+    "Assuming booleans are always lowercase; YAML accepts multiple boolean formats (yes/no, true/false, on/off)"
+  ],
+  "faq": [
+    "What YAML version does this support? YAML 1.2 with most common 1.1 features.",
+    "Can I convert YAML to JSON? Yes, the tool supports YAML-to-JSON conversion as an output option.",
+    "Does it handle multi-document YAML (--- separator)? Yes, each document is processed independently.",
+    "What about anchors and aliases? Anchors (&) and aliases (*) are preserved in formatted output but resolved in JSON conversion."
+  ]
+}

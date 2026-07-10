@@ -33,7 +33,7 @@ npm start          # http://localhost:3000
 ```bash
 docker build -t devstackio .
 docker run -p 3000:3000 \
-  -e SITE_URL=https://tools.devstackio.com \
+  -e NEXT_PUBLIC_SITE_URL=https://tools.devstackio.com \
   devstackio
 ```
 
@@ -44,7 +44,7 @@ docker run -p 3000:3000 \
 | Type | Routes | Examples |
 |------|--------|---------|
 | Static (`○`) | `/`, `/about`, `/tools`, `/blog`, etc. | Prerendered at build time |
-| SSG (`●`) | `/tools/[slug]`, `/blog/[slug]`, etc. | 70 tools, 6 blog posts, 7 categories, 7 toolkits, 11 guides/learning paths |
+| SSG (`●`) | `/tools/[slug]`, `/blog/[slug]`, etc. | 70 tools, 5 blog posts, 7 categories, 7 toolkits, 10 guides/learning paths |
 | ISR (`●` + revalidate) | `/sitemap.xml` | Revalidated every 24h — no rebuild needed |
 | Dynamic (`ƒ`) | `/search`, `/api/*` | Server-rendered on demand |
 
@@ -62,8 +62,9 @@ src/
   app/
     tools/[slug]/        # 70 individual tool pages (SSG)
     categories/[slug]/   # 7 category listing pages (SSG)
-    guides/[slug]/       # 11 developer guide pages (SSG)
-    blog/[slug]/         # 6 blog post pages (SSG)
+    guides/[slug]/       # 10 developer guide pages (SSG)
+    learning/[slug]/     # 10 learning topic pages (SSG, redirect to /guides/[slug])
+    blog/[slug]/         # 5 blog post pages (SSG)
     toolkits/[slug]/     # 7 toolkit pages (SSG)
     api/                 # Server endpoints (DNS, IP, form submit)
     sitemap.ts           # XML sitemap with ISR revalidation
@@ -141,8 +142,8 @@ sudo ./scripts/setup-cron.sh    # Installs cron job (daily UTC 00:00)
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `SITE_URL` | Yes | — | Canonical site URL (`https://tools.devstackio.com`) |
-| `ANALYTICS_URL` | No | `""` | Analytics endpoint (empty = disabled) |
+| `NEXT_PUBLIC_SITE_URL` | Yes | — | Canonical site URL (`https://tools.devstackio.com`) |
+| `NEXT_PUBLIC_GA_ID` | No | `""` | Google Analytics measurement ID (empty = disabled) |
 | `INDEXNOW_KEY` | No | — | IndexNow API key for Bing/Yandex/Seznam submission |
 
 ## Deployment
@@ -161,8 +162,8 @@ PM2 config is at `ecosystem.config.js` — cluster mode (2 instances), 500 MB ma
 ```bash
 docker build -t devstackio .
 docker run -d -p 3000:3000 --restart unless-stopped \
-  -e SITE_URL=https://tools.devstackio.com \
-  -e ANALYTICS_URL= \
+  -e NEXT_PUBLIC_SITE_URL=https://tools.devstackio.com \
+   -e NEXT_PUBLIC_GA_ID=G-Y02LPSJJCZ \
   devstackio
 ```
 

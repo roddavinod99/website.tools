@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "URL encoder and decoder supporting component-level encoding (encodeURIComponent) and full-URL encoding (encodeURI). Offers 3 character set options: all characters, unreserved only, or custom selection. Includes auto-detection of whether the input is encoded or plain, multiple output displays (encoded, decoded, component-encoded), URL validation, a special character reference table, and a history of the last 50 URL conversions.",
+  "whyItExists": "Manually encoding or decoding URLs is error-prone, especially when dealing with special characters, non-ASCII text, or nested encoding. This tool provides all encoding variants alongside validation and reference material so developers can see exactly how their URL is transformed.",
+  "whoShouldUse": "Web developers, API testers, QA engineers, and anyone who constructs or debug URLs containing query strings, paths, or user-submitted values.",
+  "useCases": [
+    "Encode a search query containing spaces and special characters for a URL query parameter",
+    "Decode a percent-encoded URL from a server log to understand the original request",
+    "Validate a URL structure to ensure it is well-formed before making an HTTP request",
+    "Reference the special character encoding table (e.g., %20 for space, %26 for &) for manual encoding",
+    "Compare component encoding vs. full URL encoding to understand when to use each",
+    "Review recent encoding/decoding history to re-use a previous conversion"
+  ],
+  "instructions": [
+    "Paste a URL or string into the input area — the tool auto-detects if it is encoded or plain text.",
+    "Select the encoding mode: Encode (plain → encoded) or Decode (encoded → plain).",
+    "Choose the character set: All Characters, Unreserved Only (letters, digits, -._~), or Custom (select specific chars to encode).",
+    "Choose encoded output type: Full URL (encodeURI) or Component Only (encodeURIComponent).",
+    "Review the results panel showing the encoded/decoded output, the original input, and the component-encoded version.",
+    "Use the Special Characters reference table to look up the percent-encoding for any ASCII or Unicode character."
+  ],
+  "examples": [
+    "Input: \"hello world & goodbye\" with Encode, Component Only → Output: \"hello%20world%20%26%20goodbye\"",
+    "Input: \"https://example.com/search?q=cat%20food\" with Decode, auto-detect → Output: \"https://example.com/search?q=cat food\""
+  ],
+  "bestPractices": [
+    "Use Component encoding (encodeURIComponent) for query parameter values, never Full URL encoding",
+    "Use Full URL encoding (encodeURI) for the entire URL — it preserves scheme, host, and path structure",
+    "Always validate the URL after encoding to ensure the result is still well-formed",
+    "Review the special character table when debugging unexpected URL behavior",
+    "Check the history panel if you need to re-encode the same value but forgot the result"
+  ],
+  "commonMistakes": [
+    "Using Full URL encoding on a query parameter value — spaces in the value should be %20, not +",
+    "Encoding an already-encoded URL (double encoding) — \"%20\" becomes \"%2520\"",
+    "Decoding a full URL with component decoding — a & in the query string may be interpreted incorrectly",
+    "Not encoding plus signs in values — a literal + should be %2B, not left as +",
+    "Assuming Unicode characters are the same across all browsers — encoding ensures consistent interpretation"
+  ],
+  "faq": [
+    "What is the difference between encodeURI and encodeURIComponent? encodeURI encodes the full URL preserving structural characters (:/?#[]@!$&'()*+,;=). encodeURIComponent encodes all characters including structural ones, making it safe for query parameter values.",
+    "Can I decode a URL that has been encoded multiple times? Yes — but you need to decode it multiple times until no %xx sequences remain.",
+    "What is the %20 vs + difference? %20 is the percent-encoded space; + is the application/x-www-form-urlencoded space (used in form submission, not URL encoding).",
+    "Does the tool handle Unicode characters? Yes — Unicode characters are encoded as UTF-8 byte sequences (e.g., ñ → %C3%B1)."
+  ]
+}

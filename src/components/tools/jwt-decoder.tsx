@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
-import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Shield, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Shield, ShieldAlert, ShieldCheck, Download } from "lucide-react";
 
 function base64UrlDecode(str: string): string {
   try {
@@ -46,10 +46,26 @@ function getAlgoSecurity(alg: string): { level: "strong" | "weak" | "none"; colo
     if (bits >= 256) return { level: "strong", color: "text-green-600 dark:text-green-400" };
     return { level: "weak", color: "text-yellow-600 dark:text-yellow-400" };
   }
+  if (/^ED/i.test(u) || /^ES256K/i.test(u)) return { level: "strong", color: "text-green-600 dark:text-green-400" };
   return { level: "weak", color: "text-yellow-600 dark:text-yellow-400" };
 }
 
 const standardClaims = new Set(["iss", "sub", "aud", "exp", "nbf", "iat", "jti", "azp", "scope", "client_id", "acr", "amr"]);
+
+const claimDescriptions: Record<string, string> = {
+  iss: "Issuer",
+  sub: "Subject",
+  aud: "Audience",
+  exp: "Expiration Time",
+  nbf: "Not Before",
+  iat: "Issued At",
+  jti: "JWT ID",
+  azp: "Authorized Party",
+  scope: "Scope",
+  client_id: "Client ID",
+  acr: "Auth Context Reference",
+  amr: "Auth Methods Reference",
+};
 
 export function JWTDecoder() {
   const [input, setInput] = useState("");
@@ -95,7 +111,10 @@ export function JWTDecoder() {
     const algo = (decoded.header.alg as string) || "HS256";
     try {
       const encoder = new TextEncoder();
-      const key = await crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: algo.replace("HS", "SHA-") }, false, ["sign"]);
+      const hashMap: Record<string, string> = { HS256: "SHA-256", HS384: "SHA-384", HS512: "SHA-512" };
+      const hash = hashMap[algo.toUpperCase()];
+      if (!hash) { setSigResult("unverified"); return; }
+      const key = await crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash }, false, ["sign"]);
       const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(data));
       const expected = btoa(Array.from(new Uint8Array(sig)).map((b) => String.fromCharCode(b)).join("")).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
       setSigResult(expected === parts[2] ? "match" : "mismatch");
@@ -111,6 +130,22 @@ export function JWTDecoder() {
   const pasteFromClipboard = async () => {
     const text = await navigator.clipboard.readText();
     setInput(text);
+  };
+
+  const downloadAsJson = () => {
+    if (!decoded) return;
+    const data = {
+      header: decoded.header,
+      payload: decoded.payload,
+      signature: decoded.signature,
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "jwt-decoded.json";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const renderColoredToken = useCallback(() => {
@@ -139,6 +174,7 @@ export function JWTDecoder() {
   const renderClaims = (payload: Record<string, unknown>) => {
     return Object.entries(payload).map(([key, value]) => {
       const isStandard = standardClaims.has(key);
+      const desc = isStandard && claimDescriptions[key] ? claimDescriptions[key] : "";
       let displayVal: string;
       if (["exp", "nbf", "iat"].includes(key) && typeof value === "number") {
         displayVal = `${value} (${formatDate(value)})`;
@@ -149,12 +185,15 @@ export function JWTDecoder() {
       }
       return (
         <div key={key} className="flex items-start justify-between gap-2 rounded border border-surface-200 bg-white px-3 py-1.5 dark:border-dark-border dark:bg-dark-surface">
-          <span className="text-xs font-medium text-surface-600 dark:text-dark-muted shrink-0">
-            {key}
-            {isStandard && <span className="ml-1 text-[10px] text-brand-500">std</span>}
-            {!isStandard && <span className="ml-1 text-[10px] text-yellow-500">custom</span>}
-          </span>
-          <span className="text-xs font-mono text-surface-900 dark:text-dark-text break-all text-right">{displayVal}</span>
+          <div className="min-w-0 shrink-0">
+            <span className="text-xs font-medium text-surface-600 dark:text-dark-muted">
+              {key}
+              {isStandard && <span className="ml-1 text-[10px] text-brand-500">std</span>}
+              {!isStandard && <span className="ml-1 text-[10px] text-yellow-500">custom</span>}
+            </span>
+            {desc && <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-0.5">{desc}</p>}
+          </div>
+          <span className="text-xs font-mono text-surface-900 dark:text-dark-text break-all text-right max-w-[60%]">{displayVal}</span>
         </div>
       );
     });
@@ -259,6 +298,9 @@ export function JWTDecoder() {
                   {expiryInfo.status === "valid" ? (countdown || "Valid") : "Expired"}
                 </span>
               )}
+              <button onClick={downloadAsJson} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+                <Download size={12} /> JSON
+              </button>
             </div>
           </div>
 

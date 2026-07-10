@@ -1,26 +1,21 @@
 #!/usr/bin/env node
 
-const { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync, rmSync, readdirSync, statSync } = await import("fs");
+const { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, rmSync } = await import("fs");
 const { join, dirname } = await import("path");
 const { fileURLToPath } = await import("url");
 const { createHash } = await import("crypto");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, "..");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STATE_FILE = join(ROOT, "data", "sitemap-state.json");
-const LOG_FILE = join(ROOT, "data", "sitemap-submit.log");
 
-const SITE_URL = process.env.SITE_URL || "https://tools.devstackio.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://tools.devstackio.com";
 const SITEMAP_URL = `${SITE_URL}/sitemap.xml`;
 const SUBMISSION_INTERVAL_DAYS = 5;
 
+// Google does not support IndexNow or automated sitemap ping APIs.
+// Register manually at https://search.google.com/search-console
+// The deprecated google.com/ping?sitemap= endpoint has been intentionally removed.
 const SEARCH_ENGINES = [
-  {
-    name: "Google",
-    url: `https://www.google.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
-    active: true,
-    coverage: "Worldwide (largest index)",
-  },
   {
     name: "Bing",
     url: `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
@@ -35,7 +30,7 @@ const SEARCH_ENGINES = [
   },
   {
     name: "Baidu",
-    url: `https://www.baidu.com/s?wd=${encodeURIComponent(SITE_URL)}`,
+    url: null,
     active: false,
     setup:
       "Requires verified Baidu Webmaster account (ziyuan.baidu.com). Add verification meta tag to <head> then use their API.",
@@ -61,25 +56,9 @@ const SEARCH_ENGINES = [
     setup:
       "Requires Sogou站长平台 account (zhanzhang.sogou.com). Submit sitemap manually.",
   },
-  {
-    name: "IndexNow",
-    url: null,
-    active: !!process.env.INDEXNOW_KEY,
-    setup:
-      !process.env.INDEXNOW_KEY
-        ? "Set INDEXNOW_KEY env var to enable. Generate key at indexnow.org and place /{key}.txt on server."
-        : "Active — submits sitemap URL via IndexNow API (supported by Bing, Yandex, Seznam, Naver).",
-  },
 ];
 
-function log(...args) {
-  const msg = `[${new Date().toISOString()}] ${args.join(" ")}`;
-  console.log(msg);
-  try {
-    mkdirSync(join(ROOT, "data"), { recursive: true });
-    appendFileSync(LOG_FILE, msg + "\n");
-  } catch {}
-}
+function log(...args) { auditLog(...args); }
 
 function normalizeSitemap(xml) {
   return xml
@@ -132,20 +111,6 @@ async function fetchWithTimeout(url, timeoutMs = 20000) {
   }
 }
 
-async function checkSitemapAccessible() {
-  log(`Fetching sitemap: ${SITEMAP_URL}`);
-  const res = await fetchWithTimeout(SITEMAP_URL);
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-  const xml = await res.text();
-  if (!xml.includes("<urlset") || !xml.includes("</urlset>")) {
-    throw new Error("Invalid sitemap: missing <urlset> tags");
-  }
-  const urlCount = (xml.match(/<url>/g) || []).length;
-  const sizeKb = (xml.length / 1024).toFixed(1);
-  log(`Sitemap accessible (${urlCount} URLs, ${sizeKb} KB)`);
-  return { xml, urlCount };
-}
-
 async function submitToSearchEngines(engines) {
   let success = 0;
   let fail = 0;
@@ -181,7 +146,9 @@ async function submitToSearchEngines(engines) {
 async function submitToIndexNow() {
   const key = process.env.INDEXNOW_KEY;
   if (!key) {
-    log("  – IndexNow: skipped (no INDEXNOW_KEY set)");
+    log("  – IndexNow: skipped (set INDEXNOW_KEY to enable)");
+    log("    Generate key at https://indexnow.org and place /{key}.txt on server");
+    log("    IndexNow notifies Bing, Yandex, Seznam, and Naver");
     return { status: "skipped", detail: "No INDEXNOW_KEY env var" };
   }
 
@@ -233,15 +200,23 @@ async function submitToIndexNow() {
   return { successCount, failCount, results };
 }
 
-async function triggerISR() {
-  log("Triggering ISR revalidation (first fetch)...");
-  try {
-    const res = await fetchWithTimeout(SITEMAP_URL);
-    const age = res.headers.get("age") || "?";
-    log(`ISR trigger response: HTTP ${res.status}, Age: ${age}s`);
-  } catch (err) {
-    log(`ISR trigger warning: ${err.message} (continuing anyway)`);
+async function fetchFreshSitemap() {
+  // Use cache-busting query param to bypass CDN/edge cache.
+  // The sitemap uses ISR (revalidate: 86400), meaning Next.js serves the cached
+  // version for 24h. A cache-busting param forces the server to respond with its
+  // latest version rather than a cached replica.
+  const cacheBustedUrl = `${SITEMAP_URL}?cb=${Date.now()}`;
+  log(`Fetching fresh sitemap: ${SITEMAP_URL}`);
+  const res = await fetchWithTimeout(cacheBustedUrl);
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+  const xml = await res.text();
+  if (!xml.includes("<urlset") || !xml.includes("</urlset>")) {
+    throw new Error("Invalid sitemap: missing <urlset> tags");
   }
+  const urlCount = (xml.match(/<url>/g) || []).length;
+  const sizeKb = (xml.length / 1024).toFixed(1);
+  log(`Sitemap accessible (${urlCount} URLs, ${sizeKb} KB)`);
+  return { xml, urlCount };
 }
 
 async function cleanCachedSitemap() {
@@ -297,17 +272,13 @@ async function main() {
 
   const state = loadState();
 
-  // With ISR enabled (revalidate: 86400 in sitemap.ts), the sitemap auto-regenerates.
-  // First fetch triggers background revalidation if the cached version is stale.
-  // We wait a few seconds then fetch again for fresh content.
-  await triggerISR();
-  log("Waiting 5s for ISR regeneration...");
-  await new Promise((r) => setTimeout(r, 5000));
-
-  // Fetch the fresh sitemap
+  // The sitemap uses ISR (revalidate: 86400 in sitemap.ts).
+  // Next.js serves the cached version for 24h, then regenerates on first request after expiry.
+  // We use a cache-busting query parameter to bypass any intermediate caches
+  // and fetch the server's latest state directly.
   let xml, urlCount;
   try {
-    ({ xml, urlCount } = await checkSitemapAccessible());
+    ({ xml, urlCount } = await fetchFreshSitemap());
   } catch (err) {
     log(`ERROR: ${err.message}`);
     process.exitCode = 1;
@@ -339,17 +310,18 @@ async function main() {
   log(` Decision: ${shouldSubmit ? "SUBMITTING" : "SKIPPING (unchanged, <5 days)"}`);
 
   if (shouldSubmit) {
+    // IndexNow is the primary notification mechanism — notifies Bing, Yandex, Seznam, Naver
     log(bar);
-    log(` SUBMITTING TO SEARCH ENGINES...`);
-    log(bar);
-
-    const activeEngines = SEARCH_ENGINES.filter((e) => e.active && e.name !== "IndexNow");
-    const { success, fail, results } = await submitToSearchEngines(activeEngines);
-
-    log(bar);
-    log(` INDEXNOW`);
+    log(` INDEXNOW (PRIMARY)`);
     log(bar);
     const indexNowResult = await submitToIndexNow();
+
+    // Fallback: direct ping for engines not covered by IndexNow
+    log(bar);
+    log(` SEARCH ENGINE PINGS (FALLBACK)`);
+    log(bar);
+    const activeEngines = SEARCH_ENGINES.filter((e) => e.active);
+    const { success, fail, results } = await submitToSearchEngines(activeEngines);
 
     state.lastSubmissionDate = new Date().toISOString();
 
@@ -357,21 +329,21 @@ async function main() {
     log(bar);
     log(` SUMMARY`);
     log(bar);
-    const totalActive = activeEngines.length + (process.env.INDEXNOW_KEY ? 1 : 0);
-    const totalSuccess = success + (indexNowResult?.successCount || 0);
-    log(`  Engines notified: ${totalSuccess}/${totalActive}`);
+    log(`  IndexNow notified: ${indexNowResult.status === "skipped" ? "skipped" : indexNowResult.successCount + "/" + (indexNowResult.successCount + indexNowResult.failCount) + " endpoints"}`);
+    log(`  Pings notified: ${success}/${activeEngines.length}`);
     if (fail > 0) log(`  Ping failures: ${fail}`);
     if (indexNowResult?.failCount > 0) log(`  IndexNow failures: ${indexNowResult.failCount}`);
-    log(`  Inactive engines: ${SEARCH_ENGINES.filter((e) => !e.active).map((e) => e.name).filter((n) => n !== "IndexNow").join(", ")}`);
+    log(`  Inactive engines: ${SEARCH_ENGINES.filter((e) => !e.active).map((e) => e.name).join(", ")}`);
+    log(`  Google: register manually at https://search.google.com/search-console`);
     log(`  Time: ${elapsed}s`);
 
-    for (const r of results) {
-      log(`  ${r.status === "accepted" ? "✓" : r.status === "skipped" ? "–" : "✗"} ${r.name}: ${r.status}${r.detail ? " (" + r.detail + ")" : ""}${r.code ? " (HTTP " + r.code + ")" : ""}`);
-    }
     if (indexNowResult?.results) {
       for (const r of indexNowResult.results) {
         log(`  ${r.status === "accepted" ? "✓" : "✗"} IndexNow (${r.host}): ${r.status}${r.detail ? " (" + r.detail + ")" : ""}${r.code ? " (HTTP " + r.code + ")" : ""}`);
       }
+    }
+    for (const r of results) {
+      log(`  ${r.status === "accepted" ? "✓" : r.status === "skipped" ? "–" : "✗"} ${r.name}: ${r.status}${r.detail ? " (" + r.detail + ")" : ""}${r.code ? " (HTTP " + r.code + ")" : ""}`);
     }
   } else {
     const daysUntilNext = SUBMISSION_INTERVAL_DAYS - daysSinceLastSubmit;

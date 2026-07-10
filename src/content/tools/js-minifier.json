@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Minifies and beautifies JavaScript code with variable name shortening to reduce size, while allowing preserve names to protect specific identifiers. Removes console.log, debugger statements, and comments, with ES5/ES6+ compatibility modes. Shows a size comparison between original and minified output with percentage savings.",
+  "whyItExists": "Shipping large JavaScript files hurts page performance, and production builds need aggressive minification. This tool provides fine-grained control over what gets stripped and what gets preserved, with a visual size comparison to quantify savings.",
+  "whoShouldUse": "Frontend developers optimizing JavaScript bundles, build pipeline maintainers, and anyone shipping JavaScript to production who needs to reduce file size.",
+  "useCases": [
+    "Minify a JavaScript library before publishing to npm with variable shortening enabled",
+    "Strip all console.log and debugger statements from development code before production deployment",
+    "Use preserve names to keep specific function names unmangled for external API compatibility",
+    "Beautify minified JavaScript from a CDN to debug a production issue",
+    "Switch between ES5 and ES6+ compatibility to ensure output works in target browsers"
+  ],
+  "instructions": [
+    "Paste JavaScript code into the input area or upload a .js file",
+    "Select Mode: Minify (compress) or Beautify (format)",
+    "Toggle options: variable shortening, preserve names list, remove console, remove debugger, remove comments",
+    "Choose compatibility: ES5 (e.g. var instead of let/const, avoid arrow functions) or ES6+ (modern JS)",
+    "Click Process to generate the output; review the size comparison showing original KB, minified KB, and % savings",
+    "Copy the result or download as a .min.js file"
+  ],
+  "examples": [
+    "Input: 'function add(a, b) { console.log(\"adding\"); return a + b; }' with shorten and remove console. Output: 'function x(a,b){return a+b}'",
+    "Input: Minified JS from CDN with beautify mode. Output: Formatted and indented JavaScript with proper line breaks."
+  ],
+  "bestPractices": [
+    "Use preserve names for any function or variable accessed via dynamic property names or eval",
+    "Always run tests after minification with variable shortening to ensure nothing broke",
+    "Use ES5 mode if targeting older browsers; ES6+ mode produces smaller output for modern targets",
+    "Strip console.log only in production builds; keep them during development"
+  ],
+  "commonMistakes": [
+    "Shortening variable names without preserving exported symbols, causing runtime ReferenceErrors",
+    "Removing console.log globally when some logging is needed for production monitoring",
+    "Using ES6+ mode and deploying to a browser that doesn't support modern syntax",
+    "Assuming beautification produces the original code; comments and formatting are permanently lost"
+  ],
+  "faq": [
+    "Can variable shortening be reversed? No, shortened variable names lose their original names permanently.",
+    "Does it handle ES modules? Yes, import/export statements are preserved during minification.",
+    "What size reductions are typical? 30-70% depending on variable shortening and comment removal.",
+    "Can I minify TypeScript? The tool expects JavaScript; compile TypeScript to JS first."
+  ]
+}

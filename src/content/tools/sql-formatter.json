@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "SQL formatter supporting 11 dialects: MySQL, PostgreSQL, SQL Server, Oracle, SQLite, BigQuery, Redshift, Snowflake, DB2, MariaDB, and Standard SQL. Offers configurable keyword case (upper/lower/capitalize), comma position (leading/trailing), logical operator placement on new lines, and inline/expanded expression toggling.",
+  "whyItExists": "SQL queries quickly become unreadable without consistent formatting. This tool enforces a unified style across teams, databases, and tools by supporting dialect-specific syntax and customizable formatting rules.",
+  "whoShouldUse": "Data engineers, analysts, backend developers, and database administrators who write, review, or maintain SQL queries across multiple database platforms.",
+  "useCases": [
+    "Format a 200-line PostgreSQL query with CTEs and window functions for code review",
+    "Convert a messy MySQL query to consistent upper-case keywords with leading commas",
+    "Ensure Snowflake-specific syntax (QUALIFY, LATERAL FLATTEN) is handled correctly",
+    "Prepare a formatted Oracle query with PL/SQL blocks for documentation",
+    "Reformat a legacy SQL Server query to use trailing commas with indented columns",
+    "Compare formatted output across dialects to catch syntax incompatible with a target database"
+  ],
+  "instructions": [
+    "Paste or type your SQL query into the input editor.",
+    "Select a target dialect from the dropdown (MySQL, PostgreSQL, SQL Server, Oracle, SQLite, BigQuery, Redshift, Snowflake, DB2, MariaDB, or Standard SQL).",
+    "Choose keyword case: UPPER, lower, or Capitalize.",
+    "Set comma position to Leading (before column name) or Trailing (after column name).",
+    "Toggle logical operator newlines to place AND/OR at the start of each line for readability.",
+    "Click Format to generate the output; use the copy button to transfer the result to your clipboard."
+  ],
+  "examples": [
+    "Input: \"SELECT id,name, email  FROM users WHERE age>18 ORDER BY name\" (MySQL, UPPER, trailing commas) → \"SELECT id, name, email FROM users WHERE age > 18 ORDER BY name\" (properly spaced and cased)",
+    "Input: \"SELECT a.* FROM tbl a LEFT JOIN tbl2 b ON a.id=b.id WHERE a.x=1 AND b.y=2 OR b.z=3\" (PostgreSQL, lower, leading commas, AND/OR on new lines) → multi-line output with each AND/OR on its own line"
+  ],
+  "bestPractices": [
+    "Always select the correct dialect to avoid syntax misinterpretation (e.g., :: type cast vs. CONVERT)",
+    "Use leading commas to make column additions/deletions easier in version control diffs",
+    "Enable logical operator newlines for complex WHERE clauses with multiple conditions",
+    "Standardize on one keyword case across your team for consistency",
+    "Run formatted queries through a linter (e.g., sqlfluff) as an additional validation step"
+  ],
+  "commonMistakes": [
+    "Formatting with the wrong dialect can produce invalid SQL (e.g., using MySQL-specific syntax for PostgreSQL)",
+    "Using trailing commas in all contexts — some databases reject trailing commas in certain clauses",
+    "Assuming the formatter handles all vendor-specific syntax perfectly — always review the output",
+    "Over-formatting very long queries into deeply nested blocks that are harder to read than a flatter layout",
+    "Forgetting to re-format after editing — incremental changes can break alignment"
+  ],
+  "faq": [
+    "Does the formatter handle CTEs and window functions? Yes — WITH clauses, ROW_NUMBER(), RANK(), and other window functions are indented and spaced correctly.",
+    "Can I format only part of a query? The tool formats the entire input; for partial formatting, extract the relevant subquery first.",
+    "What about DDL and DML statements? CREATE, ALTER, INSERT, UPDATE, DELETE are all supported with proper formatting.",
+    "Does it preserve comments? Yes — single-line (--) and block (/* */) comments are preserved in the output."
+  ]
+}

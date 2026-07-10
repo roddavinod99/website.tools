@@ -4,19 +4,22 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 type Mode = "encode" | "decode";
 type CaseType = "lower" | "upper";
-type SeparatorType = "space" | "continuous" | "0x";
+type SeparatorType = "space" | "continuous" | "0x" | "x";
+
+const COLOR_RE = /^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
 
 function textToHex(str: string, caseType: CaseType, separator: SeparatorType): string {
   return str.split("").map((char) => {
     let hex = char.charCodeAt(0).toString(16).padStart(2, "0");
     if (caseType === "upper") hex = hex.toUpperCase();
     if (separator === "0x") return `0x${hex}`;
+    if (separator === "x") return `\\x${hex}`;
     return hex;
   }).join(separator === "continuous" ? "" : " ");
 }
 
 function hexToText(hex: string): string {
-  const cleaned = hex.replace(/0x/gi, "").replace(/[^0-9a-fA-F]/g, "");
+  const cleaned = hex.replace(/0x/gi, "").replace(/\\x/gi, "").replace(/[^0-9a-fA-F]/g, "");
   if (!cleaned) throw new Error("No valid hex digits found");
   if (cleaned.length % 2 !== 0) throw new Error("Hex string has an odd number of digits");
   const chars: number[] = [];
@@ -27,13 +30,28 @@ function hexToText(hex: string): string {
 }
 
 function applyXor(hex: string, key: number): string {
-  const cleaned = hex.replace(/0x/gi, "").replace(/[^0-9a-fA-F]/g, "");
+  const cleaned = hex.replace(/0x/gi, "").replace(/\\x/gi, "").replace(/[^0-9a-fA-F]/g, "");
   const bytes: string[] = [];
   for (let i = 0; i < cleaned.length; i += 2) {
     const val = parseInt(cleaned.slice(i, i + 2), 16) ^ key;
     bytes.push(val.toString(16).padStart(2, "0"));
   }
   return bytes.join(" ");
+}
+
+function detectColor(input: string): string | null {
+  const trimmed = input.trim();
+  const hex = trimmed.startsWith("#") ? trimmed.slice(1) : trimmed;
+  if (COLOR_RE.test(hex)) {
+    if (hex.length === 3) {
+      const r = hex[0].repeat(2);
+      const g = hex[1].repeat(2);
+      const b = hex[2].repeat(2);
+      return `#${r}${g}${b}`;
+    }
+    return `#${hex.toUpperCase()}`;
+  }
+  return null;
 }
 
 export function Hex() {
@@ -55,13 +73,15 @@ export function Hex() {
         if (xorKey) {
           const key = parseInt(xorKey, 10);
           if (isNaN(key) || key < 0 || key > 255) throw new Error("XOR key must be a number between 0-255");
-          const cleaned = result.replace(/\s/g, "").replace(/0x/gi, "");
+          const cleaned = result.replace(/\s/g, "").replace(/0x/gi, "").replace(/\\x/gi, "");
           const xored: string[] = [];
           for (let i = 0; i < cleaned.length; i += 2) {
             const val = parseInt(cleaned.slice(i, i + 2), 16) ^ key;
             let h = val.toString(16).padStart(2, "0");
             if (caseType === "upper") h = h.toUpperCase();
-            xored.push(separator === "0x" ? `0x${h}` : h);
+            if (separator === "0x") xored.push(`0x${h}`);
+            else if (separator === "x") xored.push(`\\x${h}`);
+            else xored.push(h);
           }
           result = xored.join(separator === "continuous" ? "" : " ");
         }
@@ -109,14 +129,38 @@ export function Hex() {
       reader.onload = () => {
         const arrayBuffer = reader.result as ArrayBuffer;
         const bytes = new Uint8Array(arrayBuffer);
-        const hex = Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join(" ");
+        let hex = Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join(" ");
+        if (caseType === "upper") hex = hex.toUpperCase();
+        if (separator === "0x") hex = hex.replace(/([0-9a-fA-F]{2})/g, "0x$1").trim();
+        else if (separator === "x") hex = hex.replace(/([0-9a-fA-F]{2})/g, "\\x$1").trim();
+        else if (separator === "continuous") hex = hex.replace(/ /g, "");
         setInput(`[File: ${file.name} - ${bytes.length} bytes]`);
         setOutput(hex);
       };
       reader.readAsArrayBuffer(file);
     };
     inputEl.click();
-  }, []);
+  }, [caseType, separator]);
+
+  const colorPreview = useMemo(() => {
+    if (mode !== "encode" || !input.trim()) return null;
+    const words = input.trim().split(/\s+/);
+    for (const w of words) {
+      const color = detectColor(w);
+      if (color) return color;
+    }
+    return null;
+  }, [input, mode]);
+
+  const outputColorPreview = useMemo(() => {
+    if (!output) return null;
+    const words = output.trim().split(/[\s,]+/);
+    for (const w of words) {
+      const color = detectColor(w);
+      if (color) return color;
+    }
+    return null;
+  }, [output]);
 
   return (
     <div className="space-y-4">
@@ -136,10 +180,10 @@ export function Hex() {
             {c === "lower" ? "Lowercase" : "Uppercase"}
           </button>
         ))}
-        {(["space", "continuous", "0x"] as SeparatorType[]).map((s) => (
+        {(["space", "continuous", "0x", "x"] as SeparatorType[]).map((s) => (
           <button key={s} onClick={() => setSeparator(s)}
             className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${separator === s ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
-            {s === "space" ? "Space-sep" : s === "continuous" ? "Continuous" : "0x-prefixed"}
+            {s === "space" ? "Space" : s === "continuous" ? "Continuous" : s === "0x" ? "0x-prefix" : "\\x-escape"}
           </button>
         ))}
         {mode === "encode" && (
@@ -148,6 +192,16 @@ export function Hex() {
           </button>
         )}
       </div>
+
+      {colorPreview && mode === "encode" && (
+        <div className="flex items-center gap-3 rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+          <div className="w-10 h-10 rounded border border-surface-300" style={{ backgroundColor: colorPreview }} />
+          <div>
+            <p className="text-xs font-mono text-surface-700 dark:text-dark-text">{colorPreview}</p>
+            <p className="text-xs text-surface-400 dark:text-dark-muted">Color detected in input</p>
+          </div>
+        </div>
+      )}
 
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
@@ -179,6 +233,16 @@ export function Hex() {
             <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
           </div>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+        </div>
+      )}
+
+      {outputColorPreview && (
+        <div className="flex items-center gap-3 rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+          <div className="w-10 h-10 rounded border border-surface-300" style={{ backgroundColor: outputColorPreview }} />
+          <div>
+            <p className="text-xs font-mono text-surface-700 dark:text-dark-text">{outputColorPreview}</p>
+            <p className="text-xs text-surface-400 dark:text-dark-muted">Color detected in output</p>
+          </div>
         </div>
       )}
 

@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Performs IP geolocation lookup showing ISP, organization, country, city, timezone, and coordinates. Includes a My IP button to instantly look up your own public IP address, a history of recent lookups for reference, and a copy-to-clipboard for the full JSON response from the geolocation API.",
+  "whyItExists": "When debugging network issues, verifying CDN configuration, or checking where traffic originates, you need instant IP location data. This tool provides comprehensive geolocation with one click and keeps a history so you can reference previous lookups.",
+  "whoShouldUse": "Network engineers tracing traffic origins, security analysts investigating IP addresses, and web developers testing geo-targeted content delivery.",
+  "useCases": [
+    "Look up a suspicious IP address from server logs to identify its geographic origin",
+    "Use My IP button to verify your VPN is routing traffic through the expected country",
+    "Check the ISP and organization for a customer's IP to verify their network provider claim",
+    "Copy the full JSON response of an IP lookup for integration into a security automation workflow",
+    "Review the lookup history to compare multiple IP addresses from the same incident"
+  ],
+  "instructions": [
+    "Type an IP address in the input field or click the My IP button to auto-fill your current IP",
+    "Click Lookup to fetch geolocation data; results display country, city, region, timezone, ISP, and org",
+    "View the map showing the approximate geographic location of the IP",
+    "Click the copy button next to JSON to copy the full API response for external use",
+    "Scroll through the recent lookups history to revisit or compare previous results",
+    "Click on any history entry to re-run that lookup"
+  ],
+  "examples": [
+    "Input: '8.8.8.8' Output: 'ISP: Google LLC, Country: United States, City: Mountain View, Timezone: America/Los_Angeles, Coordinates: 37.4056,-122.0775'",
+    "Input: Click 'My IP' button. Output: Your public IP, full ISP, and geolocation data."
+  ],
+  "bestPractices": [
+    "Use the My IP button to confirm VPN/proxy routing before sensitive operations",
+    "Copy JSON responses for IPs flagged in logs to share with your security team",
+    "Use the history feature to track IP addresses from repeated access attempts",
+    "Note that geolocation at the city level is approximate, especially for mobile IPs"
+  ],
+  "commonMistakes": [
+    "Assuming geolocation is accurate at street level; it is typically accurate at city level only",
+    "Looking up private IP addresses (192.168.x.x, 10.x.x.x, 172.16-31.x.x) which return no data",
+    "Using the tool for abuse investigation without verifying with the ISP directly",
+    "Forgetting to use the history feature and re-typing IPs that were already looked up"
+  ],
+  "faq": [
+    "How accurate is the geolocation? City-level is ~85% accurate; country-level is >99% accurate.",
+    "Does the tool log my lookups? Lookup history is stored locally in your browser session only.",
+    "Can I look up IPv6 addresses? Yes, IPv6 geolocation is supported.",
+    "What does the JSON copy include? The full API response including asn, isp, org, country, region, city, timezone, lat, lon, and more."
+  ]
+}

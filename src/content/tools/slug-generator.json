@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Real-time slug generator supporting 4 separator types (hyphen, underscore, dot, tilde), 3 case options (lower, upper, title), max length enforcement, and Unicode transliteration. Includes prefix/suffix config, 3 sanitize modes (strict, readable, relaxed), and a generation history panel.",
+  "whyItExists": "Manual slug creation is tedious and inconsistent across developers. This tool centralizes all slugification rules — separator, case, length, sanitization — so outputs are predictable and reusable.",
+  "whoShouldUse": "Content writers, SEO specialists, web developers, and CMS administrators who create URL-friendly strings from titles, names, or arbitrary text.",
+  "useCases": [
+    "Generate SEO-friendly URL slugs from blog post titles with hyphen separator",
+    "Create database-friendly keys using underscore separator and strict sanitize mode",
+    "Transliterate non-ASCII text (e.g., Chinese, Arabic, Cyrillic) into an ASCII slug",
+    "Enforce a maximum slug length for CMS field constraints",
+    "Prepend a category prefix and append a version suffix to a slug in one step",
+    "Review and re-use the last 50 generated slugs from the history panel"
+  ],
+  "instructions": [
+    "Type or paste source text into the input field; the slug updates in real time as you type.",
+    "Choose a separator from the dropdown: hyphen (-), underscore (_), dot (.), or tilde (~).",
+    "Select a case option: lower case, UPPER CASE, or Title Case.",
+    "Set a max length (in characters); the slug is truncated at the nearest word boundary.",
+    "Configure prefix/suffix fields — they are appended automatically to every generated slug.",
+    "Pick a sanitize mode: Strict (remove all non-alphanumeric except separator), Readable (keep common punctuation), or Relaxed (minimal filtering)."
+  ],
+  "examples": [
+    "Input: \"Hello World! This is a Slug\" with hyphen separator, lower case, max 20 chars → \"hello-world-this-is\" (truncated at word boundary)",
+    "Input: \"Café München 2025\" with hyphen separator, lower case, transliteration enabled → \"cafe-munchen-2025\""
+  ],
+  "bestPractices": [
+    "Always set a max length that matches your target system's URL/field constraints",
+    "Use strict sanitize for URL slugs and readable sanitize for display-only identifiers",
+    "Enable transliteration when source text may contain accented or non-Latin characters",
+    "Use prefix to namespace slugs by content type (e.g., \"blog-\") to avoid collisions",
+    "Review the history panel to ensure you are not duplicating existing slugs"
+  ],
+  "commonMistakes": [
+    "Assuming all CMS platforms accept the same slug format — check separator and length constraints first",
+    "Using upper case in URL slugs, which can cause case-sensitivity issues on some web servers",
+    "Forgetting to enable transliteration, resulting in dropped or garbled characters for non-ASCII input",
+    "Setting max length too low and losing meaningful words without realizing it",
+    "Not using a prefix, leading to collisions when two pieces of content would generate the same slug"
+  ],
+  "faq": [
+    "What separator is best for SEO? Hyphens are recommended by Google over underscores or other separators for URL readability.",
+    "Does transliteration work for all languages? It supports Latin-based scripts, Cyrillic, Greek, Arabic, Chinese (Pinyin), and many others via ICU rules.",
+    "Why is my slug empty after generation? The source text may contain only characters removed by the sanitize mode — try a more relaxed sanitize level.",
+    "How many entries does the history store? The last 50 unique slugs are saved in browser local storage and displayed in reverse chronological order."
+  ]
+}

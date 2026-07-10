@@ -1,0 +1,4 @@
+[
+  { "slug": "hash-generator", "category": "Security", "name": "Hash Generator", "input": "hello world", "action": "Hash", "expect": "output" },
+  { "slug": "file-checksum", "category": "Security", "name": "File Checksum", "input": "test content", "action": "Calculate", "expect": "output" }
+]

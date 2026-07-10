@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "SVG optimizer that removes XML declarations, comments, empty elements, unused defs, and editor metadata (Illustrator, Inkscape, Sketch, Figma). Collapses groups, merges paths, rounds coordinate precision (configurable 1–6 decimal places), and converts colors to shorthand. Includes copy-as-React-component (JSX attributes), data URI generation, and before/after size comparison.",
+  "whyItExists": "SVG files exported from design tools are bloated with editor metadata, unused groups, and redundant attributes. This optimizer strips all non-essential content while preserving visual fidelity, reducing file size and improving rendering performance.",
+  "whoShouldUse": "Frontend developers, UI designers, and performance engineers who embed SVGs in web applications or design systems and want to minimize bundle size.",
+  "useCases": [
+    "Optimize an Illustrator-exported SVG for production by stripping all editor metadata",
+    "Convert an SVG to a React component with JSX-compatible attributes (className, htmlFor)",
+    "Generate a data URI from an SVG for use in CSS background-image without an HTTP request",
+    "Reduce SVG file size by collapsing nested groups and merging adjacent paths",
+    "Round coordinate precision from 6 decimals to 2 for significantly smaller file size",
+    "Batch-optimize multiple SVGs and compare before/after sizes to measure savings"
+  ],
+  "instructions": [
+    "Paste SVG markup into the input area or upload an .svg file using the file picker.",
+    "Adjust precision (1–6 decimal places) for numeric coordinates — lower values produce smaller files.",
+    "Toggle optional cleanups: remove XML declaration, remove comments, remove empty elements, remove unused defs, collapse groups, merge paths.",
+    "Check Remove editor metadata to strip Illustrator, Inkscape, Sketch, and Figma-specific tags and attributes.",
+    "Click Optimize; the output area shows the optimized SVG with real-time size and savings percentage.",
+    "Use the Copy as React Component or Copy as Data URI buttons for framework-specific output."
+  ],
+  "examples": [
+    "Input: 50KB SVG from Adobe Illustrator with xmlns:illustrator, sketch:type, empty <g> tags, and 6-decimal coordinates → Output: 12KB SVG with all metadata removed, coordinates rounded to 2 decimals, groups collapsed",
+    "Input: optimized SVG → copy as React Component → outputs JSX: <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"...\" fill=\"currentColor\"/></svg>"
+  ],
+  "bestPractices": [
+    "Always remove editor metadata — it can account for 30-50% of file size",
+    "Set precision to 1–2 decimal places for web use; 3–4 for print use; 5–6 only for precision-critical applications",
+    "Merge paths when the SVG is a flat icon; keep groups separate for animated or interactive SVGs",
+    "Use Copy as Data URI for small, single-use icons to eliminate HTTP requests",
+    "Run the optimizer on SVGs in your CI pipeline to enforce a maximum file size"
+  ],
+  "commonMistakes": [
+    "Over-optimizing by merging paths that should remain separate for CSS styling or animation",
+    "Rounding precision too aggressively on curves, causing visible rendering artifacts",
+    "Removing viewBox attribute — the optimizer preserves it, but always verify it is present",
+    "Assuming optimization always produces a smaller file — very small SVGs may grow slightly (rare)",
+    "Forgetting to test the optimized SVG in the target browser or rendering engine"
+  ],
+  "faq": [
+    "Does it preserve CSS classes and IDs? Classes and IDs used in CSS or for animation are preserved; only unused IDs are removed.",
+    "Can it handle inline SVGs in HTML? Paste only the SVG portion — extraneous HTML will cause parsing errors.",
+    "What editor metadata is removed? All tags and attributes from Illustrator (i:*, xmlns:illustrator), Inkscape (sodipodi:*, inkscape:*), Sketch (sketch:*), and Figma (figma:*) are stripped.",
+    "Does it convert colors? Yes — #FF0000 becomes red, #FFFFFF becomes white, where possible using named colors and shorthand hex (e.g., #FF8800 → #F80)."
+  ]
+}

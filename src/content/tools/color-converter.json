@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts colors between six formats (HEX, RGB, RGBA, HSL, HSLA, HSV, CMYK) with automatic format detection on paste. Includes a WCAG contrast checker computing contrast ratios and pass/fail for AA/AAA levels. Features a palette generator for shades, tints, complementary, triadic, and tetradic schemes, and calculates Delta E (CIE76) color difference for precise color comparison.",
+  "whyItExists": "Color management is critical in web design and UI development. Developers frequently need to convert between color models, check accessibility compliance, and generate harmonious color schemes — tasks that previously required multiple specialized tools or manual calculations.",
+  "whoShouldUse": "Frontend developers and UI designers implementing design systems, accessibility engineers auditing color contrast, digital artists working across color spaces, and branding specialists creating consistent palettes.",
+  "useCases": [
+    "Convert a HEX color from a mockup to RGBA for CSS with opacity",
+    "Check if text color passes WCAG AA compliance against a background",
+    "Generate a 5-color palette with complementary/triadic/tetradic schemes from a brand color",
+    "Calculate Delta E between two near-identical colors for brand consistency",
+    "Create shades and tints from a base color for button states",
+    "Convert CMYK print values to HSL for use in a web application"
+  ],
+  "instructions": [
+    "Type or paste a color in any supported format — format is auto-detected",
+    "All converted values displayed side-by-side — click any format to copy it",
+    "For WCAG, enter foreground and background colors — displays ratio and AA/AAA pass/fail for normal and large text",
+    "Open palette panel, select scheme type (Shades, Tints, Complementary, Triadic, Tetradic), adjust swatch count and hue rotation",
+    "Use Delta E calculator with two colors — under 1.0 is imperceptible, 2-3 barely perceptible, above 5 clearly different",
+    "Export palette as CSS custom properties snippet using the export button"
+  ],
+  "examples": [
+    "Input: '#FF6600' | Auto-detect => Output: RGB 'rgb(255, 102, 0)', HSL 'hsl(24, 100%, 50%)', CMYK 'cmyk(0%, 60%, 100%, 0%)', and more",
+    "Foreground: '#333' | Background: '#FFF' => 'Contrast Ratio: 11.04:1 | Pass AA Normal: YES | Pass AAA Normal: YES'"
+  ],
+  "bestPractices": [
+    "Use WCAG contrast checker early in design process — aim for AAA (7:1) for body text",
+    "Use 'Shades' and 'Tints' palette generators for consistent interaction states from one brand color",
+    "Use Delta E to validate printed materials against digital designs — under 2 is visually identical",
+    "Export palettes as CSS custom properties for design system consistency",
+    "When converting CMYK to RGB/HEX, understand that screen and print gamuts differ"
+  ],
+  "commonMistakes": [
+    "Confusing HSL and HSV — HSL has Lightness, HSV has Value; same color produces different values",
+    "Using HEX shorthand (#FFF) without realizing it expands to #FFFFFF",
+    "Assuming WCAG 'Large Text' means any heading — it specifically means 18pt bold or 24pt regular",
+    "Entering CMYK without proper color space context — conversion uses standard formulas",
+    "Generating triadic palettes with hues too close together — keep 120-degree spacing"
+  ],
+  "faq": [
+    "What is Delta E? — CIE76 measures perceptual color difference. 1 is the minimum the human eye can detect.",
+    "Can I use this for print design? — Yes, it supports CMYK, but monitor calibration affects actual output.",
+    "How are complementary colors calculated? — Rotating hue by 180 degrees. Triadic uses 120-degree rotations.",
+    "Does WCAG work with alpha transparency? — Foreground alpha is composited against background automatically."
+  ]
+}

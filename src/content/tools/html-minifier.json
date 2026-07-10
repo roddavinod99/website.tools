@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Minifies HTML using 7 configurable options including comment removal, whitespace stripping, optional tag elimination, quote style normalization, and type attribute removal. Supports preserve selectors to protect specific elements from minification, and shows a size comparison between original and minified output.",
+  "whyItExists": "Page load speed depends heavily on HTML size, but manual minification is error-prone and hard to maintain. This tool automates aggressive HTML compression while giving control over what to preserve, and quantifies the savings with a visual size comparison.",
+  "whoShouldUse": "Web performance engineers optimizing page load times, deployment pipeline maintainers integrating minification, and developers shipping production HTML assets.",
+  "useCases": [
+    "Minify HTML templates before deployment to reduce page weight and improve load times",
+    "Strip all HTML comments from a production build to remove development notes",
+    "Remove optional closing tags (like </li>, </p>) to maximize compression",
+    "Normalize single to double quotes across all attributes for consistency",
+    "Use preserve selectors to keep specific elements (e.g., for testing) untouched by minification"
+  ],
+  "instructions": [
+    "Paste or upload HTML content into the input area",
+    "Toggle the 7 options: comments, whitespace, optional tags, quote style, type attrs, etc.",
+    "Add preserve selectors using CSS-like selectors to protect elements from minification",
+    "Click Minify to process; the tool displays the compressed output alongside the original",
+    "Review the size comparison showing original KB, minified KB, and percentage reduction",
+    "Copy the minified output for use in your build pipeline or deployment"
+  ],
+  "examples": [
+    "Input: '<html><!-- comment --><body><p>Hello</p></body></html>' with comments+whitespace removal. Output: '<html><body><p>Hello</p></body></html>' with size comparison showing 40% reduction.",
+    "Input: '<script type=\"text/javascript\">alert(1)</script>' with type attrs removed. Output: '<script>alert(1)</script>'"
+  ],
+  "bestPractices": [
+    "Always use preserve selectors for elements containing JSON-LD or conditional comments",
+    "Enable 'remove optional tags' only if you control the HTML and know your parser handles it",
+    "Run a functional test after aggressive minification to verify nothing broke visually",
+    "Use the size comparison to decide which options give the best reduction for your specific HTML"
+  ],
+  "commonMistakes": [
+    "Removing all whitespace when the HTML relies on inline text spacing for rendering",
+    "Removing type attributes from script/style tags when using older browsers that need them",
+    "Minifying HTML that still needs editing, making further development harder",
+    "Not testing after enabling optional tag removal, which can break DOM parsing in some cases"
+  ],
+  "faq": [
+    "What size reductions can I expect? Typically 20-60%, depending on how many options you enable.",
+    "Does minification affect SEO? No, search engines parse minified HTML the same as formatted HTML.",
+    "Can I undo minification? Use the html-formatter tool to beautify minified HTML back to readable form.",
+    "Are preserve selectors case-sensitive? Yes, they follow standard CSS selector case sensitivity."
+  ]
+}

@@ -1,54 +1,64 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { sanitize } from "@/lib/sanitize";
 
 const FORMATS = [
-  "CODE128", "CODE39", "EAN-13", "EAN-8", "UPC-A", "UPC-E", "ITF-14",
-  "Codabar", "CODE93", "GS1-128", "PDF417", "DATA-MATRIX", "AZTEC",
+  "CODE128", "CODE39", "EAN-13", "EAN-8", "UPC-A", "ITF-14", "MSI", "pharmacode", "codabar",
 ] as const;
 
 type BarcodeFormat = (typeof FORMATS)[number];
 
 interface ValidationResult { valid: boolean; error?: string }
 
-const FORMAT_VALIDATORS: Partial<Record<BarcodeFormat, (v: string) => ValidationResult>> = {
-  "EAN-13": (v) => {
-    const clean = v.replace(/\D/g, "");
-    if (clean.length !== 12 && clean.length !== 13) return { valid: false, error: "EAN-13 requires 12 or 13 digits" };
-    return { valid: true };
-  },
-  "EAN-8": (v) => {
-    const clean = v.replace(/\D/g, "");
-    if (clean.length !== 7 && clean.length !== 8) return { valid: false, error: "EAN-8 requires 7 or 8 digits" };
-    return { valid: true };
-  },
-  "UPC-A": (v) => {
-    const clean = v.replace(/\D/g, "");
-    if (clean.length !== 11 && clean.length !== 12) return { valid: false, error: "UPC-A requires 11 or 12 digits" };
-    return { valid: true };
-  },
-  "UPC-E": (v) => {
-    const clean = v.replace(/\D/g, "");
-    if (clean.length !== 6 && clean.length !== 7 && clean.length !== 8) return { valid: false, error: "UPC-E requires 6-8 digits" };
-    return { valid: true };
-  },
-  "ITF-14": (v) => {
-    const clean = v.replace(/\D/g, "");
-    if (clean.length !== 14) return { valid: false, error: "ITF-14 requires exactly 14 digits" };
-    return { valid: true };
-  },
-  "CODE39": (v) => {
-    if (!/^[A-Z0-9\-.$/+%\s]+$/.test(v.trim())) return { valid: false, error: "Code 39 allows A-Z, 0-9, -, ., $, /, +, %, space" };
-    return { valid: true };
-  },
-};
-
 function validateInput(format: BarcodeFormat, value: string): ValidationResult {
   if (!value.trim()) return { valid: true };
-  const validator = FORMAT_VALIDATORS[format];
-  if (validator) return validator(value);
-  return { valid: true };
+  const clean = value.trim();
+  switch (format) {
+    case "EAN-13": {
+      const d = clean.replace(/\D/g, "");
+      if (d.length !== 12 && d.length !== 13) return { valid: false, error: "EAN-13 requires 12 or 13 digits" };
+      return { valid: true };
+    }
+    case "EAN-8": {
+      const d = clean.replace(/\D/g, "");
+      if (d.length !== 7 && d.length !== 8) return { valid: false, error: "EAN-8 requires 7 or 8 digits" };
+      return { valid: true };
+    }
+    case "UPC-A": {
+      const d = clean.replace(/\D/g, "");
+      if (d.length !== 11 && d.length !== 12) return { valid: false, error: "UPC-A requires 11 or 12 digits" };
+      return { valid: true };
+    }
+    case "ITF-14": {
+      const d = clean.replace(/\D/g, "");
+      if (d.length !== 14) return { valid: false, error: "ITF-14 requires exactly 14 digits" };
+      return { valid: true };
+    }
+    case "CODE39": {
+      if (!/^[A-Z0-9\-.$/+%\s]+$/.test(clean)) return { valid: false, error: "Code 39 allows A-Z, 0-9, -, ., $, /, +, %, space" };
+      return { valid: true };
+    }
+    case "CODE128": {
+      if (clean.length === 0) return { valid: false, error: "Code 128 requires at least 1 character" };
+      return { valid: true };
+    }
+    case "MSI": {
+      const d = clean.replace(/\D/g, "");
+      if (d.length === 0) return { valid: false, error: "MSI/Plessey requires at least 1 digit" };
+      return { valid: true };
+    }
+    case "pharmacode": {
+      const d = clean.replace(/\D/g, "");
+      const n = parseInt(d, 10);
+      if (isNaN(n) || n < 3 || n > 131070) return { valid: false, error: "Pharmacode requires a number between 3 and 131070" };
+      return { valid: true };
+    }
+    case "codabar": {
+      if (!/^[A-Da-d][0-9\-.$/:+]+[A-Da-d]$/.test(clean)) return { valid: false, error: "Codabar must start/end with A-D and contain digits, -, ., $, /, :, +" };
+      return { valid: true };
+    }
+    default: return { valid: true };
+  }
 }
 
 export function BarcodeGenerator() {
@@ -58,13 +68,11 @@ export function BarcodeGenerator() {
   const [barWidth, setBarWidth] = useState(2);
   const [barHeight, setBarHeight] = useState(80);
   const [fontSize, setFontSize] = useState(16);
+  const [margin, setMargin] = useState(10);
   const [displayValue, setDisplayValue] = useState(true);
   const [addCheckDigit, setAddCheckDigit] = useState(false);
   const [bgColor, setBgColor] = useState("#ffffff");
   const [barColor, setBarColor] = useState("#000000");
-  const [batchMode, setBatchMode] = useState(false);
-  const [batchInput, setBatchInput] = useState("");
-  const [batchResults, setBatchResults] = useState<string[]>([]);
   const [sizeDisplay, setSizeDisplay] = useState("");
   const svgRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,58 +90,36 @@ export function BarcodeGenerator() {
       height: barHeight,
       displayValue,
       fontSize,
-      margin: 10,
+      margin,
       background: bgColor,
       lineColor: barColor,
       addCheckDigit,
     });
     return div.innerHTML;
-  }, [barWidth, barHeight, displayValue, fontSize, bgColor, barColor, addCheckDigit]);
+  }, [barWidth, barHeight, displayValue, fontSize, margin, bgColor, barColor, addCheckDigit]);
 
   const generate = useCallback(async () => {
     setError("");
-    setBatchResults([]);
     setSizeDisplay("");
-    if (batchMode) {
-      const lines = batchInput.split("\n").map((l) => l.trim()).filter(Boolean);
-      if (lines.length === 0) return;
-      for (const line of lines) {
-        const v = validateInput(format, line);
-        if (!v.valid) { setError(v.error!); return; }
-      }
-      const results: string[] = [];
-      for (const line of lines) {
-        const svgStr = await generateSingle(line, format);
-        results.push(svgStr);
-      }
-      setBatchResults(results);
-      setSizeDisplay(`${lines.length} barcodes generated`);
-      if (svgRef.current) {
-        svgRef.current.innerHTML = results[0];
-      }
-    } else {
-      const v = validateInput(format, input);
-      if (!v.valid) { setError(v.error!); return; }
-      if (!input.trim()) return;
-      const svgStr = await generateSingle(input, format);
-      if (svgRef.current) svgRef.current.innerHTML = svgStr;
-      const tmp = document.createElement("div");
-      tmp.innerHTML = svgStr;
-      const svgEl = tmp.querySelector("svg");
-      if (svgEl) {
-        const w = svgEl.getAttribute("width") || `${barWidth * 100}`;
-        const h = svgEl.getAttribute("height") || `${barHeight + 40}`;
-        setSizeDisplay(`${parseInt(w).toFixed(0)} x ${parseInt(h).toFixed(0)} px`);
-      }
+    if (!input.trim()) return;
+    const v = validateInput(format, input);
+    if (!v.valid) { setError(v.error!); return; }
+    const svgStr = await generateSingle(input, format);
+    if (svgRef.current) svgRef.current.innerHTML = svgStr;
+    const tmp = document.createElement("div");
+    tmp.innerHTML = svgStr;
+    const svgEl = tmp.querySelector("svg");
+    if (svgEl) {
+      const w = svgEl.getAttribute("width") || `${barWidth * 100}`;
+      const h = svgEl.getAttribute("height") || `${barHeight + 40}`;
+      setSizeDisplay(`${parseInt(w).toFixed(0)} x ${parseInt(h).toFixed(0)} px`);
     }
-  }, [input, format, batchMode, batchInput, generateSingle, barWidth, barHeight]);
+  }, [input, format, generateSingle, barWidth, barHeight]);
 
   useEffect(() => {
-    if (!batchMode) {
-      const t = setTimeout(() => { generate(); }, 300);
-      return () => clearTimeout(t);
-    }
-  }, [input, format, barWidth, barHeight, fontSize, displayValue, addCheckDigit, bgColor, barColor, batchMode, generate]);
+    const t = setTimeout(() => { generate(); }, 300);
+    return () => clearTimeout(t);
+  }, [input, format, barWidth, barHeight, fontSize, margin, displayValue, addCheckDigit, bgColor, barColor, generate]);
 
   const download = useCallback(async (type: "svg" | "png" | "jpeg") => {
     const svg = svgRef.current?.querySelector("svg");
@@ -192,33 +178,28 @@ export function BarcodeGenerator() {
 
   const clear = () => {
     setInput("");
-    setBatchInput("");
-    setBatchResults([]);
     setError("");
     setSizeDisplay("");
     if (svgRef.current) svgRef.current.innerHTML = "";
   };
 
+  const validation = input.trim() ? validateInput(format, input) : null;
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex-1 min-w-[200px]">
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
-            {batchMode ? "Barcode Values (one per line)" : "Value"}
-          </label>
-          {batchMode ? (
-            <textarea
-              value={batchInput} onChange={(e) => setBatchInput(e.target.value)}
-              placeholder={`Enter barcode values\none per line...`}
-              rows={4}
-              className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
-            />
-          ) : (
-            <input
-              type="text" value={input} onChange={(e) => setInput(e.target.value)}
-              placeholder="Enter barcode value..." autoFocus
-              className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
-            />
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Value</label>
+          <input
+            type="text" value={input} onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter barcode value..." autoFocus
+            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          />
+          {validation && !validation.valid && (
+            <p className="mt-1 text-xs text-red-500">{validation.error}</p>
+          )}
+          {validation && validation.valid && input.trim() && (
+            <p className="mt-1 text-xs text-green-500">Valid format</p>
           )}
         </div>
         <div>
@@ -226,7 +207,7 @@ export function BarcodeGenerator() {
           <select value={format} onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
             className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {FORMATS.map((f) => (
-              <option key={f} value={f}>{f}</option>
+              <option key={f} value={f}>{f === "pharmacode" ? "Pharmacode" : f === "codabar" ? "Codabar" : f === "MSI" ? "MSI/Plessey" : f}</option>
             ))}
           </select>
         </div>
@@ -252,6 +233,12 @@ export function BarcodeGenerator() {
           <span className="text-xs text-surface-500 dark:text-dark-muted">{fontSize}px</span>
         </div>
         <div>
+          <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Margin</label>
+          <input type="range" min={0} max={40} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))}
+            className="w-full accent-brand-500" />
+          <span className="text-xs text-surface-500 dark:text-dark-muted">{margin}px</span>
+        </div>
+        <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Bg Color</label>
           <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)}
             className="h-8 w-full rounded border border-surface-200 cursor-pointer dark:border-dark-border" />
@@ -272,15 +259,11 @@ export function BarcodeGenerator() {
           <input type="checkbox" checked={addCheckDigit} onChange={(e) => setAddCheckDigit(e.target.checked)} className="accent-brand-500" />
           Add check digit
         </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={batchMode} onChange={(e) => setBatchMode(e.target.checked)} className="accent-brand-500" />
-          Batch mode
-        </label>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
-        {!batchMode && input && (
+        {input && (
           <>
             <button onClick={() => download("svg")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">SVG</button>
             <button onClick={() => download("png")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">PNG</button>
@@ -296,18 +279,7 @@ export function BarcodeGenerator() {
       {error && <p className="text-sm text-red-500">{error}</p>}
       {sizeDisplay && <p className="text-xs text-surface-500 dark:text-dark-muted">{sizeDisplay}</p>}
 
-      {batchMode && batchResults.length > 0 && (
-        <div className="space-y-2 max-h-80 overflow-y-auto">
-          {batchResults.map((svgStr, i) => (
-            <div key={i} className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Barcode {i + 1}</p>
-              <div className="flex justify-center" dangerouslySetInnerHTML={{ __html: sanitize(svgStr) }} />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {!batchMode && input.trim() && (
+      {input.trim() && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Preview</label>
           <div className="flex justify-center rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">

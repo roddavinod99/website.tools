@@ -1,238 +1,268 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
-type Format = "toml" | "json" | "yaml";
-type DetectMode = "auto" | "manual";
-
-function jsonToToml(obj: unknown, prefix = ""): string {
-  if (obj === null || obj === undefined) return "";
-  if (typeof obj === "string") {
-    if ((obj as string).includes("\n")) return `"""\n${obj}\n"""`;
-    return `"${obj.replace(/"/g, '\\"')}"`;
-  }
-  if (typeof obj === "number" || typeof obj === "boolean") return String(obj);
-  if (Array.isArray(obj)) return `[${obj.map((i) => jsonToToml(i)).join(", ")}]`;
-  if (typeof obj === "object") {
-    const entries = Object.entries(obj as Record<string, unknown>);
-    const scalars: string[] = [];
-    const tables: string[] = [];
-    for (const [key, val] of entries) {
-      if (val !== null && typeof val === "object" && !Array.isArray(val)) {
-        const sub = jsonToToml(val, `${prefix}${key}.`).trim();
-        if (sub) tables.push(`[${prefix}${key}]\n${sub}`);
-      } else if (Array.isArray(val) && val.length > 0 && val.some((v) => v !== null && typeof v === "object")) {
-        const arrOfTables = val.filter((v): v is Record<string, unknown> => v !== null && typeof v === "object");
-        for (const item of arrOfTables) {
-          const sub = jsonToToml(item, `${prefix}${key}.`).trim();
-          if (sub) tables.push(`[[${prefix}${key}]]\n${sub}`);
-        }
-        const scalarsArr = val.filter((v) => v === null || typeof v !== "object");
-        if (scalarsArr.length > 0) scalars.push(`${key} = [${scalarsArr.map((v) => jsonToToml(v)).join(", ")}]`);
-      } else {
-        scalars.push(`${key} = ${jsonToToml(val)}`);
-      }
-    }
-    return [...scalars, ...tables].join("\n");
-  }
-  return String(obj);
-}
-
-function jsonToYaml(obj: unknown, indent = 0): string {
-  const pad = "  ".repeat(indent);
-  if (obj === null || obj === undefined) return "null";
-  if (typeof obj === "string") {
-    const s = obj as string;
-    if (s.includes(":") || s.includes("#") || s.includes("\n") || s.startsWith("'")) return `"${s.replace(/"/g, '\\"')}"`;
-    return s;
-  }
-  if (typeof obj === "number" || typeof obj === "boolean") return String(obj);
-  if (Array.isArray(obj)) { return obj.map((item) => `${pad}- ${jsonToYaml(item, indent + 1).trimStart()}`).join("\n"); }
-  if (typeof obj === "object") {
-    const entries = Object.entries(obj as Record<string, unknown>);
-    if (entries.length === 0) return "{}";
-    return entries.map(([key, val]) => {
-      const v = jsonToYaml(val, indent + 1);
-      return `${pad}${key}: ${v.includes("\n") ? `\n${v}` : v}`;
-    }).join("\n");
-  }
-  return String(obj);
-}
-
-function detectFormat(input: string): Format {
-  const t = input.trim();
-  if (!t) return "json";
-  if (t.startsWith("{") || t.startsWith("[")) return "json";
-  if (t.includes("\n") && (t.includes(" = ") || t.startsWith("[") && t.includes("]"))) return "toml";
-  return "yaml";
-}
-
-function parseYamlSimple(yaml: string): string {
-  const lines = yaml.split("\n").filter((l) => l.trim() && !l.trim().startsWith("#"));
-  const result: Record<string, unknown> = {};
-  const stack: { indent: number; obj: Record<string, unknown> }[] = [{ indent: -1, obj: result }];
-  for (const line of lines) {
-    const indent = line.search(/\S/);
-    const trimmed = line.trim();
-    const isArray = trimmed.startsWith("- ");
-    const content = isArray ? trimmed.slice(2) : trimmed;
-    const colonIdx = content.indexOf(": ");
-    const key = colonIdx > -1 ? content.slice(0, colonIdx).trim() : content;
-    const val = colonIdx > -1 ? content.slice(colonIdx + 2).trim() : "";
-    while (stack.length > 1 && stack[stack.length - 1].indent >= indent) stack.pop();
-    const current = stack[stack.length - 1].obj;
-    if (isArray) {
-      if (!Array.isArray(current._arr)) { current._arr = []; current._isArr = true; }
-      if (colonIdx === -1) (current._arr as unknown[]).push(val || key);
-      else { const o: Record<string, unknown> = {}; o[key] = val || {}; (current._arr as unknown[]).push(o); }
-    } else if (val) {
-      current[key] = val === "null" ? null : val === "true" ? true : val === "false" ? false : /^\d+\.?\d*$/.test(val) ? Number(val) : val;
-    } else {
-      const next: Record<string, unknown> = {};
-      current[key] = next;
-      stack.push({ indent, obj: next });
-    }
-  }
-  function clean(obj: Record<string, unknown>): unknown {
-    if (obj._isArr) return (obj as unknown as { _arr: unknown[] })._arr.map((v) => typeof v === "object" && v !== null ? clean(v as Record<string, unknown>) : v);
-    const r: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(obj)) {
-      if (k === "_arr" || k === "_isArr") continue;
-      r[k] = v !== null && typeof v === "object" ? clean(v as Record<string, unknown>) : v;
-    }
-    return r;
-  }
-  return JSON.stringify(clean(result), null, 2);
-}
-
-function convertTomlToJson(toml: string): string {
-  const result: Record<string, unknown> = {};
-  let currentPath = "";
+function tomlToJson(toml: string): string {
   const lines = toml.split("\n");
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
-      currentPath = trimmed.slice(1, -1).trim();
-      if (currentPath.startsWith("[")) {
-        currentPath = currentPath.slice(1, -1).trim();
+  const result: Record<string, unknown> = {};
+  let currentSection = result;
+  const arrayOfTables: Record<string, unknown[]> = {};
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+
+    const sectionMatch = line.match(/^\[{1,2}(.+?)\]{1,2}$/);
+    if (sectionMatch) {
+      const isArray = line.startsWith("[[");
+      const path = sectionMatch[1]!.trim().split(".").map((p) => p.trim());
+
+      if (isArray) {
+        if (!arrayOfTables[path.join(".")]) arrayOfTables[path.join(".")] = [];
+        const arr = arrayOfTables[path.join(".")]!;
+        const newObj: Record<string, unknown> = {};
+        arr.push(newObj);
+        currentSection = newObj;
+
+        let target = result;
+        for (let i = 0; i < path.length - 1; i++) {
+          const key = path[i]!;
+          if (!target[key] || typeof target[key] !== "object") target[key] = {};
+          target = target[key] as Record<string, unknown>;
+        }
+        const lastKey = path[path.length - 1]!;
+        target[lastKey] = arr;
+      } else {
+        let target = result;
+        for (let i = 0; i < path.length - 1; i++) {
+          const key = path[i]!;
+          if (!target[key] || typeof target[key] !== "object") target[key] = {};
+          target = target[key] as Record<string, unknown>;
+        }
+        const lastKey = path[path.length - 1]!;
+        if (!target[lastKey] || typeof target[lastKey] !== "object") {
+          target[lastKey] = {};
+        }
+        currentSection = target[lastKey] as Record<string, unknown>;
       }
       continue;
     }
-    if (trimmed.includes(" = ")) {
-      const eqIdx = trimmed.indexOf(" = ");
-      const key = trimmed.slice(0, eqIdx).trim();
-      let val: unknown = trimmed.slice(eqIdx + 3).trim();
-      if (val === "true") val = true;
-      else if (val === "false") val = false;
-      else if ((val as string).startsWith('"') && (val as string).endsWith('"')) val = (val as string).slice(1, -1).replace(/\\"/g, '"');
-      else if (/^\d+\.?\d*$/.test(val as string)) val = Number(val);
-      const parts = currentPath ? currentPath.split(".") : [];
-      let current = result;
-      for (const p of parts) { if (!current[p]) current[p] = {}; current = current[p] as Record<string, unknown>; }
-      current[key] = val;
+
+    const kvMatch = line.match(/^([a-zA-Z0-9_-]+)\s*=\s*(.+)$/);
+    if (kvMatch && currentSection && typeof currentSection === "object" && !Array.isArray(currentSection)) {
+      const key = kvMatch[1]!;
+      let value: unknown = kvMatch[2]!;
+
+      if (value === "true") value = true;
+      else if (value === "false") value = false;
+      else if (value === "inf") value = Infinity;
+      else if (value === "-inf") value = -Infinity;
+      else if (value === "nan") value = "NaN";
+      else if (/^[+-]?\d+\.\d+$/.test(value as string)) value = parseFloat(value as string);
+      else if (/^[+-]?\d+$/.test(value as string)) value = parseInt(value as string, 10);
+      else if ((value as string).startsWith('"') && (value as string).endsWith('"')) value = (value as string).slice(1, -1);
+      else if ((value as string).startsWith("[") && (value as string).endsWith("]")) {
+        const items = (value as string).slice(1, -1).split(",").map((i) => {
+          const v = i.trim();
+          if (v === "true") return true;
+          if (v === "false") return false;
+          if (/^[+-]?\d+$/.test(v)) return parseInt(v, 10);
+          if (/^[+-]?\d+\.\d+$/.test(v)) return parseFloat(v);
+          if (v.startsWith('"') && v.endsWith('"')) return v.slice(1, -1);
+          return v;
+        });
+        value = items;
+      } else if (typeof value === "string") value = value;
+
+      (currentSection as Record<string, unknown>)[key] = value;
     }
   }
+
   return JSON.stringify(result, null, 2);
+}
+
+function jsonToToml(json: string, indent: number, sortKeys: boolean): string {
+  const parsed = JSON.parse(json);
+  const tomlLines: string[] = [];
+
+  function serialize(value: unknown, prefix: string, path: string[] = []): void {
+    if (value === null || value === undefined) return;
+
+    if (typeof value === "object" && !Array.isArray(value)) {
+      const obj = value as Record<string, unknown>;
+      let keys = Object.keys(obj);
+      if (sortKeys) keys = keys.sort();
+
+      for (const key of keys) {
+        const fullPath = [...path, key];
+        const val = obj[key];
+
+        if (typeof val === "object" && !Array.isArray(val) && val !== null) {
+          const header = fullPath.join(".");
+          if (prefix) {
+            tomlLines.push(`[${header}]`);
+          }
+          serialize(val, prefix, fullPath);
+        } else if (Array.isArray(val) && val.length > 0 && typeof val[0] === "object" && val[0] !== null) {
+          for (const item of val as Record<string, unknown>[]) {
+            const header = fullPath.join(".");
+            tomlLines.push(`[[${header}]]`);
+            serialize(item, prefix, fullPath);
+          }
+        } else {
+          const k = key.includes(" ") || key.includes(".") ? JSON.stringify(key) : key;
+          tomlLines.push(`${k} = ${formatTomlValue(val, indent)}`);
+        }
+      }
+    } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === "object") {
+      for (const item of value as Record<string, unknown>[]) {
+        const header = path.join(".");
+        tomlLines.push(`[[${header}]]`);
+        serialize(item, "", path);
+      }
+    }
+  }
+
+  function formatTomlValue(val: unknown, _indent: number): string {
+    if (val === null) return '""';
+    if (typeof val === "boolean") return val ? "true" : "false";
+    if (typeof val === "number") return Number.isFinite(val) ? String(val) : `"${val}"`;
+    if (typeof val === "string") {
+      if (val.includes("\n")) return `"""\n${val}\n"""`;
+      return JSON.stringify(val);
+    }
+    if (Array.isArray(val)) {
+      const items = val.map((v) => formatTomlValue(v, _indent)).join(", ");
+      return `[${items}]`;
+    }
+    return JSON.stringify(val);
+  }
+
+  serialize(parsed, "", Object.keys(parsed as Record<string, unknown>));
+
+  return tomlLines.join("\n") + "\n";
 }
 
 export function TomlConverter() {
   const [input, setInput] = useState("");
+  const [mode, setMode] = useState<"json-to-toml" | "toml-to-json">("json-to-toml");
+  const [indent, setIndent] = useState(2);
+  const [sortKeys, setSortKeys] = useState(false);
+  const [formatResult, setFormatResult] = useState(true);
+  const [validation, setValidation] = useState<{ valid: boolean; msg: string } | null>(null);
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
-  const [fromFormat, setFromFormat] = useState<Format>("json");
-  const [toFormat, setToFormat] = useState<Format>("toml");
-  const [detectMode, setDetectMode] = useState<DetectMode>("manual");
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
-
-  const convert = useCallback(() => {
-    if (!input.trim()) { setOutput(""); setError(""); return; }
-    try {
-      const actualFrom = detectMode === "auto" ? detectFormat(input) : fromFormat;
-      let parsed: unknown;
-      switch (actualFrom) {
-        case "json": parsed = JSON.parse(input); break;
-        case "yaml": parsed = JSON.parse(parseYamlSimple(input)); break;
-        case "toml": parsed = JSON.parse(convertTomlToJson(input)); break;
-      }
-      let result = "";
-      switch (toFormat) {
-        case "json": result = JSON.stringify(parsed, null, 2); break;
-        case "yaml": result = jsonToYaml(parsed); break;
-        case "toml": result = jsonToToml(parsed); break;
-      }
-      setOutput(result);
-      setError("");
-    } catch (e) {
-      const actualFrom = detectMode === "auto" ? detectFormat(input) : fromFormat;
-      setError(`Invalid ${actualFrom.toUpperCase()} input: ${e instanceof Error ? e.message : ""}`);
-      setOutput("");
-    }
-  }, [input, fromFormat, toFormat, detectMode]);
+  const [copied, setCopied] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(convert, 350);
+    debounceRef.current = setTimeout(() => {
+      if (!input.trim()) { setOutput(""); setError(""); setValidation(null); return; }
+      setError("");
+      try {
+        if (mode === "json-to-toml") {
+          JSON.parse(input);
+          const result = jsonToToml(input, indent, sortKeys);
+          setOutput(result);
+          setValidation({ valid: true, msg: "Valid JSON" });
+        } else {
+          const result = tomlToJson(input);
+          const parsed = JSON.parse(result);
+          setOutput(formatResult ? JSON.stringify(parsed, null, indent) : JSON.stringify(parsed));
+          setValidation({ valid: true, msg: "Valid TOML" });
+        }
+      } catch (e) {
+        setError((e as Error).message);
+        setOutput("");
+        setValidation({ valid: false, msg: "Invalid input" });
+      }
+    }, 300);
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-  }, [convert]);
+  }, [input, mode, indent, sortKeys, formatResult]);
 
-  const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
-  const download = () => {
+  const handleCopy = useCallback(async () => {
     if (!output) return;
-    const ext = toFormat === "json" ? ".json" : toFormat === "yaml" ? ".yaml" : ".toml";
-    const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = `output${ext}`; a.click();
-    URL.revokeObjectURL(url);
-  };
-  const clear = () => { setInput(""); setOutput(""); setError(""); };
+    await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }, [output]);
+
+  const download = useCallback(() => {
+    const ext = mode === "json-to-toml" ? "toml" : "json";
+    const a = document.createElement("a");
+    a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(output);
+    a.download = `converted.${ext}`;
+    a.click();
+  }, [output, mode]);
+
+  const handleClear = useCallback(() => { setInput(""); setOutput(""); setError(""); setValidation(null); }, []);
+
+  const inputLabel = mode === "json-to-toml" ? "JSON Input" : "TOML Input";
+  const outputLabel = mode === "json-to-toml" ? "TOML Output" : "JSON Output";
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" checked={detectMode === "auto"} onChange={(e) => setDetectMode(e.target.checked ? "auto" : "manual")} className="rounded border-surface-300" /> Auto-detect format
-        </label>
-        <div className="flex items-center gap-2">
-          <select value={fromFormat} onChange={(e) => setFromFormat(e.target.value as Format)} disabled={detectMode === "auto"}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text disabled:opacity-40">
-            <option value="json">JSON</option>
-            <option value="toml">TOML</option>
-            <option value="yaml">YAML</option>
-          </select>
-          <span className="text-sm text-surface-400 dark:text-dark-muted">→</span>
-          <select value={toFormat} onChange={(e) => setToFormat(e.target.value as Format)}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="toml">TOML</option>
-            <option value="json">JSON</option>
-            <option value="yaml">YAML</option>
-          </select>
+        <div className="flex gap-1 rounded-lg border border-surface-200 p-1 dark:border-dark-border">
+          <button onClick={() => setMode("json-to-toml")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${mode === "json-to-toml" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>JSON → TOML</button>
+          <button onClick={() => setMode("toml-to-json")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${mode === "toml-to-json" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>TOML → JSON</button>
         </div>
+        <button onClick={handleClear} className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Clear</button>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input</label>
-        <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste input here..." rows={6} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">{inputLabel}</label>
+        <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
+          placeholder={mode === "json-to-toml" ? '{"key": "value"}' : "key = \"value\""}
+          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
-      <div className="flex gap-2">
-        <button onClick={copy} disabled={!output} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors">Copy {toFormat.toUpperCase()}</button>
-        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download .{toFormat}</button>
-        <button onClick={clear} className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors">Clear</button>
-      </div>
-
-      {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
-          <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
+      <div className="flex flex-wrap items-center gap-3">
+        <div>
+          <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Indent</label>
+          <select value={indent} onChange={(e) => setIndent(Number(e.target.value))} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <option value={2}>2 spaces</option><option value={4}>4 spaces</option><option value={8}>8 spaces</option>
+          </select>
         </div>
+        {mode === "json-to-toml" && (
+          <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted pt-4">
+            <input type="checkbox" checked={sortKeys} onChange={(e) => setSortKeys(e.target.checked)} className="accent-brand-500" />
+            Sort keys
+          </label>
+        )}
+        {mode === "toml-to-json" && (
+          <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted pt-4">
+            <input type="checkbox" checked={formatResult} onChange={(e) => setFormatResult(e.target.checked)} className="accent-brand-500" />
+            Pretty-print
+          </label>
+        )}
+      </div>
+
+      {validation && (
+        <span className={`text-xs ${validation.valid ? "text-green-600" : "text-red-500"}`}>{validation.msg}</span>
       )}
+
+      {error && <p className="text-sm text-red-500">{error}</p>}
 
       {output && (
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">{toFormat.toUpperCase()} Output</label>
-          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">{output}</pre>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">{outputLabel}</label>
+          <div className="relative">
+            <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-60 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
+            <div className="absolute top-2 right-2 flex gap-1">
+              <button onClick={handleCopy} className="rounded bg-brand-500 px-2 py-1 text-xs text-white hover:bg-brand-600" aria-label="Copy output">{copied ? "Copied!" : "Copy"}</button>
+              <button onClick={download} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Download output">Download</button>
+            </div>
+          </div>
+          <p className="text-xs text-surface-400 dark:text-dark-muted mt-1">
+            {output.length} bytes
+          </p>
         </div>
+      )}
+
+      {!input.trim() && (
+        <p className="text-center text-sm text-surface-400 dark:text-dark-muted py-8">Enter input above to convert</p>
       )}
     </div>
   );

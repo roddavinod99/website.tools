@@ -31,6 +31,10 @@ export interface SiteConfig {
     twitter: string;
     github: string;
   };
+  contactEmail?: string;
+  legal?: {
+    lastUpdated: Record<string, string>;
+  };
 }
 
 export interface NavItem {
@@ -48,4 +52,24 @@ export interface ToolContent {
   bestPractices: string[];
   commonMistakes: string[];
   faq: string[];
+}
+
+export interface FooterGroup {
+  title: string;
+  links: { label: string; href: string }[];
+}
+
+export interface CookieCategory {
+  id: string;
+  title: string;
+  description: string;
+  required: boolean;
+}
+
+export interface AdPlaceholderProps {
+  className?: string;
+  slot?: string;
+  format?: "auto" | "rectangle" | "horizontal" | "vertical";
+  width?: number;
+  height?: number;
 }

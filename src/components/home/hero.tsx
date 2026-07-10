@@ -11,7 +11,7 @@ const popularSearches = [
   "Regex Tester",
 ];
 
-export function Hero() {
+export function Hero({ badgeText, searchPlaceholder }: { badgeText: string; searchPlaceholder: string }) {
   const router = useRouter();
 
   const handleSearch = (term: string) => {
@@ -31,7 +31,7 @@ export function Hero() {
         <div className="mx-auto max-w-2xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-surface-200 bg-white px-4 py-1.5 text-sm text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
             <span className="flex h-2 w-2 rounded-full bg-brand-400" />
-            70 free tools. No login required.
+            {badgeText}
           </div>
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-surface-900 dark:text-dark-text sm:text-5xl lg:text-6xl">
             The internet&apos;s best
@@ -48,7 +48,7 @@ export function Hero() {
               <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-surface-400 dark:text-dark-muted" />
               <input
                 type="text"
-                placeholder="Search 70 tools..."
+                placeholder={searchPlaceholder}
                 onKeyDown={handleKeyDown}
                 className="h-12 w-full rounded-xl border border-surface-200 bg-white pl-10 pr-12 text-sm text-surface-900 shadow-sm placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
               />

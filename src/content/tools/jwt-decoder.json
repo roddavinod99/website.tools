@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Decodes JSON Web Tokens with color-coded sections (header/payload/signature) for visual parsing. Automatically decodes standard timestamp claims (exp, iat, nbf) into human-readable dates, supports signature verification with secret/private key, and provides an expiry countdown timer with token analysis suggestions.",
+  "whyItExists": "JWTs are opaque strings that encode important security information; manually base64-decoding and inspecting each section is tedious and error-prone. Provides instant visual decoding, security analysis, and expiry monitoring in one interface.",
+  "whoShouldUse": "Backend developers, security engineers, API developers, and anyone working with JWT-based authentication or authorization systems.",
+  "useCases": [
+    "Debug authentication issues by inspecting JWT payloads and signature validity",
+    "Verify JWT expiry times and decode timestamps during token-based auth implementation",
+    "Analyze JWT header algorithms and security characteristics for security audits",
+    "Validate JWTs received from third-party SSO providers during integration",
+    "Decode and inspect refresh tokens and access tokens during OAuth2/OIDC implementation",
+    "Test JWT signature validity with shared secrets during development and testing"
+  ],
+  "instructions": [
+    "Paste your JWT string into the input field; the tool automatically splits and color-codes the three sections",
+    "Review the header section (pink) showing algorithm type (HS256/RS256/etc) and token type (JWT)",
+    "Inspect the payload section (blue) with all claims auto-decoded; timestamp claims (exp, iat, nbf) show both raw epoch and human-readable date",
+    "Scroll to the signature section (green) showing the raw signature and signature verification options",
+    "Enter the secret or public key in the verification field and click \"Verify\" to check signature validity; results show Valid or Invalid",
+    "Monitor the expiry countdown timer that shows remaining seconds/minutes/hours until token expiration"
+  ],
+  "examples": [
+    "Input: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsaWNlIiwiZXhwIjoxNzA0MDYwODAwfQ.abc123signature -> Output: Header: {alg:HS256,typ:JWT} | Payload: {sub:1234567890,name:Alice,exp:2024-01-01T00:00:00Z} | Expiry: Expired 2 years ago",
+    "Input: JWT with exp claim of 9999999999 -> Output: Payload shows exp:9999999999 (November 20, 2286) | Countdown: 262 years remaining"
+  ],
+  "bestPractices": [
+    "Always verify the signature when decoding JWTs from untrusted sources, not just the payload content",
+    "Check the algorithm in the header; reject tokens using \"none\" algorithm unless explicitly intended",
+    "Use the expiry countdown to monitor token lifetimes during auth flow testing and debugging",
+    "Compare decoded claims against expected values from your auth provider documentation",
+    "Never share decoded token contents or secrets when pasting in shared/screencast environments"
+  ],
+  "commonMistakes": [
+    "Trusting the payload content without verifying the signature - JWTs can be decoded by anyone",
+    "Not checking the algorithm field and accepting tokens with \"none\" algorithm (security vulnerability)",
+    "Assuming all timestamps are in seconds; some implementations use milliseconds which the tool flags",
+    "Sharing decoded JWTs containing sensitive claims like email, user IDs, or roles in public forums",
+    "Forgetting that a valid signature only proves integrity, not that the token has been authorized or is still valid"
+  ],
+  "faq": [
+    "Does it support JWE (encrypted) tokens? No, this tool handles JWS (signed) tokens only, not encrypted JWEs.",
+    "Can it verify JWTs signed with RS256 or ES256? Yes, if you provide the corresponding public key for asymmetric algorithms.",
+    "How does it handle custom claims? All custom claims are displayed as-is in the payload section with their raw values.",
+    "Does it store or transmit the token anywhere? No, all decoding happens client-side in the browser; no data is sent to any server."
+  ]
+}

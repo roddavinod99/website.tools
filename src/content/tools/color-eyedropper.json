@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "A full-featured color picker that captures colors from on-screen with output in all major formats (HEX, RGB, RGBA, HSL, HSLA, HSV, CMYK). Includes a color harmony generator (complementary, analogous, triadic, tetradic, monochromatic), WCAG contrast checker, color blindness simulation (protanopia, deuteranopia, tritanopia, achromatopsia), gradient generator with multi-stop linear/radial gradients, and palette save/export as CSS code.",
+  "whyItExists": "Color selection involves far more than picking a single color — designers need harmonious relationships, accessibility verification, visual impairment simulation, and gradient generation from one eyedropper starting point instead of juggling separate tools.",
+  "whoShouldUse": "UI/UX designers building accessible color systems, frontend developers implementing design tokens, brand managers ensuring color consistency, and accessibility specialists evaluating color choices for visual impairments.",
+  "useCases": [
+    "Pick a color from a reference image and instantly get all format conversions and harmonious palettes",
+    "Verify a color palette remains distinguishable for color blindness users using simulation",
+    "Generate a complete CSS gradient from two picked colors with multiple stops",
+    "Save a palette of 5 colors as CSS custom properties for a design system",
+    "Check WCAG compliance of foreground/background while iterating on color choices",
+    "Export a monochromatic palette from a brand color for data visualization charts"
+  ],
+  "instructions": [
+    "Click the eyedropper icon to activate — move cursor over the canvas or uploaded image to sample colors in real-time",
+    "Selected color appears in all six formats — click any format to copy it",
+    "Open 'Harmony' panel and choose scheme type — generated swatches appear with copy buttons",
+    "Use Color Blindness Simulator by selecting a type — main color and harmony are filtered accordingly",
+    "In Gradient Generator, add color stops, choose linear (angle) or radial (shape/position), copy generated CSS",
+    "Save colors/palettes with 'Save Palette', add a name, export all as CSS file"
+  ],
+  "examples": [
+    "Pick: Blue (#007BFF) | Harmony: Complementary => Output: #007BFF + #FF7B00 + 3 analogous variations forming 5-color palette",
+    "Pick 1: #FF6B6B | Pick 2: #4ECDC4 | Gradient: Linear 45deg => 'background: linear-gradient(45deg, #FF6B6B, #4ECDC4);'"
+  ],
+  "bestPractices": [
+    "Use color blindness simulator before finalizing any palette — ~8% of men have color vision deficiency",
+    "Build gradients with at least 3 stops for visual depth",
+    "Save reusable palettes with descriptive names per project — export produces clean CSS custom properties",
+    "Pair warm and cool colors in harmony schemes for maximum visual interest",
+    "Always check WCAG contrast ratios for text-on-background combinations"
+  ],
+  "commonMistakes": [
+    "Relying solely on visual appeal without color blindness simulation",
+    "Creating gradients with stops too close in hue, producing muddy transitions",
+    "Saving palettes without names or organization",
+    "Assuming the eyedropper picks the exact color displayed — monitor calibration affects sampling",
+    "Generating too many analogous harmony colors that are all too similar"
+  ],
+  "faq": [
+    "Can I pick colors from outside the browser? — The eyedropper works within the tool's canvas. Screenshot and upload for external colors.",
+    "What color blindness types are simulated? — Protanopia, Deuteranopia, Tritanopia, and Achromatopsia using standard transformation matrices.",
+    "How do I export for a design system? — After saving, click 'Export CSS'. Each palette becomes CSS custom properties.",
+    "Can I generate gradients with more than 2 colors? — Yes, unlimited stops. Click 'Add Stop' to insert additional colors."
+  ]
+}

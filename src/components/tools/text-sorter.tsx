@@ -8,6 +8,7 @@ type SortMode =
   | "length-asc"
   | "length-desc"
   | "numeric"
+  | "numeric-desc"
   | "random"
   | "reverse"
   | "natural";
@@ -55,6 +56,12 @@ function executeSort(
         const bn = parseFloat(b) || 0;
         return an - bn;
       });
+    case "numeric-desc":
+      return items.sort((a, b) => {
+        const an = parseFloat(a) || 0;
+        const bn = parseFloat(b) || 0;
+        return bn - an;
+      });
     case "random": {
       const arr = [...items];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -76,13 +83,17 @@ function executeSort(
 const SORT_MODES: { id: SortMode; label: string }[] = [
   { id: "alpha-asc", label: "Alphabetical A-Z" },
   { id: "alpha-desc", label: "Alphabetical Z-A" },
+  { id: "numeric", label: "Numeric" },
+  { id: "numeric-desc", label: "Numeric ↓" },
+  { id: "natural", label: "Natural" },
   { id: "length-asc", label: "Length ↑" },
   { id: "length-desc", label: "Length ↓" },
-  { id: "numeric", label: "Numeric" },
-  { id: "natural", label: "Natural" },
   { id: "reverse", label: "Reverse" },
   { id: "random", label: "Randomize" },
 ];
+
+const MAX_INPUT_SIZE = 10 * 1024 * 1024;
+const MAX_LINE_LENGTH = 100 * 1024;
 
 export function TextSorter() {
   const [input, setInput] = useState("banana\napple\ncherry\ndate\n123\n45");
@@ -92,6 +103,7 @@ export function TextSorter() {
   const [trimWhitespace, setTrimWhitespace] = useState(true);
   const [caseSensitive, setCaseSensitive] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [inputSizeWarn, setInputSizeWarn] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -103,13 +115,39 @@ export function TextSorter() {
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [input]);
 
+  const handleInputChange = (val: string) => {
+    const bytes = new TextEncoder().encode(val).length;
+    if (bytes > MAX_INPUT_SIZE) {
+      setInputSizeWarn(`Input exceeds 10MB limit (${(bytes / 1024 / 1024).toFixed(1)}MB). Please reduce input size.`);
+      return;
+    }
+    setInputSizeWarn("");
+    setInput(val);
+  };
+
+  const lineSizeWarn = useMemo(() => {
+    for (const line of debouncedInput.split("\n")) {
+      if (new TextEncoder().encode(line).length > MAX_LINE_LENGTH) {
+        return true;
+      }
+    }
+    return false;
+  }, [debouncedInput]);
+
+  const sizeWarning = inputSizeWarn || (lineSizeWarn ? "One or more lines exceed the 100KB per-line limit." : "");
+
   const processed = useMemo(() => {
     let lines = debouncedInput.split("\n");
+
+    if (lineSizeWarn) {
+      return { rawCount: lines.length, uniqueCount: new Set(lines).size, lines: [] };
+    }
+
     if (trimWhitespace) lines = lines.map((l) => l.trim());
     if (removeEmptyLines) lines = lines.filter((l) => l.length > 0);
     if (removeDuplicates) lines = [...new Set(lines)];
     return { rawCount: debouncedInput.split("\n").length, uniqueCount: new Set(lines).size, lines };
-  }, [debouncedInput, trimWhitespace, removeEmptyLines, removeDuplicates]);
+  }, [debouncedInput, trimWhitespace, removeEmptyLines, removeDuplicates, lineSizeWarn]);
 
   const output = useMemo(
     () => executeSort(processed.lines, mode, caseSensitive),
@@ -134,7 +172,7 @@ export function TextSorter() {
   const pasteFromClipboard = async () => {
     try {
       const text = await navigator.clipboard.readText();
-      setInput(text);
+      handleInputChange(text);
     } catch { /* clipboard read not available */ }
   };
 
@@ -149,7 +187,7 @@ export function TextSorter() {
               <button onClick={() => setInput("")} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Clear</button>
             </div>
           </div>
-          <textarea ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} rows={10}
+          <textarea ref={inputRef} value={input} onChange={(e) => handleInputChange(e.target.value)} rows={10}
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
         <div>
@@ -164,6 +202,10 @@ export function TextSorter() {
             className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
         </div>
       </div>
+
+      {sizeWarning && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">{sizeWarning}</div>
+      )}
 
       <div className="flex flex-wrap gap-2">
         {SORT_MODES.map((m) => (

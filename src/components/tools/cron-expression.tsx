@@ -15,7 +15,7 @@ const PRESETS: Preset[] = [
   { label: "Hourly", cron: "0 * * * *" },
   { label: "Daily @ midnight", cron: "0 0 * * *" },
   { label: "Every weekday 9am", cron: "0 9 * * 1-5" },
-  { label: "Weekly @ midnight", cron: "0 0 * * 0" },
+  { label: "Every Monday", cron: "0 0 * * 1" },
   { label: "Monthly (1st)", cron: "0 0 1 * *" },
   { label: "Yearly (Jan 1)", cron: "0 0 1 1 *" },
 ];
@@ -109,7 +109,6 @@ function validateCron(raw: string): ValidationResult {
         const n = parseInt(token.slice(2));
         if (n < 1 || n > ranges[idx].max) return { valid: false, error: `Invalid step in ${ranges[idx].name}: ${token}`, field: i };
       } else if (/^\d+\/\d+$/.test(token)) {
-        // valid step syntax
       } else if (/^[a-zA-Z]+$/.test(token)) {
         if (idx === 3) { if (!MONTH_NAMES.slice(1).includes(token.toUpperCase())) return { valid: false, error: `Unknown month: ${token}`, field: i }; }
         else if (idx === 4) { if (!DAY_NAMES.slice(0, 7).includes(token.toUpperCase())) return { valid: false, error: `Unknown day: ${token}`, field: i }; }
@@ -164,6 +163,19 @@ const FIELD_HELP: Record<string, string> = {
   dayOfWeek: "Day of week (0-7, 0=SUN). Use * for every day, 1-5 for weekdays, 0,6 for weekends.",
 };
 
+const SYNTAX_GUIDE = [
+  { field: "*", desc: "All values (every unit)" },
+  { field: "*/n", desc: "Every n units (e.g., */15 = every 15 minutes)" },
+  { field: "n", desc: "Specific value (e.g., 5 = minute 5)" },
+  { field: "n-m", desc: "Range (e.g., 9-17 = hours 9 through 17)" },
+  { field: "n,m,o", desc: "List (e.g., 0,15,30,45 = specific minutes)" },
+  { field: "n/m", desc: "Step from n (e.g., 0/15 = every 15 min starting at 0)" },
+  { field: "L", desc: "Last (e.g., L = last day of month)" },
+  { field: "W", desc: "Nearest weekday (e.g., 15W = nearest weekday to 15th)" },
+  { field: "#", desc: "Nth occurrence (e.g., 2#1 = first Monday of month)" },
+  { field: "?", desc: "No specific value (same as *)" },
+];
+
 export function CronExpression() {
   const [cronStr, setCronStr] = useState("0 0 * * *");
   const [editMode, setEditMode] = useState<"form" | "raw">("form");
@@ -174,6 +186,7 @@ export function CronExpression() {
   });
   const [favCopied, setFavCopied] = useState(false);
   const [validation, setValidation] = useState<ValidationResult>({ valid: true });
+  const [showSyntax, setShowSyntax] = useState(false);
   const rawRef = useRef<HTMLInputElement>(null);
 
   const parts = useMemo(() => parseCron(cronStr), [cronStr]);
@@ -185,7 +198,7 @@ export function CronExpression() {
 
   const description = useMemo(() => describeCron(displayParts as CronFields), [displayParts]);
 
-  const { times: nextTimes, errors: nextErrors } = useMemo(() => computeNextTimes(cronStr, 10, timezone || undefined), [cronStr, timezone]);
+  const { times: nextTimes, errors: nextErrors } = useMemo(() => computeNextTimes(cronStr, 5, timezone || undefined), [cronStr, timezone]);
 
   const applyPreset = useCallback((cron: string) => {
     setCronStr(cron);
@@ -228,10 +241,19 @@ export function CronExpression() {
   };
 
   const fields = useMemo(() => {
-    const labels = FIELD_LABELS.slice(FIELD_LABELS.length - 5);
+    const labels = [...FIELD_LABELS.slice(FIELD_LABELS.length - 5)];
     if (withSeconds) labels.unshift("Seconds");
     return labels.map((label, i) => ({ label, value: displayParts[i] || "*", key: label.toLowerCase().replace(/\s+/g, "") }));
   }, [displayParts, withSeconds]);
+
+  const updateField = (idx: number, val: string) => {
+    const p = [...displayParts] as string[];
+    while (p.length <= idx) p.push("*");
+    p[idx] = val || "*";
+    const joined = p.join(" ");
+    setCronStr(joined);
+    setValidation(validateCron(joined));
+  };
 
   return (
     <div className="space-y-4">
@@ -272,15 +294,72 @@ export function CronExpression() {
           {fields.map((f, i) => (
             <div key={f.key}>
               <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">{f.label}</label>
-              <input type="text" value={f.value}
-                onChange={(e) => {
-                  const p = [...displayParts] as string[];
-                  while (p.length <= i) p.push("*");
-                  p[i] = e.target.value || "*";
-                  setCronStr(p.join(" "));
-                  setValidation(validateCron(p.join(" ")));
-                }}
-                className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              {f.label === "Minute" || f.label === "Seconds" ? (
+                <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="*">Every minute</option>
+                  <option value="0">0 (top of hour)</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                  <option value="*/5">Every 5 min</option>
+                  <option value="*/10">Every 10 min</option>
+                  <option value="*/15">Every 15 min</option>
+                  <option value="*/30">Every 30 min</option>
+                  <option value="0,15,30,45">Every 15 (0,15,30,45)</option>
+                </select>
+              ) : f.label === "Hour" ? (
+                <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="*">Every hour</option>
+                  <option value="0">Midnight (0)</option>
+                  <option value="9">9 AM</option>
+                  <option value="12">Noon (12)</option>
+                  <option value="18">6 PM (18)</option>
+                  <option value="*/2">Every 2 hours</option>
+                  <option value="*/6">Every 6 hours</option>
+                  <option value="*/12">Every 12 hours</option>
+                  <option value="9-17">Business hours</option>
+                </select>
+              ) : f.label === "Day of Month" ? (
+                <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="*">Every day</option>
+                  <option value="1">1st</option>
+                  <option value="15">15th</option>
+                  <option value="1,15">1st & 15th</option>
+                  <option value="L">Last day</option>
+                  <option value="1-15">First half</option>
+                </select>
+              ) : f.label === "Month" ? (
+                <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="*">Every month</option>
+                  <option value="1">January</option>
+                  <option value="3">March</option>
+                  <option value="6">June</option>
+                  <option value="1,4,7,10">Quarterly</option>
+                  <option value="1-6">First half</option>
+                </select>
+              ) : f.label === "Day of Week" ? (
+                <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="*">Every day</option>
+                  <option value="1-5">Weekdays (Mon-Fri)</option>
+                  <option value="0,6">Weekends</option>
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                  <option value="0">Sunday</option>
+                </select>
+              ) : (
+                <input type="text" value={f.value}
+                  onChange={(e) => updateField(i, e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              )}
             </div>
           ))}
         </div>
@@ -326,7 +405,23 @@ export function CronExpression() {
           <option value="">Macros...</option>
           {Object.entries(MACROS).map(([k, v]) => (<option key={k} value={v}>{k}</option>))}
         </select>
+        <button onClick={() => setShowSyntax(!showSyntax)}
+          className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Syntax Guide</button>
       </div>
+
+      {showSyntax && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Cron Syntax Reference</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            {SYNTAX_GUIDE.map((item) => (
+              <div key={item.field} className="flex gap-2 text-xs">
+                <code className="font-mono text-brand-600 dark:text-brand-400 min-w-[4rem]">{item.field}</code>
+                <span className="text-surface-600 dark:text-dark-muted">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {favorites.length > 0 && (
         <div>
@@ -345,7 +440,7 @@ export function CronExpression() {
       {nextTimes.length > 0 && (
         <div>
           <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Next Execution Times</p>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-1">
             {nextTimes.map((t: Date, i: number) => (
               <div key={i} className="rounded border border-surface-200 bg-surface-50 px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 {formatTime(t, timezone || undefined)}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Real-time regex tester supporting flags (g/i/m/s/u/y), capture groups, named groups, and non-capturing groups with match highlighting. Includes a common patterns library, replace/split modes, an auto-escape feature, and a built-in cheat sheet.",
+  "whyItExists": "Writing and debugging regular expressions is error-prone without instant feedback; this tool eliminates guesswork by showing matches live as you type. It also educates users through the cheat sheet and common patterns library.",
+  "whoShouldUse": "Developers, data analysts, and anyone who needs to build, test, or debug regular expressions across any programming language.",
+  "useCases": [
+    "Debug a complex regex with nested capture groups and lookaheads",
+    "Learn regex syntax using the built-in cheat sheet and common patterns library",
+    "Test a replacement pattern in replace mode before using it in production code",
+    "Split a CSV line using split mode with a delimiter regex",
+    "Validate email/URL/phone patterns from the common patterns library",
+    "Quickly escape special regex characters in a literal string using auto-escape"
+  ],
+  "instructions": [
+    "Type or paste a regex pattern into the pattern input field; flags (g, i, m, s, u, y) can be toggled via checkboxes below it.",
+    "Enter test text in the input area; all matches are highlighted in real time with colors distinguishing capture groups.",
+    "Click a pattern from the Common Patterns library (email, URL, date, IP, etc.) to load it instantly.",
+    "Switch between Match, Replace, and Split modes using the tab bar above the output panel.",
+    "Refer to the cheat sheet by clicking the help icon; it covers anchors, quantifiers, character classes, and flags.",
+    "Use the auto-escape button to escape all special regex characters in a selected or pasted literal string."
+  ],
+  "examples": [
+    "Input: pattern /\\b(\\w+)\\s\\1\\b/gi with text \"hello hello world\" → matches \"hello hello\" showing repeated word capture group",
+    "Input: pattern /(\\d{4})-(\\d{2})-(\\d{2})/ in replace mode with replacement \"$3/$2/$1\" on \"2025-12-25\" → output \"25/12/2025\""
+  ],
+  "bestPractices": [
+    "Always anchor patterns (^ and $) when matching entire strings to avoid partial matches",
+    "Prefer non-capturing groups (?:...) when you do not need to capture to improve performance",
+    "Test edge cases like empty strings, very long inputs, and special Unicode characters",
+    "Use the auto-escape feature when treating user input as literal text in a regex",
+    "Start simple and add complexity incrementally, verifying each step with the live preview"
+  ],
+  "commonMistakes": [
+    "Forgetting to escape special characters like . + * ? [ ] ( ) { } ^ $ | \\\\",
+    "Overusing .* which can lead to catastrophic backtracking on large inputs",
+    "Assuming regex is the same across all engines (PCRE, JS, Python, etc.) — flags and features vary",
+    "Using greedy quantifiers when lazy ones (*? +?) would be more appropriate",
+    "Neglecting the m flag when using ^ and $ with multi-line strings"
+  ],
+  "faq": [
+    "What is the difference between greedy and lazy quantifiers? Greedy (*, +) matches as much as possible; lazy (*?, +?) matches as little as possible while still satisfying the pattern.",
+    "Why does my regex match more than expected? You likely have an unanchored pattern or used a greedy quantifier — try adding ^/$ or switching to lazy.",
+    "What does the s flag do? The s flag (dotAll) makes . match newline characters; without it, . matches everything except newlines.",
+    "Can I use named groups? Yes — use the syntax (?<name>...) for named capture groups. They appear in the match details panel."
+  ]
+}

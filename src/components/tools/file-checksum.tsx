@@ -6,6 +6,8 @@ import { Copy, Check, Download, Upload, X } from "lucide-react";
 interface FileResult {
   name: string;
   size: number;
+  type: string;
+  lastModified: string;
   results: Record<string, string>;
   time: number;
 }
@@ -55,13 +57,14 @@ export function FileChecksum() {
   const [results, setResults] = useState<FileResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [selectedAlgos, setSelectedAlgos] = useState<string[]>(["SHA-256", "SHA-1"]);
+  const [selectedAlgos, setSelectedAlgos] = useState<string[]>(["MD5", "SHA-1", "SHA-256", "SHA-512"]);
   const [compareMode, setCompareMode] = useState(false);
   const [expectedHash, setExpectedHash] = useState("");
   const [outputFormat, setOutputFormat] = useState<"hex" | "base64">("hex");
   const [textInput, setTextInput] = useState("");
   const [textResult, setTextResult] = useState<Record<string, string> | null>(null);
   const [copied, setCopied] = useState("");
+  const [, setVerificationResults] = useState<Record<string, "match" | "mismatch" | null>>({});
   const inputRef = useRef<HTMLInputElement>(null);
   const dropRef = useRef<HTMLDivElement>(null);
 
@@ -74,12 +77,14 @@ export function FileChecksum() {
     setFiles(Array.from(fileList));
     setResults([]);
     setTextResult(null);
+    setVerificationResults({});
   }, []);
 
   const calculate = useCallback(async () => {
     if (files.length === 0) return;
     setLoading(true);
     setProgress(0);
+    setVerificationResults({});
     const newResults: FileResult[] = [];
     for (let fi = 0; fi < files.length; fi++) {
       const file = files[fi];
@@ -98,7 +103,8 @@ export function FileChecksum() {
         }
         setProgress(Math.round(((fi * selectedAlgos.length + selectedAlgos.indexOf(algo) + 1) / (files.length * selectedAlgos.length)) * 100));
       }
-      newResults.push({ name: file.name, size: file.size, results: fileRes, time: totalTime });
+      const lastMod = new Date(file.lastModified).toLocaleDateString() + " " + new Date(file.lastModified).toLocaleTimeString();
+      newResults.push({ name: file.name, size: file.size, type: file.type || "unknown", lastModified: lastMod, results: fileRes, time: totalTime });
     }
     setResults(newResults);
     setLoading(false);
@@ -147,10 +153,10 @@ export function FileChecksum() {
   const saveResults = (format: "csv" | "json") => {
     let content = "";
     if (format === "csv") {
-      const headers = ["filename", "size", ...selectedAlgos, "time_ms"];
+      const headers = ["filename", "size", "type", "last_modified", ...selectedAlgos, "time_ms"];
       content = headers.join(",") + "\n";
       for (const r of results) {
-        content += [r.name, r.size, ...selectedAlgos.map((a) => r.results[a] || ""), r.time.toFixed(1)].join(",") + "\n";
+        content += [r.name, r.size, r.type, r.lastModified, ...selectedAlgos.map((a) => r.results[a] || ""), r.time.toFixed(1)].join(",") + "\n";
       }
     } else {
       content = JSON.stringify(results, null, 2);
@@ -186,7 +192,7 @@ export function FileChecksum() {
           {files.map((f, i) => (
             <span key={i} className="inline-flex items-center gap-1 rounded bg-surface-100 px-2 py-1 text-xs text-surface-700 dark:bg-dark-surface dark:text-dark-text">
               {f.name} ({formatSize(f.size)})
-              <button onClick={() => { setFiles((prev) => prev.filter((_, j) => j !== i)); setResults([]); }} className="text-red-400 hover:text-red-600"><X size={12} /></button>
+              <button onClick={() => { setFiles((prev) => prev.filter((_, j) => j !== i)); setResults([]); setVerificationResults({}); }} className="text-red-400 hover:text-red-600"><X size={12} /></button>
             </span>
           ))}
         </div>
@@ -241,6 +247,29 @@ export function FileChecksum() {
         </div>
       )}
 
+      {compareMode && expectedHash.trim() && results.length > 0 && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Verification Results</p>
+          {results.map((r, fi) => (
+            <div key={fi} className="space-y-1">
+              <p className="text-xs font-medium text-surface-700 dark:text-dark-text">{r.name}</p>
+              {selectedAlgos.map((algo) => {
+                const computedHash = r.results[algo];
+                const isMatch = computedHash?.toLowerCase() === expectedHash.trim().toLowerCase();
+                return (
+                  <div key={algo} className="flex items-center gap-2 text-xs">
+                    <span className="text-surface-500 dark:text-dark-muted w-14">{algo}</span>
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-medium ${isMatch ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"}`}>
+                      {isMatch ? <Check size={10} /> : "✗"} {isMatch ? "Match" : "No Match"}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+
       {results.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -248,6 +277,8 @@ export function FileChecksum() {
               <tr className="border-b border-surface-200 dark:border-dark-border">
                 <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">File</th>
                 <th className="text-right py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Size</th>
+                <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Type</th>
+                <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Modified</th>
                 {selectedAlgos.map((a) => (
                   <th key={a} className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">{a}</th>
                 ))}
@@ -260,6 +291,8 @@ export function FileChecksum() {
                 <tr key={fi} className="border-b border-surface-100 dark:border-dark-border">
                   <td className="py-2 px-2 text-surface-900 dark:text-dark-text font-medium">{r.name}</td>
                   <td className="py-2 px-2 text-right text-surface-500 dark:text-dark-muted">{formatSize(r.size)}</td>
+                  <td className="py-2 px-2 text-surface-500 dark:text-dark-muted text-[10px]">{r.type}</td>
+                  <td className="py-2 px-2 text-surface-500 dark:text-dark-muted text-[10px]">{r.lastModified}</td>
                   {selectedAlgos.map((a) => (
                     <td key={a} className="py-2 px-2">
                       <span className="font-mono text-surface-900 dark:text-dark-text break-all">{r.results[a]?.slice(0, 16)}...</span>
@@ -294,7 +327,7 @@ export function FileChecksum() {
 
       {compareMode && (
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Expected Checksum (for compare)</label>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Expected Checksum (for verify)</label>
           <input type="text" value={expectedHash} onChange={(e) => setExpectedHash(e.target.value)} placeholder="Paste expected hash..."
             className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>

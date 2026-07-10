@@ -10,7 +10,7 @@ import { JSONToCSV } from "../tools/json-to-csv";
 import { JSONToYAML } from "../tools/json-to-yaml";
 import { JsonToXml } from "../tools/json-to-xml";
 import { XmlToJson } from "../tools/xml-to-json";
-import { JsonToTypeScript } from "../tools/json-to-typescript";
+import { JsonToTypescript } from "../tools/json-to-typescript";
 import { JsonToGo } from "../tools/json-to-go";
 import { JsonSchemaGenerator } from "../tools/json-schema-generator";
 import { JsonPathFinder } from "../tools/json-path-finder";
@@ -41,7 +41,7 @@ export function JSONToolkit() {
     { id: "yaml", label: "JSON to YAML", icon: <FileType className="h-4 w-4" />, content: <JSONToYAML /> },
     { id: "xml", label: "JSON to XML", icon: <Code className="h-4 w-4" />, content: <JsonToXml /> },
     { id: "xml2json", label: "XML to JSON", icon: <ArrowLeftRight className="h-4 w-4" />, content: <XmlToJson /> },
-    { id: "typescript", label: "JSON to TypeScript", icon: <FileCode className="h-4 w-4" />, content: <JsonToTypeScript /> },
+    { id: "typescript", label: "JSON to TypeScript", icon: <FileCode className="h-4 w-4" />, content: <JsonToTypescript /> },
     { id: "go", label: "JSON to Go", icon: <Files className="h-4 w-4" />, content: <JsonToGo /> },
     { id: "schema", label: "JSON Schema", icon: <FileStack className="h-4 w-4" />, content: <JsonSchemaGenerator /> },
     { id: "path", label: "JSON Path Finder", icon: <Search className="h-4 w-4" />, content: <JsonPathFinder /> },

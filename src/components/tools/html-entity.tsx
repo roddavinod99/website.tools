@@ -27,8 +27,10 @@ const HTML_ENTITY_MAP: Record<string, { named: string; numeric: string; hex: str
 
 const HTML_SPECIAL = new Set(["&", "<", ">", '"', "'"]);
 
-function encodeEntity(str: string, entityMode: EntityMode, preset: Preset, encodeAll: boolean): string {
-  return str.split("").map((c) => {
+const MAX_INPUT_SIZE = 1_000_000;
+
+function encodeEntity(str: string, entityMode: EntityMode, preset: Preset, encodeAll: boolean, preserveWhitespace: boolean): string {
+  let result = str.split("").map((c) => {
     if (preset === "attribute") {
       if (c === "&") return entityMode === "named" ? "&amp;" : entityMode === "hex" ? "&#x26;" : "&#38;";
       if (c === '"') return entityMode === "named" ? "&quot;" : entityMode === "hex" ? "&#x22;" : "&#34;";
@@ -68,6 +70,10 @@ function encodeEntity(str: string, entityMode: EntityMode, preset: Preset, encod
     }
     return c;
   }).join("");
+  if (!preserveWhitespace) {
+    result = result.replace(/  +/g, " ").replace(/\n\s*\n/g, "\n");
+  }
+  return result;
 }
 
 function decodeEntities(str: string): string {
@@ -87,14 +93,22 @@ export function HtmlEntity() {
   const [entityMode, setEntityMode] = useState<EntityMode>("named");
   const [preset, setPreset] = useState<Preset>("none");
   const [encodeAll, setEncodeAll] = useState(false);
+  const [preserveWhitespace, setPreserveWhitespace] = useState(false);
+  const [showSizeWarning, setShowSizeWarning] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const convert = useCallback(() => {
     setError("");
+    setShowSizeWarning(false);
     if (!input.trim()) { setOutput(""); return; }
+    if (input.length > MAX_INPUT_SIZE) {
+      setShowSizeWarning(true);
+      setOutput("");
+      return;
+    }
     try {
       if (mode === "encode") {
-        setOutput(encodeEntity(input, entityMode, preset, encodeAll));
+        setOutput(encodeEntity(input, entityMode, preset, encodeAll, preserveWhitespace));
       } else {
         setOutput(decodeEntities(input));
       }
@@ -102,7 +116,7 @@ export function HtmlEntity() {
       setError(e instanceof Error ? e.message : "Conversion failed");
       setOutput("");
     }
-  }, [input, mode, entityMode, preset, encodeAll]);
+  }, [input, mode, entityMode, preset, encodeAll, preserveWhitespace]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -111,6 +125,11 @@ export function HtmlEntity() {
   }, [convert]);
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
+
+  // XSS protection: encode the 5 dangerous chars
+  const xssEncode = (s: string) => {
+    return encodeEntity(s, entityMode, "attribute", false, false);
+  };
 
   const refEntries = Object.entries(HTML_ENTITY_MAP).filter(([c]) => input.includes(c));
   const inputSize = input.length;
@@ -151,6 +170,18 @@ export function HtmlEntity() {
         )}
       </div>
 
+      <div className="flex flex-wrap gap-2">
+        <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
+          <input type="checkbox" checked={preserveWhitespace} onChange={(e) => setPreserveWhitespace(e.target.checked)} className="rounded border-surface-300 text-brand-500 focus:ring-brand-400" />
+          Preserve whitespace
+        </label>
+        {mode === "encode" && (
+          <button onClick={() => setInput(xssEncode(input))} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+            XSS-safe encode
+          </button>
+        )}
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
           {mode === "encode" ? "Text to Encode" : "HTML Entity to Decode"}
@@ -160,6 +191,12 @@ export function HtmlEntity() {
           rows={4} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
+
+      {showSizeWarning && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+          <p className="text-sm text-amber-700 dark:text-amber-400">Input exceeds 1MB limit. Please reduce input size.</p>
+        </div>
+      )}
 
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">

@@ -108,6 +108,61 @@ function unifiedFormat(lines: DiffLine[]): string {
   }).join("\n");
 }
 
+function generateHTMLDiff(lines: DiffLine[], leftLabel: string, rightLabel: string): string {
+  const rows = lines.map((l) => {
+    const cls = l.type === "added" ? "added" : l.type === "removed" ? "removed" : l.type === "modified" ? "modified" : "same";
+    const leftText = l.leftText.replace(/</g, "&lt;").replace(/>/g, "&gt;") || "&nbsp;";
+    const rightText = l.rightText.replace(/</g, "&lt;").replace(/>/g, "&gt;") || "&nbsp;";
+    return `<tr class="${cls}">
+      <td class="num">${l.leftNum ?? ""}</td>
+      <td class="content">${leftText}</td>
+      <td class="num">${l.rightNum ?? ""}</td>
+      <td class="content">${rightText}</td>
+    </tr>`;
+  }).join("\n");
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diff Result</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5; color: #333; background: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 18px; margin-bottom: 16px; color: #555; }
+.stats { display: flex; gap: 16px; margin-bottom: 16px; font-size: 13px; }
+.stats .added { color: #16a34a; } .stats .removed { color: #dc2626; } .stats .modified { color: #ca8a04; } .stats .same { color: #6b7280; }
+table { width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb; }
+th { background: #f3f4f6; padding: 4px 8px; text-align: left; font-weight: 600; font-size: 12px; color: #6b7280; border-bottom: 1px solid #e5e7eb; }
+td { padding: 2px 8px; vertical-align: top; white-space: pre-wrap; word-break: break-all; }
+td.num { width: 40px; text-align: right; color: #9ca3af; font-size: 11px; user-select: none; }
+td.content { width: 50%; }
+tr.same { background: #fff; }
+tr.added { background: #f0fdf4; } tr.added td.content { background: #dcfce7; }
+tr.removed { background: #fef2f2; } tr.removed td.content { background: #fee2e2; }
+tr.modified { background: #fefce8; }
+thead th { position: sticky; top: 0; z-index: 1; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Diff: ${leftLabel} vs ${rightLabel}</h1>
+<div class="stats">
+<span class="added">+${lines.filter(l => l.type === "added").length} added</span>
+<span class="removed">-${lines.filter(l => l.type === "removed").length} removed</span>
+<span class="modified">~${lines.filter(l => l.type === "modified").length} modified</span>
+<span class="same">${lines.filter(l => l.type === "same").length} unchanged</span>
+</div>
+<table>
+<thead><tr><th>Ln</th><th>${leftLabel}</th><th>Ln</th><th>${rightLabel}</th></tr></thead>
+<tbody>${rows}</tbody>
+</table>
+</div>
+</body>
+</html>`;
+}
+
 export function DiffChecker() {
   const [leftText, setLeftText] = useState("");
   const [rightText, setRightText] = useState("");
@@ -149,6 +204,7 @@ export function DiffChecker() {
   const handleFile = (side: "left" | "right") => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > 1024 * 1024) { alert("File size exceeds 1MB limit."); return; }
     const reader = new FileReader();
     reader.onload = () => {
       const text = reader.result as string;
@@ -163,6 +219,14 @@ export function DiffChecker() {
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a"); a.href = url; a.download = "diff.patch"; a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadHTML = () => {
+    const content = generateHTMLDiff(lines, "Original", "Changed");
+    const blob = new Blob([content], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = "diff.html"; a.click();
     URL.revokeObjectURL(url);
   };
 
@@ -213,7 +277,9 @@ export function DiffChecker() {
     );
   };
 
-  const renderChunks = (chunks: { text: string; type: string }[], _defaultType: string) => (
+  const renderChunks = (chunks: { text: string; type: string }[], _defaultType: string) => {
+    void _defaultType;
+    return (
     <span className="break-all">
       {chunks.map((c, ci) => (
         <span key={ci} className={
@@ -224,6 +290,7 @@ export function DiffChecker() {
       ))}
     </span>
   );
+  };
 
   const renderSideLine = (l: DiffLine, side: "left" | "right") => {
     const text = side === "left" ? l.leftText : l.rightText;
@@ -256,7 +323,7 @@ export function DiffChecker() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Original</label>
           <textarea ref={leftRef} value={leftText} onChange={(e) => setLeftText(e.target.value)} rows={10}
             placeholder="Paste original text or drag & drop a file..."
-            onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { const r = new FileReader(); r.onload = () => setLeftText(r.result as string); r.readAsText(f); } }}
+            onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { if (f.size > 1024 * 1024) { alert("File size exceeds 1MB limit."); return; } const r = new FileReader(); r.onload = () => setLeftText(r.result as string); r.readAsText(f); } }}
             onDragOver={(e) => e.preventDefault()}
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <input type="file" accept=".txt,.js,.ts,.jsx,.tsx,.html,.css,.json,.xml,.md,.csv" onChange={handleFile("left")} className="mt-1 text-xs text-surface-500 dark:text-dark-muted file:mr-2 file:rounded file:border-0 file:bg-brand-50 file:px-2 file:py-0.5 file:text-xs file:font-medium file:text-brand-700 dark:file:bg-brand-900/30 dark:file:text-brand-400" />
@@ -265,7 +332,7 @@ export function DiffChecker() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Changed</label>
           <textarea ref={rightRef} value={rightText} onChange={(e) => setRightText(e.target.value)} rows={10}
             placeholder="Paste changed text or drag & drop a file..."
-            onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { const r = new FileReader(); r.onload = () => setRightText(r.result as string); r.readAsText(f); } }}
+            onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { if (f.size > 1024 * 1024) { alert("File size exceeds 1MB limit."); return; } const r = new FileReader(); r.onload = () => setRightText(r.result as string); r.readAsText(f); } }}
             onDragOver={(e) => e.preventDefault()}
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <input type="file" accept=".txt,.js,.ts,.jsx,.tsx,.html,.css,.json,.xml,.md,.csv" onChange={handleFile("right")} className="mt-1 text-xs text-surface-500 dark:text-dark-muted file:mr-2 file:rounded file:border-0 file:bg-brand-50 file:px-2 file:py-0.5 file:text-xs file:font-medium file:text-brand-700 dark:file:bg-brand-900/30 dark:file:text-brand-400" />
@@ -310,6 +377,7 @@ export function DiffChecker() {
             <button onClick={() => copy(rightText, 2)} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Copy Right</button>
             <button onClick={() => copy(unifiedFormat(lines), 3)} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Copy Diff</button>
             <button onClick={downloadPatch} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Download .patch</button>
+            <button onClick={downloadHTML} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Download .html</button>
           </div>
 
           {view === "side-by-side" ? (

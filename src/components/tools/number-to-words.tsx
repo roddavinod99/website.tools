@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useCallback } from "react";
 
@@ -61,18 +61,16 @@ function numberToWordsIndian(numStr: string): string {
   const negative = n < BigInt(0);
   let abs = negative ? -n : n;
   const groups: string[] = [];
-
   const lastThree = Number(abs % BigInt(1000));
   abs = abs / BigInt(1000);
-
   if (lastThree > 0) groups.unshift(convertHundreds(lastThree));
   let idx = 1;
   while (abs > BigInt(0)) {
     const chunk = Number(abs % BigInt(100));
     if (chunk > 0) {
-      const words = convertHundreds(chunk).replace(/^.*?(\w+)$/, chunk < 20 ? ONES[chunk] : TENS[Math.floor(chunk / 10)] + (chunk % 10 > 0 ? "-" + ONES[chunk % 10].toLowerCase() : ""));
+      const w = chunk < 20 ? ONES[chunk] : TENS[Math.floor(chunk / 10)] + (chunk % 10 > 0 ? "-" + ONES[chunk % 10].toLowerCase() : "");
       const scale = SCALES_INDIAN[idx];
-      groups.unshift(words + " " + scale);
+      groups.unshift(w + " " + scale);
     }
     abs = abs / BigInt(100);
     idx++;
@@ -98,8 +96,20 @@ function toOrdinalWords(num: bigint): string {
   return words.slice(0, -last.length) + ordLast;
 }
 
+function toOrdinalDigits(num: bigint): string {
+  const n = num < BigInt(0) ? -num : num;
+  const s = n.toString();
+  const last = s[s.length - 1];
+  const lastTwo = s.length > 1 ? s.slice(-2) : s;
+  if (lastTwo === "11" || lastTwo === "12" || lastTwo === "13") return s + "th";
+  if (last === "1") return s + "st";
+  if (last === "2") return s + "nd";
+  if (last === "3") return s + "rd";
+  return s + "th";
+}
+
 function toRoman(num: bigint): string {
-  if (num <= BigInt(0) || num > BigInt(3999)) return "—";
+  if (num <= BigInt(0) || num > BigInt(3999)) return "\u2014";
   const vals = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
   const roms = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
   let n = Number(num);
@@ -123,10 +133,15 @@ export function NumberToWords() {
   const [input, setInput] = useState("1234567.89");
   const [currency, setCurrency] = useState("USD");
   const [showIndian, setShowIndian] = useState(true);
+  const [showOrdinalWords] = useState(true);
+  const [showOrdinalDigits] = useState(true);
+  const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [copied, setCopied] = useState("");
 
+  const cleaned = useMemo(() => input.trim().replace(/,/g, ""), [input]);
+
   const parsed = useMemo(() => {
-    const s = input.trim().replace(/,/g, "");
+    const s = cleaned;
     if (!s) return null;
     const sciMatch = s.match(/^(-?\d+(?:\.\d+)?)[eE]\s*([+-]?\d+)$/);
     if (sciMatch) {
@@ -139,9 +154,9 @@ export function NumberToWords() {
     if (isNaN(num) || !isFinite(num)) return null;
     const parts = s.split(".");
     const intPart = parts[0]!.replace(/^-?0*/, "") || "0";
-    const decPart = parts[1] || "";
+    const decPart = (parts[1] || "").slice(0, decimalPlaces);
     return { str: s, num: BigInt(intPart), decimal: decPart };
-  }, [input]);
+  }, [cleaned, decimalPlaces]);
 
   const intlWords = useMemo(() => {
     if (!parsed) return "";
@@ -158,8 +173,22 @@ export function NumberToWords() {
     return toOrdinalWords(parsed.num);
   }, [parsed]);
 
+  const ordinalDigits = useMemo(() => {
+    if (!parsed) return "";
+    return toOrdinalDigits(parsed.num);
+  }, [parsed]);
+
+  const decimalWords = useMemo(() => {
+    if (!parsed || !parsed.decimal) return "";
+    const digits = parsed.decimal.split("").map((d) => {
+      const n = parseInt(d);
+      return ONES[n] || d;
+    }).join(" ");
+    return digits;
+  }, [parsed]);
+
   const romanNumeral = useMemo(() => {
-    if (!parsed) return "—";
+    if (!parsed) return "\u2014";
     return toRoman(parsed.num);
   }, [parsed]);
 
@@ -213,19 +242,21 @@ export function NumberToWords() {
     if (!parsed) return [];
     return [
       { label: "English Words (International)", value: intlWords, key: "intl" },
-      { label: "English Words (Indian)", value: showIndian ? indianWords : "—", key: "indian" },
-      { label: "Ordinal", value: ordinalWords, key: "ordinal" },
+      { label: "English Words (Indian)", value: showIndian ? indianWords : "\u2014", key: "indian" },
+      { label: "Ordinal (Words)", value: showOrdinalWords ? ordinalWords : "\u2014", key: "ordinal" },
+      { label: "Ordinal (Digits)", value: showOrdinalDigits ? ordinalDigits : "\u2014", key: "ordinalDigit" },
+      { label: "Decimal (Digit by digit)", value: decimalWords || "\u2014", key: "decimal" },
       { label: "Currency", value: currencyWords, key: "currency" },
       { label: "Scientific Notation", value: scientificNotation, key: "sci" },
       { label: "Roman Numerals", value: romanNumeral, key: "roman" },
-    ].filter((r) => r.value && r.value !== "—");
-  }, [parsed, intlWords, indianWords, showIndian, ordinalWords, currencyWords, scientificNotation, romanNumeral]);
+    ].filter((r) => r.value && r.value !== "\u2014");
+  }, [parsed, intlWords, indianWords, showIndian, showOrdinalWords, showOrdinalDigits, ordinalWords, ordinalDigits, decimalWords, currencyWords, scientificNotation, romanNumeral]);
 
   return (
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
-          Number Input <span className="text-xs text-surface-400 dark:text-dark-muted">(supports scientific notation like 1.5e6)</span>
+          Number Input <span className="text-xs text-surface-400 dark:text-dark-muted">(supports commas, negative, up to 999 trillion, decimal)</span>
         </label>
         <div className="flex gap-2">
           <input
@@ -256,6 +287,12 @@ export function NumberToWords() {
             <option value="CUSTOM">Custom</option>
           </select>
         </div>
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-surface-700 dark:text-dark-text">Decimals:</label>
+          <select value={decimalPlaces} onChange={(e) => setDecimalPlaces(Number(e.target.value))} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
           <input type="checkbox" checked={showIndian} onChange={(e) => setShowIndian(e.target.checked)} className="accent-brand-500" />
           Indian Numbering
@@ -274,7 +311,7 @@ export function NumberToWords() {
               <code className="text-sm font-mono text-surface-900 dark:text-dark-text select-all">
                 {formatWithCommas(parsed.str)}
                 {parsed.num < BigInt(0) ? " (negative)" : ""}
-                {parsed.decimal ? ` (${parsed.decimal.length} decimal places)` : ""}
+                {parsed.decimal ? " (" + parsed.decimal + " decimal places)" : ""}
               </code>
             </div>
           </div>

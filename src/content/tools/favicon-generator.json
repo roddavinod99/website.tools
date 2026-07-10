@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates complete favicon sets from text/emoji input or uploaded images. Creates 13 standard sizes (16x16 through 512x512) plus platform-specific icons for iOS (apple-touch-icon), Android (manifest icons), and Windows (tile images). Outputs ICO file (multi-size), individual PNGs, SVG, HTML snippet for embedding, and a complete manifest.json for progressive web apps.",
+  "whyItExists": "Modern web applications require a complex set of favicon sizes across platforms, browsers, and devices. An all-in-one generator handles every size, format, and configuration file needed for comprehensive favicon coverage without manual image editing.",
+  "whoShouldUse": "Web developers launching new sites needing complete favicon packages, PWA developers configuring manifest icons, designers generating favicons from logos, and anyone needing favicons without image editing software.",
+  "useCases": [
+    "Generate a full favicon set from a text letter for a new personal website",
+    "Convert a company logo into all required favicon sizes for a business site",
+    "Create iOS apple-touch-icon and Android manifest icons for a PWA",
+    "Generate SVG favicon from a text-based design for modern browsers",
+    "Produce complete HTML snippet and manifest.json for PWA submission",
+    "Create Windows tile icons for a Microsoft Edge pinned site"
+  ],
+  "instructions": [
+    "Choose input type: 'Text' (type word/letter/emoji) or 'Image' (upload PNG/JPG/SVG). For text, select bg/text color and font",
+    "Preview generated favicons in a grid showing all 13 sizes — click any for full resolution",
+    "Toggle platform sections: 'Standard Web' (16-512 PNG + ICO), 'iOS', 'Android', 'Windows'",
+    "Click 'Generate ICO' for multi-size .ico file (16, 32, 48)",
+    "Click 'Generate HTML' for complete <head> snippet with all <link> tags, theme-color, and manifest reference",
+    "Click 'Download All' for ZIP archive containing PNGs, ICO, SVG, HTML snippet, and manifest.json"
+  ],
+  "examples": [
+    "Input: Text 'M' | BG: #3498db | White text | Bold => Output: ZIP with 13 PNGs, ICO, apple-touch-icon, HTML snippet, manifest.json",
+    "Input: 'logo.png' (500x500) | All platforms => Output: 13 PNG sizes, ICO, apple-touch-icon (180x180), Android (192+512), Windows tiles, HTML, manifest.json"
+  ],
+  "bestPractices": [
+    "Use image input at least 512x512 for best quality — smaller images are upscaled with pixelation",
+    "For text favicons, use a single character for max clarity at 16x16 and 32x32",
+    "Always include ICO file for legacy browser support (IE, older browsers)",
+    "Add theme-color meta tag (in generated HTML) for mobile browser chrome color",
+    "Host manifest.json at domain root or ensure start_url scope is correct for PWA compliance"
+  ],
+  "commonMistakes": [
+    "Using complex detailed images — at 16x16, intricate logos become unrecognizable blobs",
+    "Forgetting to include ICO — some browsers still request /favicon.ico at root",
+    "Using SVG without PNG fallbacks — Safari supports SVG favicons, Chrome/Firefox may not in all contexts",
+    "Generating manifest.json with incorrect icon paths — paths are relative to manifest.json location",
+    "Ignoring apple-mobile-web-app-capable meta tag for iOS — without it, apple-touch-icon is ignored on home screen"
+  ],
+  "faq": [
+    "How many icons do I actually need? — Minimum: favicon.ico (16+32), 192x192 (Android), 180x180 (iOS). Generator creates all 13.",
+    "Can I use emoji as favicons? — Yes. Emoji render colorfully at all sizes, looking great at 16x16 on retina displays.",
+    "What format is the ICO? — Contains embedded PNGs at 16, 32, and 48 pixels. Modern browsers read the 32x32 PNG from within.",
+    "Do I need dark mode favicons? — Not from this generator, but you can add prefers-color-scheme media queries to the HTML manually."
+  ]
+}

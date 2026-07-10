@@ -7,6 +7,7 @@ const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 const DIGITS = "0123456789";
 const SYMBOLS = "!@#$%^&*()_+-=[]{}|;:,.<>?/~`";
 const AMBIGUOUS = "O0I1l|!";
+const SIMILAR = "O0I1l|";
 const SYLLABLES = [
   "ba", "be", "bi", "bo", "bu", "ca", "ce", "ci", "co", "cu",
   "da", "de", "di", "do", "du", "fa", "fe", "fi", "fo", "fu",
@@ -36,10 +37,23 @@ function getStrength(password: string): { label: string; color: string; score: n
   return { label: "Very Strong", color: "bg-green-500", score: 5 };
 }
 
-function calcEntropy(charsetSize: number, length: number): string {
-  if (!charsetSize || !length) return "0";
-  const e = length * Math.log2(charsetSize);
-  return e.toFixed(1);
+function calcEntropy(charsetSize: number, length: number): number {
+  if (!charsetSize || !length) return 0;
+  return length * Math.log2(charsetSize);
+}
+
+function timeToCrack(entropy: number): string {
+  const guessesPerSecond = 1e12;
+  const seconds = Math.pow(2, entropy) / guessesPerSecond;
+  if (seconds < 1) return "Instant";
+  if (seconds < 60) return `About ${Math.round(seconds)} seconds`;
+  if (seconds < 3600) return `About ${Math.round(seconds / 60)} minutes`;
+  if (seconds < 86400) return `About ${Math.round(seconds / 3600)} hours`;
+  if (seconds < 31536000) return `About ${Math.round(seconds / 86400)} days`;
+  if (seconds < 315360000) return `About ${Math.round(seconds / 31536000)} years`;
+  if (seconds < 3153600000) return `About ${Math.round(seconds / 31536000 / 10)} decades`;
+  if (seconds < 31536000000) return `About ${Math.round(seconds / 31536000 / 100)} centuries`;
+  return "Centuries+";
 }
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -54,7 +68,7 @@ function shuffleArray<T>(arr: T[]): T[] {
 function generateOne(
   length: number,
   upper: boolean, lower: boolean, nums: boolean, syms: boolean,
-  excludeAmbiguous: boolean, noDupes: boolean, customSet: string,
+  excludeAmbiguous: boolean, excludeSimilar: boolean, noDupes: boolean, customSet: string,
   pronounceable: boolean, pinMode: boolean,
 ): string {
   if (pinMode) {
@@ -97,6 +111,9 @@ function generateOne(
   if (excludeAmbiguous) {
     for (const ch of AMBIGUOUS) chars = chars.replaceAll(ch, "");
   }
+  if (excludeSimilar) {
+    for (const ch of SIMILAR) chars = chars.replaceAll(ch, "");
+  }
   if (!chars) chars = LOWERCASE;
 
   const required: string[] = [];
@@ -128,13 +145,14 @@ export function PasswordGenerator() {
   const [numbers, setNumbers] = useState(true);
   const [symbols, setSymbols] = useState(true);
   const [excludeAmbiguous, setExcludeAmbiguous] = useState(false);
+  const [excludeSimilar, setExcludeSimilar] = useState(false);
   const [noDupes, setNoDupes] = useState(false);
   const [pronounceable, setPronounceable] = useState(false);
   const [pinMode, setPinMode] = useState(false);
   const [customSet, setCustomSet] = useState("");
   const [count, setCount] = useState(1);
-  const [passwords, setPasswords] = useState<string[]>(() => [generateOne(16, true, true, true, false, false, false, "", false, false)]);
-  const [history, setHistory] = useState<string[]>(() => [generateOne(16, true, true, true, false, false, false, "", false, false)]);
+  const [passwords, setPasswords] = useState<string[]>(() => [generateOne(16, true, true, true, false, false, false, false, "", false, false)]);
+  const [history, setHistory] = useState<string[]>(() => [generateOne(16, true, true, true, false, false, false, false, "", false, false)]);
   const [copiedIdx, setCopiedIdx] = useState(-1);
   const [showHistory, setShowHistory] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -142,14 +160,14 @@ export function PasswordGenerator() {
   const generate = useCallback(() => {
     const pwds: string[] = [];
     for (let i = 0; i < count; i++) {
-      pwds.push(generateOne(length, uppercase, lowercase, numbers, symbols, excludeAmbiguous, noDupes, customSet, pronounceable, pinMode));
+      pwds.push(generateOne(length, uppercase, lowercase, numbers, symbols, excludeAmbiguous, excludeSimilar, noDupes, customSet, pronounceable, pinMode));
     }
     setPasswords(pwds);
     setHistory((prev) => {
       const next = [...pwds, ...prev];
       return next.slice(0, 20);
     });
-  }, [length, uppercase, lowercase, numbers, symbols, excludeAmbiguous, noDupes, customSet, pronounceable, pinMode, count]);
+  }, [length, uppercase, lowercase, numbers, symbols, excludeAmbiguous, excludeSimilar, noDupes, customSet, pronounceable, pinMode, count]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -186,6 +204,15 @@ export function PasswordGenerator() {
     setPasswords([pw]);
   };
 
+  const downloadTxt = () => {
+    const content = passwords.join("\n");
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "passwords.txt"; a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const maxLen = pinMode ? 16 : 128;
   const minLen = 4;
 
@@ -199,11 +226,17 @@ export function PasswordGenerator() {
     if (lowercase) { charsetDisplay += "a-z "; charsetSize += 26; }
     if (numbers) { charsetDisplay += "0-9 "; charsetSize += 10; }
     if (symbols) { charsetDisplay += "!@#$... "; charsetSize += SYMBOLS.length; }
-    if (excludeAmbiguous) charsetSize = new Set(charsetDisplay.replace(/ /g, "").split("").filter((c) => !AMBIGUOUS.includes(c))).size;
+    if (excludeAmbiguous || excludeSimilar) {
+      let filtered = charsetDisplay.replace(/ /g, "");
+      if (excludeAmbiguous) for (const ch of AMBIGUOUS) filtered = filtered.replaceAll(ch, "");
+      if (excludeSimilar) for (const ch of SIMILAR) filtered = filtered.replaceAll(ch, "");
+      charsetSize = new Set(filtered.split("")).size;
+    }
   }
 
   const strength = passwords.length === 1 ? getStrength(passwords[0]) : null;
   const entropy = passwords.length === 1 ? calcEntropy(charsetSize, passwords[0].length) : null;
+  const crackTime = passwords.length === 1 && entropy ? timeToCrack(entropy) : null;
 
   return (
     <div className="space-y-4">
@@ -249,7 +282,11 @@ export function PasswordGenerator() {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
           <input type="checkbox" checked={excludeAmbiguous} onChange={(e) => setExcludeAmbiguous(e.target.checked)} className="accent-brand-500" />
-          Exclude Ambiguous (O/0/I/1/l/|)
+          Exclude Ambiguous (O/0/I/1/l/|/!)
+        </label>
+        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" checked={excludeSimilar} onChange={(e) => setExcludeSimilar(e.target.checked)} className="accent-brand-500" />
+          Exclude Similar (O/0/I/1/l/|)
         </label>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
           <input type="checkbox" checked={noDupes} onChange={(e) => setNoDupes(e.target.checked)} className="accent-brand-500" />
@@ -279,9 +316,12 @@ export function PasswordGenerator() {
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
         {passwords.length > 0 && (
-          <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
-            {copiedIdx === -2 ? "Copied!" : "Copy All"}
-          </button>
+          <>
+            <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+              {copiedIdx === -2 ? "Copied!" : "Copy All"}
+            </button>
+            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download .txt</button>
+          </>
         )}
         <button onClick={() => setShowHistory(!showHistory)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           History ({history.length})
@@ -294,8 +334,14 @@ export function PasswordGenerator() {
             <div className={`h-full rounded-full transition-all ${strength.color}`} style={{ width: `${(strength.score / 5) * 100}%` }} />
           </div>
           <span className="text-xs font-medium text-surface-600 dark:text-dark-muted whitespace-nowrap">{strength.label}</span>
-          {entropy && <span className="text-xs font-mono text-surface-500 dark:text-dark-muted whitespace-nowrap">{entropy} bits</span>}
+          {entropy !== null && (
+            <span className="text-xs font-mono text-surface-500 dark:text-dark-muted whitespace-nowrap">{entropy.toFixed(1)} bits</span>
+          )}
         </div>
+      )}
+
+      {crackTime && (
+        <p className="text-xs text-surface-500 dark:text-dark-muted">Time to crack (1T guesses/s): {crackTime}</p>
       )}
 
       {passwords.length > 0 && (

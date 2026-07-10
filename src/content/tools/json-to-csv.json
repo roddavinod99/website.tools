@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Converts JSON data to CSV format with automatic nested object flattening using dot notation, supporting arrays of objects and nested structures. Offers three null handling modes (empty string, null literal, or skip row) and BOM insertion for Excel compatibility.",
+  "whyItExists": "JSON is the standard data interchange format, but CSV remains essential for spreadsheets, legacy systems, and data analysis tools. Bridges the gap between structured JSON and tabular CSV without manual transformation.",
+  "whoShouldUse": "Data analysts, backend developers, and anyone who needs to convert JSON API responses or datasets into spreadsheet-compatible CSV files.",
+  "useCases": [
+    "Export JSON API responses to CSV for Excel analysis",
+    "Convert nested JSON configuration files to flat tabular format",
+    "Prepare JSON datasets for import into database systems that support CSV",
+    "Generate CSV reports from complex nested JSON data structures",
+    "Transform MongoDB document exports to CSV for business stakeholders",
+    "Create CSV backups of JSON-formatted configuration data"
+  ],
+  "instructions": [
+    "Paste or upload your JSON data into the input editor (ensure it contains an array of objects for best results)",
+    "Select your preferred null handling mode from the dropdown: Empty String, Null Literal, or Skip Row",
+    "Toggle BOM (Byte Order Mark) ON if the CSV will be opened in Microsoft Excel to ensure correct encoding",
+    "Choose your delimiter (comma, semicolon, tab) and optionally enable \"Quote All Fields\" to wrap every value in quotes",
+    "Click \"Convert\" and inspect the preview table to verify nested keys were flattened correctly with dot notation",
+    "Download the result as a .csv file or copy to clipboard; adjust settings and reconvert if needed"
+  ],
+  "examples": [
+    "Input: [{\"user\":{\"name\":\"Alice\",\"age\":30},\"tags\":[\"admin\",\"editor\"]}] -> Output: user.name,user.age,tags.0,tags.1\\nAlice,30,admin,editor",
+    "Input: [{\"id\":1,\"value\":null},{\"id\":2,\"value\":\"ok\"}] with nullMode=skip -> Output: id,value\\n2,ok"
+  ],
+  "bestPractices": [
+    "Ensure JSON is an array of objects for proper CSV output; single objects produce only headers",
+    "Enable BOM when the CSV will be opened in any version of Microsoft Excel to prevent encoding issues",
+    "Use \"Quote All Fields\" if any values contain the delimiter character to avoid broken columns",
+    "Preview the output before downloading to catch incorrect nested flattening early",
+    "For very large datasets (10K+ rows), consider splitting into smaller batches to avoid browser performance issues"
+  ],
+  "commonMistakes": [
+    "Feeding a single JSON object instead of an array expecting multiple rows of output",
+    "Forgetting to enable BOM and wondering why Excel shows garbled characters",
+    "Not accounting for commas or newlines within cell values, causing column misalignment",
+    "Assuming nested arrays will be intelligently unrolled rather than flattened with index keys",
+    "Setting null handling to \"Skip Row\" which removes the entire row instead of just the null field"
+  ],
+  "faq": [
+    "Can I convert deeply nested JSON with 5+ levels? Yes, the tool flattens recursively using dot notation regardless of depth level.",
+    "What happens if my JSON has inconsistent field names across objects? Missing fields are rendered as empty cells based on the null handling mode selected.",
+    "Does this work with JSON arrays of primitives like [1,2,3]? Yes, but the output will be a single column with a default header name; best results come from arrays of objects.",
+    "Can I import the CSV back into JSON? No, this is a one-way conversion; consider a separate CSV-to-JSON tool for reverse conversion."
+  ]
+}

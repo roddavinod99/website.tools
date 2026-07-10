@@ -82,6 +82,7 @@ export function IpCalculator() {
     return [];
   });
   const [ipv6Input, setIpv6Input] = useState("");
+  const [cidrNotation, setCidrNotation] = useState("");
 
   useEffect(() => { if (history.length > 0) localStorage.setItem("ipcalc_history", JSON.stringify(history.slice(0, 20))); }, [history]);
 
@@ -91,6 +92,17 @@ export function IpCalculator() {
     if (!r) { setError("Invalid IP address or CIDR prefix"); setResult(null); return; }
     setResult(r); setShowSubnets(false);
     setHistory(prev => [{ input: `${ip}/${cidr}`, timestamp: Date.now() }, ...prev.filter(e => e.input !== `${ip}/${cidr}`)].slice(0, 20));
+  };
+
+  const parseCidrNotation = () => {
+    const match = cidrNotation.trim().match(/^(\d+\.\d+\.\d+\.\d+)\/(\d+)$/);
+    if (!match) { setError("Invalid CIDR notation. Use format: 192.168.1.0/24"); return; }
+    setIp(match[1]!);
+    setCidr(parseInt(match[2]!, 10));
+    const r = calculateSubnet(match[1]!, parseInt(match[2]!, 10));
+    if (!r) { setError("Invalid IP address or CIDR prefix"); setResult(null); return; }
+    setResult(r); setShowSubnets(false);
+    setHistory(prev => [{ input: `${match[1]}/${match[2]}`, timestamp: Date.now() }, ...prev.filter(e => e.input !== `${match[1]}/${match[2]}`)].slice(0, 20));
   };
 
   const copyValue = async (label: string, value: string) => {
@@ -110,20 +122,32 @@ export function IpCalculator() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">IPv4 Address</label>
-          <input type="text" value={ip} onChange={e => setIp(e.target.value)} placeholder="192.168.1.0" onKeyDown={e => e.key === "Enter" && calculate()} className={inputCls} />
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">CIDR Prefix</label>
-          <div className="flex gap-2">
-            <input type="number" value={cidr} onChange={e => setCidr(Math.max(0, Math.min(32, parseInt(e.target.value) || 24)))} min={0} max={32}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-            <button onClick={calculate} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
-          </div>
+      <div>
+        <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">CIDR Notation</label>
+        <div className="flex gap-2">
+          <input type="text" value={cidrNotation} onChange={e => setCidrNotation(e.target.value)} placeholder="192.168.1.0/24" onKeyDown={e => e.key === "Enter" && parseCidrNotation()}
+            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          <button onClick={parseCidrNotation} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
         </div>
       </div>
+
+      <details className="text-xs text-surface-500 dark:text-dark-muted">
+        <summary className="cursor-pointer hover:text-surface-700 dark:hover:text-dark-text">Advanced: separate IP & CIDR</summary>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+          <div>
+            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">IPv4 Address</label>
+            <input type="text" value={ip} onChange={e => setIp(e.target.value)} placeholder="192.168.1.0" onKeyDown={e => e.key === "Enter" && calculate()} className={inputCls} />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">CIDR Prefix</label>
+            <div className="flex gap-2">
+              <input type="number" value={cidr} onChange={e => setCidr(Math.max(0, Math.min(32, parseInt(e.target.value) || 24)))} min={0} max={32}
+                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              <button onClick={calculate} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
+            </div>
+          </div>
+        </div>
+      </details>
 
       {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
 
@@ -223,7 +247,7 @@ export function IpCalculator() {
           <span className="text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted font-medium">Recent</span>
           <div className="flex flex-wrap gap-1 mt-1">
             {history.slice(0, 5).map(e => (
-              <button key={e.input} onClick={() => { const [h, c] = e.input.split("/"); setIp(h); setCidr(parseInt(c, 10)); }}
+              <button key={e.input} onClick={() => { const [h, c] = e.input.split("/"); setIp(h); setCidr(parseInt(c, 10)); setCidrNotation(e.input); }}
                 className="rounded-md border border-surface-200 bg-surface-50 px-2 py-0.5 text-[11px] font-mono text-surface-600 hover:bg-surface-100 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border transition-colors"
               >{e.input}</button>
             ))}

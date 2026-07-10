@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/constants";
+import { blogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "DevStackIO blog - developer tutorials, tips, and updates.",
   alternates: { canonical: `${siteConfig.url}/blog` },
 };
-
-const posts = [
-  { title: "Getting Started with JSON: A Complete Guide", excerpt: "Learn everything you need to know about JSON, from basic syntax to advanced use cases in modern web development.", date: "June 28, 2026", readTime: "5 min", slug: "getting-started-json" },
-  { title: "Understanding JWT Tokens: How They Work", excerpt: "A deep dive into JSON Web Tokens, including structure, signing algorithms, and security best practices.", date: "June 25, 2026", readTime: "8 min", slug: "understanding-jwt" },
-  { title: "Image Optimization for the Web", excerpt: "Best practices for optimizing images to improve page load times without sacrificing quality.", date: "June 20, 2026", readTime: "6 min", slug: "image-optimization" },
-  { title: "Password Security: Best Practices for 2026", excerpt: "How to create and manage secure passwords, plus common pitfalls to avoid.", date: "June 15, 2026", readTime: "4 min", slug: "password-security" },
-  { title: "The Ultimate Guide to UUIDs", excerpt: "Everything developers need to know about UUIDs, including v4 vs v7, use cases, and best practices.", date: "June 10, 2026", readTime: "7 min", slug: "guide-to-uuids" },
-];
 
 export default function BlogPage() {
   return (
@@ -28,7 +21,7 @@ export default function BlogPage() {
         </p>
 
         <div className="mt-8 space-y-6">
-          {posts.map((post) => (
+          {blogPosts.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}

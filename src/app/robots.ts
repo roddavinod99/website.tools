@@ -7,32 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "GPTBot",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "Claude-Web",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "Google-Extended",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "PerplexityBot",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        userAgent: "CCBot",
-        allow: "/",
-        disallow: ["/api/"],
+        disallow: ["/api/", "/contact/success", "/admin/"],
       },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

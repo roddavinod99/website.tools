@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "A visual Content Security Policy builder that generates CSP headers through an interactive directive editor. Features include a nonce generator for inline scripts/styles, presets for common environments (Strict CSP, WordPress, React/SPA), toggling between meta tag and HTTP header output formats, report-uri/report-to configuration, directives search/filter, and download of the final policy as a text file.",
+  "whyItExists": "CSP is one of the most effective defenses against XSS, but writing a correct policy manually is complex and error-prone. A visual builder helps developers craft policies that are both secure and functional by guiding them through each directive with clear descriptions.",
+  "whoShouldUse": "Security engineers configuring web application defenses, full-stack developers deploying CSP, DevOps engineers adding security headers, and compliance teams documenting security controls.",
+  "useCases": [
+    "Generate a strict CSP for a React SPA that uses inline scripts and styles",
+    "Create a WordPress-compatible CSP allowing necessary inline scripts while blocking XSS",
+    "Build a CSP with report-uri configured to send violation reports to a monitoring endpoint",
+    "Generate both meta tag and HTTP header versions of the same policy",
+    "Add nonce-based policy for a specific page with fresh nonces per request",
+    "Audit an existing CSP by pasting it in, editing visually, and downloading the updated version"
+  ],
+  "instructions": [
+    "Start with a preset (Strict, WordPress, React/SPA) or from scratch — directive editor lists all standard CSP directives",
+    "Add/remove directives using toggles — each has a description explaining what sources it controls",
+    "For each directive, specify allowed sources with autocomplete suggestions (self, domains, nonces, hashes, unsafe-inline, etc.)",
+    "Use nonce generator for cryptographically random nonces for inline script and style tags",
+    "Toggle between 'Meta Tag' and 'HTTP Header' — meta tags don't support frame-ancestors, sandbox, or report-to",
+    "Configure reporting with report-uri URL and optional report-to endpoint name",
+    "Download the completed policy as .txt or copy to clipboard — includes human-readable summary"
+  ],
+  "examples": [
+    "Preset: React/SPA | Customize: Add GA => Output: \"default-src 'self'; script-src 'self' https://www.googletagmanager.com 'nonce-abc123'; style-src 'self' 'nonce-abc123'; img-src 'self' https://www.google-analytics.com\"",
+    "Preset: Strict CSP | Meta Tag => Output: '<meta http-equiv=\"Content-Security-Policy\" content=\"base-uri 'self'; default-src 'self'; script-src 'self' 'nonce-{NONCE}' 'strict-dynamic'\">'"
+  ],
+  "bestPractices": [
+    "Start with Strict CSP preset and loosen only what breaks — principle of least privilege",
+    "Use nonces rather than 'unsafe-inline' — same functionality without disabling XSS protection",
+    "Always configure report-uri in production — violation reports help identify breaks before users notice",
+    "Test in staging with Content-Security-Policy-Report-Only before deploying to production",
+    "Use HTTP header format when possible — more secure as it applies before page parsing begins"
+  ],
+  "commonMistakes": [
+    "Including 'unsafe-inline' alongside nonces — ignored when nonce is present but causes confusion",
+    "Forgetting to regenerate nonces per request — static nonces defeat the purpose",
+    "Adding excessive domain allowlists instead of using 'strict-dynamic' — creates maintenance burden",
+    "Using meta tag for HTTP-header-only directives (frame-ancestors, sandbox, report-to)",
+    "Setting default-src too permissively — it serves as fallback for all unlisted directives"
+  ],
+  "faq": [
+    "report-uri vs report-to? — report-uri is older and widely supported. report-to uses the Reporting API and needs a Report-To header.",
+    "Can I use CSP with inline event handlers? — Blocked unless using 'unsafe-hashes'. Recommended: use addEventListener in nonced scripts.",
+    "Does the tool support CSP Level 3? — Yes, including 'strict-dynamic', 'unsafe-hashes', 'report-to', and worker-src.",
+    "What does 'strict-dynamic' do? — Allows scripts loaded by an already-trusted script to execute, eliminating the need to list every CDN."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Generates lorem ipsum placeholder text with customizable output options including paragraphs, sentences, words, or bytes with precise counts. Offers starting text variants (classic, modern, Cicero), paragraph length styles, and output formats including rich HTML, Markdown, and code-sample wrapping.",
+  "whyItExists": "Designers and developers need realistic placeholder text for layouts, typography testing, and content mockups. Provides flexible generation options beyond simple paragraph count for diverse design and development scenarios.",
+  "whoShouldUse": "Web designers, UI/UX developers, graphic designers, and frontend developers who need placeholder text for wireframes, mockups, and layout testing.",
+  "useCases": [
+    "Generate placeholder paragraphs for wireframes and website mockups during client presentations",
+    "Create multi-page dummy content for testing pagination and content layout components",
+    "Produce exact word-count text for testing text truncation and overflow CSS properties",
+    "Generate formatted placeholder content with headings, lists, and code blocks for rich layout testing",
+    "Create code-sample wrapped lorem ipsum for documentation template testing",
+    "Generate consistent placeholder text across team members using seed-based generation"
+  ],
+  "instructions": [
+    "Select the output unit type: paragraphs (for blocks), sentences (for inline), words (for exact count), or bytes (for size-specific testing)",
+    "Use the count slider to set quantity (1-100 for paragraphs/sentences, 1-1000 for words)",
+    "Choose a starting text variant: Classic (traditional lorem ipsum), Modern (common variant), or Cicero (original Latin passage)",
+    "Set paragraph style: Short (1-2 sentences), Medium (3-5 sentences), or Long (5-8 sentences) for varied rhythm",
+    "Select output format: Plain Text for general use, HTML with <p> tags, or Markdown with formatting",
+    "Toggle rich formatting options: bold first word, italic middle section, or add code sample blocks interspersed"
+  ],
+  "examples": [
+    "Settings: 2 paragraphs, Classic, Medium style, Plain text -> Output: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\\n\\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\"",
+    "Settings: 1 paragraph, HTML format, with code sample -> Output: \"<p>Lorem ipsum dolor sit amet...</p><pre><code>const lorem = generator.generate()</code></pre>\""
+  ],
+  "bestPractices": [
+    "Use paragraph count for block layouts and page sections; use word count for testing text overflow and character limits",
+    "Select the Cicero variant for the most authentic Latin placeholder text matching historical origins",
+    "Enable rich formatting only when testing styled typography; use plain text for structural layout testing",
+    "Use shorter paragraph styles (Short/Medium) for UI components like cards and sidebars",
+    "Generate in Markdown format when developing documentation sites to preview rendered placeholder content"
+  ],
+  "commonMistakes": [
+    "Using too many paragraphs (50+) when a few representative samples would suffice for layout testing",
+    "Expecting meaningful or translated text; lorem ipsum is intentionally nonsensical Latin-derived placeholder text",
+    "Not specifying the count unit and accidentally generating 100 sentences instead of 100 paragraphs",
+    "Using the tool for production content; lorem ipsum should always be replaced with real copy before launch",
+    "Selecting code sample format when plain text is sufficient, over-complicating the output unnecessarily"
+  ],
+  "faq": [
+    "Is the text actual Latin? It's a scrambled, nonsensical derivation of a passage by Cicero; it looks like Latin but isn't grammatically correct.",
+    "Can I generate the same text consistently? Yes, use the seed option with the same settings to reproduce identical output for team consistency.",
+    "What's the difference between paragraph styles? Short has 1-2 sentences, Medium has 3-5, and Long has 5-8 sentences per paragraph.",
+    "Does the HTML format include any styling? No, it outputs semantic HTML tags (<p>, <h2>, <pre><code>) without inline styles or CSS classes."
+  ]
+}

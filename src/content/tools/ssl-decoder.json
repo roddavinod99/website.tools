@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "SSL certificate decoder that parses X.509 fields including subject, issuer, serial number, validity period, subject alternative names (SAN), key algorithm, and fingerprint. Displays an expiry countdown timer, chain analysis showing all intermediate and root certificates, an ASN.1 structure dump, and key usage/extended key usage details.",
+  "whyItExists": "Debugging SSL/TLS issues requires inspecting raw certificate fields that are opaque in most UIs. This tool surfaces every detail — including chain order, SANs, and ASN.1 structure — so developers can quickly diagnose misconfigurations.",
+  "whoShouldUse": "DevOps engineers, security analysts, penetration testers, and backend developers who manage TLS certificates or troubleshoot HTTPS connectivity.",
+  "useCases": [
+    "Verify the SAN list on a certificate matches the domain being deployed",
+    "Check the issuer chain to confirm intermediate certificates are present and in the correct order",
+    "Monitor certificate expiry with the countdown timer to avoid unexpected downtime",
+    "Compare fingerprints (SHA-1, SHA-256) before and after renewal to confirm the new cert is installed",
+    "Inspect the ASN.1 dump to detect unexpected extensions or malformed fields",
+    "Analyze key usage and extended key usage to confirm a cert is valid for its intended purpose (e.g., server auth, code signing)"
+  ],
+  "instructions": [
+    "Paste a PEM-encoded certificate (or several in chain order) into the input area.",
+    "Click Decode to parse the X.509 fields; the subject, issuer, serial, and validity are displayed at the top.",
+    "Review the Subject Alternative Names (SAN) list — both DNS names and IP addresses are shown.",
+    "Read the expiry counter showing days/hours/minutes until (or since) expiration in real time.",
+    "Click the Chain tab to view each certificate in the chain with its subject, issuer, and fingerprint.",
+    "Open the ASN.1 tab to see the raw ASN.1 structure dump for deep inspection."
+  ],
+  "examples": [
+    "Input: PEM block for a Let's Encrypt certificate → output shows subject CN=example.com, issuer CN=R3, valid 90 days, SANs [example.com, www.example.com], SHA-256 fingerprint, 45 days until expiry",
+    "Input: Chain of 3 PEM blocks (leaf → intermediate → root) → chain analysis shows each level, validates trust path order, and flags any missing intermediates"
+  ],
+  "bestPractices": [
+    "Always paste the full certificate chain (leaf + intermediates) to enable chain analysis",
+    "Check the SAN list before deploying — browsers require SAN match, not just CN",
+    "Set up alerts based on the expiry countdown and renew at least 30 days before expiration",
+    "Compare fingerprints before and after renewal to ensure the correct certificate was installed",
+    "Use the ASN.1 dump when a certificate is rejected by a client to find malformed extensions"
+  ],
+  "commonMistakes": [
+    "Pasting only the leaf certificate without the intermediate chain, causing trust errors in clients",
+    "Assuming the certificate is valid because the expiry date is in the future — check revocation and key usage too",
+    "Misreading the serial number as decimal when it is typically displayed in hex",
+    "Overlooking the subject CN when SAN is present — modern browsers ignore CN entirely",
+    "Not verifying the signature algorithm is strong enough (e.g., SHA-1 is deprecated)"
+  ],
+  "faq": [
+    "What PEM formats are accepted? Standard -----BEGIN CERTIFICATE----- blocks, including multiple concatenated blocks for chain analysis.",
+    "Can I decode a certificate from a remote server directly? Not yet — paste the PEM content obtained via openssl s_client or your browser.",
+    "What is the difference between SHA-1 and SHA-256 fingerprints? SHA-256 is the modern, cryptographically stronger hash; SHA-1 is deprecated for security.",
+    "Does it support wildcard certificates? Yes — wildcard SANs like *.example.com are shown with the asterisk preserved."
+  ]
+}

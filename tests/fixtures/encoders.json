@@ -1,0 +1,8 @@
+[
+  { "slug": "html-entity", "category": "Encoders", "name": "HTML Entity Encoder/Decoder", "input": "<div class=\"test\">Hello & Goodbye</div>", "action": "Encode", "expect": "output" },
+  { "slug": "binary", "category": "Encoders", "name": "Binary Encoder/Decoder", "input": "Hello", "action": "Encode", "expect": "output" },
+  { "slug": "hex", "category": "Encoders", "name": "Hex Encoder/Decoder", "input": "Hello", "action": "Encode", "expect": "output" },
+  { "slug": "escape-unescape", "category": "Encoders", "name": "String Escape/Unescape", "input": "Hello \"World\"\nNew Line", "action": "Escape", "expect": "output" },
+  { "slug": "image-to-base64", "category": "Encoders", "name": "Base64 Image Converter", "input": "", "action": "Convert", "expect": "output" },
+  { "slug": "morse-code", "category": "Encoders", "name": "Morse Code Converter", "input": "SOS", "action": "Convert", "expect": "output" }
+]

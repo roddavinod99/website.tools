@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "A dedicated standalone Base64 encoder that converts text or file input into Base64 with support for three character encodings (UTF-8, ASCII, UTF-16LE, UTF-16BE). Features include file upload with drag-and-drop, real-time encoding as you type, byte-size comparison between input and output, and optional data URI prefix for embedding files in web documents.",
+  "whyItExists": "Many workflows require fast, focused encoding without the distraction of a decoder. A streamlined interface for converting text or small files to Base64 for embedding in code, configuration, or data transfer.",
+  "whoShouldUse": "Frontend developers embedding assets in CSS/HTML, backend developers preparing test payloads, mobile developers encoding data for HTTP headers, and technical writers creating documentation with embedded examples.",
+  "useCases": [
+    "Encode a CSS or JS file to embed into a single HTML page for distribution",
+    "Convert a small icon or font file to data URI for inline use in CSS",
+    "Encode sensitive configuration values for storage in environment variables",
+    "Prepare Base64-encoded test data for API endpoint integration tests",
+    "Encode binary payloads for WebSocket or gRPC message transmission",
+    "Quickly convert a short text string to Base64 for a demonstration or example"
+  ],
+  "instructions": [
+    "Type or paste your text into the input area, or drag-and-drop a file — input is encoded as you type",
+    "Select the character encoding: UTF-8 (recommended), ASCII (strict 7-bit), UTF-16LE, or UTF-16BE",
+    "Toggle 'Data URI' on/off — when enabled, output is prefixed with 'data:...;base64,' header",
+    "Monitor the input/output byte counter showing encoding size inflation (~33%)",
+    "Copy the encoded result with 'Copy' button, or 'Copy as Data URI' for direct embedding",
+    "Configure line wrapping (every 76 chars) in Settings for compatibility with email/MIME standards"
+  ],
+  "examples": [
+    "Input: 'Hello World!' | UTF-8 | No Data URI => Output: 'SGVsbG8gV29ybGQh'",
+    "Input: [red 16x16 PNG icon] | Data URI ON => Output: 'data:image/png;base64,iVBORw0KGgo...'"
+  ],
+  "bestPractices": [
+    "Use UTF-8 encoding unless you have a specific reason otherwise — it is the universal standard",
+    "Enable line wrapping only for email/MIME compatibility (76 chars per line)",
+    "For assets under 1 KB, data URI encoding is efficient; for larger assets, HTTP overhead may be significant",
+    "Use 'Copy as Data URI' when embedding images in HTML/CSS to avoid typing the data: prefix manually",
+    "When encoding binary files, attach correct file extension hint for the receiving side"
+  ],
+  "commonMistakes": [
+    "Encoding in one encoding and expecting the recipient to decode with a different encoding",
+    "Leaving data URI mode on when encoding non-media text",
+    "Encoding very large files (>50 MB) in the browser — memory constraints may cause tab crash",
+    "Assuming Base64 provides any security — it is obfuscation, not encryption",
+    "Forgetting to account for the 33% size increase in bandwidth-sensitive contexts"
+  ],
+  "faq": [
+    "What is the difference from the combined Base64 tool? — The dedicated encoder always encodes, giving a simpler interface.",
+    "Can I encode multiple files at once? — One file at a time. For batch, use the combined Base64 tool.",
+    "Does the tool work offline? — Yes, it runs entirely in the browser with no server communication needed.",
+    "What MIME type is used for data URI? — Auto-detected from file extension. Unknown types use application/octet-stream."
+  ]
+}

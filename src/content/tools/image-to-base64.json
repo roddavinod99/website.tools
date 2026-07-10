@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Converts images to Base64 encoding with drag-and-drop support, offering three output modes: data URI (for HTML src), raw Base64, and base64url (URL-safe). Supports resizing before encoding, batch mode for multiple images, and a decode-back mode that converts Base64 strings back to viewable images.",
+  "whyItExists": "Embedding images directly in HTML, CSS, or JSON avoids extra HTTP requests but requires Base64 conversion. This tool makes it easy to generate the right format for each context and even resize images before encoding to keep the data URI small.",
+  "whoShouldUse": "Frontend developers inlining small images in HTML/CSS, mobile app developers embedding assets in JSON, and API developers encoding image data in responses.",
+  "useCases": [
+    "Convert a small icon to a Base64 data URI for inline use in HTML src or CSS background-image",
+    "Encode a profile photo to base64url for use in a URL parameter or JWT payload",
+    "Resize a large image to a thumbnail before encoding to keep the data URI under 32KB",
+    "Decode a Base64 string from an API response back to viewable image format for inspection",
+    "Batch convert multiple images at once to data URIs for embedding in a mobile app bundle"
+  ],
+  "instructions": [
+    "Drag and drop an image or click to browse and upload",
+    "Select output mode: Data URI (data:image/...), Raw Base64 (just the encoded string), or Base64url (URL-safe variant)",
+    "Optionally enable resize before encode and set max width/height to reduce the encoded output size",
+    "In batch mode, upload multiple images and see each result with a copy button",
+    "Switch to decode-back mode, paste a Base64 string, and view the decoded image preview",
+    "Copy the encoded output to clipboard with the copy button"
+  ],
+  "examples": [
+    "Input: 16x16 favicon.png. Output (Data URI mode): 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...'",
+    "Input: Resize a 4000x3000 photo to 200px wide before encode. Output: ~4KB base64url string instead of ~4MB raw."
+  ],
+  "bestPractices": [
+    "Only inline images under 32KB; larger images should remain as external files for caching",
+    "Use data URI mode for HTML/CSS and base64url mode for URLs or JSON payloads",
+    "Always resize images before encoding to minimize the Base64 size overhead (~33% larger)",
+    "Use decode-back mode to verify API Base64 responses are correct during development"
+  ],
+  "commonMistakes": [
+    "Inlining large images as data URIs, bloating HTML pages and preventing browser caching",
+    "Using data URIs where a URL would work, losing cache and CDN benefits",
+    "Using raw Base64 in a URL without switching to base64url, causing encoding issues with + and /",
+    "Forgetting that Base64 is ~33% larger than the original binary file size"
+  ],
+  "faq": [
+    "What is base64url vs Base64? base64url uses - instead of + and _ instead of / and omits = padding, making it URL-safe.",
+    "Can I decode a data URI back to an image? Yes, use decode-back mode and paste the full data URI string.",
+    "Is there a size limit for uploads? Very large images (>50MB) may time out; resize first for such files.",
+    "What file formats are supported? JPEG, PNG, GIF, WebP, SVG, BMP, and ICO."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Resizes images using 15 social media preset dimensions (Instagram, Twitter, Facebook, LinkedIn, etc.) or custom dimensions with unit selection (px, %, cm, inch). Supports fit modes (cover, contain, fill, inside, outside), batch upload, format conversion (JPEG, PNG, WebP, AVIF), EXIF data toggle, and a target max file size for automatic quality adjustment.",
+  "whyItExists": "Every platform requires specific image dimensions, and manually resizing each image is time-consuming. This tool provides presets for all major social platforms and batch processing so you can resize an entire photoshoot to platform-specific specs in seconds.",
+  "whoShouldUse": "Social media managers preparing images for multiple platforms, developers generating thumbnail variants, and content teams batch-processing images at scale.",
+  "useCases": [
+    "Resize a batch of product photos to Instagram square (1080x1080) for an online store",
+    "Convert high-res images to Twitter card size (1200x675) with contain fit to avoid cropping",
+    "Resize images to a custom width of 800px with auto-height while keeping EXIF data intact",
+    "Target a max file size of 100KB and let the tool automatically adjust quality to meet it",
+    "Batch convert and resize PNG images to JPEG at 1200px wide for web thumbnails"
+  ],
+  "instructions": [
+    "Upload images via drag-and-drop or file browser (supports batch upload)",
+    "Select a preset from the 15 social media options or enter custom dimensions",
+    "Choose the unit: px for absolute sizes, % for scaling, cm/inch for print",
+    "Select a fit mode: cover (crop to fill), contain (fit within), fill (stretch), inside/outside",
+    "Pick the output format: JPEG, PNG, WebP, or AVIF",
+    "Toggle EXIF data on or off; optionally set a max file size target and click Resize"
+  ],
+  "examples": [
+    "Input: 4000x3000 photo with Instagram Square preset (1080x1080) and cover fit. Output: 1080x1080 center-cropped image.",
+    "Input: 2000x1500 image with custom 800px width, auto-height, contain fit. Output: 800x600 image with aspect ratio preserved, letterboxed."
+  ],
+  "bestPractices": [
+    "Use 'cover' fit for social media presets where you want the image to fill the frame completely",
+    "Use 'contain' fit for product photos where cropping would hide important details",
+    "Keep EXIF data for photography workflows; strip it for web to reduce file size and remove location data",
+    "Use max file size target when uploading to platforms with strict file size limits"
+  ],
+  "commonMistakes": [
+    "Using cover fit for images where the subject is at the edge and would be cropped out",
+    "Setting a target file size too low, resulting in poor quality; test with one image first",
+    "Resizing to cm or inch without setting the correct DPI, resulting in wrong pixel dimensions",
+    "Converting from PNG to JPEG and losing transparency without noticing in the preview"
+  ],
+  "faq": [
+    "What are the 15 social media presets? They include Instagram (square/portrait/landscape), Twitter (post/header/card), Facebook (post/cover), LinkedIn, Pinterest, YouTube thumbnail, and more.",
+    "Does batch resize preserve filenames? Yes, filenames are kept with a dimension suffix appended.",
+    "What does 'max file size target' do? It automatically adjusts JPEG/WebP quality to stay under the specified size.",
+    "Can I resize and convert format at the same time? Yes, format conversion and resizing happen in one operation."
+  ]
+}

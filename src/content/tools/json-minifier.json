@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Minifies JSON by removing whitespace with options to strip boolean and number values, preserve specific keys from removal, and show a side-by-side size comparison. Includes a frequency chart showing value type distribution, and a pretty print toggle to switch between minified and formatted views instantly.",
+  "whyItExists": "Reducing JSON payload size is critical for API performance and bandwidth savings, but standard minification (removing whitespace) only goes so far. This tool offers additional compression strategies like stripping optional fields and visualizes the savings with a size comparison and frequency chart.",
+  "whoShouldUse": "API developers optimizing JSON response sizes, mobile developers reducing payload over cellular, and anyone shipping JSON where bandwidth is constrained.",
+  "useCases": [
+    "Minify a large JSON configuration file to reduce its size for embedding in a mobile app bundle",
+    "Strip boolean fields from a JSON API response when clients only care about data values",
+    "Compare original vs minified file sizes with the visual size comparison bar",
+    "Use the frequency chart to understand the distribution of value types in a JSON document",
+    "Toggle between pretty print and minified views to review the content before and after"
+  ],
+  "instructions": [
+    "Paste JSON into the input area or upload a .json file",
+    "Toggle whitespace removal on/off (off leaves formatting, on minifies)",
+    "Enable strip boolean or strip number to remove all boolean true/false or number values",
+    "Add key names to preserve keys to keep specific keys from being stripped",
+    "Review the size comparison showing original size, minified size, and percentage reduction",
+    "View the frequency chart showing counts of string, number, boolean, null, array, and object values"
+  ],
+  "examples": [
+    "Input: '{\"name\":\"John\",\"age\":30,\"active\":true}' with strip booleans. Output: '{\"name\":\"John\",\"age\":30}' (5% size reduction).",
+    "Input: A 100KB JSON file with whitespace removal only. Output: 65KB minified with size comparison showing 35% reduction."
+  ],
+  "bestPractices": [
+    "Only strip booleans or numbers if the consuming client does not need those fields",
+    "Use preserve keys to keep structural fields like 'id' or 'type' even when stripping values",
+    "Use the frequency chart to identify the most common value types before designing a compression strategy",
+    "Toggle pretty print after minification to verify the structure is intact before deploying"
+  ],
+  "commonMistakes": [
+    "Stripping booleans when some boolean fields are semantically necessary for the client",
+    "Using preserve keys but misspelling the key name, causing it to be stripped anyway",
+    "Minifying JSON that still needs editing, making further development challenging",
+    "Assuming size reduction from whitespace removal is the same as gzip; gzip may perform differently"
+  ],
+  "faq": [
+    "What size reductions can I expect? Whitespace removal typically reduces 20-40%; stripping optional fields adds 5-20%.",
+    "Does the frequency chart count nested values? Yes, it recursively traverses the entire document.",
+    "Can I restore stripped values? No, stripping is irreversible; keep the original copy before minifying.",
+    "What is the difference between this and json-beautifier? This focuses on compression with size stats; beautifier focuses on formatting with themes."
+  ]
+}

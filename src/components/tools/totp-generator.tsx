@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { Copy, Plus, Trash2, RefreshCw, QrCode } from "lucide-react";
+import { Copy, Plus, Trash2, RefreshCw, QrCode, Download } from "lucide-react";
+import QRCode from "qrcode";
 
 function base32ToBytes(base32: string): Uint8Array {
   const cleaned = base32.replace(/[^A-Za-z2-7]/g, "").toUpperCase();
@@ -92,6 +93,7 @@ export function TotpGenerator() {
   const [codes, setCodes] = useState<Record<string, string>>({});
   const [history, setHistory] = useState<CodeHistory[]>([]);
   const [showQR, setShowQR] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState("");
   const [copied, setCopied] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(() => { const s = 30; const n = Math.floor(Date.now() / 1000); return s - (n % s); });
   const [progressPct, setProgressPct] = useState(() => { const s = 30; const n = Math.floor(Date.now() / 1000); const r = s - (n % s); return (r / s) * 100; });
@@ -131,6 +133,15 @@ export function TotpGenerator() {
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [updateCode]);
 
+  useEffect(() => {
+    const a = activeAccount;
+    if (showQR && a) {
+      const enc = encodeURIComponent(a.label);
+      const uri = `otpauth://totp/${enc}?secret=${a.secret}&algorithm=${a.algorithm}&digits=${a.digits}&period=${a.step}${a.steam ? "&issuer=Steam" : ""}`;
+      QRCode.toDataURL(uri, { width: 200, margin: 2, color: { dark: "#1e293b", light: "#ffffff" } }).then(setQrDataUrl).catch(() => setQrDataUrl(""));
+    }
+  }, [showQR, activeAccount]);
+
   const addAccount = () => {
     const newAcc: Account = {
       id: crypto.randomUUID(), label: `Account ${accounts.length + 1}`,
@@ -154,6 +165,27 @@ export function TotpGenerator() {
     await navigator.clipboard.writeText(code);
     setCopied(code);
     setTimeout(() => setCopied(""), 2000);
+  };
+
+  const exportConfig = () => {
+    const a = activeAccount;
+    if (!a) return;
+    const config = {
+      label: a.label,
+      secret: a.secret,
+      algorithm: a.algorithm,
+      digits: a.digits,
+      period: a.step,
+      steam: a.steam,
+      type: "totp",
+    };
+    const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const el = document.createElement("a");
+    el.href = url;
+    el.download = `${a.label.replace(/\s+/g, "-").toLowerCase()}-totp-config.json`;
+    el.click();
+    URL.revokeObjectURL(url);
   };
 
   const otpauthUri = useMemo(() => {
@@ -219,7 +251,7 @@ export function TotpGenerator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Time Step</label>
           <div className="flex gap-1">
-            {[30, 60].concat(activeAccount?.step && ![30, 60].includes(activeAccount.step) ? [activeAccount.step] : []).filter((v, i, a) => a.indexOf(v) === i).map((s) => (
+            {[15, 30, 60].concat(activeAccount?.step && ![15, 30, 60].includes(activeAccount.step) ? [activeAccount.step] : []).filter((v, i, a) => a.indexOf(v) === i).map((s) => (
               <button key={s} onClick={() => updateAccount(activeId, { step: s })}
                 className={`flex-1 rounded px-2 py-1.5 text-xs font-medium transition-colors ${(activeAccount?.step || 30) === s ? "bg-brand-500 text-white" : "bg-surface-100 text-surface-700 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border"}`}>
                 {s}s
@@ -263,16 +295,30 @@ export function TotpGenerator() {
         </button>
         <button onClick={() => setShowQR(!showQR)}
           className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
-          <QrCode size={14} /> {showQR ? "Hide QR" : "Show QR URI"}
+          <QrCode size={14} /> {showQR ? "Hide QR" : "Show QR"}
+        </button>
+        <button onClick={exportConfig}
+          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
+          <Download size={14} /> Export JSON
         </button>
       </div>
 
       {showQR && (
         <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
-          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">otpauth:// URI</p>
-          <div className="flex gap-2">
-            <code className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 break-all dark:border-dark-border dark:bg-dark-bg dark:text-dark-text select-all">{otpauthUri}</code>
-            <button onClick={() => copyCode(otpauthUri)} className="text-xs text-brand-500 hover:text-brand-600 shrink-0"><Copy size={14} /></button>
+          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Scan with authenticator app</p>
+          <div className="flex flex-col items-center gap-3">
+            {qrDataUrl ? (
+              <img src={qrDataUrl} alt="TOTP QR Code" className="rounded-lg border border-surface-200 dark:border-dark-border" />
+            ) : (
+              <div className="w-[200px] h-[200px] rounded-lg bg-surface-200 dark:bg-dark-border flex items-center justify-center text-xs text-surface-400">Generating QR...</div>
+            )}
+            <div className="w-full">
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">otpauth:// URI</p>
+              <div className="flex gap-2">
+                <code className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 break-all dark:border-dark-border dark:bg-dark-bg dark:text-dark-text select-all">{otpauthUri}</code>
+                <button onClick={() => copyCode(otpauthUri)} className="text-xs text-brand-500 hover:text-brand-600 shrink-0"><Copy size={14} /></button>
+              </div>
+            </div>
           </div>
         </div>
       )}

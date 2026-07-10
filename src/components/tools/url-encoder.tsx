@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 type Mode = "encode" | "decode";
 type EncodingType = "component" | "full";
@@ -49,6 +49,24 @@ function validateUrl(str: string): { valid: boolean; error?: string } {
       return { valid: false, error: "Malformed URL detected" };
     }
     return { valid: true };
+  }
+}
+
+function parseUrlParts(input: string): { protocol: string; hostname: string; path: string; query: string; hash: string; params: { key: string; value: string }[] } | null {
+  try {
+    const url = new URL(input.startsWith("http") ? input : `https://${input}`);
+    const params: { key: string; value: string }[] = [];
+    url.searchParams.forEach((value, key) => params.push({ key, value }));
+    return {
+      protocol: url.protocol,
+      hostname: url.hostname,
+      path: url.pathname,
+      query: url.search,
+      hash: url.hash,
+      params,
+    };
+  } catch {
+    return null;
   }
 }
 
@@ -135,6 +153,11 @@ export function URLEncoder() {
   };
 
   const charRefEntries = Object.entries(SPECIAL_CHARS_REF).filter(([c]) => input.includes(c));
+
+  const urlParts = useMemo(() => {
+    if (!input.trim()) return null;
+    return parseUrlParts(input);
+  }, [input]);
 
   return (
     <div className="space-y-4">
@@ -243,6 +266,42 @@ export function URLEncoder() {
                 {char} → {encoded}
               </span>
             ))}
+          </div>
+        </div>
+      )}
+
+      {urlParts && urlParts.params.length > 0 && (
+        <div>
+          <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">URL Analysis</p>
+          <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1 p-2 text-xs font-mono bg-surface-50 dark:bg-dark-surface">
+              <span className="text-surface-400">Protocol:</span>
+              <span className="text-surface-700 dark:text-dark-text">{urlParts.protocol}</span>
+              <span className="text-surface-400">Hostname:</span>
+              <span className="text-surface-700 dark:text-dark-text">{urlParts.hostname}</span>
+              <span className="text-surface-400">Path:</span>
+              <span className="text-surface-700 dark:text-dark-text break-all">{urlParts.path}</span>
+              {urlParts.query && <><span className="text-surface-400">Query:</span><span className="text-surface-700 dark:text-dark-text break-all">{urlParts.query}</span></>}
+              {urlParts.hash && <><span className="text-surface-400">Hash:</span><span className="text-surface-700 dark:text-dark-text">{urlParts.hash}</span></>}
+            </div>
+          </div>
+          <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+            <table className="w-full text-xs font-mono">
+              <thead>
+                <tr className="bg-surface-50 text-surface-500 dark:bg-dark-surface dark:text-dark-muted">
+                  <th className="px-2 py-1 text-left">Parameter</th>
+                  <th className="px-2 py-1 text-left">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {urlParts.params.map((p, i) => (
+                  <tr key={i} className="border-t border-surface-100 text-surface-700 dark:border-dark-border dark:text-dark-text">
+                    <td className="px-2 py-1 text-brand-500">{p.key}</td>
+                    <td className="px-2 py-1 break-all">{p.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

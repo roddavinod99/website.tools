@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 
 type GeneratorMode = "image" | "text";
 type BorderRadiusOption = "square" | "rounded" | "circle";
@@ -32,6 +32,17 @@ const SPECIAL_SIZES: FaviconSize[] = [
 ];
 
 const ALL_FAVICON_SIZES = [...FAVICON_SIZES, ...SPECIAL_SIZES];
+
+const FONT_FAMILIES = [
+  "Arial, sans-serif",
+  "Helvetica, sans-serif",
+  "Georgia, serif",
+  "Times New Roman, serif",
+  "Courier New, monospace",
+  "Verdana, sans-serif",
+  "Trebuchet MS, sans-serif",
+  "Impact, sans-serif",
+];
 
 function generateICO(sizes: { data: string; size: number }[]): string {
   const headerSize = 6;
@@ -130,6 +141,108 @@ function generateHTMLTags(backgroundColor: string, sizes: FaviconSize[]): string
   return tags.join("\n");
 }
 
+function crc32(data: Uint8Array): number {
+  let crc = 0xffffffff;
+  const table = new Int32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let j = 0; j < 8; j++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    table[i] = c;
+  }
+  for (let i = 0; i < data.length; i++) crc = table[(crc ^ data[i]) & 0xff] ^ (crc >>> 8);
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function dosDateTime(date: Date): [number, number] {
+  const d = date.getDate(), m = date.getMonth() + 1, y = date.getFullYear();
+  const h = date.getHours(), min = date.getMinutes(), s = date.getSeconds();
+  const datePart = ((y - 1980) << 9) | (m << 5) | d;
+  const timePart = (h << 11) | (min << 5) | Math.floor(s / 2);
+  return [timePart, datePart];
+}
+
+async function createZIP(files: { name: string; data: Blob }[]): Promise<Blob> {
+  const encoder = new TextEncoder();
+  const chunks: Uint8Array[] = [];
+  const centralEntries: Uint8Array[] = [];
+  let localOffset = 0;
+
+  for (const file of files) {
+    const nameBytes = encoder.encode(file.name);
+    const dataBytes = new Uint8Array(await file.data.arrayBuffer());
+    const crc = crc32(dataBytes);
+
+    const localHeader = new ArrayBuffer(30 + nameBytes.length);
+    const lh = new Uint8Array(localHeader);
+    const lhDV = new DataView(localHeader);
+
+    lhDV.setUint32(0, 0x04034b50, true);
+    lhDV.setUint16(4, 20, true);
+    lhDV.setUint16(6, 0, true);
+    lhDV.setUint16(8, 0, true);
+    const [time, date] = dosDateTime(new Date());
+    lhDV.setUint16(10, time, true);
+    lhDV.setUint16(12, date, true);
+    lhDV.setUint32(14, crc, true);
+    lhDV.setUint32(18, dataBytes.length, true);
+    lhDV.setUint32(22, dataBytes.length, true);
+    lhDV.setUint16(26, nameBytes.length, true);
+    lh.set(nameBytes, 30);
+
+    chunks.push(lh);
+    chunks.push(dataBytes);
+
+    const centralHeader = new ArrayBuffer(46 + nameBytes.length);
+    const ch = new Uint8Array(centralHeader);
+    const chDV = new DataView(centralHeader);
+
+    chDV.setUint32(0, 0x02014b50, true);
+    chDV.setUint16(4, 20, true);
+    chDV.setUint16(6, 20, true);
+    chDV.setUint16(8, 0, true);
+    chDV.setUint16(10, 0, true);
+    const [time2, date2] = dosDateTime(new Date());
+    chDV.setUint16(12, time2, true);
+    chDV.setUint16(14, date2, true);
+    chDV.setUint32(16, crc, true);
+    chDV.setUint32(20, dataBytes.length, true);
+    chDV.setUint32(24, dataBytes.length, true);
+    chDV.setUint16(28, nameBytes.length, true);
+    chDV.setUint16(30, 0, true);
+    chDV.setUint16(32, 0, true);
+    chDV.setUint16(34, 0, true);
+    chDV.setUint16(36, 0, true);
+    chDV.setUint32(38, 0, true);
+    chDV.setUint32(42, localOffset, true);
+    ch.set(nameBytes, 46);
+
+    centralEntries.push(ch);
+    localOffset += 30 + nameBytes.length + dataBytes.length;
+  }
+
+  const centralSize = centralEntries.reduce((s, e) => s + e.length, 0);
+  const centralOffset = chunks.reduce((s, e) => s + e.length, 0);
+
+  const eocd = new ArrayBuffer(22);
+  const eocdDV = new DataView(eocd);
+  eocdDV.setUint32(0, 0x06054b50, true);
+  eocdDV.setUint16(4, 0, true);
+  eocdDV.setUint16(6, 0, true);
+  eocdDV.setUint16(8, files.length, true);
+  eocdDV.setUint16(10, files.length, true);
+  eocdDV.setUint32(12, centralSize, true);
+  eocdDV.setUint32(16, centralOffset, true);
+  eocdDV.setUint16(20, 0, true);
+
+  const allParts = [...chunks, ...centralEntries, new Uint8Array(eocd)];
+  const totalLen = allParts.reduce((s, e) => s + e.length, 0);
+  const result = new Uint8Array(totalLen);
+  let pos = 0;
+  for (const part of allParts) { result.set(part, pos); pos += part.length; }
+
+  return new Blob([result], { type: "application/zip" });
+}
+
 export function FaviconGenerator() {
   const [mode, setMode] = useState<GeneratorMode>("text");
   const [text, setText] = useState("⚡");
@@ -139,15 +252,28 @@ export function FaviconGenerator() {
   const [fillType, setFillType] = useState<FillType>("solid");
   const [borderRadius, setBorderRadius] = useState<BorderRadiusOption>("rounded");
   const [padding, setPadding] = useState(10);
+  const [fontFamily, setFontFamily] = useState("Arial, sans-serif");
+  const [fontSize, setFontSize] = useState(0);
   const [generatedSizes, setGeneratedSizes] = useState<{ size: number; label: string; dataUrl: string }[]>([]);
   const [icoUrl, setIcoUrl] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<number[]>([16, 32, 48, 64, 96, 128, 192, 256, 512]);
   const [dragging, setDragging] = useState(false);
+  const [error, setError] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = useCallback((file: File | null) => {
-    if (!file || !file.type.startsWith("image/")) return;
+    if (!file) return;
+    const validTypes = ["image/png", "image/jpeg", "image/webp", "image/svg+xml"];
+    if (!validTypes.includes(file.type)) {
+      setError("Please upload PNG, JPG, WebP, or SVG (max 10MB)");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setError("File must be under 10MB");
+      return;
+    }
+    setError("");
     const url = URL.createObjectURL(file);
     setImageUrl(url);
     setMode("image");
@@ -182,17 +308,82 @@ export function FaviconGenerator() {
     if (!canvas) return;
     const activeSizes = ALL_FAVICON_SIZES.filter((s) => selectedSizes.includes(s.size));
     if (activeSizes.length === 0) return;
+    setError("");
 
     const results: { size: number; label: string; dataUrl: string }[] = [];
-    const maxSize = Math.max(...activeSizes.map((s) => s.size));
 
-    const img = new Image();
-    img.onload = () => {
+    if (mode === "image" && imageUrl) {
+      const img = new Image();
+      img.onload = () => {
+        for (const fav of activeSizes) {
+          const s = fav.size;
+          canvas.width = s;
+          canvas.height = s;
+          const ctx = canvas.getContext("2d")!;
+
+          ctx.clearRect(0, 0, s, s);
+
+          if (borderRadius === "circle") {
+            ctx.beginPath();
+            ctx.arc(s / 2, s / 2, s / 2, 0, Math.PI * 2);
+            ctx.clip();
+          } else if (borderRadius === "rounded") {
+            const r = s * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(r, 0);
+            ctx.lineTo(s - r, 0);
+            ctx.quadraticCurveTo(s, 0, s, r);
+            ctx.lineTo(s, s - r);
+            ctx.quadraticCurveTo(s, s, s - r, s);
+            ctx.lineTo(r, s);
+            ctx.quadraticCurveTo(0, s, 0, s - r);
+            ctx.lineTo(0, r);
+            ctx.quadraticCurveTo(0, 0, r, 0);
+            ctx.closePath();
+            ctx.clip();
+          }
+
+          if (fillType === "gradient") {
+            const gradient = ctx.createLinearGradient(0, 0, s, s);
+            gradient.addColorStop(0, bgColor);
+            gradient.addColorStop(1, adjustColor(bgColor, -40));
+            ctx.fillStyle = gradient;
+          } else {
+            ctx.fillStyle = bgColor;
+          }
+          ctx.fillRect(0, 0, s, s);
+
+          const pad = s * (padding / 100);
+          const drawSize = s - pad * 2;
+          ctx.drawImage(img, pad, pad, drawSize, drawSize);
+
+          results.push({
+            size: s,
+            label: fav.label,
+            dataUrl: canvas.toDataURL("image/png"),
+          });
+        }
+        setGeneratedSizes(results);
+
+        const icoSizes = results
+          .filter((r) => [16, 32, 48, 64].includes(r.size))
+          .map((r) => ({ data: r.dataUrl, size: r.size }));
+        if (icoSizes.length > 0) {
+          setIcoUrl(generateICO(icoSizes));
+        } else {
+          setIcoUrl(null);
+        }
+      };
+      img.onerror = () => setError("Failed to load image");
+      img.src = imageUrl;
+    } else if (mode === "text" && text) {
       for (const fav of activeSizes) {
         const s = fav.size;
         canvas.width = s;
         canvas.height = s;
         const ctx = canvas.getContext("2d")!;
+
+        ctx.clearRect(0, 0, s, s);
 
         if (borderRadius === "circle") {
           ctx.beginPath();
@@ -224,18 +415,12 @@ export function FaviconGenerator() {
         }
         ctx.fillRect(0, 0, s, s);
 
-        if (mode === "image" && img.complete && img.naturalWidth > 0) {
-          const pad = s * (padding / 100);
-          const drawSize = s - pad * 2;
-          ctx.drawImage(img, pad, pad, drawSize, drawSize);
-        } else if (mode === "text" && text) {
-          ctx.fillStyle = textColor;
-          const fontSize = s * 0.6;
-          ctx.font = `bold ${fontSize}px sans-serif`;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(text.slice(0, 2), s / 2, s / 2);
-        }
+        ctx.fillStyle = textColor;
+        const fs = fontSize || s * 0.5;
+        ctx.font = `bold ${fs}px ${fontFamily}`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text.slice(0, 5), s / 2, s / 2);
 
         results.push({
           size: s,
@@ -245,28 +430,6 @@ export function FaviconGenerator() {
       }
       setGeneratedSizes(results);
 
-      if (results.length > 0) {
-        const icoSizes = results
-          .filter((r) => [16, 32, 48, 64].includes(r.size))
-          .map((r) => ({ data: r.dataUrl, size: r.size }));
-        if (icoSizes.length > 0) {
-          setIcoUrl(generateICO(icoSizes));
-        } else {
-          setIcoUrl(null);
-        }
-      }
-    };
-
-    if (mode === "image" && imageUrl) {
-      img.src = imageUrl;
-    } else {
-      const imgData = canvas.toDataURL("image/png");
-      results.push({
-        size: maxSize,
-        label: "Preview",
-        dataUrl: imgData,
-      });
-      setGeneratedSizes(results);
       const icoSizes = results
         .filter((r) => [16, 32, 48, 64].includes(r.size))
         .map((r) => ({ data: r.dataUrl, size: r.size }));
@@ -275,13 +438,10 @@ export function FaviconGenerator() {
       } else {
         setIcoUrl(null);
       }
-      return;
+    } else {
+      setError("Please enter text or upload an image");
     }
-  }, [mode, text, imageUrl, bgColor, textColor, fillType, borderRadius, padding, selectedSizes]);
-
-  useEffect(() => {
-    if (generatedSizes.length > 0) generate();
-  }, [borderRadius, padding, generate, generatedSizes.length]);
+  }, [mode, text, imageUrl, bgColor, textColor, fillType, borderRadius, padding, selectedSizes, fontFamily, fontSize]);
 
   const downloadAll = useCallback(() => {
     if (generatedSizes.length === 0) return;
@@ -314,25 +474,40 @@ export function FaviconGenerator() {
     }, 200 * (generatedSizes.length + 2));
   }, [generatedSizes, icoUrl, bgColor]);
 
+  const downloadAllAsZip = useCallback(async () => {
+    if (generatedSizes.length === 0) return;
+    const files: { name: string; data: Blob }[] = [];
+
+    if (icoUrl) {
+      const resp = await fetch(icoUrl);
+      files.push({ name: "favicon.ico", data: await resp.blob() });
+    }
+
+    for (const gen of generatedSizes) {
+      const resp = await fetch(gen.dataUrl);
+      files.push({ name: `favicon-${gen.size}x${gen.size}.png`, data: await resp.blob() });
+    }
+
+    const manifest = generateManifest(bgColor, generatedSizes.map((g) => g.size));
+    files.push({ name: "manifest.json", data: new Blob([manifest], { type: "application/json" }) });
+
+    const zipBlob = await createZIP(files);
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(zipBlob);
+    link.download = "favicons.zip";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }, [generatedSizes, icoUrl, bgColor]);
+
   const copyHTML = useCallback(async () => {
     const tags = generateHTMLTags(bgColor, ALL_FAVICON_SIZES.filter((s) => selectedSizes.includes(s.size)));
     await navigator.clipboard.writeText(tags);
   }, [bgColor, selectedSizes]);
 
-  const downloadSVG = useCallback(() => {
-    const size = 64;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-  <rect width="${size}" height="${size}" rx="${borderRadius === "circle" ? size / 2 : borderRadius === "rounded" ? size * 0.2 : 0}" fill="${bgColor}"/>
-  ${mode === "text" && text ? `<text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="${size * 0.6}px" font-weight="bold" fill="${textColor}" font-family="sans-serif">${text.slice(0, 2)}</text>` : ""}
-</svg>`;
-    const blob = new Blob([svg], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = "favicon.svg";
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-  }, [mode, text, bgColor, textColor, borderRadius]);
+  const copyManifest = useCallback(async () => {
+    const manifest = generateManifest(bgColor, generatedSizes.map((g) => g.size));
+    await navigator.clipboard.writeText(manifest);
+  }, [bgColor, generatedSizes]);
 
   const handleGenerate = useCallback(() => {
     generate();
@@ -367,16 +542,45 @@ export function FaviconGenerator() {
         </button>
       </div>
 
+      {error && <p className="text-sm text-red-500">{error}</p>}
+
       {mode === "text" ? (
-        <div>
-          <label className="mb-1 block text-sm font-medium text-surface-700 dark:text-dark-text">Text / Emoji</label>
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="⚡"
-            maxLength={2}
-            className="w-24 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          />
+        <div className="space-y-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-surface-700 dark:text-dark-text">Text / Emoji (1-5 characters)</label>
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="⚡"
+              maxLength={5}
+              className="w-32 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+            />
+          </div>
+          <div className="flex flex-wrap items-end gap-3">
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted">Font Family</label>
+              <select
+                value={fontFamily}
+                onChange={(e) => setFontFamily(e.target.value)}
+                className="rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+              >
+                {FONT_FAMILIES.map((f) => (
+                  <option key={f} value={f}>{f.split(",")[0]}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted">Font Size (0 = auto)</label>
+              <input
+                type="number"
+                value={fontSize}
+                onChange={(e) => setFontSize(parseInt(e.target.value) || 0)}
+                min={0}
+                max={500}
+                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+              />
+            </div>
+          </div>
         </div>
       ) : (
         <div
@@ -393,7 +597,7 @@ export function FaviconGenerator() {
           <input
             ref={fileRef}
             type="file"
-            accept="image/*"
+            accept="image/png,image/jpeg,image/webp,image/svg+xml"
             className="hidden"
             onChange={(e) => handleImageUpload(e.target.files?.[0] ?? null)}
           />
@@ -404,7 +608,7 @@ export function FaviconGenerator() {
               <svg className="mb-1 h-6 w-6 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-xs text-surface-400 dark:text-dark-muted">Click or drop image</p>
+              <p className="text-xs text-surface-400 dark:text-dark-muted">Drop PNG, JPG, WebP, SVG (max 10MB)</p>
             </>
           )}
         </div>
@@ -518,16 +722,22 @@ export function FaviconGenerator() {
               Download All ({generatedSizes.length + 2} files)
             </button>
             <button
+              onClick={downloadAllAsZip}
+              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+            >
+              Download as ZIP
+            </button>
+            <button
               onClick={copyHTML}
               className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Copy HTML Tags
             </button>
             <button
-              onClick={downloadSVG}
+              onClick={copyManifest}
               className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
-              Download SVG
+              Copy Manifest JSON
             </button>
           </>
         )}
@@ -555,11 +765,7 @@ export function FaviconGenerator() {
             {icoUrl && (
               <div className="text-center">
                 <p className="text-xs text-surface-500 dark:text-dark-muted">favicon.ico</p>
-                <img
-                  src={icoUrl}
-                  alt="ICO"
-                  className="mx-auto mt-1 h-8 w-8"
-                />
+                <img src={icoUrl} alt="ICO" className="mx-auto mt-1 h-8 w-8" />
               </div>
             )}
           </div>
@@ -578,9 +784,7 @@ export function FaviconGenerator() {
                   className="mb-1 rounded"
                   style={{ width: Math.min(gen.size, 64), height: Math.min(gen.size, 64) }}
                 />
-                <span className="text-[10px] text-surface-500 dark:text-dark-muted">
-                  {gen.size}x{gen.size}
-                </span>
+                <span className="text-[10px] text-surface-500 dark:text-dark-muted">{gen.size}x{gen.size}</span>
               </div>
             ))}
           </div>
@@ -588,14 +792,24 @@ export function FaviconGenerator() {
       )}
 
       {generatedSizes.length > 0 && (
-        <details className="rounded-lg border border-surface-200 dark:border-dark-border">
-          <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
-            HTML Snippet
-          </summary>
-          <pre className="max-h-40 overflow-auto border-t border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            {generateHTMLTags(bgColor, ALL_FAVICON_SIZES.filter((s) => selectedSizes.includes(s.size)))}
-          </pre>
-        </details>
+        <>
+          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+            <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
+              HTML Code Snippets
+            </summary>
+            <pre className="max-h-40 overflow-auto border-t border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              {generateHTMLTags(bgColor, ALL_FAVICON_SIZES.filter((s) => selectedSizes.includes(s.size)))}
+            </pre>
+          </details>
+          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+            <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
+              Web App Manifest JSON
+            </summary>
+            <pre className="max-h-40 overflow-auto border-t border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              {generateManifest(bgColor, generatedSizes.map((g) => g.size))}
+            </pre>
+          </details>
+        </>
       )}
     </div>
   );

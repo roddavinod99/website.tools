@@ -8,6 +8,11 @@ interface RateEntry {
   reset: number;
 }
 
+// In-memory rate limit map — shared state is per-process only.
+// In multi-instance/serverless deployments, each instance has independent state,
+// so rate limiting is ineffective. For production with multiple replicas, use a
+// reverse proxy (Cloudflare, Nginx) or a shared store (Upstash/Redis) instead.
+// Set DISABLE_RATE_LIMIT=true env var to bypass entirely behind a reverse proxy.
 const rateLimitMap = new Map<string, RateEntry>();
 
 function evictStale() {
@@ -59,7 +64,7 @@ export default function proxy(request: NextRequest) {
 
   response.headers.set("X-Powered-By", "DevStackIO");
 
-  if (request.nextUrl.pathname.startsWith("/api/")) {
+  if (!process.env.DISABLE_RATE_LIMIT && request.nextUrl.pathname.startsWith("/api/")) {
     const retryAfter = isRateLimited(request);
     if (retryAfter) {
       return NextResponse.json(

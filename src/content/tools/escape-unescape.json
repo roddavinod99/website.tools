@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Escapes and unescapes strings across 7 modes: JavaScript, JSON, HTML, URL, SQL (single quote), SQL (double quote), and CSV. Provides three character targeting options (all special chars, only quotes, only backslashes). Includes a character map display showing each character's transformation side-by-side and real-time input vs output length preview.",
+  "whyItExists": "Injection attacks (XSS, SQL injection, CSV injection) are often caused by improper string escaping. A dedicated tool covering multiple contexts helps developers understand and apply correct escaping for their specific use case.",
+  "whoShouldUse": "Web developers sanitizing user input, security engineers auditing code for injection vulnerabilities, QA testers crafting injection test cases, and anyone debugging encoding issues in data pipelines.",
+  "useCases": [
+    "Escape a user string for safe insertion into a JavaScript string literal",
+    "Unescape HTML entities ('&lt;' back to '<') from scraped web content",
+    "Escape values for safe SQL query inclusion to prevent SQL injection",
+    "URL-encode query parameters containing &, =, and spaces",
+    "Use character map to understand how each character transforms across modes",
+    "Escape a string for CSV output containing commas, quotes, or newlines"
+  ],
+  "instructions": [
+    "Paste your input string into the text area",
+    "Select escape/unescape mode from 7 options: JavaScript, JSON, HTML, URL, SQL (single/double quote), CSV",
+    "Choose character targeting: 'All Special Characters', 'Only Quotes', or 'Only Backslashes'",
+    "Click 'Escape' or 'Unescape' — result appears with size comparison",
+    "Open 'Character Map' panel for a table showing each character's escaped counterpart",
+    "Copy result to clipboard or use 'Swap' for iterative escaping/unescaping"
+  ],
+  "examples": [
+    "Input: 'Hello \"World\" & <test>' | HTML | Escape => Output: 'Hello &quot;World&quot; &amp; &lt;test&gt;'",
+    "Input: 'Hello%20World%21' | URL | Unescape => Output: 'Hello World!'"
+  ],
+  "bestPractices": [
+    "Always match escape mode to the target context — HTML for HTML, JS for JavaScript, SQL for SQL queries",
+    "Use character map to audit escaped output when debugging injection issues",
+    "Use parameterized queries instead of manual SQL escaping in production",
+    "Use 'Only Quotes' targeting for minimal escaping of known-safe strings with quotes",
+    "When unescaping, ensure source uses the same mode you are unescaping with"
+  ],
+  "commonMistakes": [
+    "HTML-escaping a string for <script> context — HTML escaping doesn't prevent XSS in JS context",
+    "Using URL escape when URL component escape is needed — URL mode handles all special chars",
+    "Double-escaping an already-escaped string",
+    "Using SQL escape as substitute for parameterized queries in production",
+    "CSV-escaping unnecessarily — only needed when value contains delimiter, quote, or newlines"
+  ],
+  "faq": [
+    "Difference between JavaScript and JSON escaping? — JSON also escapes slash (/) and uses strict double quotes. JS mode allows both quote types.",
+    "Can this help prevent XSS? — Yes, with correct context matching. But sanitization libraries are recommended for comprehensive XSS prevention.",
+    "What is CSV injection? — When a cell starts with =, +, -, or @, interpreted as formulas. CSV escape prevents this.",
+    "SQL double-quote mode? — Escapes double quotes by doubling them. For identifier quoting (table/column names) in double quotes."
+  ]
+}

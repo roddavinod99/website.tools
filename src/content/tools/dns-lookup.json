@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Performs DNS lookups across 11 record types (A, AAAA, CNAME, MX, NS, TXT, SOA, SRV, PTR, CAA, ANY). Results displayed in an organized table with TTL values, raw DNS response data for advanced analysis, and a WHOIS summary showing domain registration status. Includes a history feature saving recent lookups for quick re-querying.",
+  "whyItExists": "Debugging DNS issues is a common task for developers and system administrators. A unified visual DNS tool provides clear organized views of all record types, TTLs, and registration data in one interface with accessible history.",
+  "whoShouldUse": "DevOps engineers troubleshooting DNS propagation, system administrators managing domain configurations, web developers diagnosing connectivity issues, and anyone maintaining domain records.",
+  "useCases": [
+    "Look up A and AAAA records to verify DNS resolution points to correct IPs",
+    "Check MX records to confirm email routing after a mail server migration",
+    "Examine TXT records for SPF, DKIM, and DMARC email authentication",
+    "Perform reverse DNS (PTR) lookup on an IP to find associated hostname",
+    "Check CAA records for authorized SSL certificate issuers",
+    "View WHOIS summary for domain expiry and registrar info before renewal"
+  ],
+  "instructions": [
+    "Enter a domain name or IP address (for PTR) into the search field",
+    "Select record types: A, AAAA, CNAME, MX, NS, TXT, SOA, SRV, PTR, CAA, or ALL",
+    "Click 'Lookup' — results in a table sorted by type with name, type, value, and TTL columns",
+    "Click 'Raw' toggle on any result for full DNS response packet data (flags, rcode, EDNS)",
+    "Switch to 'WHOIS' tab for registration summary: registrar, dates, name servers, status",
+    "Use 'History' tab for previous lookups — each shows domain, timestamp, and 'Re-lookup' button"
+  ],
+  "examples": [
+    "Input: 'google.com' | ALL => Table: A (multiple IPs), AAAA (IPv6), MX (5 servers with priorities), NS (4 servers), TXT (SPF/DKIM/DMARC), SOA (primary NS, serial, timers)",
+    "Input: '8.8.8.8' | PTR => Output: 'dns.google'"
+  ],
+  "bestPractices": [
+    "Use ALL sparingly — many queries may trigger authoritative server rate limiting",
+    "Check TTL values to estimate DNS propagation time — 86400 = up to 24 hours",
+    "Combine MX and TXT lookups for email delivery diagnosis (mail servers + auth records)",
+    "Use WHOIS to verify domain ownership before making DNS changes",
+    "Check SOA refresh/retry/expire values when troubleshooting slow resolution"
+  ],
+  "commonMistakes": [
+    "Using ANY on production servers — modern DNS servers restrict ANY responses",
+    "Confusing TTL (remaining seconds) with absolute expiration",
+    "Forgetting trailing dot in FQDNs — tool handles it but raw responses show dots",
+    "Assuming WHOIS is always accurate — privacy services may mask true registrant",
+    "Running too many lookups rapidly — DNS rate limiting may block your IP"
+  ],
+  "faq": [
+    "How are lookups performed? — Using DNS-over-HTTPS (DoH) through the browser, bypassing local DNS.",
+    "What does TTL mean? — Seconds a resolver should cache the record. Lower TTL = faster propagation.",
+    "Can I query specific DNS servers? — Not directly. Use command-line dig for specific servers.",
+    "Why do some records return nothing? — Not all domains have all record types (e.g. SRV is service-specific)."
+  ]
+}

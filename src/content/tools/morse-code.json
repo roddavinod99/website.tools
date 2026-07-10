@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Bidirectional Morse code converter supporting alphanumeric characters and prosigns. Features audio playback using the Web Audio API with adjustable WPM (words per minute) speed and frequency slider for tone pitch. Includes a timing diagram visualization, prosign reference table, and standardized Morse code reference chart.",
+  "whyItExists": "Morse code remains relevant in amateur radio, aviation, and emergency signaling. Combines learning, practice, and translation tools in one interface to support both beginners learning the code and experienced operators who need quick conversion or audio testing.",
+  "whoShouldUse": "Amateur radio (ham) operators, aviation enthusiasts, survivalists, students learning Morse code, and hobbyists working with signaling systems.",
+  "useCases": [
+    "Convert text messages to Morse code for amateur radio transmission practice",
+    "Decode Morse code audio sequences or visual signals into readable text",
+    "Practice Morse code listening skills with adjustable speed and frequency for progressive learning",
+    "Generate Morse code audio for radio transmission or signaling device testing",
+    "Learn prosigns (procedural signals) used in amateur radio communication",
+    "Study Morse code timing and rhythm using the timing diagram visualization"
+  ],
+  "instructions": [
+    "Select the conversion direction: Text to Morse (encode) or Morse to Text (decode)",
+    "Type or paste text in the input field for encoding, or tap dots/dashes using the on-screen keyer for decoding",
+    "Adjust the WPM slider to control playback speed (5-40 WPM typical range for learning)",
+    "Adjust the frequency slider to change the tone pitch (400-1000 Hz) for audio clarity preference",
+    "Click the Play button to hear the Morse code audio; the timing diagram animates in sync with playback",
+    "Use the reference table to look up any character's Morse pattern; study prosigns using the dedicated prosign section"
+  ],
+  "examples": [
+    "Input Text: \"SOS\" -> Output Morse: \"... --- ...\" -> Audio: Three short beeps, three long beeps, three short beeps",
+    "Input Morse: \"-.-- . ... / .- -. -.. / -.-- . ...\" (with / separating words) -> Output Text: \"YES AND YES\""
+  ],
+  "bestPractices": [
+    "Start with low WPM (5-10) when learning; gradually increase speed as you recognize patterns without conscious decoding",
+    "Use the timing diagram to visualize the Farnsworth spacing method for slower effective transmission speed",
+    "Learn prosigns (like BT, AR, SK) as they're commonly used in amateur radio and reduce transmission time",
+    "Practice with random words and callsigns using the generator to build real-world operating skills",
+    "Use headphones with the audio playback for clearer tone discrimination, especially at lower frequencies"
+  ],
+  "commonMistakes": [
+    "Using inconsistent spacing between letters (3 dots) and words (7 dots), causing decoding confusion",
+    "Confusing similar patterns like ... (S) and --- (O) when decoding at higher speeds",
+    "Not including word separators (/) when encoding multi-word text, producing a continuous stream",
+    "Setting the frequency too low (< 400 Hz) or too high (> 1000 Hz) where hearing discrimination is harder",
+    "Assuming prosigns are standard Morse characters; they're procedural signals with specific meanings in context"
+  ],
+  "faq": [
+    "What is the Farnsworth timing method? It adds extra spacing between characters while keeping character speed high, making it easier for learners to distinguish individual letters.",
+    "Does it support all international Morse characters? Yes, including A-Z, 0-9, common punctuation, and procedural prosigns.",
+    "Can I save the audio output? Audio is generated in real-time via Web Audio API; you can record using browser tools or external software.",
+    "What are prosigns? They're procedural signals like BT (-...-) for break, AR (.-.-.) for end of message, used in amateur radio communication."
+  ]
+}
