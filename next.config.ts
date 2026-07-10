@@ -2,10 +2,10 @@ import type { NextConfig } from "next";
 
 const cspValue = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net",
-  "connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com",
+  "connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com",
   "font-src 'self'",
   "frame-src 'self' https://googleads.g.doubleclick.net",
   "frame-ancestors 'none'",

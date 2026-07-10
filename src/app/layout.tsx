@@ -127,12 +127,7 @@ export default function RootLayout({
             __html: JSON.stringify(jsonLd),
           }}
         />
-        <link
-          rel="preload"
-          href="/og.png"
-          as="image"
-          type="image/png"
-        />
+
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
         <ThemeProvider>
