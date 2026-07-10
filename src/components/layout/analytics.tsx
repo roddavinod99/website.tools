@@ -1,7 +1,8 @@
 "use client";
 
 import Script from "next/script";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
@@ -12,17 +13,44 @@ declare global {
   }
 }
 
+function getStoredConsent(): boolean {
+  try {
+    const stored = localStorage.getItem("cookie-consent");
+    if (stored) {
+      const prefs = JSON.parse(stored);
+      return !!prefs.analytics;
+    }
+  } catch { /* ignore */ }
+  return false;
+}
+
 export function Analytics() {
-  const [consented] = useState(() => {
-    try {
-      const stored = localStorage.getItem("cookie-consent");
-      if (stored) {
-        const prefs = JSON.parse(stored);
-        return !!prefs.analytics;
+  const [consented, setConsented] = useState(false);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setConsented(getStoredConsent());
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "cookie-consent") {
+        setConsented(getStoredConsent());
       }
-    } catch { /* ignore */ }
-    return false;
-  });
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  useEffect(() => {
+    if (!consented || !window.gtag) return;
+    const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
+    window.gtag("config", GA_ID, {
+      page_path: url,
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
+  }, [consented, pathname, searchParams]);
 
   if (!GA_ID) return null;
 
@@ -45,26 +73,22 @@ export function Analytics() {
           gtag('consent', 'default', ${JSON.stringify(consentMode)});
         `}
       </Script>
-      {consented && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_ID}', {
-                anonymize_ip: true,
-                allow_google_signals: false,
-                allow_ad_personalization_signals: false,
-              });
-            `}
-          </Script>
-        </>
-      )}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}', {
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false,
+          });
+        `}
+      </Script>
     </>
   );
 }

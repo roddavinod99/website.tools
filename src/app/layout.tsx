@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -45,7 +46,6 @@ const jsonLd = {
       description: siteConfig.description,
       sameAs: [
         siteConfig.links.github,
-        siteConfig.links.twitter,
       ],
       contactPoint: {
         "@type": "ContactPoint",
@@ -119,7 +119,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#6366f1" />
+        <meta name="theme-color" content="#3282b8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           type="application/ld+json"
@@ -131,7 +131,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
         <ThemeProvider>
-          <Analytics />
+          <Suspense>
+            <Analytics />
+          </Suspense>
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

@@ -1,39 +1,39 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-50: #f2f7f4;
-  --color-brand-100: #ddebe1;
-  --color-brand-200: #bdd7c5;
-  --color-brand-300: #9cb080;
-  --color-brand-400: #618764;
-  --color-brand-500: #2b5748;
-  --color-brand-600: #1e3d33;
-  --color-brand-700: #162b24;
-  --color-brand-800: #0e1c17;
-  --color-brand-900: #070e0b;
+  --color-brand-50: #e8f4fd;
+  --color-brand-100: #d1e9fb;
+  --color-brand-200: #a3d3f7;
+  --color-brand-300: #75bdf3;
+  --color-brand-400: #47a7ef;
+  --color-brand-500: #3282b8;
+  --color-brand-600: #286893;
+  --color-brand-700: #1e4e6e;
+  --color-brand-800: #14344a;
+  --color-brand-900: #0a1a25;
 
-  --color-surface-50: #f8f9fa;
-  --color-surface-100: #e9ecef;
-  --color-surface-200: #dee2e6;
-  --color-surface-300: #ced4da;
-  --color-surface-400: #adb5bd;
-  --color-surface-500: #6c757d;
-  --color-surface-600: #495057;
-  --color-surface-700: #343a40;
-  --color-surface-800: #212529;
-  --color-surface-900: #16181b;
+  --color-surface-50: #bbe1fa;
+  --color-surface-100: #a5d4f5;
+  --color-surface-200: #8ec8f1;
+  --color-surface-300: #72b5e4;
+  --color-surface-400: #56a3d7;
+  --color-surface-500: #3a91ca;
+  --color-surface-600: #2e74a1;
+  --color-surface-700: #0f4c75;
+  --color-surface-800: #1b262c;
+  --color-surface-900: #141d22;
 
-  --color-dark-bg: #273338;
-  --color-dark-surface: #1e282c;
-  --color-dark-border: #364349;
-  --color-dark-text: #e8edee;
-  --color-dark-muted: #8a9ba3;
+  --color-dark-bg: #1b262c;
+  --color-dark-surface: #0f4c75;
+  --color-dark-border: #1a5a8a;
+  --color-dark-text: #bbe1fa;
+  --color-dark-muted: #7eaac7;
 
-  --color-light-bg: #ffffff;
-  --color-light-surface: #f8f9fa;
-  --color-light-border: #e9ecef;
-  --color-light-text: #16181b;
-  --color-light-muted: #6c757d;
+  --color-light-bg: #bbe1fa;
+  --color-light-surface: #ffffff;
+  --color-light-border: #9fcde8;
+  --color-light-text: #1b262c;
+  --color-light-muted: #0f4c75;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

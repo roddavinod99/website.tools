@@ -7,8 +7,7 @@ export const siteConfig: SiteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://tools.devstackio.com",
   ogImage: "/og.png",
   links: {
-    twitter: "https://twitter.com/devstackio",
-    github: "https://github.com/devstackio",
+    github: "https://github.com/roddavinod99",
   },
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@devstackio.com",
   legal: {
