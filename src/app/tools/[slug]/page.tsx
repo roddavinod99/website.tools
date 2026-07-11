@@ -70,13 +70,14 @@ export default async function ToolPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebApplication",
+            "@type": "SoftwareApplication",
             name: tool.name,
             url: `${siteConfig.url}/tools/${tool.slug}`,
             description: tool.description,
-            applicationCategory: categoryObj?.name || "DeveloperApplication",
+            applicationCategory: "UtilitiesApplication",
             operatingSystem: "All",
             browserRequirements: "Modern browser with JavaScript enabled",
+            image: `${siteConfig.url}${siteConfig.ogImage}`,
             offers: {
               "@type": "Offer",
               price: "0",
@@ -115,6 +116,7 @@ export default async function ToolPage({ params }: Props) {
                   acceptedAnswer: { "@type": "Answer", text: a },
                 };
               }),
+              _comment: "FAQ rich results were deprecated in Google Search in May 2026, but this structured data still helps Google understand content.",
             }),
           }}
         />

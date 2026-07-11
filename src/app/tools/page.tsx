@@ -15,7 +15,7 @@ export default function ToolsPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "All Developer Tools",
-    description: "Browse our complete collection of free online developer tools.",
+  description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
     url: `${siteConfig.url}/tools`,
     numberOfItems: allTools.length,
     itemListElement: allTools.map((tool, i) => ({
@@ -25,8 +25,21 @@ export default function ToolsPage() {
       url: `${siteConfig.url}/tools/${tool.slug}`,
     })),
   };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+      { "@type": "ListItem", position: 2, name: "Tools" },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}

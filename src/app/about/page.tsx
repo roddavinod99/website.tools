@@ -10,11 +10,51 @@ export const metadata: Metadata = {
     description: "Learn about our mission to provide free, privacy-first developer tools for everyone.",
     url: `${siteConfig.url}/about`,
   },
+  other: {
+    "article:modified_time": "2024-01-01",
+  },
 };
 
 export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+          { "@type": "ListItem", position: 2, name: "About" },
+        ],
+      },
+      {
+        "@type": "Organization",
+        name: siteConfig.name,
+        url: siteConfig.url,
+        logo: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}/favicon.svg`,
+        },
+        description: siteConfig.description,
+        email: siteConfig.contactEmail,
+        foundingDate: "2024",
+        alternateName: "DevStack",
+        sameAs: [siteConfig.links.github],
+        contactPoint: {
+          "@type": "ContactPoint",
+          email: siteConfig.contactEmail,
+          contactType: "customer service",
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="container py-12 md:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="container py-12 md:py-16">
       <article className="mx-auto max-w-3xl">
         <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
           About DevStackIO
@@ -120,5 +160,6 @@ export default function AboutPage() {
         </div>
       </article>
     </div>
+    </>
   );
 }

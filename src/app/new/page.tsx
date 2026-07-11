@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "New Tools",
-  description: "Recently added developer tools on DevStackIO.",
+  description: "Recently added free developer tools on DevStackIO. Discover the latest additions to our collection of browser-based utilities.",
   alternates: { canonical: `${siteConfig.url}/new` },
 };
 
@@ -13,30 +13,66 @@ export default function NewToolsPage() {
   const newTools = allTools.filter((t) => t.new);
   const others = allTools.filter((t) => !t.new);
 
-  return (
-    <div className="container py-12 md:py-16">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-          New Tools
-        </h1>
-        <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
-          Recently added tools and updates
-        </p>
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+      { "@type": "ListItem", position: 2, name: "New Tools" },
+    ],
+  };
 
-        {newTools.length > 0 && (
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <div className="container py-12 md:py-16">
+        <div className="mx-auto max-w-2xl">
+          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            New Tools
+          </h1>
+          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            Recently added tools and updates
+          </p>
+
+          {newTools.length > 0 && (
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Latest Additions</h2>
+              <div className="mt-4 grid gap-4">
+                {newTools.map((tool) => (
+                  <Link
+                    key={tool.id}
+                    href={`/tools/${tool.slug}`}
+                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  >
+                    <div className="flex items-start justify-between">
+                      <Badge variant="new">New</Badge>
+                      <Badge variant="default">{tool.category}</Badge>
+                    </div>
+                    <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                      {tool.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                      {tool.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="mt-8">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Latest Additions</h2>
+            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">All Tools</h2>
             <div className="mt-4 grid gap-4">
-              {newTools.map((tool) => (
+              {others.map((tool) => (
                 <Link
                   key={tool.id}
                   href={`/tools/${tool.slug}`}
                   className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
-                  <div className="flex items-start justify-between">
-                    <Badge variant="new">New</Badge>
-                    <Badge variant="default">{tool.category}</Badge>
-                  </div>
+                  <Badge variant="default">{tool.category}</Badge>
                   <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
                     {tool.name}
                   </h3>
@@ -47,29 +83,8 @@ export default function NewToolsPage() {
               ))}
             </div>
           </div>
-        )}
-
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">All Tools</h2>
-          <div className="mt-4 grid gap-4">
-            {others.map((tool) => (
-              <Link
-                key={tool.id}
-                href={`/tools/${tool.slug}`}
-                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-              >
-                <Badge variant="default">{tool.category}</Badge>
-                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                  {tool.name}
-                </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                  {tool.description}
-                </p>
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

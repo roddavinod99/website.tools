@@ -4,13 +4,45 @@ import { categories, siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Categories",
-  description: "Browse developer tools by category.",
+  description: "Browse 20+ free developer tools by category: encoding, formatting, generation, conversion, security, network, and more on DevStackIO.",
   alternates: { canonical: `${siteConfig.url}/categories` },
 };
 
 export default function CategoriesPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+      { "@type": "ListItem", position: 2, name: "Categories" },
+    ],
+  };
+
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Developer Tool Categories",
+    description: "Browse our free developer tools by category.",
+    url: `${siteConfig.url}/categories`,
+    numberOfItems: categories.length,
+    itemListElement: categories.map((cat, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: cat.name,
+      url: `${siteConfig.url}/categories/${cat.slug}`,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">

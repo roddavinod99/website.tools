@@ -135,7 +135,20 @@ export default async function GuidePage({ params }: Props) {
             headline: topic.title,
             description: topic.description,
             url: `${siteConfig.url}/guides/${topic.slug}`,
+            datePublished: new Date().toISOString(),
+            dateModified: new Date().toISOString(),
+            image: `${siteConfig.url}${siteConfig.ogImage}`,
+            mainEntityOfPage: { "@type": "WebPage", "@id": `${siteConfig.url}/guides/${topic.slug}` },
             author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+            publisher: {
+              "@type": "Organization",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              logo: {
+                "@type": "ImageObject",
+                url: `${siteConfig.url}/favicon.svg`,
+              },
+            },
           }),
         }}
       />

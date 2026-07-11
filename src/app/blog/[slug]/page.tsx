@@ -75,8 +75,19 @@ export default async function BlogPostPage({ params }: Props) {
             description: blogPost.excerpt,
             url: getPostUrl(blogPost.slug),
             datePublished: blogPost.date,
-            author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
-            publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+            dateModified: blogPost.date,
+            image: `${siteConfig.url}${siteConfig.ogImage}`,
+            wordCount: content.split(/\s+/).length,
+            author: { "@type": "Person", name: siteConfig.name, url: `${siteConfig.url}/about` },
+            publisher: {
+              "@type": "Organization",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              logo: {
+                "@type": "ImageObject",
+                url: `${siteConfig.url}/favicon.svg`,
+              },
+            },
             mainEntityOfPage: { "@type": "WebPage", "@id": getPostUrl(blogPost.slug) },
           }),
         }}

@@ -42,16 +42,34 @@ const jsonLd = {
       "@type": "Organization",
       name: siteConfig.name,
       url: siteConfig.url,
-      logo: `${siteConfig.url}/favicon.svg`,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/favicon.svg`,
+      },
       description: siteConfig.description,
+      email: siteConfig.contactEmail,
+      foundingDate: "2024",
+      alternateName: "DevStack",
       sameAs: [
         siteConfig.links.github,
       ],
-      contactPoint: {
-        "@type": "ContactPoint",
-        email: siteConfig.contactEmail,
-        contactType: "customer service",
-      },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          email: siteConfig.contactEmail,
+          contactType: "customer service",
+        },
+        {
+          "@type": "ContactPoint",
+          email: siteConfig.contactEmail,
+          contactType: "technical support",
+        },
+        {
+          "@type": "ContactPoint",
+          email: siteConfig.contactEmail,
+          contactType: "sales",
+        },
+      ],
     },
   ],
 };
@@ -121,6 +139,10 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#3282b8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="max-image-preview:large" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="alternate" hrefLang="en" href={siteConfig.url} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
