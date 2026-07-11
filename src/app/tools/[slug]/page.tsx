@@ -35,11 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonical,
       siteName: siteConfig.name,
       type: "website",
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${tool.name} - DevStackIO` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${tool.name} - Free Online Tool`,
       description: tool.description,
+      images: [siteConfig.ogImage],
     },
   };
 }
@@ -116,7 +118,27 @@ export default async function ToolPage({ params }: Props) {
                   acceptedAnswer: { "@type": "Answer", text: a },
                 };
               }),
-              _comment: "FAQ rich results were deprecated in Google Search in May 2026, but this structured data still helps Google understand content.",
+            }),
+          }}
+        />
+      )}
+      {content.instructions.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              name: `How to use ${tool.name}`,
+              description: `Step-by-step guide to using ${tool.name} for ${tool.description.split(" ").slice(0, 8).join(" ").toLowerCase()}.`,
+              image: `${siteConfig.url}${siteConfig.ogImage}`,
+              totalTime: "PT5M",
+              step: content.instructions.map((instruction, index) => ({
+                "@type": "HowToStep",
+                position: index + 1,
+                name: instruction.split(".")[0] || `Step ${index + 1}`,
+                text: instruction,
+              })),
             }),
           }}
         />

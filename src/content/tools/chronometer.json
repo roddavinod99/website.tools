@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "A precision stopwatch/chronometer with Start, Stop, Lap, and Reset controls. Displays time in hours:minutes:seconds.centiseconds format. Tracks laps with individual lap times, highlights the best and slowest laps, and allows copying all lap times.",
+  "whyItExists": "A quick-access stopwatch is useful for timing code execution, measuring UI performance, or any task requiring precise time measurement without leaving the browser.",
+  "whoShouldUse": "Developers measuring task durations, QA testers timing user flows, athletes tracking workout intervals, and anyone who needs a precise stopwatch in the browser.",
+  "useCases": [
+    "Time how long a code execution or API call takes",
+    "Measure user interaction delays during testing",
+    "Track lap times for workout or activity intervals",
+    "Compare performance of different approaches by timing them",
+    "Use as a simple countdown reference",
+    "Record timing data by copying lap results"
+  ],
+  "instructions": [
+    "Click Start to begin the timer",
+    "Click Lap while running to record a lap time without stopping the timer",
+    "Click Stop to pause the timer at the current time",
+    "Click Reset to clear all time and lap data",
+    "The lap list shows individual lap times with BEST and SLOWEST indicators",
+    "Click Copy Laps to copy all lap times to your clipboard"
+  ],
+  "examples": [
+    "Start → Lap at 5s → Lap at 12s → Stop at 15s → shows 3 lap times",
+    "Use to time a for-loop execution: start before loop, stop after",
+    "Track API response times across multiple requests using laps"
+  ],
+  "bestPractices": [
+    "Use requestAnimationFrame-based timing (this tool's default) for sub-frame accuracy",
+    "For very precise measurements, combine with performance.now() in your code",
+    "Clear old lap data before starting a new timing session",
+    "Use the Copy Laps feature to record timing data for later analysis",
+    "The timer continues running even when the browser tab is in the background (via accumulated time)"
+  ],
+  "commonMistakes": [
+    "Expecting millisecond precision from setInterval — this tool uses requestAnimationFrame for better accuracy",
+    "Forgetting to reset before starting a new timing session",
+    "Confusing lap time (time since last lap) with total elapsed time",
+    "Not accounting for browser throttling when the tab is in the background",
+    "Using the stopwatch for very long durations (hours) where drift may accumulate"
+  ],
+  "faq": [
+    "How accurate is the timer? — It uses requestAnimationFrame which syncs with the display refresh rate (typically 60fps / ~16ms precision). For sub-millisecond timing, use performance.now() directly.",
+    "Does the timer continue when the tab is in the background? — The display may pause due to browser throttling, but accumulated time is tracked correctly when you return to the tab.",
+    "What do BEST and SLOWEST mean? — BEST highlights the fastest lap time and SLOWEST highlights the longest lap time in your current session.",
+    "Can I export lap data? — Click Copy Laps to copy all lap times to your clipboard in text format."
+  ]
+}

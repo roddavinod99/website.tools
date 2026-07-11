@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Converts temperatures between Celsius, Fahrenheit, and Kelvin in real time. Type in any of the three input fields and the other two update instantly. Includes common temperature presets (absolute zero, freezing point, body temperature, boiling point), a visual thermometer bar, and temperature description labels.",
+  "whyItExists": "Temperature conversion is one of the most frequent unit conversions, needed in cooking, science, weather reporting, and everyday life. Having all three scales linked together with instant updates makes conversion effortless and error-free.",
+  "whoShouldUse": "Students studying science or math, cooks converting recipe temperatures, weather enthusiasts comparing forecast scales, healthcare workers converting body temperatures, and anyone working with international temperature data.",
+  "useCases": [
+    "Convert a cooking recipe temperature from Celsius to Fahrenheit for an American oven",
+    "Convert body temperature readings between Celsius and Fahrenheit for medical records",
+    "Convert Kelvin temperatures from physics experiments to more familiar Celsius or Fahrenheit",
+    "Quickly check common reference temperatures using the preset buttons",
+    "Compare temperature scales side by side for a science assignment"
+  ],
+  "instructions": [
+    "Click on any input field (Celsius, Fahrenheit, or Kelvin) to make it active",
+    "Type a temperature value — the other two fields update automatically",
+    "Use the preset buttons for common reference temperatures",
+    "Check the thermometer bar and description label for context on the temperature",
+    "Click \"copy\" next to any field to copy that value to your clipboard"
+  ],
+  "examples": [
+    "Type 100 in Celsius -> Fahrenheit: 212.00, Kelvin: 373.15 (water boiling point)",
+    "Type 32 in Fahrenheit -> Celsius: 0.00, Kelvin: 273.15 (water freezing point)",
+    "Type 0 in Kelvin -> Celsius: -273.15, Fahrenheit: -459.67 (absolute zero)"
+  ],
+  "bestPractices": [
+    "Click the input field first before typing — the active field determines which value you are entering",
+    "Use Kelvin for scientific calculations — it starts at absolute zero and has no negative values",
+    "Check the thermometer description to quickly understand if a temperature is comfortable or dangerous",
+    "Use presets for quick reference to commonly needed temperature points",
+    "Remember that Fahrenheit and Celsius scales cross at -40 degrees"
+  ],
+  "commonMistakes": [
+    "Entering a Kelvin value below 0 — Kelvin cannot be negative (absolute zero is 0K)",
+    "Confusing the active field — always check which field is highlighted before typing",
+    "Rounding too aggressively for medical temperatures — use at least one decimal place",
+    "Forgetting that the tool uses exact formulas — results may differ slightly from mental estimates"
+  ],
+  "faq": [
+    "Why can't I enter a negative Kelvin value? Kelvin starts at absolute zero (0K), which is -273.15°C. Negative Kelvin is physically impossible.",
+    "What does the thermometer bar show? It visually represents the current temperature on a scale from absolute zero to 100°C, with color coding for cold/comfortable/hot.",
+    "Are the conversions exact? Yes — the tool uses the standard conversion formulas with no rounding until display.",
+    "Which scale should I use for cooking? Most recipes use either Celsius or Fahrenheit. Use this tool to convert between them as needed."
+  ]
+}

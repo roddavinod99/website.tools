@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Visual text diff comparison tool with side-by-side and inline modes. Highlights additions in green and deletions in red using an LCS-based diff algorithm. Shows line numbers and provides diff statistics (added, removed, unchanged lines).",
+  "whyItExists": "Comparing two text files or code snippets visually is essential for code review, documentation updates, and content editing; this tool provides a quick, client-side diff comparison without needing command-line tools.",
+  "whoShouldUse": "Developers comparing code changes, technical writers reviewing document edits, QA testers verifying configuration changes, and anyone who needs to visually compare two pieces of text.",
+  "useCases": [
+    "Compare two versions of a code snippet to identify changes",
+    "Review configuration file modifications before deployment",
+    "Diff documentation changes between drafts",
+    "Verify that a refactoring preserved all original functionality",
+    "Compare API responses before and after a change",
+    "Visualize changes between two similar text blocks"
+  ],
+  "instructions": [
+    "Paste the original text in the left textarea",
+    "Paste the modified text in the right textarea",
+    "Choose between Side by Side or Inline view mode",
+    "Green highlighted lines show additions, red shows deletions",
+    "Use the Copy Diff button to copy the unified diff output",
+    "Review the stats bar for a quick count of changes"
+  ],
+  "examples": [
+    "Compare two versions of a README.md file to see documentation changes",
+    "Diff a JSON configuration before and after adding new environment variables",
+    "Compare two SQL queries to find the differences in logic"
+  ],
+  "bestPractices": [
+    "Use Side by Side mode for comparing large blocks of text where changes are far apart",
+    "Use Inline mode for smaller diffs where you want to see changes in context",
+    "Paste clean text without extra whitespace for more accurate diff results",
+    "The diff operates on full lines — for word-level changes, compare individual paragraphs",
+    "Copy the diff output for use in commit messages or code review comments"
+  ],
+  "commonMistakes": [
+    "Expecting word-level highlighting — this tool operates at the line level",
+    "Including trailing whitespace that creates false positive differences",
+    "Comparing binary content or files with different encodings",
+    "Assuming the tool handles merge conflicts — it only shows differences",
+    "Not accounting for line ending differences (\\r\\n vs \\n)"
+  ],
+  "faq": [
+    "What diff algorithm is used? — The tool uses a Longest Common Subsequence (LCS) based algorithm to compute the minimum number of additions and deletions.",
+    "Does it handle large files? — The tool works best with text under a few hundred lines. Very large files may slow down the browser.",
+    "Can I diff binary files? — No, this tool is designed for text comparison only.",
+    "What does the Copy Diff button copy? — It copies a unified diff format with + for additions, - for deletions, and space for unchanged lines."
+  ]
+}

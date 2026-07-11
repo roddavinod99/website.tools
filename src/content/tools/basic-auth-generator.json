@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Generates HTTP Basic Authentication headers from a username and password. Enter your credentials to instantly get the complete Authorization header value in the standard 'Authorization: Basic base64encoded' format, ready to use in API requests.",
+  "whyItExists": "HTTP Basic Auth requires base64-encoding the username:password string. Manually computing this with command-line tools or online converters adds friction when testing APIs that use Basic authentication.",
+  "whoShouldUse": "API developers testing endpoints with Basic Auth, QA engineers writing API tests, and backend developers debugging authentication issues.",
+  "useCases": [
+    "Generate a Basic Auth header to test a protected API endpoint with curl or Postman",
+    "Quickly create an Authorization header value for HTTP debugging tools",
+    "Verify that a base64-encoded credential matches what a server expects",
+    "Generate test credentials for integration testing"
+  ],
+  "instructions": [
+    "Enter the username in the Username field",
+    "Enter the password in the Password field",
+    "The Authorization header is generated instantly",
+    "Copy the full header or just the base64 value"
+  ],
+  "examples": [
+    "admin:password123 → Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=",
+    "user: → Authorization: Basic dXNlcjo=",
+    ":secret → Authorization: Basic OnNlY3JldA=="
+  ],
+  "bestPractices": [
+    "Use Copy Header for the full 'Authorization: Basic ...' string",
+    "Use Copy Value Only when you just need the base64-encoded part",
+    "Never hardcode credentials in source code — use environment variables",
+    "Consider token-based auth (OAuth, JWT) over Basic Auth for production"
+  ],
+  "commonMistakes": [
+    "Forgetting the space between 'Basic' and the base64 value in the header",
+    "Using URL-encoded passwords — Basic Auth expects the raw password",
+    "Confusing Basic Auth with Bearer token authentication"
+  ],
+  "faq": [
+    "Is Basic Auth secure? — Only over HTTPS. The base64 encoding is not encryption — it's trivially reversible.",
+    "Does it handle special characters in passwords? — Yes, all characters are correctly base64-encoded.",
+    "Can I use this for OAuth or Bearer tokens? — No, this tool specifically generates Basic Auth headers."
+  ]
+}

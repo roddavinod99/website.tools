@@ -17,10 +17,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const category = categories.find((c) => c.slug === slug);
   if (!category) return {};
+  const canonical = `${siteConfig.url}/categories/${slug}`;
   return {
     title: `${category.name} Tools`,
     description: category.description,
-    alternates: { canonical: `${siteConfig.url}/categories/${slug}` },
+    alternates: { canonical },
+    openGraph: {
+      title: `${category.name} Tools - DevStackIO`,
+      description: category.description,
+      url: canonical,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${category.name} Tools - DevStackIO` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${category.name} Tools - DevStackIO`,
+      description: category.description,
+      images: [siteConfig.ogImage],
+    },
   };
 }
 
@@ -44,6 +59,26 @@ export default async function CategoryPage({ params }: Props) {
               { "@type": "ListItem", position: 2, name: "Categories", item: `${siteConfig.url}/categories` },
               { "@type": "ListItem", position: 3, name: category.name },
             ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: `${category.name} Tools`,
+            description: category.description,
+            url: `${siteConfig.url}/categories/${slug}`,
+            numberOfItems: tools.length,
+            itemListElement: tools.map((tool, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: tool.name,
+              url: `${siteConfig.url}/tools/${tool.slug}`,
+              description: tool.description,
+            })),
           }),
         }}
       />

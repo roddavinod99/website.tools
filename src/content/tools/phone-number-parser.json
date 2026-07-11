@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Parse and format international phone numbers, extracting country code, area code, national number, and generating international, national, and E.164 formats. Supports 15+ countries with regex-based validation and formatting.",
+  "whyItExists": "Phone numbers come in many formats across different countries and this tool provides instant parsing and standardized formatting, making it easy to validate and convert phone numbers to canonical formats like E.164.",
+  "whoShouldUse": "Developers building forms with phone number inputs, QA testers validating phone number handling, and anyone who needs to parse or format international phone numbers.",
+  "useCases": [
+    "Validate and parse a phone number entered by a user in various formats",
+    "Convert a phone number to E.164 format for use with APIs like Twilio",
+    "Extract the area code and national number from a formatted phone string",
+    "Check if a phone number matches the expected format for a given country",
+    "Get the correct international dialing format for a specific country",
+    "Understand the structure of international phone numbers"
+  ],
+  "instructions": [
+    "Select the country from the dropdown menu (e.g., United States, India, United Kingdom)",
+    "Enter the phone number in any common format (with or without country code, spaces, dashes, parentheses)",
+    "The parser will validate the number and extract all components",
+    "Click the Copy button next to any field to copy that specific value to your clipboard",
+    "The E.164 format is the international standard recommended for API integrations"
+  ],
+  "examples": [
+    "US: +1 (555) 123-4567 → Country: US, Area: 555, E.164: +15551234567",
+    "India: 098765 43210 → Country: IN, Area: 98765, E.164: +919876543210",
+    "UK: 020 7946 0958 → Country: GB, Area: 20, E.164: +442079460958"
+  ],
+  "bestPractices": [
+    "Always store phone numbers in E.164 format in your database for consistency",
+    "Accept multiple input formats from users but normalize to E.164 for storage",
+    "Use a dedicated phone number library (like libphonenumber) for production validation",
+    "This tool uses simplified regex patterns — production apps need full E.164 validation",
+    "Test with phone numbers from the specific countries your application supports"
+  ],
+  "commonMistakes": [
+    "Assuming all phone numbers follow the same format across countries",
+    "Forgetting to include the country code when storing phone numbers",
+    "Using regex-only validation instead of a proper phone number parsing library in production",
+    "Not accounting for optional leading zeros in national numbers",
+    "Storing phone numbers with formatting characters (spaces, dashes) instead of digits only"
+  ],
+  "faq": [
+    "Is this tool accurate for all phone numbers? — It uses simplified regex patterns for common formats. For production validation, use a library like Google's libphonenumber.",
+    "What is E.164 format? — E.164 is the international phone number standard: +[country code][national number] with no spaces or special characters.",
+    "Why are some numbers marked as invalid? — The regex patterns expect standard formats. Non-standard or abbreviated numbers may not match.",
+    "Can I parse numbers without selecting a country? — This tool requires a country selection to apply the correct format rules."
+  ]
+}

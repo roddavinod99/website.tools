@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Browse, search, and pick emojis from a categorized grid with 9 categories including Smileys, People, Animals, Food, Travel, Activities, Objects, Symbols, and Flags. Features search filtering, click-to-copy, and a recently used history stored in localStorage.",
+  "whyItExists": "Finding the right emoji can be tedious when scrolling through hundreds of options; this tool organizes them into browsable categories with search and keeps track of your most recently used emojis for quick access.",
+  "whoShouldUse": "Developers, content creators, designers, and anyone who needs to quickly find and copy emojis for use in code, messages, social media, or documents.",
+  "useCases": [
+    "Quickly copy an emoji for use in code comments, commit messages, or UI text",
+    "Browse emojis by category to find the perfect one for a project or presentation",
+    "Search for a specific emoji when you know roughly what it looks like",
+    "Access recently used emojis without searching through the full library",
+    "Discover new emojis across different categories",
+    "Copy flag emojis for internationalization or locale indicators"
+  ],
+  "instructions": [
+    "Type in the search input to filter emojis across all categories",
+    "Click a category tab to browse emojis within that specific category",
+    "Click any emoji to copy it to your clipboard",
+    "Use the Recent tab to quickly access emojis you've recently copied",
+    "The copied confirmation shows which emoji was copied to your clipboard",
+    "Scroll through the grid if the category has more emojis than fit on screen"
+  ],
+  "examples": [
+    "Click the Smileys category, then click the grinning face emoji to copy it",
+    "Type \"heart\" in the search to find heart-related emojis across all categories",
+    "Open the Flags category to browse country flag emojis for internationalization"
+  ],
+  "bestPractices": [
+    "Use the search feature when you know what emoji you want instead of browsing categories",
+    "Check the Recent tab for frequently used emojis to save time",
+    "Remember that emoji rendering varies across platforms and operating systems",
+    "Use flag emojis sparingly in UI as they may not display consistently on all devices",
+    "Copy multiple emojis by clicking them one at a time for use in sequences"
+  ],
+  "commonMistakes": [
+    "Expecting emojis to look the same across all platforms — rendering varies by OS and browser",
+    "Using skin-tone modified emojis without testing on target platforms",
+    "Overusing emojis in professional or formal content where they may be distracting",
+    "Assuming all emojis are universally supported on older devices or browsers",
+    "Not checking that copied emojis paste correctly into the target application"
+  ],
+  "faq": [
+    "Why do emojis look different on my computer vs my phone? — Emoji appearance varies by operating system and platform. Each vendor (Apple, Google, Microsoft) has their own emoji designs.",
+    "Can I search by emoji name? — The search filters the displayed grid. Type keywords like \"heart\", \"star\", or \"food\" to narrow down options.",
+    "Where are my recently used emojis stored? — They are saved in your browser's localStorage and persist between sessions until you clear browser data.",
+    "How do I copy an emoji? — Simply click on any emoji in the grid. A confirmation will show indicating it was copied to your clipboard."
+  ]
+}

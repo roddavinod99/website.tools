@@ -1,0 +1,36 @@
+{
+  "whatItDoes": "Converts an IPv4 address between its four common representations: dotted-decimal, 32-bit integer, hexadecimal, and binary. Enter an address in any format and instantly see all four conversions along with a per-octet breakdown showing decimal, binary, and hex values.",
+  "whyItExists": "Network engineers, security analysts, and developers frequently need to translate IPv4 addresses between formats for logging, ACL configuration, forensics, and protocol debugging. Doing this mentally or with scattered online tools is slow and error-prone.",
+  "whoShouldUse": "Network engineers writing ACLs, security analysts investigating IP logs, developers working with socket APIs, and students studying binary number representation.",
+  "useCases": [
+    "Convert a hex-encoded IP from a packet capture back to dotted-decimal for troubleshooting",
+    "Translate a decimal IP logged by a firewall into human-readable dotted-decimal format",
+    "Verify binary representations of IP addresses when debugging subnet masks or bitwise operations",
+    "Convert between formats when configuring network devices that require specific input types"
+  ],
+  "instructions": [
+    "Select your input format from the dropdown (dotted decimal, integer, hexadecimal, or binary)",
+    "Enter the IPv4 address in the chosen format",
+    "Press Convert or hit Enter to see all four representations",
+    "Click any result card to copy the value to your clipboard"
+  ],
+  "examples": [
+    "Input: '192.168.1.1' (dotted decimal) — Output: Integer: 3232235777, Hex: C0A80101, Binary: 11000000.10101000.00000001.00000001",
+    "Input: 'C0A80101' (hexadecimal) — Output: Dotted: 192.168.1.1, Integer: 3232235777, Binary: 11000000.10101000.00000001.00000001"
+  ],
+  "bestPractices": [
+    "Use hexadecimal format when comparing IPs programmatically or working with raw network data",
+    "Verify the 32-bit integer falls within the valid range (0 to 4,294,967,295)",
+    "Check the octet breakdown visually when debugging bitwise operations on subnets"
+  ],
+  "commonMistakes": [
+    "Entering an integer larger than 4294967295, which exceeds the 32-bit IPv4 address space",
+    "Using non-hex characters in hexadecimal input (only 0-9 and A-F are valid)",
+    "Confusing byte order when converting between integer and dotted-decimal (this tool uses network byte order)"
+  ],
+  "faq": [
+    "Why are there two hex representations? — One shows raw hex (C0A80101) and the other includes the 0x prefix (0xC0A80101) commonly used in code and documentation.",
+    "Does this handle IPv6? — No, this tool is for IPv4 addresses only. Use an IPv6 tool for 128-bit addresses.",
+    "What is the integer range for IPv4? — 0 to 4,294,967,295 (2^32 - 1), covering all possible 32-bit IPv4 addresses."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Calculates estimated travel time based on distance and speed. Supports both metric (km/km/h) and imperial (miles/mph) units with an instant swap toggle. Outputs travel duration in hours, minutes, and seconds, along with unit conversions and an estimated arrival time based on the current clock.",
+  "whyItExists": "Quickly estimating how long a trip will take is a common need for travelers, logistics planners, and anyone doing route calculations. This tool provides instant results with flexible unit support without needing a full mapping application.",
+  "whoShouldUse": "Travelers planning trip durations, logistics coordinators estimating delivery times, students learning about speed-distance-time relationships, and developers building travel-related features.",
+  "useCases": [
+    "Estimate driving time for a road trip by entering the route distance and average speed",
+    "Calculate delivery time for logistics based on distance and vehicle speed",
+    "Convert between km/h and mph while computing travel duration",
+    "Plan commute times by entering distance and expected average speed",
+    "Teach speed-distance-time physics concepts with real-time interactive calculation"
+  ],
+  "instructions": [
+    "Enter the travel distance in the Distance field",
+    "Select the distance unit: kilometers (km) or miles (mi)",
+    "Enter the average speed in the Speed field",
+    "Select the speed unit: km/h or mph",
+    "Click \"Swap Units\" to toggle between metric and imperial",
+    "Read the estimated travel time and unit conversions in the results section"
+  ],
+  "examples": [
+    "Distance: 100 km, Speed: 100 km/h -> Travel time: 1h 0m 0s",
+    "Distance: 26.2 miles, Speed: 6 mph -> Travel time: 4h 22m 0s (marathon pace)"
+  ],
+  "bestPractices": [
+    "Use average speed including stops and traffic for realistic estimates, not just highway speed",
+    "Account for acceleration/deceleration by using a speed 10-15% lower than the posted limit",
+    "Use the swap feature to quickly convert between metric and imperial for international trips",
+    "The arrival time is based on starting now — adjust if your actual start time differs",
+    "For multi-leg journeys, calculate each segment separately and sum the times"
+  ],
+  "commonMistakes": [
+    "Using the maximum speed limit as the average speed — real average is usually lower",
+    "Forgetting to convert units when distance is in km but speed is in mph or vice versa",
+    "Entering zero or negative speed, which produces invalid results",
+    "Assuming the calculation accounts for traffic, stops, or route changes — it uses constant speed only"
+  ],
+  "faq": [
+    "Does this account for traffic or stops? No — it assumes constant speed. Use a lower average speed to account for real-world conditions.",
+    "Can I enter decimals? Yes — both distance and speed accept decimal values like 12.5 km or 65.5 mph.",
+    "What does the arrival time mean? It is calculated by adding the travel duration to the current time, assuming you start immediately.",
+    "Does the swap button change my input values? No — it only switches the display units. Your original inputs remain unchanged."
+  ]
+}

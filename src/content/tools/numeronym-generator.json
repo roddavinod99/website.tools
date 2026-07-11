@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates numeronyms from words and phrases. A numeronym is a number-based word (like i18n for internationalization, k8s for Kubernetes, a11y for accessibility) where the number represents the count of letters between the first and last character.",
+  "whoShouldUse": "Technical writers creating abbreviations, developers naming projects or packages, DevOps engineers referencing tools, and anyone who wants to create memorable short forms of long words.",
+  "whyItExists": "Numeronyms are a universal convention in tech (i18n, l10n, a11y, k8s) but manually counting middle characters is error-prone. This tool generates correct numeronyms instantly and shows you the breakdown.",
+  "useCases": [
+    "Create a numeronym for a new project name to use as a package or CLI tool alias",
+    "Verify that a known numeronym (like i18n) is correctly formed",
+    "Generate numeronyms for multiple long words to find short, memorable project names",
+    "Learn how numeronyms work by seeing the character count breakdown for any word"
+  ],
+  "instructions": [
+    "Type a word or phrase into the input field",
+    "Click 'Generate' to produce the numeronym",
+    "View the breakdown showing first letter, middle character count, and last letter",
+    "Copy the numeronym to your clipboard with the copy button",
+    "Generate numeronyms for multiple words by typing them one at a time"
+  ],
+  "examples": [
+    "Input: 'internationalization'. Output: 'i18n' (i + 18 middle letters + n).",
+    "Input: 'accessibility'. Output: 'a11y' (a + 11 middle letters + y).",
+    "Input: 'Kubernetes'. Output: 'k8s' (k + 8 middle letters + s)."
+  ],
+  "bestPractices": [
+    "Use numeronyms for words with 5+ middle characters — shorter words don't benefit much",
+    "Keep the first and last characters recognizable for the word being abbreviated",
+    "Test the numeronym aloud — it should be immediately guessable by colleagues",
+    "Use established numeronyms (i18n, l10n, a11y) rather than creating new ones for common terms"
+  ],
+  "commonMistakes": [
+    "Miscounting middle characters manually — always verify with a tool",
+    "Creating numeronyms for acronyms that are already short (e.g., don't make 'a5a' from 'ASAAAA')",
+    "Using numeronyms in formal documentation without explaining them first",
+    "Forgetting that numeronyms are case-sensitive — 'K8s' and 'k8s' are different"
+  ],
+  "faq": [
+    "What's the most famous numeronym? i18n (internationalization) is probably the most widely known, followed by l10n (localization).",
+    "Can numeronyms be used as identifiers in code? Yes, many projects use them as package names or CLI aliases (k8s, d3, s3).",
+    "Is there a minimum word length for numeronyms? Technically no, but numeronyms for words with fewer than 5 middle characters are rarely useful.",
+    "How do I know if a numeronym already exists? Search for it — many common tech numeronyms are already in use."
+  ]
+}

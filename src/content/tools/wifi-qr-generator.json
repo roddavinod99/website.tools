@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates QR codes for WiFi network credentials that can be scanned by phones and tablets to instantly connect to a WiFi network without typing the password.",
+  "whoShouldUse": "Network administrators setting up guest networks, home users sharing WiFi with visitors, office managers creating QR stickers for meeting rooms, and anyone who wants a quick way to share WiFi access.",
+  "whyItExists": "Typing long WiFi passwords on mobile devices is error-prone and tedious. WiFi QR codes let guests connect with a single scan, eliminating password entry mistakes and support requests.",
+  "useCases": [
+    "Create a QR code for your home WiFi so guests can connect without asking for the password",
+    "Generate a QR sticker for a cafe or office meeting room WiFi",
+    "Share a WPA2 enterprise network configuration via QR for quick device onboarding",
+    "Print WiFi QR codes for event venues where hundreds of attendees need network access"
+  ],
+  "instructions": [
+    "Enter the WiFi network name (SSID) in the Network Name field",
+    "Type the WiFi password in the Password field",
+    "Select the security type: WPA/WPA2, WEP, or Open (no password)",
+    "Click 'Generate' to create the QR code",
+    "Download the QR code as PNG or copy it to clipboard",
+    "Print or share the QR code — anyone can scan it with their phone camera"
+  ],
+  "examples": [
+    "Input: SSID='MyHomeWiFi', password='secure123!', security=WPA. Output: Scannable QR code that auto-connects devices to the network.",
+    "Input: SSID='CoffeeShop', security=Open. Output: QR code for an open WiFi network with no password required."
+  ],
+  "bestPractices": [
+    "Use WPA2 or WPA3 security — avoid WEP which is easily cracked",
+    "Print QR codes on waterproof paper if placing them in kitchens or outdoor areas",
+    "Test the QR code with at least two different phone models before distributing",
+    "Include the network name as text below the QR code for troubleshooting"
+  ],
+  "commonMistakes": [
+    "Typing the wrong SSID — the QR code must match the exact network name including case",
+    "Using special characters in the password that may not encode correctly",
+    "Forgetting to select the correct security type, which prevents connection",
+    "Making the QR code too small to scan reliably — maintain at least 2cm x 2cm when printed"
+  ],
+  "faq": [
+    "Which phones can scan WiFi QR codes? iOS 11+ and Android 10+ natively support WiFi QR scanning through the default camera app.",
+    "Can I embed a WiFi QR code in a webpage? Yes — download the PNG and embed it with an img tag.",
+    "Does the QR code work with hidden networks? Yes, but the device will attempt to connect even though the SSID is hidden.",
+    "What if the password contains special characters? The tool handles standard WiFi password characters, but test before distributing."
+  ]
+}

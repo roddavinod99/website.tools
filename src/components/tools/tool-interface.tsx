@@ -92,6 +92,75 @@ import { JSONBeautifier } from "./json-beautifier";
 import { JSONMinifier } from "./json-minifier";
 import { JSONValidator } from "./json-validator";
 
+// Crypto & Security Tools
+import { BcryptGenerator } from "./bcrypt-generator";
+import { UlidGenerator } from "./ulid-generator";
+import { HmacGenerator } from "./hmac-generator";
+import { RsaKeyGenerator } from "./rsa-key-generator";
+import { PasswordStrength } from "./password-strength";
+import { Bip39Generator } from "./bip39-generator";
+import { MacAddressLookup } from "./mac-address-lookup";
+import { MacAddressGenerator } from "./mac-address-generator";
+import { PhoneNumberParser } from "./phone-number-parser";
+import { IBANValidator } from "./iban-validator";
+
+// New Converters
+import { RomanNumeralConverter } from "./roman-numeral-converter";
+import { NatoAlphabet } from "./nato-alphabet";
+import { TextToUnicode } from "./text-to-unicode";
+import { ListConverter } from "./list-converter";
+import { TemperatureConverter } from "./temperature-converter";
+
+// New Generators
+import { RandomPortGenerator } from "./random-port-generator";
+import { MetaTagGenerator } from "./meta-tag-generator";
+
+// New Formatters
+import { DockerRunToCompose } from "./docker-run-to-compose";
+import { YAMLViewer } from "./yaml-viewer";
+import { BenchmarkBuilder } from "./benchmark-builder";
+
+// New Utilities
+import { BasicAuthGenerator } from "./basic-auth-generator";
+import { MimeTypes } from "./mime-types";
+import { KeycodeInfo } from "./keycode-info";
+import { SlugifyString } from "./slugify-string";
+import { SafelinkDecoder } from "./safelink-decoder";
+import { DeviceInformation } from "./device-information";
+import { EmailNormalizer } from "./email-normalizer";
+import { TextDiffVisual } from "./text-diff-visual";
+import { StringObfuscator } from "./string-obfuscator";
+import { MathEvaluator } from "./math-evaluator";
+import { Chronometer } from "./chronometer";
+import { PercentageCalculator } from "./percentage-calculator";
+import { EmojiPicker } from "./emoji-picker";
+import { Ipv4SubnetCalculator } from "./ipv4-subnet-calculator";
+import { Ipv4AddressConverter } from "./ipv4-address-converter";
+import { Ipv4RangeExpander } from "./ipv4-range-expander";
+import { Ipv6UlaGenerator } from "./ipv6-ula-generator";
+
+// Dedicated tool components (previously missing)
+import { Base64Decoder } from "./base64-decoder";
+import { Base64Encoder } from "./base64-encoder";
+import { CSSMinifier } from "./css-minifier";
+import { HTMLMinifier } from "./html-minifier";
+import { PromptGenerator } from "./prompt-generator";
+import { PromptImprover } from "./prompt-improver";
+import { MarkdownEditor } from "./markdown-editor";
+
+// Orphaned tools (components existed but were not registered)
+import { ChmodCalculator } from "./chmod-calculator";
+import { EtaCalculator } from "./eta-calculator";
+
+// New IT-Tools parity tools
+import { TokenGenerator } from "./token-generator";
+import { EncryptDecrypt } from "./encrypt-decrypt";
+import { WifiQRGenerator } from "./wifi-qr-generator";
+import { HTTPStatusCodes } from "./http-status-codes";
+import { GitCheatsheet } from "./git-cheatsheet";
+import { RegexMemo } from "./regex-memo";
+import { NumeronymGenerator } from "./numeronym-generator";
+
 const toolComponents: Record<string, React.ComponentType> = {
   // Existing
   "json-formatter": JSONFormatter,
@@ -183,6 +252,75 @@ const toolComponents: Record<string, React.ComponentType> = {
   "json-schema-generator": JsonSchemaGenerator,
   "dns-lookup": DNSLookup,
   "ip-lookup": IPLookup,
+
+  // Crypto & Security Tools
+  "bcrypt-generator": BcryptGenerator,
+  "ulid-generator": UlidGenerator,
+  "hmac-generator": HmacGenerator,
+  "rsa-key-generator": RsaKeyGenerator,
+  "password-strength": PasswordStrength,
+  "bip39-generator": Bip39Generator,
+  "mac-address-lookup": MacAddressLookup,
+  "mac-address-generator": MacAddressGenerator,
+  "phone-number-parser": PhoneNumberParser,
+  "iban-validator": IBANValidator,
+
+  // New Converters
+  "roman-numeral-converter": RomanNumeralConverter,
+  "nato-alphabet": NatoAlphabet,
+  "text-to-unicode": TextToUnicode,
+  "list-converter": ListConverter,
+  "temperature-converter": TemperatureConverter,
+
+  // New Generators
+  "random-port-generator": RandomPortGenerator,
+  "meta-tag-generator": MetaTagGenerator,
+
+  // New Formatters
+  "docker-run-to-compose": DockerRunToCompose,
+  "yaml-viewer": YAMLViewer,
+  "benchmark-builder": BenchmarkBuilder,
+
+  // New Utilities
+  "basic-auth-generator": BasicAuthGenerator,
+  "mime-types": MimeTypes,
+  "keycode-info": KeycodeInfo,
+  "slugify-string": SlugifyString,
+  "safelink-decoder": SafelinkDecoder,
+  "device-information": DeviceInformation,
+  "email-normalizer": EmailNormalizer,
+  "text-diff-visual": TextDiffVisual,
+  "string-obfuscator": StringObfuscator,
+  "math-evaluator": MathEvaluator,
+  "chronometer": Chronometer,
+  "percentage-calculator": PercentageCalculator,
+  "emoji-picker": EmojiPicker,
+  "ipv4-subnet-calculator": Ipv4SubnetCalculator,
+  "ipv4-address-converter": Ipv4AddressConverter,
+  "ipv4-range-expander": Ipv4RangeExpander,
+  "ipv6-ula-generator": Ipv6UlaGenerator,
+
+  // Dedicated tool components
+  "base64-decoder": Base64Decoder,
+  "base64-encoder": Base64Encoder,
+  "css-minifier": CSSMinifier,
+  "html-minifier": HTMLMinifier,
+  "prompt-generator": PromptGenerator,
+  "prompt-improver": PromptImprover,
+  "markdown-editor": MarkdownEditor,
+
+  // Orphaned tools now registered
+  "chmod-calculator": ChmodCalculator,
+  "eta-calculator": EtaCalculator,
+
+  // New IT-Tools parity tools
+  "token-generator": TokenGenerator,
+  "encrypt-decrypt": EncryptDecrypt,
+  "wifi-qr-generator": WifiQRGenerator,
+  "http-status-codes": HTTPStatusCodes,
+  "git-cheatsheet": GitCheatsheet,
+  "regex-memo": RegexMemo,
+  "numeronym-generator": NumeronymGenerator,
 };
 
 interface Props {

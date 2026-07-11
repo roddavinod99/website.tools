@@ -1,0 +1,44 @@
+{
+  "whatItDoes": "Generates cryptographically random port numbers for network services and development. Supports single port generation, random ports within a custom range, and batch generation of multiple unique ports. Optionally excludes well-known ports (below 1024) and labels each port with its common service name and category.",
+  "whyItExists": "When setting up development servers, containers, or network services, finding an available port number is a common task. This tool provides quick, random port suggestions while avoiding conflicts with well-known system ports.",
+  "whoShouldUse": "Developers running local development servers, DevOps engineers configuring containerized services, system administrators setting up network services, and students learning about networking.",
+  "useCases": [
+    "Generate a random port for a local development server to avoid conflicts",
+    "Pick multiple random ports for microservice architecture development",
+    "Find an available port within a specific range for firewall rule configuration",
+    "Generate ports for Docker container port mapping",
+    "Get random ports for game server or application deployment"
+  ],
+  "instructions": [
+    "Choose a generation mode: Single Port, From Range, or Multiple Ports",
+    "For range mode, specify the start and end port numbers",
+    "For multiple mode, specify how many ports to generate",
+    "Toggle \"Avoid well-known ports\" to skip system ports below 1024",
+    "Click \"Generate\" to create the port numbers",
+    "Click \"Copy All\" to copy the generated ports to your clipboard"
+  ],
+  "examples": [
+    "Single Port mode with well-known avoidance: 48291",
+    "Range mode (3000-9000): 3487, 5612, 7891, 4203, 8156",
+    "Multiple Ports (5 ports, avoid well-known): 51823, 10492, 63741, 28150, 47663"
+  ],
+  "bestPractices": [
+    "Always enable well-known port avoidance to prevent conflicts with system services",
+    "Use the range mode when you need ports within a specific firewall-permitted range",
+    "Note the service labels — if your random port matches a known service, consider choosing another",
+    "For production environments, verify the port is not in use with a port scanner before deploying",
+    "Use multiple-port generation when setting up multiple microservices at once"
+  ],
+  "commonMistakes": [
+    "Using a port in the well-known range (1-1023) for development servers without root privileges",
+    "Not checking if the randomly generated port is already in use on the target machine",
+    "Confusing port numbers with process IDs — they are different concepts",
+    "Generating only one port when the setup requires multiple for load balancing"
+  ],
+  "faq": [
+    "Why avoid ports below 1024? Ports 1-1023 are reserved for well-known system services (HTTP, SSH, etc.) and typically require root/administrator privileges to use.",
+    "Are these ports guaranteed to be available? No — this tool generates random numbers. You should verify the port is not in use before starting your service.",
+    "What port range should I use for development? Ports 3000-9000 are commonly used for local development servers.",
+    "Can I use port 0? Port 0 tells the OS to assign any available port dynamically, but this tool generates specific port numbers."
+  ]
+}

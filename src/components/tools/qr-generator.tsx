@@ -1,42 +1,15 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import QRCode from "qrcode";
 
 type ECCLevel = "L" | "M" | "Q" | "H";
 type OutputFormat = "png" | "svg" | "jpeg";
 type QRType = "url" | "text" | "email" | "phone" | "sms" | "wifi" | "vcard" | "location";
 type DotShape = "square" | "circle" | "rounded";
 
-const ECC_LABELS: Record<ECCLevel, string> = { L: "Low (7%)", M: "Medium (15%)", Q: "Quartile (25%)", H: "High (30%)" };
-
-function generateQRMatrix(text: string, ecc: ECCLevel): boolean[][] {
-  const size = 21 + (ecc === "L" ? 0 : ecc === "M" ? 2 : ecc === "Q" ? 4 : 6) * 2;
-  const matrix: boolean[][] = Array.from({ length: size }, () => Array(size).fill(false));
-  const drawFinder = (ox: number, oy: number) => {
-    for (let r = 0; r < 7; r++) {
-      for (let c = 0; c < 7; c++) {
-        if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
-          if (ox + r < size && oy + c < size) matrix[ox + r][oy + c] = true;
-        }
-      }
-    }
-  };
-  drawFinder(0, 0);
-  drawFinder(0, size - 7);
-  drawFinder(size - 7, 0);
-  const bytes = new TextEncoder().encode(text);
-  let idx = 0;
-  for (let r = 8; r < size - 1 && idx < bytes.length; r += 2) {
-    for (let c = 0; c < size && idx < bytes.length; c++) {
-      if (matrix[r] && !matrix[r][c] && !matrix[r + 1]?.[c]) {
-        matrix[r][c] = (bytes[idx] & 0x80) !== 0;
-        bytes[idx] <<= 1;
-        if (++idx % 8 === 0) idx++;
-      }
-    }
-  }
-  return matrix;
-}
+const ECC_MAP: Record<ECCLevel, string> = { L: "Low (7%)", M: "Medium (15%)", Q: "Quartile (25%)", H: "High (30%)" };
+const ECC_QRCODE = { L: "L", M: "M", Q: "Q", H: "H" } as const;
 
 function formatQRData(type: QRType, value: string, extra: Record<string, string>): string {
   switch (type) {
@@ -61,6 +34,11 @@ function formatQRData(type: QRType, value: string, extra: Record<string, string>
   }
 }
 
+interface QRBitMatrix {
+  size: number;
+  get(row: number, col: number): number;
+}
+
 export function QRGenerator() {
   const [input, setInput] = useState("");
   const [qrType, setQrType] = useState<QRType>("url");
@@ -79,36 +57,31 @@ export function QRGenerator() {
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [qrSvg, setQrSvg] = useState<string | null>(null);
   const [history, setHistory] = useState<string[]>([]);
+  const [extra, setExtra] = useState<Record<string, string>>({});
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-
-  const [extra, setExtra] = useState<Record<string, string>>({});
 
   const getEffectiveInput = useCallback(() => {
     if (!input.trim()) return "";
     return formatQRData(qrType, input.trim(), extra);
   }, [input, qrType, extra]);
 
-  const generateSvgString = useCallback((matrix: boolean[][], mSize: number, padding: number): string => {
+  const buildSvgFromMatrix = useCallback((matrix: QRBitMatrix, mSize: number, padding: number): string => {
     const size = mSize * cellSize + padding * 2;
-    const fg = useGradient ? undefined : fgColor;
-    const bg = bgColor;
+    const fill = useGradient ? "url(#qrGrad)" : fgColor;
+    const r = dotShape === "rounded" ? Math.max(1, Math.floor(cellSize / 4)) : 0;
     let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
-    svg += `<rect width="${size}" height="${size}" fill="${bg}"/>`;
+    svg += `<rect width="${size}" height="${size}" fill="${bgColor}"/>`;
     if (useGradient) {
       svg += `<defs><linearGradient id="qrGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${gradientStart}"/><stop offset="100%" stop-color="${gradientEnd}"/></linearGradient></defs>`;
     }
-    const fill = useGradient ? "url(#qrGrad)" : fg;
-    const r = dotShape === "rounded" ? Math.max(1, Math.floor(cellSize / 4)) : 0;
     for (let row = 0; row < mSize; row++) {
       for (let col = 0; col < mSize; col++) {
-        if (matrix[row]?.[col]) {
+        if (matrix.get(row, col)) {
           const x = padding + col * cellSize;
           const y = padding + row * cellSize;
           if (dotShape === "circle") {
-            const cx = x + cellSize / 2;
-            const cy = y + cellSize / 2;
-            svg += `<circle cx="${cx}" cy="${cy}" r="${cellSize / 2}" fill="${fill}"/>`;
+            svg += `<circle cx="${x + cellSize / 2}" cy="${y + cellSize / 2}" r="${cellSize / 2}" fill="${fill}"/>`;
           } else if (dotShape === "rounded") {
             svg += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="${r}" ry="${r}" fill="${fill}"/>`;
           } else {
@@ -121,36 +94,31 @@ export function QRGenerator() {
     return svg;
   }, [cellSize, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape]);
 
-  const generate = useCallback(() => {
-    const data = getEffectiveInput();
-    if (!data || !canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const matrix = generateQRMatrix(data, ecc);
-    const mSize = matrix.length;
+  const renderToCanvas = useCallback((matrix: QRBitMatrix, mSize: number, canvas: HTMLCanvasElement) => {
     const padding = margin * cellSize;
     const size = mSize * cellSize + padding * 2;
     canvas.width = size;
     canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, size, size);
 
-    const fg = useGradient ? undefined : fgColor;
     let gradient: CanvasGradient | null = null;
     if (useGradient) {
       gradient = ctx.createLinearGradient(0, 0, size, size);
       gradient.addColorStop(0, gradientStart);
       gradient.addColorStop(1, gradientEnd);
     }
+    const fg = gradient || fgColor;
 
     for (let r = 0; r < mSize; r++) {
       for (let c = 0; c < mSize; c++) {
-        if (matrix[r]?.[c]) {
+        if (matrix.get(r, c)) {
           const x = padding + c * cellSize;
           const y = padding + r * cellSize;
-          ctx.fillStyle = gradient || fg || "#000";
+          ctx.fillStyle = fg;
           if (dotShape === "circle") {
             ctx.beginPath();
             ctx.arc(x + cellSize / 2, y + cellSize / 2, cellSize / 2, 0, Math.PI * 2);
@@ -166,14 +134,40 @@ export function QRGenerator() {
         }
       }
     }
+  }, [cellSize, margin, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape]);
 
-    const svgString = generateSvgString(matrix, mSize, padding);
+  const generate = useCallback(async () => {
+    const data = getEffectiveInput();
+    if (!data || !canvasRef.current) return;
+
+    let qrData;
+    try {
+      qrData = QRCode.create(data, { errorCorrectionLevel: ECC_QRCODE[ecc] });
+    } catch {
+      return;
+    }
+
+    const matrix: QRBitMatrix = {
+      size: qrData.modules.size,
+      get(row: number, col: number): number {
+        return qrData.modules.get(row, col) ? 1 : 0;
+      },
+    };
+    const mSize = matrix.size;
+    const padding = margin * cellSize;
+
+    renderToCanvas(matrix, mSize, canvasRef.current);
+
+    const svgString = buildSvgFromMatrix(matrix, mSize, padding);
     setQrSvg(svgString);
 
     if (includeLogo && logoUrl) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
       const logoSize = mSize * cellSize * 0.25;
-      const logoX = (size - logoSize) / 2;
-      const logoY = (size - logoSize) / 2;
+      const logoX = (canvas.width - logoSize) / 2;
+      const logoY = (canvas.height - logoSize) / 2;
       const img = new Image();
       img.onload = () => {
         ctx.beginPath();
@@ -186,27 +180,25 @@ export function QRGenerator() {
         ctx.clip();
         ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
         ctx.restore();
-        const dataUrl = canvas.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`);
-        setQrDataUrl(dataUrl);
+        setQrDataUrl(canvas.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`));
       };
       img.src = logoUrl;
     } else {
       if (outputFormat === "svg") {
         setQrDataUrl("data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgString))));
       } else {
-        const dataUrl = canvas.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`);
-        setQrDataUrl(dataUrl);
+        setQrDataUrl(canvasRef.current.toDataURL(`image/${outputFormat === "jpeg" ? "jpeg" : "png"}`));
       }
     }
 
     if (input.trim()) {
-      setHistory((prev) => { const next = [input.trim(), ...prev.filter(h => h !== input.trim())].slice(0, 20); return next; });
+      setHistory((prev) => [input.trim(), ...prev.filter((h) => h !== input.trim())].slice(0, 20));
     }
-  }, [getEffectiveInput, ecc, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape, cellSize, margin, outputFormat, includeLogo, logoUrl, input, generateSvgString]);
+  }, [getEffectiveInput, ecc, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape, cellSize, margin, outputFormat, includeLogo, logoUrl, input, renderToCanvas, buildSvgFromMatrix]);
 
   useEffect(() => {
     if (input.trim()) {
-      const id = requestAnimationFrame(generate);
+      const id = requestAnimationFrame(() => { generate(); });
       return () => cancelAnimationFrame(id);
     }
   }, [generate, input]);
@@ -222,13 +214,24 @@ export function QRGenerator() {
 
   const copyToClipboard = useCallback(async () => {
     if (!qrDataUrl) return;
-    const blob = await (await fetch(qrDataUrl)).blob();
-    await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-  }, [qrDataUrl]);
+    try {
+      const blob = await (await fetch(qrDataUrl)).blob();
+      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+    } catch {
+      // Fallback: copy SVG string to clipboard
+      if (qrSvg) {
+        await navigator.clipboard.writeText(qrSvg);
+      }
+    }
+  }, [qrDataUrl, qrSvg]);
 
   const handleLogoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) { const url = URL.createObjectURL(file); setLogoUrl(url); setIncludeLogo(true); }
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setLogoUrl(url);
+      setIncludeLogo(true);
+    }
   }, []);
 
   return (
@@ -336,7 +339,7 @@ export function QRGenerator() {
             <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Error Correction</label>
             <select value={ecc} onChange={(e) => setEcc(e.target.value as ECCLevel)}
               className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-              {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_LABELS[l]}</option>))}
+              {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_MAP[l]}</option>))}
             </select>
           </div>
           <div>

@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Pretty-print and view YAML with syntax highlighting. Features color-coded keys, strings, numbers, booleans, and comments. Includes validation for common YAML syntax errors, line numbers, and copy functionality for the formatted output.",
+  "whyItExists": "YAML files can be difficult to read and debug without proper formatting; this tool provides instant syntax highlighting and validation, making it easy to spot errors and understand YAML structure visually.",
+  "whoShouldUse": "DevOps engineers, developers working with Kubernetes/Docker configurations, CI/CD pipeline authors, and anyone who regularly reads or writes YAML files.",
+  "useCases": [
+    "Quickly visualize and validate a YAML configuration file",
+    "Debug indentation errors in Kubernetes or Docker Compose YAML",
+    "Copy formatted YAML after making edits to a configuration",
+    "Understand the structure of a complex YAML document with syntax highlighting",
+    "Verify YAML syntax before committing configuration changes",
+    "Read and understand YAML files from other team members"
+  ],
+  "instructions": [
+    "Paste your YAML text into the input textarea",
+    "The syntax-highlighted output appears below in real-time",
+    "Color coding: blue for keys, green for strings, orange for numbers, purple for booleans",
+    "Click the Copy button to copy the formatted YAML to your clipboard",
+    "Enable Word Wrap for long lines that would otherwise require horizontal scrolling",
+    "Syntax errors are displayed in a red warning banner above the output"
+  ],
+  "examples": [
+    "A Kubernetes deployment YAML with pods, services, and configmaps",
+    "A Docker Compose file with multiple services and volumes",
+    "A GitHub Actions workflow with jobs, steps, and environment variables"
+  ],
+  "bestPractices": [
+    "Use 2 spaces for indentation consistently throughout your YAML files",
+    "Wrap string values in quotes when they contain special characters",
+    "Use --- to separate multiple YAML documents in a single file",
+    "Keep line length under 80 characters for better readability",
+    "Use comments (#) to explain complex configurations"
+  ],
+  "commonMistakes": [
+    "Using tabs instead of spaces for indentation — YAML requires spaces",
+    "Mixing indentation levels inconsistently within the same document",
+    "Forgetting to quote strings that contain colons, brackets, or other special characters",
+    "Using the wrong indentation depth for nested objects",
+    "Not escaping special characters in string values"
+  ],
+  "faq": [
+    "Why doesn't my YAML parse correctly? — The most common cause is inconsistent indentation. YAML is indentation-sensitive and requires spaces (not tabs).",
+    "What YAML features are supported? — This tool supports basic YAML: scalars, sequences, mappings, and inline collections. Advanced features like anchors and complex keys may not render correctly.",
+    "Can I edit the highlighted output? — The output is read-only for viewing. Edit the input textarea to make changes.",
+    "Is this tool suitable for large YAML files? — It works well for files up to a few hundred lines. For very large files, consider using a dedicated YAML editor."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Decodes URL shortener and safelink redirect URLs to reveal the final destination address. Supports batch decoding of multiple URLs at once and handles common redirect patterns including query parameter extraction, path-based redirects, and base64-encoded destinations.",
+  "whyItExists": "URL shorteners and safelink services hide the true destination of a link, which can obscure malicious sites. This tool lets you verify where a link actually goes before clicking it, improving online safety and awareness.",
+  "whoShouldUse": "Security-conscious users, IT administrators verifying link destinations, content creators checking shared links, and anyone who receives shortened URLs and wants to know the real destination.",
+  "useCases": [
+    "Verify the real destination of a shortened URL before clicking on it",
+    "Batch-decode multiple safelinks from an email or document",
+    "Check that a shared link leads to a legitimate and safe website",
+    "Extract the original URL from a link obfuscation service",
+    "Decode redirect chains from tracking or affiliate URLs"
+  ],
+  "instructions": [
+    "Paste one or more safelink or shortened URLs into the textarea, one per line",
+    "Click the \"Decode URLs\" button to process all links",
+    "Review the decoded destination URLs displayed below each original",
+    "Click \"Copy\" next to any decoded URL to copy it to your clipboard",
+    "Use \"Copy All\" to copy every decoded URL at once"
+  ],
+  "examples": [
+    "Input: https://example.com/go?url=https%3A%2F%2Fdestination.com -> Output: https://destination.com",
+    "Input: https://safelink.example.com/?u=aHR0cHM6Ly9... -> Output: the decoded base64 URL"
+  ],
+  "bestPractices": [
+    "Always decode suspicious links before sharing them with others",
+    "Decode links received in unsolicited emails or messages before visiting",
+    "Use batch mode to check multiple links from a spreadsheet or document at once",
+    "Be aware that some redirects may chain through multiple URLs",
+    "Combine with other safety tools like URL reputation checkers for maximum security"
+  ],
+  "commonMistakes": [
+    "Assuming a decoded URL is safe just because it looks legitimate",
+    "Not decoding URLs before sharing them, potentially spreading malicious links",
+    "Expecting all shortened URLs to decode successfully — some use server-side redirects that cannot be decoded client-side",
+    "Pasting multiple URLs on the same line instead of one per line"
+  ],
+  "faq": [
+    "Can this tool decode all URL shorteners? No — server-side redirects (like bit.ly) do not embed the destination in the URL and require an HTTP request to resolve.",
+    "Is it safe to paste URLs here? Yes, the tool processes everything locally in your browser. No data is sent to any server.",
+    "What if the output looks like gibberish? The destination may be double-encoded or use a format not yet supported. Try URL-decoding the output once more."
+  ]
+}

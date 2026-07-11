@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Interactive regular expression reference covering character classes, quantifiers, anchors, groups, lookaheads, and flags with real-world examples. Each pattern includes a description, example input/output, and common use cases.",
+  "whoShouldUse": "Developers writing or debugging regex patterns, data analysts building data extraction pipelines, QA engineers validating input formats, and students learning regular expressions.",
+  "whyItExists": "Regular expressions are powerful but notoriously difficult to memorize. This interactive cheatsheet provides instant access to every regex concept with practical examples, eliminating the need to search external documentation.",
+  "useCases": [
+    "Look up the exact syntax for a positive lookahead assertion",
+    "Find the correct character class for matching Unicode letters",
+    "Reference common email and URL validation patterns",
+    "Understand the difference between greedy and lazy quantifiers with examples",
+    "Quickly find how to match whitespace or word boundaries"
+  ],
+  "instructions": [
+    "Browse regex patterns by category: Character Classes, Quantifiers, Anchors, Groups, Lookarounds, Flags",
+    "Click on any pattern to expand its description and examples",
+    "Use the copy button to copy the regex snippet to your clipboard",
+    "Read the example input/output to understand how each pattern behaves",
+    "Combine patterns by referencing multiple sections for complex regex construction"
+  ],
+  "examples": [
+    "Category: Character Classes. Pattern: \\d matches digits, \\w matches word characters, \\s matches whitespace. Example: \\d{3}-\\d{4} matches '555-1234'.",
+    "Category: Lookarounds. Pattern: (?=...) positive lookahead. Example: \\w+(?=@) matches 'user' in 'user@email.com' without including the @ symbol."
+  ],
+  "bestPractices": [
+    "Start with simple patterns and add complexity incrementally — test each addition",
+    "Use non-capturing groups (?:...) when you don't need to extract the matched group",
+    "Prefer specific character classes over . (dot) to avoid unintended matches",
+    "Use the regex tester tool alongside this cheatsheet to validate patterns in real-time"
+  ],
+  "commonMistakes": [
+    "Using . (dot) to match newlines — it doesn't by default; use [\\s\\S] or the 's' flag",
+    "Forgetting that ? after a quantifier makes it lazy, not optional",
+    "Confusing ^ inside [] (negation) with ^ outside [] (start of string anchor)",
+    "Writing regex for email validation that is too strict or too permissive"
+  ],
+  "faq": [
+    "What's the difference between * and +? * matches zero or more (can match nothing), + matches one or more (must match at least once).",
+    "When should I use the 'g' (global) flag? Use it when you want to find all matches in a string, not just the first one.",
+    "How do I match literal special characters? Escape them with a backslash: \\. matches a literal dot.",
+    "Can regex match HTML? Technically yes, but it's fragile and not recommended. Use a proper HTML parser instead."
+  ]
+}

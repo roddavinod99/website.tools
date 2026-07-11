@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Provides a quick-reference guide to all HTTP status codes organized by category (1xx-5xx) with descriptions, common causes, and when each status code is typically returned by servers.",
+  "whoShouldUse": "Web developers debugging API responses, backend engineers designing error handling, students learning HTTP protocols, and DevOps engineers troubleshooting web server issues.",
+  "whyItExists": "HTTP status codes are essential for understanding API behavior, but their meanings are scattered across documentation. This tool consolidates all status codes in one searchable, categorized reference.",
+  "useCases": [
+    "Look up why a 429 status code is returned and how to handle rate limiting",
+    "Understand the difference between 301 and 302 redirects for SEO purposes",
+    "Find the correct status code to return when a resource hasn't been modified (304)",
+    "Debug a 502 Bad Gateway error by understanding what causes it",
+    "Reference status codes while designing a REST API error response strategy"
+  ],
+  "instructions": [
+    "Browse status codes by category using the category tabs (Informational, Success, Redirection, Client Error, Server Error)",
+    "Use the search bar to find a specific status code number or keyword",
+    "Read the description and common use case for each status code",
+    "Click on any status code to see detailed information about when it's used",
+    "Use the copy button to quickly copy status code numbers for use in code"
+  ],
+  "examples": [
+    "Search: 'rate limit'. Output: 429 Too Many Requests — returned when a client exceeds the rate limit, with Retry-After header.",
+    "Browse: 2xx category. Output: List of all success codes (200, 201, 204, etc.) with descriptions of when to use each."
+  ],
+  "bestPractices": [
+    "Use specific status codes rather than generic 200 or 500 for all responses",
+    "Return 201 Created with a Location header when creating new resources",
+    "Use 304 Not Modified with ETags to reduce bandwidth for unchanged resources",
+    "Include descriptive error messages in the response body alongside 4xx/5xx codes"
+  ],
+  "commonMistakes": [
+    "Returning 200 OK for error responses — use appropriate 4xx/5xx codes instead",
+    "Using 301 redirect for temporary changes — use 302 or 307 for temporary redirects",
+    "Not including a Retry-After header with 429 or 503 responses",
+    "Treating all 5xx errors the same — 500 is unexpected, 502 is gateway, 503 is overloaded"
+  ],
+  "faq": [
+    "What's the difference between 301 and 302 redirects? 301 is permanent (search engines update their index), 302 is temporary.",
+    "When should I use 204 No Content? Use it when the request succeeds but there's no response body, like after a successful DELETE.",
+    "Why is 418 I'm a teapot in the list? It's an April Fools joke from RFC 2324, but it is a real registered status code.",
+    "Should I return 400 or 422 for validation errors? 400 for malformed requests, 422 for well-formed requests with invalid data."
+  ]
+}

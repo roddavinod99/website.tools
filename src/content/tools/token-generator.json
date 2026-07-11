@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Generates random API tokens, secrets, and one-time passwords with configurable length, character sets (uppercase, lowercase, numbers, symbols), and custom character pools. Displays entropy bits and charset size for security assessment.",
+  "whyItExists": "Developers frequently need to generate secure random tokens for API keys, session identifiers, and authentication secrets. This tool provides cryptographically secure generation with full control over character composition and entropy measurement.",
+  "whoShouldUse": "Backend developers generating API keys, DevOps engineers creating secrets, security professionals needing random tokens, and anyone who needs quick secure random strings.",
+  "useCases": [
+    "Generate a secure 64-character API key for a new service integration",
+    "Create random session tokens with only alphanumeric characters",
+    "Batch-generate 20 unique passwords for test user accounts",
+    "Generate a custom-symbol-only token for a high-security application",
+    "Measure the entropy of generated tokens before using them in production"
+  ],
+  "instructions": [
+    "Set the desired token length using the slider or number input (1-512)",
+    "Toggle character set checkboxes: uppercase (A-Z), lowercase (a-z), numbers (0-9), symbols",
+    "Enable 'Custom charset' and enter your own character pool for specialized needs",
+    "Set the count to generate multiple tokens at once (1-50)",
+    "Click 'Generate' to produce tokens; view entropy and charset size stats",
+    "Click 'Copy' on any individual token, or 'Copy All' when generating multiple"
+  ],
+  "examples": [
+    "Input: Length=32, uppercase+lowercase+numbers, count=1. Output: 'aB3kL9xM2pQ7nR5sT1wY4jH8fG6dV' with 190 bits entropy.",
+    "Input: Length=16, symbols only with custom charset '!@#$%', count=5. Output: Five 16-character strings using only those four symbols."
+  ],
+  "bestPractices": [
+    "Use at least 32 characters with mixed case, numbers for API keys (190+ bits entropy)",
+    "Avoid custom charsets that are too small — check the entropy display before using a token",
+    "Generate multiple tokens at once for batch operations like test data creation",
+    "Use hex-only or alphanumeric tokens for URL-safe contexts"
+  ],
+  "commonMistakes": [
+    "Generating tokens that are too short (< 16 chars) for security-sensitive use cases",
+    "Using symbols-only charsets that reduce entropy and may cause escaping issues",
+    "Forgetting to check entropy bits — a 12-char lowercase token has only 56 bits of entropy",
+    "Using generated tokens in production without first verifying they meet your security requirements"
+  ],
+  "faq": [
+    "How secure are the generated tokens? The tool uses crypto.getRandomValues() which provides cryptographically secure randomness.",
+    "What does the entropy value mean? Entropy measures unpredictability in bits — higher is better. 128 bits is considered secure.",
+    "Can I use these for password reset tokens? Yes, but ensure the length is sufficient (32+ chars) and the charset includes enough variety.",
+    "Why does custom charset override the symbol checkbox? When custom charset is enabled, it replaces the default symbol set entirely."
+  ]
+}

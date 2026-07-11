@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Calculates Unix file permission modes with a visual checkbox grid. Toggle Read, Write, and Execute permissions for Owner, Group, and Others and see the octal (e.g., 755), symbolic (e.g., rwxr-xr-x), and chmod command output update in real time. Includes common presets and one-click copy for all output formats.",
+  "whyItExists": "Unix file permissions can be confusing — converting between octal numbers, symbolic notation, and actual permissions requires mental arithmetic that is easy to get wrong. This tool provides a visual, error-free way to configure and understand file permissions.",
+  "whoShouldUse": "System administrators managing file permissions on Linux/Unix servers, developers setting up project file permissions, DevOps engineers configuring deployment scripts, and students learning about Unix security.",
+  "useCases": [
+    "Calculate the chmod value for a desired permission set without doing mental math",
+    "Convert between octal notation (755) and symbolic notation (rwxr-xr-x)",
+    "Quickly apply common permission presets like 755 for executables or 644 for config files",
+    "Generate the exact chmod command to copy and paste into a terminal",
+    "Learn how Unix permission bits map to octal values using the visual grid"
+  ],
+  "instructions": [
+    "Toggle the checkboxes for each permission (Read/Write/Execute) for Owner, Group, and Others",
+    "Watch the octal, symbolic, and command outputs update automatically",
+    "Or type a 3-digit octal number directly into the input field and press Apply",
+    "Use the preset buttons for common permission sets like 755 or 644",
+    "Click on any output box to copy that value to your clipboard"
+  ],
+  "examples": [
+    "Owner: rwx, Group: r-x, Others: r-x -> Octal: 755 -> Symbolic: rwxr-xr-x",
+    "Owner: rw-, Group: r--, Others: r-- -> Octal: 644 -> Symbolic: rw-r--r--"
+  ],
+  "bestPractices": [
+    "Use 644 for regular files that should be readable by all but writable only by the owner",
+    "Use 755 for directories and executable scripts that all users should be able to enter/execute",
+    "Use 700 or 600 for sensitive files that only the owner should access",
+    "Avoid using 777 unless you fully understand the security implications",
+    "Always double-check permissions before applying them to production systems"
+  ],
+  "commonMistakes": [
+    "Setting 777 on files as a quick fix — this gives everyone full read/write/execute access",
+    "Confusing the order: it is Owner, Group, Others — not Others, Group, Owner",
+    "Forgetting that execute permission on a directory allows listing its contents",
+    "Using 666 for files that need to be executable — add the execute bit (766 or 755)"
+  ],
+  "faq": [
+    "What does the octal number mean? Each digit represents a group (Owner, Group, Others) and is the sum of Read (4), Write (2), and Execute (1) bits.",
+    "What is the difference between symbolic and octal? Symbolic (rwxr-xr-x) is human-readable; octal (755) is the numeric representation used in chmod commands.",
+    "Why is 755 common? It gives the owner full control while allowing others to read and execute but not modify — ideal for scripts and directories.",
+    "Can I use this tool for recursive permissions? The tool generates the value; use chmod -R in your terminal for recursive application."
+  ]
+}

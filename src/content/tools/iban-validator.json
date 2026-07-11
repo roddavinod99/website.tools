@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Validate and parse International Bank Account Numbers (IBANs) using the Mod-97 checksum algorithm. Extracts country code, check digits, BBAN, and validates against 35+ supported country formats with example patterns.",
+  "whyItExists": "IBAN validation is critical for financial applications and this tool provides instant validation with detailed feedback on the IBAN structure, including country identification and expected format examples.",
+  "whoShouldUse": "Financial developers, payment processing teams, banking professionals, and anyone who needs to validate or understand IBAN structure for European and international bank accounts.",
+  "useCases": [
+    "Validate an IBAN before submitting it to a payment processor",
+    "Parse an IBAN to extract the country code, check digits, and BBAN",
+    "Find the expected IBAN format and length for a specific country",
+    "Test IBAN validation logic during development of financial software",
+    "Understand IBAN structure by examining its components",
+    "Quickly try a sample IBAN from any supported country"
+  ],
+  "instructions": [
+    "Enter an IBAN string into the input field (with or without spaces)",
+    "The validator immediately checks validity using Mod-97 checksum and format validation",
+    "View the extracted components: country, check digits, BBAN, and length",
+    "Click on a country from the supported list to load a sample IBAN for testing",
+    "Copy any individual field or the full IBAN using the Copy buttons",
+    "Green indicates valid; red indicates invalid with details about what went wrong"
+  ],
+  "examples": [
+    "DE89 3704 0044 0532 0130 00 → Valid IBAN (Germany)",
+    "GB29 NWBK 6016 1331 9268 19 → Valid IBAN (United Kingdom)",
+    "FR14 2004 1010 0505 0001 3M02 606 → Valid IBAN (France)"
+  ],
+  "bestPractices": [
+    "Always validate IBANs on both client-side and server-side",
+    "Normalize IBANs by removing spaces before validation and storage",
+    "Use a proper IBAN validation library for production financial applications",
+    "Store IBANs in uppercase without spaces for consistency",
+    "Validate the country-specific format in addition to the Mod-97 checksum"
+  ],
+  "commonMistakes": [
+    "Only checking the Mod-97 checksum without validating country-specific format",
+    "Forgetting to remove spaces before validation",
+    "Assuming all IBANs have the same length — they vary by country",
+    "Using this simplified validator for production financial applications without additional checks",
+    "Not handling non-IBAN bank account numbers that use different formats"
+  ],
+  "faq": [
+    "What is an IBAN? — An International Bank Account Number is a standardized format for identifying bank accounts across borders, used primarily in Europe and parts of the Middle East and Caribbean.",
+    "How does Mod-97 validation work? — The IBAN is rearranged (BBAN + country code + check digits), letters are converted to numbers, and the result is divided by 97. If the remainder is 1, the IBAN is valid.",
+    "How many countries support IBAN? — This tool supports 35+ countries. IBAN is primarily used in Europe, the Middle East, and some Caribbean nations.",
+    "Is this tool sufficient for production use? — For production financial applications, use a dedicated IBAN validation library that handles all edge cases and is regularly updated."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates HMAC (Hash-based Message Authentication Code) signatures using Web Crypto API. Supports SHA-1, SHA-256, SHA-384, and SHA-512 algorithms, producing hex-encoded output for any message and secret key combination.",
+  "whyItExists": "HMAC is essential for API authentication, webhook verification, and message integrity checks. This tool provides a quick browser-based way to compute HMAC signatures without writing code or using command-line tools.",
+  "whoShouldUse": "API developers implementing request signing, backend engineers verifying webhook payloads, and security professionals auditing authentication systems.",
+  "useCases": [
+    "Generate an HMAC-SHA256 signature for API request authentication",
+    "Verify a webhook signature by comparing computed HMAC with the expected value",
+    "Compute HMAC-SHA512 for high-security message authentication",
+    "Test HMAC signatures during API integration development",
+    "Debug authentication failures by recomputing expected HMAC values"
+  ],
+  "instructions": [
+    "Enter the message (data) to be authenticated in the message field",
+    "Enter the secret key used for signing",
+    "Select the hashing algorithm (SHA-256 is recommended for most use cases)",
+    "The hex-encoded HMAC signature appears automatically",
+    "Click 'Copy' to copy the signature to your clipboard"
+  ],
+  "examples": [
+    "Message: 'Hello, World!', Key: 'secret', Algorithm: SHA-256 → Output: hex-encoded 64-character HMAC",
+    "Message: 'POST /api/webhook', Key: 'whsec_abc123', Algorithm: SHA-512 → Output: hex-encoded 128-character HMAC"
+  ],
+  "bestPractices": [
+    "Use SHA-256 or SHA-512 for new applications — SHA-1 is deprecated for security-sensitive uses",
+    "Keep secret keys secure and never expose them in client-side code",
+    "Use a strong, randomly generated secret key of at least 32 bytes",
+    "Always compare HMACs using constant-time comparison to prevent timing attacks"
+  ],
+  "commonMistakes": [
+    "Using HMAC as a substitute for encryption — HMAC provides authentication, not confidentiality",
+    "Hardcoding secret keys in source code instead of using environment variables",
+    "Using SHA-1 for new applications when SHA-256 is readily available",
+    "Comparing HMAC values with simple equality checks instead of constant-time comparison"
+  ],
+  "faq": [
+    "What is HMAC? Hash-based Message Authentication Code — a construction that combines a cryptographic hash with a secret key to authenticate messages.",
+    "How is HMAC different from a plain hash? HMAC includes a secret key, so only someone with the key can produce or verify the signature.",
+    "Which algorithm should I choose? SHA-256 is the most widely used; SHA-512 for maximum security; SHA-1 only for legacy compatibility.",
+    "Is HMAC the same as a digital signature? No — HMAC uses a symmetric key (shared secret), while digital signatures use asymmetric keys (public/private)."
+  ]
+}

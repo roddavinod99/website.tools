@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Converts text to Unicode code points (U+0048 format) and vice versa. Enter plain text to see each character's code point, or enter code points to decode them back to readable text. Supports both U+XXXX and 0xXXXX notation for input.",
+  "whyItExists": "Developers working with internationalization, character encoding issues, or Unicode escapes need to quickly look up or construct code points. This tool makes it trivial without consulting external references.",
+  "whoShouldUse": "Frontend developers working with i18n, backend developers debugging encoding issues, security researchers analyzing Unicode-based attacks, and anyone working with special characters or emoji code points.",
+  "useCases": [
+    "Find the Unicode code point for special characters or emoji to use in source code",
+    "Decode a sequence of Unicode escape sequences into readable text",
+    "Inspect hidden Unicode characters in suspicious text",
+    "Generate Unicode escape sequences for use in JSON or JavaScript strings"
+  ],
+  "instructions": [
+    "Select the conversion direction: Text to Unicode or Unicode to Text",
+    "Enter text or code points in the input field",
+    "The converted result appears instantly",
+    "Click Copy to copy the result to your clipboard"
+  ],
+  "examples": [
+    "Hello → U+0048 U+0065 U+006C U+006C U+006F",
+    "U+00A9 → ©",
+    "😀 → U+1F600",
+    "U+00E9 → é"
+  ],
+  "bestPractices": [
+    "Use space-separated U+XXXX format for clean, readable output",
+    "Non-BMP characters (like emoji) use surrogate pairs in some systems but full code points here",
+    "Copy the output directly into JavaScript or JSON escape sequences"
+  ],
+  "commonMistakes": [
+    "Forgetting that emoji and non-Latin characters have code points above U+FFFF",
+    "Using decimal instead of hexadecimal when entering code points manually",
+    "Confusing UTF-16 surrogate pairs with Unicode code points"
+  ],
+  "faq": [
+    "Does this handle emoji code points? — Yes, including multi-byte code points like U+1F600.",
+    "What input formats are accepted for Unicode to Text? — U+XXXX, 0xXXXX, #XXXX, or plain hex values, space or comma separated.",
+    "Is the output safe for use in JSON strings? — Yes, the U+XXXX format can be directly used in JSON and JavaScript Unicode escapes."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Obfuscate strings using 8 different encoding methods simultaneously: hex encoding, binary, unicode escapes, HTML entities, URL encoding, base64, reverse string, and ROT13. Each result is displayed with a copy button for easy use.",
+  "whyItExists": "Developers frequently need to encode or obfuscate strings for various purposes like escaping data for different formats, generating test data, or understanding how encoding works across different systems.",
+  "whoShouldUse": "Web developers, security researchers, CTF players, and anyone who needs to convert text between different encoding formats quickly.",
+  "useCases": [
+    "Encode a string to base64 for API authentication headers or data URLs",
+    "Convert text to HTML entities for safe embedding in HTML pages",
+    "Generate hex-encoded strings for low-level protocol debugging",
+    "Apply ROT13 for simple text obfuscation in puzzles or CTF challenges",
+    "URL-encode special characters for query strings or path components",
+    "Create binary representations for educational or debugging purposes"
+  ],
+  "instructions": [
+    "Type or paste the text you want to obfuscate into the Input Text area",
+    "All 8 obfuscation methods are computed and displayed simultaneously",
+    "Click the Copy button next to any result to copy the obfuscated text to your clipboard",
+    "The description badge next to each method shows a preview of what the output looks like",
+    "Results update in real-time as you type in the input field"
+  ],
+  "examples": [
+    "Input: \"Hello, World!\" → Base64: SGVsbG8sIFdvcmxkIQ==",
+    "Input: \"<script>\" → HTML Entities: &lt;script&gt;",
+    "Input: \"password\" → ROT13: cebjqrf"
+  ],
+  "bestPractices": [
+    "Use Base64 for data URIs and API authentication headers",
+    "Use URL encoding when building query strings or encoding path parameters",
+    "Use HTML entities when inserting user-generated content into HTML templates",
+    "Remember that obfuscation is not encryption — it provides no real security",
+    "Test encoded output in the target environment to ensure compatibility"
+  ],
+  "commonMistakes": [
+    "Assuming base64 is encryption — it is encoding and can be trivially decoded",
+    "Forgetting to URL-encode special characters in query parameters",
+    "Using HTML entities for non-HTML contexts where they won't be interpreted",
+    "Mixing up encoding methods and using the wrong one for the target format",
+    "Not handling Unicode characters correctly when encoding to ASCII-based formats"
+  ],
+  "faq": [
+    "Is base64 the same as encryption? — No, base64 is an encoding scheme, not encryption. Anyone can decode base64-encoded text trivially.",
+    "When should I use ROT13? — ROT13 is mainly used for hiding spoilers or in CTF challenges. It provides zero real security.",
+    "Why does my URL-encoded string look different from what I expected? — URL encoding can vary based on what characters are encoded. This tool encodes all non-alphanumeric characters for safety.",
+    "Can I use HTML entities in JavaScript strings? — HTML entities are interpreted by browsers in HTML context, not in JavaScript strings. Use unicode escapes (\\uXXXX) for JavaScript."
+  ]
+}

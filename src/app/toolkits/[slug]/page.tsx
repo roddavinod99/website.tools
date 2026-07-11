@@ -34,10 +34,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tk = toolkits[slug];
   if (!tk) return {};
+  const canonical = `${siteConfig.url}/toolkits/${slug}`;
   return {
     title: `${tk.name} - Free Online Developer Tools`,
     description: tk.description,
-    alternates: { canonical: `${siteConfig.url}/toolkits/${slug}` },
+    alternates: { canonical },
+    openGraph: {
+      title: `${tk.name} - Free Online Developer Tools`,
+      description: tk.description,
+      url: canonical,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${tk.name} - DevStackIO` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${tk.name} - Free Online Developer Tools`,
+      description: tk.description,
+      images: [siteConfig.ogImage],
+    },
   };
 }
 

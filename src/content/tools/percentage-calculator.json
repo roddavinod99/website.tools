@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Performs five common percentage calculations with real-time results: find what percent X is of Y, calculate X% of Y, compute percentage change between two values, add a percentage to a value, and subtract a percentage from a value. Each mode shows the result, formula, and supports one-click copy.",
+  "whyItExists": "Percentage calculations are among the most common math tasks in business, finance, and everyday life, yet people frequently make errors with the formulas. This tool provides instant, accurate results with the formula displayed for learning.",
+  "whoShouldUse": "Students learning percentage math, business professionals calculating discounts and markups, analysts computing growth rates, and anyone who needs quick percentage calculations without a spreadsheet.",
+  "useCases": [
+    "Calculate what percentage a test score is of the total possible points",
+    "Determine the discount amount when a product is 30% off its original price",
+    "Compute the percentage increase in sales from one quarter to the next",
+    "Add sales tax or tip percentage to a bill amount",
+    "Calculate the percentage decrease when comparing two measured values"
+  ],
+  "instructions": [
+    "Select the calculation mode from the five options at the top",
+    "Enter the first value (X) and second value (Y) as prompted by the input labels",
+    "View the result instantly — no submit button needed",
+    "Click the result area to copy the value to your clipboard",
+    "Switch modes to perform a different type of percentage calculation"
+  ],
+  "examples": [
+    "X is what % of Y: 50 is what % of 200 -> 25%",
+    "What is X% of Y: What is 15% of 300 -> 45",
+    "Percentage change: Change from 200 to 260 -> +30%",
+    "Add X% to Y: Add 10% to 150 -> 165",
+    "Subtract X% from Y: Subtract 20% from 200 -> 160"
+  ],
+  "bestPractices": [
+    "Use the formula display to verify the calculation method before using the result",
+    "For percentage change, note that the base is the absolute value of the original — negative values are handled correctly",
+    "Use the copy feature to paste results into reports or documents",
+    "Double-check which input is the percentage and which is the base value — they are different in each mode",
+    "For repeated calculations, switch between modes quickly using the mode selector"
+  ],
+  "commonMistakes": [
+    "Confusing \"X is what % of Y\" with \"What is X% of Y\" — they use different formulas",
+    "Entering the percentage as a whole number (e.g., 25) rather than as a fraction — the tool expects 25 for 25%, not 0.25",
+    "Forgetting that percentage change from 100 to 150 is +50%, not +50 percentage points",
+    "Using the wrong base value when calculating percentage change — the formula divides by the original value"
+  ],
+  "faq": [
+    "Why does the result show four decimal places? This ensures precision for financial or scientific calculations. Round as needed.",
+    "Can I enter negative numbers? Yes — percentage change handles negative values correctly.",
+    "What is the difference between percentage change and percentage points? Percentage change is relative (change/original × 100); percentage points are the absolute difference between two percentages.",
+    "Is there a keyboard shortcut to switch modes? No — click the mode buttons to switch."
+  ]
+}

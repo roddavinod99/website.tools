@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates bcrypt password hashes and verifies passwords against existing bcrypt hashes. Supports configurable cost rounds (4-14), real-time hash generation, and one-click copy to clipboard.",
+  "whyItExists": "Bcrypt is the industry standard for password hashing, but developers often need a quick way to generate hashes for testing or verify passwords without setting up a full backend. This tool provides a browser-based interface for both operations.",
+  "whoShouldUse": "Backend developers implementing authentication systems, security engineers testing password storage, and developers migrating or verifying user credentials.",
+  "useCases": [
+    "Generate a bcrypt hash of a password for storage in a database",
+    "Verify that a plaintext password matches an existing bcrypt hash",
+    "Test different cost rounds to balance security and performance",
+    "Quickly produce bcrypt hashes for seed data or test fixtures",
+    "Debug authentication issues by verifying password-hash pairs"
+  ],
+  "instructions": [
+    "Select the mode: 'Generate' to create a new hash or 'Verify' to check a password against a hash",
+    "In Generate mode, enter your password and select the desired cost rounds (default: 10)",
+    "The bcrypt hash appears below with the standard $2b$ prefix",
+    "In Verify mode, enter the password and paste the bcrypt hash to check for a match",
+    "Click 'Copy' to copy the generated hash to your clipboard"
+  ],
+  "examples": [
+    "Password: 'mySecret123', Cost: 10. Output: '$2b$10$Kx...'",
+    "Verify: password 'hello' against hash '$2b$10$...' → Result: Match / No Match"
+  ],
+  "bestPractices": [
+    "Use cost rounds of at least 10 for production password hashing",
+    "Never store plaintext passwords; always use bcrypt or a similar adaptive hash",
+    "Bcrypt hashes are 60 characters long and self-contain the cost and salt",
+    "Higher cost rounds increase security but also increase computation time"
+  ],
+  "commonMistakes": [
+    "Using a cost factor that is too low (below 8) making hashes easy to brute-force",
+    "Confusing bcrypt with plain SHA-256 hashing, which is not suitable for passwords",
+    "Truncating the bcrypt hash, which invalidates the entire hash",
+    "Using different prefixes ($2a$ vs $2b$) when comparing hashes from different libraries"
+  ],
+  "faq": [
+    "What is the cost rounds parameter? It determines how many times the hashing algorithm iterates, exponentially increasing computation time (2^cost iterations).",
+    "Why does the output always look different for the same password? Bcrypt includes a random salt, so each hash is unique even for identical inputs.",
+    "Is bcrypt still secure? Yes, bcrypt is an adaptive hash function designed to remain secure as computing power increases.",
+    "What is the difference between $2a$, $2b$, and $2y$? They are minor format variations from different implementations; $2b$ is the current standard."
+  ]
+}

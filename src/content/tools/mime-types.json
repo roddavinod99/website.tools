@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Looks up MIME types by file extension and vice versa using a built-in database of 100+ common MIME types. Enter a file extension like .json to get its MIME type, or enter a MIME type like application/json to find all matching extensions.",
+  "whyItExists": "Developers constantly need to know MIME types for HTTP headers, content-type configurations, and file handling. Having a quick lookup tool eliminates the need to search external references.",
+  "whoShouldUse": "Web developers configuring servers, API developers setting content types, DevOps engineers writing deployment configs, and anyone working with file uploads or HTTP headers.",
+  "useCases": [
+    "Find the correct Content-Type header value for a file extension in an API response",
+    "Discover all file extensions associated with a specific MIME type",
+    "Configure a web server to serve files with correct content types",
+    "Debug file upload issues by checking supported MIME types"
+  ],
+  "instructions": [
+    "Select the lookup direction: Extension to MIME or MIME to Extension",
+    "Type a file extension (e.g. pdf) or MIME type (e.g. application/json) in the input field",
+    "Results appear instantly as you type",
+    "Click Copy to copy the results to your clipboard"
+  ],
+  "examples": [
+    ".json → application/json",
+    "application/javascript → .js",
+    ".jpg → image/jpeg",
+    "video/mp4 → .mp4, .mp4v, .mpg4"
+  ],
+  "bestPractices": [
+    "Use the dot prefix (e.g. .json) or plain extension (json) — both work",
+    "For MIME types with charset parameters, the charset is stripped for matching",
+    "Some MIME types map to multiple extensions — all are shown in results"
+  ],
+  "commonMistakes": [
+    "Entering a full file path instead of just the extension",
+    "Confusing application/json with text/json — they differ",
+    "Expecting vendor-specific MIME types that aren't in the common lookup table"
+  ],
+  "faq": [
+    "How many MIME types are in the database? — Over 100 common types covering web, document, media, and font formats.",
+    "Does it handle charset parameters in MIME types? — Yes, charset suffixes are stripped before matching.",
+    "Can I look up custom or vendor-specific MIME types? — Only if they're in the built-in database; no external API is used."
+  ]
+}

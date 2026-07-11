@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Interactive Git command reference organized by category (Branching, Stashing, Undoing, History, etc.) with copy-to-clipboard support. Covers essential daily Git workflows from basic commits to advanced rebasing and cherry-picking.",
+  "whoShouldUse": "Git beginners learning version control, intermediate users expanding their Git knowledge, and experienced developers who need a quick command reference without leaving the terminal context.",
+  "whyItExists": "Git has dozens of commands with subtle variations. Even experienced developers forget the exact syntax for rebasing, stashing with messages, or undoing specific commits. This cheatsheet puts the most-used commands at your fingertips.",
+  "useCases": [
+    "Quickly find the correct git command to undo the last commit without losing changes",
+    "Copy the exact syntax for interactive rebase to squash commits before a pull request",
+    "Look up how to create a new branch and switch to it in one command",
+    "Find the git command to stash changes with a descriptive message",
+    "Reference cherry-pick syntax when applying a specific commit to another branch"
+  ],
+  "instructions": [
+    "Browse commands by category using the sidebar or tabs",
+    "Use the search box to filter commands by keyword",
+    "Click the copy icon next to any command to copy it to your clipboard",
+    "Read the brief description below each command to understand when to use it",
+    "Combine commands by copying multiple commands in sequence for complex workflows"
+  ],
+  "examples": [
+    "Search: 'squash'. Output: git rebase -i HEAD~N with instructions for marking commits as 'squash' in the editor.",
+    "Category: Undoing. Output: Commands for git reset --soft/--mixed/--hard, git revert, git restore, and git stash."
+  ],
+  "bestPractices": [
+    "Always create a backup branch before destructive operations like reset --hard or rebase",
+    "Use git stash pop instead of git stash apply to remove the stash after applying",
+    "Write descriptive commit messages that explain why, not what, the change does",
+    "Use git log --oneline --graph to visualize branch structure before rebasing"
+  ],
+  "commonMistakes": [
+    "Using git reset --hard on committed work without creating a backup branch first",
+    "Confusing git merge with git rebase — rebase rewrites history, merge preserves it",
+    "Running git push --force on shared branches, overwriting teammates' work",
+    "Forgetting to git pull before pushing, causing unnecessary merge conflicts"
+  ],
+  "faq": [
+    "Is this cheatsheet for Git beginners or advanced users? It covers both — basic commands like add/commit and advanced operations like rebase and cherry-pick.",
+    "Are the commands safe to copy-paste directly? Most are safe, but destructive commands (reset --hard, force push) should be reviewed before running.",
+    "Can I contribute additional commands? The cheatsheet is static, but you can request additions through the feedback page.",
+    "Does this cover Git LFS or Git submodules? Currently it covers core Git commands. LFS and submodule commands may be added later."
+  ]
+}

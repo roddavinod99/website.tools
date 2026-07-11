@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Encrypts and decrypts text using symmetric algorithms: AES, TripleDES, Rabbit, and RC4. Supports text and hex input/output formats with a configurable secret key.",
+  "whoShouldUse": "Developers learning about cryptography, security analysts examining encrypted payloads, and anyone needing quick symmetric encryption/decryption.",
+  "whyItExists": "Understanding symmetric encryption is fundamental to security. This tool lets you experiment with multiple algorithms side-by-side, observe how different keys and algorithms produce different outputs, and verify encryption/decryption round-trips.",
+  "useCases": [
+    "Encrypt a plaintext message with AES and a secret key, then verify decryption produces the original",
+    "Compare output lengths and patterns across AES, TripleDES, Rabbit, and RC4 for the same input",
+    "Decrypt a hex-encoded ciphertext by providing the correct algorithm and secret key",
+    "Understand how changing even one character of the key completely changes the encrypted output",
+    "Experiment with XOR-based encryption to learn how symmetric ciphers obscure data"
+  ],
+  "instructions": [
+    "Choose Encrypt or Decrypt mode",
+    "Select an algorithm from the dropdown: AES, TripleDES, Rabbit, or RC4",
+    "Enter a secret key — both sides of encrypt/decrypt must use the same key",
+    "For encryption: type plaintext in the input area",
+    "For decryption: choose input format (Text or Hex) and paste the ciphertext",
+    "Choose output format (Hex or Text) and click the action button",
+    "Copy the result using the Copy button"
+  ],
+  "examples": [
+    "Encrypt: algorithm=AES, key='my-secret', input='Hello World'. Output: hex string of the XOR-processed bytes.",
+    "Decrypt: algorithm=AES, key='my-secret', input='[hex from above]', inputFormat=Hex. Output: 'Hello World'"
+  ],
+  "bestPractices": [
+    "Use at least 16 characters for the secret key to resist brute-force attacks",
+    "AES is the industry standard — prefer it over RC4 or Rabbit for real applications",
+    "Always use authenticated encryption (AEAD) in production; this tool uses simplified XOR-based processing for learning",
+    "Test with known plaintext/ciphertext pairs to verify algorithm behavior"
+  ],
+  "commonMistakes": [
+    "Using different keys for encryption and decryption, which produces garbled output",
+    "Expecting production-grade security — this tool uses simplified cipher implementations for educational purposes",
+    "Confusing hex output with text output when pasting ciphertext for decryption",
+    "Using very short keys (< 8 chars) which provide insufficient key entropy"
+  ],
+  "faq": [
+    "Is this suitable for production encryption? No — this uses simplified implementations for learning. Use established libraries like Web Crypto API for production.",
+    "Why does the output change completely with a one-character key change? Symmetric ciphers are designed so that similar keys produce completely different outputs (avalanche effect).",
+    "Can I encrypt binary data? Currently the tool accepts text and hex input. For binary, convert to hex first and use hex mode.",
+    "Which algorithm is fastest? RC4 and Rabbit are stream ciphers and tend to be faster. AES and TripleDES are block ciphers with more overhead."
+  ]
+}

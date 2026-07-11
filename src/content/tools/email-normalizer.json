@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Normalizes email addresses by applying common cleanup rules: converting to lowercase, stripping dots (for Gmail-style services), removing +aliases, and trimming whitespace. Supports batch processing of multiple emails and deduplication to find unique addresses from a list.",
+  "whyItExists": "Many email providers (especially Gmail) treat variations of the same address as identical. This makes it difficult to compare, deduplicate, or validate email lists. This tool normalizes all variants to their canonical form for accurate comparison.",
+  "whoShouldUse": "Marketing teams managing email lists, developers validating user registration data, system administrators cleaning up mailing lists, and anyone who needs to compare or deduplicate email addresses.",
+  "useCases": [
+    "Clean and normalize a marketing email list before import into an email platform",
+    "Deduplicate user registrations where the same person signed up with different email variations",
+    "Verify that email normalization rules are working correctly for your application",
+    "Remove Gmail-specific formatting differences (dots, +aliases) from a contact list",
+    "Prepare email data for analysis by normalizing all addresses to a consistent format"
+  ],
+  "instructions": [
+    "Paste email addresses into the textarea, one per line",
+    "Toggle normalization options: lowercase, strip dots, strip +aliases, trim whitespace",
+    "Click \"Normalize\" to process all emails with the selected options",
+    "Click \"Deduplicate\" to remove emails that normalize to the same address",
+    "Click \"Copy All\" to copy the normalized emails to your clipboard"
+  ],
+  "examples": [
+    "Input: John.Doe+Work@Gmail.com, j.o.h.n.d.o.e@gmail.com -> Both normalize to: johndoe@gmail.com",
+    "Input: alice@EXAMPLE.COM, alice@example.com -> With lowercase: alice@example.com (deduplicated)"
+  ],
+  "bestPractices": [
+    "Always lowercase email addresses — email addresses are case-insensitive per RFC 5321",
+    "Use strip dots only for Gmail-like providers where dots are ignored in the local part",
+    "Run deduplication before importing emails into your mailing platform to avoid duplicate sends",
+    "Keep the original email alongside the normalized version for audit trails",
+    "Note that dot-stripping only applies to Gmail — other providers may treat dots as significant"
+  ],
+  "commonMistakes": [
+    "Stripping dots for all email providers — only Gmail ignores dots in the local part",
+    "Forgetting to lowercase before comparing emails for equality",
+    "Using deduplication without normalization first, missing variant duplicates",
+    "Assuming +aliases are universally ignored — only some providers support them"
+  ],
+  "faq": [
+    "Does Gmail really ignore dots? Yes — john.doe@gmail.com, j.o.h.n.d.o.e@gmail.com, and johndoe@gmail.com all deliver to the same inbox.",
+    "What about Yahoo or Outlook? They do NOT ignore dots. Only enable strip dots if you are specifically targeting Gmail users.",
+    "Is strip + aliases safe? The + symbol is a standard alias separator used by Gmail, Outlook, and many others. It is generally safe to strip.",
+    "Can I use this for validating email format? No — this tool normalizes format, not validity. Use an email validator for format checking."
+  ]
+}

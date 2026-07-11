@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates BIP39 mnemonic phrases (12 or 24 words) for cryptocurrency wallet seed generation. Computes the corresponding 512-bit seed using PBKDF2 with an optional passphrase, and supports batch generation of multiple mnemonics.",
+  "whyItExists": "BIP39 is the standard for generating wallet seeds in cryptocurrency, but computing mnemonics correctly requires understanding checksums, entropy, and PBKDF2 derivation. This tool handles all the complexity and produces standards-compliant mnemonics.",
+  "whoShouldUse": "Cryptocurrency developers, wallet builders, and crypto enthusiasts who need to generate or test BIP39 seed phrases for wallet creation and recovery.",
+  "useCases": [
+    "Generate a 12-word mnemonic for a new cryptocurrency wallet",
+    "Create 24-word mnemonics for high-security cold storage wallets",
+    "Derive the corresponding seed hex for wallet initialization",
+    "Batch-generate mnemonics for testing wallet recovery flows",
+    "Verify the relationship between a mnemonic and its derived seed"
+  ],
+  "instructions": [
+    "Select word count: 12 (128-bit entropy) or 24 (256-bit entropy)",
+    "Choose how many mnemonics to generate (1-10)",
+    "Click 'Generate' to create the mnemonic phrase(s)",
+    "Each mnemonic is shown with its corresponding seed (hex) derived via PBKDF2",
+    "Use the copy buttons to copy individual mnemonics or seeds to clipboard"
+  ],
+  "examples": [
+    "12-word: 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about'",
+    "24-word: 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about'"
+  ],
+  "bestPractices": [
+    "Write down mnemonics on paper and store them in a secure physical location",
+    "Never store mnemonics digitally in plain text or screenshot them",
+    "Use a 24-word mnemonic for high-value wallets for additional security",
+    "Always use an optional passphrase (25th word) for an extra layer of protection"
+  ],
+  "commonMistakes": [
+    "Storing mnemonics in cloud storage, email, or password managers without encryption",
+    "Sharing a mnemonic phrase with anyone — legitimate services will never ask for it",
+    "Using a software wallet's generated mnemonic without verifying the checksum",
+    "Forgetting the passphrase — without it, the seed cannot be fully reconstructed"
+  ],
+  "faq": [
+    "What is a BIP39 mnemonic? A human-readable sequence of 12 or 24 words that encodes entropy for generating a cryptographic wallet seed.",
+    "How are mnemonics generated? Random entropy is converted to binary, a checksum is appended, and the result is split into 11-bit segments mapped to the BIP39 wordlist.",
+    "What is the seed hex? The 512-bit (128 hex character) master key derived from the mnemonic using PBKDF2-SHA512 with 2048 iterations.",
+    "Is this compatible with hardware wallets? Yes, these are standards-compliant BIP39 mnemonics compatible with all major wallets."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Generate complete HTML meta tags for SEO and social sharing. Supports title, description, author, keywords, Open Graph (OG) properties, Twitter Card tags, canonical URL, and robots directives. Includes a live search result preview.",
+  "whyItExists": "Creating complete and correct meta tags for SEO and social sharing requires knowing the exact property names and formats for multiple standards (HTML, Open Graph, Twitter Cards); this tool generates all tags from simple form inputs.",
+  "whoShouldUse": "Web developers, SEO specialists, content creators, and marketing teams who need to generate meta tags for web pages without manually writing HTML.",
+  "useCases": [
+    "Generate meta tags for a new blog post or landing page",
+    "Create Open Graph tags for social media sharing previews",
+    "Set up Twitter Card tags for link previews on Twitter/X",
+    "Generate canonical URLs and robots directives for SEO",
+    "Preview how a page title and description will appear in Google search results",
+    "Quickly update meta tags when page content changes"
+  ],
+  "instructions": [
+    "Fill in the Page Title and Description — these are the most important fields for SEO",
+    "Add optional fields like Author and Keywords for additional metadata",
+    "Fill in OG Title, OG Description, and OG Image URL for social sharing previews",
+    "Select the appropriate OG Type (website, article, product) and Twitter Card type",
+    "Set the Canonical URL to tell search engines the preferred version of the page",
+    "Copy the generated HTML and paste it into your page's <head> section"
+  ],
+  "examples": [
+    "Blog post: title, description, og:image pointing to the post's featured image",
+    "Product page: og:type=product, Twitter card=summary_large_image with product photo",
+    "Landing page: robots=noindex for a temporary campaign page"
+  ],
+  "bestPractices": [
+    "Keep title under 60 characters and description under 160 characters for optimal search display",
+    "Always include an og:image with a 1200x630 pixel image for best social sharing results",
+    "Use the canonical URL to prevent duplicate content issues across URL variations",
+    "Test your meta tags with Facebook Debugger and Twitter Card Validator",
+    "Include relevant keywords naturally in the title and description"
+  ],
+  "commonMistakes": [
+    "Making the title or description too long — they get truncated in search results",
+    "Using the same meta tags across all pages instead of customizing per page",
+    "Forgetting to add og:image which results in poor social media previews",
+    "Setting robots to noindex on pages that should be indexed",
+    "Using a non-absolute URL for og:image (must be a full URL with protocol)"
+  ],
+  "faq": [
+    "Do I still need meta keywords for SEO? — Most search engines ignore meta keywords. Focus on title and description instead.",
+    "What's the difference between Open Graph and Twitter Cards? — Open Graph is used by Facebook, LinkedIn, and many other platforms. Twitter Cards are Twitter/X-specific with additional features like player and app cards.",
+    "How do I test if my meta tags work? — Use the Facebook Sharing Debugger (developers.facebook.com/tools/debug) and Twitter Card Validator (cards-dev.twitter.com/validator).",
+    "Should I use the same OG tags as my regular meta tags? — You can, but it's better to customize OG tags specifically for social sharing with different text that's optimized for social feeds."
+  ]
+}

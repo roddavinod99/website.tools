@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 interface CookiePreferences {
@@ -13,6 +13,7 @@ interface CookiePreferences {
 type ConsentView = "banner" | "customize";
 
 const COOKIE_CONSENT_KEY = "cookie-consent";
+const COOKIE_CONSENT_COOKIE = "cookie_consent";
 const DEFAULT_PREFERENCES: CookiePreferences = {
   necessary: true,
   analytics: false,
@@ -53,18 +54,28 @@ function getStoredConsent(): CookiePreferences | null {
     if (stored) {
       return JSON.parse(stored) as CookiePreferences;
     }
-  } catch {
-    return null;
-  }
+  } catch {}
+  try {
+    const cookies = document.cookie.split("; ");
+    const consentCookie = cookies.find((c) => c.startsWith(`${COOKIE_CONSENT_COOKIE}=`));
+    if (consentCookie) {
+      const value = consentCookie.split("=").slice(1).join("=");
+      return JSON.parse(decodeURIComponent(value)) as CookiePreferences;
+    }
+  } catch {}
   return null;
 }
 
 function setStoredConsent(prefs: CookiePreferences) {
+  const value = JSON.stringify(prefs);
   try {
-    localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(prefs));
-  } catch {
-    console.error("Could not save cookie consent");
-  }
+    localStorage.setItem(COOKIE_CONSENT_KEY, value);
+  } catch {}
+  try {
+    const expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+    document.cookie = `${COOKIE_CONSENT_COOKIE}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+  } catch {}
 }
 
 declare global {
@@ -92,18 +103,20 @@ function updateConsentMode(prefs: CookiePreferences) {
 
 export function CookieConsent() {
   const [view, setView] = useState<ConsentView>("banner");
-  const [show, setShow] = useState(() => !getStoredConsent());
-  const [preferences, setPreferences] = useState<CookiePreferences>(() => getStoredConsent() ?? DEFAULT_PREFERENCES);
-  const initialized = useRef(false);
+  const [show, setShow] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [preferences, setPreferences] = useState<CookiePreferences>(DEFAULT_PREFERENCES);
 
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
     const stored = getStoredConsent();
     if (stored) {
+      setPreferences(stored);
       updateConsentMode(stored);
+    } else {
+      setShow(true);
     }
-  }, [updateConsentMode]);
+    setMounted(true);
+  }, []);
 
   const acceptAll = useCallback(() => {
     const all: CookiePreferences = {
@@ -138,7 +151,7 @@ export function CookieConsent() {
     }));
   }, []);
 
-  if (!show) return null;
+  if (!mounted || !show) return null;
 
   return (
     <div

@@ -19,14 +19,28 @@ const categories = [
 
 export default function LearningPage() {
   return (
-    <div className="container py-12 md:py-16">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-          Learning Center
-        </h1>
-        <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
-          Tutorials, guides, and best practices for developers
-        </p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 2, name: "Learning" },
+            ],
+          }),
+        }}
+      />
+      <div className="container py-12 md:py-16">
+        <div className="mx-auto max-w-2xl">
+          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            Learning Center
+          </h1>
+          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            Tutorials, guides, and best practices for developers
+          </p>
 
         <div className="mt-8">
           <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">
@@ -77,5 +91,6 @@ export default function LearningPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

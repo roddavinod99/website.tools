@@ -1,0 +1,37 @@
+{
+  "whatItDoes": "Converts any text into the NATO phonetic alphabet, where each letter is replaced by its standard NATO word (A→Alpha, B→Bravo, etc.) and digits use standard pronunciation (0→Zero, 9→Niner). Output is displayed one word per line.",
+  "whyItExists": "Spelling out codes, passwords, or identifiers over the phone or radio is error-prone. The NATO phonetic alphabet eliminates ambiguity by assigning a unique word to each letter.",
+  "whoShouldUse": "Customer support agents reading verification codes, military and aviation personnel, developers sharing API keys or tokens verbally, and anyone who needs to spell out strings clearly.",
+  "useCases": [
+    "Spell out a customer's verification code over the phone without confusion",
+    "Convert a password or API key to phonetic words for verbal sharing",
+    "Teach or learn the NATO phonetic alphabet interactively",
+    "Prepare phonetic spellings for aviation or military communications"
+  ],
+  "instructions": [
+    "Type or paste any text into the input field",
+    "Each letter is instantly converted to its NATO phonetic word",
+    "Spaces between letters are shown as dashes for clarity",
+    "Click Copy to copy the phonetic output to your clipboard"
+  ],
+  "examples": [
+    "HELLO → Hotel, Echo, Lima, Lima, Oscar",
+    "ABC123 → Alpha, Bravo, Charlie, One, Two, Three",
+    "SOS → Sierra, Oscar, Sierra"
+  ],
+  "bestPractices": [
+    "Use one word per line for easy reading aloud",
+    "Digits are converted using NATO standard pronunciation (Niner for 9)",
+    "Non-alphanumeric characters are passed through unchanged"
+  ],
+  "commonMistakes": [
+    "Confusing NATO phonetic words with other phonetic alphabets like the old US military one",
+    "Expecting lowercase output — NATO phonetic words are always capitalized",
+    "Forgetting that spaces become dashes in the output"
+  ],
+  "faq": [
+    "Does this use the current NATO standard alphabet? — Yes, it uses the ICAO/NATO standard phonetic alphabet.",
+    "What happens to numbers? — They use standard pronunciation: Zero, One, Two, ..., Niner.",
+    "Can I use this for aviation or military comms? — Yes, the words match the official standard."
+  ]
+}

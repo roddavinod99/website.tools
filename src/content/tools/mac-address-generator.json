@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Generates random MAC addresses with configurable options including the universal/local (U/L) bit, unicast/multicast (U/M) bit, separator style, and batch count. Displays generated addresses in a clickable grid with individual and bulk copy support.",
+  "whyItExists": "Developers and network engineers often need random MAC addresses for testing network software, configuring virtual machines, or setting up isolated lab environments without exposing real hardware addresses.",
+  "whoShouldUse": "Developers writing network automation scripts, QA engineers testing MAC-based authentication, VM administrators configuring virtual NICs, and students learning about MAC address structure.",
+  "useCases": [
+    "Generate random MAC addresses for testing MAC-based network access control systems",
+    "Create unique MAC addresses for virtual machine configurations in lab environments",
+    "Produce a batch of MAC addresses for populating network device tables during testing",
+    "Learn how the unicast/multicast and universal/local bits affect MAC address classification"
+  ],
+  "instructions": [
+    "Set the number of MAC addresses to generate (1-100)",
+    "Choose a separator style: colon, dash, dot, or none",
+    "Optionally toggle the Local (L) bit for locally administered addresses",
+    "Optionally toggle the Multicast (M) bit for multicast addresses",
+    "Press Generate to create the addresses",
+    "Click any address to copy it, or use Copy All for the entire batch"
+  ],
+  "examples": [
+    "Count: 3, Separator: Colon, Unicast, Universal — Output: 3 globally unique unicast MACs like 7A:3F:82:B1:C4:D9",
+    "Count: 5, Separator: Dash, Local, Unicast — Output: 5 locally administered unicast MACs with the L bit set"
+  ],
+  "bestPractices": [
+    "Use locally administered addresses (L bit set) for testing to avoid conflicts with real hardware",
+    "Generate unicast addresses (M bit clear) for most standard networking use cases",
+    "Use dashes or colons consistently to match your target platform's expected format"
+  ],
+  "commonMistakes": [
+    "Forgetting that the first two bits of the first octet control multicast and local/universal flags",
+    "Using globally unique addresses in test environments where MAC spoofing is needed",
+    "Generating more addresses than needed — large batches are harder to review and manage"
+  ],
+  "faq": [
+    "What is the difference between local and universal MAC addresses? — Universal (U/L bit = 0) addresses are assigned by the manufacturer; local (U/L bit = 1) addresses are manually configured or software-generated.",
+    "Why would I need random MAC addresses? — Common uses include VM provisioning, network testing, MAC authentication bypass research, and lab environments.",
+    "Can these MACs conflict with real hardware? — Globally unique (non-local) generated MACs may theoretically conflict. Use the Local bit for testing to avoid this."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Converts lists between multiple formats: one-per-line, CSV, numbered, bulleted, JSON array, and comma-separated. Select the source format and target format, and the list is instantly converted.",
+  "whyItExists": "Lists come in many formats across different tools and contexts. Manually reformatting a list from one style to another is tedious and error-prone, especially for long lists.",
+  "whoShouldUse": "Developers migrating data between formats, content creators reformatting lists for different platforms, and anyone who regularly works with structured lists.",
+  "useCases": [
+    "Convert a newline-separated list from a spreadsheet into a JSON array for code",
+    "Turn a numbered markdown list into a simple one-per-line format",
+    "Transform comma-separated values into a bulleted markdown list",
+    "Convert a JSON array into CSV format for import into a spreadsheet"
+  ],
+  "instructions": [
+    "Select the source format of your input list using the From dropdown",
+    "Select the desired output format using the To dropdown",
+    "Paste or type your list into the input area",
+    "The converted list appears instantly in the output area",
+    "Click Copy to copy the result to your clipboard"
+  ],
+  "examples": [
+    "One-per-line (apple, banana, cherry) → JSON array: [\"apple\", \"banana\", \"cherry\"]",
+    "CSV (apple, banana, cherry) → Numbered: 1. apple\\n2. banana\\n3. cherry",
+    "JSON array [\"a\", \"b\", \"c\"] → Bulleted: - a\\n- b\\n- c"
+  ],
+  "bestPractices": [
+    "Make sure the From format matches your actual input format for correct parsing",
+    "For JSON array input, each element should be a simple string",
+    "Trailing commas in CSV input are handled automatically"
+  ],
+  "commonMistakes": [
+    "Selecting the wrong source format, which causes items to be parsed incorrectly",
+    "Expecting nested JSON arrays to be flattened — only simple arrays are supported",
+    "Forgetting to trim extra whitespace around items in CSV input"
+  ],
+  "faq": [
+    "Can I convert from JSON to CSV? — Yes, select JSON Array as From and CSV as To.",
+    "Does it handle nested lists? — No, only flat lists of simple strings are supported.",
+    "What happens with empty lines? — Empty lines are automatically filtered out from the output."
+  ]
+}

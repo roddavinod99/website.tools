@@ -1,0 +1,48 @@
+{
+  "whatItDoes": "Evaluate mathematical expressions with support for basic operators (+, -, *, /, ^, %), functions (sqrt, abs, sin, cos, tan, log, ln, floor, ceil, round), constants (pi, e), and factorial. Includes a history of previous calculations and quick-access example expressions.",
+  "whyItExists": "Performing quick math calculations with functions and constants is cumbersome in standard calculators; this tool provides a developer-friendly interface that supports programming-style math expressions with immediate results and history.",
+  "whoShouldUse": "Developers, students, engineers, and anyone who needs to quickly evaluate mathematical expressions with functions and constants without opening a full calculator application.",
+  "useCases": [
+    "Quickly evaluate a math expression during coding or debugging",
+    "Calculate trigonometric values like sin(pi/2) or cos(0)",
+    "Compute factorials for combinatorics problems",
+    "Test mathematical formulas before implementing them in code",
+    "Use as a quick reference for supported math functions",
+    "Review previous calculations in the history panel"
+  ],
+  "instructions": [
+    "Type a mathematical expression into the input field (e.g., 2 * (3 + 4) / 7)",
+    "Press Enter or click the Evaluate button to compute the result",
+    "The result is displayed below the input with full precision",
+    "Click any example expression to load and evaluate it instantly",
+    "Click any history entry to reload that expression for re-evaluation",
+    "Use the function reference panel to see all supported operations"
+  ],
+  "examples": [
+    "2 * (3 + 4) / 7 → 2",
+    "sqrt(144) + 3^2 → 21",
+    "sin(pi / 2) + cos(0) → 2",
+    "5! → 120",
+    "abs(-42) * log(100) → 84"
+  ],
+  "bestPractices": [
+    "Use parentheses to ensure correct order of operations",
+    "Remember that trigonometric functions use radians, not degrees",
+    "Use log() for base-10 logarithm and ln() for natural logarithm",
+    "The ^ operator is for exponentiation, not XOR",
+    "Check the function reference panel for the exact function names and syntax"
+  ],
+  "commonMistakes": [
+    "Using degrees instead of radians for trigonometric functions (sin(pi/2) = 1, not sin(90))",
+    "Confusing log() (base 10) with ln() (natural log)",
+    "Forgetting parentheses in complex expressions leading to wrong order of operations",
+    "Using ^ for XOR instead of exponentiation",
+    "Expecting very large factorials to compute quickly (5! is fine, 100! will overflow)"
+  ],
+  "faq": [
+    "What order of operations does the evaluator follow? — Standard mathematical order: parentheses first, then exponents, then multiplication/division, then addition/subtraction.",
+    "Can I use variables? — No, this tool evaluates pure mathematical expressions only. Use a programming environment for variable-based calculations.",
+    "Why does sin(90) not give 1? — Trigonometric functions use radians. Use sin(pi/2) for the sine of 90 degrees.",
+    "What happens with division by zero? — The evaluator will return an error message indicating the expression is invalid."
+  ]
+}

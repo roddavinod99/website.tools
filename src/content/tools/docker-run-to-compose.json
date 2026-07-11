@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Convert docker run commands to Docker Compose YAML files. Parses the command to extract image, ports, volumes, environment variables, network, restart policy, and container name, then generates a complete docker-compose.yml configuration.",
+  "whyItExists": "Migrating from docker run commands to Docker Compose requires manually translating flags into YAML syntax, which is error-prone; this tool automates the conversion and provides a parsed breakdown of all components.",
+  "whoShouldUse": "DevOps engineers, backend developers, and system administrators who are migrating from standalone Docker commands to Docker Compose orchestration.",
+  "useCases": [
+    "Convert a complex docker run command with many flags into clean docker-compose.yml",
+    "Migrate a deployment script from docker run to docker-compose up",
+    "Quickly generate compose configuration for a container with specific port mappings",
+    "Understand how docker run flags map to Docker Compose YAML properties",
+    "Generate compose files for multi-container applications",
+    "Preview the parsed components before generating the YAML output"
+  ],
+  "instructions": [
+    "Paste your docker run command into the input textarea",
+    "The tool parses all flags and displays the extracted components",
+    "Review the parsed components: image, ports, volumes, env vars, network, restart policy",
+    "Copy the generated docker-compose.yml YAML to your clipboard",
+    "The YAML includes a networks section if a custom network was specified"
+  ],
+  "examples": [
+    "docker run -d -p 8080:80 -e NODE_ENV=prod nginx → service with port mapping and env var",
+    "docker run --name db -v /data:/var/lib/postgresql/data postgres:14 → service with named volume",
+    "docker run --network backend --restart always redis → service with custom network and restart policy"
+  ],
+  "bestPractices": [
+    "Review the generated YAML before using it in production — some flags may need manual adjustment",
+    "Add health checks, resource limits, and logging configuration that docker run doesn't capture",
+    "Use named volumes instead of bind mounts for better portability",
+    "Consider adding a .env file for environment variables instead of hardcoding them",
+    "Test the generated compose file with docker-compose config before deploying"
+  ],
+  "commonMistakes": [
+    "Forgetting to map all ports — complex port mappings may not parse correctly",
+    "Not adding health checks in the compose file that were implicit in the docker run setup",
+    "Assuming all docker run flags have direct compose equivalents",
+    "Using the generated YAML without reviewing it for correctness",
+    "Missing environment variables that were passed via --env-file instead of -e"
+  ],
+  "faq": [
+    "Does this handle all docker run flags? — It handles the most common flags: -p, -v, -e, --name, --network, --restart, --rm, -d. Some advanced flags may not be parsed.",
+    "Can I convert docker-compose.yml back to docker run? — This tool is one-way only. For reverse conversion, consider using docker-compose config.",
+    "What about multi-stage builds? — This tool only handles runtime configuration. Build-related settings need to be added manually.",
+    "Does the generated YAML include version numbers? — Yes, it uses version 3.8 which is compatible with most Docker Compose installations."
+  ]
+}

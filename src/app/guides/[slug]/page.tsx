@@ -4,6 +4,19 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { learningTopics, siteConfig } from "@/lib/constants";
 
+const guideDates: Record<string, { published: string; modified: string }> = {
+  "getting-started-json": { published: "2026-06-28", modified: "2026-06-28" },
+  "understanding-jwt": { published: "2026-06-25", modified: "2026-06-25" },
+  "image-optimization-guide": { published: "2026-06-20", modified: "2026-06-20" },
+  "password-security": { published: "2026-06-15", modified: "2026-06-15" },
+  "understanding-base64": { published: "2026-07-01", modified: "2026-07-01" },
+  "css-minification-guide": { published: "2026-07-02", modified: "2026-07-02" },
+  "regex-fundamentals": { published: "2026-07-03", modified: "2026-07-03" },
+  "unix-timestamps-explained": { published: "2026-07-04", modified: "2026-07-04" },
+  "html-encoding-guide": { published: "2026-07-05", modified: "2026-07-05" },
+  "data-serialization-formats": { published: "2026-07-06", modified: "2026-07-06" },
+};
+
 const guideContent: Record<string, { sections: { title: string; body: string }[] }> = {
   "getting-started-json": {
     sections: [
@@ -96,10 +109,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const topic = learningTopics.find((t) => t.slug === slug);
   if (!topic) return {};
+  const canonical = `${siteConfig.url}/guides/${slug}`;
   return {
     title: `${topic.title} - Guide`,
     description: topic.description,
-    alternates: { canonical: `${siteConfig.url}/guides/${slug}` },
+    alternates: { canonical },
+    openGraph: {
+      title: `${topic.title} - Guide`,
+      description: topic.description,
+      url: canonical,
+      siteName: siteConfig.name,
+      type: "article",
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${topic.title} - DevStackIO Guide` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${topic.title} - Guide`,
+      description: topic.description,
+      images: [siteConfig.ogImage],
+    },
   };
 }
 
@@ -109,6 +137,7 @@ export default async function GuidePage({ params }: Props) {
   if (!topic) notFound();
 
   const content = guideContent[slug];
+  const dates = guideDates[slug] || { published: "2026-07-01", modified: "2026-07-01" };
 
   return (
     <>
@@ -135,8 +164,8 @@ export default async function GuidePage({ params }: Props) {
             headline: topic.title,
             description: topic.description,
             url: `${siteConfig.url}/guides/${topic.slug}`,
-            datePublished: new Date().toISOString(),
-            dateModified: new Date().toISOString(),
+            datePublished: `${dates.published}T00:00:00Z`,
+            dateModified: `${dates.modified}T00:00:00Z`,
             image: `${siteConfig.url}${siteConfig.ogImage}`,
             mainEntityOfPage: { "@type": "WebPage", "@id": `${siteConfig.url}/guides/${topic.slug}` },
             author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },

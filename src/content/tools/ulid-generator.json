@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates ULIDs (Universally Unique Lexicographically Sortable Identifiers) — 26-character identifiers encoded in Crockford Base32 that sort chronologically. Supports generating up to 100 ULIDs at once with timestamp component highlighting.",
+  "whyItExists": "UUIDs are not sortable by creation time and use inefficient encoding. ULIDs provide a sortable, URL-friendly alternative that embeds the timestamp, making them ideal for database primary keys and distributed systems.",
+  "whoShouldUse": "Backend developers choosing identifiers for databases, distributed systems engineers, and anyone needing time-sortable unique IDs.",
+  "useCases": [
+    "Generate unique, time-sortable primary keys for database records",
+    "Create unique identifiers for distributed systems that need lexicographic ordering",
+    "Replace UUIDv4 with a sortable, more compact identifier format",
+    "Generate multiple ULIDs for batch inserts or test data",
+    "Extract the timestamp from a ULID to determine when it was created"
+  ],
+  "instructions": [
+    "Set the count (1-100) of ULIDs to generate",
+    "Click 'Generate' to create the ULIDs",
+    "Each ULID is displayed with the timestamp portion highlighted in a different color",
+    "Click 'Copy' next to any individual ULID, or 'Copy All' to copy every ULID on separate lines",
+    "The timestamp portion (first 10 characters) encodes the millisecond-precision creation time"
+  ],
+  "examples": [
+    "Single ULID: 01ARZ3NDEKTSV4RRFFQ69G5FAV (26 chars, Crockford Base32)",
+    "Timestamp portion: 01ARZ3NDEK (first 10 chars, sortable by time)"
+  ],
+  "bestPractices": [
+    "Use ULIDs when you need both uniqueness and chronological sorting in your identifiers",
+    "ULIDs are 128 bits — they provide the same collision resistance as UUIDv4",
+    "The Crockford Base32 encoding is case-insensitive and excludes ambiguous characters (I, L, O, U)",
+    "Sort ULIDs as strings — they maintain chronological order lexicographically"
+  ],
+  "commonMistakes": [
+    "Expecting ULIDs to be exactly 32 characters — they are 26 characters long",
+    "Confusing ULIDs with UUIDs — ULIDs are not formatted with hyphens",
+    "Using ULIDs in a field that expects UUID format — they are not compatible",
+    "Assuming the random portion provides additional time information — only the first 10 chars are timestamp"
+  ],
+  "faq": [
+    "What is a ULID? A Universally Unique Lexicographically Sortable Identifier — a 128-bit value encoded as 26 Crockford Base32 characters.",
+    "How does ULID sorting work? ULIDs sort lexicographically in time order because the timestamp occupies the most significant bits.",
+    "Are ULIDs collision-resistant? Yes, the 80-bit random component provides collision resistance comparable to UUIDv4.",
+    "Can I extract the timestamp from a ULID? Yes, the first 10 characters encode the millisecond-precision Unix timestamp."
+  ]
+}

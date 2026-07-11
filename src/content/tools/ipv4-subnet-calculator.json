@@ -1,0 +1,36 @@
+{
+  "whatItDoes": "Calculates IPv4 subnet details from CIDR notation, subnet mask, or slash-mask input. Displays network address, broadcast address, subnet mask, wildcard mask, usable host range, total and usable host counts, and a binary representation of the network address and mask.",
+  "whyItExists": "Manually computing subnet boundaries, host ranges, and broadcast addresses is tedious and error-prone. This tool accepts multiple input formats (CIDR, subnet mask, or slash-mask) and instantly returns all critical subnet details with a binary visualization.",
+  "whoShouldUse": "Network administrators, DevOps engineers configuring cloud VPCs and container networks, and students learning IP subnetting fundamentals.",
+  "useCases": [
+    "Calculate the network and broadcast addresses for a new /24 subnet before assigning static IPs",
+    "Convert a subnet mask like 255.255.255.192 to its CIDR equivalent and see the resulting host range",
+    "Verify that two IP addresses fall within the same subnet by comparing network addresses",
+    "Plan IP allocations for a multi-tier deployment by checking usable host counts at different prefix lengths"
+  ],
+  "instructions": [
+    "Enter an IPv4 address with CIDR notation (e.g., 192.168.1.0/24), a subnet mask (e.g., 192.168.1.0 255.255.255.0), or a slash-mask (e.g., 192.168.1.0/255.255.255.0)",
+    "Press Calculate or hit Enter to compute subnet details",
+    "Review the network address, broadcast address, subnet mask, wildcard mask, and usable host range",
+    "Check the binary view to visually verify the network and host portions of the address"
+  ],
+  "examples": [
+    "Input: '192.168.1.0/24' — Output: Network: 192.168.1.0, Broadcast: 192.168.1.255, Subnet Mask: 255.255.255.0, Host Range: 192.168.1.1 - 192.168.1.254, Usable Hosts: 254",
+    "Input: '10.0.0.0 255.255.0.0' — Output: Network: 10.0.0.0, Broadcast: 10.0.255.255, Subnet Mask: 255.255.0.0, CIDR: /16, Usable Hosts: 65,534"
+  ],
+  "bestPractices": [
+    "Always verify the calculated network address matches your expected subnet boundary",
+    "Remember that the network and broadcast addresses are not assignable to hosts",
+    "For cloud VPCs, account for the 3-5 reserved IPs per subnet that providers like AWS and GCP hold"
+  ],
+  "commonMistakes": [
+    "Using an invalid subnet mask that does not align on byte boundaries (e.g., 255.255.255.130 is invalid)",
+    "Confusing the wildcard mask with the subnet mask — wildcard is the bitwise inverse",
+    "Forgetting that /31 and /32 subnets have special host count rules"
+  ],
+  "faq": [
+    "What input formats are supported? — CIDR notation (192.168.1.0/24), IP + subnet mask (192.168.1.0 255.255.255.0), or IP/slash-mask (192.168.1.0/255.255.255.0).",
+    "What is a wildcard mask? — It is the bitwise inverse of the subnet mask, commonly used in ACLs and routing protocols.",
+    "Why does /31 show a different host range? — /31 subnets use point-to-point conventions where both addresses can be assigned to hosts."
+  ]
+}

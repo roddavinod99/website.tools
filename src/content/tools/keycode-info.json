@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Displays detailed keyboard event information when you press any key. Shows a large visual key display along with the key value, keyCode, code, which, and the state of modifier keys (shift, ctrl, alt, meta). Updates in real-time as keys are pressed.",
+  "whyItExists": "Web developers building keyboard shortcuts, hotkeys, or interactive keyboard UIs need to know exact keyCode and code values. Looking these up in documentation is slow compared to just pressing the key.",
+  "whoShouldUse": "Frontend developers implementing keyboard navigation, game developers mapping key controls, accessibility developers building keyboard interactions, and anyone debugging keyboard event handling.",
+  "useCases": [
+    "Find the keyCode and code for a specific key to implement a keyboard shortcut",
+    "Debug why a keyboard event handler isn't firing for the expected key",
+    "Identify the code value for game input mapping across different keyboard layouts",
+    "Learn the difference between key, keyCode, and code properties"
+  ],
+  "instructions": [
+    "Press any key on your keyboard",
+    "The large display shows which key was pressed",
+    "All keyboard event properties are listed in the table below",
+    "Modifier key states (shift, ctrl, alt, meta) update in real-time"
+  ],
+  "examples": [
+    "Pressing 'A' → key: a, keyCode: 65, code: KeyA",
+    "Pressing Shift → key: Shift, keyCode: 16, code: ShiftLeft",
+    "Pressing Space → key: (space), keyCode: 32, code: Space"
+  ],
+  "bestPractices": [
+    "Use event.code for layout-independent key identification (e.g. KeyA is always the same physical key)",
+    "Use event.key for layout-dependent character input (e.g. may differ on AZERTY vs QWERTY)",
+    "Check both keyCode and code when implementing keyboard shortcuts for cross-browser compatibility",
+    "Test with modifier keys held down to see how modifier states change"
+  ],
+  "commonMistakes": [
+    "Using keyCode which is deprecated — prefer event.code or event.key for new code",
+    "Assuming keyCode is the same across different keyboard layouts",
+    "Not preventing default behavior when capturing keyboard events for custom shortcuts",
+    "Confusing event.key (the character) with event.code (the physical key)"
+  ],
+  "faq": [
+    "Why are some keyCode values showing 0? — keyCode is deprecated and some events may not provide it reliably.",
+    "Does this capture key events on mobile? — No, this tool works with physical keyboard events only.",
+    "What's the difference between key and code? — key is the character produced (layout-dependent), code is the physical key position (layout-independent)."
+  ]
+}

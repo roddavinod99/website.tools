@@ -1,0 +1,47 @@
+{
+  "whatItDoes": "Benchmark JavaScript code execution time by running a code snippet N times (configurable from 1 to 10,000 iterations). Reports total time, average time, min/max time, and operations per second using performance.now() for high-precision timing.",
+  "whyItExists": "Comparing the performance of different code approaches requires accurate timing measurement; this tool provides a quick way to benchmark code snippets without setting up a full test framework.",
+  "whoShouldUse": "JavaScript developers optimizing performance-critical code, educators teaching algorithm complexity, and anyone who needs to measure code execution time accurately.",
+  "useCases": [
+    "Compare the performance of two different sorting algorithms",
+    "Measure the overhead of different JavaScript patterns (map vs for-loop)",
+    "Benchmark regex patterns for performance optimization",
+    "Test the speed of different JSON serialization approaches",
+    "Measure the cost of function calls vs inline code",
+    "Quick A/B testing of code implementations"
+  ],
+  "instructions": [
+    "Write or paste JavaScript code in the function body textarea",
+    "Use 'return' to return a value from the benchmarked code",
+    "Select the number of iterations (1, 10, 100, 1K, or 10K)",
+    "Click Run Benchmark to execute the code the specified number of times",
+    "Review the results: total time, average, min, max, and ops/sec",
+    "Click a quick example button to load a pre-written benchmark"
+  ],
+  "examples": [
+    "Array.sort vs manual sort algorithm on a 1000-element array",
+    "String concatenation with += vs array join",
+    "JSON.parse/stringify vs manual object cloning",
+    "Math.sqrt vs manual square root approximation"
+  ],
+  "bestPractices": [
+    "Run benchmarks multiple times to account for browser warm-up and JIT optimization",
+    "Use a high iteration count (1000+) for more stable and reliable results",
+    "Avoid including setup/teardown code inside the benchmarked function",
+    "Be aware that browser tab throttling can affect timing accuracy",
+    "Compare relative performance rather than absolute numbers across machines"
+  ],
+  "commonMistakes": [
+    "Running too few iterations (1-10) which gives unreliable results due to JIT warm-up",
+    "Including console.log or DOM operations inside the benchmarked code",
+    "Comparing absolute times across different machines or browsers",
+    "Not accounting for garbage collection pauses in longer benchmarks",
+    "Assuming browser optimizations won't affect the benchmark (e.g., dead code elimination)"
+  ],
+  "faq": [
+    "Why are my results inconsistent between runs? — Browser JIT compilation optimizes code over time. Run multiple benchmarks and look at the average for stable results.",
+    "Is this safe to run arbitrary code? — The code runs in the browser sandbox via the Function constructor. It cannot access files or system resources, but it can consume CPU and memory.",
+    "What does ops/sec mean? — Operations per second is the inverse of average time: 1000 / avgTime(ms). Higher is better.",
+    "Can I benchmark async code? — This tool benchmarks synchronous code only. For async benchmarks, you would need a custom setup with await."
+  ]
+}

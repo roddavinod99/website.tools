@@ -1,0 +1,44 @@
+{
+  "whatItDoes": "Displays detailed information about your device, browser, screen, hardware, and network connection by reading data from the navigator API and window object. Shows user agent, screen resolution, color depth, language, platform, cookies status, connection type, available memory, CPU cores, and touch support in a clean card layout.",
+  "whyItExists": "Developers and support technicians frequently need to know a user's browser and device details for debugging, compatibility testing, and troubleshooting. This tool provides all that information in one place without requiring developer tools.",
+  "whoShouldUse": "Web developers debugging cross-browser issues, QA testers verifying device configurations, IT support staff diagnosing user problems, and curious users who want to learn more about their device capabilities.",
+  "useCases": [
+    "Debug browser compatibility issues by checking exact user agent and platform details",
+    "Verify screen resolution and color depth for responsive design testing",
+    "Check available memory and CPU cores for performance optimization decisions",
+    "Confirm touch support and max touch points for touch-friendly UI development",
+    "View network connection type and effective speed for adaptive loading strategies",
+    "Share device details with IT support when reporting a technical issue"
+  ],
+  "instructions": [
+    "Open this tool in the browser you want to inspect — the information is read from the current browser session",
+    "Review the Browser section for user agent, language, and cookie settings",
+    "Check the Display section for screen resolution, window size, and pixel ratio",
+    "Review the Hardware section for CPU cores, device memory, and touch capability",
+    "Check the Network & System section for connection details and timezone",
+    "Click \"Copy All\" to copy all device information to your clipboard for sharing"
+  ],
+  "examples": [
+    "Desktop Chrome on Windows: Screen 1920×1080, 8 CPU cores, 8 GB memory, No touch, Ethernet connection",
+    "Mobile Safari on iPhone: Screen 390×844, 4 CPU cores, 6 GB memory, Touch supported, 4G connection"
+  ],
+  "bestPractices": [
+    "Use this tool to compare device information across different browsers on the same machine",
+    "Copy and paste device info into bug reports for faster issue resolution",
+    "Check pixel ratio for retina/HiDPI display testing in your web applications",
+    "Monitor connection type and downlink speed when optimizing page load performance",
+    "Verify timezone information when debugging date/time-related bugs"
+  ],
+  "commonMistakes": [
+    "Expecting hardware-level details like exact GPU model or disk space — the API only exposes limited hardware information",
+    "Confusing window size with screen size — they differ when the browser is not maximized",
+    "Not realizing that user agent strings can be customized or spoofed by the browser or extensions",
+    "Assuming all browsers expose the same device information — some APIs are browser-specific"
+  ],
+  "faq": [
+    "Why is some information showing \"Not available\"? Some APIs (like Network Information or Device Memory) are not supported by all browsers.",
+    "Is my data sent anywhere? No, all information is read locally from your browser. Nothing is transmitted.",
+    "Why does my user agent look different from what I expect? Some browsers modify the user agent for privacy, and extensions can alter it too.",
+    "Can I test a different device? Open this page in a different browser or on a different device to see its information."
+  ]
+}

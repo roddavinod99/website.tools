@@ -1,0 +1,37 @@
+{
+  "whatItDoes": "Looks up the manufacturer or vendor associated with a MAC address by matching its first 3 bytes (OUI prefix) against a built-in database of over 200 common vendors. Supports partial matching when no exact OUI is found.",
+  "whoShouldUse": "Network administrators identifying unknown devices on their network, security analysts investigating MAC addresses in logs, and IT support staff tracking hardware inventory.",
+  "whyItExists": "Identifying device manufacturers from MAC addresses helps with network inventory, security auditing, and troubleshooting. This tool provides instant vendor lookup without requiring an external API call.",
+  "useCases": [
+    "Identify the manufacturer of an unknown device connected to your network",
+    "Verify that a MAC address matches the expected hardware vendor for a device",
+    "Investigate suspicious MAC addresses in firewall or DHCP logs",
+    "Track hardware vendors across your infrastructure for procurement and support"
+  ],
+  "instructions": [
+    "Enter a MAC address in any common format (colon-separated, dash-separated, or dot-separated)",
+    "Press Lookup to search the built-in OUI database",
+    "View the vendor/manufacturer associated with the MAC prefix",
+    "Click the result to copy the vendor name to your clipboard"
+  ],
+  "examples": [
+    "Input: '00:50:56:AA:BB:CC' — Output: Vendor: VMware",
+    "Input: 'DC:A6:32:11:22:33' — Output: Vendor: Raspberry Pi Foundation",
+    "Input: '00:0C:29:44:55:66' — Output: Vendor: VMware"
+  ],
+  "bestPractices": [
+    "For exact vendor identification, verify the full OUI (first 6 hex characters) matches, not just the first 4",
+    "Keep in mind that MAC address spoofing is possible — the vendor tells you what hardware was manufactured, not necessarily what is currently running",
+    "Use partial matches as a starting point, then cross-reference with device serial numbers for confirmation"
+  ],
+  "commonMistakes": [
+    "Entering a full MAC address when only the OUI prefix (first 3 bytes) is needed for vendor lookup",
+    "Expecting 100% coverage — some OUI entries may not be in the built-in database",
+    "Confusing locally administered MAC addresses (second-least-significant bit of first byte set) with globally unique ones"
+  ],
+  "faq": [
+    "Why is my MAC not found? — The built-in database covers 200+ common vendors. For a complete lookup, try a service like IEEE's OUI registry.",
+    "What is an OUI? — Organizationally Unique Identifier, the first 24 bits of a MAC address assigned to hardware manufacturers by IEEE.",
+    "Can a MAC address be spoofed? — Yes, software can change the reported MAC address, so the vendor lookup shows the manufacturer of the original hardware, not necessarily the current configuration."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Generates RSA public/private key pairs using the Web Crypto API with configurable key sizes (1024, 2048, or 4096 bits). Outputs PEM-formatted keys with key details and supports copy and download operations.",
+  "whyItExists": "Developers frequently need RSA key pairs for JWT signing, SSH authentication, TLS certificates, or encryption protocols. This tool provides instant key generation in the browser without requiring OpenSSL or other command-line tools.",
+  "whoShouldUse": "Security engineers, backend developers implementing JWT or certificate-based auth, DevOps engineers generating test keys, and students learning cryptography.",
+  "useCases": [
+    "Generate RSA key pairs for JWT RS256/RS512 signing",
+    "Create test key pairs for SSH or TLS development environments",
+    "Generate keys for RSA-OAEP encryption/decryption workflows",
+    "Quickly produce PEM-formatted keys for API documentation examples",
+    "Learn RSA key generation and understand key size implications"
+  ],
+  "instructions": [
+    "Select the desired key size: 1024 (legacy), 2048 (standard), or 4096 (high security)",
+    "Click 'Generate Key Pair' to create the keys using Web Crypto API",
+    "The public and private keys appear in PEM format below",
+    "Use the copy buttons to copy individual keys, or download both as a ZIP",
+    "Key details (algorithm, size, creation time) are displayed alongside the keys"
+  ],
+  "examples": [
+    "2048-bit RSA key pair for RS256 JWT signing — public key starts with '-----BEGIN PUBLIC KEY-----'",
+    "4096-bit RSA key pair for high-security applications — takes longer to generate but provides stronger protection"
+  ],
+  "bestPractices": [
+    "Use at least 2048-bit keys for production; 4096-bit for high-security applications",
+    "Never share private keys — only the public key should be distributed",
+    "Store private keys securely using a secrets manager, not in source code",
+    "Rotate key pairs periodically and use different keys for different purposes"
+  ],
+  "commonMistakes": [
+    "Using 1024-bit keys, which are considered insecure and deprecated by NIST",
+    "Sharing private keys in chat messages, emails, or version control",
+    "Reusing the same key pair across multiple environments (dev/staging/prod)",
+    "Confusing RSA with other algorithms — RSA keys cannot be used for ECDSA or EdDSA"
+  ],
+  "faq": [
+    "Which key size should I choose? 2048-bit is the standard for most applications; use 4096-bit for extra security.",
+    "Are these keys secure enough for production? Yes, the Web Crypto API uses the same cryptographic libraries as the operating system.",
+    "Can I use these keys for SSH? Yes, but you may need to convert the format using ssh-keygen.",
+    "How long does key generation take? 1024-bit is nearly instant; 2048-bit takes a moment; 4096-bit may take several seconds."
+  ]
+}

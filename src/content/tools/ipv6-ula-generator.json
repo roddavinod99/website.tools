@@ -1,0 +1,37 @@
+{
+  "whatItDoes": "Generates random IPv6 Unique Local Addresses (ULA) in the fd00::/8 range. Displays each address with its /64 prefix, full expanded form, and compressed notation. Supports batch generation of up to 50 addresses with individual and bulk copy.",
+  "whyItExists": "IPv6 ULAs serve the same purpose as RFC 1918 private IPv4 addresses — they provide non-routable addresses for internal networks, lab environments, and service mesh configurations. Generating them manually is tedious and error-prone.",
+  "whoShouldUse": "Network engineers designing dual-stack or IPv6-only networks, DevOps engineers configuring Kubernetes pod networking, homelab enthusiasts setting up IPv6, and students learning IPv6 addressing.",
+  "useCases": [
+    "Generate ULA prefixes for internal network segments during IPv6 migration planning",
+    "Create unique local addresses for Docker containers or Kubernetes pods",
+    "Set up IPv6 ULA addresses for home lab services that should not be globally routable",
+    "Generate test addresses for IPv6 firewall rules and routing configurations"
+  ],
+  "instructions": [
+    "Enter the number of ULA addresses to generate (1-50)",
+    "Press Generate to create the addresses",
+    "View the compressed form (with /64 prefix) for configuration files",
+    "View the full expanded form for learning or debugging",
+    "Click any address or field to copy it to your clipboard"
+  ],
+  "examples": [
+    "Input: Count 1 — Output: fd3a:7c42:910b::/64 (compressed), fd3a:7c42:910b:0000:0000:0000:0000:0000 (expanded)",
+    "Input: Count 3 — Output: 3 unique fd00::/8 ULAs, each with random 40-bit Global IDs"
+  ],
+  "bestPractices": [
+    "Always use /64 prefix length for standard IPv6 subnetting — smaller prefixes break SLAAC and NDP",
+    "Store generated ULA prefixes in a central registry to avoid collisions across teams",
+    "Do not use ULAs for services that need to be reachable from the internet — use global unicast (2000::/3) instead"
+  ],
+  "commonMistakes": [
+    "Using fc00::/8 instead of fd00::/8 — fc00::/7 is reserved but only fd00::/8 is actually in use for ULAs",
+    "Assigning ULA addresses to internet-facing services that need global reachability",
+    "Using subnet lengths other than /64, which can break IPv6 features like SLAAC and privacy extensions"
+  ],
+  "faq": [
+    "What is an IPv6 ULA? — A Unique Local Address is the IPv6 equivalent of a private IPv4 address (like 192.168.x.x). It is not routable on the public internet.",
+    "Why fd00::/8 and not fc00::/8? — The fc00::/8 block was originally split into fc00::/8 (locally assigned) and fd00::/8 (random). Only fd00::/8 is in common use today.",
+    "Can two organizations have the same ULA? — Statistically extremely unlikely (40-bit random ID = ~1 trillion possibilities), but for critical infrastructure, consider registering with a coordination authority."
+  ]
+}

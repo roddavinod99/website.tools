@@ -1,0 +1,36 @@
+{
+  "whatItDoes": "Expands a CIDR range into a complete list of individual IP addresses. Enter any CIDR notation (e.g., 192.168.1.0/30) and see every address in the range with a click-to-copy grid. Includes a warning for large ranges and a bulk copy button.",
+  "whyItExists": "When provisioning services, whitelisting IPs, or debugging network filters, engineers often need to enumerate every address in a CIDR block. Manually listing them is impractical for ranges larger than a handful of hosts.",
+  "whoShouldUse": "Network administrators configuring firewall rules and ACLs, DevOps engineers provisioning cloud resources, and security analysts reviewing IP allow-lists.",
+  "useCases": [
+    "Enumerate all IPs in a /28 subnet to plan static IP assignments for a server cluster",
+    "Generate a complete IP list from a CIDR block to populate a firewall allow-list",
+    "Quickly see how many usable addresses exist in a given subnet for capacity planning",
+    "Copy a list of IPs from a small range to paste into a monitoring tool configuration"
+  ],
+  "instructions": [
+    "Enter a CIDR notation (e.g., 192.168.1.0/24) in the input field",
+    "Press Expand or hit Enter to list all addresses in the range",
+    "Click any individual IP to copy it to your clipboard",
+    "Use the Copy All button to copy the entire list at once"
+  ],
+  "examples": [
+    "Input: '192.168.1.0/30' — Output: 192.168.1.0, 192.168.1.1, 192.168.1.2, 192.168.1.3 (4 total, 2 usable hosts)",
+    "Input: '10.0.0.0/29' — Output: 10.0.0.0 through 10.0.0.7 (8 total, 6 usable hosts)"
+  ],
+  "bestPractices": [
+    "Use smaller prefix lengths (/28 to /30) for manual enumeration; larger ranges are better handled programmatically",
+    "Remember that the first and last addresses in a subnet are typically the network and broadcast addresses",
+    "Copy the full list when generating firewall rules to avoid missing addresses"
+  ],
+  "commonMistakes": [
+    "Entering a prefix like /16 which produces 65,536 addresses — use a larger CIDR for manageable lists",
+    "Forgetting that the network and broadcast addresses may not be assignable to hosts",
+    "Not checking the warning for large ranges before expanding"
+  ],
+  "faq": [
+    "What is the maximum range size? — The tool supports up to /16 (65,536 addresses) but will warn for ranges over 1,024 IPs.",
+    "Does it show network and broadcast addresses? — Yes, all addresses including network and broadcast are listed.",
+    "Can I export the list? — Use the Copy All button to copy the full list to your clipboard for pasting into a file or configuration."
+  ]
+}

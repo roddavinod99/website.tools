@@ -1,0 +1,38 @@
+{
+  "whatItDoes": "Converts between Roman numerals and integers in both directions. Enter a number (1–3999) to get its Roman numeral representation, or enter a Roman numeral to get its numeric value. Supports standard subtractive notation like IV for 4 and IX for 9.",
+  "whyItExists": "Roman numerals appear in book chapters, movie copyright dates, Super Bowl numbering, and clock faces. Quickly converting between Roman and Arabic numerals saves manual calculation and avoids errors with subtractive notation.",
+  "whoShouldUse": "Students learning Roman numerals, editors formatting chapter numbers, developers working with legacy numbering systems, and anyone encountering Roman numerals in everyday life.",
+  "useCases": [
+    "Convert a year like 2024 to Roman numerals for a copyright notice",
+    "Decode Roman numeral chapter headings in a book or document",
+    "Validate whether a string is a correctly formatted Roman numeral",
+    "Convert Super Bowl or Olympic game numbers to their year equivalents"
+  ],
+  "instructions": [
+    "Select the conversion direction: Number to Roman or Roman to Number",
+    "Enter your value in the input field",
+    "The converted result appears instantly in the output area",
+    "Click Copy to copy the result to your clipboard"
+  ],
+  "examples": [
+    "1984 → MCMLXXXIV",
+    "MMXXIV → 2024",
+    "XLII → 42",
+    "4 → IV"
+  ],
+  "bestPractices": [
+    "Roman numerals only support values from 1 to 3999",
+    "Use subtractive notation for cleaner results (IV instead of IIII)",
+    "Double-check Roman numeral input for valid characters: I, V, X, L, C, D, M"
+  ],
+  "commonMistakes": [
+    "Entering zero or negative numbers, which have no Roman numeral representation",
+    "Using lowercase Roman numerals — always use uppercase for valid input",
+    "Entering non-Roman characters and expecting a numeric result"
+  ],
+  "faq": [
+    "What is the range of supported numbers? — 1 to 3999, the standard range for Roman numerals.",
+    "Does it handle subtractive notation like IV and IX? — Yes, both output and input use standard subtractive notation.",
+    "Can I convert numbers larger than 3999? — Not in standard Roman numerals; the tool enforces the traditional limit."
+  ]
+}

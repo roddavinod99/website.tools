@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Converts any string into a URL-friendly slug in real-time. Options include lowercasing, replacing spaces with hyphens, removing special characters, and truncating to a maximum length. The slug updates instantly as you type or change options.",
+  "whyItExists": "Generating clean URL slugs from titles or arbitrary text is a common need in web development. Manual slug creation is error-prone and inconsistent, especially with special characters and non-English text.",
+  "whoShouldUse": "Blog authors creating URL slugs from post titles, CMS developers building slug generators, SEO specialists creating clean URLs, and any developer who needs URL-safe identifiers.",
+  "useCases": [
+    "Generate a URL slug from a blog post title like 'Hello World! My First Post'",
+    "Create clean URL-friendly identifiers from user-generated content",
+    "Truncate long titles into short, SEO-friendly slugs with a max length",
+    "Remove special characters and spaces to create machine-readable identifiers"
+  ],
+  "instructions": [
+    "Type or paste any text into the input field",
+    "Toggle options: lowercase, spaces to hyphens, remove special chars",
+    "Set a max length of 0 for no truncation, or specify a character limit",
+    "The slug updates in real-time as you type or change options",
+    "Click Copy to copy the slug to your clipboard"
+  ],
+  "examples": [
+    "\"Hello World! This is a Post #1...\" → hello-world-this-is-a-post-1",
+    "\"2024: My Year in Review\" → 2024-my-year-in-review",
+    "\"Café & Résumé: A Guide\" → cafe-resume-a-guide"
+  ],
+  "bestPractices": [
+    "Keep lowercase enabled for consistent, URL-friendly slugs",
+    "Use truncation for titles that may be very long to keep URLs manageable",
+    "Test with special characters, accented letters, and numbers to ensure expected output",
+    "Consider keeping hyphens in the output for readability in URLs"
+  ],
+  "commonMistakes": [
+    "Setting max length too short, cutting off meaningful words",
+    "Forgetting to remove special characters that cause issues in URLs",
+    "Using the slug for file names without considering OS-specific character restrictions"
+  ],
+  "faq": [
+    "Does this handle Unicode or accented characters? — Accented characters are preserved unless Remove Special Chars is enabled, which may strip them.",
+    "Can I use this for file names? — Yes, but be aware some file systems have additional restrictions beyond URL safety.",
+    "What happens with multiple consecutive spaces or hyphens? — They are collapsed into a single hyphen automatically."
+  ]
+}
