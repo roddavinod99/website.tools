@@ -33,10 +33,14 @@ interface ToXmlOpts {
   arrayHandling: ArrayHandling;
 }
 
+function sanitizeTagName(key: string): string {
+  return /^[0-9]/.test(key) ? `n_${key}` : key;
+}
+
 function toXml(obj: unknown, name: string, opts: ToXmlOpts, depth: number): string {
   const indentStr = opts.indent === "tab" ? "\t" : " ".repeat(Number(opts.indent));
   const pad = indentStr.repeat(depth);
-  const elName = convertCase(name, opts.elementCase);
+  const elName = sanitizeTagName(convertCase(name, opts.elementCase));
 
   if (obj === null || obj === undefined) return `${pad}<${elName}/>`;
   if (typeof obj === "string" || typeof obj === "number" || typeof obj === "boolean") {

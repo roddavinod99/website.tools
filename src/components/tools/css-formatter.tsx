@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, RefreshCw, Minimize, Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 type IndentType = "spaces" | "tabs";
 type OutputMode = "expanded" | "compact" | "compressed";
@@ -229,6 +230,8 @@ export function CSSFormatter() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

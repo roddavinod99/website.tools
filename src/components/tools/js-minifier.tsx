@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, Minimize, Maximize, Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 type Indent = "2" | "4" | "tab";
 type OutputCompat = "es5" | "es6";
@@ -53,7 +54,39 @@ export function JSMinifier() {
 
       if (removeDebugger) code = code.replace(/\bdebugger\s*;/g, "");
       if (removeConsole) code = code.replace(/\bconsole\s*\.\s*\w+\s*\([^)]*\)\s*;?\s*/g, "");
-      if (removeCmts) code = code.replace(/\/\/.*$/gm, "").replace(/\/\*[\s\S]*?\*\//g, "");
+      if (removeCmts) {
+        let result = '';
+        let inString = false;
+        let stringChar = '';
+        for (let ci = 0; ci < code.length; ci++) {
+          const ch = code[ci];
+          const next = code[ci + 1];
+          if (inString) {
+            result += ch;
+            if (ch === '\\') { result += code[++ci]; continue; }
+            if (ch === stringChar) inString = false;
+            continue;
+          }
+          if (ch === '"' || ch === "'" || ch === '`') {
+            inString = true;
+            stringChar = ch;
+            result += ch;
+            continue;
+          }
+          if (ch === '/' && next === '/') {
+            while (ci < code.length && code[ci] !== '\n') ci++;
+            continue;
+          }
+          if (ch === '/' && next === '*') {
+            ci += 2;
+            while (ci < code.length - 1 && !(code[ci] === '*' && code[ci + 1] === '/')) ci++;
+            ci++;
+            continue;
+          }
+          result += ch;
+        }
+        code = result;
+      }
 
       if (semicolons === "remove") {
         code = code.replace(/;\s*([\n\r}])/g, "$1");
@@ -184,6 +217,8 @@ export function JSMinifier() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

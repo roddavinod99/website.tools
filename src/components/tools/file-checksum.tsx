@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { Copy, Check, Download, Upload, X } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 interface FileResult {
   name: string;
@@ -13,12 +14,11 @@ interface FileResult {
 }
 
 const algos = [
-  { id: "MD5", label: "MD5" },
   { id: "SHA-1", label: "SHA-1" },
+  { id: "SHA-224", label: "SHA-224" },
   { id: "SHA-256", label: "SHA-256" },
   { id: "SHA-384", label: "SHA-384" },
   { id: "SHA-512", label: "SHA-512" },
-  { id: "SHA-224", label: "SHA-224" },
 ];
 
 async function hexDigest(algorithm: string, data: ArrayBuffer): Promise<string> {
@@ -29,24 +29,17 @@ async function hexDigest(algorithm: string, data: ArrayBuffer): Promise<string> 
 async function computeHash(file: File, algorithm: string, onProgress?: (pct: number) => void): Promise<{ hash: string; time: number }> {
   const start = performance.now();
   let hash: string;
-  if (algorithm === "MD5") {
-    const buffer = await file.arrayBuffer();
-    hash = await hexDigest("SHA-256", buffer);
-    const fake = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode("md5_fallback")))).map((b) => b.toString(16).padStart(2, "0")).join("");
-    hash = fake.slice(0, 32);
-  } else {
-    if (file.size > 10 * 1024 * 1024 && onProgress) {
-      const chunkSize = 1024 * 1024;
-      const totalChunks = Math.ceil(file.size / chunkSize);
-      for (let i = 0; i < totalChunks; i++) {
-        onProgress(Math.round(((i + 1) / totalChunks) * 100));
-      }
-      const buffer = await file.arrayBuffer();
-      hash = await hexDigest(algorithm, buffer);
-    } else {
-      const buffer = await file.arrayBuffer();
-      hash = await hexDigest(algorithm, buffer);
+  if (file.size > 10 * 1024 * 1024 && onProgress) {
+    const chunkSize = 1024 * 1024;
+    const totalChunks = Math.ceil(file.size / chunkSize);
+    for (let i = 0; i < totalChunks; i++) {
+      onProgress(Math.round(((i + 1) / totalChunks) * 100));
     }
+    const buffer = await file.arrayBuffer();
+    hash = await hexDigest(algorithm, buffer);
+  } else {
+    const buffer = await file.arrayBuffer();
+    hash = await hexDigest(algorithm, buffer);
   }
   const time = performance.now() - start;
   return { hash, time };
@@ -57,7 +50,7 @@ export function FileChecksum() {
   const [results, setResults] = useState<FileResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [selectedAlgos, setSelectedAlgos] = useState<string[]>(["MD5", "SHA-1", "SHA-256", "SHA-512"]);
+  const [selectedAlgos, setSelectedAlgos] = useState<string[]>(["SHA-1", "SHA-256", "SHA-512"]);
   const [compareMode, setCompareMode] = useState(false);
   const [expectedHash, setExpectedHash] = useState("");
   const [outputFormat, setOutputFormat] = useState<"hex" | "base64">("hex");
@@ -74,7 +67,17 @@ export function FileChecksum() {
 
   const handleFiles = useCallback((fileList: FileList | null) => {
     if (!fileList) return;
-    setFiles(Array.from(fileList));
+    const validFiles: File[] = [];
+    for (const file of Array.from(fileList)) {
+      const sizeCheck = validateFileSize(file, 25);
+      if (!sizeCheck.valid) {
+        alert(`${file.name}: ${sizeCheck.error}`);
+        continue;
+      }
+      validFiles.push(file);
+    }
+    if (validFiles.length === 0) return;
+    setFiles(validFiles);
     setResults([]);
     setTextResult(null);
     setVerificationResults({});
@@ -82,6 +85,14 @@ export function FileChecksum() {
 
   const calculate = useCallback(async () => {
     if (files.length === 0) return;
+    const MAX_FILE_SIZE = 25 * 1024 * 1024;
+    for (const file of files) {
+      if (file.size > MAX_FILE_SIZE) {
+        setResults([{ name: file.name, size: file.size, type: file.type || "unknown", lastModified: new Date(file.lastModified).toLocaleString(), results: Object.fromEntries(selectedAlgos.map(a => [a, "File too large"])), time: 0 }]);
+        setLoading(false);
+        return;
+      }
+    }
     setLoading(true);
     setProgress(0);
     setVerificationResults({});
@@ -118,8 +129,8 @@ export function FileChecksum() {
     const res: Record<string, string> = {};
     for (const algo of selectedAlgos) {
       try {
-        const hash = await hexDigest(algo === "MD5" ? "SHA-256" : algo, data);
-        res[algo] = algo === "MD5" ? hash.slice(0, 32) : hash;
+        const hash = await hexDigest(algo, data);
+        res[algo] = hash;
       } catch {
         res[algo] = "Error";
       }

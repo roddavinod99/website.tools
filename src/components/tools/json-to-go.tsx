@@ -47,7 +47,7 @@ function generateGo(input: string, opts: { packageName: string; structName: stri
       const fieldName = toGoName(key);
       let fieldType: string;
 
-      if (typeof value === "object" && value !== null && !Array.isArray(value) && Object.keys(value as Record<string, unknown>).length > 0) {
+      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
         const structName = opts.inlineStructs ? toGoName(key) : name + toGoName(key);
         fieldType = structName;
         if (opts.inlineStructs) {

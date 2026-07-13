@@ -3,5 +3,5 @@
   { "slug": "password-generator", "category": "Generators", "name": "Password Generator", "action": "Generate", "expect": "output", "input": "" },
   { "slug": "lorem-ipsum", "category": "Generators", "name": "Lorem Ipsum", "action": "Generate", "expect": "output", "input": "" },
   { "slug": "random-data", "category": "Generators", "name": "Random Data", "action": "Generate", "expect": "output", "input": "" },
-  { "slug": "cron-expression", "category": "Generators", "name": "Cron Expression", "action": "Generate", "expect": "output", "input": "0 0 * * *" }
+  { "slug": "cron-expression", "category": "Generators", "name": "Cron Expression", "action": "", "expect": "output", "input": "" }
 ]

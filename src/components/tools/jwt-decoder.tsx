@@ -7,7 +7,7 @@ function base64UrlDecode(str: string): string {
   try {
     let s = str.replace(/-/g, "+").replace(/_/g, "/");
     s = s.padEnd(s.length + (4 - (s.length % 4)) % 4, "=");
-    return atob(s);
+    return decodeURIComponent(escape(atob(s)));
   } catch { return ""; }
 }
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Copy, Download } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 function rotateLeft(x: number, n: number) { return (x << n) | (x >>> (32 - n)); }
 
@@ -44,25 +45,19 @@ function md5(text: string): string {
   return toHex(a0) + toHex(b0) + toHex(c0) + toHex(d0);
 }
 
-function sha224(data: string): Promise<string> {
-  return crypto.subtle.digest("SHA-256", new TextEncoder().encode(data)).then((buf) => {
-    const bytes = new Uint8Array(buf);
-    return Array.from(bytes.slice(0, 28)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  });
+async function sha224(data: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-224", new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-function sha512_224(data: string): Promise<string> {
-  return crypto.subtle.digest("SHA-512", new TextEncoder().encode(data)).then((buf) => {
-    const bytes = new Uint8Array(buf);
-    return Array.from(bytes.slice(0, 28)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  });
+async function sha512_224(data: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-512/224", new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-function sha512_256(data: string): Promise<string> {
-  return crypto.subtle.digest("SHA-512", new TextEncoder().encode(data)).then((buf) => {
-    const bytes = new Uint8Array(buf);
-    return Array.from(bytes.slice(0, 32)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  });
+async function sha512_256(data: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-512/256", new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 function rmd160(data: string): string {
@@ -272,6 +267,11 @@ export function HashGenerator() {
   };
 
   const hashFile = async (f: File) => {
+    const sizeCheck = validateFileSize(f, 25);
+    if (!sizeCheck.valid) {
+      alert(sizeCheck.error);
+      return;
+    }
     setFile(f);
     setHasFile(true);
     const buf = await f.arrayBuffer();

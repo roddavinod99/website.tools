@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 
+
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
 type FitMode = "fit" | "contain" | "cover";
 type QualityPreset = { label: string; value: number };
@@ -21,7 +22,7 @@ const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
 ];
 
 const INPUT_ACCEPT = "image/jpeg,image/png,image/webp";
-const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 25 * 1024 * 1024;
 
 interface ImageEntry {
   id: string;
@@ -100,7 +101,7 @@ export function ImageCompressor() {
       const file = fileList[i];
       if (!file.type.match(/^image\/(jpeg|png|webp)$/)) continue;
       if (totalSize + file.size > MAX_TOTAL_SIZE) {
-        setError("Total size exceeds 50MB limit");
+        setError("Total size exceeds 25MB limit");
         break;
       }
       const info = await readImageFile(file);
@@ -303,7 +304,7 @@ export function ImageCompressor() {
             : "Click or drop images here"}
         </p>
         <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">
-          Supports JPEG, PNG, WebP &middot; 50MB total limit
+          Supports JPEG, PNG, WebP &middot; 25MB total limit
         </p>
       </div>
 

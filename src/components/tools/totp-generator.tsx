@@ -24,7 +24,7 @@ function base32ToBytes(base32: string): Uint8Array {
 }
 
 function isValidBase32(s: string): boolean {
-  return /^[A-Z2-7]{16,}=*$/i.test(s.replace(/\s/g, "").toUpperCase());
+  return /^[A-Z2-7]+=*$/i.test(s.replace(/\s/g, "").toUpperCase());
 }
 
 function generateRandomSecret(): string {

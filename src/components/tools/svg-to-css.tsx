@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import DOMPurify from "dompurify";
 import { Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 const safeSanitize = (html: string) => {
   try { return DOMPurify.sanitize(html); } catch { return html; }
@@ -14,6 +15,7 @@ export function SvgToCss() {
   const [encoding, setEncoding] = useState<"url" | "base64">("url");
   const [vendorPrefix, setVendorPrefix] = useState(false);
   const [copied, setCopied] = useState("");
+  const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const svgSize = useMemo(() => {
@@ -42,7 +44,7 @@ export function SvgToCss() {
     const svg = optimized;
     let dataUri: string;
     if (encoding === "url") {
-      dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg).replace(/%23/g, '#');
     } else {
       dataUri = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
     }
@@ -53,7 +55,7 @@ export function SvgToCss() {
       case "background":
         return `.svg-icon {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n${prefix("background-image: url(\"" + dataUri + "\");")}\n  background-size: contain;\n  background-repeat: no-repeat;\n}`;
       case "mask":
-        return `.svg-mask {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  background: currentColor;\n${prefix("mask: url(\"" + dataUri + "\") no-repeat center / contain;")}\n}`;
+        return `.svg-mask {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n  background: currentColor;\n${prefix("mask-image: url(\"" + dataUri + "\") no-repeat center;")}\n${prefix("mask-size: contain;")}\n${prefix("mask-repeat: no-repeat;")}\n}`;
       case "inline":
         return `.svg-inline {\n  width: ${svgSize.w};\n  height: ${svgSize.h};\n}\n\n.svg-inline::before {\n  content: "${encodeURIComponent(svg).replace(/"/g, '\\"')}";\n}`;
       case "clip":
@@ -89,7 +91,12 @@ export function SvgToCss() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) { return; }
+    const sizeCheck = validateFileSize(file, 25);
+    if (!sizeCheck.valid) {
+      setFileError(sizeCheck.error || "File too large");
+      return;
+    }
+    setFileError("");
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);
@@ -106,6 +113,8 @@ export function SvgToCss() {
           <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 text-xs text-brand-500 hover:text-brand-600" aria-label="Upload SVG file"><Upload className="w-3 h-3" /> Upload SVG</button>
         </div>
       </div>
+
+      {fileError && <p className="text-sm text-red-500">{fileError}</p>}
 
       {!isValid && input.trim() && <p className="text-sm text-red-500">Invalid SVG — must start with &lt;svg and end with &lt;/svg&gt;</p>}
 

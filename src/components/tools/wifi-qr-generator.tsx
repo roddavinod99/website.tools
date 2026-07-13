@@ -18,15 +18,23 @@ export function WifiQRGenerator() {
   const [anonymous, setAnonymous] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const escapeWifiString = (str: string) => str.replace(/([\\;,:"])/g, "\\$1");
+
   const buildWifiString = useCallback(() => {
-    let str = `WIFI:T:${encryption === "nopass" ? "nopass" : encryption};S:${ssid};`;
-    if (encryption !== "nopass" && encryption !== "WPA2-EAP") str += `P:${password};`;
-    if (hidden) str += "H:true;";
-    if (encryption === "WPA2-EAP") {
-      str += `E=${eapMethod};PH2=${eapPhase2};`;
-      if (identity) str += `I=${identity};`;
-      if (anonymous) str += "A=true;";
+    const escapedSsid = escapeWifiString(ssid);
+    let str = `WIFI:S:${escapedSsid};T:${encryption === "nopass" ? "nopass" : encryption};`;
+    if (encryption !== "nopass") {
+      if (encryption === "WPA2-EAP") {
+        if (password) str += `P:${escapeWifiString(password)};`;
+        if (eapMethod) str += `E:${eapMethod};`;
+        if (eapPhase2 && eapPhase2 !== "None") str += `PH2:${eapPhase2};`;
+        if (identity) str += `I:${escapeWifiString(identity)};`;
+        if (anonymous) str += "A:anon;";
+      } else {
+        str += `P:${escapeWifiString(password)};`;
+      }
     }
+    if (hidden) str += "H:true;";
     str += ";";
     return str;
   }, [ssid, password, encryption, hidden, eapMethod, eapPhase2, identity, anonymous]);

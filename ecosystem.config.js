@@ -10,6 +10,11 @@ module.exports = {
         NODE_ENV: "production",
         PORT: 3000,
         NEXT_PUBLIC_SITE_URL: "https://tools.devstackio.com",
+        NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID || "",
+        NEXT_PUBLIC_ADSENSE_PUBLISHER_ID:
+          process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "",
+        NEXT_PUBLIC_CONTACT_EMAIL: "contact@devstackio.com",
+        DISABLE_RATE_LIMIT: "true",
       },
       error_file: "./logs/err.log",
       out_file: "./logs/out.log",
@@ -18,6 +23,8 @@ module.exports = {
       max_restarts: 10,
       restart_delay: 5000,
       exp_backoff_restart_delay: 100,
+      watch: false,
+      autorestart: true,
     },
   ],
 };

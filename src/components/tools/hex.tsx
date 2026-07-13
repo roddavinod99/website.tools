@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 type Mode = "encode" | "decode";
 type CaseType = "lower" | "upper";
@@ -125,6 +126,8 @@ export function Hex() {
     inputEl.onchange = () => {
       const file = inputEl.files?.[0];
       if (!file) return;
+      const sizeCheck = validateFileSize(file);
+      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
       const reader = new FileReader();
       reader.onload = () => {
         const arrayBuffer = reader.result as ArrayBuffer;

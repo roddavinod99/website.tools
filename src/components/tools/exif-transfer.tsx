@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 interface ExifData {
   Make?: string; Model?: string; Lens?: string; Software?: string;
@@ -124,6 +125,8 @@ export function ExifTransfer() {
 
   const processFile = useCallback(async (file: File, type: "source" | "target") => {
     setError(""); setSuccess("");
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const preview = URL.createObjectURL(file);
     const exif = await readExifBasic(file);
     const entry = { file, preview, exif, rawSize: file.size };
@@ -168,10 +171,12 @@ export function ExifTransfer() {
           if (!blob) { setError("Failed to generate output"); return; }
           const fieldInfo = fields.filter((f) => sourceFile.exif[f] !== undefined);
           const a = document.createElement("a");
-          a.href = URL.createObjectURL(blob);
+          const blobUrl = URL.createObjectURL(blob);
+          a.href = blobUrl;
           const baseName = targetFile.file.name.replace(/\.[^.]+$/, "");
           a.download = `${baseName}_with_exif.${ext === "jpeg" ? "jpg" : ext}`;
           a.click();
+          URL.revokeObjectURL(blobUrl);
           setSuccess(`Transferred ${fieldInfo.length} EXIF field(s) from source. Image saved as ${a.download}`);
         },
         mimeType,

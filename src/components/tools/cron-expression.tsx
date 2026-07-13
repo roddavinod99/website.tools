@@ -291,7 +291,15 @@ export function CronExpression() {
 
       {editMode === "form" ? (
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-          {fields.map((f, i) => (
+          {fields.map((f, i) => {
+            const ranges: Record<string, { min: number; max: number }> = {
+              minute: { min: 0, max: 59 }, seconds: { min: 0, max: 59 },
+              hour: { min: 0, max: 23 }, dayofmonth: { min: 1, max: 31 },
+              month: { min: 1, max: 12 }, dayofweek: { min: 0, max: 7 },
+            };
+            const range = ranges[f.key];
+            const isInvalid = range && f.value !== "*" && f.value !== "?" && !f.value.startsWith("*/") && !f.value.includes("-") && !f.value.includes(",") && !f.value.includes("/") && !/^[a-zA-Z]+$/.test(f.value) && /^\d+$/.test(f.value) && (parseInt(f.value) < range.min || parseInt(f.value) > range.max);
+            return (
             <div key={f.key}>
               <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">{f.label}</label>
               {f.label === "Minute" || f.label === "Seconds" ? (
@@ -356,12 +364,15 @@ export function CronExpression() {
                   <option value="0">Sunday</option>
                 </select>
               ) : (
+                <div>
                 <input type="text" value={f.value}
                   onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className={`w-full rounded-lg border bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:bg-dark-surface dark:text-dark-text ${isInvalid ? "border-red-400 dark:border-red-600" : "border-surface-200 dark:border-dark-border"}`} />
+                {isInvalid && <p className="text-[10px] text-red-500 mt-0.5">{range.min}-{range.max}</p>}
+                </div>
               )}
             </div>
-          ))}
+          );})}
         </div>
       ) : (
         <div>
@@ -380,7 +391,7 @@ export function CronExpression() {
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div data-testid="tool-output" className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Cron Expression</p>

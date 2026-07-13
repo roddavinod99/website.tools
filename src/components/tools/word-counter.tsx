@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 interface WordStats {
   words: number;
@@ -141,6 +142,8 @@ export function WordCounter() {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { alert(sizeCheck.error); return; }
     const reader = new FileReader();
     reader.onload = () => { setText(reader.result as string); };
     reader.readAsText(file);

@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload } from "lucide-react";
 
+
 type Delimiter = "comma" | "tab" | "semicolon" | "pipe" | "custom";
 type NullHandling = "empty" | "null" | "skip";
 type ArrayHandling = "indexing" | "flatten" | "json";

@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/constants";
 import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
+import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -137,7 +138,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#3282b8" />
+        <meta name="theme-color" content="#0070f3" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="max-image-preview:large" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -153,13 +154,18 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
         <ThemeProvider>
-          <Suspense>
-            <Analytics />
-          </Suspense>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CookieConsent />
+          <FileCleanupProvider>
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
+              Skip to content
+            </a>
+            <Suspense>
+              <Analytics />
+            </Suspense>
+            <Header />
+            <main id="main-content" className="flex-1">{children}</main>
+            <Footer />
+            <CookieConsent />
+          </FileCleanupProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -63,6 +63,7 @@ export function getPostUrl(slug: string): string {
 }
 
 export async function getPostContent(slug: string): Promise<string | null> {
+  if (!blogPosts.some((p) => p.slug === slug)) return null;
   try {
     const filePath = path.join(process.cwd(), "src/content/blog", `${slug}.md`);
     return await fs.readFile(filePath, "utf-8");

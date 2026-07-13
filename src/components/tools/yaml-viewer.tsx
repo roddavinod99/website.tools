@@ -19,6 +19,17 @@ const TOKEN_COLORS: Record<TokenType, string> = {
   comment: "text-surface-400 dark:text-dark-muted italic",
 };
 
+function getValueType(val: string): TokenType {
+  const v = val.trim();
+  if (v === "true" || v === "false") return "boolean";
+  if (v === "null" || v === "~") return "null";
+  if (/^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(v)) return "number";
+  if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return "string";
+  if (v.startsWith("[") || v.startsWith("{")) return "punctuation";
+  if (v.startsWith("|") || v.startsWith(">")) return "punctuation";
+  return "string";
+}
+
 function tokenizeYAML(yaml: string): Token[][] {
   const lines: Token[][] = [];
   const inputLines = yaml.split("\n");
@@ -33,56 +44,36 @@ function tokenizeYAML(yaml: string): Token[][] {
     }
 
     const trimmed = line;
-    const keyMatch = trimmed.match(/^(\s*)(- )?("[^"]*"|'[^']*'|[^:#\n]+?)(: )(.*)/);
-    if (keyMatch) {
-      const [, indent, dash, key, colon, value] = keyMatch;
+
+    const listMatch = trimmed.match(/^(\s*)(- )(.*)/);
+    if (listMatch) {
+      const [, indent, dash, rest] = listMatch;
       if (indent) tokens.push({ text: indent, type: "punctuation" });
-      if (dash) tokens.push({ text: dash, type: "punctuation" });
-      tokens.push({ text: key, type: "key" });
-      tokens.push({ text: colon, type: "punctuation" });
-      if (value) {
-        const val = value.trim();
-        if (val === "true" || val === "false") {
-          tokens.push({ text: " " + val, type: "boolean" });
-        } else if (val === "null" || val === "~") {
-          tokens.push({ text: " " + val, type: "null" });
-        } else if (/^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(val)) {
-          tokens.push({ text: " " + val, type: "number" });
-        } else if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-          tokens.push({ text: " " + val, type: "string" });
-        } else {
-          tokens.push({ text: " " + val, type: "string" });
-        }
-      }
-    } else if (/^\s*- /.test(trimmed)) {
-      const dashMatch = trimmed.match(/^(\s*)(- )(.*)/);
-      if (dashMatch) {
-        const [, indent, dash, val] = dashMatch;
-        tokens.push({ text: indent, type: "punctuation" });
-        tokens.push({ text: dash, type: "punctuation" });
-        if (/^-?\d+(\.\d+)?$/.test(val)) {
-          tokens.push({ text: val, type: "number" });
-        } else if (val === "true" || val === "false") {
-          tokens.push({ text: val, type: "boolean" });
-        } else if (val === "null" || val === "~") {
-          tokens.push({ text: val, type: "null" });
-        } else {
-          tokens.push({ text: val, type: "string" });
-        }
+      tokens.push({ text: dash, type: "punctuation" });
+      const kvInList = rest.match(/^("[^"]*"|'[^']*'|[^\s:]+?)\s*:\s(.*)/);
+      if (kvInList) {
+        const [, key, value] = kvInList;
+        tokens.push({ text: key, type: "key" });
+        tokens.push({ text: ": ", type: "punctuation" });
+        tokens.push({ text: value, type: getValueType(value) });
+      } else {
+        tokens.push({ text: rest, type: getValueType(rest) });
       }
     } else if (/^\s*-\s*$/.test(trimmed)) {
       tokens.push({ text: trimmed, type: "punctuation" });
-    } else if (trimmed.trim()) {
-      const parts = trimmed.split(/(:\s)/);
-      for (const part of parts) {
-        if (part === ": " || part === ":") {
-          tokens.push({ text: part, type: "punctuation" });
-        } else {
-          tokens.push({ text: part, type: part.trim().length > 0 ? "key" : "punctuation" });
-        }
-      }
     } else {
-      tokens.push({ text: trimmed, type: "punctuation" });
+      const kvMatch = trimmed.match(/^(\s*)(("[^"]*"|'[^']*'|[^\s:]+))\s*:\s(.*)/);
+      if (kvMatch) {
+        const [, indent, key, , value] = kvMatch;
+        if (indent) tokens.push({ text: indent, type: "punctuation" });
+        tokens.push({ text: key, type: "key" });
+        tokens.push({ text: ": ", type: "punctuation" });
+        tokens.push({ text: value, type: getValueType(value) });
+      } else if (trimmed.trim()) {
+        tokens.push({ text: trimmed, type: "string" });
+      } else {
+        tokens.push({ text: trimmed, type: "punctuation" });
+      }
     }
 
     lines.push(tokens);
@@ -96,40 +87,31 @@ function validateYAML(input: string): { valid: boolean; error: string | null; li
 
   try {
     const lines = input.split("\n");
-    let lastIndent = 0;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      if (/^\s*#/.test(line) || line.trim() === "") continue;
+      if (/^\s*$/.test(line) || /^\s*#/.test(line)) continue;
 
-      const indent = line.search(/\S/);
-      if (indent > lastIndent + 2) {
-        return { valid: false, error: `Unexpected indentation at line ${i + 1}`, line: i + 1 };
+      if (/^\t/.test(line)) {
+        return { valid: false, error: `Tabs are not allowed for indentation at line ${i + 1}`, line: i + 1 };
       }
-      lastIndent = indent;
     }
 
-    const stack: string[] = [];
+    const stack: { type: string; line: number }[] = [];
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       if (line.trim() === "" || /^\s*#/.test(line)) continue;
 
-      if (line.includes("[") && !line.includes("]")) {
-        stack.push("array");
-      }
-      if (line.includes("{") && !line.includes("}")) {
-        stack.push("object");
-      }
-      if (line.includes("]") && stack[stack.length - 1] === "array") {
-        stack.pop();
-      }
-      if (line.includes("}") && stack[stack.length - 1] === "object") {
-        stack.pop();
-      }
-    }
+      const opens = (line.match(/\[/g) || []).length - (line.match(/\[\[/g) || []).length * 2 + (line.match(/\[\[/g) || []).length;
+      const closes = (line.match(/\]/g) || []).length - (line.match(/\]\]/g) || []).length * 2 + (line.match(/\]\]/g) || []).length;
 
-    if (stack.length > 0) {
-      return { valid: false, error: `Unclosed ${stack[stack.length - 1]} at end of document`, line: lines.length };
+      for (let j = 0; j < opens; j++) {
+        const isDouble = line.includes("[[");
+        stack.push({ type: isDouble ? "array-table" : "bracket", line: i + 1 });
+      }
+      for (let j = 0; j < closes; j++) {
+        if (stack.length > 0) stack.pop();
+      }
     }
 
     return { valid: true, error: null, line: null };

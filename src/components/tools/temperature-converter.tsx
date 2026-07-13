@@ -84,10 +84,12 @@ export function TemperatureConverter() {
   const [copiedUnit, setCopiedUnit] = useState("");
 
   const updateFrom = useCallback((unit: TempUnit, value: string) => {
+    if (value === "-" || value === "") {
+      setValues(prev => ({ ...prev, [unit]: value }));
+      return;
+    }
     const num = parseFloat(value);
     if (isNaN(num)) {
-      const empty: Record<TempUnit, string> = { c: "", f: "", k: "", r: "", d: "", n: "", re: "", ro: "" };
-      setValues(empty);
       return;
     }
     const celsius = toCelsius(unit, num);

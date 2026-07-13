@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 type HeadingStyle = "hash" | "underline";
 type BulletMarker = "-" | "*" | "+";
@@ -11,99 +12,94 @@ type CodeStyle = "backtick" | "indented";
 type StrongEmStyle = "asterisk" | "underscore";
 
 function htmlToMarkdown(html: string, opts: { headingStyle: HeadingStyle; bulletMarker: BulletMarker; linkStyle: LinkStyle; hrStyle: HrStyle; codeStyle: CodeStyle; strongEmStyle: StrongEmStyle; stripStyles: boolean; preserveAlt: boolean; tables: boolean }): string {
-  let text = html;
-  if (opts.stripStyles) text = text.replace(/ style="[^"]*"/gi, "").replace(/ style='[^']*'/gi, "");
-
-  if (opts.tables) {
-    text = text.replace(/<table[\s\S]*?<\/table>/gi, (table) => {
-      const rows: string[][] = [];
-      table.replace(/<th[^>]*>([\s\S]*?)<\/th>/gi, (_, c) => { rows.push([c.replace(/<[^>]+>/g, "").trim()]); return ""; });
-      table.replace(/<tr[^>]*>([\s\S]*?)<\/tr>/gi, (_, r) => {
-        const cells: string[] = [];
-        r.replace(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi, (_m: string, c: string) => { cells.push(c.replace(/<[^>]+>/g, "").trim()); return ""; });
-        if (cells.length > 0) rows.push(cells);
-        return "";
-      });
-      if (rows.length === 0) return "";
-      const sep = rows[0].map(() => "---").join(" | ");
-      return "\n| " + rows[0].join(" | ") + " |\n| " + sep + " |\n" + rows.slice(1).map((r) => "| " + r.join(" | ") + " |").join("\n") + "\n";
-    });
-  }
-
-  const images: string[] = [];
+  if (!html.trim()) return "";
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const seChar = opts.strongEmStyle === "underscore" ? "_" : "*";
+  const refLinks: string[] = [];
   let refIdx = 0;
 
-  if (opts.preserveAlt) text = text.replace(/<img[^>]+alt="([^"]*)"[^>]*\/?>/gi, (_, alt) => alt || "");
-  else text = text.replace(/<img[^>]*\/?>/gi, "");
+  function nodeToMarkdown(node: Node): string {
+    if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
+    if (node.nodeType !== Node.ELEMENT_NODE) return "";
+    const el = node as Element;
+    const tag = el.tagName.toLowerCase();
+    const childMd = () => Array.from(el.childNodes).map(nodeToMarkdown).join("");
 
-  if (opts.linkStyle === "reference") {
-    text = text.replace(/<a[^>]+href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (_, url, content) => {
-      const stripped = content.replace(/<[^>]+>/g, "");
-      refIdx++;
-      images.push(`[${refIdx}]: ${url}`);
-      return `${stripped}[${refIdx}]`;
-    });
-  } else {
-    text = text.replace(/<a[^>]+href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (_, url, content) => {
-      const stripped = content.replace(/<[^>]+>/g, "");
-      return `[${stripped}](${url})`;
-    });
+    switch (tag) {
+      case "h1": {
+        const c = childMd().trim();
+        return opts.headingStyle === "underline" ? `${c}\n${"=".repeat(c.length)}\n\n` : `# ${c}\n\n`;
+      }
+      case "h2": {
+        const c = childMd().trim();
+        return opts.headingStyle === "underline" ? `${c}\n${"-".repeat(c.length)}\n\n` : `## ${c}\n\n`;
+      }
+      case "h3": return `### ${childMd().trim()}\n\n`;
+      case "h4": return `#### ${childMd().trim()}\n\n`;
+      case "h5": return `##### ${childMd().trim()}\n\n`;
+      case "h6": return `###### ${childMd().trim()}\n\n`;
+      case "p": return `${childMd()}\n\n`;
+      case "strong": case "b": return `${seChar}${seChar}${childMd()}${seChar}${seChar}`;
+      case "em": case "i": return `${seChar}${childMd()}${seChar}`;
+      case "del": case "s": return `~~${childMd()}~~`;
+      case "a": {
+        const href = el.getAttribute("href") || "";
+        const c = childMd();
+        if (opts.linkStyle === "reference") {
+          refIdx++;
+          refLinks.push(`[${refIdx}]: ${href}`);
+          return `${c}[${refIdx}]`;
+        }
+        return `[${c}](${href})`;
+      }
+      case "img": {
+        if (!opts.preserveAlt) return "";
+        const alt = el.getAttribute("alt") || "";
+        const src = el.getAttribute("src") || "";
+        return `![${alt}](${src})`;
+      }
+      case "code": {
+        if (el.parentElement?.tagName.toLowerCase() === "pre") return childMd();
+        return `\`${childMd()}\``;
+      }
+      case "pre": {
+        const code = el.querySelector("code");
+        const content = code ? Array.from(code.childNodes).map(nodeToMarkdown).join("") : childMd();
+        if (opts.codeStyle === "backtick") return `\`\`\`\n${content.trim()}\n\`\`\`\n\n`;
+        return content.trim().split("\n").map((l: string) => `    ${l}`).join("\n") + "\n\n";
+      }
+      case "blockquote": return childMd().trim().split("\n").map((l: string) => `> ${l}`).join("\n") + "\n\n";
+      case "ul": return Array.from(el.children).map((li) => `${opts.bulletMarker} ${Array.from(li.childNodes).map(nodeToMarkdown).join("").trim()}`).join("\n") + "\n\n";
+      case "ol": return Array.from(el.children).map((li, i) => `${i + 1}. ${Array.from(li.childNodes).map(nodeToMarkdown).join("").trim()}`).join("\n") + "\n\n";
+      case "li": return `${opts.bulletMarker} ${childMd().trim()}`;
+      case "br": return "\n";
+      case "hr": return `${opts.hrStyle}\n\n`;
+      case "span": case "div": return childMd();
+      case "table": {
+        if (!opts.tables) return childMd();
+        const rows: string[][] = [];
+        el.querySelectorAll("tr").forEach((tr) => {
+          const cells: string[] = [];
+          tr.querySelectorAll("th, td").forEach((cell) => cells.push(Array.from(cell.childNodes).map(nodeToMarkdown).join("").trim()));
+          if (cells.length > 0) rows.push(cells);
+        });
+        if (rows.length === 0) return "";
+        const sep = rows[0].map(() => "---").join(" | ");
+        return "\n| " + rows[0].join(" | ") + " |\n| " + sep + " |\n" + rows.slice(1).map((r) => "| " + r.join(" | ") + " |").join("\n") + "\n";
+      }
+      default: return childMd();
+    }
   }
 
-  text = text
-    .replace(/<h1[^>]*>(.*?)<\/h1>/gi, (_, c) => {
-      const content = c.replace(/<[^>]+>/g, "");
-      if (opts.headingStyle === "underline") return `${content}\n${"=".repeat(content.length)}\n\n`;
-      return `# ${content}\n\n`;
-    })
-    .replace(/<h2[^>]*>(.*?)<\/h2>/gi, (_, c) => {
-      const content = c.replace(/<[^>]+>/g, "");
-      if (opts.headingStyle === "underline") return `${content}\n${"-".repeat(content.length)}\n\n`;
-      return `## ${content}\n\n`;
-    })
-    .replace(/<h3[^>]*>(.*?)<\/h3>/gi, (_, c) => `### ${c.replace(/<[^>]+>/g, "")}\n\n`)
-    .replace(/<h4[^>]*>(.*?)<\/h4>/gi, (_, c) => `#### ${c.replace(/<[^>]+>/g, "")}\n\n`)
-    .replace(/<h5[^>]*>(.*?)<\/h5>/gi, (_, c) => `##### ${c.replace(/<[^>]+>/g, "")}\n\n`)
-    .replace(/<h6[^>]*>(.*?)<\/h6>/gi, (_, c) => `###### ${c.replace(/<[^>]+>/g, "")}\n\n`);
+  let result = nodeToMarkdown(doc.body);
+  result = result.replace(/(https?:\/\/[^\s<]+)/g, (url) => `[${url}](${url})`);
+  result = result.replace(/\n{3,}/g, "\n\n").trim();
 
-  const seChar = opts.strongEmStyle === "underscore" ? "_" : "*";
-  text = text
-    .replace(/<strong[^>]*>(.*?)<\/strong>/gi, (_, c) => `${seChar}${seChar}${c.replace(/<[^>]+>/g, "")}${seChar}${seChar}`)
-    .replace(/<b[^>]*>(.*?)<\/b>/gi, (_, c) => `${seChar}${seChar}${c.replace(/<[^>]+>/g, "")}${seChar}${seChar}`)
-    .replace(/<em[^>]*>(.*?)<\/em>/gi, (_, c) => `${seChar}${c.replace(/<[^>]+>/g, "")}${seChar}`)
-    .replace(/<i[^>]*>(.*?)<\/i>/gi, (_, c) => `${seChar}${c.replace(/<[^>]+>/g, "")}${seChar}`);
-
-  if (opts.codeStyle === "backtick") {
-    text = text.replace(/<code[^>]*>(.*?)<\/code>/gi, "`$1`");
-    text = text.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, (_, c) => {
-      const code = c.replace(/<code[^>]*>/gi, "").replace(/<\/code>/gi, "");
-      return `\`\`\`\n${code.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&")}\n\`\`\`\n\n`;
-    });
-  } else {
-    text = text.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, (_, c) => {
-      const code = c.replace(/<code[^>]*>/gi, "").replace(/<\/code>/gi, "");
-      return code.split("\n").map((l: string) => `    ${l}`).join("\n") + "\n\n";
-    });
-    text = text.replace(/<code[^>]*>(.*?)<\/code>/gi, "`$1`");
+  if (opts.linkStyle === "reference" && refLinks.length > 0) {
+    result += "\n\n" + refLinks.join("\n");
   }
-
-  text = text
-    .replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, c) => { const inner = c.replace(/<[^>]+>/g, "").trim(); return inner.split("\n").map((l: string) => `> ${l}`).join("\n") + "\n\n"; })
-    .replace(/<li[^>]*>(.*?)<\/li>/gi, (_, c) => `${opts.bulletMarker} ${c.replace(/<[^>]+>/g, "")}\n`)
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<hr\s*\/?>/gi, `${opts.hrStyle}\n\n`)
-    .replace(/<p[^>]*>(.*?)<\/p>/gi, "$1\n\n")
-    .replace(/<div[^>]*>(.*?)<\/div>/gi, "$1\n")
-    .replace(/<span[^>]*>(.*?)<\/span>/gi, "$1")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-
-  if (opts.linkStyle === "reference" && images.length > 0) {
-    text += "\n\n" + images.join("\n");
-  }
-  return text;
+  return result;
 }
 
 export function HtmlToMarkdown() {
@@ -153,6 +149,8 @@ export function HtmlToMarkdown() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

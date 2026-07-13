@@ -66,6 +66,7 @@ export function CspGenerator() {
   const [customDirs, setCustomDirs] = useState<{ id: string; sources: Source[] }[]>([]);
   const [reportUri, setReportUri] = useState("");
   const [reportTo, setReportTo] = useState("");
+  const [customDomainInput, setCustomDomainInput] = useState("");
   const [nonce, setNonce] = useState("");
   const [asMeta, setAsMeta] = useState(false);
   const [upgradeInsecure, setUpgradeInsecure] = useState(false);
@@ -273,6 +274,9 @@ export function CspGenerator() {
                   <option value="">+ source</option>
                   {sourceOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
+                <input type="text" placeholder="Custom domain..."
+                  onKeyDown={(e) => { if (e.key === "Enter" && e.currentTarget.value.trim()) { addSource(d.id, e.currentTarget.value.trim()); e.currentTarget.value = ""; } }}
+                  className="w-28 text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text px-1.5 py-0.5 font-mono outline-none focus:ring-1 focus:ring-brand-400" />
               </div>
             </div>
           </div>
@@ -296,6 +300,9 @@ export function CspGenerator() {
               <option value="">+ source</option>
               {sourceOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
             </select>
+            <input type="text" placeholder="Custom domain..."
+              onKeyDown={(e) => { if (e.key === "Enter" && e.currentTarget.value.trim()) { setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: [...cd.sources, { value: e.currentTarget.value.trim(), id: crypto.randomUUID() }] } : cd)); e.currentTarget.value = ""; } }}
+              className="w-28 text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text px-1.5 py-0.5 font-mono outline-none focus:ring-1 focus:ring-brand-400" />
           </div>
           <button onClick={() => removeCustomDir(i)} className="text-red-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
         </div>

@@ -164,9 +164,9 @@ const categories: Record<CategoryKey, CategoryDef> = {
     label: "Fuel Economy", formula: "mpg = 235.215 / L/100km",
     units: [
       { label: "L/100km", value: "l100", toBase: (n) => n, fromBase: (n) => n },
-      { label: "mpg (US)", value: "mpg", toBase: (n) => 235.215 / n, fromBase: (n) => 235.215 / n },
-      { label: "mpg (UK)", value: "mpguk", toBase: (n) => 282.481 / n, fromBase: (n) => 282.481 / n },
-      { label: "km/L", value: "kml", toBase: (n) => 100 / n, fromBase: (n) => 100 / n },
+      { label: "mpg (US)", value: "mpg", toBase: (n) => n > 0 ? 235.215 / n : 0, fromBase: (n) => n > 0 ? 235.215 / n : 0 },
+      { label: "mpg (UK)", value: "mpguk", toBase: (n) => n > 0 ? 282.481 / n : 0, fromBase: (n) => n > 0 ? 282.481 / n : 0 },
+      { label: "km/L", value: "kml", toBase: (n) => n > 0 ? 100 / n : 0, fromBase: (n) => n > 0 ? 100 / n : 0 },
     ],
   },
   power: {
@@ -224,7 +224,7 @@ export function UnitConverter() {
     if (sciNotation) return raw.toExponential(6);
     if (category === "temperature") return raw.toFixed(2);
     if (Math.abs(raw) < 0.001 || Math.abs(raw) > 1e9) return raw.toExponential(6);
-    return raw.toPrecision(precision).replace(/\.?0+$/, "");
+    return raw.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "");
   }, [value, fromDef, toDef, sciNotation, category, precision]);
 
   const resultNum = useMemo(() => {
@@ -250,7 +250,7 @@ export function UnitConverter() {
       if (isNaN(n)) return `Invalid: ${line}`;
       const base = fromDef.toBase(n);
       const raw = toDef.fromBase(base);
-      return `${n} ${fromUnit} = ${raw.toPrecision(precision).replace(/\.?0+$/, "")} ${toUnit}`;
+      return `${n} ${fromUnit} = ${raw.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "")} ${toUnit}`;
     });
     setBatchResults(results);
   }, [batchInput, fromDef, toDef, fromUnit, toUnit, precision]);
@@ -328,7 +328,7 @@ export function UnitConverter() {
             <code className="flex-1 text-lg font-bold font-mono text-surface-900 dark:text-dark-text select-all">{result} {toUnit}</code>
             <button onClick={() => copy(result + " " + toUnit)} className="text-xs text-brand-500 hover:text-brand-600 transition-colors" aria-label="Copy result">Copy</button>
           </div>
-          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">{value} {fromUnit} = {resultNum.toPrecision(precision).replace(/\.?0+$/, "")} {toUnit}</p>
+          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">{value} {fromUnit} = {resultNum.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "")} {toUnit}</p>
           <p className="mt-0.5 text-xs text-surface-400 dark:text-dark-muted italic">{formulaText}</p>
         </div>
       )}

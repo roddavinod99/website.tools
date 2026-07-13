@@ -74,7 +74,14 @@ function tomlToJson(toml: string): string {
         value = items;
       } else if (typeof value === "string") value = value;
 
-      (currentSection as Record<string, unknown>)[key] = value;
+      if ((currentSection as Record<string, unknown>)[key] !== undefined) {
+        if (!Array.isArray((currentSection as Record<string, unknown>)[key])) {
+          (currentSection as Record<string, unknown>)[key] = [(currentSection as Record<string, unknown>)[key]];
+        }
+        ((currentSection as Record<string, unknown>)[key] as unknown[]).push(value);
+      } else {
+        (currentSection as Record<string, unknown>)[key] = value;
+      }
     }
   }
 

@@ -37,8 +37,20 @@ interface LengthInfo {
   combiningChars: string[];
 }
 
-function getEmojiRegex(): RegExp {
-  return /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{231A}-\u{231B}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{25AA}-\u{25AB}\u{25B6}\u{25C0}\u{25FB}-\u{25FE}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{2B50}\u{2B55}\u{3030}\u{303D}\u{3297}\u{3299}]/gu;
+const EMOJI_REGEX = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE0F}\u{200D}\u{20E3}\u{231A}-\u{231B}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{25AA}-\u{25AB}\u{25B6}\u{25C0}\u{25FB}-\u{25FE}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{2B50}\u{2B55}\u{3030}\u{303D}\u{3297}\u{3299}]/gu;
+
+function countEmojis(text: string): { count: number; list: string[] } {
+  if (typeof Intl !== "undefined" && Intl.Segmenter) {
+    const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+    const segments: string[] = [];
+    for (const { segment } of segmenter.segment(text)) {
+      segments.push(segment);
+    }
+    const emojiSegments = segments.filter((s) => /\p{Emoji}/u.test(s) && !/^[\d\s]$/.test(s));
+    return { count: emojiSegments.length, list: emojiSegments };
+  }
+  const list = text.match(EMOJI_REGEX) || [];
+  return { count: list.length, list };
 }
 
 function countGraphemeClusters(text: string): number {
@@ -114,8 +126,7 @@ function analyzeString(text: string): LengthInfo {
   const spaces = (text.match(/ /g) || []).length;
   const punctuation = (text.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || []).length;
   const symbols = (text.match(/[^\w\s]/g) || []).length - punctuation;
-  const emojiList = text.match(getEmojiRegex()) || [];
-  const emojiCount = emojiList.length;
+  const { count: emojiCount, list: emojiList } = countEmojis(text);
 
   const codePointsDisplay = [...text].map((c) => {
     const cp = c.codePointAt(0)!;

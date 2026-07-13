@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef } from "react";
 import { Upload, Search, Expand, Minimize2, Copy } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 type NodeType = "string" | "number" | "boolean" | "null" | "array" | "object" | "undefined";
 
@@ -106,6 +107,7 @@ export function JsonPathFinder() {
   const [searchFilter, setSearchFilter] = useState("");
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set(["$"]));
   const [showPaths, setShowPaths] = useState(false);
+  const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const parsed = useMemo(() => {
@@ -175,6 +177,8 @@ export function JsonPathFinder() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setFileError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);
@@ -183,30 +187,83 @@ export function JsonPathFinder() {
   // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const resultJson = useMemo(() => {
     if (!parsed || !pathExpr.trim()) return "";
-    const parts = pathExpr.replace(/^\$\.?/, "").split(".");
-    let current: unknown = parsed;
-    for (const part of parts) {
-      if (!part) continue;
-      if (part === "*") {
-        if (typeof current === "object" && current !== null) {
-          return JSON.stringify(Object.values(current as Record<string, unknown>), null, 2);
+    function resolvePath(obj: unknown, segments: string[]): unknown[] {
+      if (segments.length === 0) return [obj];
+      const [head, ...rest] = segments;
+      if (head === "..") {
+        const results: unknown[] = [];
+        function deepScan(val: unknown): void {
+          if (rest.length === 0) { results.push(val); return; }
+          if (val === null || typeof val !== "object") return;
+          if (Array.isArray(val)) {
+            for (const item of val) deepScan(item);
+          } else {
+            for (const v of Object.values(val as Record<string, unknown>)) deepScan(v);
+          }
         }
-        return "";
-      }
-      if (part.match(/\[(\d+)\]/)) {
-        const idx = parseInt(part.match(/\[(\d+)\]/)![1]!, 10);
-        if (Array.isArray(current) && idx < current.length) {
-          current = current[idx];
-        } else {
-          return "";
+        if (rest.length > 0) {
+          const key = rest[0];
+          const remaining = rest.slice(1);
+          function deepSearch(val: unknown): void {
+            if (val === null || typeof val !== "object") return;
+            if (Array.isArray(val)) {
+              for (const item of val) deepSearch(item);
+            } else {
+              const objRecord = val as Record<string, unknown>;
+              if (key in objRecord) {
+                results.push(...resolvePath(objRecord[key], remaining));
+              }
+              for (const v of Object.values(objRecord)) deepSearch(v);
+            }
+          }
+          deepSearch(obj);
         }
-      } else if (current && typeof current === "object" && part in (current as Record<string, unknown>)) {
-        current = (current as Record<string, unknown>)[part];
-      } else {
-        return "";
+        return results;
       }
+      if (head === "*") {
+        if (obj === null || typeof obj !== "object") return [];
+        const values = Array.isArray(obj) ? obj : Object.values(obj as Record<string, unknown>);
+        return values.flatMap((v) => resolvePath(v, rest));
+      }
+      const indexMatch = head.match(/^\[(\d+)\]$/);
+      if (indexMatch) {
+        const idx = parseInt(indexMatch[1], 10);
+        if (Array.isArray(obj) && idx < obj.length) return resolvePath(obj[idx], rest);
+        return [];
+      }
+      if (typeof obj === "object" && obj !== null && !Array.isArray(obj) && head in (obj as Record<string, unknown>)) {
+        return resolvePath((obj as Record<string, unknown>)[head], rest);
+      }
+      return [];
     }
-    return JSON.stringify(current, null, 2);
+    function tokenize(path: string): string[] {
+      const clean = path.replace(/^\$\.?/, "");
+      if (!clean) return [];
+      const segments: string[] = [];
+      let i = 0;
+      while (i < clean.length) {
+        if (clean[i] === ".") {
+          if (clean[i + 1] === ".") { segments.push(".."); i += 2; if (clean[i] === ".") i++; }
+          else { i++; }
+        } else if (clean[i] === "[") {
+          const close = clean.indexOf("]", i);
+          if (close === -1) { segments.push(clean.slice(i)); break; }
+          segments.push(clean.slice(i, close + 1));
+          i = close + 1;
+        } else {
+          let end = i + 1;
+          while (end < clean.length && clean[end] !== "." && clean[end] !== "[") end++;
+          segments.push(clean.slice(i, end));
+          i = end;
+        }
+      }
+      return segments;
+    }
+    const segments = tokenize(pathExpr);
+    const results = resolvePath(parsed, segments);
+    if (results.length === 0) return "";
+    if (results.length === 1) return JSON.stringify(results[0], null, 2);
+    return JSON.stringify(results, null, 2);
   }, [parsed, pathExpr]);
 
   return (
@@ -226,6 +283,12 @@ export function JsonPathFinder() {
         </button>
         <span className="text-xs text-surface-400 dark:text-dark-muted">{allNodes.length} nodes</span>
       </div>
+
+      {fileError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+          <p className="text-sm text-red-700 dark:text-red-400">{fileError}</p>
+        </div>
+      )}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useRef } from "react";
 import { sanitize } from "@/lib/sanitize";
+import { validateFileSize } from "@/lib/file-security";
 
 interface OptimizeOptions {
   removeXmlDecl: boolean;
@@ -122,15 +123,8 @@ function optimizeSVG(input: string, opts: OptimizeOptions): string {
     );
   }
 
-  if (opts.convertShapes) {
-    svg = svg
-      .replace(/<rect\b[^>]*\/?>/gi, (m) => m.replace(/^<rect/, "<path"))
-      .replace(/<circle\b[^>]*\/?>/gi, (m) => m.replace(/^<circle/, "<path"))
-      .replace(/<ellipse\b[^>]*\/?>/gi, (m) => m.replace(/^<ellipse/, "<path"))
-      .replace(/<line\b[^>]*\/?>/gi, (m) => m.replace(/^<line/, "<path"))
-      .replace(/<polyline\b[^>]*\/?>/gi, (m) => m.replace(/^<polyline/, "<path"))
-      .replace(/<polygon\b[^>]*\/?>/gi, (m) => m.replace(/^<polygon/, "<path"));
-  }
+  // Shape-to-path conversion removed: naive tag renaming produces invalid SVG
+  // without computing proper path d attributes from shape coordinates.
 
   if (opts.convertColors) {
     svg = svg.replace(/#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])\b/g, "#$1$2$3");
@@ -232,6 +226,7 @@ export function SvgOptimizer() {
   const [input, setInput] = useState("");
   const [opts, setOpts] = useState<OptimizeOptions>(DEFAULT_OPTS);
   const [showReadable, setShowReadable] = useState(false);
+  const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const result = useMemo(() => {
@@ -289,6 +284,12 @@ export function SvgOptimizer() {
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file, 25);
+    if (!sizeCheck.valid) {
+      setFileError(sizeCheck.error || "File too large");
+      return;
+    }
+    setFileError("");
     const reader = new FileReader();
     reader.onload = (ev) => {
       setInput(ev.target?.result as string || "");
@@ -525,6 +526,8 @@ export function SvgOptimizer() {
           ))}
         </div>
       </details>
+
+      {fileError && <p className="text-sm text-red-500">{fileError}</p>}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 

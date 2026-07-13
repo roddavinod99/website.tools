@@ -127,10 +127,17 @@ function generateOne(
   const pool = noDupes ? [...new Set(chars.split(""))] : chars.split("");
   const remaining = length - required.length;
   const filled: string[] = [];
+  const limit = Math.floor(0x100000000 / pool.length) * pool.length;
   const buf = new Uint32Array(Math.max(remaining, 0));
   crypto.getRandomValues(buf);
   for (let i = 0; i < remaining; i++) {
-    filled.push(pool[buf[i] % pool.length]);
+    if (buf[i] < limit) {
+      filled.push(pool[buf[i] % pool.length]);
+    } else {
+      const single = new Uint32Array(1);
+      crypto.getRandomValues(single);
+      filled.push(pool[single[0] % pool.length]);
+    }
   }
 
   const combined = shuffleArray([...required, ...filled]);

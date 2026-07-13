@@ -1,43 +1,39 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { create, all, type MathJsInstance } from "mathjs";
+
+const math: MathJsInstance = create(all);
+
+math.import({
+  import: () => { throw new Error("Function import is disabled"); },
+  createUnit: () => { throw new Error("Function createUnit is disabled"); },
+  reviver: () => { throw new Error("Function reviver is disabled"); },
+}, { override: true });
+
+const limitedEvaluate = math.evaluate.bind(math);
+
+function factorial(n: number): number {
+  if (n < 0) return NaN;
+  if (n === 0 || n === 1) return 1;
+  let result = 1;
+  for (let i = 2; i <= n; i++) result *= i;
+  return result;
+}
+
+function safeEvaluate(expr: string): number {
+  const processed = expr.replace(/(\d+)!/g, (_, numStr) => {
+    return `factorial(${numStr})`;
+  });
+
+  const result = limitedEvaluate(processed, { factorial });
+  return result as number;
+}
 
 interface HistoryEntry {
   expression: string;
   result: string;
   timestamp: number;
-}
-
-function safeEvaluate(expr: string): number {
-  const sanitized = expr
-    .replace(/\bsqrt\b/g, "Math.sqrt")
-    .replace(/\babs\b/g, "Math.abs")
-    .replace(/\bsin\b/g, "Math.sin")
-    .replace(/\bcos\b/g, "Math.cos")
-    .replace(/\btan\b/g, "Math.tan")
-    .replace(/\blog\b/g, "Math.log10")
-    .replace(/\bln\b/g, "Math.log")
-    .replace(/\bpi\b/g, "Math.PI")
-    .replace(/\be\b/g, "Math.E")
-    .replace(/\bfloor\b/g, "Math.floor")
-    .replace(/\bceil\b/g, "Math.ceil")
-    .replace(/\bround\b/g, "Math.round")
-    .replace(/\bpow\b/g, "Math.pow");
-
-  const factorialMatch = sanitized.match(/(\d+)!/g);
-  if (factorialMatch) {
-    let result = sanitized;
-    for (const match of factorialMatch) {
-      const num = parseInt(match.replace("!", ""), 10);
-      let fact = 1;
-      for (let i = 2; i <= num; i++) fact *= i;
-      result = result.replace(match, String(fact));
-    }
-    return new Function("return " + result)() as number;
-  }
-
-  const fn = new Function("return " + sanitized);
-  return fn() as number;
 }
 
 const EXAMPLES = [

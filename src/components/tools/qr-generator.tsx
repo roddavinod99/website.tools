@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import QRCode from "qrcode";
+import { validateFileSize } from "@/lib/file-security";
 
 type ECCLevel = "L" | "M" | "Q" | "H";
 type OutputFormat = "png" | "svg" | "jpeg";
@@ -228,11 +229,14 @@ export function QRGenerator() {
   const handleLogoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const sizeCheck = validateFileSize(file);
+      if (!sizeCheck.valid) return;
+      if (logoUrl) URL.revokeObjectURL(logoUrl);
       const url = URL.createObjectURL(file);
       setLogoUrl(url);
       setIncludeLogo(true);
     }
-  }, []);
+  }, [logoUrl]);
 
   return (
     <div className="space-y-6">

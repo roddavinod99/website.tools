@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 type GeneratorMode = "image" | "text";
 type BorderRadiusOption = "square" | "rounded" | "circle";
@@ -247,7 +248,7 @@ export function FaviconGenerator() {
   const [mode, setMode] = useState<GeneratorMode>("text");
   const [text, setText] = useState("⚡");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [bgColor, setBgColor] = useState("#6366f1");
+  const [bgColor, setBgColor] = useState("#0070f3");
   const [textColor, setTextColor] = useState("#ffffff");
   const [fillType, setFillType] = useState<FillType>("solid");
   const [borderRadius, setBorderRadius] = useState<BorderRadiusOption>("rounded");
@@ -269,10 +270,8 @@ export function FaviconGenerator() {
       setError("Please upload PNG, JPG, WebP, or SVG (max 10MB)");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      setError("File must be under 10MB");
-      return;
-    }
+    const sizeCheck = validateFileSize(file, 10 * 1024 * 1024);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     setError("");
     const url = URL.createObjectURL(file);
     setImageUrl(url);
@@ -446,6 +445,9 @@ export function FaviconGenerator() {
   const downloadAll = useCallback(() => {
     if (generatedSizes.length === 0) return;
 
+    // Only download key sizes to avoid popup blocker; use ZIP for all sizes
+    const keySizes = generatedSizes.filter((g) => [16, 32, 192, 512].includes(g.size));
+
     if (icoUrl) {
       const link = document.createElement("a");
       link.download = "favicon.ico";
@@ -453,17 +455,17 @@ export function FaviconGenerator() {
       link.click();
     }
 
-    generatedSizes.forEach((gen, i) => {
+    keySizes.forEach((gen, i) => {
       setTimeout(() => {
         const link = document.createElement("a");
         link.download = `favicon-${gen.size}x${gen.size}.png`;
         link.href = gen.dataUrl;
         link.click();
-      }, 200 * (i + 1));
+      }, 300 * (i + 1));
     });
 
     setTimeout(() => {
-      const manifest = generateManifest(bgColor, generatedSizes.map((g) => g.size));
+      const manifest = generateManifest(bgColor, keySizes.map((g) => g.size));
       const blob = new Blob([manifest], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -471,7 +473,7 @@ export function FaviconGenerator() {
       link.href = url;
       link.click();
       URL.revokeObjectURL(url);
-    }, 200 * (generatedSizes.length + 2));
+    }, 300 * (keySizes.length + 2));
   }, [generatedSizes, icoUrl, bgColor]);
 
   const downloadAllAsZip = useCallback(async () => {
@@ -719,13 +721,13 @@ export function FaviconGenerator() {
               onClick={downloadAll}
               className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
-              Download All ({generatedSizes.length + 2} files)
+              Download Key Sizes (ico + 4 PNGs + manifest)
             </button>
             <button
               onClick={downloadAllAsZip}
               className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
-              Download as ZIP
+              Download as ZIP (all {generatedSizes.length} sizes)
             </button>
             <button
               onClick={copyHTML}
@@ -744,7 +746,7 @@ export function FaviconGenerator() {
       </div>
 
       {generatedSizes.length > 0 && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div data-testid="tool-output" className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <div className="mb-3 flex items-center gap-4">
             <div className="relative rounded-lg border border-surface-300 bg-white p-2 dark:border-dark-border dark:bg-dark-surface">
               <div className="flex items-center gap-2 rounded-t border-b border-surface-200 bg-surface-100 px-3 py-1 dark:border-dark-border dark:bg-dark-surface">

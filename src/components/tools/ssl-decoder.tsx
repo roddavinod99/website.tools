@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from "react";
 import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 const EXAMPLE_PEM = `-----BEGIN CERTIFICATE-----
 MIIB9TCCAV+gAwIBAgIUQrKJ1xL0KHBm0BVJjG6BVOQt07MwDQYJKoZIhvcNAQEL
@@ -302,6 +303,7 @@ function decodeCertificate(pem: string): { fields: CertField[]; sANs: string[]; 
 export function SslDecoder() {
   const [input, setInput] = useState("");
   const [copied, setCopied] = useState("");
+  const [error, setError] = useState("");
   const [showAsn1, setShowAsn1] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -342,6 +344,8 @@ export function SslDecoder() {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
+    const sizeCheck = validateFileSize(f);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") setInput(reader.result);
@@ -386,6 +390,19 @@ export function SslDecoder() {
         <button onClick={() => setShowAsn1(!showAsn1)} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${showAsn1 ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
           {showAsn1 ? "Hide" : "Show"} ASN.1 Dump
         </button>
+      </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+          <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+        </div>
+      )}
+
+      <div className="flex items-start gap-2 rounded-lg border border-yellow-200 bg-yellow-50 p-3 dark:border-yellow-800 dark:bg-yellow-900/20">
+        <AlertCircle size={16} className="mt-0.5 shrink-0 text-yellow-500" />
+        <p className="text-xs text-yellow-700 dark:text-yellow-400">
+          Client-side basic ASN.1 decoder with limited field support. For production certificate inspection, use OpenSSL or dedicated certificate tools.
+        </p>
       </div>
 
       {showAsn1 && asn1Dump && (

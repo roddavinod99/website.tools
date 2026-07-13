@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 interface Analysis {
   chars: number;
@@ -74,16 +75,12 @@ const PLACE_NAMES = new Set(["london", "paris", "new york", "tokyo", "berlin", "
 const ORG_NAMES = new Set(["google", "microsoft", "apple", "amazon", "meta", "netflix", "tesla", "ibm", "intel", "oracle", "sap", "adobe", "spotify", "uber", "airbnb", "twitter", "linkedin", "github", "docker", "kubernetes"]);
 
 function countSyllables(word: string): number {
-  word = word.toLowerCase().replace(/[^a-z]/g, "");
-  if (!word || word.length <= 3) return 1;
-  let count = 0;
-  const vowels = "aeiouy";
-  let prevVowel = false;
-  for (const c of word) { const isV = vowels.includes(c); if (isV && !prevVowel) count++; prevVowel = isV; }
-  if (word.endsWith("e")) count--;
-  if (word.endsWith("le") && word.length > 2 && !vowels.includes(word[word.length - 3])) count++;
-  if (word.endsWith("es") || word.endsWith("ed")) count--;
-  return Math.max(1, count);
+  word = word.toLowerCase().trim();
+  if (word.length <= 3) return 1;
+  word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+  word = word.replace(/^y/, '');
+  const vowelMatches = word.match(/[aeiouy]{1,2}/g);
+  return vowelMatches ? Math.max(1, vowelMatches.length) : 1;
 }
 
 const BASIC_WORDS = new Set(["the", "a", "an", "is", "are", "was", "were", "be", "been", "have", "has", "had", "do", "does", "did", "can", "could", "will", "would", "shall", "should", "may", "might", "must", "i", "you", "he", "she", "it", "we", "they", "this", "that", "these", "those", "and", "or", "but", "not", "if", "with", "for", "on", "in", "at", "to", "from", "by", "about", "of", "as", "into", "through", "during", "before", "after", "above", "below", "up", "down", "out", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "each", "every", "both", "few", "more", "most", "other", "some", "such", "no", "nor", "only", "own", "same", "so", "than", "too", "very", "just", "also", "now", "man", "woman", "child", "time", "year", "day", "way", "thing", "life", "hand", "part", "place", "case", "week", "work", "point", "world", "school", "state", "family", "group", "number", "night", "water", "people", "long", "good", "new", "first", "last", "big", "small", "high", "old", "great", "right", "left", "early", "young", "important", "public", "come", "get", "give", "go", "keep", "let", "make", "put", "seem", "take", "know", "see", "think", "look", "want", "find", "tell", "ask", "try", "need", "feel", "call", "show", "use", "like", "say", "start", "run", "move", "live", "believe", "hold", "bring", "happen", "write", "provide", "sit", "stand", "set", "meet", "pay", "include", "continue", "set", "change", "play", "turn", "lead", "understand", "watch", "follow", "stop", "create", "speak", "read", "allow", "add", "spend", "grow", "open", "walk", "win", "teach", "offer", "remember", "love", "consider", "appear", "buy", "wait", "serve", "die", "send", "expect", "build", "stay", "fall", "cut", "reach", "kill", "remain", "suggest", "raise", "pass", "sell", "require", "report", "decide", "pull", "carry", "hope", "develop", "produce", "receive", "agree", "support", "start", "finish", "wish", "thank"]);
@@ -246,6 +243,8 @@ export function TextAnalyzer() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { alert(sizeCheck.error); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

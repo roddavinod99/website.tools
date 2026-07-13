@@ -135,7 +135,7 @@ export function UrlParser() {
 
       {parsed && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <div data-testid="tool-output" className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {((): { label: string; value: string; cls?: string }[] => [
               { label: "Protocol", value: parsed.protocol },
               { label: "Hostname", value: parsed.hostname },

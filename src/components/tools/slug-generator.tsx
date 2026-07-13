@@ -109,6 +109,7 @@ function transliterate(text: string): string {
     };
     result = result.replace(/[\u0400-\u04FF]/g, (c) => cyrillicMap[c] || c);
   }
+  result = result.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
   const accentMap: Record<string, string> = {
     à: "a", á: "a", â: "a", ã: "a", ä: "a", å: "a", æ: "ae",
     ç: "c", è: "e", é: "e", ê: "e", ë: "e",
@@ -319,7 +320,7 @@ export function SlugGenerator() {
         </div>
         <div>
           <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Generated Slug</label>
-          <div className="rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm font-mono text-brand-800 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-300 break-all select-all min-h-[2.5rem]">
+          <div data-testid="tool-output" className="rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm font-mono text-brand-800 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-300 break-all select-all min-h-[2.5rem]">
             {slug}
           </div>
         </div>

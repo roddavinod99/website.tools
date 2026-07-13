@@ -180,7 +180,7 @@ const presets = [
 ];
 
 export function ColorConverter() {
-  const [input, setInput] = useState("#3282B8");
+  const [input, setInput] = useState("#0070F3");
   const [opacity, setOpacity] = useState(1);
   const [fgInput, setFgInput] = useState("#000000");
   const [bgInput, setBgInput] = useState("#FFFFFF");

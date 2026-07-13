@@ -153,7 +153,7 @@ export function IpCalculator() {
 
       {result && (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+          <div data-testid="tool-output" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
             {((): { label: string; value: string; cls?: string }[] => [
               { label: "Network", value: `${result.network}/${result.cidr}` },
               { label: "Broadcast", value: result.broadcast }, { label: "First Host", value: result.firstHost },

@@ -2,11 +2,19 @@ node_modules
 .next
 .git
 .gitignore
+.gitattributes
 .env*
 *.md
+!.env.example
 tests
 scripts
 data
+logs
+playwright-report
+test-results
+.opencode
+.vscode
+.idea
 public/next.svg
 public/vercel.svg
 public/file.svg
@@ -14,3 +22,7 @@ public/globe.svg
 public/window.svg
 public/og.svg
 tsconfig.tsbuildinfo
+ecosystem.config.js
+DEPLOYMENT.md
+AGENTS.md
+README.md

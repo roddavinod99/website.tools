@@ -24,11 +24,15 @@ export function ToolkitShell({ title, description, tabs, defaultTab }: Props) {
   return (
     <div className="flex flex-col lg:flex-row gap-6">
       {/* Sidebar Navigation */}
-      <nav className="lg:w-56 shrink-0">
-        <div className="lg:sticky lg:top-24 space-y-1">
+      <nav className="lg:w-56 shrink-0" aria-label={title}>
+        <div className="lg:sticky lg:top-24 space-y-1" role="tablist" aria-orientation="vertical">
           {tabs.map((tab) => (
             <button
               key={tab.id}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`tabpanel-${tab.id}`}
+              id={`tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
               className={`w-full flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left ${
                 activeTab === tab.id
@@ -49,7 +53,12 @@ export function ToolkitShell({ title, description, tabs, defaultTab }: Props) {
           <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">{active?.label || title}</h2>
           <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted">{description}</p>
         </div>
-        <div className="rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface">
+        <div
+          role="tabpanel"
+          id={`tabpanel-${activeTab}`}
+          aria-labelledby={`tab-${activeTab}`}
+          className="rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface"
+        >
           {active?.content}
         </div>
       </div>

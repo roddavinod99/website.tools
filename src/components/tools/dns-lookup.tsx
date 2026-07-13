@@ -137,7 +137,7 @@ export function DNSLookup() {
 
       {data?.Answer && data.Answer.length > 0 && (
         <div>
-          <div className="overflow-x-auto rounded-lg border border-surface-200 dark:border-dark-border">
+          <div data-testid="tool-output" className="overflow-x-auto rounded-lg border border-surface-200 dark:border-dark-border">
             <table className="w-full text-xs font-mono">
               <thead>
                 <tr className="bg-surface-50 dark:bg-dark-surface">

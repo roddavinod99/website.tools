@@ -9,7 +9,12 @@ function minifyWithOptions(
 ): string {
   let result = json;
   if (options.removeWhitespace) {
-    result = result.replace(/\s+/g, " ").replace(/\s*([{}[\],:])\s*/g, "$1");
+    try {
+      const parsed = JSON.parse(json);
+      result = JSON.stringify(parsed);
+    } catch {
+      result = result.replace(/\s+/g, " ").replace(/\s*([{}[\],:])\s*/g, "$1");
+    }
   }
   if (options.shortenBooleans) {
     result = result.replace(/:true\b/g, ":!0").replace(/:false\b/g, ":!1");

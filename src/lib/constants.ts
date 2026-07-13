@@ -52,7 +52,7 @@ export const allTools: Tool[] = [
   { id: "e9", name: "Base64 Decoder", description: "Free Base64 decoder with automatic encoding detection and file download support. Paste or upload Base64 data to decode it back to text or binary files.", category: "Encoders", slug: "base64-decoder", popularity: 60, icon: "FileCode" },
   { id: "e10", name: "Base64 Encoder", description: "Free Base64 encoder tool with multiple encoding presets for developers. Encode plain text and file uploads to Base64 format with customizable options.", category: "Encoders", slug: "base64-encoder", popularity: 60, icon: "FileCode" },
 
-  // ── Formatters (14) ──
+  // ── Formatters (17) ──
   { id: "f1", name: "JSON Formatter", description: "Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection.", category: "Formatters", slug: "json-formatter", popularity: 98, icon: "Braces", featured: true, trending: true },
   { id: "f2", name: "HTML Formatter/Validator", description: "Free HTML formatter and validator tool for web developers. Beautify, minify, and validate HTML code online with syntax error detection and reporting.", category: "Formatters", slug: "html-formatter", popularity: 82, icon: "Code" },
   { id: "f3", name: "CSS Formatter/Minifier", description: "Free CSS formatter, beautifier, and minifier tool online. Format, prettify, and compress CSS code with syntax highlighting and customizable indentation.", category: "Formatters", slug: "css-formatter", popularity: 78, icon: "Palette" },
@@ -71,7 +71,7 @@ export const allTools: Tool[] = [
   { id: "f16", name: "YAML Viewer", description: "Free online YAML viewer and pretty-printer with syntax highlighting. View, format, and validate YAML configuration files in your browser.", category: "Formatters", slug: "yaml-viewer", popularity: 62, icon: "FileType" },
   { id: "f17", name: "Benchmark Builder", description: "Free online JavaScript benchmark builder for measuring code execution time. Test and compare performance of different code snippets accurately.", category: "Formatters", slug: "benchmark-builder", popularity: 58, icon: "Zap" },
 
-  // ── Generators (10) ──
+  // ── Generators (15) ──
   { id: "g1", name: "UUID Generator", description: "Free online UUID generator tool for developers. Generate UUID v4 and v7 universally unique identifiers instantly with one-click copy to clipboard.", category: "Generators", slug: "uuid-generator", popularity: 90, icon: "FingerprintPattern", featured: true },
   { id: "g2", name: "Password Generator", description: "Free secure password generator with customizable length, characters, and complexity options. Create strong random passwords for accounts and apps.", category: "Generators", slug: "password-generator", popularity: 85, icon: "Lock", featured: true },
   { id: "g3", name: "QR Code Generator", description: "Free online QR code generator with customizable colors, logos, and styling options. Create high-quality QR codes for URLs, text, and contact info.", category: "Generators", slug: "qr-generator", popularity: 88, icon: "QrCode", featured: true, trending: true },
@@ -88,7 +88,7 @@ export const allTools: Tool[] = [
   { id: "g14", name: "WiFi QR Code Generator", description: "Free WiFi QR code generator for easy network sharing. Create QR codes that connect guests to your WiFi network automatically when scanned.", category: "Generators", slug: "wifi-qr-generator", popularity: 66, icon: "QrCode" },
   { id: "g15", name: "Numeronym Generator", description: "Free numeronym generator tool for developers. Create shorthand abbreviations like k8s, i18n, and a11y from words and phrases instantly.", category: "Generators", slug: "numeronym-generator", popularity: 52, icon: "Hash" },
 
-  // ── Converters (17) ──
+  // ── Converters (22) ──
   { id: "c1", name: "JSON to CSV Converter", description: "Free online JSON to CSV converter with advanced formatting options. Transform JSON arrays into spreadsheet-ready CSV files with customizable delimiters.", category: "Converters", slug: "json-to-csv", popularity: 84, icon: "Table", featured: true },
   { id: "c2", name: "CSV to JSON Converter", description: "Free CSV to JSON converter tool for developers. Parse and convert CSV data to structured JSON format with advanced parsing and formatting options.", category: "Converters", slug: "csv-to-json", popularity: 82, icon: "FileSpreadsheet" },
   { id: "c3", name: "JSON to XML Converter", description: "Free online JSON to XML converter with customizable options. Transform JSON data into well-formatted XML documents for data interchange.", category: "Converters", slug: "json-to-xml", popularity: 68, icon: "FileX" },
@@ -130,7 +130,7 @@ export const allTools: Tool[] = [
   { id: "s13", name: "Password Strength Analyser", description: "Free online password strength analyser tool. Evaluate password security, entropy level, and estimated crack time with detailed improvement suggestions.", category: "Security Tools", slug: "password-strength", popularity: 74, icon: "Shield" },
   { id: "s14", name: "BIP39 Mnemonic Generator", description: "Free BIP39 mnemonic phrase generator for cryptocurrency wallets. Create secure seed phrases for Bitcoin, Ethereum, and other crypto wallet setup.", category: "Security Tools", slug: "bip39-generator", popularity: 64, icon: "Key" },
 
-  // ── Additional Security Tools (4) ──
+  // ── Additional Security Tools (5) ──
   { id: "s15", name: "MAC Address Lookup", description: "Free online MAC address lookup tool. Identify the manufacturer and vendor of any MAC address for network administration and security analysis.", category: "Security Tools", slug: "mac-address-lookup", popularity: 60, icon: "Search" },
   { id: "s16", name: "MAC Address Generator", description: "Free random MAC address generator for network testing and development. Generate valid MAC addresses with custom OUI prefixes for device simulation.", category: "Security Tools", slug: "mac-address-generator", popularity: 56, icon: "Shuffle" },
   { id: "s17", name: "Phone Number Parser", description: "Free online international phone number parser and formatter. Validate and format phone numbers from any country with standardized output formats.", category: "Security Tools", slug: "phone-number-parser", popularity: 62, icon: "Smartphone" },
@@ -148,7 +148,7 @@ export const allTools: Tool[] = [
   { id: "i8", name: "EXIF Transfer", description: "Free online EXIF metadata transfer tool. Copy and transfer EXIF data from one image to another while preserving original image quality intact.", category: "Image Tools", slug: "exif-transfer", popularity: 52, icon: "ArrowLeftRight" },
   { id: "i9", name: "Color Eyedropper", description: "Free online color eyedropper and picker tool for designers. Pick and extract colors from anywhere on your screen with HEX, RGB, and HSL values.", category: "Image Tools", slug: "color-eyedropper", popularity: 60, icon: "Droplets" },
 
-  // ── Utilities (14) ──
+  // ── Utilities (31) ──
   { id: "u1", name: "Regex Tester", description: "Free online regex tester and debugger with real-time matching, capture groups, and extended flag support. Test and debug regular expressions easily.", category: "Utilities", slug: "regex-tester", popularity: 77, icon: "SearchCode", featured: true },
   { id: "u2", name: "Text Diff Checker", description: "Free online text diff checker and comparison tool. Compare two texts side-by-side or in unified view with highlighted additions and deletions.", category: "Utilities", slug: "diff-checker", popularity: 64, icon: "GitCompare" },
   { id: "u3", name: "Word Counter", description: "Free online word counter and text analyzer tool. Count words, characters, sentences, and analyze readability with Flesch reading ease scores.", category: "Utilities", slug: "word-counter", popularity: 80, icon: "Hash", featured: true },
@@ -181,7 +181,7 @@ export const allTools: Tool[] = [
   { id: "u30", name: "IPv4 Range Expander", description: "Free online IPv4 CIDR range expander tool. Expand CIDR notation ranges into lists of individual IP addresses for network configuration.", category: "Utilities", slug: "ipv4-range-expander", popularity: 58, icon: "ArrowUpDown" },
   { id: "u31", name: "IPv6 ULA Generator", description: "Free online IPv6 Unique Local Address generator for network administrators. Create random ULA addresses for private internal network configurations.", category: "Utilities", slug: "ipv6-ula-generator", popularity: 55, icon: "Globe" },
 
-  // ── Additional Utilities (2) ──
+  // ── Additional Utilities (5) ──
   { id: "u32", name: "Chmod Calculator", description: "Free online chmod calculator with visual checkbox grid for Unix file permissions. Calculate read, write, and execute permission modes easily.", category: "Utilities", slug: "chmod-calculator", popularity: 60, icon: "Calculator" },
   { id: "u33", name: "ETA Calculator", description: "Free online ETA calculator for estimated travel time. Calculate arrival time based on distance, speed, and current time for trip planning.", category: "Utilities", slug: "eta-calculator", popularity: 56, icon: "Clock" },
   { id: "u34", name: "HTTP Status Codes", description: "Free HTTP status code reference guide for web developers. Quick lookup for all HTTP response codes with descriptions and common use cases.", category: "Utilities", slug: "http-status-codes", popularity: 68, icon: "Globe" },
@@ -189,7 +189,7 @@ export const allTools: Tool[] = [
   { id: "u36", name: "Regex Cheatsheet", description: "Free interactive regular expression cheatsheet with examples. Quick reference for regex patterns, syntax, and common matching expressions.", category: "Utilities", slug: "regex-memo", popularity: 64, icon: "SearchCode" },
 ];
 
-export const TOOL_COUNT = 128; // keep in sync with allTools array above
+export const TOOL_COUNT = allTools.length;
 
 export const categories: Category[] = categoryMetas.map((c) => ({
   ...c,

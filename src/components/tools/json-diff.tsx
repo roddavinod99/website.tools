@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 interface DiffEntry {
   path: string;
@@ -100,6 +101,7 @@ export function JSONDiff() {
   const [ignoreOrder, setIgnoreOrder] = useState(false);
   const [mergeMode, setMergeMode] = useState(false);
   const [mergedData, setMergedData] = useState<string>("");
+  const [error, setError] = useState("");
   const [, setMergeChoices] = useState<Record<string, "left" | "right">>({}); // choices tracked via setMergeChoices
   const dropRef = useRef<HTMLDivElement>(null);
 
@@ -161,6 +163,8 @@ export function JSONDiff() {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = (ev) => {
       const text = ev.target?.result as string;
@@ -222,6 +226,12 @@ export function JSONDiff() {
           <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-0.5">Drop a .json file here</p>
         </div>
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+          <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-2">
         <button onClick={() => setViewMode("side")} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "side" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Side-by-Side</button>

@@ -3,7 +3,7 @@ import { Search, ArrowRight, Home } from "lucide-react";
 import { categories, allTools } from "@/lib/constants";
 
 export default function NotFound() {
-  const popularTools = allTools
+  const popularTools = [...allTools]
     .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 6);
 

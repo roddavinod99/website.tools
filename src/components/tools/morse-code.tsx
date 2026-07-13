@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 
+
 const MORSE_MAP: Record<string, string> = {
   "A": ".-", "B": "-...", "C": "-.-.", "D": "-..", "E": ".",
   "F": "..-.", "G": "--.", "H": "....", "I": "..", "J": ".---",

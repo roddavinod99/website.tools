@@ -27,17 +27,15 @@ function generateTypescript(input: string, opts: { outputType: "interface" | "ty
     if (typeof value === "object" && value !== null) {
       const obj = value as Record<string, unknown>;
       const objName = parentDefined || getTypeName(key);
-      if (opts.outputType === "type") {
-        const props = Object.entries(obj).map(([k, v]) => {
-          const optional = opts.optional ? "?" : "";
-          const readonly = opts.readonly ? "readonly " : "";
-          const valType = inferType(v, k, undefined);
-          return `  ${readonly}${k}${optional}: ${valType};`;
-        });
-        const typeStr = `{\n${props.join("\n")}\n}`;
-        if (Object.keys(obj).length === 0) return "Record<string, unknown>";
-        return typeStr;
-      }
+      if (Object.keys(obj).length === 0) return "Record<string, unknown>";
+      const props = Object.entries(obj).map(([k, v]) => {
+        const optional = opts.optional ? "?" : "";
+        const readonly = opts.readonly ? "readonly " : "";
+        const valType = inferType(v, k, undefined);
+        return `  ${readonly}${k}${optional}: ${valType};`;
+      });
+      const typeStr = `{\n${props.join("\n")}\n}`;
+      if (opts.outputType === "type") return typeStr;
       return objName;
     }
     return "unknown";

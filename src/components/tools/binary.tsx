@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 type Mode = "encode" | "decode";
 type SeparatorType = "space" | "none" | "comma" | "custom";
@@ -27,6 +28,10 @@ function textToBinary(str: string, separator: SeparatorType, groupMode: GroupMod
 }
 
 function binaryToText(bin: string, groupMode: GroupMode): string {
+  const forValidation = bin.replace(/[\s,;]/g, "");
+  if (forValidation && !/^[01]+$/.test(forValidation)) {
+    throw new Error(`Invalid binary input: contains non-binary characters`);
+  }
   const cleaned = bin.replace(/[^01]/g, "");
   if (!cleaned) throw new Error("No valid binary digits found");
   const bits = groupMode === "8bit" ? 8 : groupMode === "4bit" ? 4 : 8;
@@ -104,6 +109,8 @@ export function Binary() {
     inputEl.onchange = () => {
       const file = inputEl.files?.[0];
       if (!file) return;
+      const sizeCheck = validateFileSize(file);
+      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
       const reader = new FileReader();
       reader.onload = () => {
         const arrayBuffer = reader.result as ArrayBuffer;

@@ -4,12 +4,21 @@ import { useState, useMemo, useRef, useEffect } from "react";
 
 type Mode = "match" | "replace" | "split";
 
+interface GroupCapture {
+  name: string;
+  value: string;
+  start: number;
+  end: number;
+}
+
 interface MatchResult {
   index: number;
   value: string;
   length: number;
   groups: (string | undefined)[];
   namedGroups: Record<string, string>;
+  captures: GroupCapture[];
+  namedGroupCaptures: GroupCapture[];
   isLookahead: boolean;
   isLookbehind: boolean;
 }
@@ -119,7 +128,8 @@ export function RegexTester() {
   const matches = useMemo(() => {
     if (!regex || !testText || mode !== "match") return [];
     const results: MatchResult[] = [];
-    const re = new RegExp(regex.source, regex.flags.includes("g") ? regex.flags : regex.flags + "g");
+    const flagsWithD = regex.flags.includes("d") ? regex.flags : regex.flags + "d";
+    const re = new RegExp(regex.source, flagsWithD.includes("g") ? flagsWithD : flagsWithD + "g");
     let m: RegExpExecArray | null;
     while ((m = re.exec(testText)) !== null) {
       const namedGroups: Record<string, string> = {};
@@ -127,12 +137,32 @@ export function RegexTester() {
       const localIdx = m.index;
       const groupVals: (string | undefined)[] = [];
       for (let i = 1; i < m.length; i++) groupVals.push(m[i]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rawIndices = (m as any).indices as ([number, number][] & { groups?: Record<string, [number, number]> }) | undefined;
+      const captures: GroupCapture[] = [];
+      const namedGroupCaptures: GroupCapture[] = [];
+      if (rawIndices) {
+        for (let i = 1; i < m.length; i++) {
+          if (m[i] !== undefined && rawIndices[i]) {
+            captures.push({ name: `$${i}`, value: m[i], start: rawIndices[i][0], end: rawIndices[i][1] });
+          }
+        }
+        if (m.groups && rawIndices.groups) {
+          for (const [groupName, groupValue] of Object.entries(m.groups)) {
+            if (rawIndices.groups[groupName]) {
+              namedGroupCaptures.push({ name: groupName, value: groupValue, start: rawIndices.groups[groupName][0], end: rawIndices.groups[groupName][1] });
+            }
+          }
+        }
+      }
       results.push({
         index: localIdx,
         value: m[0],
         length: m[0].length,
         groups: groupVals,
         namedGroups,
+        captures,
+        namedGroupCaptures,
         isLookahead: false,
         isLookbehind: false,
       });
@@ -398,22 +428,24 @@ export function RegexTester() {
                   </button>
                 </div>
                 <code className="text-sm font-mono text-surface-900 dark:text-dark-text break-all">{m.value}</code>
-                {m.groups.length > 0 && (
+                {m.captures.length > 0 && (
                   <div className="mt-1.5 pl-3 border-l-2 border-brand-300 dark:border-brand-700">
                     <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Capture Groups:</p>
-                    {m.groups.map((g, gi) => (
-                      <div key={gi} className="flex gap-2 text-xs font-mono">
-                        <span className="text-brand-500 shrink-0">${gi + 1}:</span>
-                        <span className="text-surface-900 dark:text-dark-text break-all">{g ?? <span className="text-red-400">undefined</span>}</span>
+                    {m.captures.map((c, ci) => (
+                      <div key={ci} className="flex gap-2 text-xs font-mono">
+                        <span className="text-brand-500 shrink-0">{c.name}:</span>
+                        <span className="text-surface-900 dark:text-dark-text break-all">{c.value}</span>
+                        <span className="text-surface-400 dark:text-dark-muted shrink-0">[{c.start}:{c.end}]</span>
                       </div>
                     ))}
-                    {Object.keys(m.namedGroups).length > 0 && (
+                    {m.namedGroupCaptures.length > 0 && (
                       <div className="mt-1">
                         <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Named Groups:</p>
-                        {Object.entries(m.namedGroups).map(([name, val]) => (
-                          <div key={name} className="flex gap-2 text-xs font-mono">
-                            <span className="text-purple-500 dark:text-purple-400 shrink-0">?&lt;{name}&gt;:</span>
-                            <span className="text-surface-900 dark:text-dark-text break-all">{val}</span>
+                        {m.namedGroupCaptures.map((g, gi) => (
+                          <div key={gi} className="flex gap-2 text-xs font-mono">
+                            <span className="text-purple-500 dark:text-purple-400 shrink-0">?&lt;{g.name}&gt;:</span>
+                            <span className="text-surface-900 dark:text-dark-text break-all">{g.value}</span>
+                            <span className="text-surface-400 dark:text-dark-muted shrink-0">[{g.start}:{g.end}]</span>
                           </div>
                         ))}
                       </div>

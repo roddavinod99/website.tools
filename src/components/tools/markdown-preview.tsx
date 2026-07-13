@@ -4,18 +4,19 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
 import hljs from "highlight.js";
+import { validateFileSize } from "@/lib/file-security";
 
 type Theme = "github" | "dark" | "solarized";
 
 const THEME_STYLES: Record<Theme, string> = {
   github: "bg-white text-surface-900",
-  dark: "bg-[#0d1117] text-[#c9d1d9]",
+  dark: "bg-dark-bg text-dark-text",
   solarized: "bg-[#fdf6e3] text-[#657b83]",
 };
 
 const THEME_PROSE: Record<Theme, string> = {
   github: "prose prose-sm max-w-none prose-headings:text-surface-900 prose-a:text-brand-500 prose-code:bg-surface-100 prose-code:px-1 prose-code:rounded",
-  dark: "prose prose-sm max-w-none prose-invert prose-headings:text-[#c9d1d9] prose-a:text-[#58a6ff] prose-code:bg-[#161b22] prose-code:px-1 prose-code:rounded",
+  dark: "prose prose-sm max-w-none prose-invert prose-headings:text-dark-text prose-a:text-brand-300 prose-code:bg-dark-surface prose-code:px-1 prose-code:rounded",
   solarized: "prose prose-sm max-w-none prose-headings:text-[#657b83] prose-a:text-[#268bd2] prose-code:bg-[#eee8d5] prose-code:px-1 prose-code:rounded",
 };
 
@@ -217,6 +218,8 @@ export function MarkdownPreview() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { alert(sizeCheck.error); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);
@@ -305,7 +308,7 @@ export function MarkdownPreview() {
             spellCheck={false}
           />
           {showLineNumbers && (
-            <div className="absolute top-0 left-0 bottom-0 overflow-hidden border-r border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-[#1e282c] select-none text-right" style={{ width: "2.5rem", fontSize: `${fontSize}px`, lineHeight: "1.25rem" }}>
+            <div className="absolute top-0 left-0 bottom-0 overflow-hidden border-r border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface select-none text-right" style={{ width: "2.5rem", fontSize: `${fontSize}px`, lineHeight: "1.25rem" }}>
               {input.split("\n").map((_, i) => (
                 <div key={i} className="px-1 text-[11px] leading-5 text-surface-400 dark:text-dark-muted font-mono">{i + 1}</div>
               ))}
@@ -316,9 +319,9 @@ export function MarkdownPreview() {
           className="w-1.5 cursor-col-resize bg-surface-200 hover:bg-brand-400 dark:bg-dark-border dark:hover:bg-brand-500 transition-colors shrink-0"
           onMouseDown={handleMouseDown}
         />
-        <div className="flex-1 overflow-auto" style={{ backgroundColor: theme === "solarized" ? "#fdf6e3" : theme === "dark" ? "#0d1117" : "#fff" }}>
+        <div className="flex-1 overflow-auto" style={{ backgroundColor: theme === "solarized" ? "#fdf6e3" : theme === "dark" ? "#0d1117" : "#ffffff" }}>
           {showHtml ? (
-            <pre className="p-4 text-xs font-mono overflow-x-auto" style={{ color: theme === "solarized" ? "#657b83" : theme === "dark" ? "#c9d1d9" : undefined }}>
+            <pre className="p-4 text-xs font-mono overflow-x-auto" style={{ color: theme === "solarized" ? "#657b83" : theme === "dark" ? "#f0f6fc" : undefined }}>
               {generatedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
             </pre>
           ) : (

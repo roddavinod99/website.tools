@@ -37,10 +37,24 @@ function encodeRandom(rand: Uint8Array): string {
   return chars.join("");
 }
 
+let lastTime = 0;
+let lastRandom: Uint8Array | null = null;
+
 function generateULID(): string {
-  const timeMs = Date.now();
-  const rand = randomBytes(10);
-  return encodeTime(timeMs) + encodeRandom(rand);
+  const now = Date.now();
+  if (now === lastTime && lastRandom) {
+    for (let i = lastRandom.length - 1; i >= 0; i--) {
+      if (lastRandom[i] < 0xFF) {
+        lastRandom[i]++;
+        break;
+      }
+      lastRandom[i] = 0;
+    }
+  } else {
+    lastTime = now;
+    lastRandom = randomBytes(10);
+  }
+  return encodeTime(now) + encodeRandom(lastRandom);
 }
 
 function extractTimestamp(ulid: string): Date {

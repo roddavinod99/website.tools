@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 
+
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
 type FitMode = "exact" | "contain" | "cover" | "fill";
 type UnitType = "px" | "percent" | "cm" | "inch";
@@ -56,7 +57,7 @@ const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
 
 const INPUT_ACCEPT = "image/jpeg,image/png,image/gif,image/webp,image/bmp";
 const MAX_FILES = 20;
-const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 25 * 1024 * 1024;
 const MAX_HISTORY = 5;
 
 interface ImageEntry {
@@ -195,6 +196,8 @@ export function ImageResizer() {
   const [history, setHistory] = useState<ImageEntry[]>([]);
   const [width, setWidth] = useState(800);
   const [height, setHeight] = useState(600);
+  const [lockRatio, setLockRatio] = useState(false);
+  const [originalDimensions, setOriginalDimensions] = useState({ width: 0, height: 0 });
   const [unit, setUnit] = useState<UnitType>("px");
   const [fitMode, setFitMode] = useState<FitMode>("exact");
   const [keepRatio, setKeepRatio] = useState(true);
@@ -236,7 +239,7 @@ export function ImageResizer() {
         break;
       }
       if (totalSize + file.size > MAX_TOTAL_SIZE) {
-        setError("Total size exceeds 50MB limit");
+        setError("Total size exceeds 25MB limit");
         break;
       }
       const info = await readImageFile(file);
@@ -250,6 +253,10 @@ export function ImageResizer() {
       });
     }
     setImages((prev) => [...prev, ...newEntries]);
+    if (newEntries.length > 0) {
+      const first = newEntries[0];
+      setOriginalDimensions({ width: first.originalWidth, height: first.originalHeight });
+    }
   }, [images]);
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -476,7 +483,7 @@ export function ImageResizer() {
         <p className="text-sm text-surface-500 dark:text-dark-muted">
           {images.length > 0 ? `${images.length} image(s) selected` : "Click or drop images here"}
         </p>
-        <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">JPEG, PNG, GIF, WebP, BMP &middot; Max 20 files &middot; 50MB total</p>
+        <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">JPEG, PNG, GIF, WebP, BMP &middot; Max 20 files &middot; 25MB total</p>
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
@@ -549,19 +556,26 @@ export function ImageResizer() {
               <input
                 type="number"
                 value={width}
-                onChange={(e) => { setWidth(parseInt(e.target.value) || 0); setSelectedPreset(""); }}
+                onChange={(e) => {
+                  const newWidth = parseInt(e.target.value) || 0;
+                  setWidth(newWidth);
+                  setSelectedPreset("");
+                  if (lockRatio && originalDimensions.width > 0 && newWidth > 0) {
+                    setHeight(Math.round(newWidth * (originalDimensions.height / originalDimensions.width)));
+                  }
+                }}
                 min={1}
                 className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
             </div>
             <button
-              onClick={() => setKeepRatio(!keepRatio)}
+              onClick={() => setLockRatio(!lockRatio)}
               className={`mt-5 rounded p-1.5 transition-colors ${
-                keepRatio
+                lockRatio
                   ? "text-brand-500 bg-brand-50 dark:bg-brand-500/10"
                   : "text-surface-400 hover:text-surface-600 dark:text-dark-muted"
               }`}
-              title="Maintain aspect ratio"
+              title="Lock aspect ratio"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8m0 0v8m0-8L8 16" />
@@ -572,7 +586,14 @@ export function ImageResizer() {
               <input
                 type="number"
                 value={height}
-                onChange={(e) => { setHeight(parseInt(e.target.value) || 0); setSelectedPreset(""); }}
+                onChange={(e) => {
+                  const newHeight = parseInt(e.target.value) || 0;
+                  setHeight(newHeight);
+                  setSelectedPreset("");
+                  if (lockRatio && originalDimensions.height > 0 && newHeight > 0) {
+                    setWidth(Math.round(newHeight * (originalDimensions.width / originalDimensions.height)));
+                  }
+                }}
                 min={1}
                 className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />

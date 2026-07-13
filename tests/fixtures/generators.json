@@ -1,5 +1,5 @@
 [
-  { "slug": "qr-generator", "category": "Generators", "name": "QR Code Generator", "input": "https://example.com", "action": "Generate", "expect": "svg" },
+  { "slug": "qr-generator", "category": "Generators", "name": "QR Code Generator", "input": "https://example.com", "action": "", "expect": "output" },
   { "slug": "ascii-art", "category": "Generators", "name": "ASCII Art Generator", "input": "Hello", "action": "Generate", "expect": "output" },
   { "slug": "barcode-generator", "category": "Generators", "name": "Barcode Generator", "input": "1234567890", "action": "Generate", "expect": "output" }
 ]

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, RefreshCw, Minimize, ShieldCheck, Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 type IndentType = "spaces" | "tabs";
 type SelfClose = "html" | "xhtml";
@@ -80,6 +81,16 @@ export function HTMLFormatter() {
       html = html.replace(/>\s+</g, "><").trim();
       if (!html) { setOutput(""); setError(""); return; }
 
+      const protectedChunks: string[] = [];
+      html = html.replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (_m: string, open: string, content: string, close: string) => {
+        protectedChunks.push(content);
+        return `${open}__CHUNK_${protectedChunks.length - 1}__${close}`;
+      });
+      html = html.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, (_m: string, open: string, content: string, close: string) => {
+        protectedChunks.push(content);
+        return `${open}__CHUNK_${protectedChunks.length - 1}__${close}`;
+      });
+
       const tokens: string[] = [];
       const tagRe = /(<[^>]+>)/g;
       let lastIdx = 0, match: RegExpExecArray | null;
@@ -94,6 +105,10 @@ export function HTMLFormatter() {
       if (lastIdx < html.length) {
         const text = html.slice(lastIdx);
         if (text.trim()) tokens.push(text);
+      }
+
+      for (let i = 0; i < tokens.length; i++) {
+        tokens[i] = tokens[i].replace(/__CHUNK_(\d+)__/g, (_m: string, idx: string) => protectedChunks[parseInt(idx)] || '');
       }
 
       const indent = getIndent();
@@ -297,6 +312,8 @@ export function HTMLFormatter() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

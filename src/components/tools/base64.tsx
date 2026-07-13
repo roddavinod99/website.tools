@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 type Mode = "encode" | "decode";
 type OutputFormat = "plain" | "datauri" | "base64url";
@@ -133,6 +134,8 @@ export function Base64Tool() {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
     const reader = new FileReader();
     reader.onload = () => {
       const result = reader.result as string;
@@ -150,6 +153,8 @@ export function Base64Tool() {
     inputEl.onchange = () => {
       const file = inputEl.files?.[0];
       if (!file) return;
+      const sizeCheck = validateFileSize(file);
+      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
       const reader = new FileReader();
       reader.onload = () => {
         const content = reader.result as string;

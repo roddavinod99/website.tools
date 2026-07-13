@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, readdir, unlink } from "fs/promises";
 import { join } from "path";
+import { randomUUID } from "crypto";
 
 const TYPES = ["suggest", "feature-request", "feedback", "report-bug", "newsletter"] as const;
 type FormType = typeof TYPES[number];
@@ -24,17 +25,22 @@ function sanitize(val: unknown, maxLen = MAX_FIELD_LENGTH): unknown {
 }
 
 export async function POST(request: Request) {
-  const origin = request.headers.get("origin") || request.headers.get("referer") || "";
-  if (origin) {
-    try {
-      const originHost = new URL(origin).hostname;
-      const expectedHost = new URL(request.url).hostname;
-      if (originHost !== expectedHost) {
-        return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
-      }
-    } catch {
-      return NextResponse.json({ error: "Invalid origin header" }, { status: 400 });
+  const origin = request.headers.get("origin");
+  const referer = request.headers.get("referer");
+  const source = origin || referer;
+
+  if (!source) {
+    return NextResponse.json({ error: "Missing origin or referer header" }, { status: 403 });
+  }
+
+  try {
+    const sourceHost = new URL(source).hostname;
+    const expectedHost = new URL(request.url).hostname;
+    if (sourceHost !== expectedHost) {
+      return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
     }
+  } catch {
+    return NextResponse.json({ error: "Invalid origin header" }, { status: 400 });
   }
 
   const contentType = request.headers.get("content-type") || "";
@@ -67,17 +73,17 @@ export async function POST(request: Request) {
 
   let entryCount = 0;
   try {
-    const { readdir } = await import("fs/promises");
     const files = await readdir(dir);
     entryCount = files.length;
   } catch {}
 
   if (entryCount > MAX_ENTRIES) {
-    const { readdir, unlink } = await import("fs/promises");
-    const files = await readdir(dir);
-    const sorted = files.sort();
-    const toRemove = sorted.slice(0, sorted.length - MAX_ENTRIES);
-    for (const f of toRemove) await unlink(join(dir, f)).catch(() => {});
+    try {
+      const files = await readdir(dir);
+      const sorted = files.sort();
+      const toRemove = sorted.slice(0, sorted.length - MAX_ENTRIES);
+      for (const f of toRemove) await unlink(join(dir, f)).catch(() => {});
+    } catch {}
   }
 
   const submission = {
@@ -87,9 +93,13 @@ export async function POST(request: Request) {
     ip: "redacted",
   };
 
-  await mkdir(dir, { recursive: true });
-  const filename = `${type}-${Date.now()}.json`;
-  await writeFile(join(dir, filename), JSON.stringify(submission, null, 2));
+  try {
+    await mkdir(dir, { recursive: true });
+    const filename = `${type}-${Date.now()}-${randomUUID().slice(0, 8)}.json`;
+    await writeFile(join(dir, filename), JSON.stringify(submission, null, 2));
+  } catch {
+    return NextResponse.json({ error: "Failed to save submission" }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true, message: "Submission received" });
 }

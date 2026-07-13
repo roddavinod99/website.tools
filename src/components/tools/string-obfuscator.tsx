@@ -9,29 +9,41 @@ interface ObfuscatedResult {
 }
 
 function toHex(str: string): string {
-  return Array.from(str).map((c) => "\\x" + c.charCodeAt(0).toString(16).padStart(2, "0")).join("");
+  return Array.from(str).map((c) => {
+    const cp = c.codePointAt(0)!;
+    return "\\x" + cp.toString(16).padStart(2, "0");
+  }).join("");
 }
 
 function toBinary(str: string): string {
-  return Array.from(str).map((c) => c.charCodeAt(0).toString(2).padStart(8, "0")).join(" ");
+  return Array.from(str).map((c) => {
+    const cp = c.codePointAt(0)!;
+    return cp.toString(2).padStart(cp > 0xFF ? 32 : 8, "0");
+  }).join(" ");
 }
 
 function toUnicode(str: string): string {
-  return Array.from(str).map((c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0")).join("");
+  return Array.from(str).map((c) => {
+    const cp = c.codePointAt(0)!;
+    if (cp > 0xFFFF) {
+      return "\\u{" + cp.toString(16).toUpperCase() + "}";
+    }
+    return "\\u" + cp.toString(16).padStart(4, "0");
+  }).join("");
 }
 
 function toHTMLEntities(str: string): string {
   return Array.from(str).map((c) => {
-    const code = c.charCodeAt(0);
-    if (code > 127) return "&#" + code + ";";
+    const cp = c.codePointAt(0)!;
+    if (cp > 127) return "&#" + cp + ";";
     return c === "<" ? "&lt;" : c === ">" ? "&gt;" : c === "&" ? "&amp;" : c === '"' ? "&quot;" : c === "'" ? "&#39;" : c;
   }).join("");
 }
 
 function toURLEncoding(str: string): string {
   return Array.from(str).map((c) => {
-    const code = c.charCodeAt(0);
-    if (code > 127) return encodeURIComponent(c);
+    const cp = c.codePointAt(0)!;
+    if (cp > 127) return encodeURIComponent(c);
     if (/[a-zA-Z0-9\-_.~]/.test(c)) return c;
     return encodeURIComponent(c);
   }).join("");
@@ -39,7 +51,9 @@ function toURLEncoding(str: string): string {
 
 function toBase64(str: string): string {
   try {
-    return btoa(unescape(encodeURIComponent(str)));
+    const bytes = new TextEncoder().encode(str);
+    const binString = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
+    return btoa(binString);
   } catch {
     return "Error: Unable to encode to Base64";
   }

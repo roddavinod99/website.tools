@@ -96,8 +96,8 @@ declare global {
 }
 
 export function ColorEyedropper() {
-  const [hex, setHex] = useState("#6366f1");
-  const [r, setR] = useState(99); const [g, setG] = useState(102); const [b, setB] = useState(241);
+  const [hex, setHex] = useState("#0070f3");
+  const [r, setR] = useState(0); const [g, setG] = useState(112); const [b, setB] = useState(243);
   const [contrastHex, setContrastHex] = useState("#000000");
   const [history, setHistory] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); } catch { return []; } });
   const [palette, setPalette] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem(PALETTE_KEY) ?? "[]"); } catch { return []; } });

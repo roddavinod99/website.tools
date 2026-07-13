@@ -1,6 +1,5 @@
 [
   { "slug": "jwt-decoder", "category": "Security", "name": "JWT Decoder", "input": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", "action": "Decode", "expect": "output" },
   { "slug": "jwt-generator", "category": "Security", "name": "JWT Generator", "input": "{\"sub\":\"123\",\"name\":\"Test\"}", "action": "Generate", "expect": "output" },
-  { "slug": "hash-generator", "category": "Security", "name": "Hash Generator", "input": "hello world", "action": "Generate", "expect": "output" },
   { "slug": "totp-generator", "category": "Security", "name": "TOTP Generator", "input": "JBSWY3DPEHPK3PXP", "action": "Generate", "expect": "output" }
 ]

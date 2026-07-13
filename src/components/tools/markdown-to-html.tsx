@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import DOMPurify from "dompurify";
 import { Upload } from "lucide-react";
+import { validateFileSize } from "@/lib/file-security";
 
 const safeSanitize = (html: string, opts?: object) => {
   try { return opts ? DOMPurify.sanitize(html, opts) : DOMPurify.sanitize(html); } catch { return html; }
@@ -158,6 +159,8 @@ export function MarkdownToHtml() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const sizeCheck = validateFileSize(file);
+    if (!sizeCheck.valid) { alert(sizeCheck.error); return; }
     const reader = new FileReader();
     reader.onload = () => setInput(reader.result as string);
     reader.readAsText(file);

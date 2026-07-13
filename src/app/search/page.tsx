@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { allTools, siteConfig, TOOL_COUNT } from "@/lib/constants";
+import { searchTools } from "@/lib/search";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 
@@ -22,14 +23,7 @@ export default async function SearchPage({ searchParams }: Props) {
   const { q } = await searchParams;
   const query = (q || "").trim().toLowerCase();
 
-  const results = query
-    ? allTools.filter(
-        (t) =>
-          t.name.toLowerCase().includes(query) ||
-          t.description.toLowerCase().includes(query) ||
-          t.category.toLowerCase().includes(query)
-      )
-    : [];
+  const results = searchTools(allTools, query);
 
   return (
     <div className="container py-12 md:py-16">

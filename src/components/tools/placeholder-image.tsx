@@ -20,7 +20,7 @@ const MAX_HEIGHT = 2160;
 export function PlaceholderImage() {
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(200);
-  const [bgColor, setBgColor] = useState("#6366f1");
+  const [bgColor, setBgColor] = useState("#0070f3");
   const [textColor, setTextColor] = useState("#ffffff");
   const [customText, setCustomText] = useState("");
   const [fontSize, setFontSize] = useState(0);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { validateFileSize } from "@/lib/file-security";
 
 type CharEncoding = "utf-8" | "ascii" | "utf-16le" | "utf-16be";
 
@@ -38,6 +39,7 @@ export function Base64Encoder() {
   const [encoding, setEncoding] = useState<CharEncoding>("utf-8");
   const [dataUri, setDataUri] = useState(false);
   const [wrapLines, setWrapLines] = useState(false);
+  const [error, setError] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
 
   const encode = useCallback(() => {
@@ -60,6 +62,8 @@ export function Base64Encoder() {
     el.onchange = () => {
       const file = el.files?.[0];
       if (!file) return;
+      const sizeCheck = validateFileSize(file);
+      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
       const reader = new FileReader();
       reader.onload = () => setInput(reader.result as string);
       reader.readAsText(file);
@@ -109,6 +113,12 @@ export function Base64Encoder() {
           placeholder="Enter text to encode..." rows={6} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+          <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+        </div>
+      )}
 
       {output && (
         <div>

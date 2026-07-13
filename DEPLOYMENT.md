@@ -3,8 +3,9 @@
 ## Prerequisites
 
 - Node.js 20+
-- Docker (for containerized deployment)
+- Docker + Docker Compose (for containerized deployment)
 - Domain: `tools.devstackio.com`
+- SSL certificates (Let's Encrypt)
 
 ## Environment Variables
 
@@ -12,42 +13,108 @@
 |----------|----------|-------------|
 | `NEXT_PUBLIC_SITE_URL` | Yes | Production URL (no trailing slash) |
 | `NEXT_PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID |
+| `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` | No | Google AdSense publisher ID |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | No | Contact email displayed on the contact page |
+| `PORT` | No | Server port (default: 3000) |
 | `DISABLE_RATE_LIMIT` | No | Set `true` behind a reverse proxy with its own rate limiting |
 | `INDEXNOW_KEY` | No | IndexNow API key for Bing/Yandex/Seznam sitemap submission |
 
-## Option A: Docker
+## Option A: Docker (Recommended)
 
 ```bash
-# Build
-docker build -t devstackio-tools .
+# Clone and configure
+git clone <repo-url> ~/tools
+cd ~/tools
+cp .env.example .env.local
 
-# Run
-docker run -d \
-  --name devstackio \
-  -p 3000:3000 \
-  -e NEXT_PUBLIC_SITE_URL=https://tools.devstackio.com \
-  -e NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX \
-  -v /host/path/data:/app/data \
-  devstackio-tools
+# Edit .env.local with your values
+nano .env.local
+
+# Build and start
+docker compose up -d --build
+
+# Verify
+docker compose ps
+curl -I http://localhost:3000
 ```
 
-Data directory (`data/`) is mounted for persistent submissions and SEO reports.
+### SSL Setup (First Time)
 
-## Option B: PM2 (bare metal / VM)
+```bash
+# Install certbot on host
+sudo apt install certbot
+
+# Stop nginx temporarily
+docker compose stop nginx
+
+# Generate certificates
+sudo certbot certonly --standalone -d tools.devstackio.com
+
+# Start nginx
+docker compose up -d nginx
+```
+
+### Updating
+
+```bash
+cd ~/tools
+git pull origin main
+docker compose down
+docker compose build --no-cache
+docker compose up -d
+```
+
+## Option B: PM2 (Bare Metal / VM)
 
 ```bash
 # Build
+npm ci
 npm run build
 
-# Start
+# Create logs directory
+mkdir -p logs
+
+# Start with PM2
 NEXT_PUBLIC_SITE_URL=https://tools.devstackio.com pm2 start ecosystem.config.js
+
+# Save PM2 process list and configure startup
+pm2 save
+pm2 startup
+
+# Monitor
+pm2 monit
+```
+
+### PM2 Updating
+
+```bash
+cd ~/tools
+git pull origin main
+npm ci
+npm run build
+pm2 restart devstackio
 ```
 
 ## Option C: Vercel
 
 1. Connect repo to Vercel
 2. Add env vars in Vercel dashboard
-3. Deploy — `vercel.json` handles config
+3. Deploy — `output: "standalone"` is already configured in `next.config.ts`
+
+## CI/CD Pipeline
+
+Pushes to `main` automatically trigger:
+
+1. **Validation job** — lint + build
+2. **Deploy job** — SSH into Oracle Cloud, pull changes, rebuild containers, verify health
+
+### Required GitHub Secrets
+
+| Secret | Description |
+|--------|-------------|
+| `ORACLE_HOST` | Oracle Cloud server IP/hostname |
+| `ORACLE_USER` | SSH username (e.g., `ubuntu`) |
+| `ORACLE_SSH_KEY` | Private SSH key for authentication |
 
 ## Production Readiness Gate
 
@@ -100,3 +167,6 @@ The cron job (`scripts/setup-cron.sh`) runs daily at UTC 00:00 and:
 - **Rate limiting errors**: Set `DISABLE_RATE_LIMIT=true` behind a reverse proxy. The in-memory rate limiter is per-process — it works for single-instance but not PM2 clusters or serverless. Long-term, use **Redis** as a shared store or let **Cloudflare** handle rate limiting at the edge.
 - **CSS/JS not loading in container**: Verify `output: "standalone"` in `next.config.ts`
 - **Sitemap stale**: ISR regenerates every 24h on request
+- **Nginx 502**: Check that the app container is healthy: `docker compose ps`
+- **SSL errors**: Verify certificates exist at `/etc/letsencrypt/live/tools.devstackio.com/`
+- **Memory issues**: Check `docker compose stats` or `pm2 monit`; adjust limits in `docker-compose.yml` or `ecosystem.config.js`

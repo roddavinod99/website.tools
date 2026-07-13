@@ -138,7 +138,10 @@ export function BarcodeGenerator() {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
+    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
     img.onload = () => {
+      URL.revokeObjectURL(url);
       canvas.width = img.width;
       canvas.height = img.height;
       ctx!.fillStyle = bgColor;
@@ -149,7 +152,7 @@ export function BarcodeGenerator() {
       const a = document.createElement("a");
       a.href = blobUrl; a.download = `barcode-${input || "output"}.${type}`; a.click();
     };
-    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+    img.src = url;
   }, [input, bgColor]);
 
   const copyImage = useCallback(async () => {
@@ -159,7 +162,10 @@ export function BarcodeGenerator() {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
+    const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
     img.onload = async () => {
+      URL.revokeObjectURL(url);
       canvas.width = img.width;
       canvas.height = img.height;
       ctx!.fillStyle = bgColor;
@@ -173,7 +179,7 @@ export function BarcodeGenerator() {
         }
       });
     };
-    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+    img.src = url;
   }, [bgColor]);
 
   const clear = () => {

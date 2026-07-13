@@ -1,326 +1,136 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 
-import { JSONFormatter } from "./json-formatter";
-import { JSONToCSV } from "./json-to-csv";
-import { JSONToYAML } from "./json-to-yaml";
-import { JWTDecoder } from "./jwt-decoder";
-import { SQLFormatter } from "./sql-formatter";
-import { UUIDGenerator } from "./uuid-generator";
-import { QRGenerator } from "./qr-generator";
-import { ImageCompressor } from "./image-compressor";
-import { PasswordGenerator } from "./password-generator";
-import { WordCounter } from "./word-counter";
-import { URLEncoder } from "./url-encoder";
-import { JSMinifier } from "./js-minifier";
-import { DiffChecker } from "./diff-checker";
-import { RegexTester } from "./regex-tester";
-import { ColorConverter } from "./color-converter";
-import { TimestampConverter } from "./timestamp-converter";
-import { HashGenerator } from "./hash-generator";
-
-// New Encoders
-import { Base64Tool } from "./base64";
-import { HtmlEntity } from "./html-entity";
-import { Binary } from "./binary";
-import { Hex } from "./hex";
-import { EscapeUnescape } from "./escape-unescape";
-import { ImageToBase64 } from "./image-to-base64";
-import { MorseCode } from "./morse-code";
-
-// New Generators
-import { RandomData } from "./random-data";
-import { AsciiArt } from "./ascii-art";
-import { BarcodeGenerator } from "./barcode-generator";
-import { LoremIpsum } from "./lorem-ipsum";
-import { CronExpression } from "./cron-expression";
-
-// New Converters
-import { CsvToJson } from "./csv-to-json";
-import { JsonToXml } from "./json-to-xml";
-import { XmlToJson } from "./xml-to-json";
-import { MarkdownToHtml } from "./markdown-to-html";
-import { HtmlToMarkdown } from "./html-to-markdown";
-import { TomlConverter } from "./toml-converter";
-import { UnitConverter } from "./unit-converter";
-import { CaseConverter } from "./case-converter";
-import { BaseConverter } from "./base-converter";
-import { NumberToWords } from "./number-to-words";
-import { JsonToTypescript } from "./json-to-typescript";
-import { JsonToGo } from "./json-to-go";
-
-// New Image Tools
-import { ImageResizer } from "./image-resizer";
-import { FaviconGenerator } from "./favicon-generator";
-import { SvgOptimizer } from "./svg-optimizer";
-import { PlaceholderImage } from "./placeholder-image";
-import { SvgToCss } from "./svg-to-css";
-import { ExifReader } from "./exif-reader";
-import { ExifTransfer } from "./exif-transfer";
-import { ColorEyedropper } from "./color-eyedropper";
-
-// New Formatters
-import { CSSFormatter } from "./css-formatter";
-import { HTMLFormatter } from "./html-formatter";
-import { XMLFormatter } from "./xml-formatter";
-import { YAMLFormatter } from "./yaml-formatter";
-import { TextAnalyzer } from "./text-analyzer";
-import { JSONDiff } from "./json-diff";
-
-// New Security
-import { JwtGenerator } from "./jwt-generator";
-import { TotpGenerator } from "./totp-generator";
-import { SslDecoder } from "./ssl-decoder";
-import { CspGenerator } from "./csp-generator";
-import { FileChecksum } from "./file-checksum";
-
-// New Utilities
-import { TextSorter } from "./text-sorter";
-import { HttpHeaderParser } from "./http-header-parser";
-import { UrlParser } from "./url-parser";
-import { UserAgentParser } from "./user-agent-parser";
-import { IpCalculator } from "./ip-calculator";
-import { JsonPathFinder } from "./json-path-finder";
-import { MarkdownPreview } from "./markdown-preview";
-import { SlugGenerator } from "./slug-generator";
-import { StringLength } from "./string-length";
-import { JsonSchemaGenerator } from "./json-schema-generator";
-import { DNSLookup } from "./dns-lookup";
-import { IPLookup } from "./ip-lookup";
-import { JSONBeautifier } from "./json-beautifier";
-import { JSONMinifier } from "./json-minifier";
-import { JSONValidator } from "./json-validator";
-
-// Crypto & Security Tools
-import { BcryptGenerator } from "./bcrypt-generator";
-import { UlidGenerator } from "./ulid-generator";
-import { HmacGenerator } from "./hmac-generator";
-import { RsaKeyGenerator } from "./rsa-key-generator";
-import { PasswordStrength } from "./password-strength";
-import { Bip39Generator } from "./bip39-generator";
-import { MacAddressLookup } from "./mac-address-lookup";
-import { MacAddressGenerator } from "./mac-address-generator";
-import { PhoneNumberParser } from "./phone-number-parser";
-import { IBANValidator } from "./iban-validator";
-
-// New Converters
-import { RomanNumeralConverter } from "./roman-numeral-converter";
-import { NatoAlphabet } from "./nato-alphabet";
-import { TextToUnicode } from "./text-to-unicode";
-import { ListConverter } from "./list-converter";
-import { TemperatureConverter } from "./temperature-converter";
-
-// New Generators
-import { RandomPortGenerator } from "./random-port-generator";
-import { MetaTagGenerator } from "./meta-tag-generator";
-
-// New Formatters
-import { DockerRunToCompose } from "./docker-run-to-compose";
-import { YAMLViewer } from "./yaml-viewer";
-import { BenchmarkBuilder } from "./benchmark-builder";
-
-// New Utilities
-import { BasicAuthGenerator } from "./basic-auth-generator";
-import { MimeTypes } from "./mime-types";
-import { KeycodeInfo } from "./keycode-info";
-import { SlugifyString } from "./slugify-string";
-import { SafelinkDecoder } from "./safelink-decoder";
-import { DeviceInformation } from "./device-information";
-import { EmailNormalizer } from "./email-normalizer";
-import { TextDiffVisual } from "./text-diff-visual";
-import { StringObfuscator } from "./string-obfuscator";
-import { MathEvaluator } from "./math-evaluator";
-import { Chronometer } from "./chronometer";
-import { PercentageCalculator } from "./percentage-calculator";
-import { EmojiPicker } from "./emoji-picker";
-import { Ipv4SubnetCalculator } from "./ipv4-subnet-calculator";
-import { Ipv4AddressConverter } from "./ipv4-address-converter";
-import { Ipv4RangeExpander } from "./ipv4-range-expander";
-import { Ipv6UlaGenerator } from "./ipv6-ula-generator";
-
-// Dedicated tool components (previously missing)
-import { Base64Decoder } from "./base64-decoder";
-import { Base64Encoder } from "./base64-encoder";
-import { CSSMinifier } from "./css-minifier";
-import { HTMLMinifier } from "./html-minifier";
-import { PromptGenerator } from "./prompt-generator";
-import { PromptImprover } from "./prompt-improver";
-import { MarkdownEditor } from "./markdown-editor";
-
-// Orphaned tools (components existed but were not registered)
-import { ChmodCalculator } from "./chmod-calculator";
-import { EtaCalculator } from "./eta-calculator";
-
-// New IT-Tools parity tools
-import { TokenGenerator } from "./token-generator";
-import { EncryptDecrypt } from "./encrypt-decrypt";
-import { WifiQRGenerator } from "./wifi-qr-generator";
-import { HTTPStatusCodes } from "./http-status-codes";
-import { GitCheatsheet } from "./git-cheatsheet";
-import { RegexMemo } from "./regex-memo";
-import { NumeronymGenerator } from "./numeronym-generator";
-
-const toolComponents: Record<string, React.ComponentType> = {
-  // Existing
-  "json-formatter": JSONFormatter,
-  "json-to-csv": JSONToCSV,
-  "json-to-yaml": JSONToYAML,
-  "jwt-decoder": JWTDecoder,
-  "sql-formatter": SQLFormatter,
-  "uuid-generator": UUIDGenerator,
-  "qr-generator": QRGenerator,
-  "image-compressor": ImageCompressor,
-  "password-generator": PasswordGenerator,
-  "word-counter": WordCounter,
-  "url-encoder": URLEncoder,
-  "js-minifier": JSMinifier,
-  "diff-checker": DiffChecker,
-  "regex-tester": RegexTester,
-  "color-converter": ColorConverter,
-  "timestamp-converter": TimestampConverter,
-  "hash-generator": HashGenerator,
-
-  // New Encoders
-  "base64": Base64Tool,
-  "html-entity": HtmlEntity,
-  "binary": Binary,
-  "hex": Hex,
-  "escape-unescape": EscapeUnescape,
-  "image-to-base64": ImageToBase64,
-  "morse-code": MorseCode,
-
-  // New Generators
-  "random-data": RandomData,
-  "ascii-art": AsciiArt,
-  "barcode-generator": BarcodeGenerator,
-  "lorem-ipsum": LoremIpsum,
-  "cron-expression": CronExpression,
-
-  // New Converters
-  "csv-to-json": CsvToJson,
-  "json-to-xml": JsonToXml,
-  "xml-to-json": XmlToJson,
-  "markdown-to-html": MarkdownToHtml,
-  "html-to-markdown": HtmlToMarkdown,
-  "toml-converter": TomlConverter,
-  "unit-converter": UnitConverter,
-  "case-converter": CaseConverter,
-  "base-converter": BaseConverter,
-  "number-to-words": NumberToWords,
-  "json-to-typescript": JsonToTypescript,
-  "json-to-go": JsonToGo,
-
-  // New Image Tools
-  "image-resizer": ImageResizer,
-  "favicon-generator": FaviconGenerator,
-  "svg-optimizer": SvgOptimizer,
-  "placeholder-image": PlaceholderImage,
-  "svg-to-css": SvgToCss,
-  "exif-reader": ExifReader,
-  "exif-transfer": ExifTransfer,
-  "color-eyedropper": ColorEyedropper,
-
-  // New Formatters
-  "css-formatter": CSSFormatter,
-  "html-formatter": HTMLFormatter,
-  "xml-formatter": XMLFormatter,
-  "yaml-formatter": YAMLFormatter,
-  "text-analyzer": TextAnalyzer,
-  "json-diff": JSONDiff,
-  "json-beautifier": JSONBeautifier,
-  "json-minifier": JSONMinifier,
-  "json-validator": JSONValidator,
-
-  // New Security
-  "jwt-generator": JwtGenerator,
-  "totp-generator": TotpGenerator,
-  "ssl-decoder": SslDecoder,
-  "csp-generator": CspGenerator,
-  "file-checksum": FileChecksum,
-
-  // New Utilities
-  "text-sorter": TextSorter,
-  "http-header-parser": HttpHeaderParser,
-  "url-parser": UrlParser,
-  "user-agent-parser": UserAgentParser,
-  "ip-calculator": IpCalculator,
-  "json-path-finder": JsonPathFinder,
-  "markdown-preview": MarkdownPreview,
-  "slug-generator": SlugGenerator,
-  "string-length": StringLength,
-  "json-schema-generator": JsonSchemaGenerator,
-  "dns-lookup": DNSLookup,
-  "ip-lookup": IPLookup,
-
-  // Crypto & Security Tools
-  "bcrypt-generator": BcryptGenerator,
-  "ulid-generator": UlidGenerator,
-  "hmac-generator": HmacGenerator,
-  "rsa-key-generator": RsaKeyGenerator,
-  "password-strength": PasswordStrength,
-  "bip39-generator": Bip39Generator,
-  "mac-address-lookup": MacAddressLookup,
-  "mac-address-generator": MacAddressGenerator,
-  "phone-number-parser": PhoneNumberParser,
-  "iban-validator": IBANValidator,
-
-  // New Converters
-  "roman-numeral-converter": RomanNumeralConverter,
-  "nato-alphabet": NatoAlphabet,
-  "text-to-unicode": TextToUnicode,
-  "list-converter": ListConverter,
-  "temperature-converter": TemperatureConverter,
-
-  // New Generators
-  "random-port-generator": RandomPortGenerator,
-  "meta-tag-generator": MetaTagGenerator,
-
-  // New Formatters
-  "docker-run-to-compose": DockerRunToCompose,
-  "yaml-viewer": YAMLViewer,
-  "benchmark-builder": BenchmarkBuilder,
-
-  // New Utilities
-  "basic-auth-generator": BasicAuthGenerator,
-  "mime-types": MimeTypes,
-  "keycode-info": KeycodeInfo,
-  "slugify-string": SlugifyString,
-  "safelink-decoder": SafelinkDecoder,
-  "device-information": DeviceInformation,
-  "email-normalizer": EmailNormalizer,
-  "text-diff-visual": TextDiffVisual,
-  "string-obfuscator": StringObfuscator,
-  "math-evaluator": MathEvaluator,
-  "chronometer": Chronometer,
-  "percentage-calculator": PercentageCalculator,
-  "emoji-picker": EmojiPicker,
-  "ipv4-subnet-calculator": Ipv4SubnetCalculator,
-  "ipv4-address-converter": Ipv4AddressConverter,
-  "ipv4-range-expander": Ipv4RangeExpander,
-  "ipv6-ula-generator": Ipv6UlaGenerator,
-
-  // Dedicated tool components
-  "base64-decoder": Base64Decoder,
-  "base64-encoder": Base64Encoder,
-  "css-minifier": CSSMinifier,
-  "html-minifier": HTMLMinifier,
-  "prompt-generator": PromptGenerator,
-  "prompt-improver": PromptImprover,
-  "markdown-editor": MarkdownEditor,
-
-  // Orphaned tools now registered
-  "chmod-calculator": ChmodCalculator,
-  "eta-calculator": EtaCalculator,
-
-  // New IT-Tools parity tools
-  "token-generator": TokenGenerator,
-  "encrypt-decrypt": EncryptDecrypt,
-  "wifi-qr-generator": WifiQRGenerator,
-  "http-status-codes": HTTPStatusCodes,
-  "git-cheatsheet": GitCheatsheet,
-  "regex-memo": RegexMemo,
-  "numeronym-generator": NumeronymGenerator,
+const toolComponents: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
+  "json-formatter": React.lazy(() => import("./json-formatter").then((m) => ({ default: m.JSONFormatter }))),
+  "json-to-csv": React.lazy(() => import("./json-to-csv").then((m) => ({ default: m.JSONToCSV }))),
+  "json-to-yaml": React.lazy(() => import("./json-to-yaml").then((m) => ({ default: m.JSONToYAML }))),
+  "jwt-decoder": React.lazy(() => import("./jwt-decoder").then((m) => ({ default: m.JWTDecoder }))),
+  "sql-formatter": React.lazy(() => import("./sql-formatter").then((m) => ({ default: m.SQLFormatter }))),
+  "uuid-generator": React.lazy(() => import("./uuid-generator").then((m) => ({ default: m.UUIDGenerator }))),
+  "qr-generator": React.lazy(() => import("./qr-generator").then((m) => ({ default: m.QRGenerator }))),
+  "image-compressor": React.lazy(() => import("./image-compressor").then((m) => ({ default: m.ImageCompressor }))),
+  "password-generator": React.lazy(() => import("./password-generator").then((m) => ({ default: m.PasswordGenerator }))),
+  "word-counter": React.lazy(() => import("./word-counter").then((m) => ({ default: m.WordCounter }))),
+  "url-encoder": React.lazy(() => import("./url-encoder").then((m) => ({ default: m.URLEncoder }))),
+  "js-minifier": React.lazy(() => import("./js-minifier").then((m) => ({ default: m.JSMinifier }))),
+  "diff-checker": React.lazy(() => import("./diff-checker").then((m) => ({ default: m.DiffChecker }))),
+  "regex-tester": React.lazy(() => import("./regex-tester").then((m) => ({ default: m.RegexTester }))),
+  "color-converter": React.lazy(() => import("./color-converter").then((m) => ({ default: m.ColorConverter }))),
+  "timestamp-converter": React.lazy(() => import("./timestamp-converter").then((m) => ({ default: m.TimestampConverter }))),
+  "hash-generator": React.lazy(() => import("./hash-generator").then((m) => ({ default: m.HashGenerator }))),
+  "base64": React.lazy(() => import("./base64").then((m) => ({ default: m.Base64Tool }))),
+  "html-entity": React.lazy(() => import("./html-entity").then((m) => ({ default: m.HtmlEntity }))),
+  "binary": React.lazy(() => import("./binary").then((m) => ({ default: m.Binary }))),
+  "hex": React.lazy(() => import("./hex").then((m) => ({ default: m.Hex }))),
+  "escape-unescape": React.lazy(() => import("./escape-unescape").then((m) => ({ default: m.EscapeUnescape }))),
+  "image-to-base64": React.lazy(() => import("./image-to-base64").then((m) => ({ default: m.ImageToBase64 }))),
+  "morse-code": React.lazy(() => import("./morse-code").then((m) => ({ default: m.MorseCode }))),
+  "random-data": React.lazy(() => import("./random-data").then((m) => ({ default: m.RandomData }))),
+  "ascii-art": React.lazy(() => import("./ascii-art").then((m) => ({ default: m.AsciiArt }))),
+  "barcode-generator": React.lazy(() => import("./barcode-generator").then((m) => ({ default: m.BarcodeGenerator }))),
+  "lorem-ipsum": React.lazy(() => import("./lorem-ipsum").then((m) => ({ default: m.LoremIpsum }))),
+  "cron-expression": React.lazy(() => import("./cron-expression").then((m) => ({ default: m.CronExpression }))),
+  "csv-to-json": React.lazy(() => import("./csv-to-json").then((m) => ({ default: m.CsvToJson }))),
+  "json-to-xml": React.lazy(() => import("./json-to-xml").then((m) => ({ default: m.JsonToXml }))),
+  "xml-to-json": React.lazy(() => import("./xml-to-json").then((m) => ({ default: m.XmlToJson }))),
+  "markdown-to-html": React.lazy(() => import("./markdown-to-html").then((m) => ({ default: m.MarkdownToHtml }))),
+  "html-to-markdown": React.lazy(() => import("./html-to-markdown").then((m) => ({ default: m.HtmlToMarkdown }))),
+  "toml-converter": React.lazy(() => import("./toml-converter").then((m) => ({ default: m.TomlConverter }))),
+  "unit-converter": React.lazy(() => import("./unit-converter").then((m) => ({ default: m.UnitConverter }))),
+  "case-converter": React.lazy(() => import("./case-converter").then((m) => ({ default: m.CaseConverter }))),
+  "base-converter": React.lazy(() => import("./base-converter").then((m) => ({ default: m.BaseConverter }))),
+  "number-to-words": React.lazy(() => import("./number-to-words").then((m) => ({ default: m.NumberToWords }))),
+  "json-to-typescript": React.lazy(() => import("./json-to-typescript").then((m) => ({ default: m.JsonToTypescript }))),
+  "json-to-go": React.lazy(() => import("./json-to-go").then((m) => ({ default: m.JsonToGo }))),
+  "image-resizer": React.lazy(() => import("./image-resizer").then((m) => ({ default: m.ImageResizer }))),
+  "favicon-generator": React.lazy(() => import("./favicon-generator").then((m) => ({ default: m.FaviconGenerator }))),
+  "svg-optimizer": React.lazy(() => import("./svg-optimizer").then((m) => ({ default: m.SvgOptimizer }))),
+  "placeholder-image": React.lazy(() => import("./placeholder-image").then((m) => ({ default: m.PlaceholderImage }))),
+  "svg-to-css": React.lazy(() => import("./svg-to-css").then((m) => ({ default: m.SvgToCss }))),
+  "exif-reader": React.lazy(() => import("./exif-reader").then((m) => ({ default: m.ExifReader }))),
+  "exif-transfer": React.lazy(() => import("./exif-transfer").then((m) => ({ default: m.ExifTransfer }))),
+  "color-eyedropper": React.lazy(() => import("./color-eyedropper").then((m) => ({ default: m.ColorEyedropper }))),
+  "css-formatter": React.lazy(() => import("./css-formatter").then((m) => ({ default: m.CSSFormatter }))),
+  "html-formatter": React.lazy(() => import("./html-formatter").then((m) => ({ default: m.HTMLFormatter }))),
+  "xml-formatter": React.lazy(() => import("./xml-formatter").then((m) => ({ default: m.XMLFormatter }))),
+  "yaml-formatter": React.lazy(() => import("./yaml-formatter").then((m) => ({ default: m.YAMLFormatter }))),
+  "text-analyzer": React.lazy(() => import("./text-analyzer").then((m) => ({ default: m.TextAnalyzer }))),
+  "json-diff": React.lazy(() => import("./json-diff").then((m) => ({ default: m.JSONDiff }))),
+  "json-beautifier": React.lazy(() => import("./json-beautifier").then((m) => ({ default: m.JSONBeautifier }))),
+  "json-minifier": React.lazy(() => import("./json-minifier").then((m) => ({ default: m.JSONMinifier }))),
+  "json-validator": React.lazy(() => import("./json-validator").then((m) => ({ default: m.JSONValidator }))),
+  "jwt-generator": React.lazy(() => import("./jwt-generator").then((m) => ({ default: m.JwtGenerator }))),
+  "totp-generator": React.lazy(() => import("./totp-generator").then((m) => ({ default: m.TotpGenerator }))),
+  "ssl-decoder": React.lazy(() => import("./ssl-decoder").then((m) => ({ default: m.SslDecoder }))),
+  "csp-generator": React.lazy(() => import("./csp-generator").then((m) => ({ default: m.CspGenerator }))),
+  "file-checksum": React.lazy(() => import("./file-checksum").then((m) => ({ default: m.FileChecksum }))),
+  "text-sorter": React.lazy(() => import("./text-sorter").then((m) => ({ default: m.TextSorter }))),
+  "http-header-parser": React.lazy(() => import("./http-header-parser").then((m) => ({ default: m.HttpHeaderParser }))),
+  "url-parser": React.lazy(() => import("./url-parser").then((m) => ({ default: m.UrlParser }))),
+  "user-agent-parser": React.lazy(() => import("./user-agent-parser").then((m) => ({ default: m.UserAgentParser }))),
+  "ip-calculator": React.lazy(() => import("./ip-calculator").then((m) => ({ default: m.IpCalculator }))),
+  "json-path-finder": React.lazy(() => import("./json-path-finder").then((m) => ({ default: m.JsonPathFinder }))),
+  "markdown-preview": React.lazy(() => import("./markdown-preview").then((m) => ({ default: m.MarkdownPreview }))),
+  "slug-generator": React.lazy(() => import("./slug-generator").then((m) => ({ default: m.SlugGenerator }))),
+  "string-length": React.lazy(() => import("./string-length").then((m) => ({ default: m.StringLength }))),
+  "json-schema-generator": React.lazy(() => import("./json-schema-generator").then((m) => ({ default: m.JsonSchemaGenerator }))),
+  "dns-lookup": React.lazy(() => import("./dns-lookup").then((m) => ({ default: m.DNSLookup }))),
+  "ip-lookup": React.lazy(() => import("./ip-lookup").then((m) => ({ default: m.IPLookup }))),
+  "bcrypt-generator": React.lazy(() => import("./bcrypt-generator").then((m) => ({ default: m.BcryptGenerator }))),
+  "ulid-generator": React.lazy(() => import("./ulid-generator").then((m) => ({ default: m.UlidGenerator }))),
+  "hmac-generator": React.lazy(() => import("./hmac-generator").then((m) => ({ default: m.HmacGenerator }))),
+  "rsa-key-generator": React.lazy(() => import("./rsa-key-generator").then((m) => ({ default: m.RsaKeyGenerator }))),
+  "password-strength": React.lazy(() => import("./password-strength").then((m) => ({ default: m.PasswordStrength }))),
+  "bip39-generator": React.lazy(() => import("./bip39-generator").then((m) => ({ default: m.Bip39Generator }))),
+  "mac-address-lookup": React.lazy(() => import("./mac-address-lookup").then((m) => ({ default: m.MacAddressLookup }))),
+  "mac-address-generator": React.lazy(() => import("./mac-address-generator").then((m) => ({ default: m.MacAddressGenerator }))),
+  "phone-number-parser": React.lazy(() => import("./phone-number-parser").then((m) => ({ default: m.PhoneNumberParser }))),
+  "iban-validator": React.lazy(() => import("./iban-validator").then((m) => ({ default: m.IBANValidator }))),
+  "roman-numeral-converter": React.lazy(() => import("./roman-numeral-converter").then((m) => ({ default: m.RomanNumeralConverter }))),
+  "nato-alphabet": React.lazy(() => import("./nato-alphabet").then((m) => ({ default: m.NatoAlphabet }))),
+  "text-to-unicode": React.lazy(() => import("./text-to-unicode").then((m) => ({ default: m.TextToUnicode }))),
+  "list-converter": React.lazy(() => import("./list-converter").then((m) => ({ default: m.ListConverter }))),
+  "temperature-converter": React.lazy(() => import("./temperature-converter").then((m) => ({ default: m.TemperatureConverter }))),
+  "random-port-generator": React.lazy(() => import("./random-port-generator").then((m) => ({ default: m.RandomPortGenerator }))),
+  "meta-tag-generator": React.lazy(() => import("./meta-tag-generator").then((m) => ({ default: m.MetaTagGenerator }))),
+  "docker-run-to-compose": React.lazy(() => import("./docker-run-to-compose").then((m) => ({ default: m.DockerRunToCompose }))),
+  "yaml-viewer": React.lazy(() => import("./yaml-viewer").then((m) => ({ default: m.YAMLViewer }))),
+  "benchmark-builder": React.lazy(() => import("./benchmark-builder").then((m) => ({ default: m.BenchmarkBuilder }))),
+  "basic-auth-generator": React.lazy(() => import("./basic-auth-generator").then((m) => ({ default: m.BasicAuthGenerator }))),
+  "mime-types": React.lazy(() => import("./mime-types").then((m) => ({ default: m.MimeTypes }))),
+  "keycode-info": React.lazy(() => import("./keycode-info").then((m) => ({ default: m.KeycodeInfo }))),
+  "slugify-string": React.lazy(() => import("./slugify-string").then((m) => ({ default: m.SlugifyString }))),
+  "safelink-decoder": React.lazy(() => import("./safelink-decoder").then((m) => ({ default: m.SafelinkDecoder }))),
+  "device-information": React.lazy(() => import("./device-information").then((m) => ({ default: m.DeviceInformation }))),
+  "email-normalizer": React.lazy(() => import("./email-normalizer").then((m) => ({ default: m.EmailNormalizer }))),
+  "text-diff-visual": React.lazy(() => import("./text-diff-visual").then((m) => ({ default: m.TextDiffVisual }))),
+  "string-obfuscator": React.lazy(() => import("./string-obfuscator").then((m) => ({ default: m.StringObfuscator }))),
+  "math-evaluator": React.lazy(() => import("./math-evaluator").then((m) => ({ default: m.MathEvaluator }))),
+  "chronometer": React.lazy(() => import("./chronometer").then((m) => ({ default: m.Chronometer }))),
+  "percentage-calculator": React.lazy(() => import("./percentage-calculator").then((m) => ({ default: m.PercentageCalculator }))),
+  "emoji-picker": React.lazy(() => import("./emoji-picker").then((m) => ({ default: m.EmojiPicker }))),
+  "ipv4-subnet-calculator": React.lazy(() => import("./ipv4-subnet-calculator").then((m) => ({ default: m.Ipv4SubnetCalculator }))),
+  "ipv4-address-converter": React.lazy(() => import("./ipv4-address-converter").then((m) => ({ default: m.Ipv4AddressConverter }))),
+  "ipv4-range-expander": React.lazy(() => import("./ipv4-range-expander").then((m) => ({ default: m.Ipv4RangeExpander }))),
+  "ipv6-ula-generator": React.lazy(() => import("./ipv6-ula-generator").then((m) => ({ default: m.Ipv6UlaGenerator }))),
+  "base64-decoder": React.lazy(() => import("./base64-decoder").then((m) => ({ default: m.Base64Decoder }))),
+  "base64-encoder": React.lazy(() => import("./base64-encoder").then((m) => ({ default: m.Base64Encoder }))),
+  "css-minifier": React.lazy(() => import("./css-minifier").then((m) => ({ default: m.CSSMinifier }))),
+  "html-minifier": React.lazy(() => import("./html-minifier").then((m) => ({ default: m.HTMLMinifier }))),
+  "prompt-generator": React.lazy(() => import("./prompt-generator").then((m) => ({ default: m.PromptGenerator }))),
+  "prompt-improver": React.lazy(() => import("./prompt-improver").then((m) => ({ default: m.PromptImprover }))),
+  "markdown-editor": React.lazy(() => import("./markdown-editor").then((m) => ({ default: m.MarkdownEditor }))),
+  "chmod-calculator": React.lazy(() => import("./chmod-calculator").then((m) => ({ default: m.ChmodCalculator }))),
+  "eta-calculator": React.lazy(() => import("./eta-calculator").then((m) => ({ default: m.EtaCalculator }))),
+  "token-generator": React.lazy(() => import("./token-generator").then((m) => ({ default: m.TokenGenerator }))),
+  "encrypt-decrypt": React.lazy(() => import("./encrypt-decrypt").then((m) => ({ default: m.EncryptDecrypt }))),
+  "wifi-qr-generator": React.lazy(() => import("./wifi-qr-generator").then((m) => ({ default: m.WifiQRGenerator }))),
+  "http-status-codes": React.lazy(() => import("./http-status-codes").then((m) => ({ default: m.HTTPStatusCodes }))),
+  "git-cheatsheet": React.lazy(() => import("./git-cheatsheet").then((m) => ({ default: m.GitCheatsheet }))),
+  "regex-memo": React.lazy(() => import("./regex-memo").then((m) => ({ default: m.RegexMemo }))),
+  "numeronym-generator": React.lazy(() => import("./numeronym-generator").then((m) => ({ default: m.NumeronymGenerator }))),
 };
 
 interface Props {
@@ -344,7 +154,15 @@ export function ToolInterface({ slug, name }: Props) {
 
   return (
     <div className="p-2">
-      <Component />
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center min-h-[200px]">
+            <div className="text-sm text-surface-400 dark:text-dark-muted">Loading tool...</div>
+          </div>
+        }
+      >
+        <Component />
+      </Suspense>
     </div>
   );
 }
