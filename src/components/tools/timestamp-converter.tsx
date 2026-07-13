@@ -106,8 +106,10 @@ function getConversions(date: Date, tz: Timezone, nowMs: number): { label: strin
 export function TimestampConverter() {
   const [input, setInput] = useState("");
   const [tz, setTz] = useState<Timezone>("local");
-  const [nowMs, setNowMs] = useState<number | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [nowMs, setNowMs] = useState<number | null>(() => {
+    if (typeof window === "undefined") return null;
+    return Date.now();
+  });
   const [copied, setCopied] = useState("");
   const [countdown, setCountdown] = useState("");
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -115,10 +117,7 @@ export function TimestampConverter() {
   const [diffResult, setDiffResult] = useState("");
 
   useEffect(() => {
-    setMounted(true);
-    const tick = () => setNowMs(Date.now());
-    tick();
-    const id = setInterval(tick, 1000);
+    const id = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -132,8 +131,8 @@ export function TimestampConverter() {
   }, [detected]);
 
   const isLive = !input.trim();
-  const activeDate = parsedDate ?? (mounted && nowMs !== null ? new Date(nowMs) : new Date(0));
-  const conversions = useMemo(() => getConversions(activeDate, tz, mounted && nowMs !== null ? nowMs : 0), [activeDate, tz, nowMs, mounted]);
+  const activeDate = parsedDate ?? (nowMs !== null ? new Date(nowMs) : new Date(0));
+  const conversions = useMemo(() => getConversions(activeDate, tz, nowMs !== null ? nowMs : 0), [activeDate, tz, nowMs]);
 
   const handleCopy = useCallback(async (text: string, label: string) => {
     try {
@@ -190,7 +189,7 @@ export function TimestampConverter() {
 
   return (
     <div className="space-y-4">
-      {mounted && nowMs !== null && (
+      {nowMs !== null && (
         <div className="rounded-lg border border-brand-200 bg-brand-50 px-5 py-4 dark:border-brand-800 dark:bg-brand-950/30">
           <div className="flex items-center gap-3">
             <span className="relative flex h-2.5 w-2.5">

@@ -25,18 +25,18 @@ export function Chronometer() {
   const rafRef = useRef<number>(0);
   const lapIdRef = useRef(0);
 
-  const update = useCallback(() => {
-    const elapsed = Date.now() - startTimeRef.current + accumulatedRef.current;
-    setTime(elapsed);
-    rafRef.current = requestAnimationFrame(update);
-  }, []);
-
   const start = useCallback(() => {
     if (isRunning) return;
     startTimeRef.current = Date.now();
     setIsRunning(true);
-    rafRef.current = requestAnimationFrame(update);
-  }, [isRunning, update]);
+
+    const tick = () => {
+      const elapsed = Date.now() - startTimeRef.current + accumulatedRef.current;
+      setTime(elapsed);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  }, [isRunning]);
 
   const stop = useCallback(() => {
     if (!isRunning) return;

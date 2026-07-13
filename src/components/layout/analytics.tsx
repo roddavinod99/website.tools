@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
@@ -25,21 +25,18 @@ function getStoredConsent(): boolean {
 }
 
 export function Analytics() {
-  const [consented, setConsented] = useState(false);
+  const [consented, setConsented] = useState(() => getStoredConsent());
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
+  const handleStorageChange = useCallback(() => {
     setConsented(getStoredConsent());
-
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === "cookie-consent") {
-        setConsented(getStoredConsent());
-      }
-    };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [handleStorageChange]);
 
   useEffect(() => {
     if (!consented || !window.gtag) return;

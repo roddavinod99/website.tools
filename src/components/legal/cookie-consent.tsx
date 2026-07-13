@@ -103,19 +103,15 @@ function updateConsentMode(prefs: CookiePreferences) {
 
 export function CookieConsent() {
   const [view, setView] = useState<ConsentView>("banner");
-  const [show, setShow] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [preferences, setPreferences] = useState<CookiePreferences>(DEFAULT_PREFERENCES);
+  const [show, setShow] = useState(() => !getStoredConsent());
+  const [mounted] = useState(() => typeof window !== "undefined");
+  const [preferences, setPreferences] = useState<CookiePreferences>(() => getStoredConsent() ?? DEFAULT_PREFERENCES);
 
   useEffect(() => {
     const stored = getStoredConsent();
     if (stored) {
-      setPreferences(stored);
       updateConsentMode(stored);
-    } else {
-      setShow(true);
     }
-    setMounted(true);
   }, []);
 
   const acceptAll = useCallback(() => {

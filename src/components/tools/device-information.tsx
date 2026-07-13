@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface DeviceInfo {
   userAgent: string;
@@ -55,46 +55,46 @@ function getBrowserInfo(): string {
   return "Unknown";
 }
 
-export function DeviceInformation() {
-  const [info, setInfo] = useState<DeviceInfo | null>(null);
-  const [copied, setCopied] = useState(false);
+function collectDeviceInfo(): DeviceInfo {
+  const conn = (navigator as Navigator & { connection?: { effectiveType?: string; downlink?: number; type?: string } }).connection;
+  const devMem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  return {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform || "Unknown",
+    language: navigator.language,
+    languages: navigator.languages?.join(", ") || navigator.language,
+    cookiesEnabled: navigator.cookieEnabled,
+    doNotTrack: navigator.doNotTrack || "Not set",
+    screenWidth: screen.width,
+    screenHeight: screen.height,
+    screenDepth: screen.colorDepth,
+    availWidth: screen.availWidth,
+    availHeight: screen.availHeight,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
+    colorDepth: screen.colorDepth,
+    pixelRatio: window.devicePixelRatio,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timezoneOffset: new Date().getTimezoneOffset(),
+    connectionType: conn?.type || "Not available",
+    connectionEffectiveType: conn?.effectiveType || "Not available",
+    connectionDownlink: conn?.downlink !== undefined ? `${conn.downlink} Mbps` : "Not available",
+    memory: devMem !== undefined ? `${devMem} GB` : "Not available",
+    cpuCores: navigator.hardwareConcurrency || 0,
+    touchSupport: navigator.maxTouchPoints > 0 ? "Yes" : "No",
+    maxTouchPoints: navigator.maxTouchPoints,
+    deviceMemory: devMem !== undefined ? `${devMem} GB` : "Not available",
+    hardwareConcurrency: navigator.hardwareConcurrency || 0,
+    pdfViewer: typeof navigator.pdfViewerEnabled !== "undefined" ? navigator.pdfViewerEnabled : true,
+    webdriver: navigator.webdriver || false,
+    javaEnabled: false,
+    ink: (window as Window & { StyleMedia?: unknown }).StyleMedia !== undefined,
+  };
+}
 
-  useEffect(() => {
-    const conn = (navigator as Navigator & { connection?: { effectiveType?: string; downlink?: number; type?: string } }).connection;
-    const devMem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
-    setInfo({
-      userAgent: navigator.userAgent,
-      platform: navigator.platform || "Unknown",
-      language: navigator.language,
-      languages: navigator.languages?.join(", ") || navigator.language,
-      cookiesEnabled: navigator.cookieEnabled,
-      doNotTrack: navigator.doNotTrack || "Not set",
-      screenWidth: screen.width,
-      screenHeight: screen.height,
-      screenDepth: screen.colorDepth,
-      availWidth: screen.availWidth,
-      availHeight: screen.availHeight,
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      colorDepth: screen.colorDepth,
-      pixelRatio: window.devicePixelRatio,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      timezoneOffset: new Date().getTimezoneOffset(),
-      connectionType: conn?.type || "Not available",
-      connectionEffectiveType: conn?.effectiveType || "Not available",
-      connectionDownlink: conn?.downlink !== undefined ? `${conn.downlink} Mbps` : "Not available",
-      memory: devMem !== undefined ? `${devMem} GB` : "Not available",
-      cpuCores: navigator.hardwareConcurrency || 0,
-      touchSupport: navigator.maxTouchPoints > 0 ? "Yes" : "No",
-      maxTouchPoints: navigator.maxTouchPoints,
-      deviceMemory: devMem !== undefined ? `${devMem} GB` : "Not available",
-      hardwareConcurrency: navigator.hardwareConcurrency || 0,
-      pdfViewer: typeof navigator.pdfViewerEnabled !== "undefined" ? navigator.pdfViewerEnabled : true,
-      webdriver: navigator.webdriver || false,
-      javaEnabled: false,
-      ink: (window as Window & { StyleMedia?: unknown }).StyleMedia !== undefined,
-    });
-  }, []);
+export function DeviceInformation() {
+  const [info] = useState<DeviceInfo | null>(() => collectDeviceInfo());
+  const [copied, setCopied] = useState(false);
 
   const copyAll = async () => {
     if (!info) return;

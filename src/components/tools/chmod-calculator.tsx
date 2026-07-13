@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 
 interface PermissionBits {
   owner: { read: boolean; write: boolean; execute: boolean };
@@ -75,10 +75,6 @@ export function ChmodCalculator() {
     const parsed = octalToPermission(value);
     if (parsed) setPermissions(parsed);
   };
-
-  useEffect(() => {
-    setOctalInput(octal);
-  }, [octal]);
 
   const copyValue = async (label: string, value: string) => {
     await navigator.clipboard.writeText(value);
