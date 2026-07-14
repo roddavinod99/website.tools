@@ -1,56 +1,64 @@
 name: Deploy to Oracle
 
 on:
-  push:
-    branches:
-      - main
+push:
+branches:
+- main
 
 env:
-  NODE_VERSION: "20"
+NODE_VERSION: "20"
 
 jobs:
-  validate:
-    name: Validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+validate:
+name: Validate
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+```
+  - uses: actions/setup-node@v4
+    with:
+      node-version: ${{ env.NODE_VERSION }}
+      cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+  - run: npm ci
+  - run: npm run lint
+  - run: npm run build
+    env:
+      NEXT_PUBLIC_SITE_URL: https://tools.devstackio.com
+```
 
-      - name: Lint
-        run: npm run lint
+deploy:
+name: Deploy
+runs-on: ubuntu-latest
+needs: validate
 
-      - name: Build
-        run: npm run build
-        env:
-          NEXT_PUBLIC_SITE_URL: https://tools.devstackio.com
+```
+steps:
+  - name: Deploy via SSH
+    uses: appleboy/ssh-action@v1.2.5
+    with:
+      host: ${{ secrets.ORACLE_HOST }}
+      username: ${{ secrets.ORACLE_USER }}
+      key: ${{ secrets.ORACLE_SSH_KEY }}
+      script: |
+        set -e
 
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: validate
-    environment: production
-    steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.5
-        with:
-          host: ${{ secrets.ORACLE_HOST }}
-          username: ${{ secrets.ORACLE_USER }}
-          key: ${{ secrets.ORACLE_SSH_KEY }}
-          script: |
-            cd ~/tools
-            git pull origin main
-            docker compose down
-            docker compose build --no-cache
-            docker compose up -d
-            sleep 10
-            docker compose ps
-            curl -sf http://localhost:3000/api/health || exit 1
+        cd /var/www/tools
+
+        git fetch origin
+        git reset --hard origin/main
+
+        npm ci
+        npm run build
+
+        mkdir -p .next/standalone/.next
+        cp -r .next/static .next/standalone/.next/
+        cp -r public .next/standalone/
+
+        pm2 restart tools
+        pm2 save
+
+        sleep 5
+        curl -sf http://localhost:3000/api/health
+```

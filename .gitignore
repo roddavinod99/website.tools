@@ -66,3 +66,6 @@ Desktop.ini
 # misc
 *.pem
 .opencode/
+
+# nginx (keep production config private)
+/nginx/nginx.prod.conf

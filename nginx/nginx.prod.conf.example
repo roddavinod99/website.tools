@@ -1,6 +1,11 @@
-# DevStackIO Tools - Nginx Reverse Proxy Configuration
-# Defense in depth: Nginx is Layer 1 of the security stack
-# Deploy on Oracle Cloud ARM server in front of Docker container
+# Example Production Configuration
+# Replace domains, certificates, and upstream addresses before deploying.
+#
+# Usage:
+#   cp nginx.prod.conf.example nginx.prod.conf
+#   # Edit nginx.prod.conf with your real domain, certs, and upstream
+#   sudo cp nginx.prod.conf /etc/nginx/nginx.conf
+#   sudo nginx -t && sudo systemctl reload nginx
 
 worker_processes auto;
 worker_rlimit_nofile 65535;
@@ -55,7 +60,7 @@ http {
     # Connection limiting: 20 concurrent connections per IP
     limit_conn_zone $binary_remote_addr zone=conn_limit:10m;
 
-    # ─── Security Headers (applied at proxy level) ───
+    # ─── Proxy Headers (applied at proxy level) ───
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -70,8 +75,8 @@ http {
     }
 
     # ─── Upstream ───
-    upstream devstackio {
-        server 127.0.0.1:3000;
+    upstream app {
+        server ${APP_HOST}:3000;
         keepalive 32;
     }
 
@@ -79,7 +84,7 @@ http {
     server {
         listen 80;
         listen [::]:80;
-        server_name tools.devstackio.com;
+        server_name ${DOMAIN};
         return 301 https://$server_name$request_uri;
     }
 
@@ -87,11 +92,11 @@ http {
     server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
-        server_name tools.devstackio.com;
+        server_name ${DOMAIN};
 
         # ─── SSL Configuration ───
-        ssl_certificate /etc/letsencrypt/live/tools.devstackio.com/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/tools.devstackio.com/privkey.pem;
+        ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
         ssl_prefer_server_ciphers off;
@@ -102,18 +107,19 @@ http {
         # OCSP Stapling
         ssl_stapling on;
         ssl_stapling_verify on;
-        resolver 8.8.8.8 8.8.4.4 valid=300s;
+        resolver ${DNS_RESOLVER} valid=300s;
         resolver_timeout 5s;
 
         # ─── Security Headers ───
         add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
         add_header X-Content-Type-Options "nosniff" always;
         add_header X-Frame-Options "DENY" always;
-        add_header X-XSS-Protection "1; mode=block" always;
         add_header Referrer-Policy "strict-origin-when-cross-origin" always;
         add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()" always;
         add_header Cross-Origin-Opener-Policy "same-origin" always;
         add_header Cross-Origin-Resource-Policy "same-origin" always;
+        # Note: 'unsafe-eval' is required for the BenchmarkBuilder tool (uses new Function()).
+        # If you remove that tool, you can remove 'unsafe-eval' from the CSP.
         add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com; font-src 'self'; frame-src 'self' https://googleads.g.doubleclick.net; frame-ancestors 'none'; form-action 'self'; base-uri 'self'" always;
 
         # ─── Connection Limits ───
@@ -147,7 +153,7 @@ http {
             limit_req zone=api_submit burst=3 nodelay;
             limit_req_status 429;
 
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_http_version 1.1;
             proxy_set_header Connection "";
             proxy_connect_timeout 10s;
@@ -162,7 +168,7 @@ http {
             limit_req zone=api_contact burst=2 nodelay;
             limit_req_status 429;
 
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_http_version 1.1;
             proxy_set_header Connection "";
             proxy_connect_timeout 10s;
@@ -174,7 +180,7 @@ http {
             limit_req zone=api_general burst=20 nodelay;
             limit_req_status 429;
 
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_http_version 1.1;
             proxy_set_header Connection "";
             proxy_connect_timeout 10s;
@@ -184,7 +190,7 @@ http {
 
         # ─── Health Endpoint (no rate limit) ───
         location /api/health {
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_http_version 1.1;
             proxy_set_header Connection "";
             access_log off;
@@ -192,20 +198,20 @@ http {
 
         # ─── Static Assets with Long Cache ───
         location /_next/static/ {
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_cache_valid 200 365d;
             add_header Cache-Control "public, max-age=31536000, immutable";
         }
 
         location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|avif|woff|woff2|ttf|eot)$ {
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_cache_valid 200 30d;
             add_header Cache-Control "public, max-age=2592000";
         }
 
         # ─── Default Location ───
         location / {
-            proxy_pass http://devstackio;
+            proxy_pass http://app;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
