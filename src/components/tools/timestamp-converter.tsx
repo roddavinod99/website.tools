@@ -131,7 +131,7 @@ export function TimestampConverter() {
   }, [detected]);
 
   const isLive = !input.trim();
-  const activeDate = parsedDate ?? (nowMs !== null ? new Date(nowMs) : new Date(0));
+  const activeDate = useMemo(() => parsedDate ?? (nowMs !== null ? new Date(nowMs) : new Date(0)), [parsedDate, nowMs]);
   const conversions = useMemo(() => getConversions(activeDate, tz, nowMs !== null ? nowMs : 0), [activeDate, tz, nowMs]);
 
   const handleCopy = useCallback(async (text: string, label: string) => {

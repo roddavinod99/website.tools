@@ -41,17 +41,6 @@ function binaryToIp(binary: string): string | null {
   return longToIp(n >>> 0);
 }
 
-function detectFormat(input: string): FormatType {
-  const trimmed = input.trim();
-  if (/^\d+$/.test(trimmed) && !trimmed.includes(".") && !trimmed.includes(":") && !trimmed.includes(" ")) {
-    const n = parseInt(trimmed, 10);
-    if (n >= 0 && n <= 4294967295) return "integer";
-  }
-  if (/^[0-9a-fA-F]{8}$/.test(trimmed.replace(/^0x/i, "").replace(/[.:]/g, ""))) return "hex";
-  if (/^[01]{32}$/.test(trimmed.replace(/[.\s]/g, ""))) return "binary";
-  return "dotted";
-}
-
 function parseInput(input: string, format: FormatType): ConversionResult | null {
   const trimmed = input.trim();
   let ip: string | null = null;
@@ -83,7 +72,6 @@ function parseInput(input: string, format: FormatType): ConversionResult | null 
   if (long === null) return null;
 
   const hexStr = long.toString(16).toUpperCase().padStart(8, "0");
-  const binaryStr = long.toString(2).padStart(32, "0");
   const octets = [(long >>> 24) & 0xff, (long >>> 16) & 0xff, (long >>> 8) & 0xff, long & 0xff];
 
   return {

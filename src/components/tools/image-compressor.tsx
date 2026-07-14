@@ -463,6 +463,7 @@ export function ImageCompressor() {
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <p className="mb-1 text-xs text-surface-500 dark:text-dark-muted">Original</p>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={entry.originalUrl}
                       alt="Original"
@@ -480,6 +481,7 @@ export function ImageCompressor() {
                         Processing...
                       </div>
                     ) : entry.compressedUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={entry.compressedUrl}
                         alt="Compressed"

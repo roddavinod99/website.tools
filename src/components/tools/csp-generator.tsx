@@ -66,7 +66,6 @@ export function CspGenerator() {
   const [customDirs, setCustomDirs] = useState<{ id: string; sources: Source[] }[]>([]);
   const [reportUri, setReportUri] = useState("");
   const [reportTo, setReportTo] = useState("");
-  const [customDomainInput, setCustomDomainInput] = useState("");
   const [nonce, setNonce] = useState("");
   const [asMeta, setAsMeta] = useState(false);
   const [upgradeInsecure, setUpgradeInsecure] = useState(false);

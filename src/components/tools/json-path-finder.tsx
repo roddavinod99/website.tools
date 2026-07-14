@@ -184,23 +184,12 @@ export function JsonPathFinder() {
     reader.readAsText(file);
   };
 
-  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const resultJson = useMemo(() => {
     if (!parsed || !pathExpr.trim()) return "";
     function resolvePath(obj: unknown, segments: string[]): unknown[] {
       if (segments.length === 0) return [obj];
       const [head, ...rest] = segments;
       if (head === "..") {
-        const results: unknown[] = [];
-        function deepScan(val: unknown): void {
-          if (rest.length === 0) { results.push(val); return; }
-          if (val === null || typeof val !== "object") return;
-          if (Array.isArray(val)) {
-            for (const item of val) deepScan(item);
-          } else {
-            for (const v of Object.values(val as Record<string, unknown>)) deepScan(v);
-          }
-        }
         if (rest.length > 0) {
           const key = rest[0];
           const remaining = rest.slice(1);

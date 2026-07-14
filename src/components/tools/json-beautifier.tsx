@@ -128,7 +128,14 @@ export function JSONBeautifier() {
   const print = useCallback(() => {
     if (!output) return;
     const w = window.open("", "", "width=800,height=600");
-    if (w) { w.document.write(`<pre style="font-family:monospace;font-size:13px;">${output.replace(/</g, "&lt;")}</pre>`); w.print(); }
+    if (w) {
+      const pre = w.document.createElement("pre");
+      pre.style.fontFamily = "monospace";
+      pre.style.fontSize = "13px";
+      pre.textContent = output;
+      w.document.body.appendChild(pre);
+      w.print();
+    }
   }, [output]);
 
   const theme = themes[themeName] || themes.default;

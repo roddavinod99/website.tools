@@ -604,6 +604,7 @@ export function FaviconGenerator() {
             onChange={(e) => handleImageUpload(e.target.files?.[0] ?? null)}
           />
           {imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src={imageUrl} alt="Uploaded" className="max-h-20 rounded object-contain" />
           ) : (
             <>
@@ -756,6 +757,7 @@ export function FaviconGenerator() {
                 <span className="ml-2 text-[10px] text-surface-400">favicon — Browser Tab</span>
               </div>
               <div className="flex items-center gap-2 p-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={generatedSizes.find((s) => s.size === 32)?.dataUrl || generatedSizes[0]?.dataUrl}
                   alt="favicon"
@@ -767,6 +769,7 @@ export function FaviconGenerator() {
             {icoUrl && (
               <div className="text-center">
                 <p className="text-xs text-surface-500 dark:text-dark-muted">favicon.ico</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={icoUrl} alt="ICO" className="mx-auto mt-1 h-8 w-8" />
               </div>
             )}
@@ -780,6 +783,7 @@ export function FaviconGenerator() {
                 key={gen.size}
                 className="flex flex-col items-center rounded-lg border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={gen.dataUrl}
                   alt={`${gen.size}x${gen.size}`}

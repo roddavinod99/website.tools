@@ -17,7 +17,7 @@ export function InContentAd({ className = "", slot = "3456789012", width = 336, 
       const adsbygoogle = (window as { adsbygoogle?: unknown[] }).adsbygoogle || [];
       (adsbygoogle as unknown[]).push({});
     } catch {
-      console.warn("AdSense push failed");
+      // AdSense not available
     }
   }, [isEnabled]);
 

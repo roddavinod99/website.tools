@@ -195,7 +195,7 @@ export function QRGenerator() {
     if (input.trim()) {
       setHistory((prev) => [input.trim(), ...prev.filter((h) => h !== input.trim())].slice(0, 20));
     }
-  }, [getEffectiveInput, ecc, fgColor, bgColor, useGradient, gradientStart, gradientEnd, dotShape, cellSize, margin, outputFormat, includeLogo, logoUrl, input, renderToCanvas, buildSvgFromMatrix]);
+  }, [getEffectiveInput, ecc, cellSize, margin, outputFormat, includeLogo, logoUrl, input, renderToCanvas, buildSvgFromMatrix, bgColor]);
 
   useEffect(() => {
     if (input.trim()) {
@@ -439,7 +439,7 @@ export function QRGenerator() {
             <button onClick={copyToClipboard} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
               Copy Image
             </button>
-            <button onClick={() => { const w = window.open(""); w?.document.write(`<img src="${qrDataUrl}" />`); }}
+            <button onClick={() => { const w = window.open(""); if (w) { const img = w.document.createElement("img"); img.src = qrDataUrl; w.document.body.appendChild(img); } }}
               className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
               Preview Full Size
             </button>

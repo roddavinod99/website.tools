@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { allTools, siteConfig, categories } from "@/lib/constants";
+import { allTools, siteConfig } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -62,8 +62,6 @@ export default async function ToolPage({ params }: Props) {
     .filter((t) => t.id !== tool.id && !sameCategory.find((st) => st.id === t.id))
     .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
     .slice(0, 3);
-
-  const categoryObj = categories.find((c) => c.name === tool.category);
 
   return (
     <>

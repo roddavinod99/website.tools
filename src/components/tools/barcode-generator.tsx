@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import DOMPurify from "dompurify";
 
 const FORMATS = [
   "CODE128", "CODE39", "EAN-13", "EAN-8", "UPC-A", "ITF-14", "MSI", "pharmacode", "codabar",
@@ -105,9 +106,10 @@ export function BarcodeGenerator() {
     const v = validateInput(format, input);
     if (!v.valid) { setError(v.error!); return; }
     const svgStr = await generateSingle(input, format);
-    if (svgRef.current) svgRef.current.innerHTML = svgStr;
+    const safeStr = DOMPurify.sanitize(svgStr, { USE_PROFILES: { svg: true, svgFilters: true } });
+    if (svgRef.current) svgRef.current.innerHTML = safeStr;
     const tmp = document.createElement("div");
-    tmp.innerHTML = svgStr;
+    tmp.innerHTML = safeStr;
     const svgEl = tmp.querySelector("svg");
     if (svgEl) {
       const w = svgEl.getAttribute("width") || `${barWidth * 100}`;

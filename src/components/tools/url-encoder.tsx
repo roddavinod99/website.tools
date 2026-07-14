@@ -15,10 +15,6 @@ const SPECIAL_CHARS_REF: Record<string, string> = {
   "`": "%60", "{": "%7B", "|": "%7C", "}": "%7D", "~": "%7E",
 };
 
-function detectEncoded(input: string): boolean {
-  return /%[0-9a-fA-F]{2}/.test(input);
-}
-
 function encodeWithSet(str: string, type: EncodingType, charSet: CharSet): string {
   const fn = type === "component" ? encodeURIComponent : encodeURI;
   if (charSet === "all") return fn(str);

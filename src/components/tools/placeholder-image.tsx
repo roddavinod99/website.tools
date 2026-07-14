@@ -125,6 +125,7 @@ export function PlaceholderImage() {
       </div>
 
       <div className="rounded-lg border border-surface-200 bg-white p-4 flex items-center justify-center dark:border-dark-border dark:bg-dark-surface">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={dataUri} alt="Placeholder preview" className="max-w-full" style={{ maxHeight: 300 }} />
       </div>
 

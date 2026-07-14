@@ -308,6 +308,7 @@ export function TotpGenerator() {
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Scan with authenticator app</p>
           <div className="flex flex-col items-center gap-3">
             {qrDataUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={qrDataUrl} alt="TOTP QR Code" className="rounded-lg border border-surface-200 dark:border-dark-border" />
             ) : (
               <div className="w-[200px] h-[200px] rounded-lg bg-surface-200 dark:bg-dark-border flex items-center justify-center text-xs text-surface-400">Generating QR...</div>

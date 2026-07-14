@@ -200,7 +200,7 @@ export function ImageResizer() {
   const [originalDimensions, setOriginalDimensions] = useState({ width: 0, height: 0 });
   const [unit, setUnit] = useState<UnitType>("px");
   const [fitMode, setFitMode] = useState<FitMode>("exact");
-  const [keepRatio, setKeepRatio] = useState(true);
+  const [keepRatio] = useState(true);
   const [format, setFormat] = useState<ImageFormat>("image/png");
   const [quality, setQuality] = useState(85);
   const [preserveExif, setPreserveExif] = useState(false);
@@ -744,6 +744,7 @@ export function ImageResizer() {
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <p className="mb-1 text-xs text-surface-500 dark:text-dark-muted">Original</p>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={entry.originalUrl}
                       alt="Original"
@@ -755,6 +756,7 @@ export function ImageResizer() {
                     {entry.processing ? (
                       <div className="flex h-full items-center justify-center text-xs text-surface-400">Processing...</div>
                     ) : entry.outputUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={entry.outputUrl}
                         alt="Resized"
@@ -788,6 +790,7 @@ export function ImageResizer() {
               <div className="grid gap-3 border-t border-surface-200 p-3 sm:grid-cols-2 lg:grid-cols-3 dark:border-dark-border">
                 {history.map((entry) => (
                   <div key={entry.id} className="flex items-center gap-3 rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={entry.outputUrl || entry.originalUrl}
                       alt=""

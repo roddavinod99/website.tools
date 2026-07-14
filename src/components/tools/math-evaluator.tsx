@@ -146,7 +146,7 @@ export function MathEvaluator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">History</label>
           <div className="space-y-1 max-h-48 overflow-y-auto">
-            {history.map((h, i) => (
+            {history.map((h) => (
               <button
                 key={h.timestamp}
                 onClick={() => { setExpression(h.expression); }}

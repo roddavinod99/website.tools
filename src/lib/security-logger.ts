@@ -47,7 +47,8 @@ export function logSecurityEvent(
   truncateLog();
 
   if (typeof process !== "undefined" && process.env?.NODE_ENV === "production") {
-    console.error(JSON.stringify(entry));
+    const safeEntry = { ...entry, ip: "***" };
+    console.error(JSON.stringify(safeEntry));
   }
 }
 

@@ -279,6 +279,7 @@ export function ExifReader() {
         <div key={idx} className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2 min-w-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={f.preview} alt={f.file.name} className="h-10 w-10 rounded border border-surface-100 object-cover dark:border-dark-border flex-shrink-0" />
               <div className="min-w-0">
                 <p className="text-sm font-medium text-surface-700 dark:text-dark-text truncate">{f.file.name}</p>
@@ -295,6 +296,7 @@ export function ExifReader() {
           </div>
 
           <div className="flex flex-col md:flex-row gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={f.preview} alt={f.file.name} className="max-h-40 rounded border border-surface-100 dark:border-dark-border object-contain" />
             {f.exif && Object.keys(f.exif).length > 0 ? (
               <div className="flex-1 min-w-0">

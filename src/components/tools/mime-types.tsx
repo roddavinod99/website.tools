@@ -97,34 +97,6 @@ export function MimeTypes() {
   const [output, setOutput] = useState<string[]>([]);
   const [direction, setDirection] = useState<Direction>("extToMime");
 
-  const lookup = useCallback(() => {
-    const q = input.trim().toLowerCase();
-    if (!q) { setOutput([]); return; }
-
-    if (direction === "extToMime") {
-      const ext = q.replace(/^\./, "");
-      const mime = extToMimeMap[ext];
-      setOutput(mime ? [mime] : []);
-    } else {
-      const results: string[] = [];
-      const normalizedInput = q.replace(/\s*;\s*charset=.*$/, "");
-      for (const [mime, exts] of Object.entries(MIME_DB)) {
-        if (mime.toLowerCase() === normalizedInput) {
-          results.push(...exts.map((e) => `.${e}`));
-          break;
-        }
-      }
-      if (results.length === 0) {
-        for (const [mime, exts] of Object.entries(MIME_DB)) {
-          if (mime.toLowerCase().includes(normalizedInput)) {
-            results.push(`${mime} → .${exts.join(", .")}`);
-          }
-        }
-      }
-      setOutput(results.slice(0, 20));
-    }
-  }, [input, direction]);
-
   const handleInput = useCallback((val: string) => {
     setInput(val);
     if (!val.trim()) { setOutput([]); return; }

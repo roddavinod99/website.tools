@@ -163,6 +163,7 @@ export function ImageToBase64() {
             {images.map((img, i) => (
               <div key={i} className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex gap-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.dataUri} alt={img.file.name} className="max-h-32 rounded border border-surface-100 dark:border-dark-border" />
                   <div className="flex-1 min-w-0 space-y-1">
                     <p className="text-sm font-medium text-surface-700 dark:text-dark-text truncate">{img.file.name}</p>
@@ -203,6 +204,7 @@ export function ImageToBase64() {
           {decodedPreview && (
             <div className="space-y-2">
               <p className="text-xs text-surface-500 dark:text-dark-muted">Detected format: {decodedMime}</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={decodedPreview} alt="Decoded" className="max-h-48 rounded-lg border border-surface-200 dark:border-dark-border" />
               <div className="flex gap-2">
                 <button onClick={() => download(decodedPreview, `decoded.${decodedMime.split("/")[1]}`)} className="rounded bg-brand-500 px-2.5 py-1 text-xs text-white hover:bg-brand-600">Download Image</button>

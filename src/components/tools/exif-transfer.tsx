@@ -212,6 +212,7 @@ export function ExifTransfer() {
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Source (has EXIF data)</p>
           {sourceFile ? (
             <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={sourceFile.preview} alt="source" className="max-h-16 rounded" />
               <p className="text-xs text-surface-400 mt-1 truncate max-w-full">{sourceFile.file.name} ({fileSizeStr(sourceFile.file.size)})</p>
               <p className="text-xs text-green-600 mt-0.5">{Object.keys(sourceFile.exif).length} EXIF fields</p>
@@ -236,6 +237,7 @@ export function ExifTransfer() {
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Target (receives EXIF)</p>
           {targetFile ? (
             <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={targetFile.preview} alt="target" className="max-h-16 rounded" />
               <p className="text-xs text-surface-400 mt-1 truncate max-w-full">{targetFile.file.name} ({fileSizeStr(targetFile.file.size)})</p>
             </>

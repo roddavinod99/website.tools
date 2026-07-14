@@ -20,23 +20,6 @@ function generateUla(): { full: string; compressed: string; prefix: string } {
   return { full, compressed, prefix };
 }
 
-function expandUla(segments: string): string {
-  const parts = segments.replace(/::/, ":__COMPRESS__:").split(":");
-  const expanded: string[] = [];
-  let compressed = false;
-  for (const p of parts) {
-    if (p === "__COMPRESS__") {
-      compressed = true;
-      const remaining = 8 - expanded.length - (parts.length - parts.indexOf("__COMPRESS__") - 1);
-      for (let i = 0; i < remaining; i++) expanded.push("0000");
-    } else {
-      expanded.push(p.padStart(4, "0"));
-    }
-  }
-  while (expanded.length < 8) expanded.push("0000");
-  return expanded.join(":");
-}
-
 export function Ipv6UlaGenerator() {
   const [count, setCount] = useState(1);
   const [ulas, setUlas] = useState<{ full: string; compressed: string; prefix: string }[]>([]);

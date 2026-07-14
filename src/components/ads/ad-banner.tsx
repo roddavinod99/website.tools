@@ -17,7 +17,7 @@ export function AdBanner({ className = "", slot = "1234567890", width = 728, hei
       const adsbygoogle = (window as { adsbygoogle?: unknown[] }).adsbygoogle || [];
       (adsbygoogle as unknown[]).push({});
     } catch {
-      console.warn("AdSense push failed");
+      // AdSense not available
     }
   }, [isEnabled]);
 

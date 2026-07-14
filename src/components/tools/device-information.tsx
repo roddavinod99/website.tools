@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 interface DeviceInfo {
   userAgent: string;
@@ -35,30 +35,14 @@ interface DeviceInfo {
   ink: boolean;
 }
 
-function getDeviceType(): string {
-  const ua = navigator.userAgent;
-  if (/tablet|ipad|playbook|silk/i.test(ua)) return "Tablet";
-  if (/mobile|iphone|ipod|android.*mobile|opera mini|iemobile/i.test(ua)) return "Mobile";
-  if (/tv|smarttv|googletv|roku|firetv|appletv/i.test(ua)) return "Smart TV";
-  return "Desktop";
-}
+let cachedInfo: DeviceInfo | null = null;
 
-function getBrowserInfo(): string {
-  const ua = navigator.userAgent;
-  if (ua.includes("Firefox/") && !ua.includes("Seamonkey")) return "Firefox";
-  if (ua.includes("Edg/")) return "Edge";
-  if (ua.includes("OPR/") || ua.includes("Opera")) return "Opera";
-  if (ua.includes("SamsungBrowser")) return "Samsung Browser";
-  if (ua.includes("UCBrowser")) return "UC Browser";
-  if (ua.includes("Chrome/") && !ua.includes("Edg/")) return "Chrome";
-  if (ua.includes("Safari/") && !ua.includes("Chrome")) return "Safari";
-  return "Unknown";
-}
-
-function collectDeviceInfo(): DeviceInfo {
+function getDeviceInfoSnapshot(): DeviceInfo | null {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return null;
+  if (cachedInfo) return cachedInfo;
   const conn = (navigator as Navigator & { connection?: { effectiveType?: string; downlink?: number; type?: string } }).connection;
   const devMem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
-  return {
+  cachedInfo = {
     userAgent: navigator.userAgent,
     platform: navigator.platform || "Unknown",
     language: navigator.language,
@@ -90,10 +74,37 @@ function collectDeviceInfo(): DeviceInfo {
     javaEnabled: false,
     ink: (window as Window & { StyleMedia?: unknown }).StyleMedia !== undefined,
   };
+  return cachedInfo;
+}
+
+function getDeviceInfoServerSnapshot(): DeviceInfo | null {
+  return null;
+}
+
+function subscribeDeviceInfo(): () => void {
+  return () => {};
+}
+
+function getDeviceType(ua: string): string {
+  if (/tablet|ipad|playbook|silk/i.test(ua)) return "Tablet";
+  if (/mobile|iphone|ipod|android.*mobile|opera mini|iemobile/i.test(ua)) return "Mobile";
+  if (/tv|smarttv|googletv|roku|firetv|appletv/i.test(ua)) return "Smart TV";
+  return "Desktop";
+}
+
+function getBrowserInfo(ua: string): string {
+  if (ua.includes("Firefox/") && !ua.includes("Seamonkey")) return "Firefox";
+  if (ua.includes("Edg/")) return "Edge";
+  if (ua.includes("OPR/") || ua.includes("Opera")) return "Opera";
+  if (ua.includes("SamsungBrowser")) return "Samsung Browser";
+  if (ua.includes("UCBrowser")) return "UC Browser";
+  if (ua.includes("Chrome/") && !ua.includes("Edg/")) return "Chrome";
+  if (ua.includes("Safari/") && !ua.includes("Chrome")) return "Safari";
+  return "Unknown";
 }
 
 export function DeviceInformation() {
-  const [info] = useState<DeviceInfo | null>(() => collectDeviceInfo());
+  const info = useSyncExternalStore(subscribeDeviceInfo, getDeviceInfoSnapshot, getDeviceInfoServerSnapshot);
   const [copied, setCopied] = useState(false);
 
   const copyAll = async () => {
@@ -118,7 +129,7 @@ export function DeviceInformation() {
     {
       title: "Browser",
       items: [
-        { label: "Browser", value: getBrowserInfo() },
+        { label: "Browser", value: getBrowserInfo(info.userAgent) },
         { label: "User Agent", value: info.userAgent },
         { label: "Platform", value: info.platform },
         { label: "Language", value: info.language },
@@ -132,7 +143,7 @@ export function DeviceInformation() {
     {
       title: "Display",
       items: [
-        { label: "Device Type", value: getDeviceType() },
+        { label: "Device Type", value: getDeviceType(info.userAgent) },
         { label: "Screen Resolution", value: `${info.screenWidth} × ${info.screenHeight}` },
         { label: "Available Screen", value: `${info.availWidth} × ${info.availHeight}` },
         { label: "Window Size", value: `${info.windowWidth} × ${info.windowHeight}` },

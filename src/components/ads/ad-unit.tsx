@@ -36,7 +36,7 @@ export function AdUnit({ className = "", slot, format, label: customLabel }: AdU
       const adsbygoogle = (window as { adsbygoogle?: unknown[] }).adsbygoogle || [];
       (adsbygoogle as unknown[]).push({});
     } catch {
-      console.warn("AdSense push failed");
+      // AdSense not available
     }
   }, [isEnabled]);
 
