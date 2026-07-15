@@ -12,7 +12,7 @@ const staticPages: MetadataRoute.Sitemap = [
   { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
   { url: `${BASE}/categories`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
   { url: `${BASE}/guides`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-  { url: `${BASE}/blog`, lastModified: new Date("2026-06-28"), changeFrequency: "weekly", priority: 0.7 },
+  { url: `${BASE}/blog`, lastModified: new Date(blogData[0].dateISO), changeFrequency: "weekly", priority: 0.7 },
   { url: `${BASE}/learning`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   { url: `${BASE}/popular`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
   { url: `${BASE}/new`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
@@ -25,8 +25,8 @@ const staticPages: MetadataRoute.Sitemap = [
   { url: `${BASE}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
   { url: `${BASE}/report-bug`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
   { url: `${BASE}/roadmap`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-  { url: `${BASE}/search`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
-  { url: `${BASE}/sitemap`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+  // search excluded — dynamic content with no unique indexable value
+  // sitemap excluded — self-referencing HTML page not needed in XML sitemap
   { url: `${BASE}/status`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.3 },
   { url: `${BASE}/suggest`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
   { url: `${BASE}/support`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
