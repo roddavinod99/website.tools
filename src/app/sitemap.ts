@@ -47,12 +47,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const toolPages: MetadataRoute.Sitemap = allTools.map((tool) => ({
-    url: `${BASE}/tools/${tool.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: tool.featured ? 0.9 : tool.new ? 0.85 : 0.8,
-  }));
+  const toolPages: MetadataRoute.Sitemap = allTools
+    .filter((tool) => !tool.noindex)
+    .map((tool) => ({
+      url: `${BASE}/tools/${tool.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: tool.featured ? 0.9 : tool.new ? 0.85 : 0.8,
+    }));
 
   const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) => ({
     url: `${BASE}/guides/${topic.slug}`,

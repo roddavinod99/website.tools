@@ -13,6 +13,7 @@ export interface Tool {
   wasm?: boolean;
   aliasSlugs?: string[];
   keywords?: string[];
+  noindex?: boolean;
 }
 
 export interface Category {
