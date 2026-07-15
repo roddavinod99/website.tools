@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Search, Moon, Sun } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/constants";
 
@@ -38,9 +39,13 @@ export function Header() {
             href="/"
             className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500 text-xs font-bold text-white">
-              D
-            </span>
+            <Image
+              src="/logo.png"
+              alt={siteConfig.name}
+              width={32}
+              height={32}
+              className="rounded-lg"
+            />
             <span className="hidden sm:inline">{siteConfig.name}</span>
           </Link>
           <nav className="hidden md:flex items-center gap-1">

@@ -32,7 +32,7 @@ export default function AboutPage() {
         url: siteConfig.url,
         logo: {
           "@type": "ImageObject",
-          url: `${siteConfig.url}/favicon.svg`,
+          url: `${siteConfig.url}/logo.png`,
         },
         description: siteConfig.description,
         email: siteConfig.contactEmail,

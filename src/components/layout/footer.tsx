@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/constants";
 
@@ -50,9 +51,13 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500 text-xs font-bold text-white">
-                D
-              </span>
+              <Image
+                src="/logo.png"
+                alt={siteConfig.name}
+                width={32}
+                height={32}
+                className="rounded-lg"
+              />
               {siteConfig.name}
             </Link>
             <p className="mt-3 text-sm text-surface-500 dark:text-dark-muted max-w-xs">
