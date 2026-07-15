@@ -40,11 +40,18 @@ export function Header() {
             className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text"
           >
             <Image
-              src="/logo.png"
+              src="/logo-light.png"
               alt={siteConfig.name}
               width={32}
               height={32}
-              className="rounded-lg"
+              className="rounded-lg block dark:hidden"
+            />
+            <Image
+              src="/logo-dark.png"
+              alt={siteConfig.name}
+              width={32}
+              height={32}
+              className="rounded-lg hidden dark:block"
             />
             <span className="hidden sm:inline">{siteConfig.name}</span>
           </Link>

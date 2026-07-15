@@ -47,7 +47,7 @@ const jsonLd = {
       url: siteConfig.url,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}/logo-light.png`,
       },
       description: siteConfig.description,
       email: siteConfig.contactEmail,
@@ -137,9 +137,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo-light.png" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#0070f3" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

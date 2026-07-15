@@ -175,7 +175,7 @@ export default async function GuidePage({ params }: Props) {
               url: siteConfig.url,
               logo: {
                 "@type": "ImageObject",
-                url: `${siteConfig.url}/logo.png`,
+                url: `${siteConfig.url}/logo-light.png`,
               },
             },
           }),
