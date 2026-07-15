@@ -1,17 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { create, all, type MathJsInstance } from "mathjs";
-
-const math: MathJsInstance = create(all);
-
-math.import({
-  import: () => { throw new Error("Function import is disabled"); },
-  createUnit: () => { throw new Error("Function createUnit is disabled"); },
-  reviver: () => { throw new Error("Function reviver is disabled"); },
-}, { override: true });
-
-const limitedEvaluate = math.evaluate.bind(math);
+import { useState, useCallback, useEffect } from "react";
 
 function factorial(n: number): number {
   if (n < 0) return NaN;
@@ -21,7 +10,7 @@ function factorial(n: number): number {
   return result;
 }
 
-function safeEvaluate(expr: string): number {
+function safeEvaluate(expr: string, limitedEvaluate: (expr: string, scope?: Record<string, unknown>) => unknown): number {
   const processed = expr.replace(/(\d+)!/g, (_, numStr) => {
     return `factorial(${numStr})`;
   });
@@ -52,10 +41,27 @@ export function MathEvaluator() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [libLoading, setLibLoading] = useState(true);
+  const [limitedEvaluate, setLimitedEvaluate] = useState<((expr: string, scope?: Record<string, unknown>) => unknown) | null>(null);
+
+  useEffect(() => {
+    import("mathjs").then((mod) => {
+      const { create, all } = mod;
+      const math = create(all);
+      math.import({
+        import: () => { throw new Error("Function import is disabled"); },
+        createUnit: () => { throw new Error("Function createUnit is disabled"); },
+        reviver: () => { throw new Error("Function reviver is disabled"); },
+      }, { override: true });
+      setLimitedEvaluate(math.evaluate.bind(math));
+      setLibLoading(false);
+    });
+  }, []);
 
   const evaluate = useCallback((expr: string) => {
+    if (!limitedEvaluate) return;
     try {
-      const res = safeEvaluate(expr);
+      const res = safeEvaluate(expr, limitedEvaluate);
       if (typeof res !== "number" || isNaN(res)) {
         setError("Invalid expression");
         setResult(null);
@@ -72,7 +78,7 @@ export function MathEvaluator() {
       setError("Invalid expression");
       setResult(null);
     }
-  }, []);
+  }, [limitedEvaluate]);
 
   const handleSubmit = () => {
     if (expression.trim()) evaluate(expression.trim());
@@ -80,6 +86,11 @@ export function MathEvaluator() {
 
   return (
     <div className="space-y-4">
+      {libLoading && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading math library...</p>
+        </div>
+      )}
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Math Expression</label>
         <div className="flex gap-2">

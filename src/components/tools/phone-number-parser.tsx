@@ -1,11 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
-import parsePhoneNumberFromString, {
-  getCountries,
-  getCountryCallingCode,
-  type CountryCode,
-} from "libphonenumber-js";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
 function booleanToHumanReadable(value: boolean | undefined): string {
   return value ? "Yes" : "No";
@@ -19,28 +14,46 @@ function formatType(type: string | undefined): string {
     .join(" ");
 }
 
+type LibPhoneNumber = {
+  default: (...args: any[]) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  getCountries: (...args: any[]) => string[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  getCountryCallingCode: (...args: any[]) => string; // eslint-disable-line @typescript-eslint/no-explicit-any
+};
+
 export function PhoneNumberParser() {
   const [rawPhone, setRawPhone] = useState("");
-  const [defaultCountry, setDefaultCountry] = useState<CountryCode>("US");
+  const [defaultCountry, setDefaultCountry] = useState<string>("US");
   const [copiedField, setCopiedField] = useState("");
+  const [libLoading, setLibLoading] = useState(true);
+  const [lib, setLib] = useState<LibPhoneNumber | null>(null);
 
-  const countriesOptions = useMemo(
-    () =>
-      getCountries().map((code) => ({
-        label: `${code} (+${getCountryCallingCode(code)})`,
-        value: code,
-      })),
-    []
-  );
+  useEffect(() => {
+    import("libphonenumber-js").then((mod) => {
+      setLib({
+        default: mod.default,
+        getCountries: mod.getCountries,
+        getCountryCallingCode: mod.getCountryCallingCode,
+      });
+      setLibLoading(false);
+    });
+  }, []);
+
+  const countriesOptions = useMemo(() => {
+    if (!lib) return [];
+    return lib.getCountries().map((code: string) => ({
+      label: `${code} (+${lib.getCountryCallingCode(code)})`,
+      value: code,
+    }));
+  }, [lib]);
 
   const parsed = useMemo(() => {
-    if (!rawPhone.trim()) return undefined;
+    if (!rawPhone.trim() || !lib) return undefined;
     try {
-      return parsePhoneNumberFromString(rawPhone, defaultCountry);
+      return lib.default(rawPhone, defaultCountry);
     } catch {
       return undefined;
     }
-  }, [rawPhone, defaultCountry]);
+  }, [rawPhone, defaultCountry, lib]);
 
   const parsedDetails = useMemo(() => {
     if (!parsed) return undefined;
@@ -65,11 +78,16 @@ export function PhoneNumberParser() {
 
   return (
     <div className="space-y-4">
+      {libLoading && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading phone number library...</p>
+        </div>
+      )}
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Default country code:</label>
         <select
           value={defaultCountry}
-          onChange={(e) => setDefaultCountry(e.target.value as CountryCode)}
+          onChange={(e) => setDefaultCountry(e.target.value)}
           className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         >
           {countriesOptions.map((c) => (

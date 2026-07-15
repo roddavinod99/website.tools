@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const cspValue = [
   "default-src 'self'",
@@ -71,8 +76,8 @@ const nextConfig: NextConfig = {
   ],
 
   experimental: {
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ["lucide-react", "highlight.js"],
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0d14"/>
+      <stop offset="50%" stop-color="#0f111a"/>
+      <stop offset="100%" stop-color="#080910"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f8cff"/>
+      <stop offset="50%" stop-color="#6c5ce7"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="glow1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f8cff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4f8cff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glow2" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="accentBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f8cff"/>
+      <stop offset="50%" stop-color="#6c5ce7"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <filter id="glassBlur">
+      <feGaussianBlur stdDeviation="1"/>
+    </filter>
+    <clipPath id="safeZone">
+      <rect x="80" y="40" width="1040" height="550" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Ambient glow - top right -->
+  <circle cx="900" cy="100" r="300" fill="url(#glow1)"/>
+  <circle cx="300" cy="500" r="250" fill="url(#glow2)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.02">
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+    </pattern>
+    <rect width="1200" height="630" fill="url(#grid)"/>
+  </g>
+
+  <!-- Decorative code-like elements -->
+  <g opacity="0.04" font-family="'SF Mono', 'Cascadia Code', monospace" font-size="10" fill="#6366f1">
+    <text x="80" y="100">{ tools: [ 137 items ] }</text>
+    <text x="80" y="115">├─ formatters/</text>
+    <text x="80" y="130">├─ generators/</text>
+    <text x="80" y="145">├─ converters/</text>
+    <text x="80" y="160">└─ security/</text>
+    <text x="1030" y="520">import { all } from "tools"</text>
+    <text x="1030" y="535">class DevStackIO extends Platform</text>
+  </g>
+
+  <!-- Accent bar at top -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#accentBar)"/>
+
+  <!-- Glassmorphic card behind content -->
+  <rect x="80" y="80" width="1040" height="470" rx="20" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- Content area -->
+
+  <!-- Eyebrow / badge -->
+  <rect x="100" y="110" width="140" height="28" rx="14" fill="rgba(79,140,255,0.12)" stroke="rgba(79,140,255,0.2)" stroke-width="0.5"/>
+  <text x="170" y="129" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="600" fill="#4f8cff" text-anchor="middle" letter-spacing="0.5">
+    137+ FREE TOOLS
+  </text>
+
+  <!-- Main headline -->
+  <text x="100" y="200" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="800" fill="#ffffff" letter-spacing="-1.5">
+    Developer Tools
+  </text>
+  <text x="100" y="285" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="800" fill="#ffffff" letter-spacing="-1.5">
+    for the Modern Web
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="345" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="400" fill="#8488a0" letter-spacing="-0.3">
+    Privacy-first, browser-based. JSON, JWT, crypto, images, text &amp; more.
+  </text>
+
+  <!-- Feature pills row -->
+  <g transform="translate(100, 390)">
+    <rect x="0" y="0" width="105" height="32" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="52" y="21" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#b0b4ce" text-anchor="middle">⚡ No Login</text>
+
+    <rect x="118" y="0" width="130" height="32" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="183" y="21" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#b0b4ce" text-anchor="middle">🔒 Privacy First</text>
+
+    <rect x="261" y="0" width="130" height="32" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="326" y="21" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#b0b4ce" text-anchor="middle">🆓 100% Free</text>
+  </g>
+
+  <!-- Gradient divider -->
+  <line x1="100" y1="460" x2="420" y2="460" stroke="url(#accentBar)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Domain name -->
+  <text x="100" y="505" font-family="'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace" font-size="20" font-weight="500" fill="url(#accentBar)">
+    tools.devstackio.com
+  </text>
+
+  <!-- Technology badge -->
+  <g transform="translate(1030, 485)">
+    <rect x="0" y="0" width="170" height="40" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="85" y="18" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#8488a0" text-anchor="middle">Built with</text>
+    <text x="85" y="32" font-family="'Inter', sans-serif" font-size="11" font-weight="400" fill="#6b6f8a" text-anchor="middle">Next.js 16 + TypeScript</text>
+  </g>
+
+  <!-- Decorative dots bottom-right -->
+  <g opacity="0.06">
+    <circle cx="1080" cy="500" r="3" fill="#ffffff"/>
+    <circle cx="1100" cy="500" r="3" fill="#ffffff"/>
+    <circle cx="1120" cy="500" r="3" fill="#ffffff"/>
+    <circle cx="1080" cy="520" r="3" fill="#ffffff"/>
+    <circle cx="1100" cy="520" r="3" fill="#ffffff"/>
+    <circle cx="1080" cy="540" r="3" fill="#ffffff"/>
+  </g>
+</svg>

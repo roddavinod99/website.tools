@@ -1,17 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Copy } from "lucide-react";
-import CryptoJS, {
-  HmacMD5,
-  HmacRIPEMD160,
-  HmacSHA1,
-  HmacSHA3,
-  HmacSHA224,
-  HmacSHA256,
-  HmacSHA384,
-  HmacSHA512,
-} from "crypto-js";
 
 type HashFn = "MD5" | "RIPEMD160" | "SHA1" | "SHA224" | "SHA256" | "SHA3" | "SHA384" | "SHA512";
 type OutputEncoding = "Hex" | "Base64" | "Base64url" | "Binary";
@@ -34,38 +24,11 @@ const ENCODING_OPTIONS: { value: OutputEncoding; label: string }[] = [
   { value: "Base64url", label: "Base64-url (URL-safe)" },
 ];
 
-function hmac(message: string, key: string, algorithm: HashFn): CryptoJS.lib.WordArray {
-  switch (algorithm) {
-    case "MD5": return HmacMD5(message, key);
-    case "RIPEMD160": return HmacRIPEMD160(message, key);
-    case "SHA1": return HmacSHA1(message, key);
-    case "SHA224": return HmacSHA224(message, key);
-    case "SHA256": return HmacSHA256(message, key);
-    case "SHA3": return HmacSHA3(message, key);
-    case "SHA384": return HmacSHA384(message, key);
-    case "SHA512": return HmacSHA512(message, key);
-  }
-}
-
 function convertToBinary(hex: string): string {
   return hex
     .split("")
     .map((c) => parseInt(c, 16).toString(2).padStart(4, "0"))
     .join(" ");
-}
-
-function formatResult(result: CryptoJS.lib.WordArray, encoding: OutputEncoding): string {
-  switch (encoding) {
-    case "Binary":
-      return convertToBinary(result.toString(CryptoJS.enc.Hex));
-    case "Base64":
-      return result.toString(CryptoJS.enc.Base64);
-    case "Base64url":
-      return result.toString(CryptoJS.enc.Base64url);
-    case "Hex":
-    default:
-      return result.toString(CryptoJS.enc.Hex);
-  }
 }
 
 export function HmacGenerator() {
@@ -74,10 +37,51 @@ export function HmacGenerator() {
   const [algorithm, setAlgorithm] = useState<HashFn>("SHA256");
   const [encoding, setEncoding] = useState<OutputEncoding>("Hex");
   const [copied, setCopied] = useState(false);
+  const [libLoading, setLibLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [cryptoJS, setCryptoJS] = useState<any>(null);
+
+  useEffect(() => {
+    import("crypto-js").then((mod) => {
+      setCryptoJS(mod);
+      setLibLoading(false);
+    });
+  }, []);
 
   const algoInfo = HASH_FUNCTIONS.find((a) => a.value === algorithm)!;
 
-  const output = message && secretKey
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hmac = (message: string, key: string, algorithm: HashFn): any => {
+    if (!cryptoJS) return null;
+    switch (algorithm) {
+      case "MD5": return cryptoJS.HmacMD5(message, key);
+      case "RIPEMD160": return cryptoJS.HmacRIPEMD160(message, key);
+      case "SHA1": return cryptoJS.HmacSHA1(message, key);
+      case "SHA224": return cryptoJS.HmacSHA224(message, key);
+      case "SHA256": return cryptoJS.HmacSHA256(message, key);
+      case "SHA3": return cryptoJS.HmacSHA3(message, key);
+      case "SHA384": return cryptoJS.HmacSHA384(message, key);
+      case "SHA512": return cryptoJS.HmacSHA512(message, key);
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const formatResult = (result: any, enc: OutputEncoding): string => {
+    if (!cryptoJS || !result) return "";
+    switch (enc) {
+      case "Binary":
+        return convertToBinary(result.toString(cryptoJS.enc.Hex));
+      case "Base64":
+        return result.toString(cryptoJS.enc.Base64);
+      case "Base64url":
+        return result.toString(cryptoJS.enc.Base64url);
+      case "Hex":
+      default:
+        return result.toString(cryptoJS.enc.Hex);
+    }
+  };
+
+  const output = message && secretKey && cryptoJS
     ? formatResult(hmac(message, secretKey, algorithm), encoding)
     : "";
 
@@ -90,6 +94,11 @@ export function HmacGenerator() {
 
   return (
     <div className="space-y-4">
+      {libLoading && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading crypto library...</p>
+        </div>
+      )}
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Message</label>
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3}

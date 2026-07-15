@@ -9,22 +9,23 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 3000,
-        NEXT_PUBLIC_SITE_URL: "https://tools.devstackio.com",
-        NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID || "",
-        NEXT_PUBLIC_ADSENSE_PUBLISHER_ID:
-          process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "",
-        NEXT_PUBLIC_CONTACT_EMAIL: "contact@devstackio.com",
-        DISABLE_RATE_LIMIT: "true",
       },
+      // Environment variables should come from the shell environment, not hardcoded
+      // Set them in .env or in the shell before starting PM2
+      env_file: ".env",
       error_file: "./logs/err.log",
       out_file: "./logs/out.log",
       merge_logs: true,
+      log_date_format: "YYYY-MM-DD HH:mm:ss Z",
       max_memory_restart: "500M",
       max_restarts: 10,
       restart_delay: 5000,
       exp_backoff_restart_delay: 100,
       watch: false,
       autorestart: true,
+      kill_timeout: 5000,
+      listen_timeout: 3000,
+      shutdown_with_message: true,
     },
   ],
 };

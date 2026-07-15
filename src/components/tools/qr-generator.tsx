@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import QRCode from "qrcode";
 import { validateFileSize } from "@/lib/file-security";
 
 type ECCLevel = "L" | "M" | "Q" | "H";
@@ -61,6 +60,14 @@ export function QRGenerator() {
   const [extra, setExtra] = useState<Record<string, string>>({});
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [qrCode, setQrCode] = useState<any>(null);
+
+  useEffect(() => {
+    import("qrcode").then((mod) => {
+      setQrCode(mod.default || mod);
+    });
+  }, []);
 
   const getEffectiveInput = useCallback(() => {
     if (!input.trim()) return "";
@@ -143,7 +150,7 @@ export function QRGenerator() {
 
     let qrData;
     try {
-      qrData = QRCode.create(data, { errorCorrectionLevel: ECC_QRCODE[ecc] });
+      qrData = qrCode.create(data, { errorCorrectionLevel: ECC_QRCODE[ecc] });
     } catch {
       return;
     }
@@ -195,7 +202,7 @@ export function QRGenerator() {
     if (input.trim()) {
       setHistory((prev) => [input.trim(), ...prev.filter((h) => h !== input.trim())].slice(0, 20));
     }
-  }, [getEffectiveInput, ecc, cellSize, margin, outputFormat, includeLogo, logoUrl, input, renderToCanvas, buildSvgFromMatrix, bgColor]);
+  }, [getEffectiveInput, ecc, cellSize, margin, outputFormat, includeLogo, logoUrl, input, renderToCanvas, buildSvgFromMatrix, bgColor, qrCode]);
 
   useEffect(() => {
     if (input.trim()) {
@@ -240,6 +247,11 @@ export function QRGenerator() {
 
   return (
     <div className="space-y-6">
+      {!qrCode && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading QR library...</p>
+        </div>
+      )}
       <div className="flex flex-wrap gap-2">
         {(["url", "text", "email", "phone", "sms", "wifi", "vcard", "location"] as QRType[]).map((t) => (
           <button key={t} onClick={() => setQrType(t)}

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
-import hljs from "highlight.js";
 import { validateFileSize } from "@/lib/file-security";
 
 type Theme = "github" | "dark" | "solarized";
@@ -31,16 +30,18 @@ const EMOJI_MAP: Record<string, string> = {
   ":star:": "⭐", ":zap:": "⚡", ":ship:": "🚢", ":memo:": "📝",
 };
 
-function highlightCode(code: string, lang: string): string {
-  if (lang && hljs.getLanguage(lang)) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function highlightCode(code: string, lang: string, hljsInstance?: any): string {
+  if (hljsInstance && lang && hljsInstance.getLanguage(lang)) {
     try {
-      return hljs.highlight(code, { language: lang }).value;
+      return hljsInstance.highlight(code, { language: lang }).value;
     } catch {}
   }
   return escapeHtml(code);
 }
 
-function renderMarkdown(text: string): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function renderMarkdown(text: string, hljsInstance?: any): string {
   let html = escapeHtml(text);
 
   html = html.replace(/:[\w+]+:/g, m => EMOJI_MAP[m] || m);
@@ -61,7 +62,7 @@ function renderMarkdown(text: string): string {
 
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
     const trimmed = code.trim();
-    const highlighted = highlightCode(trimmed, lang);
+    const highlighted = highlightCode(trimmed, lang, hljsInstance);
     const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted uppercase">${escapeHtml(lang)}</span>` : "";
     return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
   });
@@ -153,6 +154,23 @@ export function MarkdownPreview() {
   const [splitPos, setSplitPos] = useState(50);
   const isDragging = useRef(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [hljsInstance, setHljsInstance] = useState<any>(null);
+
+  useEffect(() => {
+    import("highlight.js").then((mod) => {
+      setHljsInstance(mod.default || mod);
+    });
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css";
+    link.id = "hljs-dynamic-css-preview";
+    document.head.appendChild(link);
+    return () => {
+      const existing = document.getElementById("hljs-dynamic-css-preview");
+      if (existing) existing.remove();
+    };
+  }, []);
 
   const wordCount = useMemo(() => input.trim() ? input.trim().split(/\s+/).length : 0, [input]);
   const readingTime = useMemo(() => Math.max(1, Math.ceil(wordCount / 200)), [wordCount]);
@@ -180,7 +198,7 @@ export function MarkdownPreview() {
   };
 
   const downloadHtml = () => {
-    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Document</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body>${renderMarkdown(input)}</body></html>`;
+    const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Document</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body>${renderMarkdown(input, hljsInstance)}</body></html>`;
     const blob = new Blob([fullHtml], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a"); a.href = url; a.download = "document.html"; a.click();
@@ -188,7 +206,7 @@ export function MarkdownPreview() {
   };
 
   const handleCopy = async (type: "md" | "html") => {
-    await navigator.clipboard.writeText(type === "md" ? input : renderMarkdown(input));
+    await navigator.clipboard.writeText(type === "md" ? input : renderMarkdown(input, hljsInstance));
     setCopyFeedback(`${type.toUpperCase()} copied`);
     setTimeout(() => setCopyFeedback(""), 2000);
   };
@@ -239,7 +257,7 @@ export function MarkdownPreview() {
     return () => { document.removeEventListener("mousemove", handleMouseMove); document.removeEventListener("mouseup", handleMouseUp); };
   }, []);
 
-  const generatedHtml = renderMarkdown(input);
+  const generatedHtml = renderMarkdown(input, hljsInstance);
 
   return (
     <div className="space-y-3 animate-fade-in">

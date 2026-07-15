@@ -1,0 +1,22 @@
+# Default owner for all files
+* @roddavinod99
+
+# CI/CD workflows
+.github/workflows/ @roddavinod99
+
+# Security configuration
+SECURITY.md @roddavinod99
+src/lib/security-logger.ts @roddavinod99
+src/lib/api-security.ts @roddavinod99
+src/proxy.ts @roddavinod99
+nginx/ @roddavinod99
+
+# Deployment configuration
+ecosystem.config.js @roddavinod99
+server.js @roddavinod99
+DEPLOYMENT.md @roddavinod99
+
+# Documentation
+README.md @roddavinod99
+ARCHITECTURE.md @roddavinod99
+CONTRIBUTING.md @roddavinod99

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
-import hljs from "highlight.js";
 import { validateFileSize } from "@/lib/file-security";
 
 type Theme = "light" | "dark" | "sepia";
@@ -24,14 +23,16 @@ function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function highlightCode(code: string, lang: string): string {
-  if (lang && hljs.getLanguage(lang)) {
-    try { return hljs.highlight(code, { language: lang }).value; } catch {}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function highlightCode(code: string, lang: string, hljsInstance?: any): string {
+  if (hljsInstance && lang && hljsInstance.getLanguage(lang)) {
+    try { return hljsInstance.highlight(code, { language: lang }).value; } catch {}
   }
   return escapeHtml(code);
 }
 
-function renderMarkdown(text: string): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function renderMarkdown(text: string, hljsInstance?: any): string {
   let html = escapeHtml(text);
   html = html.replace(/^###### (.+)$/gm, "<h6>$1</h6>");
   html = html.replace(/^##### (.+)$/gm, "<h5>$1</h5>");
@@ -45,7 +46,7 @@ function renderMarkdown(text: string): string {
   html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
-    const highlighted = highlightCode(code.trim(), lang);
+    const highlighted = highlightCode(code.trim(), lang, hljsInstance);
     const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted uppercase">${escapeHtml(lang)}</span>` : "";
     return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
   });
@@ -112,6 +113,23 @@ export function MarkdownEditor() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [hljsInstance, setHljsInstance] = useState<any>(null);
+
+  useEffect(() => {
+    import("highlight.js").then((mod) => {
+      setHljsInstance(mod.default || mod);
+    });
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css";
+    link.id = "hljs-dynamic-css";
+    document.head.appendChild(link);
+    return () => {
+      const existing = document.getElementById("hljs-dynamic-css");
+      if (existing) existing.remove();
+    };
+  }, []);
 
   const wordCount = useMemo(() => input.trim() ? input.trim().split(/\s+/).length : 0, [input]);
   const charCount = useMemo(() => input.length, [input]);
@@ -196,7 +214,7 @@ export function MarkdownEditor() {
     return () => { document.removeEventListener("mousemove", handleMouseMove); document.removeEventListener("mouseup", handleMouseUp); };
   }, []);
 
-  const renderedHtml = renderMarkdown(input);
+  const renderedHtml = renderMarkdown(input, hljsInstance);
 
   return (
     <div className="space-y-3">

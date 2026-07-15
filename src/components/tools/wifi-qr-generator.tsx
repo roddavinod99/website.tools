@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
-import QRCode from "qrcode";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 type Encryption = "nopass" | "WPA" | "WEP" | "WPA2-EAP";
 
@@ -17,6 +16,14 @@ export function WifiQRGenerator() {
   const [identity, setIdentity] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [qrCode, setQrCode] = useState<any>(null);
+
+  useEffect(() => {
+    import("qrcode").then((mod) => {
+      setQrCode(mod.default || mod);
+    });
+  }, []);
 
   const escapeWifiString = (str: string) => str.replace(/([\\;,:"])/g, "\\$1");
 
@@ -40,17 +47,17 @@ export function WifiQRGenerator() {
   }, [ssid, password, encryption, hidden, eapMethod, eapPhase2, identity, anonymous]);
 
   const generateQR = useCallback(async () => {
-    if (!ssid || !canvasRef.current) return;
+    if (!ssid || !canvasRef.current || !qrCode) return;
     const canvas = canvasRef.current;
     try {
-      await QRCode.toCanvas(canvas, buildWifiString(), {
+      await qrCode.toCanvas(canvas, buildWifiString(), {
         width: 300,
         margin: 2,
         color: { dark: fgColor, light: bgColor },
         errorCorrectionLevel: "M",
       });
     } catch { /* ignore */ }
-  }, [ssid, buildWifiString, fgColor, bgColor]);
+  }, [ssid, buildWifiString, fgColor, bgColor, qrCode]);
 
   const download = () => {
     if (!canvasRef.current) return;

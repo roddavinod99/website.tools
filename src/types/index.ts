@@ -9,6 +9,10 @@ export interface Tool {
   featured?: boolean;
   new?: boolean;
   trending?: boolean;
+  worker?: boolean;
+  wasm?: boolean;
+  aliasSlugs?: string[];
+  keywords?: string[];
 }
 
 export interface Category {

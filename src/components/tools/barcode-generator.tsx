@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 const FORMATS = [
   "CODE128", "CODE39", "EAN-13", "EAN-8", "UPC-A", "ITF-14", "MSI", "pharmacode", "codabar",

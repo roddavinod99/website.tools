@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 type SecurityEvent =
   | "upload_rejected_size"
   | "upload_rejected_type"
@@ -20,6 +22,14 @@ interface SecurityLogEntry {
 
 const SECURITY_LOG: SecurityLogEntry[] = [];
 const MAX_LOG_ENTRIES = 1000;
+const IP_HASH_SALT = process.env.IP_HASH_SALT || "default-salt-change-in-production";
+
+function hashIP(ip: string): string {
+  return createHash("sha256")
+    .update(ip.replace(/::ffff:/, "") + IP_HASH_SALT)
+    .digest("hex")
+    .slice(0, 16);
+}
 
 function truncateLog(): void {
   if (SECURITY_LOG.length > MAX_LOG_ENTRIES) {
@@ -37,7 +47,7 @@ export function logSecurityEvent(
   const entry: SecurityLogEntry = {
     timestamp: new Date().toISOString(),
     event,
-    ip: ip.replace(/::ffff:/, ""),
+    ip: hashIP(ip),
     path,
     details,
     userAgent,
@@ -47,8 +57,7 @@ export function logSecurityEvent(
   truncateLog();
 
   if (typeof process !== "undefined" && process.env?.NODE_ENV === "production") {
-    const safeEntry = { ...entry, ip: "***" };
-    console.error(JSON.stringify(safeEntry));
+    console.error(JSON.stringify(entry));
   }
 }
 
@@ -61,8 +70,8 @@ export function getSecurityLogByEvent(event: SecurityEvent): SecurityLogEntry[] 
 }
 
 export function getSecurityLogByIP(ip: string): SecurityLogEntry[] {
-  const cleanIp = ip.replace(/::ffff:/, "");
-  return SECURITY_LOG.filter((e) => e.ip === cleanIp);
+  const hashed = hashIP(ip);
+  return SECURITY_LOG.filter((e) => e.ip === hashed);
 }
 
 export function clearSecurityLog(): void {

@@ -9,6 +9,8 @@ import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
 import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
+import { ServiceWorkerRegister } from "@/components/layout/service-worker-register";
+import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -154,12 +156,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
         <ThemeProvider>
+          <ServiceWorkerRegister />
           <FileCleanupProvider>
             <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
               Skip to content
             </a>
             <Suspense>
               <Analytics />
+              <AnalyticsTracker />
             </Suspense>
             <Header />
             <main id="main-content" className="flex-1">{children}</main>

@@ -14,6 +14,9 @@ const SANITIZE_CONFIG = {
     "d", "cx", "cy", "r", "x", "y", "rx", "ry", "points", "xmlns",
     "preserveAspectRatio", "fill-rule", "clip-rule", "transform",
   ],
+  ALLOW_DATA_ATTR: false,
+  FORBID_TAGS: ["style", "script", "iframe", "object", "embed", "form", "input", "textarea", "select", "button", "noscript"],
+  FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover", "onfocus", "onblur", "onchange", "onsubmit", "onreset", "onselect", "onscroll", "onabort", "onbeforeunload", "onhashchange", "onpopstate", "onstorage"],
 };
 
 export function sanitize(dirty: string): string {

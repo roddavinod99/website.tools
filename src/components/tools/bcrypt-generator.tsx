@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Copy } from "lucide-react";
-import { hashSync, compareSync } from "bcryptjs";
 
 export function BcryptGenerator() {
   const [mode, setMode] = useState<"generate" | "verify">("generate");
@@ -13,25 +12,35 @@ export function BcryptGenerator() {
   const [compareHash, setCompareHash] = useState("");
   const [compareResult, setCompareResult] = useState<boolean | null>(null);
   const [copied, setCopied] = useState(false);
+  const [libLoading, setLibLoading] = useState(true);
+  const [bcrypt, setBcrypt] = useState<{ hashSync: (password: string, salt: number) => string; compareSync: (password: string, hash: string) => boolean } | null>(null);
+
+  useEffect(() => {
+    import("bcryptjs").then((mod) => {
+      setBcrypt({ hashSync: mod.hashSync, compareSync: mod.compareSync });
+      setLibLoading(false);
+    });
+  }, []);
 
   const handleGenerate = useCallback(() => {
-    if (!password) return;
+    if (!password || !bcrypt) return;
     try {
-      const hashed = hashSync(password, cost);
+      const hashed = bcrypt.hashSync(password, cost);
       setResult(hashed);
     } catch {
       setResult("Error generating hash");
     }
-  }, [password, cost]);
+  }, [password, cost, bcrypt]);
 
   const handleCompare = useCallback(() => {
+    if (!bcrypt) return;
     try {
-      const match = compareSync(compareString, compareHash);
+      const match = bcrypt.compareSync(compareString, compareHash);
       setCompareResult(match);
     } catch {
       setCompareResult(false);
     }
-  }, [compareString, compareHash]);
+  }, [compareString, compareHash, bcrypt]);
 
   const copyResult = async () => {
     if (!result) return;
@@ -42,6 +51,11 @@ export function BcryptGenerator() {
 
   return (
     <div className="space-y-6">
+      {libLoading && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading bcrypt library...</p>
+        </div>
+      )}
       <div>
         <div className="flex gap-2 mb-4">
           {(["generate", "verify"] as const).map((m) => (

@@ -32,7 +32,7 @@ sudo nginx -t && sudo systemctl reload nginx
 | Variable | Example | Description |
 |----------|---------|-------------|
 | `${DOMAIN}` | `example.com` | Your site domain |
-| `${APP_HOST}` | `127.0.0.1` | App server address (Docker container or localhost) |
+| `${APP_HOST}` | `127.0.0.1` | App server address (e.g., localhost) |
 | `${DNS_RESOLVER}` | `1.1.1.1 1.0.0.1` | DNS resolvers for OCSP stapling |
 
 ## What This Config Provides

@@ -1,0 +1,14 @@
+{
+  "name": "DevStackIO - Free Developer Tools",
+  "short_name": "DevStackIO",
+  "description": "The internet's best collection of free online tools for developers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0070f3",
+  "orientation": "any",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["developer tools", "utilities", "productivity"]
+}

@@ -80,7 +80,6 @@ Avoid unnecessary dependencies.
 * TypeScript
 * TailwindCSS
 * Node.js
-* Docker
 * PM2
 * Playwright
 * Linux (Oracle Cloud ARM64)
@@ -295,6 +294,39 @@ Never weaken security headers without justification.
 
 ---
 
+
+---
+
+## Advanced Performance Architecture
+
+Prefer:
+
+* dynamic imports for tool components
+* route-level code splitting
+* lazy loading of heavy dependencies
+* Web Workers for CPU-intensive tasks
+* streaming and incremental processing
+* performance budgets enforced in CI
+
+For computationally heavy browser tools, prefer:
+
+```text
+React
+  ↓
+Web Worker
+  ↓
+Rust WebAssembly (when justified)
+```
+
+Rust + WebAssembly should only be introduced when profiling demonstrates meaningful improvements in performance, memory usage, or bundle size. Do not rewrite working TypeScript implementations without measurable benefits.
+
+Avoid:
+
+* eagerly loading all tools
+* blocking the main UI thread
+* introducing WebAssembly without benchmarks
+
+
 # Performance Requirements
 
 The site should remain lightweight and fast.
@@ -321,6 +353,14 @@ Prefer:
 * dynamic imports
 * tree-shakeable packages
 * browser-native APIs
+* lazy loading of syntax highlighters, math libraries, and other heavy dependencies
+
+Performance budgets should be monitored in CI where possible:
+
+* Initial JavaScript ≤ 250 KB per route target
+* Individual tool bundle target ≤ 100 KB
+* Lighthouse Performance ≥ 90
+
 
 ---
 
@@ -370,6 +410,33 @@ Every page should include:
 * social metadata
 
 ---
+
+
+---
+
+## Tool Architecture Guidelines
+
+Prefer a metadata-driven tool registry.
+
+Example:
+
+```ts
+{
+  slug: "json-formatter",
+  category: "formatters",
+  worker: true,
+  wasm: false
+}
+```
+
+The registry should be the source of truth for:
+
+* search indexing
+* sitemap generation
+* metadata generation
+* analytics
+* feature discovery
+
 
 # Developer Tool Requirements
 
@@ -450,24 +517,6 @@ Avoid dependencies for trivial functionality.
 
 ---
 
-# Docker Rules
-
-Containers should be:
-
-* stateless
-* non-root
-* resource-limited
-* restartable
-* minimally privileged
-
-Never:
-
-* run privileged containers
-* use host networking unnecessarily
-* expose internal services publicly
-
----
-
 # Infrastructure Rules
 
 Deployment target:
@@ -540,7 +589,6 @@ Never:
 * disable sanitization
 * expose secrets
 * weaken CSP
-* weaken Docker security
 * introduce breaking changes without justification
 
 ---
@@ -856,12 +904,6 @@ If any answer is "No", the implementation is incomplete and must not be consider
 * <https://www.typescriptlang.org/tsconfig>
 
 ---
-
-## Container Security
-
-* <https://docs.docker.com/engine/security/>
-* <https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html>
-* <https://www.cisecurity.org/benchmark/docker>
 
 ---
 

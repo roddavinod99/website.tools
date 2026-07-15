@@ -13,7 +13,7 @@ export function Badge({ className, variant = "default", children, ...props }: Ba
         variant === "success" && "bg-brand-100 text-brand-700 dark:bg-brand-800 dark:text-brand-200",
         variant === "warning" && "bg-amber-100 text-amber-700 dark:bg-amber-800 dark:text-amber-200",
         variant === "error" && "bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200",
-        variant === "new" && "bg-brand-400 text-white",
+        variant === "new" && "bg-brand-600 text-white dark:bg-brand-500",
         className,
       )}
       {...props}

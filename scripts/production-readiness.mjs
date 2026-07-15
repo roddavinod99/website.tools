@@ -161,7 +161,6 @@ function checkHealthEndpoint() {
 function checkDeploymentConfig() {
   const items = [];
   const checks = [
-    ["Dockerfile", () => existsSync(join(ROOT, "Dockerfile"))],
     ["PM2 config", () => existsSync(join(ROOT, "ecosystem.config.js"))],
     [".env.local", () => existsSync(join(ROOT, ".env.local"))],
     [".gitignore", () => existsSync(join(ROOT, ".gitignore"))],
@@ -170,7 +169,6 @@ function checkDeploymentConfig() {
         return readFileSync(join(ROOT, "next.config.ts"), "utf-8").includes("standalone");
       } catch { return false; }
     }],
-    ["Docker .dockerignore", () => existsSync(join(ROOT, ".dockerignore"))],
   ];
   for (const [label, fn] of checks) {
     items.push(fn() ? `✓ ${label}` : `✗ ${label}`);

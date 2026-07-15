@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { allTools, siteConfig } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { ToolInterface } from "@/components/tools/tool-interface";
+import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
 import Link from "next/link";
 import {
@@ -17,12 +17,21 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return allTools.map((tool) => ({ slug: tool.slug }));
+  const params: { slug: string }[] = [];
+  for (const tool of allTools) {
+    params.push({ slug: tool.slug });
+    if (tool.aliasSlugs) {
+      for (const alias of tool.aliasSlugs) {
+        params.push({ slug: alias });
+      }
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const tool = allTools.find((t) => t.slug === slug);
+  const tool = allTools.find((t) => t.slug === slug) ?? allTools.find((t) => t.aliasSlugs?.includes(slug));
   if (!tool) return {};
   const canonical = `${siteConfig.url}/tools/${tool.slug}`;
   return {
@@ -48,6 +57,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ToolPage({ params }: Props) {
   const { slug } = await params;
+
+  // Check for alias slugs and redirect to canonical
+  const aliasMatch = allTools.find((t) => t.aliasSlugs?.includes(slug));
+  if (aliasMatch) {
+    redirect(`/tools/${aliasMatch.slug}`);
+  }
+
   const tool = allTools.find((t) => t.slug === slug);
   if (!tool) notFound();
 
@@ -141,6 +157,22 @@ export default async function ToolPage({ params }: Props) {
           }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareSourceCode",
+            name: tool.name,
+            description: tool.description,
+            url: `${siteConfig.url}/tools/${tool.slug}`,
+            codeRepository: siteConfig.links.github,
+            programmingLanguage: "TypeScript",
+            runtimePlatform: "Web Browser",
+            license: "https://opensource.org/licenses/MIT",
+          }),
+        }}
+      />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-8">
           <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">

@@ -44,7 +44,7 @@ function isRateLimited(request: NextRequest): string | null {
   const windowMs = 60;
   const maxRequests = isSubmit ? 5 : isContact ? 3 : 100;
 
-  const key = `${ip}:${path}`;
+  const key = `${ip}:${path}:${process.env.pm_id || "0"}`;
   const entry = rateLimitMap.get(key);
 
   if (!entry || entry.reset < now) {
@@ -63,6 +63,14 @@ function isRateLimited(request: NextRequest): string | null {
 
 export default function proxy(request: NextRequest) {
   const response = NextResponse.next();
+
+  // Additional security headers at proxy/middleware level
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
+  response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+  response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
 
   if (!process.env.DISABLE_RATE_LIMIT && request.nextUrl.pathname.startsWith("/api/")) {
     const retryAfter = isRateLimited(request);

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Copy, Plus, Trash2, RefreshCw, QrCode, Download } from "lucide-react";
-import QRCode from "qrcode";
 
 function base32ToBytes(base32: string): Uint8Array {
   const cleaned = base32.replace(/[^A-Za-z2-7]/g, "").toUpperCase();
@@ -98,6 +97,14 @@ export function TotpGenerator() {
   const [timeRemaining, setTimeRemaining] = useState(() => { const s = 30; const n = Math.floor(Date.now() / 1000); return s - (n % s); });
   const [progressPct, setProgressPct] = useState(() => { const s = 30; const n = Math.floor(Date.now() / 1000); const r = s - (n % s); return (r / s) * 100; });
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [qrCode, setQrCode] = useState<any>(null);
+
+  useEffect(() => {
+    import("qrcode").then((mod) => {
+      setQrCode(mod.default || mod);
+    });
+  }, []);
 
   const activeAccount = useMemo(() => accounts.find((a) => a.id === activeId) || accounts[0], [accounts, activeId]);
 
@@ -135,12 +142,12 @@ export function TotpGenerator() {
 
   useEffect(() => {
     const a = activeAccount;
-    if (showQR && a) {
+    if (showQR && a && qrCode) {
       const enc = encodeURIComponent(a.label);
       const uri = `otpauth://totp/${enc}?secret=${a.secret}&algorithm=${a.algorithm}&digits=${a.digits}&period=${a.step}${a.steam ? "&issuer=Steam" : ""}`;
-      QRCode.toDataURL(uri, { width: 200, margin: 2, color: { dark: "#1e293b", light: "#ffffff" } }).then(setQrDataUrl).catch(() => setQrDataUrl(""));
+      qrCode.toDataURL(uri, { width: 200, margin: 2, color: { dark: "#1e293b", light: "#ffffff" } }).then(setQrDataUrl).catch(() => setQrDataUrl(""));
     }
-  }, [showQR, activeAccount]);
+  }, [showQR, activeAccount, qrCode]);
 
   const addAccount = () => {
     const newAcc: Account = {

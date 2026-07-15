@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { AES, TripleDES, Rabbit, RC4, enc } from "crypto-js";
+import { useState, useCallback, useEffect } from "react";
 
 type Algorithm = "aes" | "tripledes" | "rabbit" | "rc4";
 type Mode = "encrypt" | "decrypt";
@@ -13,8 +12,6 @@ const ALGO_OPTIONS: { id: Algorithm; label: string }[] = [
   { id: "rc4", label: "RC4" },
 ];
 
-const ALGO_MAP = { aes: AES, tripledes: TripleDES, rabbit: Rabbit, rc4: RC4 } as const;
-
 export function EncryptDecrypt() {
   const [encryptInput, setEncryptInput] = useState("Lorem ipsum dolor sit amet");
   const [decryptInput, setDecryptInput] = useState("U2FsdGVkX1/EC3+6P5dbbkZ3e1kQ5o2yzuU0NHTjmrKnLBEwreV489Kr0DIB+uBs");
@@ -25,25 +22,41 @@ export function EncryptDecrypt() {
   const [decryptOutput, setDecryptOutput] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState("");
+  const [libLoading, setLibLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [cryptoLib, setCryptoLib] = useState<{ algoMap: Record<Algorithm, any>; enc: any } | null>(null);
+
+  useEffect(() => {
+    import("crypto-js").then((mod) => {
+      const { AES, TripleDES, Rabbit, RC4, enc } = mod;
+      setCryptoLib({
+        algoMap: { aes: AES, tripledes: TripleDES, rabbit: Rabbit, rc4: RC4 },
+        enc,
+      });
+      setLibLoading(false);
+    });
+  }, []);
 
   const encrypt = useCallback(() => {
     setError("");
     if (!encryptInput.trim()) { setEncryptOutput(""); return; }
+    if (!cryptoLib) return;
     try {
-      const result = ALGO_MAP[algorithm].encrypt(encryptInput, secretKey).toString();
+      const result = cryptoLib.algoMap[algorithm].encrypt(encryptInput, secretKey).toString();
       setEncryptOutput(result);
     } catch {
       setError("Encryption failed");
       setEncryptOutput("");
     }
-  }, [encryptInput, algorithm, secretKey]);
+  }, [encryptInput, algorithm, secretKey, cryptoLib]);
 
   const decrypt = useCallback(() => {
     setError("");
     if (!decryptInput.trim()) { setDecryptOutput(""); return; }
+    if (!cryptoLib) return;
     try {
-      const bytes = ALGO_MAP[algorithm].decrypt(decryptInput, secretKey);
-      const result = bytes.toString(enc.Utf8);
+      const bytes = cryptoLib.algoMap[algorithm].decrypt(decryptInput, secretKey);
+      const result = bytes.toString(cryptoLib.enc.Utf8);
       if (!result) {
         setError("Unable to decrypt your text. Check the key and input.");
         setDecryptOutput("");
@@ -54,7 +67,7 @@ export function EncryptDecrypt() {
       setError("Unable to decrypt your text");
       setDecryptOutput("");
     }
-  }, [decryptInput, algorithm, secretKey]);
+  }, [decryptInput, algorithm, secretKey, cryptoLib]);
 
   const handleProcess = () => {
     if (mode === "encrypt") encrypt();
@@ -71,6 +84,11 @@ export function EncryptDecrypt() {
 
   return (
     <div className="space-y-4">
+      {libLoading && (
+        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading crypto library...</p>
+        </div>
+      )}
       <div className="flex flex-wrap gap-2">
         {(["encrypt", "decrypt"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}

@@ -2,13 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { toolkits } from "@/lib/toolkits";
 import { siteConfig } from "@/lib/constants";
-import { JSONToolkit } from "@/components/toolkits/json-toolkit";
-import { EncoderToolkit } from "@/components/toolkits/encoder-toolkit";
-import { GeneratorToolkit } from "@/components/toolkits/generator-toolkit";
-import { SecurityToolkit } from "@/components/toolkits/security-toolkit";
-import { ImageToolkit } from "@/components/toolkits/image-toolkit";
-import { TextToolkit } from "@/components/toolkits/text-toolkit";
-import { DevToolkit } from "@/components/toolkits/dev-toolkit";
+import { DynamicToolkitLoader, type ToolkitSlug } from "@/components/toolkits/dynamic-toolkit-loader";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
@@ -16,18 +10,13 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-const toolkitComponents: Record<string, React.ComponentType> = {
-  "json-toolkit": JSONToolkit,
-  "encoder-toolkit": EncoderToolkit,
-  "generator-toolkit": GeneratorToolkit,
-  "security-toolkit": SecurityToolkit,
-  "image-toolkit": ImageToolkit,
-  "text-toolkit": TextToolkit,
-  "dev-toolkit": DevToolkit,
-};
+const validSlugs: ToolkitSlug[] = [
+  "json-toolkit", "encoder-toolkit", "generator-toolkit",
+  "security-toolkit", "image-toolkit", "text-toolkit", "dev-toolkit",
+];
 
 export async function generateStaticParams() {
-  return Object.keys(toolkitComponents).map((slug) => ({ slug }));
+  return validSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -61,8 +50,7 @@ export default async function ToolkitPage({ params }: Props) {
   const tk = toolkits[slug];
   if (!tk) notFound();
 
-  const Component = toolkitComponents[slug];
-  if (!Component) notFound();
+  if (!validSlugs.includes(slug as ToolkitSlug)) notFound();
 
   return (
     <>
@@ -84,7 +72,7 @@ export default async function ToolkitPage({ params }: Props) {
             <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">{tk.name}</h1>
             <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">{tk.description}</p>
           </div>
-          <Component />
+          <DynamicToolkitLoader slug={slug as ToolkitSlug} />
         </div>
       </section>
     </>
