@@ -1,6 +1,15 @@
 import { siteConfig } from "@/lib/constants";
 import { blogPosts } from "@/lib/blog";
 
+function xmlEscape(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
 export async function GET() {
   const now = new Date().toUTCString();
   const siteUrl = siteConfig.url;
@@ -10,8 +19,8 @@ export async function GET() {
       (post) => `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${siteUrl}/blog/${post.slug}</link>
-      <guid isPermaLink="true">${siteUrl}/blog/${post.slug}</guid>
+      <link>${xmlEscape(siteUrl)}/blog/${xmlEscape(post.slug)}</link>
+      <guid isPermaLink="true">${xmlEscape(siteUrl)}/blog/${xmlEscape(post.slug)}</guid>
       <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${new Date(post.dateISO).toUTCString()}</pubDate>
       <dc:creator><![CDATA[DevStackIO]]></dc:creator>
@@ -27,14 +36,14 @@ export async function GET() {
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:sy="http://purl.org/rss/1.0/modules/syndication/">
   <channel>
-    <title><![CDATA[${siteConfig.name} Blog]]></title>
-    <link>${siteUrl}/blog</link>
+    <title><![CDATA[${xmlEscape(siteConfig.name)} Blog]]></title>
+    <link>${xmlEscape(siteUrl)}/blog</link>
     <description><![CDATA[${siteConfig.description}]]></description>
     <language>en</language>
     <lastBuildDate>${now}</lastBuildDate>
     <sy:updatePeriod>daily</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
-    <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${xmlEscape(siteUrl)}/feed.xml" rel="self" type="application/rss+xml"/>
     ${items}
   </channel>
 </rss>`;

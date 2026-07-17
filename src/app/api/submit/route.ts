@@ -1,13 +1,30 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir, readdir, unlink } from "fs/promises";
-import { join } from "path";
-import { randomUUID } from "crypto";
+import { logSecurityEvent } from "@/lib/security-logger";
 
 const TYPES = ["suggest", "feature-request", "feedback", "report-bug", "newsletter"] as const;
 type FormType = typeof TYPES[number];
 const MAX_BODY_BYTES = 10_000;
 const MAX_FIELD_LENGTH = 2000;
-const MAX_ENTRIES = 500;
+const MAX_QUEUED = 500;
+
+const submissionQueue: Array<{ type: FormType; data: unknown; timestamp: string }> = [];
+
+type QueueEntry = { timestamp: string; ip: string };
+const requestLog = new Map<string, QueueEntry[]>();
+const RATE_LIMIT_WINDOW = 60_000;
+const MAX_REQUESTS = 5;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entries = requestLog.get(ip) || [];
+  const recent = entries.filter((e) => now - new Date(e.timestamp).getTime() < RATE_LIMIT_WINDOW);
+  if (recent.length === 0) {
+    requestLog.delete(ip);
+  } else {
+    requestLog.set(ip, recent);
+  }
+  return recent.length >= MAX_REQUESTS;
+}
 
 function sanitize(val: unknown, maxLen = MAX_FIELD_LENGTH): unknown {
   if (typeof val === "string") return val.trim().slice(0, maxLen);
@@ -25,6 +42,13 @@ function sanitize(val: unknown, maxLen = MAX_FIELD_LENGTH): unknown {
 }
 
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+  if (isRateLimited(ip)) {
+    logSecurityEvent("rate_limit_violation", ip, "/api/submit", "Rate limit exceeded");
+    return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+  }
+
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
   const source = origin || referer;
@@ -69,36 +93,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid form type" }, { status: 400 });
   }
 
-  const dir = join(process.cwd(), "data", "submissions");
-
-  let entryCount = 0;
-  try {
-    const files = await readdir(dir);
-    entryCount = files.length;
-  } catch {}
-
-  if (entryCount > MAX_ENTRIES) {
-    try {
-      const files = await readdir(dir);
-      const sorted = files.sort();
-      const toRemove = sorted.slice(0, sorted.length - MAX_ENTRIES);
-      for (const f of toRemove) await unlink(join(dir, f)).catch(() => {});
-    } catch {}
-  }
+  requestLog.set(ip, [
+    ...(requestLog.get(ip) || []).slice(-MAX_REQUESTS + 1),
+    { timestamp: new Date().toISOString(), ip: "redacted" },
+  ]);
 
   const submission = {
     type: type as FormType,
     data: sanitize(formData),
     timestamp: new Date().toISOString(),
-    ip: "redacted",
   };
 
-  try {
-    await mkdir(dir, { recursive: true });
-    const filename = `${type}-${Date.now()}-${randomUUID().slice(0, 8)}.json`;
-    await writeFile(join(dir, filename), JSON.stringify(submission, null, 2));
-  } catch {
-    return NextResponse.json({ error: "Failed to save submission" }, { status: 500 });
+  submissionQueue.push(submission);
+
+  if (submissionQueue.length > MAX_QUEUED) {
+    submissionQueue.splice(0, submissionQueue.length - MAX_QUEUED);
   }
 
   return NextResponse.json({ success: true, message: "Submission received" });

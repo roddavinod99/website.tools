@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface BenchmarkResult {
   totalTime: number;
@@ -19,44 +19,44 @@ export function BenchmarkBuilder() {
   const [result, setResult] = useState<BenchmarkResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const workerRef = useRef<Worker | null>(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; workerRef.current?.terminate(); };
+  }, []);
 
   const runBenchmark = useCallback(() => {
     setIsRunning(true);
     setError(null);
     setResult(null);
 
-    setTimeout(() => {
-      try {
-        const times: number[] = [];
+    workerRef.current?.terminate();
+    const worker = new Worker(new URL("../../workers/benchmark.worker.ts", import.meta.url), { type: "module" });
+    workerRef.current = worker;
 
-        for (let i = 0; i < iterations; i++) {
-          const start = performance.now();
-          const fn = new Function(code);
-          fn();
-          const end = performance.now();
-          times.push(end - start);
-        }
-
-        const totalTime = times.reduce((a, b) => a + b, 0);
-        const avgTime = totalTime / times.length;
-        const minTime = Math.min(...times);
-        const maxTime = Math.max(...times);
-        const opsPerSec = avgTime > 0 ? 1000 / avgTime : Infinity;
-
-        setResult({
-          totalTime,
-          avgTime,
-          minTime,
-          maxTime,
-          opsPerSec,
-          iterations,
-        });
-      } catch (e) {
-        setError((e as Error).message);
-      } finally {
-        setIsRunning(false);
+    worker.onmessage = (e) => {
+      if (!mountedRef.current) return;
+      if (e.data.type === "result") {
+        setResult(e.data.result);
+      } else if (e.data.error) {
+        setError(e.data.error);
       }
-    }, 50);
+      setIsRunning(false);
+      worker.terminate();
+      workerRef.current = null;
+    };
+
+    worker.onerror = () => {
+      if (!mountedRef.current) return;
+      setError("Worker error occurred");
+      setIsRunning(false);
+      worker.terminate();
+      workerRef.current = null;
+    };
+
+    worker.postMessage({ id: crypto.randomUUID(), type: "run", data: { code, iterations } });
   }, [code, iterations]);
 
   return (

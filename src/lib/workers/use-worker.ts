@@ -33,13 +33,14 @@ export function useAsyncWorker(type: string, data: unknown, enabled = true): Asy
   const [error, setError] = useState<string | null>(null);
   const poolRef = useRef<WorkerPool | null>(null);
   const executingRef = useRef(false);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    let mounted = true;
+    mountedRef.current = true;
     import("./worker-pool").then(({ WorkerPool }) => {
-      if (mounted) poolRef.current = new WorkerPool(new URL("../../workers/compute.worker.ts", import.meta.url));
+      if (mountedRef.current) poolRef.current = new WorkerPool(new URL("../../workers/compute.worker.ts", import.meta.url));
     });
-    return () => { mounted = false; poolRef.current?.terminate(); };
+    return () => { mountedRef.current = false; poolRef.current?.terminate(); };
   }, []);
 
   useEffect(() => {
@@ -51,14 +52,14 @@ export function useAsyncWorker(type: string, data: unknown, enabled = true): Asy
     setLoading(true);
 
     poolRef.current.execute(type, data).then((res) => {
-      if (!cancelled) {
+      if (!cancelled && mountedRef.current) {
         setResult(res.result);
         setError(res.error || null);
         setLoading(false);
         executingRef.current = false;
       }
     }).catch((err: Error) => {
-      if (!cancelled) {
+      if (!cancelled && mountedRef.current) {
         setError(err.message);
         setLoading(false);
         executingRef.current = false;

@@ -87,3 +87,6 @@ Desktop.ini
 # wasm build output
 /wasm/pkg/
 /wasm/target/
+
+# suggestions / notes
+suggestions.md

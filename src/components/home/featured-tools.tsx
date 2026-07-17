@@ -5,6 +5,7 @@ import {
   Network, Search, SearchCode, Shield, Table, type LucideIcon,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ToolLink } from "@/components/ui/tool-link";
 import { featuredTools } from "@/lib/constants";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -37,9 +38,9 @@ export function FeaturedTools() {
           {featuredTools.map((tool) => {
             const Icon = iconMap[tool.icon] || Braces;
             return (
-              <Link
+              <ToolLink
                 key={tool.id}
-                href={`/tools/${tool.slug}`}
+                slug={tool.slug}
                 className="group relative rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
               >
                 <div className="flex items-start justify-between">
@@ -67,7 +68,7 @@ export function FeaturedTools() {
                     Popularity {tool.popularity}%
                   </span>
                 </div>
-              </Link>
+              </ToolLink>
             );
           })}
         </div>

@@ -152,7 +152,10 @@ export function TimestampConverter() {
   }, []);
 
   const handleStartCountdown = useCallback(() => {
-    if (!parsedDate) return;
+    if (!parsedDate) {
+      setCountdown("Enter a target date in the input above first");
+      return;
+    }
     if (countdownRef.current) clearInterval(countdownRef.current);
     const update = () => {
       const diff = parsedDate.getTime() - Date.now();
@@ -172,12 +175,13 @@ export function TimestampConverter() {
   }, [parsedDate]);
 
   const handleDiff = useCallback(() => {
-    if (!parsedDate) { setDiffResult(""); return; }
+    const baseDate = parsedDate ?? (nowMs !== null ? new Date(nowMs) : null);
+    if (!baseDate) return;
     const d2 = detectInput(diffTarget);
-    if (!d2) { setDiffResult(""); return; }
+    if (!d2) { setDiffResult("Enter a valid timestamp in the second input"); return; }
     const date2 = parseDetected(d2);
-    if (!date2) { setDiffResult(""); return; }
-    const diffMs = date2.getTime() - parsedDate.getTime();
+    if (!date2) { setDiffResult("Could not parse the second date"); return; }
+    const diffMs = date2.getTime() - baseDate.getTime();
     const abs = Math.abs(diffMs);
     const days = Math.floor(abs / 86400000);
     const hours = Math.floor((abs % 86400000) / 3600000);
@@ -185,7 +189,7 @@ export function TimestampConverter() {
     const secs = Math.floor((abs % 60000) / 1000);
     const sign = diffMs >= 0 ? "" : "-";
     setDiffResult(`${sign}${days}d ${hours}h ${mins}m ${secs}s`);
-  }, [diffTarget, parsedDate]);
+  }, [diffTarget, parsedDate, nowMs]);
 
   return (
     <div className="space-y-4">
@@ -260,7 +264,11 @@ export function TimestampConverter() {
             <button onClick={handleStartCountdown} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
               Start Countdown
             </button>
-            {countdown && <span className="text-lg font-mono text-surface-900 dark:text-dark-text">{countdown}</span>}
+            {countdown && (
+              <span className={`text-lg font-mono ${countdown.startsWith("Enter") ? "text-amber-600 dark:text-amber-400 text-sm" : "text-surface-900 dark:text-dark-text"}`}>
+                {countdown}
+              </span>
+            )}
           </div>
         </div>
       </details>
@@ -282,7 +290,11 @@ export function TimestampConverter() {
               Calculate
             </button>
           </div>
-          {diffResult && <p className="mt-2 text-sm font-mono text-surface-700 dark:text-dark-text">{diffResult}</p>}
+          {diffResult && (
+            <p className={`mt-2 text-sm font-mono ${diffResult.startsWith("Enter") || diffResult.startsWith("Could") ? "text-amber-600 dark:text-amber-400" : "text-surface-700 dark:text-dark-text"}`}>
+              {diffResult}
+            </p>
+          )}
         </div>
       </details>
     </div>

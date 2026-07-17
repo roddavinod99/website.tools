@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allTools, categories, siteConfig } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
+import { ToolLink } from "@/components/ui/tool-link";
 import { Search } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -86,9 +87,9 @@ export default function ToolsPage() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {allTools.map((tool) => (
-            <Link
+            <ToolLink
               key={tool.id}
-              href={`/tools/${tool.slug}`}
+              slug={tool.slug}
               className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
             >
               <div className="flex items-start justify-between">
@@ -107,7 +108,7 @@ export default function ToolsPage() {
               <div className="mt-3 flex items-center gap-1 text-xs text-surface-400 dark:text-dark-muted">
                 <span>Popularity {tool.popularity}%</span>
               </div>
-            </Link>
+            </ToolLink>
           ))}
         </div>
       </section>

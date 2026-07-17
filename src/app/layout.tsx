@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
 import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
 import { ServiceWorkerRegister } from "@/components/layout/service-worker-register";
+import { PreloadPopularTools } from "@/components/layout/tool-preloader";
 import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 
 const geistSans = Geist({
@@ -164,6 +165,7 @@ export default function RootLayout({
             <Suspense>
               <Analytics />
               <AnalyticsTracker />
+              <PreloadPopularTools />
             </Suspense>
             <Header />
             <main id="main-content" className="flex-1">{children}</main>

@@ -13,7 +13,8 @@ type WorkerResult = {
 
 export class WorkerPool {
   private workers: Worker[] = [];
-  private taskQueue: Array<{ task: WorkerTask; resolve: (result: WorkerResult) => void; reject: (error: Error) => void }> = [];
+  private queue: Array<{ task: WorkerTask; resolve: (result: WorkerResult) => void; reject: (error: Error) => void }> = [];
+  private pending = new Map<string, { resolve: (result: WorkerResult) => void; reject: (error: Error) => void }>();
   private busyWorkers = new Set<Worker>();
   private maxWorkers: number;
 
@@ -30,33 +31,39 @@ export class WorkerPool {
   async execute(type: string, data: unknown): Promise<WorkerResult> {
     return new Promise((resolve, reject) => {
       const task: WorkerTask = { id: crypto.randomUUID(), type, data };
-      this.taskQueue.push({ task, resolve, reject });
+      this.queue.push({ task, resolve, reject });
       this.dispatch();
     });
   }
 
   private dispatch() {
+    if (this.queue.length === 0) return;
     const idle = this.workers.filter(w => !this.busyWorkers.has(w));
-    if (idle.length === 0 || this.taskQueue.length === 0) return;
+    if (idle.length === 0) return;
     const worker = idle[0];
-    const item = this.taskQueue.shift()!;
+    const item = this.queue.shift()!;
+    this.pending.set(item.task.id, { resolve: item.resolve, reject: item.reject });
     this.busyWorkers.add(worker);
     worker.postMessage(item.task);
   }
 
   private onWorkerMessage(worker: Worker, result: WorkerResult) {
     this.busyWorkers.delete(worker);
-    const item = this.taskQueue.find(q => q.task.id === result.id);
-    if (item) {
-      this.taskQueue = this.taskQueue.filter(q => q.task.id !== result.id);
-      item.resolve(result);
+    const pending = this.pending.get(result.id);
+    if (pending) {
+      this.pending.delete(result.id);
+      if (result.error) {
+        pending.reject(new Error(result.error));
+      } else {
+        pending.resolve(result);
+      }
     }
     this.dispatch();
   }
 
   private onWorkerError(worker: Worker, event: ErrorEvent) {
     this.busyWorkers.delete(worker);
-    console.error('Worker error:', event);
+    console.error('Worker error:', event.message);
     this.dispatch();
   }
 
@@ -64,7 +71,9 @@ export class WorkerPool {
     this.workers.forEach(w => w.terminate());
     this.workers = [];
     this.busyWorkers.clear();
-    this.taskQueue.forEach(item => item.reject(new Error('Worker pool terminated')));
-    this.taskQueue = [];
+    this.pending.forEach(item => item.reject(new Error('Worker pool terminated')));
+    this.pending.clear();
+    this.queue.forEach(item => item.reject(new Error('Worker pool terminated')));
+    this.queue = [];
   }
 }

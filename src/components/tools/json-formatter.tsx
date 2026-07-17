@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { useComputeWorker } from "@/lib/workers/use-compute-worker";
 
 interface TokenSpan {
   text: string;
@@ -99,6 +100,12 @@ export function JSONFormatter() {
   const [searchIndex, setSearchIndex] = useState(0);
   const outputRef = useRef<HTMLPreElement>(null);
   const pasteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const compute = useComputeWorker();
+  const computeReadyRef = useRef(false);
+
+  useEffect(() => {
+    compute.formatJson("{}", 2).then(() => { computeReadyRef.current = true; }).catch(() => {});
+  }, [compute]);
 
   const handleChange = useCallback((val: string) => {
     setInput(val);
@@ -109,56 +116,124 @@ export function JSONFormatter() {
   }, [indent]);
 
   const format = useCallback(() => {
-    try {
-      let parsed = JSON.parse(input);
-      if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
-      const indentStr = indent === "tab" ? "\t" : Number(indent);
-      let formatted = JSON.stringify(parsed, null, indentStr);
-      if (stripQuotes) formatted = stripQuotesFromKeys(formatted);
-      if (compactArrays) formatted = formatCompactArray(formatted);
-      setOutput(formatted);
-      setError("");
-      setErrorLine(null);
-      setErrorCol(null);
-    } catch (e) {
-      const msg = (e as Error).message;
-      setError(msg);
-      const lc = getErrorLineCol(input, msg);
-      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-      setOutput("");
-    }
-  }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays]);
+    const runFormat = async () => {
+      if (!computeReadyRef.current) {
+        try {
+          let parsed = JSON.parse(input);
+          if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
+          const indentStr = indent === "tab" ? "\t" : Number(indent);
+          let formatted = JSON.stringify(parsed, null, indentStr);
+          if (stripQuotes) formatted = stripQuotesFromKeys(formatted);
+          if (compactArrays) formatted = formatCompactArray(formatted);
+          setOutput(formatted);
+          setError("");
+          setErrorLine(null);
+          setErrorCol(null);
+        } catch (e) {
+          const msg = (e as Error).message;
+          setError(msg);
+          const lc = getErrorLineCol(input, msg);
+          if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+          setOutput("");
+        }
+        return;
+      }
+      try {
+        const indentNum = indent === "tab" ? 2 : Number(indent);
+        const formatted = await compute.formatJson(input, indentNum);
+        let parsed = JSON.parse(formatted);
+        if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
+        if (compactArrays || stripQuotes) {
+          let result = JSON.stringify(parsed, null, indentNum);
+          if (stripQuotes) result = stripQuotesFromKeys(result);
+          if (compactArrays) result = formatCompactArray(result);
+          setOutput(result);
+        } else {
+          setOutput(JSON.stringify(parsed, null, indentNum));
+        }
+        setError("");
+        setErrorLine(null);
+        setErrorCol(null);
+      } catch (e) {
+        const msg = (e as Error).message;
+        setError(msg);
+        const lc = getErrorLineCol(input, msg);
+        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+        setOutput("");
+      }
+    };
+    runFormat();
+  }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays, compute]);
 
-  const minify = useCallback(() => {
-    try {
-      setOutput(JSON.stringify(JSON.parse(input)));
-      setError("");
-      setErrorLine(null);
-      setErrorCol(null);
-    } catch (e) {
-      const msg = (e as Error).message;
-      setError(msg);
-      const lc = getErrorLineCol(input, msg);
-      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-      setOutput("");
+  const minify = useCallback(async () => {
+    if (computeReadyRef.current) {
+      try {
+        const result = await compute.minifyJson(input);
+        setOutput(result);
+        setError("");
+        setErrorLine(null);
+        setErrorCol(null);
+      } catch (e) {
+        const msg = (e as Error).message;
+        setError(msg);
+        const lc = getErrorLineCol(input, msg);
+        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+        setOutput("");
+      }
+    } else {
+      try {
+        setOutput(JSON.stringify(JSON.parse(input)));
+        setError("");
+        setErrorLine(null);
+        setErrorCol(null);
+      } catch (e) {
+        const msg = (e as Error).message;
+        setError(msg);
+        const lc = getErrorLineCol(input, msg);
+        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+        setOutput("");
+      }
     }
-  }, [input]);
+  }, [input, compute]);
 
-  const validate = useCallback(() => {
-    try {
-      JSON.parse(input);
-      setError("");
-      setErrorLine(null);
-      setErrorCol(null);
-      setOutput("JSON is valid.");
-    } catch (e) {
-      const msg = (e as Error).message;
-      setError(msg);
-      const lc = getErrorLineCol(input, msg);
-      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-      setOutput("");
+  const validate = useCallback(async () => {
+    if (computeReadyRef.current) {
+      try {
+        const result = await compute.validateJson(input);
+        if (result.valid) {
+          setError("");
+          setErrorLine(null);
+          setErrorCol(null);
+          setOutput("JSON is valid.");
+        } else {
+          setError(result.error || "Invalid JSON");
+          setErrorLine(null);
+          setErrorCol(null);
+          setOutput("");
+        }
+      } catch (e) {
+        const msg = (e as Error).message;
+        setError(msg);
+        const lc = getErrorLineCol(input, msg);
+        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+        setOutput("");
+      }
+    } else {
+      try {
+        JSON.parse(input);
+        setError("");
+        setErrorLine(null);
+        setErrorCol(null);
+        setOutput("JSON is valid.");
+      } catch (e) {
+        const msg = (e as Error).message;
+        setError(msg);
+        const lc = getErrorLineCol(input, msg);
+        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+        setOutput("");
+      }
     }
-  }, [input]);
+  }, [input, compute]);
 
   const copy = useCallback(async (text: string) => {
     if (text) await navigator.clipboard.writeText(text);

@@ -5,44 +5,173 @@ import { blogPosts as blogData } from "@/lib/blog";
 
 export const revalidate = 86400;
 
-const BASE = siteConfig.url;
+const BASE = siteConfig.url.replace(/\/+$/, "");
+const NOW = new Date();
+const LEGAL = siteConfig.legal?.lastUpdated ?? {};
+
+function dateFrom(str: string | undefined): Date {
+  if (!str) return NOW;
+  const d = new Date(str);
+  return Number.isNaN(d.getTime()) ? NOW : d;
+}
 
 const staticPages: MetadataRoute.Sitemap = [
-  { url: `${BASE}/`, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
-  { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-  { url: `${BASE}/categories`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-  { url: `${BASE}/guides`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-  { url: `${BASE}/blog`, lastModified: new Date(blogData[0].dateISO), changeFrequency: "weekly", priority: 0.7 },
-  { url: `${BASE}/learning`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-  { url: `${BASE}/popular`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
-  { url: `${BASE}/new`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
-  { url: `${BASE}/changelog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
-  { url: `${BASE}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-  { url: `${BASE}/api`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-  { url: `${BASE}/best-practices`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-  { url: `${BASE}/feature-request`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-  { url: `${BASE}/feedback`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-  { url: `${BASE}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-  { url: `${BASE}/report-bug`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-  { url: `${BASE}/roadmap`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-  // search excluded — dynamic content with no unique indexable value
-  // sitemap excluded — self-referencing HTML page not needed in XML sitemap
-  { url: `${BASE}/status`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.3 },
-  { url: `${BASE}/suggest`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-  { url: `${BASE}/support`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-  { url: `${BASE}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-  { url: `${BASE}/tutorials`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-  { url: `${BASE}/cookie-policy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-  { url: `${BASE}/disclaimer`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-  { url: `${BASE}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+  {
+    url: `${BASE}/`,
+    lastModified: dateFrom(blogData[0]?.dateISO),
+    changeFrequency: "weekly",
+    priority: 1.0,
+  },
+  {
+    url: `${BASE}/tools`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.9,
+  },
+  {
+    url: `${BASE}/categories`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  },
+  {
+    url: `${BASE}/guides`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  },
+  {
+    url: `${BASE}/blog`,
+    lastModified: dateFrom(blogData[0]?.dateISO),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  },
+  {
+    url: `${BASE}/learning`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  },
+  {
+    url: `${BASE}/popular`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  },
+  {
+    url: `${BASE}/new`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  },
+  {
+    url: `${BASE}/changelog`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.6,
+  },
+  {
+    url: `${BASE}/about`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
+  {
+    url: `${BASE}/api`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
+  {
+    url: `${BASE}/best-practices`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
+  {
+    url: `${BASE}/contact`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/cookie-policy`,
+    lastModified: dateFrom(LEGAL.cookie),
+    changeFrequency: "yearly",
+    priority: 0.3,
+  },
+  {
+    url: `${BASE}/disclaimer`,
+    lastModified: dateFrom(LEGAL.disclaimer),
+    changeFrequency: "yearly",
+    priority: 0.3,
+  },
+  {
+    url: `${BASE}/feature-request`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/feedback`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/privacy`,
+    lastModified: dateFrom(LEGAL.privacy),
+    changeFrequency: "yearly",
+    priority: 0.3,
+  },
+  {
+    url: `${BASE}/report-bug`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/roadmap`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  },
+  {
+    url: `${BASE}/status`,
+    lastModified: NOW,
+    changeFrequency: "weekly",
+    priority: 0.3,
+  },
+  {
+    url: `${BASE}/suggest`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/support`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.4,
+  },
+  {
+    url: `${BASE}/terms`,
+    lastModified: dateFrom(LEGAL.terms),
+    changeFrequency: "yearly",
+    priority: 0.3,
+  },
+  {
+    url: `${BASE}/tutorials`,
+    lastModified: NOW,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const categoriesPages: MetadataRoute.Sitemap = categories.map((cat) => ({
     url: `${BASE}/categories/${cat.slug}`,
-    lastModified: now,
+    lastModified: NOW,
     changeFrequency: "weekly",
     priority: 0.7,
   }));
@@ -51,14 +180,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((tool) => !tool.noindex)
     .map((tool) => ({
       url: `${BASE}/tools/${tool.slug}`,
-      lastModified: now,
+      lastModified: tool.new ? NOW : NOW,
       changeFrequency: "monthly",
       priority: tool.featured ? 0.9 : tool.new ? 0.85 : 0.8,
     }));
 
   const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) => ({
     url: `${BASE}/guides/${topic.slug}`,
-    lastModified: now,
+    lastModified: NOW,
     changeFrequency: "monthly",
     priority: 0.6,
   }));
@@ -72,7 +201,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const toolkitPages: MetadataRoute.Sitemap = Object.keys(toolkits).map((slug) => ({
     url: `${BASE}/toolkits/${slug}`,
-    lastModified: now,
+    lastModified: NOW,
     changeFrequency: "monthly",
     priority: 0.6,
   }));

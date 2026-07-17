@@ -1,26 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Search, Moon, Sun } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/constants";
 
+const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
+
 export function Header() {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        router.push("/search");
+        setSearchOpen(true);
       }
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [router]);
+  }, []);
 
   const toggleDark = () => {
     const isDark = document.documentElement.classList.toggle("dark");
@@ -28,7 +29,7 @@ export function Header() {
   };
 
   const handleSearchClick = () => {
-    router.push("/search");
+    setSearchOpen(true);
   };
 
   return (
@@ -111,18 +112,21 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-2">
-              <Link
-                href="/search"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+              <button
+                onClick={() => { setIsOpen(false); setSearchOpen(true); }}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left"
               >
                 <Search className="h-4 w-4" />
                 Search
-              </Link>
+              </button>
             </div>
           </nav>
         </div>
       )}
+
+      <Suspense fallback={null}>
+        <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      </Suspense>
     </header>
   );
 }
