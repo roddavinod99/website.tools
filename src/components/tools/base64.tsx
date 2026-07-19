@@ -198,13 +198,15 @@ export function Base64Tool() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+        <label htmlFor="base64-output-format" className="sr-only">Output format</label>
+        <select id="base64-output-format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="plain">Plain Text</option>
           <option value="datauri">Data URI</option>
           <option value="base64url">Base64url</option>
         </select>
-        <select value={charEncoding} onChange={(e) => setCharEncoding(e.target.value as CharEncoding)}
+        <label htmlFor="base64-char-encoding" className="sr-only">Character encoding</label>
+        <select id="base64-char-encoding" value={charEncoding} onChange={(e) => setCharEncoding(e.target.value as CharEncoding)}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="utf-8">UTF-8</option>
           <option value="ascii">ASCII</option>
@@ -217,10 +219,10 @@ export function Base64Tool() {
       </div>
 
       <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()}>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+        <label htmlFor="base64-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
           {mode === "encode" ? "Text to Encode" : "Base64 to Decode"}
         </label>
-        <textarea value={input} onChange={(e) => handleInputChange(e.target.value)}
+        <textarea id="base64-input" value={input} onChange={(e) => handleInputChange(e.target.value)}
           placeholder={mode === "encode" ? "Enter text or drop a file..." : "Enter Base64 string or drop a file..."}
           rows={5} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
@@ -248,11 +250,11 @@ export function Base64Tool() {
           <div className="flex items-center justify-between mb-1">
             <label className="block text-sm font-medium text-surface-700 dark:text-dark-text">Output</label>
             <div className="flex gap-1">
-              <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
-              <button onClick={downloadTxt} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">.txt</button>
-              <button onClick={downloadBin} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">.bin</button>
+              <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600" aria-label="Copy output to clipboard">Copy</button>
+              <button onClick={downloadTxt} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Download as text file">.txt</button>
+              <button onClick={downloadBin} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Download as binary file">.bin</button>
               {mode === "decode" && (
-                <button onClick={handleDecodedFileDownload} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Save Decoded</button>
+                <button onClick={handleDecodedFileDownload} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Save decoded file">Save Decoded</button>
               )}
             </div>
           </div>

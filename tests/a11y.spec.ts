@@ -35,6 +35,16 @@ test.describe("Accessibility audit (@axe-core/playwright)", () => {
         (v) => v.impact === "critical" || v.impact === "serious"
       );
 
+      if (criticalSerious.length > 0) {
+        console.log(`\n=== ${pagePath} violations ===`);
+        criticalSerious.forEach((v) => {
+          console.log(`  ${v.impact}: ${v.id} - ${v.description}`);
+          console.log(`    Help: ${v.helpUrl}`);
+          console.log(`    Nodes: ${v.nodes.length}`);
+          v.nodes.forEach((n) => console.log(`      ${n.html}`));
+        });
+      }
+
       expect(criticalSerious.length).toBe(0);
     });
   }

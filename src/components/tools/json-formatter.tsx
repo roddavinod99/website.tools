@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { useComputeWorker } from "@/lib/workers/use-compute-worker";
+import { jsonFormatWasm as jsonFormat, jsonMinifyWasm as jsonMinify, jsonValidateWasm as jsonValidate } from "@/lib/wasm/wasm-wrapper";
 
 interface TokenSpan {
   text: string;
@@ -100,12 +100,11 @@ export function JSONFormatter() {
   const [searchIndex, setSearchIndex] = useState(0);
   const outputRef = useRef<HTMLPreElement>(null);
   const pasteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const compute = useComputeWorker();
-  const computeReadyRef = useRef(false);
+  const wasmReadyRef = useRef(false);
 
   useEffect(() => {
-    compute.formatJson("{}", 2).then(() => { computeReadyRef.current = true; }).catch(() => {});
-  }, [compute]);
+    jsonFormat("{}", 2).then(() => { wasmReadyRef.current = true; }).catch(() => {});
+  }, []);
 
   const handleChange = useCallback((val: string) => {
     setInput(val);
@@ -115,9 +114,9 @@ export function JSONFormatter() {
     }, 400);
   }, [indent]);
 
-  const format = useCallback(() => {
+  const format = useCallback(async () => {
     const runFormat = async () => {
-      if (!computeReadyRef.current) {
+      if (!wasmReadyRef.current) {
         try {
           let parsed = JSON.parse(input);
           if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
@@ -140,7 +139,7 @@ export function JSONFormatter() {
       }
       try {
         const indentNum = indent === "tab" ? 2 : Number(indent);
-        const formatted = await compute.formatJson(input, indentNum);
+        const formatted = await jsonFormat(input, indentNum);
         let parsed = JSON.parse(formatted);
         if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
         if (compactArrays || stripQuotes) {
@@ -163,12 +162,12 @@ export function JSONFormatter() {
       }
     };
     runFormat();
-  }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays, compute]);
+  }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays]);
 
   const minify = useCallback(async () => {
-    if (computeReadyRef.current) {
+    if (wasmReadyRef.current) {
       try {
-        const result = await compute.minifyJson(input);
+        const result = await jsonMinify(input);
         setOutput(result);
         setError("");
         setErrorLine(null);
@@ -194,19 +193,19 @@ export function JSONFormatter() {
         setOutput("");
       }
     }
-  }, [input, compute]);
+  }, [input]);
 
   const validate = useCallback(async () => {
-    if (computeReadyRef.current) {
+    if (wasmReadyRef.current) {
       try {
-        const result = await compute.validateJson(input);
-        if (result.valid) {
+        const result = await jsonValidate(input);
+        if (result) {
           setError("");
           setErrorLine(null);
           setErrorCol(null);
           setOutput("JSON is valid.");
         } else {
-          setError(result.error || "Invalid JSON");
+          setError("Invalid JSON");
           setErrorLine(null);
           setErrorCol(null);
           setOutput("");
@@ -233,7 +232,7 @@ export function JSONFormatter() {
         setOutput("");
       }
     }
-  }, [input, compute]);
+  }, [input]);
 
   const copy = useCallback(async (text: string) => {
     if (text) await navigator.clipboard.writeText(text);
@@ -278,9 +277,10 @@ export function JSONFormatter() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input JSON</label>
+        <label htmlFor="json-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input JSON</label>
         <div className="relative">
           <textarea
+            id="json-input"
             value={input}
             onChange={(e) => handleChange(e.target.value)}
             placeholder='{"key": "value"}'
@@ -302,16 +302,16 @@ export function JSONFormatter() {
         <button onClick={format} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Format</button>
         <button onClick={minify} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Minify</button>
         <button onClick={validate} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Validate</button>
-        <button onClick={() => copy(output)} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy Formatted</button>
-        <button onClick={() => copy(JSON.stringify(JSON.parse(input || "{}")))} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy Minified</button>
-        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download</button>
+        <button onClick={() => copy(output)} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy formatted JSON to clipboard">Copy Formatted</button>
+        <button onClick={() => copy(JSON.stringify(JSON.parse(input || "{}")))} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy minified JSON to clipboard">Copy Minified</button>
+        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download formatted JSON as file">Download</button>
         <button onClick={clear} className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors">Clear</button>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-1.5">
-          <label className="text-xs text-surface-500 dark:text-dark-muted">Indent:</label>
-          <select value={String(indent)} onChange={(e) => setIndent(e.target.value === "tab" ? "tab" : Number(e.target.value))}
+          <label htmlFor="json-indent" className="text-xs text-surface-500 dark:text-dark-muted">Indent:</label>
+          <select id="json-indent" value={String(indent)} onChange={(e) => setIndent(e.target.value === "tab" ? "tab" : Number(e.target.value))}
             className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="2">2 spaces</option>
             <option value="4">4 spaces</option>
@@ -320,16 +320,16 @@ export function JSONFormatter() {
           </select>
         </div>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" checked={sortKeysEnabled} onChange={(e) => setSortKeysEnabled(e.target.checked)} className="rounded border-surface-300" /> Sort keys
+          <input type="checkbox" id="json-sort-keys" checked={sortKeysEnabled} onChange={(e) => setSortKeysEnabled(e.target.checked)} className="rounded border-surface-300" /> Sort keys
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" checked={stripQuotes} onChange={(e) => setStripQuotes(e.target.checked)} className="rounded border-surface-300" /> Strip key quotes
+          <input type="checkbox" id="json-strip-quotes" checked={stripQuotes} onChange={(e) => setStripQuotes(e.target.checked)} className="rounded border-surface-300" /> Strip key quotes
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" checked={compactArrays} onChange={(e) => setCompactArrays(e.target.checked)} className="rounded border-surface-300" /> Compact arrays
+          <input type="checkbox" id="json-compact-arrays" checked={compactArrays} onChange={(e) => setCompactArrays(e.target.checked)} className="rounded border-surface-300" /> Compact arrays
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" checked={wordWrap} onChange={(e) => setWordWrap(e.target.checked)} className="rounded border-surface-300" /> Word wrap
+          <input type="checkbox" id="json-word-wrap" checked={wordWrap} onChange={(e) => setWordWrap(e.target.checked)} className="rounded border-surface-300" /> Word wrap
         </label>
       </div>
 
@@ -354,19 +354,23 @@ export function JSONFormatter() {
           </div>
           {searchMatches.length > 0 && (
             <div className="flex items-center gap-1 mb-2">
+              <label htmlFor="json-search" className="sr-only">Search in output</label>
               <input
+                id="json-search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search in output..."
                 className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
-              <button onClick={() => setSearchIndex((i) => (i - 1 + searchMatches.length) % searchMatches.length)} className="rounded border border-surface-200 px-2 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Prev</button>
-              <button onClick={() => setSearchIndex((i) => (i + 1) % searchMatches.length)} className="rounded border border-surface-200 px-2 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Next</button>
+              <button onClick={() => setSearchIndex((i) => (i - 1 + searchMatches.length) % searchMatches.length)} className="rounded border border-surface-200 px-2 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Previous match">Prev</button>
+              <button onClick={() => setSearchIndex((i) => (i + 1) % searchMatches.length)} className="rounded border border-surface-200 px-2 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Next match">Next</button>
             </div>
           )}
           {!searchMatches.length && searchTerm && (
             <div className="flex items-center gap-1 mb-2">
+              <label htmlFor="json-search-empty" className="sr-only">Search in output</label>
               <input
+                id="json-search-empty"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search in output..."

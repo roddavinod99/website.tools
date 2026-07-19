@@ -346,8 +346,8 @@ export function HashGenerator() {
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
-          <select value={hashFmt} onChange={(e) => setHashFmt(e.target.value as "hex" | "base64" | "binary")}
+          <label htmlFor="hash-format" className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
+          <select id="hash-format" value={hashFmt} onChange={(e) => setHashFmt(e.target.value as "hex" | "base64" | "binary")}
             className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="hex">Hex</option>
             <option value="base64">Base64</option>
@@ -355,36 +355,36 @@ export function HashGenerator() {
           </select>
         </div>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={hmac} onChange={(e) => setHmac(e.target.checked)} className="accent-brand-500" />
+          <input type="checkbox" id="hash-hmac" checked={hmac} onChange={(e) => setHmac(e.target.checked)} className="accent-brand-500" />
           HMAC
         </label>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={compareMode} onChange={(e) => setCompareMode(e.target.checked)} className="accent-brand-500" />
+          <input type="checkbox" id="hash-compare" checked={compareMode} onChange={(e) => setCompareMode(e.target.checked)} className="accent-brand-500" />
           Compare
         </label>
         <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={bulkMode} onChange={(e) => setBulkMode(e.target.checked)} className="accent-brand-500" />
+          <input type="checkbox" id="hash-bulk" checked={bulkMode} onChange={(e) => setBulkMode(e.target.checked)} className="accent-brand-500" />
           Bulk (per line)
         </label>
       </div>
 
       {hmac && (
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">HMAC Secret Key</label>
-          <input type="text" value={hmacKey} onChange={(e) => setHmacKey(e.target.value)} placeholder="Enter secret key..."
+          <label htmlFor="hash-hmac-key" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">HMAC Secret Key</label>
+          <input type="text" id="hash-hmac-key" value={hmacKey} onChange={(e) => setHmacKey(e.target.value)} placeholder="Enter secret key..."
             className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       )}
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt (optional)</label>
-          <input type="text" value={salt} onChange={(e) => setSalt(e.target.value)} placeholder="Enter salt..."
+          <label htmlFor="hash-salt" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt (optional)</label>
+          <input type="text" id="hash-salt" value={salt} onChange={(e) => setSalt(e.target.value)} placeholder="Enter salt..."
             className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt Position</label>
-          <select value={saltPos} onChange={(e) => setSaltPos(e.target.value as "prepend" | "append")}
+          <label htmlFor="hash-salt-pos" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt Position</label>
+          <select id="hash-salt-pos" value={saltPos} onChange={(e) => setSaltPos(e.target.value as "prepend" | "append")}
             className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="prepend">Prepend</option>
             <option value="append">Append</option>
@@ -403,13 +403,13 @@ export function HashGenerator() {
       {compareMode && (
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 1</label>
-            <input type="text" value={compareA} onChange={(e) => setCompareA(e.target.value)}
+            <label htmlFor="hash-compare-a" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 1</label>
+            <input type="text" id="hash-compare-a" value={compareA} onChange={(e) => setCompareA(e.target.value)}
               className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 2</label>
-            <input type="text" value={compareB} onChange={(e) => setCompareB(e.target.value)}
+            <label htmlFor="hash-compare-b" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 2</label>
+            <input type="text" id="hash-compare-b" value={compareB} onChange={(e) => setCompareB(e.target.value)}
               className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
           <div className="col-span-2">
@@ -426,7 +426,8 @@ export function HashGenerator() {
 
       {bulkMode && (
         <div>
-          <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text (one item per line)..."
+          <label htmlFor="hash-bulk-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Enter text (one item per line)</label>
+          <textarea id="hash-bulk-input" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text (one item per line)..."
             rows={6}
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           {bulkResults.length > 0 && (
@@ -460,10 +461,11 @@ export function HashGenerator() {
         onDragOver={(e) => e.preventDefault()}
         className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
       >
-        <p>Drop a file here or <label className="text-brand-500 hover:text-brand-600 cursor-pointer underline">browse<input type="file" onChange={handleFilePick} className="hidden" /></label></p>
+        <p>Drop a file here or <label htmlFor="hash-file-picker" className="text-brand-500 hover:text-brand-600 cursor-pointer underline">browse<input type="file" id="hash-file-picker" onChange={handleFilePick} className="hidden" /></label></p>
         <div className="flex items-center gap-2 justify-center mt-2">
           <span className="text-xs">Algorithm:</span>
-          <select value={fileAlgo} onChange={(e) => setFileAlgo(e.target.value)}
+          <label htmlFor="hash-file-algo" className="sr-only">File hash algorithm</label>
+          <select id="hash-file-algo" value={fileAlgo} onChange={(e) => setFileAlgo(e.target.value)}
             className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 focus:outline-none dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {ALL_ALGORITHMS.filter((a) => a.id !== "CRC32" && a.id !== "CRC32C" && a.id !== "RIPEMD-160").map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
           </select>

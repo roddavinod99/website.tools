@@ -28,6 +28,21 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
+  turbopack: {},
+
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+      layers: true,
+    };
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'webassembly/async',
+    });
+    return config;
+  },
+
   async redirects() {
     return [
       {
@@ -42,7 +57,7 @@ const nextConfig: NextConfig = {
     {
       source: "/(.*)",
       headers: [
-        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "X-Content-Type-Options", value: "nosfiff" },
         { key: "X-Frame-Options", value: "DENY" },
         { key: "X-XSS-Protection", value: "1; mode=block" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -52,6 +67,42 @@ const nextConfig: NextConfig = {
         { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
         { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
         { key: "Link", value: "</llms.txt>; rel=alternate; type=text/plain; title=AI Guide" },
+      ],
+    },
+    {
+      source: "/api/version",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
+      source: "/api/health",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
+      source: "/api/submit",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
+      source: "/api/contact",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
+      source: "/api/ip-lookup",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
+      source: "/api/dns-lookup",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
       ],
     },
     {

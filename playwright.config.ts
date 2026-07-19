@@ -7,6 +7,7 @@ export default defineConfig({
   retries: 1,
   workers: 2,
   reporter: [["html", { open: "never" }], ["list"]],
+  testMatch: "**/*.spec.ts",
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
@@ -26,6 +27,7 @@ export default defineConfig({
     env: {
       PORT: "3000",
       HOSTNAME: "localhost",
+      IP_HASH_SALT: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
     },
   },
 });

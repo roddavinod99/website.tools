@@ -167,13 +167,16 @@ export function URLEncoder() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {(["component", "full"] as EncodingType[]).map((t) => (
-          <button key={t} onClick={() => setEncodingType(t)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${encodingType === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
-            {t === "component" ? "Component" : "Full URL"}
-          </button>
-        ))}
-        <select value={charSet} onChange={(e) => setCharSet(e.target.value as CharSet)}
+        <div role="group" aria-label="Encoding type">
+          {(["component", "full"] as EncodingType[]).map((t) => (
+            <button key={t} onClick={() => setEncodingType(t)} aria-pressed={encodingType === t}
+              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${encodingType === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+              {t === "component" ? "Component" : "Full URL"}
+            </button>
+          ))}
+        </div>
+        <label htmlFor="url-encoder-char-set" className="sr-only">Character set to encode</label>
+        <select id="url-encoder-char-set" value={charSet} onChange={(e) => setCharSet(e.target.value as CharSet)}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="all">Encode All Chars</option>
           <option value="special">Special Chars Only</option>
@@ -182,8 +185,8 @@ export function URLEncoder() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input</label>
-          <textarea value={input} onChange={(e) => setInput(e.target.value)}
+        <label htmlFor="url-encoder-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input</label>
+          <textarea id="url-encoder-input" value={input} onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "encode" ? "Enter text or URL to encode..." : "Enter URL-encoded string..."}
           rows={4} spellCheck={false}
           className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
@@ -209,7 +212,7 @@ export function URLEncoder() {
             <label className="block text-sm font-medium text-surface-700 dark:text-dark-text">
               {mode === "encode" ? "Encoded" : "Decoded"}
             </label>
-            <button onClick={() => copy()} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
+            <button onClick={() => copy()} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600" aria-label={`${mode === "encode" ? "Encoded" : "Decoded"} output to clipboard`}>Copy</button>
           </div>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 break-all select-all">{output}</pre>
         </div>
@@ -220,14 +223,14 @@ export function URLEncoder() {
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Component Encoded</p>
-              <button onClick={() => copy(outputComponentEncoded())} className="text-xs text-brand-500 hover:text-brand-600">Copy</button>
+              <button onClick={() => copy(outputComponentEncoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy component encoded URL">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputComponentEncoded() || "-"}</p>
           </div>
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Full URL Encoded</p>
-              <button onClick={() => copy(outputFullEncoded())} className="text-xs text-brand-500 hover:text-brand-600">Copy</button>
+              <button onClick={() => copy(outputFullEncoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy full URL encoded">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputFullEncoded() || "-"}</p>
           </div>
@@ -239,14 +242,14 @@ export function URLEncoder() {
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Component Decoded</p>
-              <button onClick={() => copy(outputComponentDecoded())} className="text-xs text-brand-500 hover:text-brand-600">Copy</button>
+              <button onClick={() => copy(outputComponentDecoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy component decoded URL">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputComponentDecoded() || "-"}</p>
           </div>
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Full URL Decoded</p>
-              <button onClick={() => copy(outputFullDecoded())} className="text-xs text-brand-500 hover:text-brand-600">Copy</button>
+              <button onClick={() => copy(outputFullDecoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy full URL decoded">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputFullDecoded() || "-"}</p>
           </div>

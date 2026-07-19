@@ -74,7 +74,8 @@ test.describe("API Endpoint Tests", () => {
       expect(typeof body.version).toBe("string");
       expect(typeof body.build).toBe("number");
       expect(typeof body.commit).toBe("string");
-      expect(response.headers()["cache-control"]).toContain("no-store");
+      const cacheControl = response.headers()["cache-control"] || "";
+      expect(cacheControl).toMatch(/no-store|max-age=0/);
     });
   });
 

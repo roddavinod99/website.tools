@@ -247,72 +247,74 @@ export function PasswordGenerator() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-surface-700 dark:text-dark-text whitespace-nowrap">Length:</label>
-          <input
-            type="range" min={minLen} max={maxLen} value={length}
-            onChange={(e) => handleLengthSlider(parseInt(e.target.value))}
-            className="w-28 accent-brand-500"
-          />
-          <input
-            ref={inputRef}
-            type="number" min={minLen} max={maxLen} value={lengthInput}
-            onChange={(e) => handleLengthInput(e.target.value)}
-            className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-surface-700 dark:text-dark-text whitespace-nowrap">Count:</label>
-          <input
-            type="number" min={1} max={50} value={count}
-            onChange={(e) => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
-            className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-          />
-        </div>
+<div className="flex flex-wrap items-center gap-3">
+      <div className="flex items-center gap-2">
+        <label htmlFor="pwd-length-slider" className="text-sm font-medium text-surface-700 dark:text-dark-text whitespace-nowrap">Length:</label>
+        <input
+          type="range" id="pwd-length-slider" min={minLen} max={maxLen} value={length}
+          onChange={(e) => handleLengthSlider(parseInt(e.target.value))}
+          className="w-28 accent-brand-500"
+          aria-valuemin={minLen} aria-valuemax={maxLen} aria-valuenow={length}
+        />
+        <input
+          ref={inputRef}
+          type="number" id="pwd-length-input" min={minLen} max={maxLen} value={lengthInput}
+          onChange={(e) => handleLengthInput(e.target.value)}
+          className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+          aria-label="Password length"
+        />
       </div>
+      <div className="flex items-center gap-2">
+        <label htmlFor="pwd-count" className="text-sm font-medium text-surface-700 dark:text-dark-text whitespace-nowrap">Count:</label>
+        <input
+          type="number" id="pwd-count" min={1} max={50} value={count}
+          onChange={(e) => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
+          className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+        />
+      </div>
+    </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "A-Z", checked: uppercase, set: setUppercase, disabled: pinMode },
-          { label: "a-z", checked: lowercase, set: setLowercase, disabled: pinMode || pronounceable },
-          { label: "0-9", checked: numbers, set: setNumbers, disabled: pinMode },
-          { label: "!@#$%", checked: symbols, set: setSymbols, disabled: pinMode },
+          { id: "pwd-uppercase", label: "A-Z", checked: uppercase, set: setUppercase, disabled: pinMode },
+          { id: "pwd-lowercase", label: "a-z", checked: lowercase, set: setLowercase, disabled: pinMode || pronounceable },
+          { id: "pwd-numbers", label: "0-9", checked: numbers, set: setNumbers, disabled: pinMode },
+          { id: "pwd-symbols", label: "!@#$%", checked: symbols, set: setSymbols, disabled: pinMode },
         ].map((opt) => (
-          <label key={opt.label} className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-            <input type="checkbox" checked={opt.checked} onChange={(e) => opt.set(e.target.checked)} disabled={opt.disabled} className="accent-brand-500 disabled:opacity-40" />
+          <label key={opt.id} htmlFor={opt.id} className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+            <input type="checkbox" id={opt.id} checked={opt.checked} onChange={(e) => opt.set(e.target.checked)} disabled={opt.disabled} className="accent-brand-500 disabled:opacity-40" />
             {opt.label}
           </label>
         ))}
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={excludeAmbiguous} onChange={(e) => setExcludeAmbiguous(e.target.checked)} className="accent-brand-500" />
+        <label htmlFor="pwd-exclude-ambiguous" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" id="pwd-exclude-ambiguous" checked={excludeAmbiguous} onChange={(e) => setExcludeAmbiguous(e.target.checked)} className="accent-brand-500" />
           Exclude Ambiguous (O/0/I/1/l/|/!)
         </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={excludeSimilar} onChange={(e) => setExcludeSimilar(e.target.checked)} className="accent-brand-500" />
+        <label htmlFor="pwd-exclude-similar" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" id="pwd-exclude-similar" checked={excludeSimilar} onChange={(e) => setExcludeSimilar(e.target.checked)} className="accent-brand-500" />
           Exclude Similar (O/0/I/1/l/|)
         </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={noDupes} onChange={(e) => setNoDupes(e.target.checked)} className="accent-brand-500" />
+        <label htmlFor="pwd-no-dupes" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" id="pwd-no-dupes" checked={noDupes} onChange={(e) => setNoDupes(e.target.checked)} className="accent-brand-500" />
           No Duplicate Chars
         </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={pronounceable} onChange={(e) => { setPronounceable(e.target.checked); if (e.target.checked) setPinMode(false); }} className="accent-brand-500" />
+        <label htmlFor="pwd-pronounceable" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" id="pwd-pronounceable" checked={pronounceable} onChange={(e) => { setPronounceable(e.target.checked); if (e.target.checked) setPinMode(false); }} className="accent-brand-500" />
           Pronounceable
         </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" checked={pinMode} onChange={(e) => { setPinMode(e.target.checked); if (e.target.checked) { setPronounceable(false); if (length > 16) setLength(8); } }} className="accent-brand-500" />
+        <label htmlFor="pwd-pin-mode" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+          <input type="checkbox" id="pwd-pin-mode" checked={pinMode} onChange={(e) => { setPinMode(e.target.checked); if (e.target.checked) { setPronounceable(false); if (length > 16) setLength(8); } }} className="accent-brand-500" />
           PIN Mode
         </label>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Custom Character Set (overrides selections)</label>
+        <label htmlFor="pwd-custom-set" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Custom Character Set (overrides selections)</label>
         <input
-          type="text" value={customSet} onChange={(e) => setCustomSet(e.target.value)} placeholder="e.g. ABCabc123"
+          type="text" id="pwd-custom-set" value={customSet} onChange={(e) => setCustomSet(e.target.value)} placeholder="e.g. ABCabc123"
           className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
         />
         {charsetDisplay && !pronounceable && !pinMode && (
@@ -324,19 +326,19 @@ export function PasswordGenerator() {
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
         {passwords.length > 0 && (
           <>
-            <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+            <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label={count === 1 ? "Copy password to clipboard" : "Copy all passwords to clipboard"}>
               {copiedIdx === -2 ? "Copied!" : "Copy All"}
             </button>
-            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download .txt</button>
+            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download passwords as text file">Download .txt</button>
           </>
         )}
-        <button onClick={() => setShowHistory(!showHistory)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={() => setShowHistory(!showHistory)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-expanded={showHistory} aria-controls="password-history">
           History ({history.length})
         </button>
       </div>
 
       {strength && (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3" role="progressbar" aria-valuenow={strength.score} aria-valuemin={1} aria-valuemax={5} aria-label={`Password strength: ${strength.label}`}>
           <div className="flex-1 h-2 rounded-full bg-surface-200 dark:bg-dark-border overflow-hidden">
             <div className={`h-full rounded-full transition-all ${strength.color}`} style={{ width: `${(strength.score / 5) * 100}%` }} />
           </div>
@@ -348,7 +350,7 @@ export function PasswordGenerator() {
       )}
 
       {crackTime && (
-        <p className="text-xs text-surface-500 dark:text-dark-muted">Time to crack (1T guesses/s): {crackTime}</p>
+        <p className="text-xs text-surface-500 dark:text-dark-muted" aria-live="polite">Time to crack (1T guesses/s): {crackTime}</p>
       )}
 
       {passwords.length > 0 && (
@@ -356,7 +358,7 @@ export function PasswordGenerator() {
           {passwords.map((pw, i) => (
             <div key={i} className="flex items-center gap-2 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all break-all">{pw}</code>
-              <button onClick={() => copyOne(pw, i)} className="text-xs text-brand-500 hover:text-brand-600 whitespace-nowrap">
+              <button onClick={() => copyOne(pw, i)} className="text-xs text-brand-500 hover:text-brand-600 whitespace-nowrap" aria-label={`Copy password ${i + 1} to clipboard`}>
                 {copiedIdx === i ? "Copied!" : "Copy"}
               </button>
             </div>
@@ -365,11 +367,11 @@ export function PasswordGenerator() {
       )}
 
       {showHistory && history.length > 0 && (
-        <div>
+        <div id="password-history">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Password History (click to restore)</p>
           <div className="max-h-36 overflow-y-auto space-y-1">
             {history.map((pw, i) => (
-              <button key={i} onClick={() => handleRestore(pw)} className="w-full text-left rounded border border-surface-100 bg-white px-3 py-1.5 text-xs font-mono text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors truncate">
+              <button key={i} onClick={() => handleRestore(pw)} className="w-full text-left rounded border border-surface-200 p-1.5 text-xs font-mono text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors truncate">
                 {pw}
               </button>
             ))}
