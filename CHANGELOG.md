@@ -55,6 +55,16 @@
 - Largest chunk reduced from **936 KB → 310 KB** (67% reduction)
 - Bundle size budget test now passes (all chunks under 500 KB)
 
+### Added
+
+- **Google AdSense Integration** for sustainable free access:
+  - Auto Ads enabled (anchor, vignette, side rail, in-page, multiplex formats)
+  - Manual ad components: `AdSenseScript`, `AdBanner`, `InContentAd`, `SidebarAd`, `ResponsiveAd`
+  - Strategic placements: Home page (3), Tools listing (2), Category pages (2), Tool pages (5 in-content)
+  - Development mode placeholders (disabled in `NODE_ENV=development`)
+  - GDPR/CCPA compliant via CMP integration
+  - Follows Google AdSense best practices and Better Ads Standards
+
 ### Fixed
 
 - Fixed `package-lock.json` mismatch: `sharp@0.34.5` vs `package.json` `sharp@^0.35.3` — regenerated lock file to prevent CI `npm ci` failures
@@ -63,6 +73,7 @@
 
 - Updated `DEPLOYMENT.md`, `TROUBLESHOOTING.md` with lock file sync and bundle size debugging guidance
 - Updated `README.md` with new scripts and project structure documentation
+- Updated `ARCHITECTURE.md` with AdSense monetization layer documentation
 
 ## Template
 

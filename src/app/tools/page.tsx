@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { allTools, categories, siteConfig } from "@/lib/constants";
-import { Badge } from "@/components/ui/badge";
-import { ToolLink } from "@/components/ui/tool-link";
+import { ToolCard } from "@/components/ui/tool-card";
 import { Search } from "lucide-react";
 import { AdBanner } from "@/components/ads";
 
@@ -31,7 +30,7 @@ export default function ToolsPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "All Developer Tools",
-  description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
+    description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
     url: `${siteConfig.url}/tools`,
     numberOfItems: allTools.length,
     itemListElement: allTools.map((tool, i) => ({
@@ -110,28 +109,23 @@ export default function ToolsPage() {
                   <AdBanner className="my-8" slot="5678901234" />
                 </div>
               )}
-              <ToolLink
+              <ToolCard
                 key={tool.id}
-                slug={tool.slug}
-                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-              >
-                <div className="flex items-start justify-between">
-                  <Badge variant="default">{tool.category}</Badge>
-                  <div className="flex gap-1.5">
-                    {tool.new && <Badge variant="new">New</Badge>}
-                    {tool.trending && <Badge variant="warning">Hot</Badge>}
-                  </div>
-                </div>
-                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                  {tool.name}
-                </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                  {tool.description}
-                </p>
-                <div className="mt-3 flex items-center gap-1 text-xs text-surface-400 dark:text-dark-muted">
-                  <span>Popularity {tool.popularity}%</span>
-                </div>
-              </ToolLink>
+                tool={{
+                  id: tool.id,
+                  name: tool.name,
+                  description: tool.description,
+                  category: tool.category,
+                  slug: tool.slug,
+                  popularity: tool.popularity,
+                  featured: tool.featured,
+                  trending: tool.trending,
+                  new: tool.new,
+                  icon: tool.icon,
+                }}
+                variant="default"
+                size="md"
+              />
             </>
           ))}
         </div>

@@ -3,21 +3,37 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Search, Moon, Sun, ExternalLink } from "lucide-react";
+import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/constants";
 import { setStorageItem } from "@/lib/client-storage";
+import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setSearchOpen(true);
+        return;
+      }
+      if (e.key === "?" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const activeElement = document.activeElement;
+        const isInput = activeElement?.tagName === "INPUT" || activeElement?.tagName === "TEXTAREA" || activeElement?.getAttribute("contenteditable") === "true";
+        if (!isInput) {
+          e.preventDefault();
+          setShortcutsOpen(true);
+        }
+      }
+      if (e.key === "Escape") {
+        setShortcutsOpen(false);
+        setSearchOpen(false);
+        setIsOpen(false);
       }
     };
     document.addEventListener("keydown", handleKeyDown);
@@ -83,12 +99,13 @@ export function Header() {
           <button
             onClick={handleSearchClick}
             aria-label="Search tools"
-            className="hidden sm:flex items-center gap-2 h-9 w-48 rounded-lg border border-surface-200 bg-surface-50 px-3 text-sm text-surface-400 transition-colors hover:border-surface-300 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
+            className="hidden sm:flex items-center gap-2 h-9 flex-1 max-w-md sm:max-w-lg rounded-lg border border-surface-200 bg-surface-50 px-3 text-sm text-surface-400 transition-colors hover:border-surface-300 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
           >
             <Search className="h-4 w-4" />
             <span>Search tools...</span>
             <kbd className="ml-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg">
-              ⌘K
+              <Command className="h-3 w-3" />
+              K
             </kbd>
           </button>
           <button
@@ -101,6 +118,13 @@ export function Header() {
             <span className="inline dark:hidden" suppressHydrationWarning><Moon className="h-4 w-4" /></span>
           </button>
           <button
+            onClick={() => setShortcutsOpen(true)}
+            aria-label="Keyboard shortcuts"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+          >
+            <HelpCircle className="h-4 w-4" />
+          </button>
+          <button
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
             className="flex md:hidden h-9 w-9 items-center justify-center rounded-lg text-surface-500 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
@@ -110,7 +134,7 @@ export function Header() {
         </div>
       </div>
       {isOpen && (
-        <div className="border-t border-surface-200 dark:border-dark-border md:hidden">
+        <div className="border-t border-surface-200 dark:border-dark-border md:hidden animate-slide-down">
           <nav className="container py-4 space-y-1">
             {mainNav.map((item) => (
               <Link
@@ -148,6 +172,8 @@ export function Header() {
       <Suspense fallback={null}>
         <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       </Suspense>
+
+      <ShortcutsModal isOpen={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
     </header>
   );
 }

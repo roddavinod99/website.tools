@@ -13,6 +13,46 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    title: "How to Format JSON Online: Best Free Tools for Developers",
+    excerpt: "Complete guide to formatting, validating, and beautifying JSON online. Covers syntax highlighting, error detection, large file handling, and privacy-first tools.",
+    date: "July 20, 2026",
+    dateISO: "2026-07-20",
+    readTime: "6 min",
+    slug: "how-to-format-json-online",
+  },
+  {
+    title: "Decode JWT Tokens Instantly — No Login Required",
+    excerpt: "Debug authentication issues fast. Paste any JWT to inspect header, payload, and signature. Supports HS256, RS256, ES256, EdDSA with JWKS verification.",
+    date: "July 19, 2026",
+    dateISO: "2026-07-19",
+    readTime: "7 min",
+    slug: "decode-jwt-tokens-instantly",
+  },
+  {
+    title: "Generate Secure Passwords in Your Browser — Zero Server Upload",
+    excerpt: "Create cryptographically strong passwords using Web Crypto API. 100% client-side, configurable entropy, passphrase mode, zero tracking.",
+    date: "July 18, 2026",
+    dateISO: "2026-07-18",
+    readTime: "5 min",
+    slug: "generate-secure-passwords-in-browser",
+  },
+  {
+    title: "Convert JSON to CSV for Excel — Free Online Converter",
+    excerpt: "Transform JSON arrays to spreadsheet-ready CSV with nested object flattening, custom delimiters, and large file support. No uploads, no limits.",
+    date: "July 17, 2026",
+    dateISO: "2026-07-17",
+    readTime: "6 min",
+    slug: "convert-json-to-csv-for-excel",
+  },
+  {
+    title: "Create QR Codes for Free: Complete Guide (URL, vCard, WiFi, Crypto)",
+    excerpt: "Generate QR codes for 10 formats with custom colors, logos, and error correction. URL, contact, WiFi, calendar, crypto payments — all client-side.",
+    date: "July 16, 2026",
+    dateISO: "2026-07-16",
+    readTime: "6 min",
+    slug: "create-qr-codes-for-free",
+  },
+  {
     title: "Getting Started with JSON: A Complete Guide",
     excerpt: "Learn everything you need to know about JSON, from basic syntax to advanced use cases in modern web development.",
     date: "June 28, 2026",

@@ -118,25 +118,23 @@ async function detectOrphans(sitemapUrls) {
   const constantsPath = join(ROOT, "src", "lib", "constants.ts");
   const constantsRaw = readFileSync(constantsPath, "utf-8");
 
-  const allSlugs = [...constantsRaw.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
+  // Parse category slugs from categoryMetas
+  const categoryMetasMatch = constantsRaw.match(/const categoryMetas\s*=\s*\[([\s\S]*?)\];/);
+  const catSlugs = categoryMetasMatch
+    ? [...categoryMetasMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
+    : [];
 
-  // Derive counts from array declarations in constants.ts
-  // Order: categories[], allTools[], learningTopics[]
-  // Each category entry has a slug, so we split the file at each array boundary
-  const categoriesMatch = constantsRaw.match(/export const categories/);
-  const allToolsMatch = constantsRaw.match(/export const allTools/);
-  const learningTopicsMatch = constantsRaw.match(/export const learningTopics/);
-  const catText = constantsRaw.slice(
-    categoriesMatch ? categoriesMatch.index : 0,
-    allToolsMatch ? allToolsMatch.index : undefined
-  );
-  const toolsText = constantsRaw.slice(
-    allToolsMatch ? allToolsMatch.index : 0,
-    learningTopicsMatch ? learningTopicsMatch.index : undefined
-  );
-  const catSlugs = [...catText.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
-  const toolSlugs = [...toolsText.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
-  const topicSlugs = allSlugs.slice(catSlugs.length + toolSlugs.length);
+  // Parse tool slugs from allTools array
+  const allToolsMatch = constantsRaw.match(/export const allTools\s*=\s*\[([\s\S]*?)\];/);
+  const toolSlugs = allToolsMatch
+    ? [...allToolsMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
+    : [];
+
+  // Parse guide slugs from learningTopics array (only these should have guide pages)
+  const learningTopicsMatch = constantsRaw.match(/export const learningTopics\s*=\s*\[([\s\S]*?)\];/);
+  const topicSlugs = learningTopicsMatch
+    ? [...learningTopicsMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
+    : [];
 
   const expected = new Set();
 

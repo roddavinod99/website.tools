@@ -416,6 +416,66 @@ Every page should include:
 
 ------------------------------------------------------------------------
 
+# Ad Implementation Guidelines
+
+This project uses Google AdSense for sustainable free access. All AI agents must follow these rules when working with ads.
+
+## Ad Architecture
+
+### Components (src/components/ads/)
+- **AdSenseScript** — Loads AdSense JS with Auto Ads enabled (`enable_page_level_ads: true`)
+- **AdBanner** — Horizontal responsive banner (format: "horizontal", slot: "1234567890")
+- **InContentAd** — Rectangle in-content ad (format: "rectangle", slot: "3456789012")
+- **SidebarAd** — Vertical sidebar ad for desktop (format: "vertical", slot: "2345678901")
+- **ResponsiveAd** — Auto-sizing ad unit (format: "auto", slot: "4567890123")
+
+### Implementation Rules
+
+1. **Auto Ads Enabled** — AdSenseScript includes `(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-...", enable_page_level_ads: true })` — do not remove.
+
+2. **Development Mode** — Ads are disabled in development (`NODE_ENV === "development"`). Components render labeled placeholders for layout testing.
+
+3. **Content-First Placement** — Ads must never block or interfere with tool functionality:
+   - Tool interfaces load before any ad
+   - Ads placed between content sections, not within tools
+   - No ads near navigation, buttons, or form controls
+
+4. **Google Policy Compliance** — Follow [AdSense Program Policies](https://support.google.com/adsense/answer/48182):
+   - No misleading labels (only "Advertisements" or "Sponsored links")
+   - No ads disguised as content/navigation
+   - Clear visual separation from content
+   - Respect Better Ads Standards
+
+5. **Responsive Units** — All manual ad units use `data-ad-format="auto"` and `data-full-width-responsive="true"` for mobile optimization.
+
+6. **Slot IDs** — Each placement uses a unique ad slot ID (provided in AdSense account). Do not reuse slots across pages.
+
+### Placement Strategy
+
+| Page Type | Placements |
+|-----------|------------|
+| Home | After Hero, after Featured Tools, after Learning Section |
+| Tool Pages | After tool interface, after How-to, after Best Practices, after FAQ, after Learning Resources |
+| Tools Listing | After header/search, middle of grid (50%) |
+| Category Pages | After header, middle of grid (50%) |
+
+### Adding New Ad Placements
+
+1. Import from `@/components/ads`: `import { AdBanner, InContentAd } from "@/components/ads"`
+2. Use appropriate component: `<AdBanner slot="YOUR_SLOT_ID" />` or `<InContentAd slot="YOUR_SLOT_ID" />`
+3. Add unique slot ID from AdSense account
+4. Place between content sections with `my-12` spacing
+5. Test in development (shows placeholder) and production
+
+### Prohibited Patterns
+
+- ❌ Placing ads inside tool interfaces
+- ❌ Ads that cover content on scroll
+- ❌ More than 3 in-content ads per tool page
+- ❌ Reusing slot IDs
+- ❌ Removing Auto Ads configuration
+- ❌ Adding ads to API routes or non-content pages
+
 ------------------------------------------------------------------------
 
 ## Tool Architecture Guidelines

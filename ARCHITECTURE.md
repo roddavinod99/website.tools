@@ -63,6 +63,29 @@ Security is implemented at multiple layers:
 3. **API Routes** — Input validation, sanitization, origin checking
 4. **Client-side** — DOMPurify sanitization, CSP enforcement
 
+### 6. Monetization (AdSense)
+The platform uses **Google AdSense** for sustainable free access:
+
+**Auto Ads** — Enabled globally via `AdSenseScript` component:
+- One script tag loads `pagead2.googlesyndication.com/pagead/js/adsbygoogle.js`
+- Auto Ads config: `enable_page_level_ads: true`
+- Handles: Anchor ads (mobile), Vignette ads (page transitions), Side rails (desktop widescreen), In-page banners, Multiplex ads
+
+**Manual Ad Units** — React components for strategic placement:
+- `AdBanner` — Horizontal responsive (728×90 / fluid)
+- `InContentAd` — Rectangle in-content (336×280 / fluid)
+- `SidebarAd` — Vertical sidebar (300×600 / fluid)
+- `ResponsiveAd` — Auto-sizing for any container
+
+**Development Mode** — Ads disabled when `NODE_ENV=development`, showing labeled placeholders for layout testing.
+
+**Compliance** — Follows [AdSense Program Policies](https://support.google.com/adsense/answer/48182):
+- Content-first: tools load before ads
+- Clear separation from navigation/controls
+- Responsive units with `data-full-width-responsive="true"`
+- Unique slot IDs per placement
+- Works with CMP for GDPR/CCPA consent
+
 ## Performance Targets
 
 | Metric | Target |

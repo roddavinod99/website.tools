@@ -11,7 +11,6 @@ import { FAQSection } from "@/components/home/faq-section";
 import { AdBanner } from "@/components/ads";
 
 export const metadata: Metadata = {
-  title: "DevStackIO Tools — Free Online Developer Tools",
   description:
     "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, convert data, compress images, and more — all in your browser, zero server uploads.",
   alternates: {

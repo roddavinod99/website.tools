@@ -58,7 +58,7 @@ const SEARCH_ENGINES = [
   },
 ];
 
-function log(...args) { auditLog(...args); }
+function log(...args) { console.log(...args); }
 
 function normalizeSitemap(xml) {
   return xml

@@ -54,6 +54,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# generated version data
+src/lib/version/__generated__/
+
 # eslint
 .eslintcache
 

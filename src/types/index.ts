@@ -76,7 +76,7 @@ export interface CookieCategory {
 export interface AdPlaceholderProps {
   className?: string;
   slot?: string;
-  format?: "auto" | "rectangle" | "horizontal" | "vertical";
+  format?: "auto" | "rectangle" | "horizontal" | "vertical" | "fluid";
   width?: number;
   height?: number;
 }

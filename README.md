@@ -14,6 +14,7 @@
 - **Keyboard Shortcuts** — Power-user workflows for efficient tool access
 - **PWA Ready** — Installable as a Progressive Web App with offline support
 - **Accessible** — WCAG 2.2 AA compliant, keyboard navigable, screen reader friendly
+- **Ad-Supported** — Google AdSense with Auto Ads for sustainable free access
 
 ## 🚀 Quick Start
 
@@ -58,6 +59,7 @@ npm start
 | Fonts | Geist (Vercel) |
 | Tool Processing | Client-side (Web APIs, Web Workers) |
 | Search | Fuse.js in Web Worker |
+| Ads | Google AdSense (Auto Ads + Manual Placements) |
 | Process Manager | PM2 cluster mode |
 | Reverse Proxy | Nginx |
 | Deployment | Oracle Cloud ARM64 (Ampere A1) |
@@ -82,6 +84,7 @@ src/
 │   ├── tools/              # Interactive tool interfaces
 │   ├── ui/                 # Reusable UI components
 │   ├── layout/             # Header, Footer, Analytics
+│   ├── ads/                # AdSense components (Auto Ads, Banner, In-Content)
 │   └── ...
 ├── lib/
 │   ├── constants.ts        # Tool registry, site config
@@ -113,6 +116,34 @@ Security is a core design principle. See [SECURITY.md](SECURITY.md) for the full
 - **XSS Prevention** — DOMPurify with strict allowlist for all HTML/SVG rendering
 - **File Upload Hardening** — MIME validation, magic byte checks, zip bomb detection
 - **Process Isolation** — Runs as non-root user with restricted privileges
+
+## 📢 Ad Implementation
+
+This project uses Google AdSense for sustainable free access:
+
+### Ad Strategy
+- **Auto Ads** — Google automatically places optimized ads (anchor, vignette, side rail, in-page)
+- **Manual Placements** — Strategic banner and in-content ads following Google's best practices
+- **Privacy Compliant** — No user data sent to AdSense; all tool processing remains client-side
+
+### Ad Components
+- `AdSenseScript` — Loads AdSense JS with Auto Ads configuration
+- `AdBanner` — Horizontal banner ads (728x90 / responsive)
+- `InContentAd` — Rectangle ads within content (336x280 / responsive)
+- `ResponsiveAd` — Auto-sizing ad units
+- `SidebarAd` — Vertical sidebar ads (300x600) for desktop
+
+### Placement Guidelines (Google Best Practices)
+- Ads placed between content sections, not interrupting tool usage
+- Clear visual separation from content
+- No ads near navigation or action buttons
+- Mobile-first responsive sizing
+- Compliance with [Better Ads Standards](https://www.betterads.org/standards/)
+
+### Environment Variables
+```bash
+NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX  # Required for production
+```
 
 ## 🔧 Scripts
 
