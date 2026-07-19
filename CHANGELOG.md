@@ -46,6 +46,24 @@
 - Production readiness gate
 - Daily cron jobs for sitemap submission
 
+## [0.2.0] - 2026-07-19
+
+### Performance
+
+- **Bundle size optimization**: Replaced full `import("highlight.js")` (384 langs) with `highlight-lazy.ts` (core + 25 common langs, static subpath imports for tree-shaking)
+- **Bundle size optimization**: Replaced `mathjs` "all" preset (371+ factories) with `math-lite.ts` (27 specific function dependencies via static imports, 133 keys vs 371+)
+- Largest chunk reduced from **936 KB → 310 KB** (67% reduction)
+- Bundle size budget test now passes (all chunks under 500 KB)
+
+### Fixed
+
+- Fixed `package-lock.json` mismatch: `sharp@0.34.5` vs `package.json` `sharp@^0.35.3` — regenerated lock file to prevent CI `npm ci` failures
+
+### Infrastructure
+
+- Updated `DEPLOYMENT.md`, `TROUBLESHOOTING.md` with lock file sync and bundle size debugging guidance
+- Updated `README.md` with new scripts and project structure documentation
+
 ## Template
 
 For future releases:

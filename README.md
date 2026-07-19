@@ -87,6 +87,9 @@ src/
 │   ├── constants.ts        # Tool registry, site config
 │   ├── search.ts           # Search implementation
 │   ├── sanitize.ts         # DOMPurify wrapper
+│   ├── highlight-lazy.ts   # Tree-shakeable highlight.js (core + 25 langs)
+│   ├── math-lite.ts        # Tree-shakeable mathjs (functions-only subset)
+│   ├── version/            # Release & version management system
 │   ├── workers/            # Web Worker infrastructure
 │   └── ...
 ├── workers/                # Web Worker implementations
@@ -116,7 +119,7 @@ Security is a core design principle. See [SECURITY.md](SECURITY.md) for the full
 | Script | Purpose |
 |--------|---------|
 | `npm run dev` | Start development server |
-| `npm run build` | Production build |
+| `npm run build` | Production build (runs `prebuild` hook automatically) |
 | `npm start` | Start production server |
 | `npm run lint` | ESLint check |
 | `npm run test` | Run Playwright test suite |
@@ -124,6 +127,7 @@ Security is a core design principle. See [SECURITY.md](SECURITY.md) for the full
 | `npm run production:readiness` | Run production readiness checks |
 | `npm run seo:audit` | Run SEO audit |
 | `npm run sitemap:submit` | Submit sitemap to search engines |
+| `npm run version` | Interactive release CLI (bumps version, updates changelog) |
 
 ## 📦 Deployment
 

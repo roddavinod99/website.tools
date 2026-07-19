@@ -26,6 +26,8 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
 Environment variables are automatically injected during CI/CD deployment from
 GitHub Secrets (`.github/workflows/deploy.yml`). No manual `.env` setup needed.
 
+> **Important**: CI runs `npm ci` which requires `package-lock.json` to be in sync with `package.json`. Always run `npm install` locally and commit the updated lock file when changing dependencies. Out-of-sync lock files cause CI failures with `npm error code EUSAGE`.
+
 Required GitHub Secrets (set once in repo Settings → Secrets and variables → Actions):
 
 | Secret | Description | Example |

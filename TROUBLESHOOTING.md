@@ -19,6 +19,29 @@
 2. Run `npm ci` instead of `npm install` (clean install)
 3. Check for platform-specific dependencies
 
+**Problem**: CI fails with `npm error code EUSAGE` / `lock file's sharp@0.34.5 does not satisfy sharp@0.35.3`.
+
+**Root cause**: `package-lock.json` is out of sync with `package.json`. This happens when `package.json` is edited (e.g., dependency version bump) but `npm install` is not re-run to update the lock file. CI uses `npm ci` which strictly requires lock file accuracy.
+
+**Solutions**:
+1. Run `npm install` locally to regenerate `package-lock.json`
+2. Commit the updated `package-lock.json`
+3. Verify: `node -e "const lock = require('./package-lock.json'); console.log(lock.packages['node_modules/sharp'].version);"` should match your `package.json` version
+
+### Bundle Size Budget Failures
+
+**Problem**: Vitest bundle-size test fails with `expected [ …(1) ] to have a length of +0 but got 1`.
+
+**Root cause**: A JavaScript chunk exceeds the 500 KB budget. This happens when a large library (highlight.js, mathjs) is imported without tree-shaking.
+
+**Solutions**:
+1. Check which library is oversized:
+   ```bash
+   node -e "const fs = require('fs'); const c = fs.readFileSync('.next/static/chunks/' + fs.readdirSync('.next/static/chunks').filter(f => f.endsWith('.js')).map(f => ({n:f,s:fs.statSync('.next/static/chunks/'+f).size})).sort((a,b)=>b.s-a.s)[0].n, 'utf8'); ['highlight','mathjs','dompurify','crypto-js'].forEach(p => { const m = c.match(new RegExp(p,'g')); if(m) console.log(p, m.length); });"
+   ```
+2. If highlight.js is oversized: use `src/lib/highlight-lazy.ts` instead of `import("highlight.js")` — it loads core + only 25 common languages via tree-shakeable static imports
+3. If mathjs is oversized: use `src/lib/math-lite.ts` instead of `import("mathjs").then(({create, all}) => ...)` — it imports only 27 specific function dependencies instead of the 371+ "all" preset
+
 ### Deployment Issues
 
 **Problem**: Nginx 502 Bad Gateway.
