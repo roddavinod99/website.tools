@@ -60,6 +60,24 @@ test.describe("API Endpoint Tests", () => {
     });
   });
 
+  test.describe("GET /api/version", () => {
+    test("returns version information", async ({ request }) => {
+      const response = await request.get(`${BASE_URL}/api/version`);
+      expect(response.status()).toBe(200);
+      const body = await response.json();
+      expect(body).toHaveProperty("version");
+      expect(body).toHaveProperty("build");
+      expect(body).toHaveProperty("commit");
+      expect(body).toHaveProperty("branch");
+      expect(body).toHaveProperty("buildDate");
+      expect(body).toHaveProperty("environment");
+      expect(typeof body.version).toBe("string");
+      expect(typeof body.build).toBe("number");
+      expect(typeof body.commit).toBe("string");
+      expect(response.headers()["cache-control"]).toContain("no-store");
+    });
+  });
+
   test.describe("GET /api/ip-lookup", () => {
     test("public IP — returns location data", async ({ request }) => {
       const response = await request.get(`${BASE_URL}/api/ip-lookup?ip=8.8.8.8`);

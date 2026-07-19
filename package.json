@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/prebuild.mjs",
     "build": "next build",
     "start": "next start",
+    "version": "node scripts/release.mjs",
     "lint": "eslint",
     "sitemap:submit": "node scripts/sitemap-submitter.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",

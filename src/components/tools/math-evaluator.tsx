@@ -45,15 +45,8 @@ export function MathEvaluator() {
   const [limitedEvaluate, setLimitedEvaluate] = useState<((expr: string, scope?: Record<string, unknown>) => unknown) | null>(null);
 
   useEffect(() => {
-    import("mathjs").then((mod) => {
-      const { create, all } = mod;
-      const math = create(all);
-      math.import({
-        import: () => { throw new Error("Function import is disabled"); },
-        createUnit: () => { throw new Error("Function createUnit is disabled"); },
-        reviver: () => { throw new Error("Function reviver is disabled"); },
-      }, { override: true });
-      setLimitedEvaluate(math.evaluate.bind(math));
+    import("@/lib/math-lite").then((mod) => {
+      setLimitedEvaluate(mod.limitedEvaluate);
       setLibLoading(false);
     });
   }, []);

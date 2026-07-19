@@ -115,8 +115,8 @@ export function MarkdownEditor() {
   const [hljsInstance, setHljsInstance] = useState<any>(null);
 
   useEffect(() => {
-    import("highlight.js").then((mod) => {
-      setHljsInstance(mod.default || mod);
+    import("@/lib/highlight-lazy").then((mod) => {
+      setHljsInstance(mod.default);
     });
     const link = document.createElement("link");
     link.rel = "stylesheet";
