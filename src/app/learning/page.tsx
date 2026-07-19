@@ -5,8 +5,22 @@ import { learningTopics, siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Learning Center",
-  description: "Developer tutorials, guides, and best practices.",
+  description: "Developer tutorials, guides, and best practices from DevStackIO. Learn JSON, JWT, image optimization, web performance, and data formats.",
   alternates: { canonical: `${siteConfig.url}/learning` },
+  openGraph: {
+    title: "Learning Center — DevStackIO Tools",
+    description: "Developer tutorials, guides, and best practices from DevStackIO. Learn JSON, JWT, image optimization, and more.",
+    url: `${siteConfig.url}/learning`,
+    siteName: "DevStackIO Tools",
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Learning Center" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learning Center — DevStackIO Tools",
+    description: "Developer tutorials, guides, and best practices from DevStackIO.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 const categories = [

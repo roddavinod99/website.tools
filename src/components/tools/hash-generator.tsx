@@ -267,7 +267,7 @@ export function HashGenerator() {
   };
 
   const hashFile = async (f: File) => {
-    const sizeCheck = validateFileSize(f, 25);
+    const sizeCheck = validateFileSize(f, 25 * 1024 * 1024);
     if (!sizeCheck.valid) {
       alert(sizeCheck.error);
       return;

@@ -100,6 +100,16 @@ export default async function ToolPage({ params }: Props) {
               price: "0",
               priceCurrency: "USD",
             },
+            author: {
+              "@type": "Organization",
+              name: "DevStackIO",
+              url: siteConfig.mainSiteUrl,
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "DevStackIO",
+              url: siteConfig.mainSiteUrl,
+            },
           }),
         }}
       />
@@ -215,6 +225,17 @@ export default async function ToolPage({ params }: Props) {
             <div className="mt-4 space-y-4 text-surface-600 dark:text-dark-muted">
               <p>{content.whatItDoes}</p>
               <p>{content.whyItExists}</p>
+              <p className="text-sm text-surface-400 dark:text-dark-muted">
+                This tool is part of the{" "}
+                <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+                  DevStackIO
+                </a>{" "}
+                platform — a collection of free online developer tools from DevStackIO.
+                Browse more free developer resources on{" "}
+                <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+                  DevStackIO
+                </a>.
+              </p>
               <div>
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Who should use this tool?</h3>
                 <p className="mt-1">{content.whoShouldUse}</p>

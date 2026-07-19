@@ -3,11 +3,11 @@ import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn about DevStackIO - our mission to provide free, privacy-first developer tools for everyone. Discover our story, principles, and roadmap.",
+  description: "Learn about DevStackIO — the parent platform behind tools.devstackio.com. Our mission is to provide free, privacy-first developer tools for everyone.",
   alternates: { canonical: `${siteConfig.url}/about` },
   openGraph: {
-    title: "About DevStackIO",
-    description: "Learn about our mission to provide free, privacy-first developer tools for everyone.",
+    title: "About DevStackIO — Free Developer Tools Platform",
+    description: "DevStackIO provides free online developer tools at tools.devstackio.com. Learn about our mission, principles, and roadmap.",
     url: `${siteConfig.url}/about`,
   },
   other: {
@@ -28,17 +28,21 @@ export default function AboutPage() {
       },
       {
         "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.url,
+        name: "DevStackIO",
+        url: siteConfig.mainSiteUrl,
         logo: {
           "@type": "ImageObject",
           url: `${siteConfig.url}/logo-light.png`,
         },
-        description: siteConfig.description,
+        description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
         email: siteConfig.contactEmail,
         foundingDate: "2024",
         alternateName: "DevStack",
-        sameAs: [siteConfig.links.github],
+        sameAs: [
+          siteConfig.mainSiteUrl,
+          siteConfig.url,
+          siteConfig.links.github,
+        ],
         contactPoint: {
           "@type": "ContactPoint",
           email: siteConfig.contactEmail,
@@ -61,6 +65,30 @@ export default function AboutPage() {
         </h1>
 
         <div className="mt-8 space-y-8 text-surface-600 dark:text-dark-muted">
+          <section>
+            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">The DevStackIO Platform</h2>
+            <p className="mt-2">
+              DevStackIO is the parent platform behind{" "}
+              <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">tools.devstackio.com</a>
+              {" — "}the official collection of free online developer tools. Both websites are maintained
+              by the same team and share the same commitment to privacy, quality, and accessibility.
+            </p>
+            <p className="mt-2">
+              <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+                DevStackIO
+              </a>{" "}
+              is the parent organization that provides the developer tools platform, learning resources,
+              APIs, and utilities for the developer community.
+            </p>
+            <p className="mt-2">
+              <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">
+                Tools.DevStackIO
+              </a>{" "}
+              is our dedicated tools website featuring 140+ free online developer utilities —
+              all processing data entirely in your browser with zero server uploads.
+            </p>
+          </section>
+
           <section>
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Our Mission</h2>
             <p className="mt-2">

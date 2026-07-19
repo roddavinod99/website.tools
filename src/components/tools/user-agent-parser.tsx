@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface UAResult {
   browser: string; browserVersion: string;
@@ -142,8 +143,7 @@ export function UserAgentParser() {
   });
   const [result, setResult] = useState<UAResult | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    try { const stored = localStorage.getItem("uaparse_history"); if (stored) return JSON.parse(stored); } catch {}
-    return [];
+    return getStorageJSON<HistoryEntry[]>("uaparse_history") || [];
   });
   const [compareInput, setCompareInput] = useState("");
   const [compareResult, setCompareResult] = useState<UAResult | null>(null);
@@ -151,7 +151,7 @@ export function UserAgentParser() {
   const [showReference, setShowReference] = useState(false);
 
   useEffect(() => {
-    if (history.length > 0) localStorage.setItem("uaparse_history", JSON.stringify(history.slice(0, 20)));
+    if (history.length > 0) setStorageJSON("uaparse_history", history.slice(0, 20));
   }, [history]);
 
   const parse = (ua?: string) => {

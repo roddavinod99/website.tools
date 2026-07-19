@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { getIPHashSalt } from "./env";
 
 type SecurityEvent =
   | "upload_rejected_size"
@@ -22,13 +23,9 @@ interface SecurityLogEntry {
 
 const SECURITY_LOG: SecurityLogEntry[] = [];
 const MAX_LOG_ENTRIES = 1000;
-const IP_HASH_SALT = process.env.IP_HASH_SALT;
-if (!IP_HASH_SALT && process.env.NODE_ENV === "production") {
-  console.error("WARNING: IP_HASH_SALT is not set. Set a secure random salt in production.");
-}
 
 function hashIP(ip: string): string {
-  const salt = IP_HASH_SALT || "default-salt-change-in-production";
+  const salt = getIPHashSalt();
   return createHash("sha256")
     .update(ip.replace(/::ffff:/, "") + salt)
     .digest("hex")

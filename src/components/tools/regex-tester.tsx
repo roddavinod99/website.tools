@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 type Mode = "match" | "replace" | "split";
 
@@ -95,12 +96,10 @@ export function RegexTester() {
   const [copiedIdx, setCopiedIdx] = useState(-1);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    try { const s = localStorage.getItem("regex-history"); return s ? JSON.parse(s) : []; } catch { return []; }
-  });
+  const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("regex-history") || []);
 
   useEffect(() => {
-    localStorage.setItem("regex-history", JSON.stringify(history.slice(0, 20)));
+    setStorageJSON("regex-history", history.slice(0, 20));
   }, [history]);
 
   const activePattern = autoEscape ? escapeRegex(pattern) : pattern;

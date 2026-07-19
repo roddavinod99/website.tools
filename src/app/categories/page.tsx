@@ -4,8 +4,22 @@ import { categories, siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Categories",
-  description: "Browse 20+ free developer tools by category: encoding, formatting, generation, conversion, security, network, and more on DevStackIO.",
+  description: "Browse free developer tools by category on DevStackIO: encoders, formatters, generators, converters, security tools, image tools, and utilities.",
   alternates: { canonical: `${siteConfig.url}/categories` },
+  openGraph: {
+    title: "Tool Categories — DevStackIO Tools",
+    description: "Browse free developer tools by category: encoders, formatters, generators, converters, security tools, image tools, and utilities.",
+    url: `${siteConfig.url}/categories`,
+    siteName: "DevStackIO Tools",
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Tool Categories" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tool Categories — DevStackIO Tools",
+    description: "Browse free developer tools by category on DevStackIO.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function CategoriesPage() {

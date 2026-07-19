@@ -5,8 +5,22 @@ import { learningTopics, siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Guides",
-  description: "Free developer guides covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and data serialization formats.",
+  description: "Free developer guides from DevStackIO covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and more.",
   alternates: { canonical: `${siteConfig.url}/guides` },
+  openGraph: {
+    title: "Developer Guides — DevStackIO Tools",
+    description: "Free developer guides covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and more.",
+    url: `${siteConfig.url}/guides`,
+    siteName: "DevStackIO Tools",
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Guides" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Developer Guides — DevStackIO Tools",
+    description: "Free developer guides from DevStackIO covering JSON, JWT, Base64, and more.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function GuidesPage() {

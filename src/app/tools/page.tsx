@@ -7,8 +7,22 @@ import { Search } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "All Tools",
-  description: "Browse our complete collection of free online developer tools.",
+  description: "Browse 140+ free online developer tools from DevStackIO. JSON formatters, JWT decoders, UUID generators, image compressors, and more — all client-side.",
   alternates: { canonical: `${siteConfig.url}/tools` },
+  openGraph: {
+    title: "All Developer Tools — DevStackIO",
+    description: "Browse 140+ free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
+    url: `${siteConfig.url}/tools`,
+    siteName: "DevStackIO Tools",
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Tools" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "All Developer Tools — DevStackIO",
+    description: "Browse 140+ free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function ToolsPage() {

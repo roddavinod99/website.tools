@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 type IpType = "public" | "private" | "loopback" | "link-local" | "multicast" | "reserved";
 
@@ -77,14 +78,11 @@ export function IpCalculator() {
   const [error, setError] = useState("");
   const [copyFeedback, setCopyFeedback] = useState("");
   const [showSubnets, setShowSubnets] = useState(false);
-  const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    try { const s = localStorage.getItem("ipcalc_history"); if (s) return JSON.parse(s); } catch { /* empty */ }
-    return [];
-  });
+  const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("ipcalc_history") || []);
   const [ipv6Input, setIpv6Input] = useState("");
   const [cidrNotation, setCidrNotation] = useState("");
 
-  useEffect(() => { if (history.length > 0) localStorage.setItem("ipcalc_history", JSON.stringify(history.slice(0, 20))); }, [history]);
+  useEffect(() => { if (history.length > 0) setStorageJSON("ipcalc_history", history.slice(0, 20)); }, [history]);
 
   const calculate = () => {
     setError("");

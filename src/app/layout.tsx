@@ -8,10 +8,13 @@ import { siteConfig } from "@/lib/constants";
 import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
+import { ConsentManager } from "@/components/legal/consent-manager";
 import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
 import { ServiceWorkerRegister } from "@/components/layout/service-worker-register";
 import { PreloadPopularTools } from "@/components/layout/tool-preloader";
 import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
+import { AdSenseScript } from "@/components/ads/adsense-script";
+import { AdBanner } from "@/components/ads";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +33,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      name: siteConfig.name,
+      name: "DevStackIO Tools",
       url: siteConfig.url,
-      description: siteConfig.description,
+      description: "Free online developer tools from DevStackIO. Format, encode, generate, convert, and analyze data entirely in your browser with no server uploads.",
       potentialAction: {
         "@type": "SearchAction",
         target: {
@@ -41,20 +44,32 @@ const jsonLd = {
         },
         "query-input": "required name=search_term_string",
       },
+      publisher: {
+        "@type": "Organization",
+        name: "DevStackIO",
+        url: siteConfig.mainSiteUrl,
+      },
+      isPartOf: {
+        "@type": "WebSite",
+        name: siteConfig.mainSiteName,
+        url: siteConfig.mainSiteUrl,
+      },
     },
     {
       "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
+      name: "DevStackIO",
+      url: siteConfig.mainSiteUrl,
       logo: {
         "@type": "ImageObject",
         url: `${siteConfig.url}/logo-light.png`,
       },
-      description: siteConfig.description,
+      description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
       email: siteConfig.contactEmail,
       foundingDate: "2024",
       alternateName: "DevStack",
       sameAs: [
+        siteConfig.mainSiteUrl,
+        siteConfig.url,
         siteConfig.links.github,
       ],
       contactPoint: [
@@ -80,19 +95,21 @@ const jsonLd = {
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    default: "DevStackIO Tools — Free Online Developer Tools",
+    template: `%s | DevStackIO Tools`,
   },
-  description: siteConfig.description,
+  description: "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, compress images, and more — all processing in your browser with zero server uploads.",
   keywords: [
     "developer tools",
     "online tools",
+    "DevStackIO",
     "JSON formatter",
     "JWT decoder",
     "UUID generator",
     "free tools",
     "base64 encoder",
     "password generator",
+    "privacy-first tools",
   ],
   authors: [{ name: "DevStackIO" }],
   creator: "DevStackIO",
@@ -101,15 +118,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: siteConfig.name }],
+    title: "DevStackIO Tools — Free Online Developer Tools",
+    description: "Free online developer tools from DevStackIO. JSON formatters, JWT decoders, image compressors, and more — all in your browser.",
+    siteName: "DevStackIO Tools",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Tools" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: "DevStackIO Tools — Free Online Developer Tools",
+    description: "Free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
     images: [siteConfig.ogImage],
     creator: "@devstackio",
   },
@@ -146,6 +163,8 @@ export default function RootLayout({
         <meta name="robots" content="max-image-preview:large" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="alternate" hrefLang="en" href={siteConfig.url} />
         <script
           type="application/ld+json"
@@ -156,6 +175,7 @@ export default function RootLayout({
 
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
+        <ConsentManager />
         <ThemeProvider>
           <ServiceWorkerRegister />
           <FileCleanupProvider>
@@ -167,8 +187,10 @@ export default function RootLayout({
               <AnalyticsTracker />
               <PreloadPopularTools />
             </Suspense>
+            <AdSenseScript />
             <Header />
             <main id="main-content" className="flex-1">{children}</main>
+            <AdBanner slot="4654925834" />
             <Footer />
             <CookieConsent />
           </FileCleanupProvider>

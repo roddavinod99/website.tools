@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface UnitDef {
   label: string;
@@ -184,11 +185,11 @@ const categories: Record<CategoryKey, CategoryDef> = {
 const STORAGE_KEY = "unit-converter-favorites";
 
 function loadFavorites(): string[] {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
+  return getStorageJSON<string[]>(STORAGE_KEY) || [];
 }
 
 function saveFavorites(favs: string[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
+  setStorageJSON(STORAGE_KEY, favs);
 }
 
 export function UnitConverter() {

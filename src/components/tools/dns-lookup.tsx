@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 const RECORD_TYPES = ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SOA", "SRV", "PTR", "CAA", "ANY"] as const;
 type RecordType = (typeof RECORD_TYPES)[number];
@@ -60,9 +61,7 @@ export function DNSLookup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRaw, setShowRaw] = useState(false);
-  const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    try { const saved = localStorage.getItem("dns-lookup-history"); return saved ? JSON.parse(saved) : []; } catch { return []; }
-  });
+  const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("dns-lookup-history") || []);
 
   const lookup = useCallback(async (d: string, t: RecordType) => {
     if (!d.trim()) return;
@@ -82,7 +81,7 @@ export function DNSLookup() {
         setError("");
         setHistory((prev) => {
           const next = [{ domain: d.trim(), type: t, timestamp: Date.now() }, ...prev.filter((h) => h.domain !== d.trim())].slice(0, 10);
-          localStorage.setItem("dns-lookup-history", JSON.stringify(next));
+          setStorageJSON("dns-lookup-history", next);
           return next;
         });
       }

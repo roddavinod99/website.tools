@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
 import { validateFileSize } from "@/lib/file-security";
+import { getStorageItem, setStorageItem } from "@/lib/client-storage";
 
 type Theme = "github" | "dark" | "solarized";
 
@@ -135,13 +136,7 @@ const TOOLBAR_ACTIONS = [
 
 export function MarkdownPreview() {
   const [input, setInput] = useState(() => {
-    try {
-      if (typeof window === "undefined") return "# Hello\n\nType **markdown** here to see a **live preview**.\n\n- List item 1\n- List item 2\n\n> A blockquote";
-      const saved = localStorage.getItem("mdpreview_input");
-      return saved || "# Hello\n\nType **markdown** here to see a **live preview**.\n\n- List item 1\n- List item 2\n\n> A blockquote";
-    } catch {
-      return "# Hello\n\nType **markdown** here to see a **live preview**.\n\n- List item 1\n- List item 2\n\n> A blockquote";
-    }
+    return getStorageItem("mdpreview_input") || "# Hello\n\nType **markdown** here to see a **live preview**.\n\n- List item 1\n- List item 2\n\n> A blockquote";
   });
   const [theme, setTheme] = useState<Theme>("github");
   const [showHtml, setShowHtml] = useState(false);
@@ -176,7 +171,7 @@ export function MarkdownPreview() {
   const readingTime = useMemo(() => Math.max(1, Math.ceil(wordCount / 200)), [wordCount]);
 
   useEffect(() => {
-    localStorage.setItem("mdpreview_input", input);
+    setStorageItem("mdpreview_input", input);
   }, [input]);
 
   const insertAtCursor = useCallback((cmd: string) => {

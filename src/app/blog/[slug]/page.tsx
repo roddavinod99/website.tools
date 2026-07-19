@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: blogPost.title,
       description: blogPost.excerpt,
       url: canonical,
-      siteName: siteConfig.name,
+      siteName: "DevStackIO Tools",
       type: "article",
       publishedTime: blogPost.dateISO,
     },

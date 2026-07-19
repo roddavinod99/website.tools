@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 
 const footerLinks = [
@@ -68,9 +69,31 @@ export function Footer() {
               {siteConfig.name}
             </Link>
             <p className="mt-3 text-sm text-surface-500 dark:text-dark-muted max-w-xs">
-              The internet&apos;s best collection of free online tools for developers.
+              Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
+            </p>
+            <p className="mt-3 text-sm text-surface-400 dark:text-dark-muted max-w-xs">
+              DevStackIO Tools is part of the{" "}
+              <a
+                href={siteConfig.mainSiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-500 hover:text-brand-600 underline underline-offset-2"
+              >
+                DevStackIO
+              </a>{" "}
+              developer platform.
             </p>
             <div className="mt-4 flex gap-3">
+              <a
+                href={siteConfig.mainSiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm text-surface-500 hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text transition-colors"
+              >
+                DevStackIO Home
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              <span className="text-surface-300 dark:text-dark-border">|</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"

@@ -69,7 +69,7 @@ export function FileChecksum() {
     if (!fileList) return;
     const validFiles: File[] = [];
     for (const file of Array.from(fileList)) {
-      const sizeCheck = validateFileSize(file, 25);
+      const sizeCheck = validateFileSize(file, 25 * 1024 * 1024);
       if (!sizeCheck.valid) {
         alert(`${file.name}: ${sizeCheck.error}`);
         continue;

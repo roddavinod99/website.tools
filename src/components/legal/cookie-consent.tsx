@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface CookiePreferences {
   necessary: boolean;
@@ -49,12 +50,8 @@ const categories = [
 ];
 
 function getStoredConsent(): CookiePreferences | null {
-  try {
-    const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
-    if (stored) {
-      return JSON.parse(stored) as CookiePreferences;
-    }
-  } catch {}
+  const stored = getStorageJSON<CookiePreferences>(COOKIE_CONSENT_KEY);
+  if (stored) return stored;
   try {
     const cookies = document.cookie.split("; ");
     const consentCookie = cookies.find((c) => c.startsWith(`${COOKIE_CONSENT_COOKIE}=`));
@@ -68,9 +65,7 @@ function getStoredConsent(): CookiePreferences | null {
 
 function setStoredConsent(prefs: CookiePreferences) {
   const value = JSON.stringify(prefs);
-  try {
-    localStorage.setItem(COOKIE_CONSENT_KEY, value);
-  } catch {}
+  setStorageJSON(COOKIE_CONSENT_KEY, prefs);
   try {
     const expires = new Date();
     expires.setFullYear(expires.getFullYear() + 1);

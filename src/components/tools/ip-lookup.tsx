@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface IpData {
   query?: string;
@@ -27,13 +28,7 @@ export function IPLookup() {
   const [data, setData] = useState<IpData | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem("ip-lookup-history");
-      return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
-  });
+  const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("ip-lookup-history") || []);
 
   const lookup = useCallback(async (address: string) => {
     if (!address.trim()) return;
@@ -54,7 +49,7 @@ export function IPLookup() {
         setData(result);
         setHistory((prev) => {
           const next = [{ ip: address.trim(), data: result, timestamp: Date.now() }, ...prev.filter((h) => h.ip !== address.trim())].slice(0, 10);
-          localStorage.setItem("ip-lookup-history", JSON.stringify(next));
+          setStorageJSON("ip-lookup-history", next);
           return next;
         });
       }

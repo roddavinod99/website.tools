@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 const EMOJI_KEYWORDS: Record<string, string> = {
   "\u{1F600}": "grinning face happy smile",
@@ -579,13 +580,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 function getRecentEmojis(): string[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const s = localStorage.getItem("emoji-recent");
-    return s ? JSON.parse(s) : [];
-  } catch {
-    return [];
-  }
+  return getStorageJSON<string[]>("emoji-recent") || [];
 }
 
 export function EmojiPicker() {
@@ -609,7 +604,7 @@ export function EmojiPicker() {
     setTimeout(() => setCopiedEmoji(""), 1500);
     setRecent((prev) => {
       const next = [emoji, ...prev.filter((e) => e !== emoji)].slice(0, 24);
-      localStorage.setItem("emoji-recent", JSON.stringify(next));
+      setStorageJSON("emoji-recent", next);
       return next;
     });
   }, []);

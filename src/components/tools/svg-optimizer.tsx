@@ -284,7 +284,7 @@ export function SvgOptimizer() {
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const sizeCheck = validateFileSize(file, 25);
+    const sizeCheck = validateFileSize(file, 25 * 1024 * 1024);
     if (!sizeCheck.valid) {
       setFileError(sizeCheck.error || "File too large");
       return;

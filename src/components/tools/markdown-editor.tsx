@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { sanitize } from "@/lib/sanitize";
 import { validateFileSize } from "@/lib/file-security";
+import { getStorageItem, setStorageItem } from "@/lib/client-storage";
 
 type Theme = "light" | "dark" | "sepia";
 
@@ -95,10 +96,7 @@ const TOOLBAR = [
 
 export function MarkdownEditor() {
   const [input, setInput] = useState(() => {
-    try {
-      if (typeof window === "undefined") return "# Welcome\n\nStart writing your Markdown here...\n\n## Features\n\n- **Bold** and *italic* text\n- [Links](https://example.com)\n- Code blocks with syntax highlighting\n\n```javascript\nconsole.log('Hello World');\n```\n\n> Blockquotes work too!\n\n| Column 1 | Column 2 |\n|----------|----------|\n| Data | Data |";
-      return localStorage.getItem("mdeditor_input") || "# Welcome\n\nStart writing your Markdown here...";
-    } catch { return "# Welcome\n\nStart writing your Markdown here..."; }
+    return getStorageItem("mdeditor_input") || "# Welcome\n\nStart writing your Markdown here...";
   });
   const [theme, setTheme] = useState<Theme>("light");
   const [showLineNumbers, setShowLineNumbers] = useState(true);
@@ -135,7 +133,7 @@ export function MarkdownEditor() {
   const charCount = useMemo(() => input.length, [input]);
   const readingTime = useMemo(() => Math.max(1, Math.ceil(wordCount / 200)), [wordCount]);
 
-  useEffect(() => { localStorage.setItem("mdeditor_input", input); }, [input]);
+  useEffect(() => { setStorageItem("mdeditor_input", input); }, [input]);
 
   const insertAtCursor = useCallback((before: string, after = "") => {
     if (!editorRef.current) return;

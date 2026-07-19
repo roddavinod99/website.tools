@@ -76,6 +76,17 @@ jobs:
             git fetch origin
             git reset --hard origin/main
 
+            # Create .env from GitHub Secrets
+            # Values are injected at deploy time, never committed to git
+            printf '%s\n' \
+              'NEXT_PUBLIC_SITE_URL=https://tools.devstackio.com' \
+              'NEXT_PUBLIC_CONTACT_EMAIL=contact@devstackio.com' \
+              "NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}" \
+              "NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=${{ secrets.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID }}" \
+              "IP_HASH_SALT=${{ secrets.IP_HASH_SALT }}" \
+              'PORT=3000' \
+              'NODE_ENV=production' > .env
+
             # Install dependencies and build
             npm ci
             npm run build

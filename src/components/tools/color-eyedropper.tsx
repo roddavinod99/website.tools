@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface RGB { r: number; g: number; b: number }
 const namedColors: Record<string, string> = {
@@ -99,8 +100,8 @@ export function ColorEyedropper() {
   const [hex, setHex] = useState("#0070f3");
   const [r, setR] = useState(0); const [g, setG] = useState(112); const [b, setB] = useState(243);
   const [contrastHex, setContrastHex] = useState("#000000");
-  const [history, setHistory] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); } catch { return []; } });
-  const [palette, setPalette] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem(PALETTE_KEY) ?? "[]"); } catch { return []; } });
+  const [history, setHistory] = useState<string[]>(() => getStorageJSON<string[]>(STORAGE_KEY) || []);
+  const [palette, setPalette] = useState<string[]>(() => getStorageJSON<string[]>(PALETTE_KEY) || []);
   const [copied, setCopied] = useState("");
   const [gradientColor, setGradientColor] = useState("#ff0000");
   const [eyeDropperError, setEyeDropperError] = useState("");
@@ -120,7 +121,7 @@ export function ColorEyedropper() {
 
   const updateHex = useCallback((h: string) => {
     setHex(h); const c = hexToRgb(h); if (c) { setR(c.r); setG(c.g); setB(c.b); }
-    setHistory((prev) => { const n = [h, ...prev.filter((x) => x !== h)].slice(0, 20); try { localStorage.setItem(STORAGE_KEY, JSON.stringify(n)); } catch {} return n; });
+    setHistory((prev) => { const n = [h, ...prev.filter((x) => x !== h)].slice(0, 20); setStorageJSON(STORAGE_KEY, n); return n; });
   }, []);
 
   const handleRgbChange = () => { const h = rgbToHex({ r: Math.min(255, Math.max(0, r)), g: Math.min(255, Math.max(0, g)), b: Math.min(255, Math.max(0, b)) }); updateHex(h); };
@@ -146,7 +147,7 @@ export function ColorEyedropper() {
   };
 
   const saveToPalette = () => {
-    setPalette((prev) => { const n = [hex, ...prev.filter((x) => x !== hex)].slice(0, 20); try { localStorage.setItem(PALETTE_KEY, JSON.stringify(n)); } catch {} return n; });
+    setPalette((prev) => { const n = [hex, ...prev.filter((x) => x !== hex)].slice(0, 20); setStorageJSON(PALETTE_KEY, n); return n; });
   };
 
   const exportPalette = (format: "css" | "json" | "tailwind") => {

@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const checks = {
-    ok: true,
+    healthy: true,
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     memory: process.memoryUsage().rss,

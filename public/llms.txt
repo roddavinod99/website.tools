@@ -1,15 +1,20 @@
-# DevStackIO — Free Online Developer Tools
+# DevStackIO Tools — Free Online Developer Tools
 
 > The internet's best collection of free online tools for developers. Everything runs in your browser — nothing is uploaded to any server. No registration, no login, no rate limits. 100% free forever.
 
 ## URL
 https://tools.devstackio.com
 
+## Parent Website
+https://www.devstackio.com
+
+DevStackIO Tools is the official tools website of the DevStackIO developer platform.
+
 ## Sitemap
 https://tools.devstackio.com/sitemap.xml
 
 ## What
-DevStackIO provides 128 free online developer tools across 7 categories, all processing data entirely in the browser (client-side). No server uploads, no data persistence, no tracking. Fully responsive with dark mode support.
+DevStackIO Tools provides 140+ free online developer tools across 7 categories, all processing data entirely in the browser (client-side). No server uploads, no data persistence, no tracking. Fully responsive with dark mode support. This tools website is part of the DevStackIO platform.
 
 ## Categories
 
@@ -61,11 +66,11 @@ DevStackIO provides 128 free online developer tools across 7 categories, all pro
 - [Status](https://tools.devstackio.com/status)
 
 ## Blog Posts
-- [Getting Started with JSON: A Complete Guide](https://tools.devstackio.com/blog/getting-started-with-json) (2026-06-28)
-- [Understanding JWT Tokens: How They Work](https://tools.devstackio.com/blog/understanding-jwt-tokens) (2026-06-25)
-- [Image Optimization for the Web](https://tools.devstackio.com/blog/image-optimization-for-the-web) (2026-06-20)
-- [Password Security: Best Practices for 2026](https://tools.devstackio.com/blog/password-security-best-practices) (2026-06-15)
-- [The Ultimate Guide to UUIDs](https://tools.devstackio.com/blog/the-ultimate-guide-to-uuids) (2026-06-10)
+- [Getting Started with JSON: A Complete Guide](https://tools.devstackio.com/blog/getting-started-json) (2026-06-28)
+- [Understanding JWT Tokens: How They Work](https://tools.devstackio.com/blog/understanding-jwt) (2026-06-25)
+- [Image Optimization for the Web](https://tools.devstackio.com/blog/image-optimization) (2026-06-20)
+- [Password Security: Best Practices for 2026](https://tools.devstackio.com/blog/password-security) (2026-06-15)
+- [The Ultimate Guide to UUIDs](https://tools.devstackio.com/blog/guide-to-uuids) (2026-06-10)
 
 ## Key Features
 - 100% free — no credit card, no registration, no login required

@@ -3,8 +3,10 @@ import type { Tool, Category, SiteConfig, NavItem } from "@/types";
 export const siteConfig: SiteConfig = {
   name: "DevStackIO",
   description:
-    "The internet's best collection of free online tools for developers. JSON formatters, JWT decoders, image compressors, and more.",
+    "The internet's best collection of free online developer tools from DevStackIO. JSON formatters, JWT decoders, image compressors, and more — all in your browser.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://tools.devstackio.com",
+  mainSiteUrl: "https://www.devstackio.com",
+  mainSiteName: "DevStackIO",
   ogImage: "/og.svg",
   links: {
     github: "https://github.com/roddavinod99",

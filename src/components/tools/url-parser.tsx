@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 interface ParsedURL {
   href: string; protocol: string; hostname: string; port: string;
@@ -51,10 +52,7 @@ export function UrlParser() {
   const [parsed, setParsed] = useState<ParsedURL | null>(null);
   const [error, setError] = useState("");
   const [copyFeedback, setCopyFeedback] = useState("");
-  const [history, setHistory] = useState<HistoryEntry[]>(() => {
-    try { const stored = localStorage.getItem("urlparse_history"); if (stored) return JSON.parse(stored); } catch {}
-    return [];
-  });
+  const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("urlparse_history") || []);
   const [encodeInput, setEncodeInput] = useState("");
   const [encodeMode, setEncodeMode] = useState<"encode" | "decode">("encode");
   const [encodeResult, setEncodeResult] = useState("");
@@ -67,7 +65,7 @@ export function UrlParser() {
     search: "?query=value", hash: "#section", username: "", password: "",
   });
   useEffect(() => {
-    if (history.length > 0) localStorage.setItem("urlparse_history", JSON.stringify(history.slice(0, 20)));
+    if (history.length > 0) setStorageJSON("urlparse_history", history.slice(0, 20));
   }, [history]);
 
   const buildUrl = useCallback((f: EditableFields): string => {

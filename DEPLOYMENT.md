@@ -23,28 +23,44 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
 
 ## Environment Setup
 
+Environment variables are automatically injected during CI/CD deployment from
+GitHub Secrets (`.github/workflows/deploy.yml`). No manual `.env` setup needed.
+
+Required GitHub Secrets (set once in repo Settings → Secrets and variables → Actions):
+
+| Secret | Description | Example |
+|--------|-------------|---------|
+| `ORACLE_HOST` | Server IP | `192.168.1.1` |
+| `ORACLE_USER` | SSH user | `ubuntu` |
+| `ORACLE_SSH_KEY` | SSH private key | `-----BEGIN OPENSSH PRIVATE KEY-----...` |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics ID (optional) | `G-XXXXXXXXXX` |
+| `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` | AdSense ID (optional) | `ca-pub-XXXXXXXXXXXXXXXX` |
+| `IP_HASH_SALT` | 64-char hex salt | `openssl rand -hex 32` output |
+
+**One-time server setup** (manual, first deploy only):
+
 ```bash
 # 1. Clone repository
 git clone https://github.com/roddavinod99/tools.git /var/www/tools
 
-# 2. Create environment file
+# 2. Install Node.js and PM2
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+sudo apt install -y nodejs
+npm install -g pm2
+
+# 3. Create initial .env (required for first build)
 cp .env.example .env
-# Edit .env with production values
 nano .env
 
-# 3. Install dependencies
-cd /var/www/tools
-npm ci
-
-# 4. Build
+# 5. Build for first time
 npm run build
 
-# 5. Prepare standalone output
+# 6. Prepare standalone output
 mkdir -p .next/standalone/.next
 cp -r .next/static .next/standalone/.next/
 cp -r public .next/standalone/
 
-# 6. Start with PM2
+# 7. Start with PM2
 pm2 start ecosystem.config.js
 pm2 save
 pm2 startup

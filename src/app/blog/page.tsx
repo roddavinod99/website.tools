@@ -7,6 +7,20 @@ export const metadata: Metadata = {
   title: "Blog",
   description: "Developer tutorials, tips, and industry insights on web development, API design, security, and DevOps. Free guides from DevStackIO.",
   alternates: { canonical: `${siteConfig.url}/blog` },
+  openGraph: {
+    title: "Blog — DevStackIO Tools",
+    description: "Developer tutorials, tips, and industry insights from DevStackIO. Free guides on web development, API design, security, and DevOps.",
+    url: `${siteConfig.url}/blog`,
+    siteName: "DevStackIO Tools",
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Blog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog — DevStackIO Tools",
+    description: "Developer tutorials, tips, and industry insights from DevStackIO.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function BlogPage() {

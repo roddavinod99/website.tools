@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 type CronFields = [string, string, string, string, string, string?];
 
@@ -182,7 +183,7 @@ export function CronExpression() {
   const [withSeconds, setWithSeconds] = useState(false);
   const [timezone, setTimezone] = useState("");
   const [favorites, setFavorites] = useState<string[]>(() => {
-    try { const saved = localStorage.getItem("cron-favorites"); return saved ? JSON.parse(saved) : []; } catch { return []; }
+    return getStorageJSON<string[]>("cron-favorites") || [];
   });
   const [favCopied, setFavCopied] = useState(false);
   const [validation, setValidation] = useState<ValidationResult>({ valid: true });
@@ -218,13 +219,13 @@ export function CronExpression() {
     if (favorites.includes(cronStr)) return;
     const next = [...favorites, cronStr].slice(-10);
     setFavorites(next);
-    localStorage.setItem("cron-favorites", JSON.stringify(next));
+    setStorageJSON("cron-favorites", next);
   };
 
   const removeFav = (cron: string) => {
     const next = favorites.filter((f) => f !== cron);
     setFavorites(next);
-    localStorage.setItem("cron-favorites", JSON.stringify(next));
+    setStorageJSON("cron-favorites", next);
   };
 
   const copyAsSystemd = () => {

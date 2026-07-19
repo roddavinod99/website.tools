@@ -3,8 +3,9 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Search, Moon, Sun } from "lucide-react";
+import { Menu, X, Search, Moon, Sun, ExternalLink } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/constants";
+import { setStorageItem } from "@/lib/client-storage";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
 
@@ -25,7 +26,7 @@ export function Header() {
 
   const toggleDark = () => {
     const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    setStorageItem("theme", isDark ? "dark" : "light");
   };
 
   const handleSearchClick = () => {
@@ -66,6 +67,16 @@ export function Header() {
                 {item.title}
               </Link>
             ))}
+            <div className="mx-2 h-5 w-px bg-surface-300 dark:bg-dark-border" />
+            <a
+              href={siteConfig.mainSiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-100 dark:hover:bg-dark-surface"
+            >
+              DevStackIO Home
+              <ExternalLink className="h-3 w-3" />
+            </a>
           </nav>
         </div>
         <div className="flex items-center gap-2">
@@ -111,7 +122,7 @@ export function Header() {
                 {item.title}
               </Link>
             ))}
-            <div className="pt-2">
+            <div className="pt-2 space-y-1">
               <button
                 onClick={() => { setIsOpen(false); setSearchOpen(true); }}
                 className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left"
@@ -119,6 +130,16 @@ export function Header() {
                 <Search className="h-4 w-4" />
                 Search
               </button>
+              <a
+                href={siteConfig.mainSiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-500 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface w-full"
+              >
+                <ExternalLink className="h-4 w-4" />
+                DevStackIO Home
+              </a>
             </div>
           </nav>
         </div>

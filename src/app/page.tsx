@@ -10,9 +10,9 @@ import { NewsletterSection } from "@/components/home/newsletter-section";
 import { FAQSection } from "@/components/home/faq-section";
 
 export const metadata: Metadata = {
-  title: "DevStackIO — 128 Free Online Developer Tools",
+  title: "DevStackIO Tools — Free Online Developer Tools",
   description:
-    "128 free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data, and more — all client-side, zero uploads.",
+    "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, convert data, compress images, and more — all in your browser, zero server uploads.",
   alternates: {
     canonical: siteConfig.url,
     languages: { en: siteConfig.url, "x-default": siteConfig.url },
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description:
       "128 free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data, and more — all client-side, zero uploads.",
     url: siteConfig.url,
-    siteName: siteConfig.name,
+    siteName: "DevStackIO Tools",
     type: "website",
     images: [
       {
