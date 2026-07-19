@@ -1,4 +1,4 @@
-import type { Version, ReleaseManifest, ChangelogEntry } from "./types";
+import type { Version, ChangelogEntry } from "./types";
 
 export interface ValidationResult {
   valid: boolean;

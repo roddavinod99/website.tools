@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import type { Version, ReleaseType } from "./types";
 import { parseSemVer, formatVersion, validateVersionString } from "./validation";
 

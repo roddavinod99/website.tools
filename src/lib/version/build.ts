@@ -1,25 +1,18 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { BuildInfo } from "./types";
-import { readPackageVersionString, getBuildNumber, incrementBuildNumber } from "./version";
+import { readPackageVersionString, incrementBuildNumber } from "./version";
 import { getGitInfo } from "./git";
 
 let _cachedBuildInfo: BuildInfo | null = null;
 
 function getNextVersion(): string {
   try {
-    const { readNextVersion } = require("next/package.json");
-    return readNextVersion;
+    const nextPkgPath = join(process.cwd(), "node_modules", "next", "package.json");
+    const nextPkg = readFileSync(nextPkgPath, "utf-8");
+    return JSON.parse(nextPkg).version || "unknown";
   } catch {
-    try {
-      const nextPkg = readFileSync(
-        join(require.resolve("next/package.json")),
-        "utf-8"
-      );
-      return JSON.parse(nextPkg).version || "unknown";
-    } catch {
-      return "unknown";
-    }
+    return "unknown";
   }
 }
 

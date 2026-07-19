@@ -1,8 +1,8 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { ReleaseManifest, ReleaseType, ChangelogEntry } from "./types";
 import { formatVersion } from "./validation";
-import { readPackageVersion, incrementVersion, readPackageVersionString, getBuildNumber } from "./version";
+import { readPackageVersion, incrementVersion, getBuildNumber } from "./version";
 import { getGitInfo } from "./git";
 
 function getRoot(): string {
@@ -111,7 +111,6 @@ export function listReleaseArchives(): ReleaseManifest[] {
   if (!existsSync(archiveDir)) return [];
 
   try {
-    const { readdirSync } = require("node:fs");
     const files = readdirSync(archiveDir).filter((f: string) => f.endsWith(".json"));
     const releases: ReleaseManifest[] = [];
 

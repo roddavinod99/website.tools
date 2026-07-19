@@ -107,15 +107,6 @@ function groupEntries(entries) {
   return grouped;
 }
 
-function formatReleaseSummary(entries, grouped) {
-  const total = entries.length;
-  const byType = Object.entries(CATEGORY_NAMES)
-    .filter(([key]) => grouped[key]?.length)
-    .map(([key, name]) => `  ${name}: ${grouped[key].length}`)
-    .join("\n");
-  return `Total changes: ${total}\n${byType}`;
-}
-
 const VALID_CATEGORIES = CATEGORY_KEYS.join(", ");
 
 async function promptUser(query) {

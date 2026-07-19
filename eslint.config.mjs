@@ -13,6 +13,9 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "_reference/**",
+    // Auto-generated test artifacts:
+    "playwright-report/**",
+    "test-results/**",
   ]),
 ]);
 
