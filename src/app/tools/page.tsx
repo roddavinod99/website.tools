@@ -4,6 +4,7 @@ import { allTools, categories, siteConfig } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import { ToolLink } from "@/components/ui/tool-link";
 import { Search } from "lucide-react";
+import { AdBanner } from "@/components/ads";
 
 export const metadata: Metadata = {
   title: "All Tools",
@@ -80,6 +81,8 @@ export default function ToolsPage() {
         </div>
       </section>
 
+      <AdBanner className="my-12" slot="4567890123" />
+
       <section className="container py-12">
         <div className="flex flex-wrap gap-2 mb-8">
           <Link
@@ -100,29 +103,36 @@ export default function ToolsPage() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {allTools.map((tool) => (
-            <ToolLink
-              key={tool.id}
-              slug={tool.slug}
-              className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-            >
-              <div className="flex items-start justify-between">
-                <Badge variant="default">{tool.category}</Badge>
-                <div className="flex gap-1.5">
-                  {tool.new && <Badge variant="new">New</Badge>}
-                  {tool.trending && <Badge variant="warning">Hot</Badge>}
+          {allTools.map((tool, index) => (
+            <>
+              {index === Math.floor(allTools.length / 2) && (
+                <div className="col-span-full">
+                  <AdBanner className="my-8" slot="5678901234" />
                 </div>
-              </div>
-              <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                {tool.name}
-              </h3>
-              <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                {tool.description}
-              </p>
-              <div className="mt-3 flex items-center gap-1 text-xs text-surface-400 dark:text-dark-muted">
-                <span>Popularity {tool.popularity}%</span>
-              </div>
-            </ToolLink>
+              )}
+              <ToolLink
+                key={tool.id}
+                slug={tool.slug}
+                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+              >
+                <div className="flex items-start justify-between">
+                  <Badge variant="default">{tool.category}</Badge>
+                  <div className="flex gap-1.5">
+                    {tool.new && <Badge variant="new">New</Badge>}
+                    {tool.trending && <Badge variant="warning">Hot</Badge>}
+                  </div>
+                </div>
+                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                  {tool.name}
+                </h3>
+                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                  {tool.description}
+                </p>
+                <div className="mt-3 flex items-center gap-1 text-xs text-surface-400 dark:text-dark-muted">
+                  <span>Popularity {tool.popularity}%</span>
+                </div>
+              </ToolLink>
+            </>
           ))}
         </div>
       </section>

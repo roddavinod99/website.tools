@@ -8,6 +8,7 @@ import { LearningSection } from "@/components/home/learning-section";
 import { CommunitySection } from "@/components/home/community-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { FAQSection } from "@/components/home/faq-section";
+import { AdBanner } from "@/components/ads";
 
 export const metadata: Metadata = {
   title: "DevStackIO Tools — Free Online Developer Tools",
@@ -49,10 +50,13 @@ export default function Home() {
         badgeText={`${TOOL_COUNT} free tools. No login required.`}
         searchPlaceholder={`Search ${TOOL_COUNT} tools...`}
       />
+      <AdBanner className="my-12" slot="1234567890" />
       <CategoriesSection />
       <FeaturedTools />
+      <AdBanner className="my-12" slot="2345678901" />
       <BenefitsSection />
       <LearningSection />
+      <AdBanner className="my-12" slot="3456789012" />
       <CommunitySection />
       <NewsletterSection />
       <FAQSection />

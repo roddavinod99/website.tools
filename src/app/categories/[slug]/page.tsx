@@ -4,6 +4,7 @@ import Link from "next/link";
 import { categories, allTools, siteConfig } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
+import { AdBanner } from "@/components/ads";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -94,6 +95,8 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
+      <AdBanner className="my-12" slot="4567890123" />
+
       <section className="container py-12 md:py-16">
         <div className="max-w-2xl">
           <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
@@ -109,23 +112,30 @@ export default async function CategoryPage({ params }: Props) {
 
         {tools.length > 0 ? (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool) => (
-              <Link
-                key={tool.id}
-                href={`/tools/${tool.slug}`}
-                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-              >
-                <div className="flex items-start justify-between">
-                  <Badge variant="default">{tool.category}</Badge>
-                  {tool.trending && <Badge variant="warning">Trending</Badge>}
-                </div>
-                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                  {tool.name}
-                </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                  {tool.description}
-                </p>
-              </Link>
+            {tools.map((tool, index) => (
+              <>
+                {index === Math.floor(tools.length / 2) && (
+                  <div className="col-span-full">
+                    <AdBanner className="my-8" slot="5678901234" />
+                  </div>
+                )}
+                <Link
+                  key={tool.id}
+                  href={`/tools/${tool.slug}`}
+                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                >
+                  <div className="flex items-start justify-between">
+                    <Badge variant="default">{tool.category}</Badge>
+                    {tool.trending && <Badge variant="warning">Trending</Badge>}
+                  </div>
+                  <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                    {tool.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    {tool.description}
+                  </p>
+                </Link>
+              </>
             ))}
           </div>
         ) : (

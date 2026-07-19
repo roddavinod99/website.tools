@@ -16,11 +16,25 @@ export function AdSenseScript() {
   if (!ADSENSE_PUBLISHER_ID || IS_DEV) return null;
 
   return (
-    <Script
-      id="adsense"
-      src={src}
-      strategy="afterInteractive"
-      crossOrigin="anonymous"
-    />
+    <>
+      <Script
+        id="adsense"
+        src={src}
+        strategy="afterInteractive"
+        crossOrigin="anonymous"
+      />
+      <Script
+        id="adsense-auto-ads"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "${ADSENSE_PUBLISHER_ID}",
+              enable_page_level_ads: true
+            });
+          `,
+        }}
+      />
+    </>
   );
 }

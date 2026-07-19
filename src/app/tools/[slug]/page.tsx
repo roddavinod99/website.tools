@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
+import { InContentAd } from "@/components/ads";
 import Link from "next/link";
 import {
   CircleCheck, CircleAlert,
@@ -214,6 +215,8 @@ export default async function ToolPage({ params }: Props) {
             <div className="mt-8 rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface">
               <ToolInterface slug={tool.slug} name={tool.name} />
             </div>
+
+            <InContentAd className="my-12" slot="3456789012" />
           </div>
         </div>
       </section>
@@ -271,15 +274,17 @@ export default async function ToolPage({ params }: Props) {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
+</div>
+           </div>
+         </div>
+       </section>
 
-      <section className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
+       <InContentAd className="my-12" slot="5678901234" />
+
+       <section className="border-b border-surface-200 dark:border-dark-border">
+         <div className="container py-12 md:py-16">
+           <div className="mx-auto max-w-3xl">
+             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
             <div className="mt-6 space-y-4">
               {content.examples.map((ex, i) => (
                 <Card key={i}>
@@ -308,6 +313,8 @@ export default async function ToolPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <InContentAd className="my-12" slot="6789012345" />
 
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-12 md:py-16">
@@ -348,6 +355,8 @@ export default async function ToolPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <InContentAd className="my-12" slot="7890123456" />
 
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-12 md:py-16">
@@ -436,6 +445,8 @@ export default async function ToolPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <InContentAd className="my-12" slot="8901234567" />
 
       <section className="container py-12">
         <div className="mx-auto max-w-3xl">
