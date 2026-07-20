@@ -33,6 +33,11 @@ export function AdContainer({
 }: AdContainerProps) {
   const adRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [adLoaded, setAdLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const checkTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const initialDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  
   const isEnabled = !!ADSENSE_PUBLISHER_ID && !IS_DEV;
   const defaults = formatDefaults[format];
   const finalWidth = width ?? defaults.width;
@@ -40,6 +45,29 @@ export function AdContainer({
   const displayLabel = customLabel || defaults.label;
   const finalSlot = slot || defaults.slot;
 
+  const checkAdFill = () => {
+    if (!adRef.current) return false;
+    
+    const ins = adRef.current.querySelector('ins');
+    if (!ins) return false;
+    
+    // Check for iframe (ad loaded) or non-zero dimensions
+    const iframe = ins.querySelector('iframe');
+    const hasAd = !!iframe || ins.offsetHeight > 0 || ins.offsetWidth > 0;
+    
+    if (hasAd) {
+      setAdLoaded(true);
+      setIsLoading(false);
+      if (checkTimerRef.current) {
+        clearInterval(checkTimerRef.current);
+        checkTimerRef.current = null;
+      }
+      return true;
+    }
+    return false;
+  };
+
+  // Intersection observer for lazy loading
   useEffect(() => {
     if (!isEnabled || !adRef.current || typeof window === "undefined") return;
     const observer = new IntersectionObserver(
@@ -57,16 +85,93 @@ export function AdContainer({
     return () => observer.disconnect();
   }, [isEnabled]);
 
+  // Ad load detection with 1 second timeout
   useEffect(() => {
-    if (!isVisible || !isEnabled || !adRef.current || typeof window === "undefined") return;
+    if (!isVisible || !isEnabled || !adRef.current || typeof window === "undefined" || adLoaded) return;
+    
+    setIsLoading(true);
+    
     try {
       const adsbygoogle = (window as { adsbygoogle?: unknown[] }).adsbygoogle || [];
       (adsbygoogle as unknown[]).push({});
     } catch {
       // AdSense not available
     }
-  }, [isVisible, isEnabled]);
 
+    // Start checking after 1 second delay
+    if (initialDelayRef.current) clearTimeout(initialDelayRef.current);
+    initialDelayRef.current = setTimeout(() => {
+      let checks = 0;
+      const maxChecks = 10; // 1 second total (100ms intervals)
+      
+      const interval = setInterval(() => {
+        if (checkAdFill() || checks >= maxChecks) {
+          clearInterval(interval);
+          checkTimerRef.current = null;
+          if (!checkAdFill() && !adLoaded) {
+            // No ad after 1 second - collapse
+            setAdLoaded(false);
+            setIsLoading(false);
+          }
+        }
+        checks++;
+      }, 100);
+      
+      checkTimerRef.current = interval;
+    }, 1000);
+
+    return () => {
+      if (initialDelayRef.current) clearTimeout(initialDelayRef.current);
+      if (checkTimerRef.current) clearInterval(checkTimerRef.current);
+    };
+  }, [isVisible, isEnabled, adLoaded]);
+
+  // MutationObserver fallback for late-loading ads
+  useEffect(() => {
+    if (!adRef.current || adLoaded || IS_DEV) return;
+    
+    const observer = new MutationObserver(() => {
+      if (checkAdFill()) {
+        observer.disconnect();
+      }
+    });
+    
+    observer.observe(adRef.current, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [adLoaded]);
+
+  // Re-check on window resize for unfilled slots
+  useEffect(() => {
+    if (adLoaded) return;
+    
+    const handleResize = () => {
+      if (isVisible && isEnabled && !isLoading && !adLoaded) {
+        setIsLoading(true);
+        if (initialDelayRef.current) clearTimeout(initialDelayRef.current);
+        initialDelayRef.current = setTimeout(() => {
+          let checks = 0;
+          const maxChecks = 10;
+          const interval = setInterval(() => {
+            if (checkAdFill() || checks >= maxChecks) {
+              clearInterval(interval);
+              checkTimerRef.current = null;
+              if (!checkAdFill() && !adLoaded) {
+                setAdLoaded(false);
+                setIsLoading(false);
+              }
+            }
+            checks++;
+          }, 100);
+          checkTimerRef.current = interval;
+        }, 500); // shorter delay on resize
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [adLoaded, isVisible, isEnabled, isLoading]);
+
+  // Dev mode placeholder
   if (IS_DEV) {
     return (
       <div
@@ -89,16 +194,46 @@ export function AdContainer({
     return null;
   }
 
-  const containerStyle: React.CSSProperties = {
-    minHeight: finalHeight || 90,
-  };
+  // Dynamic container styles based on ad state
+  const containerStyle: React.CSSProperties = (() => {
+    if (adLoaded) {
+      return { 
+        height: 'auto', 
+        minHeight: 0,
+        overflow: 'hidden',
+        transition: 'height 0.3s ease-out'
+      };
+    }
+    if (!isLoading) {
+      // Ad failed to load - fully collapse
+      return { 
+        height: 0, 
+        minHeight: 0, 
+        overflow: 'hidden',
+        margin: 0,
+        padding: 0,
+        transition: 'height 0.3s ease-out'
+      };
+    }
+    // Loading state - show skeleton
+    return { 
+      minHeight: finalHeight || 90,
+      transition: 'height 0.3s ease-out'
+    };
+  })();
 
   const insStyle: React.CSSProperties = finalWidth && finalHeight
     ? { display: "block", width: finalWidth, height: finalHeight }
     : { display: "block" };
 
   return (
-    <div ref={adRef} className={className} style={containerStyle} role="complementary" aria-label="Advertisement">
+    <div 
+      ref={adRef} 
+      className={className} 
+      style={containerStyle} 
+      role="complementary" 
+      aria-label="Advertisement"
+    >
       <ins
         className="adsbygoogle"
         style={insStyle}

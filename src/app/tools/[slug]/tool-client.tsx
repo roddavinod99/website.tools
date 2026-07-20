@@ -142,13 +142,13 @@ export function ToolClient({
               <ToolInterface slug={tool.slug} name={tool.name} />
             </div>
 
-            <InContentAd className="my-12" slot="3456789012" />
+            <InContentAd className="my-6" slot="3456789012" />
           </div>
         </div>
       </section>
 
       <section id="about" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">About</h2>
             <div className="mt-4 space-y-4 text-surface-600 dark:text-dark-muted">
@@ -186,7 +186,7 @@ export function ToolClient({
       </section>
 
       <section id="how-to-use" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">How to Use</h2>
             <div className="mt-6 space-y-4">
@@ -205,10 +205,10 @@ export function ToolClient({
         </div>
       </section>
 
-      <InContentAd className="my-12" slot="5678901234" />
+      <InContentAd className="my-6" slot="5678901234" />
 
       <section id="examples" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
             <div className="mt-6 space-y-4">
@@ -225,7 +225,7 @@ export function ToolClient({
       </section>
 
       <section id="best-practices" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Best Practices</h2>
             <ul className="mt-6 space-y-3">
@@ -240,13 +240,13 @@ export function ToolClient({
         </div>
       </section>
 
-      <CollapsibleSection
+<CollapsibleSection
         title="Common Mistakes"
         icon={CircleAlert}
-        defaultOpen={false}
+        defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <ul className="mt-6 space-y-3">
               {content.commonMistakes.map((cm, i) => (
@@ -261,7 +261,7 @@ export function ToolClient({
       </CollapsibleSection>
 
       <section id="faq" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">FAQ</h2>
             <div className="mt-6 space-y-3">
@@ -284,14 +284,14 @@ export function ToolClient({
         </div>
       </section>
 
-      <InContentAd className="my-12" slot="7890123456" />
+      <InContentAd className="my-6" slot="7890123456" />
 
-      <CollapsibleSection
+<CollapsibleSection
         title="Related Tools"
-        defaultOpen={false}
+        defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             {sameCategory.length > 0 && (
               <>
@@ -356,10 +356,10 @@ export function ToolClient({
       <CollapsibleSection
         title="Learning Resources"
         icon={BookOpen}
-        defaultOpen={false}
+        defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-12 md:py-16">
+        <div className="container py-8 md:py-10">
           <div className="mx-auto max-w-3xl">
             <p className="mt-2 text-surface-500 dark:text-dark-muted">
               Dive deeper with our comprehensive guides and tutorials.
@@ -408,7 +408,7 @@ export function ToolClient({
         </div>
       </CollapsibleSection>
 
-      <section className="container py-12">
+      <section className="container py-8 md:py-10">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
           <ShareButtons />
