@@ -154,6 +154,7 @@ NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX  # Required for product
 | `npm start` | Start production server |
 | `npm run lint` | ESLint check |
 | `npm run test` | Run Playwright test suite |
+| `npm run clean` | Remove build artifacts (`.next/`, `wasm/target/`, test dirs) |
 | `npm run analyze` | Bundle analyzer report |
 | `npm run production:readiness` | Run production readiness checks |
 | `npm run seo:audit` | Run SEO audit |

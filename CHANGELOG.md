@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.1] - 2026-07-26
+
+### Added
+- `npm run clean` script to remove build artifacts (`wasm/target/`, `.next/`, `test-results/`, `playwright-report/`)
+- Pre-deploy cleanup in GitHub Actions to clear stale artifacts on Oracle server
+- Post-build cleanup in CI/CD to keep runners lean
+
+### Changed
+- Deploy workflow: added `rm -rf .next wasm/target test-results playwright-report node_modules/.cache` before build on server
+- Deploy workflow: added `npm run clean` after build (before standalone prep)
+- Validate workflow: added `npm run clean` after build to free GitHub runner space
+
+### Infrastructure
+- Storage savings: ~2.8 GB per deploy (local + server)
+- Faster CI runs (no accumulated cache)
+
 ## [0.1.0] - 2026-07-15
 
 ### Added

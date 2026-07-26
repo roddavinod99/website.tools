@@ -106,6 +106,13 @@
 
 ### Development Issues
 
+**Problem**: Build artifacts consuming too much disk space.
+
+**Solutions**:
+1. Run cleanup: `npm run clean` (removes `.next/`, `wasm/target/`, `test-results/`, `playwright-report/`)
+2. Run full reset: `rm -rf node_modules .next wasm/target test-results playwright-report && npm install`
+3. Check disk usage: `du -sh .next wasm/target node_modules 2>/dev/null`
+
 **Problem**: Port 3000 already in use.
 
 **Solutions**:

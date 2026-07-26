@@ -191,6 +191,10 @@ cd /var/www/tools
 git pull origin main
 npm ci
 npm run build
+
+# Clean build artifacts (keeps .next/standalone)
+npm run clean
+
 mkdir -p .next/standalone/.next
 cp -r .next/static .next/standalone/.next/
 cp -r public .next/standalone/
@@ -205,6 +209,10 @@ git log --oneline -5
 git reset --hard <previous-commit>
 npm ci
 npm run build
+
+# Clean build artifacts (keeps .next/standalone)
+npm run clean
+
 [repeat standalone prep]
 pm2 restart devstackio
 ```

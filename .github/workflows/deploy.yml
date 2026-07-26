@@ -28,6 +28,8 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: https://tools.devstackio.com
+      - name: Cleanup build artifacts
+        run: npm run clean
       - run: npx playwright install chromium --with-deps
       - run: npx playwright test tests/security.spec.ts tests/api.spec.ts
       - name: Run npm audit
@@ -72,6 +74,9 @@ jobs:
             # Create logs directory
             mkdir -p logs
 
+            # Clean stale build artifacts from previous deploys
+            rm -rf .next wasm/target test-results playwright-report node_modules/.cache
+
             # Pull latest changes
             git fetch origin
             git reset --hard origin/main
@@ -90,6 +95,9 @@ jobs:
             # Install dependencies and build
             npm ci
             npm run build
+
+            # Cleanup build artifacts (keep standalone output)
+            npm run clean
 
             # Prepare standalone output
             mkdir -p .next/standalone/.next

@@ -19,7 +19,8 @@
     "test:tools": "playwright test tests/tools.spec.ts",
     "test:snapshots": "playwright test tests/snapshots.spec.ts",
     "test:security": "playwright test tests/security.spec.ts",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "clean": "node scripts/cleanup.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
