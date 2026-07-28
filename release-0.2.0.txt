@@ -1,0 +1,9 @@
+[Added] Google AdSense Integration for sustainable free access - Auto Ads enabled, manual ad components, strategic placements, GDPR/CCPA compliant
+[Performance] Bundle size optimization: Replaced full import highlight.js (384 langs) with highlight-lazy.ts (core + 25 common langs)
+[Performance] Bundle size optimization: Replaced mathjs all preset (371+ factories) with math-lite.ts (27 specific function dependencies)
+[Performance] Largest chunk reduced from 936 KB to 310 KB (67% reduction)
+[Performance] Bundle size budget test now passes (all chunks under 500 KB)
+[Fixed] Fixed package-lock.json mismatch: sharp@0.34.5 vs package.json sharp@^0.35.3
+[Infrastructure] Updated DEPLOYMENT.md, TROUBLESHOOTING.md with lock file sync and bundle size debugging guidance
+[Infrastructure] Updated README.md with new scripts and project structure documentation
+[Infrastructure] Updated ARCHITECTURE.md with AdSense monetization layer documentation

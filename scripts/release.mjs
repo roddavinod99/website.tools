@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { createInterface } from "node:readline";
 import { execSync } from "node:child_process";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = process.cwd();
 
 function readPackage() {
   return JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8"));

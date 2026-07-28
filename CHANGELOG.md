@@ -1,18 +1,45 @@
 # Changelog
 
+## [0.1.3] - 2026-07-28
+
+### Added
+
+- Pre-deploy cleanup in GitHub Actions to clear stale artifacts on Oracle server
+- Post-build cleanup in CI/CD to keep runners lean
+
+### Changed
+
+- Deploy workflow: added rm -rf .next wasm/target test-results playwright-report node_modules/.cache before build on server
+- Deploy workflow: added npm run clean after build (before standalone prep)
+- Validate workflow: added npm run clean after build to free GitHub runner space
+
+### Infrastructure
+
+- Storage savings: ~2.8 GB per deploy (local + server)
+- Faster CI runs (no accumulated cache)
+
+## [0.1.2] - 2026-07-28
+
+### Added
+
+- Pre-deploy cleanup in GitHub Actions to clear stale artifacts on Oracle server
+
 ## [0.1.1] - 2026-07-26
 
 ### Added
+
 - `npm run clean` script to remove build artifacts (`wasm/target/`, `.next/`, `test-results/`, `playwright-report/`)
 - Pre-deploy cleanup in GitHub Actions to clear stale artifacts on Oracle server
 - Post-build cleanup in CI/CD to keep runners lean
 
 ### Changed
+
 - Deploy workflow: added `rm -rf .next wasm/target test-results playwright-report node_modules/.cache` before build on server
 - Deploy workflow: added `npm run clean` after build (before standalone prep)
 - Validate workflow: added `npm run clean` after build to free GitHub runner space
 
 ### Infrastructure
+
 - Storage savings: ~2.8 GB per deploy (local + server)
 - Faster CI runs (no accumulated cache)
 
@@ -62,34 +89,28 @@
 - Production readiness gate
 - Daily cron jobs for sitemap submission
 
-## [0.2.0] - 2026-07-19
-
-### Performance
-
-- **Bundle size optimization**: Replaced full `import("highlight.js")` (384 langs) with `highlight-lazy.ts` (core + 25 common langs, static subpath imports for tree-shaking)
-- **Bundle size optimization**: Replaced `mathjs` "all" preset (371+ factories) with `math-lite.ts` (27 specific function dependencies via static imports, 133 keys vs 371+)
-- Largest chunk reduced from **936 KB → 310 KB** (67% reduction)
-- Bundle size budget test now passes (all chunks under 500 KB)
+## [0.2.0] - 2026-07-28
 
 ### Added
 
-- **Google AdSense Integration** for sustainable free access:
-  - Auto Ads enabled (anchor, vignette, side rail, in-page, multiplex formats)
-  - Manual ad components: `AdSenseScript`, `AdBanner`, `InContentAd`, `SidebarAd`, `ResponsiveAd`
-  - Strategic placements: Home page (3), Tools listing (2), Category pages (2), Tool pages (5 in-content)
-  - Development mode placeholders (disabled in `NODE_ENV=development`)
-  - GDPR/CCPA compliant via CMP integration
-  - Follows Google AdSense best practices and Better Ads Standards
+- Google AdSense Integration for sustainable free access - Auto Ads enabled, manual ad components, strategic placements, GDPR/CCPA compliant
+
+### Performance
+
+- Bundle size optimization: Replaced full import highlight.js (384 langs) with highlight-lazy.ts (core + 25 common langs)
+- Bundle size optimization: Replaced mathjs all preset (371+ factories) with math-lite.ts (27 specific function dependencies)
+- Largest chunk reduced from 936 KB to 310 KB (67% reduction)
+- Bundle size budget test now passes (all chunks under 500 KB)
 
 ### Fixed
 
-- Fixed `package-lock.json` mismatch: `sharp@0.34.5` vs `package.json` `sharp@^0.35.3` — regenerated lock file to prevent CI `npm ci` failures
+- Fixed package-lock.json mismatch: sharp@0.34.5 vs package.json sharp@^0.35.3
 
 ### Infrastructure
 
-- Updated `DEPLOYMENT.md`, `TROUBLESHOOTING.md` with lock file sync and bundle size debugging guidance
-- Updated `README.md` with new scripts and project structure documentation
-- Updated `ARCHITECTURE.md` with AdSense monetization layer documentation
+- Updated DEPLOYMENT.md, TROUBLESHOOTING.md with lock file sync and bundle size debugging guidance
+- Updated README.md with new scripts and project structure documentation
+- Updated ARCHITECTURE.md with AdSense monetization layer documentation
 
 ## Template
 
