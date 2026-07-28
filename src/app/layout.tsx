@@ -61,7 +61,7 @@ const jsonLd = {
       url: siteConfig.mainSiteUrl,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/logo-light.png`,
+        url: `${siteConfig.url}/favicon.svg`,
       },
       description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
       email: siteConfig.contactEmail,
@@ -156,7 +156,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logo-light.png" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#0070f3" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

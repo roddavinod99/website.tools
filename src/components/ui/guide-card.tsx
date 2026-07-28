@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Clock, Calendar, ArrowRight, BookOpen } from "lucide-react";

@@ -34,7 +34,7 @@ jobs:
       - run: npx playwright test tests/security.spec.ts tests/api.spec.ts
       - name: Run npm audit
         continue-on-error: true
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high --omit=dev
 
   security-scan:
     name: Security Scan

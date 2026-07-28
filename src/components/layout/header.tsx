@@ -2,13 +2,22 @@
 
 import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/constants";
 import { setStorageItem } from "@/lib/client-storage";
 import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
+
+// Text-based logo component
+function Logo() {
+  return (
+    <span className="flex items-center gap-1 font-bold text-xl text-surface-900 dark:text-dark-text">
+      <span className="text-indigo-600 dark:text-indigo-400">DevStack</span>
+      <span className="text-gray-900 dark:text-gray-100">IoTools</span>
+    </span>
+  );
+}
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,20 +66,7 @@ export function Header() {
             href="/"
             className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text"
           >
-            <Image
-              src="/logo-light.png"
-              alt={siteConfig.name}
-              width={32}
-              height={32}
-              className="rounded-lg block dark:hidden"
-            />
-            <Image
-              src="/logo-dark.png"
-              alt={siteConfig.name}
-              width={32}
-              height={32}
-              className="rounded-lg hidden dark:block"
-            />
+            <Logo />
             <span className="hidden sm:inline">{siteConfig.name}</span>
           </Link>
           <nav className="hidden md:flex items-center gap-1">

@@ -1,7 +1,15 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
+
+function Logo() {
+  return (
+    <span className="flex items-center gap-1 font-bold text-xl text-surface-900 dark:text-dark-text">
+      <span className="text-indigo-600 dark:text-indigo-400">DevStack</span>
+      <span className="text-gray-900 dark:text-gray-100">IoTools</span>
+    </span>
+  );
+}
 
 const footerLinks = [
   {
@@ -52,20 +60,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text">
-              <Image
-                src="/logo-light.png"
-                alt={siteConfig.name}
-                width={32}
-                height={32}
-                className="rounded-lg block dark:hidden"
-              />
-              <Image
-                src="/logo-dark.png"
-                alt={siteConfig.name}
-                width={32}
-                height={32}
-                className="rounded-lg hidden dark:block"
-              />
+              <Logo />
               {siteConfig.name}
             </Link>
             <p className="mt-3 text-sm text-surface-500 dark:text-dark-muted max-w-xs">

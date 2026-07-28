@@ -32,7 +32,7 @@ export default function AboutPage() {
         url: siteConfig.mainSiteUrl,
         logo: {
           "@type": "ImageObject",
-          url: `${siteConfig.url}/logo-light.png`,
+          url: `${siteConfig.url}/favicon.svg`,
         },
         description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
         email: siteConfig.contactEmail,

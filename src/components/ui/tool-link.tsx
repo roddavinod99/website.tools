@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import Link from "next/link";
 import type { ComponentProps } from "react";
 import { useToolPreload } from "@/components/tools/dynamic-tool-loader";

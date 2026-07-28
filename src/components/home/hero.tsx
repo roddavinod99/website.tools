@@ -17,7 +17,6 @@ const popularSearches = [
 
 export function Hero({ badgeText, searchPlaceholder }: { badgeText: string; searchPlaceholder: string }) {
   const router = useRouter();
-  const [toolCount, setToolCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const counterRef = useRef<HTMLDivElement>(null);
 
@@ -42,15 +41,23 @@ export function Hero({ badgeText, searchPlaceholder }: { badgeText: string; sear
     if (isVisible) {
       const duration = 1200;
       const startTime = Date.now();
+      
+      // Use direct DOM update via ref instead of setState in rAF loop
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        setToolCount(Math.floor(eased * TOOL_COUNT));
+        const currentCount = Math.floor(eased * TOOL_COUNT);
+        
+        // Update DOM directly
+        if (counterRef.current) {
+          counterRef.current.textContent = currentCount.toLocaleString() + "+";
+        }
+        
         if (progress < 1) {
           requestAnimationFrame(animate);
-        } else {
-          setToolCount(TOOL_COUNT);
+        } else if (counterRef.current) {
+          counterRef.current.textContent = TOOL_COUNT.toLocaleString() + "+";
         }
       };
       requestAnimationFrame(animate);
@@ -136,7 +143,7 @@ export function Hero({ badgeText, searchPlaceholder }: { badgeText: string; sear
               </div>
               <div className="text-left">
                 <div className="text-2xl font-bold text-surface-900 dark:text-dark-text">
-                  {toolCount.toLocaleString()}+
+                  <span id="tool-count-display">0+</span>
                 </div>
                 <div className="text-xs text-surface-500 dark:text-dark-muted">Free Tools</div>
               </div>

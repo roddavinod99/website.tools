@@ -10,13 +10,12 @@ function factorial(n: number): number {
   return result;
 }
 
-function safeEvaluate(expr: string, limitedEvaluate: (expr: string, scope?: Record<string, unknown>) => unknown): number {
+function safeEvaluate(expr: string, limitedEvaluate: (expr: string, scope?: Record<string, unknown>) => Promise<unknown>): Promise<number> {
   const processed = expr.replace(/(\d+)!/g, (_, numStr) => {
     return `factorial(${numStr})`;
   });
 
-  const result = limitedEvaluate(processed, { factorial });
-  return result as number;
+  return limitedEvaluate(processed, { factorial }) as Promise<number>;
 }
 
 interface HistoryEntry {
@@ -42,7 +41,7 @@ export function MathEvaluator() {
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [libLoading, setLibLoading] = useState(true);
-  const [limitedEvaluate, setLimitedEvaluate] = useState<((expr: string, scope?: Record<string, unknown>) => unknown) | null>(null);
+  const [limitedEvaluate, setLimitedEvaluate] = useState<((expr: string, scope?: Record<string, unknown>) => Promise<unknown>) | null>(null);
 
   useEffect(() => {
     import("@/lib/math-lite").then((mod) => {
@@ -51,10 +50,10 @@ export function MathEvaluator() {
     });
   }, []);
 
-  const evaluate = useCallback((expr: string) => {
+  const evaluate = useCallback(async (expr: string) => {
     if (!limitedEvaluate) return;
     try {
-      const res = safeEvaluate(expr, limitedEvaluate);
+      const res = await safeEvaluate(expr, limitedEvaluate);
       if (typeof res !== "number" || isNaN(res)) {
         setError("Invalid expression");
         setResult(null);

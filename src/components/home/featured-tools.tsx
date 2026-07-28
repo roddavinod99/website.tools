@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Braces, Key, Database, FingerprintPattern, QrCode, Lock, Sparkles,
