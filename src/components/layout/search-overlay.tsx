@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useFuseSearch } from "@/lib/search-fuse";
-import { allTools } from "@/lib/constants";
+import { allTools } from "@/lib/data/tools";
 import { Search, X } from "lucide-react";
 
 interface Props {

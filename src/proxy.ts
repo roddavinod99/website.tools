@@ -64,14 +64,6 @@ function isRateLimited(request: NextRequest): string | null {
 export default function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Additional security headers at proxy/middleware level
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
-  response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
-  response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
-
   if (!process.env.DISABLE_RATE_LIMIT && request.nextUrl.pathname.startsWith("/api/")) {
     const retryAfter = isRateLimited(request);
     if (retryAfter) {

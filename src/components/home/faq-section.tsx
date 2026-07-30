@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { faqItems } from "@/lib/constants";
+import { faqItems } from "@/lib/data/faq";
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

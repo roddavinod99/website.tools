@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { preloadPopularTools } from "@/components/tools/dynamic-tool-loader";
-import { featuredTools } from "@/lib/constants";
+import { featuredTools } from "@/lib/data/faq";
 
 export function PreloadPopularTools() {
   useEffect(() => {

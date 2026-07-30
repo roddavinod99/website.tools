@@ -13,7 +13,7 @@ import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
 } from "lucide-react";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data/site-config";
 
 interface ToolData {
   id: string;

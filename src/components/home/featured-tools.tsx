@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolLink } from "@/components/ui/tool-link";
-import { featuredTools } from "@/lib/constants";
+import { featuredTools } from "@/lib/data/faq";
 
 const iconMap: Record<string, LucideIcon> = {
   Braces, Key, Database, FingerprintPattern, QrCode, Lock, Sparkles,

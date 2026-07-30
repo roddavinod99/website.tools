@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { Search, Command, ArrowRight, Zap, CheckCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TOOL_COUNT } from "@/lib/constants";
+import { TOOL_COUNT } from "@/lib/data/faq";
 
 const popularSearches = [
   "JSON Formatter",

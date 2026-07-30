@@ -1,4 +1,26 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "lsp": true
+  "lsp": true,
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "enabled": true
+    },
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\Vinod\\Desktop\\Project\\tools"],
+      "enabled": true
+    },
+    "web-search": {
+      "type": "local",
+      "command": ["npx", "-y", "@ericthered926/duckduckgo-mcp-server"],
+      "enabled": true
+    }
+  }
 }

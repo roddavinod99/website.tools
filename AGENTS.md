@@ -984,6 +984,7 @@ When uncertain:
 4.  Prefer native browser APIs.
 5.  Prefer maintainability.
 6.  Prefer documented standards over assumptions.
+7.  If you are unsure how to do something, use `gh_grep` to search code examples from GitHub.
 
 ------------------------------------------------------------------------
 

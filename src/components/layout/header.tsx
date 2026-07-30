@@ -3,7 +3,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
-import { mainNav, siteConfig } from "@/lib/constants";
+import { mainNav, siteConfig } from "@/lib/data/site-config";
 import { setStorageItem } from "@/lib/client-storage";
 import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
 
