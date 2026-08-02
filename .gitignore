@@ -37,6 +37,9 @@ yarn-error.log*
 .pnpm-debug.log*
 *.log
 
+# npm
+.npmrc
+
 # env files
 .env
 .env.local
