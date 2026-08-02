@@ -103,6 +103,7 @@ export function CookieConsent() {
   const [preferences, setPreferences] = useState<CookiePreferences>(DEFAULT_PREFERENCES);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const stored = getStoredConsent();
     if (stored) {

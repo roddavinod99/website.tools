@@ -16,6 +16,9 @@ const eslintConfig = defineConfig([
     // Auto-generated test artifacts:
     "playwright-report/**",
     "test-results/**",
+    // WASM generated types:
+    "wasm/pkg/**",
+    "src/lib/wasm/pkg/**",
   ]),
 ]);
 
