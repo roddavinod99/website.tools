@@ -28,5 +28,4 @@ export const mainNav: NavItem[] = [
   { title: "Guides", href: "/guides" },
   { title: "Blog", href: "/blog" },
   { title: "Learning", href: "/learning" },
-  { title: "API", href: "/api" },
 ];

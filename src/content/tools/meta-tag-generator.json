@@ -42,5 +42,11 @@
     "What's the difference between Open Graph and Twitter Cards? — Open Graph is used by Facebook, LinkedIn, and many other platforms. Twitter Cards are Twitter/X-specific with additional features like player and app cards.",
     "How do I test if my meta tags work? — Use the Facebook Sharing Debugger (developers.facebook.com/tools/debug) and Twitter Card Validator (cards-dev.twitter.com/validator).",
     "Should I use the same OG tags as my regular meta tags? — You can, but it's better to customize OG tags specifically for social sharing with different text that's optimized for social feeds."
+  ],
+  "features": [
+    "Build Open Graph and Twitter Card tags",
+    "SEO title, description, and canonical URLs",
+    "Live preview of search snippets",
+    "One-click copy of all HTML tags"
   ]
 }

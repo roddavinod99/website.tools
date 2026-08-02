@@ -41,5 +41,11 @@
     "Can it handle inline SVGs in HTML? Paste only the SVG portion — extraneous HTML will cause parsing errors.",
     "What editor metadata is removed? All tags and attributes from Illustrator (i:*, xmlns:illustrator), Inkscape (sodipodi:*, inkscape:*), Sketch (sketch:*), and Figma (figma:*) are stripped.",
     "Does it convert colors? Yes — #FF0000 becomes red, #FFFFFF becomes white, where possible using named colors and shorthand hex (e.g., #FF8800 → #F80)."
+  ],
+  "features": [
+    "Optimize SVG files with SVGO rules",
+    "Strip metadata and unused definitions",
+    "Report exact size savings",
+    "Copy or download the optimized SVG"
   ]
 }

@@ -41,7 +41,7 @@ export function CommunitySection() {
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
             Community Driven
           </h2>
-          <p className="mt-2 text-surface-500 dark:text-dark-muted">
+          <p className="mt-2 text-surface-600 dark:text-dark-muted">
             Help us build the tools you need
           </p>
         </div>
@@ -60,7 +60,7 @@ export function CommunitySection() {
                 <h3 className="mt-4 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
                   {link.title}
                 </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted">
+                <p className="mt-1 text-sm text-surface-600 dark:text-dark-muted">
                   {link.description}
                 </p>
               </Link>

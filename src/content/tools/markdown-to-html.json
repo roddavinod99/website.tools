@@ -41,5 +41,11 @@
     "Does it support custom Markdown extensions? It supports GFM extensions; custom or uncommon extensions may not be recognized.",
     "What HTML tags are stripped when sanitization is enabled? Dangerous tags like script, iframe, object, embed, and event handlers are removed.",
     "Can I customize the HTML wrapper/doctype? The output is an HTML fragment; wrap it manually for a full HTML page structure."
+  ],
+  "features": [
+    "Convert Markdown to clean HTML",
+    "GitHub-flavored Markdown support",
+    "Live preview of the rendered result",
+    "Copy the generated HTML"
   ]
 }

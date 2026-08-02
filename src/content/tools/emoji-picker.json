@@ -42,5 +42,10 @@
     "Can I search by emoji name? — The search filters the displayed grid. Type keywords like \"heart\", \"star\", or \"food\" to narrow down options.",
     "Where are my recently used emojis stored? — They are saved in your browser's localStorage and persist between sessions until you clear browser data.",
     "How do I copy an emoji? — Simply click on any emoji in the grid. A confirmation will show indicating it was copied to your clipboard."
+  ],
+  "features": [
+    "Searchable emoji library",
+    "Category filtering",
+    "One-click copy to clipboard"
   ]
 }

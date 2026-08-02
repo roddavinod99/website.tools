@@ -3,9 +3,13 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { faqItems } from "@/lib/data/faq";
 
-export function FAQSection() {
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export function FAQSection({ faqItems }: { faqItems: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -38,7 +42,7 @@ export function FAQSection() {
                 </button>
                 {openIndex === i && (
                   <div className="px-5 pb-4">
-                    <p className="text-sm text-surface-500 dark:text-dark-muted">
+                    <p className="text-sm text-surface-600 dark:text-dark-muted">
                       {item.answer}
                     </p>
                   </div>

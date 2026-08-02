@@ -41,5 +41,10 @@
     "How accurate is bot detection? It detects over 50 known crawlers (Googlebot, Bingbot, DuckDuckBot, Yandex, Baidu, Slurp, etc.) by matching patterns in the UA string.",
     "Does it support custom UA databases? Not yet — the parser uses a built-in rule set updated for modern browsers.",
     "What does \"engine\" mean? Engine is the browser rendering engine (Blink, WebKit, Gecko, Trident) which determines CSS/HTML feature support independent of the browser vendor."
+  ],
+  "features": [
+    "Extract browser, OS, and device from user agents",
+    "Detailed breakdown with versions",
+    "Real-time parsing as you paste"
   ]
 }

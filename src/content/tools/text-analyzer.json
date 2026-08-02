@@ -41,5 +41,11 @@
     "What languages does language detection support? Over 50 languages including English, Spanish, French, German, Chinese, Arabic, and Russian, using a neural language identification model.",
     "Can I analyze a PDF or document file? Paste the extracted text — file upload with text extraction is on the roadmap.",
     "Are entity recognitions stored or sent to a server? All processing is done client-side in the browser; no data is transmitted externally."
+  ],
+  "features": [
+    "Count words, characters, and sentences",
+    "Flesch reading ease and grade level scores",
+    "Keyword density and character frequency",
+    "Reading time estimate"
   ]
 }

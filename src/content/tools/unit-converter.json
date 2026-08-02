@@ -41,5 +41,12 @@
     "Are conversion formulas always exact? Most are exact by definition (e.g., 1 inch = 25.4 mm). Some, like temperature, use exact formulas.",
     "Can I add custom units or categories? Custom units are not supported yet — use favorites to save frequently used conversion pairs.",
     "What precision is used? Results are displayed with up to 10 significant figures; very large or small numbers use scientific notation."
+  ],
+  "features": [
+    "Convert across 13 unit categories",
+    "Accurate formulas backed by real constants",
+    "Batch conversion table for all units in a category",
+    "Swap input and output with one click",
+    "Save favorite conversions"
   ]
 }

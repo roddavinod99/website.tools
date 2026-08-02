@@ -3,6 +3,10 @@ import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { learningTopics, siteConfig } from "@/lib/constants";
 
+interface GuidesPageProps {
+  searchParams: Promise<{ topic?: string }>;
+}
+
 export const metadata: Metadata = {
   title: "Guides",
   description: "Free developer guides from DevStackIO covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and more.",
@@ -23,7 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GuidesPage() {
+export default async function GuidesPage({ searchParams }: GuidesPageProps) {
+  const { topic } = await searchParams;
+  const activeTopic = topic ? decodeURIComponent(topic) : null;
+  const visibleTopics = activeTopic
+    ? learningTopics.filter((t) => t.category === activeTopic)
+    : learningTopics;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -39,8 +48,8 @@ export default function GuidesPage() {
     name: "Developer Guides",
     description: "Free developer guides covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and data serialization.",
     url: `${siteConfig.url}/guides`,
-    numberOfItems: learningTopics.length,
-    itemListElement: learningTopics.map((topic, i) => ({
+    numberOfItems: visibleTopics.length,
+    itemListElement: visibleTopics.map((topic, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: topic.title,
@@ -67,8 +76,19 @@ export default function GuidesPage() {
             In-depth guides to help you master development tools and practices
           </p>
 
+          {activeTopic && (
+            <div className="mt-4">
+              <Link
+                href="/guides"
+                className="inline-flex items-center gap-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400"
+              >
+                ← Show all guides
+              </Link>
+            </div>
+          )}
+
           <div className="mt-8 grid gap-4">
-            {learningTopics.map((topic) => (
+            {visibleTopics.map((topic) => (
               <Link
                 key={topic.slug}
                 href={`/guides/${topic.slug}`}
@@ -85,13 +105,19 @@ export default function GuidesPage() {
                     {topic.description}
                   </p>
                   <p className="mt-2 text-xs text-surface-400 dark:text-dark-muted">
-                    {topic.readTime} read
+                    {topic.category} · {topic.readTime} read
                   </p>
                 </div>
                 <ArrowRight className="mt-2 h-4 w-4 flex-shrink-0 text-surface-400" />
               </Link>
             ))}
           </div>
+
+          {visibleTopics.length === 0 && (
+            <div className="mt-8 rounded-xl border border-dashed border-surface-300 p-8 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted">
+              No guides found for this topic.
+            </div>
+          )}
         </div>
       </div>
     </>

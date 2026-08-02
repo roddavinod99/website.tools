@@ -37,5 +37,10 @@
     "Can this tool decode all URL shorteners? No — server-side redirects (like bit.ly) do not embed the destination in the URL and require an HTTP request to resolve.",
     "Is it safe to paste URLs here? Yes, the tool processes everything locally in your browser. No data is sent to any server.",
     "What if the output looks like gibberish? The destination may be double-encoded or use a format not yet supported. Try URL-decoding the output once more."
+  ],
+  "features": [
+    "Decode safelink and URL-shortener wrappers",
+    "Reveal the underlying redirect target",
+    "Copy the decoded URL"
   ]
 }

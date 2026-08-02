@@ -41,5 +41,10 @@
     "What color blindness types are simulated? — Protanopia, Deuteranopia, Tritanopia, and Achromatopsia using standard transformation matrices.",
     "How do I export for a design system? — After saving, click 'Export CSS'. Each palette becomes CSS custom properties.",
     "Can I generate gradients with more than 2 colors? — Yes, unlimited stops. Click 'Add Stop' to insert additional colors."
+  ],
+  "features": [
+    "Pick colors from anywhere on screen",
+    "HEX, RGB, and HSL values at once",
+    "Color history for quick reuse"
   ]
 }

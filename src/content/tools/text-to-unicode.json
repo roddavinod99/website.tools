@@ -34,5 +34,11 @@
     "Does this handle emoji code points? — Yes, including multi-byte code points like U+1F600.",
     "What input formats are accepted for Unicode to Text? — U+XXXX, 0xXXXX, #XXXX, or plain hex values, space or comma separated.",
     "Is the output safe for use in JSON strings? — Yes, the U+XXXX format can be directly used in JSON and JavaScript Unicode escapes."
+  ],
+  "features": [
+    "Encode text as Unicode code points",
+    "Multiple escape formats: hex, decimal, \\u escapes",
+    "Decode Unicode escapes back to text",
+    "Real-time conversion"
   ]
 }

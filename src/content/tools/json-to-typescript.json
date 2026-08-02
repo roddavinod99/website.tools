@@ -41,5 +41,11 @@
     "How does it handle arrays with different element types? Arrays are typed as union types (e.g., (string | number)[]) when elements have mixed types.",
     "Does it support generating enums from string literals? Not automatically; you'll need to manually create enums from generated string literal unions.",
     "What happens with empty objects or arrays? Empty objects become Record<string, any> and empty arrays become any[] as fallback types."
+  ],
+  "features": [
+    "Generate TypeScript interfaces and types",
+    "Correctly types nested objects and arrays",
+    "Optional, readonly, and export options",
+    "Copy or download the generated code"
   ]
 }

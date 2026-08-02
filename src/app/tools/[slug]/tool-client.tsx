@@ -13,7 +13,7 @@ import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
 } from "lucide-react";
-import { siteConfig } from "@/lib/data/site-config";
+import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
 
 interface ToolData {
   id: string;
@@ -38,6 +38,7 @@ interface ToolContent {
   bestPractices: string[];
   commonMistakes: string[];
   faq: string[];
+  features?: string[];
 }
 
 interface ToolClientProps {
@@ -47,6 +48,8 @@ interface ToolClientProps {
   popularTools: ToolData[];
   specificGuide: { slug: string; title: string; description: string; readTime: string } | null;
   tocItems: TocItem[];
+  mainSiteUrl: string;
+  categorySlug?: string;
 }
 
 function generateTocItems(content: ToolContent): TocItem[] {
@@ -54,6 +57,9 @@ function generateTocItems(content: ToolContent): TocItem[] {
   
   if (content.whatItDoes || content.whyItExists || content.whoShouldUse || content.useCases.length > 0) {
     items.push({ id: "about", label: "About", level: 1 });
+  }
+  if (content.features && content.features.length > 0) {
+    items.push({ id: "features", label: "Key Features", level: 1 });
   }
   if (content.instructions.length > 0) {
     items.push({ id: "how-to-use", label: "How to Use", level: 1 });
@@ -82,9 +88,31 @@ export function ToolClient({
   sameCategory, 
   popularTools, 
   specificGuide, 
-  tocItems 
+  tocItems,
+  mainSiteUrl,
+  categorySlug,
 }: ToolClientProps) {
   const [activeTocId, setActiveTocId] = useState("");
+
+  useEffect(() => {
+    const onShortcut = (e: KeyboardEvent) => {
+      if (isToolShortcutEvent(e, "Enter", false)) {
+        e.preventDefault();
+        dispatchToolShortcut("run");
+      } else if (isToolShortcutEvent(e, "C", true)) {
+        e.preventDefault();
+        dispatchToolShortcut("copy");
+      } else if (isToolShortcutEvent(e, "M", true)) {
+        e.preventDefault();
+        dispatchToolShortcut("minify");
+      } else if (isToolShortcutEvent(e, "V", true)) {
+        e.preventDefault();
+        dispatchToolShortcut("validate");
+      }
+    };
+    document.addEventListener("keydown", onShortcut);
+    return () => document.removeEventListener("keydown", onShortcut);
+  }, []);
 
   useEffect(() => {
     const items = generateTocItems(content);
@@ -111,22 +139,24 @@ export function ToolClient({
     <>
       <TableOfContents items={tocItems} activeId={activeTocId} />
 
+      {/* Breadcrumb */}
       <section className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
-            <ChevronRight className="h-3 w-3" />
-            <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text">Tools</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{tool.name}</span>
+        <div className="container py-6">
+          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Home</Link>
+            <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+            <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Tools</Link>
+            <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+            <span className="text-surface-900 dark:text-dark-text font-medium">{tool.name}</span>
           </nav>
         </div>
       </section>
 
+      {/* Hero with Tool Interface */}
       <section id="hero" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
+        <div className="container py-10 md:py-14">
           <div className="mx-auto max-w-3xl">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="default">{tool.category}</Badge>
               {tool.trending && <Badge variant="warning">Trending</Badge>}
               {tool.new && <Badge variant="new">New</Badge>}
@@ -138,7 +168,8 @@ export function ToolClient({
               {tool.description}
             </p>
 
-            <div className="mt-8 rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface">
+            {/* Tool Interface Card */}
+            <div className="mt-8 rounded-xl border border-surface-200 bg-white p-6 shadow-sm dark:border-dark-border dark:bg-dark-surface">
               <ToolInterface slug={tool.slug} name={tool.name} />
             </div>
 
@@ -147,8 +178,28 @@ export function ToolClient({
         </div>
       </section>
 
+      {/* Key Features */}
+      {content.features && content.features.length > 0 && (
+        <section id="features" className="border-b border-surface-200 dark:border-dark-border">
+          <div className="container py-10 md:py-12">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Key Features</h2>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {content.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                    <span className="text-sm text-surface-600 dark:text-dark-muted">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* About */}
       <section id="about" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">About</h2>
             <div className="mt-4 space-y-4 text-surface-600 dark:text-dark-muted">
@@ -156,12 +207,12 @@ export function ToolClient({
               <p>{content.whyItExists}</p>
               <p className="text-sm text-surface-400 dark:text-dark-muted">
                 This tool is part of the{" "}
-                <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+                <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
                   DevStackIO
                 </a>{" "}
                 platform — a collection of free online developer tools from DevStackIO.
                 Browse more free developer resources on{" "}
-                <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+                <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
                   DevStackIO
                 </a>.
               </p>
@@ -174,7 +225,7 @@ export function ToolClient({
                 <ul className="mt-2 space-y-1">
                   {content.useCases.map((uc, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                      <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
                       <span>{uc}</span>
                     </li>
                   ))}
@@ -185,14 +236,15 @@ export function ToolClient({
         </div>
       </section>
 
+      {/* How to Use */}
       <section id="how-to-use" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">How to Use</h2>
             <div className="mt-6 space-y-4">
               {content.instructions.map((inst, i) => (
                 <div key={i} className="flex gap-4">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-500 text-sm font-semibold text-white">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 text-sm font-semibold dark:bg-brand-900/30 dark:text-brand-400">
                     {i + 1}
                   </div>
                   <div>
@@ -207,8 +259,9 @@ export function ToolClient({
 
       <InContentAd className="my-6" slot="5678901234" />
 
+      {/* Examples */}
       <section id="examples" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
             <div className="mt-6 space-y-4">
@@ -224,14 +277,15 @@ export function ToolClient({
         </div>
       </section>
 
+      {/* Best Practices */}
       <section id="best-practices" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Best Practices</h2>
             <ul className="mt-6 space-y-3">
               {content.bestPractices.map((bp, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <Lightbulb className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" />
+                  <Lightbulb className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" aria-hidden="true" />
                   <span className="text-surface-600 dark:text-dark-muted">{bp}</span>
                 </li>
               ))}
@@ -240,18 +294,19 @@ export function ToolClient({
         </div>
       </section>
 
-<CollapsibleSection
+      {/* Common Mistakes */}
+      <CollapsibleSection
         title="Common Mistakes"
         icon={CircleAlert}
         defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <ul className="mt-6 space-y-3">
               {content.commonMistakes.map((cm, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CircleAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-500" />
+                  <CircleAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-500" aria-hidden="true" />
                   <span className="text-surface-600 dark:text-dark-muted">{cm}</span>
                 </li>
               ))}
@@ -260,8 +315,9 @@ export function ToolClient({
         </div>
       </CollapsibleSection>
 
+      {/* FAQ */}
       <section id="faq" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">FAQ</h2>
             <div className="mt-6 space-y-3">
@@ -272,7 +328,7 @@ export function ToolClient({
                 >
                   <summary className="flex cursor-pointer items-center justify-between px-5 py-4 font-medium text-surface-900 dark:text-dark-text">
                     {item.includes(" — ") ? item.split(" — ")[0] : item.split(" | A:")[0]}
-                    <ChevronRight className="h-4 w-4 text-surface-400 transition-transform group-open:rotate-90" />
+                    <ChevronRight className="h-4 w-4 text-surface-400 transition-transform group-open:rotate-90" aria-hidden="true" />
                   </summary>
                   <div className="px-5 pb-4">
                     <p className="text-sm text-surface-500 dark:text-dark-muted">{item.includes(" — ") ? item.split(" — ").slice(1).join(" — ") : item.split(" | A:")[1] || ""}</p>
@@ -286,12 +342,13 @@ export function ToolClient({
 
       <InContentAd className="my-6" slot="7890123456" />
 
-<CollapsibleSection
+      {/* Related Tools */}
+      <CollapsibleSection
         title="Related Tools"
         defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             {sameCategory.length > 0 && (
               <>
@@ -353,13 +410,14 @@ export function ToolClient({
         </div>
       </CollapsibleSection>
 
+      {/* Learning Resources */}
       <CollapsibleSection
         title="Learning Resources"
         icon={BookOpen}
         defaultOpen={true}
         className="border-b border-surface-200 dark:border-dark-border"
       >
-        <div className="container py-8 md:py-10">
+        <div className="container py-10 md:py-12">
           <div className="mx-auto max-w-3xl">
             <p className="mt-2 text-surface-500 dark:text-dark-muted">
               Dive deeper with our comprehensive guides and tutorials.
@@ -371,44 +429,71 @@ export function ToolClient({
                   className="group flex items-center justify-between rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
                   <div className="flex items-start gap-3">
-                    <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" />
+                    <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" aria-hidden="true" />
                     <div>
-                      <p className="font-medium text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                      <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
                         {specificGuide.title}
                       </p>
                       <p className="text-xs text-surface-400 dark:text-dark-muted">{specificGuide.readTime} read</p>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" />
+                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
                 </Link>
               )}
-              {[
-                { title: `${tool.name} - Beginner's Guide`, read: "5 min read" },
-                { title: `${tool.name} Advanced Techniques`, read: "8 min read" },
-              ].map((resource) => (
+              {categorySlug && (
                 <Link
-                  key={resource.title}
-                  href="/learning"
+                  href={`/categories/${categorySlug}`}
                   className="group flex items-center justify-between rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
                   <div className="flex items-start gap-3">
-                    <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" />
+                    <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" aria-hidden="true" />
                     <div>
-                      <p className="font-medium text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                        {resource.title}
+                      <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                        More {tool.category} Tools
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">{resource.read}</p>
+                      <p className="text-xs text-surface-400 dark:text-dark-muted">Browse the full category</p>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" />
+                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
                 </Link>
-              ))}
+              )}
+              <Link
+                href="/guides"
+                className="group flex items-center justify-between rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+              >
+                <div className="flex items-start gap-3">
+                  <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                  <div>
+                    <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                      Developer Guides
+                    </p>
+                    <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth tutorials and best practices</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/learning"
+                className="group flex items-center justify-between rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+              >
+                <div className="flex items-start gap-3">
+                  <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                  <div>
+                    <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                      Learning Center
+                    </p>
+                    <p className="text-xs text-surface-400 dark:text-dark-muted">Core concepts and fundamentals</p>
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </div>
       </CollapsibleSection>
 
-      <section className="container py-8 md:py-10">
+      {/* Share */}
+      <section className="container py-10 md:py-12">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
           <ShareButtons />

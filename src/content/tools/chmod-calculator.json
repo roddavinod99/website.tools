@@ -38,5 +38,10 @@
     "What is the difference between symbolic and octal? Symbolic (rwxr-xr-x) is human-readable; octal (755) is the numeric representation used in chmod commands.",
     "Why is 755 common? It gives the owner full control while allowing others to read and execute but not modify — ideal for scripts and directories.",
     "Can I use this tool for recursive permissions? The tool generates the value; use chmod -R in your terminal for recursive application."
+  ],
+  "features": [
+    "Convert between numeric and symbolic modes",
+    "Visual checkbox grid for permissions",
+    "Copy the chmod command"
   ]
 }

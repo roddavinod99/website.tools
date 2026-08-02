@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
-import { TOOL_COUNT, siteConfig } from "@/lib/constants";
+import { TOOL_COUNT, siteConfig, featuredTools, faqItems } from "@/lib/constants";
+import { featuresBySlug } from "@/lib/data/tool-features";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
 import { BenefitsSection } from "@/components/home/benefits-section";
@@ -48,17 +49,18 @@ export default function Home() {
       <Hero
         badgeText={`${TOOL_COUNT} free tools. No login required.`}
         searchPlaceholder={`Search ${TOOL_COUNT} tools...`}
+        toolCount={TOOL_COUNT}
       />
       <AdBanner className="my-12" slot="1234567890" />
       <CategoriesSection />
-      <FeaturedTools />
+      <FeaturedTools featuredTools={featuredTools} featuresBySlug={featuresBySlug} />
       <AdBanner className="my-12" slot="2345678901" />
       <BenefitsSection />
       <LearningSection />
       <AdBanner className="my-12" slot="3456789012" />
       <CommunitySection />
       <NewsletterSection />
-      <FAQSection />
+      <FAQSection faqItems={faqItems} />
     </>
   );
 }

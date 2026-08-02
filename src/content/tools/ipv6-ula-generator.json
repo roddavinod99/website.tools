@@ -33,5 +33,10 @@
     "What is an IPv6 ULA? — A Unique Local Address is the IPv6 equivalent of a private IPv4 address (like 192.168.x.x). It is not routable on the public internet.",
     "Why fd00::/8 and not fc00::/8? — The fc00::/8 block was originally split into fc00::/8 (locally assigned) and fd00::/8 (random). Only fd00::/8 is in common use today.",
     "Can two organizations have the same ULA? — Statistically extremely unlikely (40-bit random ID = ~1 trillion possibilities), but for critical infrastructure, consider registering with a coordination authority."
+  ],
+  "features": [
+    "Generate random IPv6 ULA addresses",
+    "Custom global ID and subnet prefixes",
+    "Copy generated addresses"
   ]
 }

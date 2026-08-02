@@ -38,5 +38,11 @@
     "Does auto-format work for partial or invalid JSON? It attempts to format valid portions and highlights the error location.",
     "Can I copy only a selection of the formatted JSON? Use the copy all button; for partial copy, select text manually.",
     "What does the depth stat mean? It shows the maximum nesting level of objects/arrays in the JSON."
+  ],
+  "features": [
+    "Beautify, minify, and validate JSON",
+    "Line-level syntax errors with position hints",
+    "Syntax highlighting and optional sorting",
+    "Copy, download, and load from file"
   ]
 }

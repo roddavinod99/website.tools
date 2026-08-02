@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { detectDpiFromBuffer, setJpegDpi, buildZip } from "@/lib/image-utils";
 
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
@@ -13,6 +14,7 @@ const QUALITY_PRESETS: QualityPreset[] = [
   { label: "Medium", value: 65 },
   { label: "Low", value: 40 },
 ];
+const LOSSLESS_PRESET = "lossless";
 
 const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
   { value: "image/jpeg", label: "JPEG", ext: "jpg" },
@@ -32,10 +34,12 @@ interface ImageEntry {
   originalWidth: number;
   originalHeight: number;
   fileType: string;
+  dpi: number;
   compressedUrl?: string;
   compressedSize?: number;
   compressedWidth?: number;
   compressedHeight?: number;
+  outputDpi?: number;
   processing: boolean;
 }
 
@@ -43,6 +47,39 @@ function formatSize(bytes: number): string {
   if (bytes < 1024) return bytes + " B";
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
   return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+}
+
+function BeforeAfterSlider({ originalUrl, compressedUrl }: { originalUrl: string; compressedUrl: string }) {
+  const [position, setPosition] = useState(50);
+  const setClamped = (v: number) => setPosition(Math.max(0, Math.min(100, v)));
+
+  return (
+    <div className="relative w-full select-none overflow-hidden rounded border border-surface-200 dark:border-dark-border">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={compressedUrl} alt="Compressed comparison base" className="block h-full w-full object-contain" draggable={false} />
+      <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={originalUrl} alt="Original comparison" className="block h-full w-full object-contain" draggable={false} />
+      </div>
+      <div className="absolute inset-y-0" style={{ left: `${position}%`, width: "2px" }} aria-hidden="true">
+        <div className="absolute inset-y-0 -left-px w-0.5 bg-brand-500" />
+        <div className="absolute left-1/2 top-1/2 flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-brand-500 bg-white text-brand-500 shadow dark:bg-dark-surface">
+          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7l-4 5 4 5m8-10l4 5-4 5" />
+          </svg>
+        </div>
+      </div>
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={position}
+        onChange={(e) => setClamped(parseInt(e.target.value))}
+        aria-label="Compare before and after"
+        className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
+      />
+    </div>
+  );
 }
 
 function getFileTypeLabel(mime: string): string {
@@ -59,7 +96,7 @@ function getFileTypeLabel(mime: string): string {
   return map[mime] || mime.split("/")[1]?.toUpperCase() || "Unknown";
 }
 
-function readImageFile(file: File): Promise<{ url: string; width: number; height: number; bitDepth: number; colorSpace: string }> {
+function readImageFile(file: File): Promise<{ url: string; width: number; height: number; bitDepth: number; colorSpace: string; dpi: number }> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -72,7 +109,10 @@ function readImageFile(file: File): Promise<{ url: string; width: number; height
       const imageData = ctx.getImageData(0, 0, 1, 1);
       const bitDepth = imageData.data.length === 4 ? 32 : 24;
       const colorSpace = "sRGB";
-      resolve({ url, width: img.width, height: img.height, bitDepth, colorSpace });
+      file.arrayBuffer().then((buf) => {
+        const dpi = detectDpiFromBuffer(buf).dpi;
+        resolve({ url, width: img.width, height: img.height, bitDepth, colorSpace, dpi });
+      }).catch(() => resolve({ url, width: img.width, height: img.height, bitDepth, colorSpace, dpi: 72 }));
     };
     img.onerror = reject;
     img.src = url;
@@ -83,11 +123,13 @@ export function ImageCompressor() {
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [quality, setQuality] = useState(85);
   const [format, setFormat] = useState<ImageFormat>("image/webp");
+  const [targetDpi, setTargetDpi] = useState(0);
   const [maxWidth, setMaxWidth] = useState(0);
   const [maxHeight, setMaxHeight] = useState(0);
   const [fitMode, setFitMode] = useState<FitMode>("fit");
   const [maintainAspect, setMaintainAspect] = useState(true);
   const [preset, setPreset] = useState<string>("custom");
+  const [lossless, setLossless] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
@@ -113,6 +155,7 @@ export function ImageCompressor() {
         originalWidth: info.width,
         originalHeight: info.height,
         fileType: file.type,
+        dpi: info.dpi,
         processing: false,
       });
     }
@@ -189,21 +232,30 @@ export function ImageCompressor() {
       const blob = await new Promise<Blob | null>((resolve) => {
         canvas.toBlob(
           (b) => resolve(b),
-          format,
-          format === "image/png" ? undefined : quality / 100
+          lossless ? "image/png" : format,
+          format === "image/png" && !lossless ? undefined : quality / 100
         );
       });
       if (!blob) return entry;
+      let outputBlob = blob;
+      let outputDpi = entry.dpi;
+      if (lossless) {
+        outputDpi = entry.dpi;
+      } else if (format === "image/jpeg" && targetDpi > 0) {
+        outputBlob = await setJpegDpi(blob, targetDpi);
+        outputDpi = targetDpi;
+      }
       return {
         ...entry,
-        compressedUrl: URL.createObjectURL(blob),
-        compressedSize: blob.size,
+        compressedUrl: URL.createObjectURL(outputBlob),
+        compressedSize: outputBlob.size,
         compressedWidth: w,
         compressedHeight: h,
+        outputDpi,
         processing: false,
       };
     },
-    [quality, format, maxWidth, maxHeight, fitMode, maintainAspect]
+    [quality, format, maxWidth, maxHeight, fitMode, maintainAspect, lossless, targetDpi]
   );
 
   const compressAll = useCallback(async () => {
@@ -230,22 +282,39 @@ export function ImageCompressor() {
     if (!entry.compressedUrl) return;
     const link = document.createElement("a");
     const baseName = entry.file.name.replace(/\.[^.]+$/, "");
-    const ext = FORMAT_OPTIONS.find((f) => f.value === format)?.ext || "webp";
+    const ext = lossless ? "png" : (FORMAT_OPTIONS.find((f) => f.value === format)?.ext || "webp");
     link.download = `${baseName}-compressed.${ext}`;
     link.href = entry.compressedUrl;
     link.click();
-  }, [format]);
+  }, [format, lossless]);
 
-  const downloadAll = useCallback(() => {
-    images.forEach((entry) => {
-      if (entry.compressedUrl) {
-        setTimeout(() => downloadImage(entry), 100 * images.indexOf(entry));
-      }
-    });
-  }, [images, downloadImage]);
+  const downloadAll = useCallback(async () => {
+    const entries = images.filter((img) => img.compressedUrl);
+    if (entries.length === 0) return;
+    const ext = lossless ? "png" : (FORMAT_OPTIONS.find((f) => f.value === format)?.ext || "webp");
+    const files = await Promise.all(
+      entries.map(async (entry) => {
+        const baseName = entry.file.name.replace(/\.[^.]+$/, "");
+        const blob = await fetch(entry.compressedUrl!).then((r) => r.blob());
+        return { name: `${baseName}-compressed.${ext}`, data: new Uint8Array(await blob.arrayBuffer()) };
+      })
+    );
+    const zip = await buildZip(files);
+    const url = URL.createObjectURL(zip);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `compressed-images-${Date.now()}.zip`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, [images, format, lossless]);
 
   const applyPreset = useCallback((p: string) => {
     setPreset(p);
+    if (p === LOSSLESS_PRESET) {
+      setLossless(true);
+      return;
+    }
+    setLossless(false);
     if (p === "custom") return;
     const found = QUALITY_PRESETS.find((q) => q.label.toLowerCase() === p);
     if (found) setQuality(found.value);
@@ -321,6 +390,7 @@ export function ImageCompressor() {
                 className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 <option value="custom">Custom</option>
+                <option value="lossless">Lossless</option>
                 {QUALITY_PRESETS.map((q) => (
                   <option key={q.label.toLowerCase()} value={q.label.toLowerCase()}>
                     {q.label}
@@ -337,6 +407,7 @@ export function ImageCompressor() {
                 value={quality}
                 onChange={(e) => {
                   setQuality(parseInt(e.target.value));
+                  setLossless(false);
                   setPreset("custom");
                 }}
                 className="w-24 accent-brand-500"
@@ -344,7 +415,11 @@ export function ImageCompressor() {
             </div>
             <select
               value={format}
-              onChange={(e) => setFormat(e.target.value as ImageFormat)}
+              onChange={(e) => {
+                setFormat(e.target.value as ImageFormat);
+                setLossless(false);
+                if (preset === LOSSLESS_PRESET) setPreset("custom");
+              }}
               className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
             >
               {FORMAT_OPTIONS.map((f) => (
@@ -353,6 +428,18 @@ export function ImageCompressor() {
                 </option>
               ))}
             </select>
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-surface-500 dark:text-dark-muted">DPI (0 = keep):</label>
+              <input
+                type="number"
+                min={0}
+                max={1200}
+                value={targetDpi}
+                onChange={(e) => setTargetDpi(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                aria-label="Output DPI"
+              />
+            </div>
           </div>
 
           <details className="rounded-lg border border-surface-200 dark:border-dark-border">
@@ -458,8 +545,14 @@ export function ImageCompressor() {
                   <span>Type: {getFileTypeLabel(entry.fileType)}</span>
                   <span>Size: {formatSize(entry.originalSize)}</span>
                   <span>Dim: {entry.originalWidth}x{entry.originalHeight}</span>
-                  <span>DPI: 72</span>
+                  <span>DPI: {entry.dpi}</span>
                 </div>
+                {entry.compressedWidth && (
+                  <p className="mb-1 text-[11px] text-surface-400 dark:text-dark-muted">
+                    Output: {entry.compressedWidth}x{entry.compressedHeight}
+                    {entry.outputDpi ? ` @ ${entry.outputDpi} DPI` : ` @ ${entry.dpi} DPI`}
+                  </p>
+                )}
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <p className="mb-1 text-xs text-surface-500 dark:text-dark-muted">Original</p>
@@ -494,16 +587,22 @@ export function ImageCompressor() {
                     )}
                   </div>
                 </div>
-                {entry.compressedSize && (
-                  <div className="mt-2 flex items-center justify-between text-xs text-surface-600 dark:text-dark-muted">
-                    <span>
-                      {formatSize(entry.originalSize)} → {formatSize(entry.compressedSize)}
-                    </span>
-                    <span className="font-medium text-green-600 dark:text-green-400">
-                      -{Math.round((1 - entry.compressedSize / entry.originalSize) * 100)}%
-                    </span>
-                  </div>
-                )}
+                    {entry.compressedSize && (
+                      <div className="mt-2 flex items-center justify-between text-xs text-surface-600 dark:text-dark-muted">
+                        <span>
+                          {formatSize(entry.originalSize)} → {formatSize(entry.compressedSize)}
+                        </span>
+                        <span className="font-medium text-green-600 dark:text-green-400">
+                          -{Math.round((1 - entry.compressedSize / entry.originalSize) * 100)}%
+                        </span>
+                      </div>
+                    )}
+                    {entry.compressedUrl && (
+                      <div className="mt-2">
+                        <p className="mb-1 text-xs text-surface-500 dark:text-dark-muted">Before / After</p>
+                        <BeforeAfterSlider originalUrl={entry.originalUrl} compressedUrl={entry.compressedUrl} />
+                      </div>
+                    )}
                 {entry.compressedUrl && (
                   <button
                     onClick={() => downloadImage(entry)}

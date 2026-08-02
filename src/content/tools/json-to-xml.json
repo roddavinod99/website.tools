@@ -41,5 +41,11 @@
     "What happens if my JSON key starts with a number? The tool prepends an underscore or allowed character since XML elements cannot start with digits.",
     "How is the XML declaration handled? You can toggle it on/off; when enabled it includes version and encoding attributes.",
     "Does it support mixed content (text with child elements)? Not directly; use CDATA for text-heavy nodes that need to coexist with element children."
+  ],
+  "features": [
+    "Convert JSON to well-formed XML",
+    "Custom root element and attribute handling",
+    "Pretty-printed or compact output",
+    "Copy and download the XML"
   ]
 }

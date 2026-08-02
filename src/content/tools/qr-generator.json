@@ -41,5 +41,11 @@
     "What's the maximum data capacity? Depends on version and ECC level; URL QR codes typically handle up to ~3KB of data.",
     "Does the logo overlay affect scanability? Yes, higher ECC levels compensate for logo-related data loss; use at least level Q (25%) with logos.",
     "Are the generated QR codes standard compliant? Yes, they follow ISO/IEC 18004 standards for QR Code symbology."
+  ],
+  "features": [
+    "Generate QR codes for text, URLs, email, phone, SMS, and more",
+    "Custom foreground, background, and logo",
+    "SVG, PNG, and JPEG export",
+    "Four error-correction levels"
   ]
 }

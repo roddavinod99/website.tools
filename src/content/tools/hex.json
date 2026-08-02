@@ -38,5 +38,11 @@
     "What does XOR with a key do? It applies a bitwise exclusive-or of each byte with the key byte for obfuscation.",
     "Does the tool handle UTF-8 characters? Yes, multi-byte UTF-8 characters are properly encoded to hex.",
     "Can I switch between text-to-hex and hex-to-text without clearing input? Yes, the conversion is bidirectional."
+  ],
+  "features": [
+    "Convert text to hex and hex back to text",
+    "Configurable spacing and letter case",
+    "Real-time conversion as you type",
+    "Copy or download output"
   ]
 }

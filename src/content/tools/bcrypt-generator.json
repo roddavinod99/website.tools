@@ -37,5 +37,10 @@
     "Why does the output always look different for the same password? Bcrypt includes a random salt, so each hash is unique even for identical inputs.",
     "Is bcrypt still secure? Yes, bcrypt is an adaptive hash function designed to remain secure as computing power increases.",
     "What is the difference between $2a$, $2b$, and $2y$? They are minor format variations from different implementations; $2b$ is the current standard."
+  ],
+  "features": [
+    "Generate bcrypt hashes with configurable rounds",
+    "Verify passwords against a stored hash",
+    "Copy the generated hash"
   ]
 }

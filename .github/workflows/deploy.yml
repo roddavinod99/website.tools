@@ -106,6 +106,14 @@ jobs:
             mkdir -p .next/standalone/data
             cp -r data/. .next/standalone/data/
 
+            # Verify CSS chunks exist before restart (prevents unstyled deployments)
+            CSS_COUNT=$(find .next/standalone/.next/static/chunks -maxdepth 1 -name "*.css" -type f -size +0c | wc -l)
+            if [ "$CSS_COUNT" -eq 0 ]; then
+              echo "ERROR: No CSS chunks found in standalone output -- aborting deploy" >&2
+              exit 1
+            fi
+            echo "Verified $CSS_COUNT CSS chunk(s) in standalone output"
+
             # Restart application
             pm2 restart tools || pm2 start ecosystem.config.js
             pm2 save
@@ -113,4 +121,5 @@ jobs:
             # Verify deployment
             sleep 5
             curl -sf http://localhost:3000/api/health || exit 1
+            curl -sf -o /dev/null -w "%{http_code}" http://localhost:3000/ | grep -q 200 || { echo "ERROR: Homepage 500" >&2; exit 1; }
             echo "Deployment successful"

@@ -41,5 +41,11 @@
     "Can I convert docker-compose.yml back to docker run? — This tool is one-way only. For reverse conversion, consider using docker-compose config.",
     "What about multi-stage builds? — This tool only handles runtime configuration. Build-related settings need to be added manually.",
     "Does the generated YAML include version numbers? — Yes, it uses version 3.8 which is compatible with most Docker Compose installations."
+  ],
+  "features": [
+    "Convert docker run commands to Compose YAML",
+    "Parses ports, volumes, env vars, and labels",
+    "Detects docker CLI flags automatically",
+    "Copy or download the generated Compose file"
   ]
 }

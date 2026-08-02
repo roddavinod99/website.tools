@@ -44,5 +44,10 @@
     "Can I use variables? — No, this tool evaluates pure mathematical expressions only. Use a programming environment for variable-based calculations.",
     "Why does sin(90) not give 1? — Trigonometric functions use radians. Use sin(pi/2) for the sine of 90 degrees.",
     "What happens with division by zero? — The evaluator will return an error message indicating the expression is invalid."
+  ],
+  "features": [
+    "Evaluate math expressions in real time",
+    "Functions, constants, and variables",
+    "Full operator precedence"
   ]
 }

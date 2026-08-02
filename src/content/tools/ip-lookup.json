@@ -38,5 +38,10 @@
     "Does the tool log my lookups? Lookup history is stored locally in your browser session only.",
     "Can I look up IPv6 addresses? Yes, IPv6 geolocation is supported.",
     "What does the JSON copy include? The full API response including asn, isp, org, country, region, city, timezone, lat, lon, and more."
+  ],
+  "features": [
+    "Geolocate an IP address",
+    "ISP, ASN, and country details",
+    "Live results from public databases"
   ]
 }

@@ -37,5 +37,10 @@
     "Are the commands safe to copy-paste directly? Most are safe, but destructive commands (reset --hard, force push) should be reviewed before running.",
     "Can I contribute additional commands? The cheatsheet is static, but you can request additions through the feedback page.",
     "Does this cover Git LFS or Git submodules? Currently it covers core Git commands. LFS and submodule commands may be added later."
+  ],
+  "features": [
+    "Searchable Git command reference",
+    "Categorized commands with examples",
+    "Copy any command snippet"
   ]
 }

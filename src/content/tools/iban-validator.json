@@ -42,5 +42,10 @@
     "How does Mod-97 validation work? — The IBAN is rearranged (BBAN + country code + check digits), letters are converted to numbers, and the result is divided by 97. If the remainder is 1, the IBAN is valid.",
     "How many countries support IBAN? — This tool supports 35+ countries. IBAN is primarily used in Europe, the Middle East, and some Caribbean nations.",
     "Is this tool sufficient for production use? — For production financial applications, use a dedicated IBAN validation library that handles all edge cases and is regularly updated."
+  ],
+  "features": [
+    "Validate IBANs against country-specific rules",
+    "Extract bank and account details",
+    "Format IBANs with proper spacing"
   ]
 }

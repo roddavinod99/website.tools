@@ -41,5 +41,11 @@
     "Can I compare cross-OS files? — Yes, but enable 'Ignore Whitespace' for CRLF vs LF.",
     "How to apply a .patch file? — 'git apply <file>.patch' or 'patch -p0 < <file>.patch'.",
     "Character limit? — ~500,000 chars in line mode. Character-level diff has ~50,000 char limit."
+  ],
+  "features": [
+    "Compare text side by side and unified",
+    "Highlight additions, deletions, and changes",
+    "Line numbers and match counts",
+    "Copy the unified diff"
   ]
 }

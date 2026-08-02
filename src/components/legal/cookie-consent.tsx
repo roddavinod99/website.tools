@@ -98,14 +98,18 @@ function updateConsentMode(prefs: CookiePreferences) {
 
 export function CookieConsent() {
   const [view, setView] = useState<ConsentView>("banner");
-  const [show, setShow] = useState(() => !getStoredConsent());
-  const [mounted] = useState(() => typeof window !== "undefined");
-  const [preferences, setPreferences] = useState<CookiePreferences>(() => getStoredConsent() ?? DEFAULT_PREFERENCES);
+  const [show, setShow] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [preferences, setPreferences] = useState<CookiePreferences>(DEFAULT_PREFERENCES);
 
   useEffect(() => {
+    setMounted(true);
     const stored = getStoredConsent();
     if (stored) {
+      setPreferences(stored);
       updateConsentMode(stored);
+    } else {
+      setShow(true);
     }
   }, []);
 
@@ -159,17 +163,17 @@ export function CookieConsent() {
                 We use cookies to enhance your experience, analyze site usage, and serve
                 personalized content. By clicking &quot;Accept All,&quot; you consent to our use
                 of cookies. See our{" "}
-                <a
-                  href="/cookie-policy"
-                  className="text-brand-500 underline hover:text-brand-600"
-                >
-                  Cookie Policy
-                </a>{" "}
-                and{" "}
-                <a
-                  href="/privacy"
-                  className="text-brand-500 underline hover:text-brand-600"
-                >
+                  <a
+                    href="/cookie-policy"
+                    className="text-brand-600 underline hover:text-brand-700"
+                  >
+                    Cookie Policy
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="/privacy"
+                    className="text-brand-600 underline hover:text-brand-700"
+                  >
                   Privacy Policy
                 </a>{" "}
                 for details.
@@ -205,7 +209,7 @@ export function CookieConsent() {
               <button
                 onClick={() => setView("banner")}
                 aria-label="Close cookie preferences"
-                className="rounded-lg p-1.5 text-surface-500 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-border transition-colors"
+                className="rounded-lg p-1.5 text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-border transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -237,7 +241,7 @@ export function CookieConsent() {
                         <span className="ml-1 text-xs text-surface-400">(Required)</span>
                       )}
                     </div>
-                    <p className="text-xs text-surface-500 dark:text-dark-muted mt-0.5">
+                    <p className="text-xs text-surface-600 dark:text-dark-muted mt-0.5">
                       {cat.description}
                     </p>
                   </div>

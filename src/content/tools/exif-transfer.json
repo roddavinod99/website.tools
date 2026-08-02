@@ -41,5 +41,10 @@
     "Can I transfer between different formats? — Yes (JPEG to PNG, TIFF to JPEG, etc.), but target must support the tags being transferred.",
     "What if a field exists on both? — Source value overwrites target for fields in selected scope. Others remain unchanged.",
     "Can I transfer to multiple files at once? — One target at a time. Source stays uploaded while swapping targets."
+  ],
+  "features": [
+    "Copy EXIF metadata between images",
+    "Preserve original image quality",
+    "Batch transfer support"
   ]
 }

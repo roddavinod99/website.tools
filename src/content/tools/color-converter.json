@@ -41,5 +41,11 @@
     "Can I use this for print design? — Yes, it supports CMYK, but monitor calibration affects actual output.",
     "How are complementary colors calculated? — Rotating hue by 180 degrees. Triadic uses 120-degree rotations.",
     "Does WCAG work with alpha transparency? — Foreground alpha is composited against background automatically."
+  ],
+  "features": [
+    "Convert between HEX, RGB, HSL, HSV, and CMYK",
+    "Live preview of the selected color",
+    "Generate complementary palettes",
+    "Copy values in any format"
   ]
 }

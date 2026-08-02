@@ -75,10 +75,6 @@ const staticPages: MetadataRoute.Sitemap = [
     changeFrequency: "monthly",
     priority: 0.5,
   }),
-  entry(`${BASE}/api`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
   entry(`${BASE}/best-practices`, {
     changeFrequency: "monthly",
     priority: 0.5,

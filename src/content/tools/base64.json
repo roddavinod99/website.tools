@@ -41,5 +41,11 @@
     "Can I encode images with this tool? — Yes, drag-and-drop any image file. The tool encodes it and optionally adds data URI header.",
     "How do I process multiple files at once? — Switch to 'Batch' mode and paste multiple values or use multi-file upload.",
     "Does the tool support streaming for large files? — Files are processed in memory. For >50 MB, use a command-line tool."
+  ],
+  "features": [
+    "Encode and decode text between plain text and Base64",
+    "URL-safe variant for use in URLs and filenames",
+    "Real-time conversion with copy and download support",
+    "Handles Unicode text and multi-line input"
   ]
 }

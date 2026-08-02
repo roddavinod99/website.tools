@@ -41,5 +41,11 @@
     "What validation checks are performed? Well-formedness checks: matching start/end tags, proper nesting, valid attribute syntax, entity references, and encoding declarations.",
     "Can it format XML without a root element? No — the input must be well-formed XML with a single root element.",
     "Does it handle namespaces? Yes — namespace prefixes and xmlns attributes are preserved and sorted along with other attributes."
+  ],
+  "features": [
+    "Beautify, minify, and validate XML documents",
+    "Real-time error detection with line numbers",
+    "Custom indentation and newline handling",
+    "Copy and download the formatted XML"
   ]
 }

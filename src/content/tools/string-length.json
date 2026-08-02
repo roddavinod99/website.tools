@@ -41,5 +41,10 @@
     "What is the difference between code points and UTF-8 bytes? Code points are Unicode characters; UTF-8 bytes are how those characters are stored — ASCII is 1 byte, extended Latin 2 bytes, CJK 3 bytes, emoji up to 4 bytes.",
     "How does SMS length work? 7-bit GSM characters allow 160; UCS-2 characters allow 70. If any non-GSM character is present, the entire message switches to UCS-2 (70 char limit).",
     "Are control characters counted? Yes — tabs, newlines, and other control characters are included in all measurements and listed under the \"other\" category."
+  ],
+  "features": [
+    "Count characters, bytes, and code points",
+    "Encoding-aware measurement",
+    "Real-time results while typing"
   ]
 }

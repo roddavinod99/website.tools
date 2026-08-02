@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allTools, siteConfig, TOOL_COUNT } from "@/lib/constants";
 import { searchTools } from "@/lib/search";
+import { featuresBySlug } from "@/lib/data/tool-features";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search DevStackIO tools and resources. Find the right developer tool for your needs.",
+  description: "Search DevStackIO developer tools. Find the right tool for your needs.",
   alternates: { canonical: `${siteConfig.url}/search` },
   robots: {
     index: false,
@@ -23,7 +24,7 @@ export default async function SearchPage({ searchParams }: Props) {
   const { q } = await searchParams;
   const query = (q || "").trim().toLowerCase();
 
-  const results = searchTools(allTools, query);
+  const results = searchTools(allTools, query, featuresBySlug);
 
   return (
     <div className="container py-12 md:py-16">
@@ -79,6 +80,18 @@ export default async function SearchPage({ searchParams }: Props) {
                     <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
                       {tool.description}
                     </p>
+                    {featuresBySlug[tool.slug] && (
+                      <ul className="mt-3 flex flex-wrap gap-1.5">
+                        {featuresBySlug[tool.slug].slice(0, 3).map((feature) => (
+                          <li
+                            key={feature}
+                            className="rounded-full border border-surface-200 bg-surface-50 px-2 py-0.5 text-[10px] font-medium text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
+                          >
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </Link>
                 ))}
               </div>
@@ -87,7 +100,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
           {!query && (
             <div className="text-center text-surface-500 dark:text-dark-muted">
-              <p>Type to search across all tools, guides, and resources.</p>
+              <p>Type to search across all tools.</p>
             </div>
           )}
         </div>

@@ -41,5 +41,11 @@
     "Why does my regex match more than expected? You likely have an unanchored pattern or used a greedy quantifier — try adding ^/$ or switching to lazy.",
     "What does the s flag do? The s flag (dotAll) makes . match newline characters; without it, . matches everything except newlines.",
     "Can I use named groups? Yes — use the syntax (?<name>...) for named capture groups. They appear in the match details panel."
+  ],
+  "features": [
+    "Test regular expressions with live matches",
+    "Capture groups and detailed match info",
+    "Configurable flags",
+    "Flavor presets for common regex engines"
   ]
 }

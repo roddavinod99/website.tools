@@ -34,5 +34,10 @@
     "What is the range of supported numbers? — 1 to 3999, the standard range for Roman numerals.",
     "Does it handle subtractive notation like IV and IX? — Yes, both output and input use standard subtractive notation.",
     "Can I convert numbers larger than 3999? — Not in standard Roman numerals; the tool enforces the traditional limit."
+  ],
+  "features": [
+    "Convert integers to Roman numerals and back",
+    "Real-time conversion with validation",
+    "Copy the converted result"
   ]
 }

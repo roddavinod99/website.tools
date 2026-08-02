@@ -38,5 +38,11 @@
     "Can I convert YAML to JSON? Yes, the tool supports YAML-to-JSON conversion as an output option.",
     "Does it handle multi-document YAML (--- separator)? Yes, each document is processed independently.",
     "What about anchors and aliases? Anchors (&) and aliases (*) are preserved in formatted output but resolved in JSON conversion."
+  ],
+  "features": [
+    "Format and validate YAML documents",
+    "Minify output for compact configuration",
+    "Syntax error reporting with location hints",
+    "Copy and download the formatted YAML"
   ]
 }

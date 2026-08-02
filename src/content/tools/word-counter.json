@@ -41,5 +41,11 @@
     "What readability formulas are used? Flesch-Kincaid Grade Level and Gunning Fog Index — both output a US school grade level (e.g., 8.5 = 8th grade).",
     "Does the counter handle non-English text? Yes — Unicode text including CJK, Arabic, and Cyrillic is supported. Syllable counting works best for English.",
     "Can I track multiple word goals? The tool supports one word goal at a time; reset it when starting a new document."
+  ],
+  "features": [
+    "Count words, characters, and sentences",
+    "Reading time estimate",
+    "Flesch readability score",
+    "Real-time as you type"
   ]
 }

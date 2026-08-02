@@ -42,5 +42,11 @@
     "What order are vendor prefixes sorted in? — Spec-Compliant: -webkit-, -moz-, -ms-, -o-. Alphabetical: -moz-, -ms-, -o-, -webkit-.",
     "Can I convert colors conditionally? — No, applies to ALL matching colors. Edit manually for selective conversion.",
     "Does it fix invalid CSS? — Valid CSS is preserved. Invalid CSS may be dropped."
+  ],
+  "features": [
+    "Beautify compressed CSS with custom indentation",
+    "Syntax highlighting for selectors and properties",
+    "Sort properties and remove empty rules",
+    "Real-time formatting with copy support"
   ]
 }

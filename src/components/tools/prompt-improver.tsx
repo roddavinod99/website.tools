@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 type Tone = "Professional" | "Casual" | "Academic" | "Friendly";
 
@@ -93,13 +94,40 @@ function improvePrompt(prompt: string, tone: Tone): { improved: string; changes:
   return { improved, changes };
 }
 
+type DiffLine = { type: "same" | "add" | "del"; text: string };
+
+function diffLines(original: string, improved: string): DiffLine[] {
+  const a = original.replace(/\n+$/, "").split("\n");
+  const b = improved.replace(/\n+$/, "").split("\n");
+  const n = a.length;
+  const m = b.length;
+  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  const out: DiffLine[] = [];
+  let i = 0;
+  let j = 0;
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { out.push({ type: "same", text: a[i] }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { out.push({ type: "del", text: a[i] }); i++; }
+    else { out.push({ type: "add", text: b[j] }); j++; }
+  }
+  while (i < n) { out.push({ type: "del", text: a[i] }); i++; }
+  while (j < m) { out.push({ type: "add", text: b[j] }); j++; }
+  return out;
+}
+
 export function PromptImprover() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [tone, setTone] = useState<Tone>("Professional");
   const [scores, setScores] = useState<Record<Dimension, number> | null>(null);
   const [changes, setChanges] = useState<string[]>([]);
-  const [history, setHistory] = useState<Array<{ original: string; improved: string }>>([]);
+  const [showDiff, setShowDiff] = useState(false);
+  const [history, setHistory] = useState<Array<{ original: string; improved: string }>>(() => getStorageJSON<Array<{ original: string; improved: string }>>("prompt-improver-history") || []);
 
   const improve = useCallback(() => {
     if (!input.trim()) return;
@@ -108,10 +136,24 @@ export function PromptImprover() {
     const { improved, changes: c } = improvePrompt(input, tone);
     setOutput(improved);
     setChanges(c);
-    setHistory(prev => [{ original: input, improved }, ...prev].slice(0, 15));
+    setShowDiff(false);
+    setHistory(prev => {
+      const next = [{ original: input, improved }, ...prev].slice(0, 20);
+      setStorageJSON("prompt-improver-history", next);
+      return next;
+    });
   }, [input, tone]);
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
+
+  const clearHistory = () => {
+    setHistory([]);
+    setStorageJSON("prompt-improver-history", []);
+  };
+
+  const diff = useMemo<DiffLine[]>(() => (showDiff && output && input ? diffLines(input, output) : []), [showDiff, output, input]);
+  const addedCount = diff.filter((l) => l.type === "add").length;
+  const removedCount = diff.filter((l) => l.type === "del").length;
 
   const avgScore = scores ? Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.keys(scores).length * 10) / 10 : null;
 
@@ -172,19 +214,40 @@ export function PromptImprover() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Improved Prompt</label>
-            <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
+            <div className="flex gap-1">
+              <button onClick={() => setShowDiff(v => !v)} className={`rounded border px-2 py-0.5 text-xs transition-colors ${showDiff ? "bg-brand-500 border-brand-500 text-white" : "border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Diff</button>
+              <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
+            </div>
           </div>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
+          {showDiff && diff.length > 0 && (
+            <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+              <div className="px-3 py-1.5 text-xs font-medium text-surface-600 dark:text-dark-muted bg-surface-50 dark:bg-dark-surface border-b border-surface-200 dark:border-dark-border">
+                {addedCount} added · {removedCount} removed
+              </div>
+              <pre className="text-xs font-mono max-h-64 overflow-auto">
+                {diff.map((l, i) => (
+                  <div key={i} className={`px-3 whitespace-pre-wrap break-all ${l.type === "add" ? "bg-green-50 text-green-800 dark:bg-green-900/20 dark:text-green-300" : l.type === "del" ? "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-300" : "text-surface-600 dark:text-dark-muted"}`}>
+                    <span className="select-none inline-block w-4">{l.type === "add" ? "+" : l.type === "del" ? "−" : " "}</span>{l.text || " "}
+                  </div>
+                ))}
+              </pre>
+            </div>
+          )}
         </div>
       )}
 
       {history.length > 1 && (
         <div>
-          <h3 className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">History</h3>
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-xs font-medium text-surface-500 dark:text-dark-muted">History</h3>
+            <button onClick={clearHistory} className="text-xs text-surface-400 hover:text-red-500 dark:text-dark-muted dark:hover:text-red-400">Clear all</button>
+          </div>
           <div className="space-y-1 max-h-40 overflow-auto">
             {history.slice(1).map((h, i) => (
-              <div key={i} className="p-2 rounded border border-surface-200 dark:border-dark-border text-xs text-surface-600 dark:text-dark-muted cursor-pointer hover:bg-surface-50 dark:hover:bg-dark-surface" onClick={() => setInput(h.original)}>
-                <span className="truncate block">{h.original.slice(0, 80)}...</span>
+              <div key={i} className="flex items-start gap-2 p-2 rounded border border-surface-200 dark:border-dark-border text-xs text-surface-600 dark:text-dark-muted cursor-pointer hover:bg-surface-50 dark:hover:bg-dark-surface" onClick={() => setInput(h.original)} title="Load into input">
+                <span className="truncate block flex-1">{h.original.slice(0, 80)}...</span>
+                <button onClick={(e) => { e.stopPropagation(); setOutput(h.improved); }} title="Show improved version" className="shrink-0 hover:text-brand-500">↻</button>
               </div>
             ))}
           </div>

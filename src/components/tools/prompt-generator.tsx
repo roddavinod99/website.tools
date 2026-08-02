@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 
 type Category = "Creative" | "Technical" | "Business" | "Educational" | "Personal" | "Analytical";
 type Tone = "Professional" | "Casual" | "Academic";
@@ -90,8 +91,9 @@ export function PromptGenerator() {
   const [fields, setFields] = useState<Record<string, string>>({});
   const [customContext, setCustomContext] = useState("");
   const [output, setOutput] = useState("");
-  const [history, setHistory] = useState<string[]>([]);
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [history, setHistory] = useState<string[]>(() => getStorageJSON<string[]>("prompt-generator-history") || []);
+  const [favorites, setFavorites] = useState<string[]>(() => getStorageJSON<string[]>("prompt-generator-favorites") || []);
+  const [historyTab, setHistoryTab] = useState<"history" | "favorites">("history");
 
   const fieldsForUseCase = CONTEXT_FIELDS[useCase] || [];
 
@@ -101,11 +103,36 @@ export function PromptGenerator() {
     const templateFn = TEMPLATES[useCase];
     const result = templateFn ? templateFn(ctx, tone, format) : generateDefault(category, useCase, ctx, tone, format);
     setOutput(result);
-    setHistory(prev => [result, ...prev].slice(0, 20));
+    setHistory(prev => {
+      const next = [result, ...prev.filter(p => p !== result)].slice(0, 30);
+      setStorageJSON("prompt-generator-history", next);
+      return next;
+    });
   }, [category, useCase, tone, format, fields, customContext]);
 
   const toggleFavorite = (prompt: string) => {
-    setFavorites(prev => prev.includes(prompt) ? prev.filter(p => p !== prompt) : [prompt, ...prev]);
+    setFavorites(prev => {
+      const next = prev.includes(prompt) ? prev.filter(p => p !== prompt) : [prompt, ...prev];
+      setStorageJSON("prompt-generator-favorites", next);
+      return next;
+    });
+  };
+
+  const removeFromHistory = (prompt: string) => {
+    setHistory(prev => {
+      const next = prev.filter(p => p !== prompt);
+      setStorageJSON("prompt-generator-history", next);
+      return next;
+    });
+  };
+
+  const clearHistory = () => {
+    setHistory([]);
+    setStorageJSON("prompt-generator-history", []);
+  };
+
+  const restorePrompt = (prompt: string) => {
+    setOutput(prompt);
   };
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
@@ -175,19 +202,53 @@ export function PromptGenerator() {
         </div>
       )}
 
-      {(history.length > 1 || favorites.length > 0) && (
-        <div className="space-y-3">
-          {favorites.length > 0 && (
-            <div>
-              <h3 className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Favorites ({favorites.length})</h3>
-              <div className="space-y-1 max-h-40 overflow-auto">
-                {favorites.map((p, i) => (
-                  <div key={i} className="flex items-start gap-2 p-2 rounded border border-surface-200 dark:border-dark-border text-xs text-surface-600 dark:text-dark-muted cursor-pointer hover:bg-surface-50 dark:hover:bg-dark-surface" onClick={() => { setOutput(p); navigator.clipboard.writeText(p); }}>
-                    <span className="truncate flex-1">{p.slice(0, 100)}...</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {(history.length > 0 || favorites.length > 0) && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 border-b border-surface-200 dark:border-dark-border">
+            {(["history", "favorites"] as const).map(tab => (
+              <button key={tab} onClick={() => setHistoryTab(tab)}
+                className={`px-3 py-1.5 text-xs font-medium border-b-2 -mb-px transition-colors ${
+                  historyTab === tab
+                    ? "border-brand-400 text-brand-600 dark:text-brand-300"
+                    : "border-transparent text-surface-500 hover:text-surface-700 dark:text-dark-muted dark:hover:text-dark-text"
+                }`}>
+                {tab === "history" ? `History (${history.length})` : `Favorites (${favorites.length})`}
+              </button>
+            ))}
+          </div>
+
+          {historyTab === "history" ? (
+            history.length > 0 ? (
+              <>
+                <div className="flex justify-end">
+                  <button onClick={clearHistory} className="text-xs text-surface-400 hover:text-red-500 dark:text-dark-muted dark:hover:text-red-400">Clear all</button>
+                </div>
+                <ul className="space-y-1 max-h-48 overflow-auto">
+                  {history.map((p, i) => (
+                    <li key={`${i}-${p.slice(0, 32)}`} className="flex items-start gap-2 p-2 rounded border border-surface-200 dark:border-dark-border text-xs text-surface-600 dark:text-dark-muted">
+                      <button className="truncate flex-1 text-left hover:text-brand-600 dark:hover:text-brand-300" onClick={() => restorePrompt(p)} title="Load into editor">{p.slice(0, 120)}</button>
+                      <button onClick={() => { navigator.clipboard.writeText(p); }} title="Copy prompt" className="shrink-0 hover:text-brand-500">Copy</button>
+                      <button onClick={() => toggleFavorite(p)} title={favorites.includes(p) ? "Unsave" : "Save"} className="shrink-0 hover:text-brand-500">{favorites.includes(p) ? "★" : "☆"}</button>
+                      <button onClick={() => removeFromHistory(p)} title="Delete" className="shrink-0 hover:text-red-500">×</button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p className="text-xs text-surface-400 dark:text-dark-muted">No history yet. Generate a prompt to see it here.</p>
+            )
+          ) : favorites.length > 0 ? (
+            <ul className="space-y-1 max-h-48 overflow-auto">
+              {favorites.map((p, i) => (
+                <li key={`${i}-${p.slice(0, 32)}`} className="flex items-start gap-2 p-2 rounded border border-surface-200 dark:border-dark-border text-xs text-surface-600 dark:text-dark-muted">
+                  <button className="truncate flex-1 text-left hover:text-brand-600 dark:hover:text-brand-300" onClick={() => restorePrompt(p)} title="Load into editor">{p.slice(0, 120)}</button>
+                  <button onClick={() => { navigator.clipboard.writeText(p); }} title="Copy prompt" className="shrink-0 hover:text-brand-500">Copy</button>
+                  <button onClick={() => toggleFavorite(p)} title="Unsave" className="shrink-0 hover:text-brand-500">★</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-xs text-surface-400 dark:text-dark-muted">No favorites yet. Save a prompt to find it here.</p>
           )}
         </div>
       )}

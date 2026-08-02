@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { allTools, siteConfig, learningTopics } from "@/lib/constants";
+import { allTools, siteConfig, learningTopics, categories } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
 import { ToolClient } from "./tool-client";
 
@@ -72,20 +72,46 @@ export default async function ToolPage({ params }: Props) {
     .slice(0, 3);
 
   const toolGuideMap: Record<string, string> = {
-    "ipv4-range-expander": "ipv4-range-expander",
-    "ipv6-ula-generator": "ipv6-ula-generator",
-    "chmod-calculator": "chmod-calculator",
-    "eta-calculator": "eta-calculator",
-    "http-status-codes": "http-status-codes",
-    "git-cheatsheet": "git-cheatsheet",
-    "regex-memo": "regex-memo",
+    "json-formatter": "getting-started-json",
+    "json-to-csv": "data-serialization-formats",
+    "json-to-yaml": "data-serialization-formats",
+    "json-to-xml": "data-serialization-formats",
+    "json-to-typescript": "getting-started-json",
+    "json-validator": "getting-started-json",
+    "json-beautifier": "getting-started-json",
+    "json-minifier": "getting-started-json",
+    "jwt-decoder": "understanding-jwt",
+    "jwt-generator": "understanding-jwt",
+    "image-compressor": "image-optimization-guide",
+    "image-resizer": "image-optimization-guide",
+    "password-generator": "password-security",
+    "password-strength": "password-security",
+    "base64": "understanding-base64",
+    "base64-encoder": "understanding-base64",
+    "base64-decoder": "understanding-base64",
+    "image-to-base64": "understanding-base64",
+    "css-formatter": "css-minification-guide",
+    "css-minifier": "css-minification-guide",
+    "regex-tester": "regex-fundamentals",
+    "regex-memo": "regex-fundamentals",
+    "timestamp-converter": "unix-timestamps-explained",
+    "html-entity": "html-encoding-guide",
+    "html-formatter": "html-encoding-guide",
+    "yaml-formatter": "data-serialization-formats",
+    "yaml-viewer": "data-serialization-formats",
+    "toml-converter": "data-serialization-formats",
+    "xml-formatter": "data-serialization-formats",
+    "xml-to-json": "data-serialization-formats",
   };
 
   const toolGuideSlug = toolGuideMap[tool.slug];
   const specificGuide = toolGuideSlug ? learningTopics.find((t) => t.slug === toolGuideSlug) : null;
 
+  const categorySlug = categories.find((c) => c.name === tool.category)?.slug ?? "";
+
   const tocItems = [
     { id: "about", label: "About", level: 1 },
+    ...(content.features?.length ? [{ id: "features", label: "Key Features", level: 1 }] : []),
     { id: "how-to-use", label: "How to Use", level: 1 },
     { id: "examples", label: "Examples", level: 1 },
     { id: "best-practices", label: "Best Practices", level: 1 },
@@ -206,6 +232,8 @@ export default async function ToolPage({ params }: Props) {
         popularTools={popularTools}
         specificGuide={specificGuide ?? null}
         tocItems={tocItems}
+        mainSiteUrl={siteConfig.mainSiteUrl}
+        categorySlug={categorySlug}
       />
     </>
   );

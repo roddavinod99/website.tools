@@ -41,5 +41,10 @@
     "Can I preview in mobile viewport? A responsive preview toggle is available to simulate mobile rendering.",
     "How does drag-drop image insertion work? Dropped images are converted to Markdown image syntax with a relative path placeholder.",
     "Does the auto-save persist across browser sessions? Yes, content is saved to localStorage and restored on return."
+  ],
+  "features": [
+    "Live preview of Markdown as you type",
+    "GitHub-flavored Markdown support",
+    "Copy the rendered HTML output"
   ]
 }

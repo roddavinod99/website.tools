@@ -3,26 +3,34 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 
 type DataCategory = "people" | "companies" | "finance" | "internet" | "ids" | "dates" | "text" | "numbers";
-type ExportFormat = "json" | "csv" | "tsv" | "text" | "html-table" | "sql";
-type Locale = "en-US" | "en-GB" | "de-DE" | "fr-FR" | "es-ES" | "ja-JP";
+type ExportFormat = "json" | "csv" | "tsv" | "text" | "html-table" | "sql" | "xml" | "yaml";
+type Locale = "en-US" | "en-GB" | "in-IN" | "de-DE" | "fr-FR" | "es-ES" | "ja-JP";
 
 interface FieldDef {
-  id: string; label: string; category: DataCategory; enabled: boolean; generate: (seed?: number) => string;
+  id: string; label: string; category: DataCategory; enabled: boolean; generate: (seed?: number, locale?: Locale) => string;
 }
 
 const NAMES_EN = ["James","Mary","John","Patricia","Robert","Jennifer","Michael","Linda","David","Elizabeth","William","Barbara","Richard","Susan","Joseph","Jessica","Thomas","Sarah","Christopher","Karen"];
+const NAMES_EN_GB = ["Oliver","Amelia","Jack","Olivia","Harry","Isla","George","Poppy","Noah","Mia","Charlie","Alice","Jacob","Lily","Freddie","Sophie","Arthur","Evie","Thomas","Isabelle"];
+const NAMES_IN = ["Aarav","Priya","Vihaan","Ananya","Aditya","Sneha","Arjun","Kavya","Rohan","Diya","Ishaan","Pooja","Kabir","Riya","Dev","Anjali","Karan","Shreya","Rahul","Meera"];
 const NAMES_DE = ["Hans","Anna","Karl","Maria","Peter","Ursula","Thomas","Sabine","Wolfgang","Ingrid"];
 const NAMES_FR = ["Jean","Marie","Pierre","Jeanne","Michel","Catherine","Philippe","Françoise","Nicolas","Anne"];
 const NAMES_ES = ["José","María","Antonio","Carmen","Manuel","Isabel","Francisco","Dolores","Jesús","Ana"];
 const NAMES_JP = ["Haruto","Sakura","Souta","Yui","Yuuki","Aoi","Ren","Hina","Hiroto","Rin"];
 const SURNAMES_EN = ["Smith","Johnson","Williams","Brown","Jones","Garcia","Miller","Davis","Martinez","Hernandez","Clark","Lewis","Walker","Hall","Allen","Young","King","Wright","Hill","Scott"];
+const SURNAMES_EN_GB = ["Smith","Taylor","Brown","Wilson","Davies","Evans","Thomas","Roberts","Walker","Wright","Clarke","Lewis","Robinson","Thompson","White","Jackson","Green","Martin","Harris","Baker"];
+const SURNAMES_IN = ["Sharma","Verma","Patel","Reddy","Nair","Gupta","Iyer","Singh","Kulkarni","Chopra","Mehta","Rao","Malhotra","Banerjee","Desai","Joshi","Kapoor","Menon","Bose","Pillai"];
 const SURNAMES_DE = ["Schmidt","Müller","Weber","Meyer","Wagner","Becker","Schulz","Hoffmann","Schäfer","Koch"];
 const SURNAMES_FR = ["Martin","Bernard","Dubois","Thomas","Robert","Richard","Petit","Durand","Leroy","Moreau"];
 const SURNAMES_ES = ["García","Rodríguez","Martínez","López","González","Hernández","Pérez","Sánchez","Ramírez","Cruz"];
 const SURNAMES_JP = ["Sato","Suzuki","Takahashi","Tanaka","Watanabe","Ito","Yamamoto","Nakamura","Kobayashi","Kato"];
 const DOMAINS = ["gmail.com","outlook.com","yahoo.com","proton.me","example.com","mail.com","icloud.com"];
 const CITIES_EN = ["New York","Los Angeles","Chicago","Houston","Phoenix","Seattle","Boston","Denver","Miami","Portland"];
+const CITIES_EN_GB = ["London","Manchester","Birmingham","Leeds","Glasgow","Liverpool","Newcastle","Bristol","Sheffield","Cardiff"];
+const CITIES_IN = ["Mumbai","Delhi","Bengaluru","Hyderabad","Chennai","Kolkata","Pune","Ahmedabad","Jaipur","Lucknow"];
 const STREETS = ["Main St","Oak Ave","Elm Rd","Park Blvd","Broadway","Lake Dr","Hill St","Maple Ln","Cedar Ct","River Rd"];
+const STREETS_GB = ["High St","Church Rd","Station Rd","Park Rd","London Rd","Mill Lane","Victoria Rd","Queen St","Kings Rd","Green Lane"];
+const STREETS_IN = ["MG Road","Park Street","Church Street","Jubilee Hills Road","Banjara Hills Rd","FC Road","Anna Salai","Linking Road","Brigade Road","Civil Lines"];
 const BS_WORDS = ["next-generation","synergistic","enterprise","cross-platform","scalable","innovative","disruptive","strategic","robust","dynamic"];
 const CATCHPHRASES = ["Enhanced","Advanced","Integrated","Optimized","Universal","Streamlined","Automated","Intelligent","Seamless","Proactive"];
 const DEPARTMENTS = ["Engineering","Marketing","Sales","HR","Finance","Legal","Operations","Design","Support","R&D"];
@@ -32,11 +40,41 @@ const CC_PREFIXES = ["4","5","3","6","2"];
 
 function nameSet(locale: Locale): [string[], string[]] {
   switch (locale) {
+    case "en-GB": return [NAMES_EN_GB, SURNAMES_EN_GB];
+    case "in-IN": return [NAMES_IN, SURNAMES_IN];
     case "de-DE": return [NAMES_DE, SURNAMES_DE];
     case "fr-FR": return [NAMES_FR, SURNAMES_FR];
     case "es-ES": return [NAMES_ES, SURNAMES_ES];
     case "ja-JP": return [NAMES_JP, SURNAMES_JP];
     default: return [NAMES_EN, SURNAMES_EN];
+  }
+}
+
+function citySet(locale: Locale): string[] {
+  switch (locale) {
+    case "en-GB": return CITIES_EN_GB;
+    case "in-IN": return CITIES_IN;
+    default: return CITIES_EN;
+  }
+}
+
+function streetSet(locale: Locale): string[] {
+  switch (locale) {
+    case "en-GB": return STREETS_GB;
+    case "in-IN": return STREETS_IN;
+    default: return STREETS;
+  }
+}
+
+function currencyFor(locale: Locale): string {
+  switch (locale) {
+    case "en-GB": return "£";
+    case "in-IN": return "₹";
+    case "de-DE": return "€";
+    case "fr-FR": return "€";
+    case "es-ES": return "€";
+    case "ja-JP": return "¥";
+    default: return "$";
   }
 }
 
@@ -55,34 +93,31 @@ function applyPrefixSuffix(val: string, prefix: string, suffix: string): string 
   return prefix + val + suffix;
 }
 
-function generateField(f: FieldDef, seed: number, prefix: string, suffix: string, numMin: number, numMax: number): string {
-  let val = f.generate(seed);
+function generateField(f: FieldDef, seed: number, prefix: string, suffix: string, numMin: number, numMax: number, locale: Locale): string {
+  let val = f.generate(seed, locale);
   if ((f.category === "text" || f.id === "slug") && (prefix || suffix)) {
     val = applyPrefixSuffix(val, prefix, suffix);
   }
   if (f.category === "numbers") {
+    const r = makeSeed(seed);
     if (f.id === "integer") {
-      const r = makeSeed(seed);
       val = String(randInt(numMin, numMax, r));
     } else if (f.id === "float") {
-      const r = makeSeed(seed);
       val = (numMin + r.next() * (numMax - numMin)).toFixed(4);
     } else if (f.id === "percentage") {
-      const r = makeSeed(seed);
       val = (r.next() * (numMax - numMin) + numMin).toFixed(2) + "%";
     } else if (f.id === "price") {
-      const r = makeSeed(seed);
-      val = "$" + (r.next() * (numMax - numMin) + numMin).toFixed(2);
+      val = currencyFor(locale) + (r.next() * (numMax - numMin) + numMin).toFixed(2);
     }
   }
   return val;
 }
 
 const ALL_FIELDS: FieldDef[] = [
-  { id: "name", label: "Full Name", category: "people", enabled: true, generate: (s) => { const r = makeSeed(s || Date.now()); const [ns, ss] = nameSet("en-US"); return `${ns[Math.floor(r.next() * ns.length)]} ${ss[Math.floor(r.next() * ss.length)]}`; } },
-  { id: "email", label: "Email", category: "people", enabled: true, generate: (s) => { const r = makeSeed(s || Date.now()); const [ns, ss] = nameSet("en-US"); return `${ns[Math.floor(r.next() * ns.length)].toLowerCase()}.${ss[Math.floor(r.next() * ss.length)].toLowerCase()}@${DOMAINS[Math.floor(r.next() * DOMAINS.length)]}`; } },
-  { id: "phone", label: "Phone", category: "people", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); const n = () => Math.floor(r.next() * 900 + 100); return `(${n()}) ${n()}-${Math.floor(r.next() * 9000 + 1000)}`; } },
-  { id: "address", label: "Address", category: "people", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `${Math.floor(r.next() * 9900 + 100)} ${STREETS[Math.floor(r.next() * STREETS.length)]}, ${CITIES_EN[Math.floor(r.next() * CITIES_EN.length)]}`; } },
+  { id: "name", label: "Full Name", category: "people", enabled: true, generate: (s, locale) => { const r = makeSeed(s || Date.now()); const [ns, ss] = nameSet(locale || "en-US"); return `${ns[Math.floor(r.next() * ns.length)]} ${ss[Math.floor(r.next() * ss.length)]}`; } },
+  { id: "email", label: "Email", category: "people", enabled: true, generate: (s, locale) => { const r = makeSeed(s || Date.now()); const [ns, ss] = nameSet(locale || "en-US"); return `${ns[Math.floor(r.next() * ns.length)].toLowerCase().replace(/[^a-z0-9]/g, "")}.${ss[Math.floor(r.next() * ss.length)].toLowerCase().replace(/[^a-z0-9]/g, "")}@${DOMAINS[Math.floor(r.next() * DOMAINS.length)]}`; } },
+  { id: "phone", label: "Phone", category: "people", enabled: false, generate: (s, locale) => { const r = makeSeed(s || Date.now()); const n = () => Math.floor(r.next() * 900 + 100); const n4 = () => Math.floor(r.next() * 9000 + 1000); if (locale === "en-GB") return `+44 7${n()} ${n()} ${n()}`; if (locale === "in-IN") return `+91 ${n()} ${n()}-${n4()}`; if (locale === "de-DE") return `+49 1${n()} ${n()}-${n4()}`; if (locale === "fr-FR") return `+33 ${n()} ${n()} ${n()} ${n()}`; if (locale === "es-ES") return `+34 6${n()} ${n()} ${n()}`; if (locale === "ja-JP") return `+81 9${n()} ${n()} ${n()}`; return `(${n()}) ${n()}-${n4()}`; } },
+  { id: "address", label: "Address", category: "people", enabled: false, generate: (s, locale) => { const r = makeSeed(s || Date.now()); const num = Math.floor(r.next() * 9900 + 100); const street = streetSet(locale || "en-US")[Math.floor(r.next() * STREETS.length)]; const city = citySet(locale || "en-US")[Math.floor(r.next() * citySet(locale || "en-US").length)]; return `${num} ${street}, ${city}`; } },
   { id: "dob", label: "Date of Birth", category: "people", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); const d = new Date(Date.now() - Math.floor(r.next() * 80 * 365 * 86400000) - 18 * 365 * 86400000); return d.toISOString().slice(0, 10); } },
   { id: "company", label: "Company Name", category: "companies", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `${CATCHPHRASES[Math.floor(r.next() * CATCHPHRASES.length)]} ${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]} ${COMPANY_SUFFIXES[Math.floor(r.next() * COMPANY_SUFFIXES.length)]}`; } },
   { id: "catchphrase", label: "Catchphrase", category: "companies", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `${CATCHPHRASES[Math.floor(r.next() * CATCHPHRASES.length)]} ${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]} ${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]}`; } },
@@ -96,7 +131,7 @@ const ALL_FIELDS: FieldDef[] = [
   { id: "userAgent", label: "User Agent", category: "internet", enabled: false, generate: () => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" },
   { id: "hashtag", label: "Hashtag", category: "internet", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `#${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]}${CATCHPHRASES[Math.floor(r.next() * CATCHPHRASES.length)]}`; } },
   { id: "uuid", label: "UUIDv4", category: "ids", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); const h = () => Math.floor(r.next() * 16).toString(16); return `${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}-${h()}${h()}${h()}${h()}-4${h()}${h()}${h()}-${(8 + Math.floor(r.next() * 4)).toString(16)}${h()}${h()}${h()}-${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}`; } },
-  { id: "nanoid", label: "NanoID", category: "ids", enabled: false, generate: () => { const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"; let id = ""; const b = new Uint32Array(21); crypto.getRandomValues(b); for (let i = 0; i < 21; i++) id += a[b[i] % a.length]; return id; } },
+  { id: "nanoid", label: "NanoID", category: "ids", enabled: false, generate: (s) => { const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"; let id = ""; const b = new Uint32Array(21); if (s !== undefined) { const r = makeSeed(s); for (let i = 0; i < 21; i++) id += a[Math.floor(r.next() * a.length)]; } else { crypto.getRandomValues(b); for (let i = 0; i < 21; i++) id += a[b[i] % a.length]; } return id; } },
   { id: "serial", label: "Serial No", category: "ids", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `SN-${Math.floor(r.next() * 900000 + 100000)}`; } },
   { id: "pastDate", label: "Past Date", category: "dates", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return new Date(Date.now() - Math.floor(r.next() * 365 * 86400000 * 10)).toISOString().slice(0, 10); } },
   { id: "futureDate", label: "Future Date", category: "dates", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return new Date(Date.now() + Math.floor(r.next() * 365 * 86400000 * 5)).toISOString().slice(0, 10); } },
@@ -140,7 +175,7 @@ export function RandomData() {
     const rows = Array.from({ length: count }, (_, i) => {
       const row: Record<string, string> = {};
       for (const f of fields) {
-        row[f.id] = generateField(f, useSeed + i * 1000, textPrefix, textSuffix, numMin, numMax);
+        row[f.id] = generateField(f, useSeed + i * 1000, textPrefix, textSuffix, numMin, numMax, locale);
       }
       return row;
     });
@@ -178,12 +213,30 @@ export function RandomData() {
         }).join("\n");
         break;
       }
+      case "xml": {
+        const escapeXml = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+        const tag = (s: string) => s.replace(/[^A-Za-z0-9]/g, "").replace(/^(\d)/, "_$1") || "field";
+        result = `<?xml version="1.0" encoding="UTF-8"?>\n<${category}>\n`;
+        result += rows.map((r) => {
+          const inner = fields.map((f) => `    <${tag(f.id)}>${escapeXml(r[f.id])}</${tag(f.id)}>`).join("\n");
+          return `  <record>\n${inner}\n  </record>`;
+        }).join("\n");
+        result += `\n</${category}>`;
+        break;
+      }
+      case "yaml": {
+        result = rows.map((r, i) => {
+          const lines = fields.map((f) => `  ${f.label.toLowerCase().replace(/\s+/g, "-")}: ${JSON.stringify(r[f.id])}`).join("\n");
+          return `- record_${i + 1}:\n${lines}`;
+        }).join("\n");
+        break;
+      }
       default: {
         result = rows.map((r, i) => `Record ${i + 1}:\n` + fields.map((f) => `  ${f.label}: ${r[f.id]}`).join("\n")).join("\n\n");
       }
     }
     setOutput(result);
-  }, [activeFields, count, format, includeHeader, category, seedInput, textPrefix, textSuffix, numMin, numMax]);
+  }, [activeFields, count, format, includeHeader, category, seedInput, textPrefix, textSuffix, numMin, numMax, locale]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -194,8 +247,8 @@ export function RandomData() {
   const copy = async () => { if (output) { await navigator.clipboard.writeText(output); setCopied(true); setTimeout(() => setCopied(false), 2000); } };
 
   const exportFile = () => {
-    const extMap: Record<ExportFormat, string> = { "json": "json", "csv": "csv", "tsv": "tsv", "html-table": "html", "sql": "sql", "text": "txt" };
-    const mimeMap: Record<string, string> = { "json": "application/json", "csv": "text/csv", "tsv": "text/tab-separated-values", "html": "text/html", "sql": "text/plain", "txt": "text/plain" };
+    const extMap: Record<ExportFormat, string> = { "json": "json", "csv": "csv", "tsv": "tsv", "html-table": "html", "sql": "sql", "text": "txt", "xml": "xml", "yaml": "yaml" };
+    const mimeMap: Record<string, string> = { "json": "application/json", "csv": "text/csv", "tsv": "text/tab-separated-values", "html": "text/html", "sql": "text/plain", "txt": "text/plain", "xml": "application/xml", "yaml": "application/yaml" };
     const ext = extMap[format];
     const blob = new Blob([output], { type: mimeMap[ext] || "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -266,6 +319,8 @@ export function RandomData() {
             <option value="text">Text</option>
             <option value="html-table">HTML Table</option>
             <option value="sql">SQL INSERT</option>
+            <option value="xml">XML</option>
+            <option value="yaml">YAML</option>
           </select>
         </div>
         <div>
@@ -274,6 +329,7 @@ export function RandomData() {
             className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="en-US">en-US</option>
             <option value="en-GB">en-GB</option>
+            <option value="in-IN">in-IN</option>
             <option value="de-DE">de-DE</option>
             <option value="fr-FR">fr-FR</option>
             <option value="es-ES">es-ES</option>

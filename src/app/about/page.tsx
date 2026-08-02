@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig, TOOL_COUNT } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About",
@@ -84,7 +84,7 @@ export default function AboutPage() {
               <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">
                 Tools.DevStackIO
               </a>{" "}
-              is our dedicated tools website featuring 140+ free online developer utilities —
+              is our dedicated tools website featuring {TOOL_COUNT}+ free online developer utilities —
               all processing data entirely in your browser with zero server uploads.
             </p>
           </section>
@@ -155,7 +155,7 @@ export default function AboutPage() {
               developments include:
             </p>
             <ul className="mt-2 list-disc pl-6 space-y-2">
-              <li>Expanding to 100+ developer tools across new categories</li>
+              <li>Expanding beyond {TOOL_COUNT} developer tools across new categories</li>
               <li>Premium API for enterprise integration</li>
               <li>Advanced offline support with service workers</li>
               <li>Collaborative tools for team workflows</li>

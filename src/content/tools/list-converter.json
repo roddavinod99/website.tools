@@ -34,5 +34,11 @@
     "Can I convert from JSON to CSV? — Yes, select JSON Array as From and CSV as To.",
     "Does it handle nested lists? — No, only flat lists of simple strings are supported.",
     "What happens with empty lines? — Empty lines are automatically filtered out from the output."
+  ],
+  "features": [
+    "Convert between CSV, JSON, and one-per-line lists",
+    "Custom delimiter control",
+    "Real-time conversion as you paste",
+    "Copy and download the output"
   ]
 }

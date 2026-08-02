@@ -42,5 +42,11 @@
     "Can I use CSP with inline event handlers? — Blocked unless using 'unsafe-hashes'. Recommended: use addEventListener in nonced scripts.",
     "Does the tool support CSP Level 3? — Yes, including 'strict-dynamic', 'unsafe-hashes', 'report-to', and worker-src.",
     "What does 'strict-dynamic' do? — Allows scripts loaded by an already-trusted script to execute, eliminating the need to list every CDN."
+  ],
+  "features": [
+    "Visually build Content-Security-Policy headers",
+    "Directive presets and per-source controls",
+    "Live policy preview",
+    "Copy the finished header"
   ]
 }

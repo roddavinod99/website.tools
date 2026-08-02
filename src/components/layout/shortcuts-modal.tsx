@@ -36,8 +36,8 @@ const shortcutCategories: { title: string; shortcuts: ShortcutItem[] }[] = [
   {
     title: "Tool Pages",
     shortcuts: [
-      { key: "⌘Enter", description: "Run / Format (in tools)" },
-      { key: "⌘Shift+C", description: "Copy output" },
+      { key: "⌘Enter", description: "Run / Format (supported tools)" },
+      { key: "⌘Shift+C", description: "Copy output (supported tools)" },
       { key: "⌘Shift+M", description: "Minify (formatters)" },
       { key: "⌘Shift+V", description: "Validate (formatters)" },
       { key: "⌘↑/↓", description: "Navigate search results" },
@@ -83,7 +83,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-title"
@@ -100,7 +100,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:bg-dark-bg dark:hover:text-dark-text transition-colors"
+            className="rounded-lg p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-200 dark:hover:bg-dark-bg dark:hover:text-dark-text transition-colors"
             aria-label="Close shortcuts"
           >
             <X className="h-5 w-5" />

@@ -41,5 +41,11 @@
     "Can it handle large multi-document YAML (with --- separators)? Yes, each document is processed independently.",
     "How does it handle YAML anchors and aliases? Anchors and aliases are resolved to their actual values; the reference structure is not preserved.",
     "What YAML version does this use? The tool follows the YAML 1.2 specification, which changes boolean parsing rules from YAML 1.1."
+  ],
+  "features": [
+    "Convert JSON to YAML and back",
+    "Preserves nested structures and types",
+    "Real-time conversion as you type",
+    "Copy and download the output"
   ]
 }

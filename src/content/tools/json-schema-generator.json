@@ -38,5 +38,10 @@
     "What is the difference between Draft-07 and 2020-12? 2020-12 adds vocabularies, new keywords like dependentRequired, and changes how $defs works.",
     "Does it detect nested objects? Yes, it recursively generates schema for nested objects and arrays.",
     "Can I exclude certain fields from the schema? Post-edit the generated schema or use a tool like json-path-finder to identify field paths first."
+  ],
+  "features": [
+    "Generate JSON Schema drafts from sample data",
+    "Infers types for nested structures",
+    "Copy and download the schema"
   ]
 }

@@ -34,6 +34,34 @@ const DIALECT_LABELS: Record<Dialect, string> = {
   singlestore: "SingleStore", standard: "Standard SQL",
 };
 
+const DIALECT_KEYWORDS: Partial<Record<Dialect, string[]>> = {
+  mysql: ["ENGINE", "CHARSET", "COLLATE", "AUTO_INCREMENT", "TINYINT", "MEDIUMINT", "DATETIME", "UNSIGNED", "ON DUPLICATE KEY", "IF EXISTS", "IF NOT EXISTS", "IGNORE", "LOW_PRIORITY"],
+  mariadb: ["ENGINE", "CHARSET", "AUTO_INCREMENT", "TINYINT", "MEDIUMINT", "DATETIME", "UNSIGNED", "ON DUPLICATE KEY", "IF EXISTS", "IF NOT EXISTS"],
+  postgresql: ["SERIAL", "BIGSERIAL", "RETURNING", "ILIKE", "JSONB", "ARRAY", "DOUBLE PRECISION", "CITEXT", "ON CONFLICT", "DO UPDATE", "DO NOTHING"],
+  sqlserver: ["TOP", "NVARCHAR", "IDENTITY", "GO", "WITHIN GROUP", "PIVOT", "UNPIVOT"],
+  oracle: ["NVL", "SYSDATE", "ROWNUM", "DUAL", "CONNECT BY", "START WITH", "PRIOR", "NUMBER", "CLOB", "BULK COLLECT"],
+  sqlite: ["AUTOINCREMENT", "IF EXISTS", "IF NOT EXISTS", "ATTACH", "DETACH", "VACUUM", "WITHOUT ROWID"],
+  bigquery: ["QUALIFY", "ARRAY_AGG", "STRUCT", "UNNEST", "DATETIME", "TIMESTAMP", "SAFE_CAST"],
+  redshift: ["SORTKEY", "DISTKEY", "COMPOUND", "INTERLEAVED", "UNLOAD", "COPY"],
+  snowflake: ["QUALIFY", "LATERAL FLATTEN", "VARIANT", "OBJECT", "COPY INTO", "PUT", "GET"],
+  spark: ["EXPLODE", "POSEXPLODE", "LATERAL VIEW", "STRUCT", "ARRAY", "MAP", "REDUCE"],
+  hive: ["LATERAL VIEW", "EXPLODE", "PARTITIONED BY", "CLUSTERED BY", "STORED AS", "TBLPROPERTIES"],
+  trino: ["UNNEST", "CROSS JOIN UNNEST", "WITH ORDINALITY", "CAST", "TRY_CAST"],
+  n1ql: ["USE KEYS", "USE INDEX", "NEST", "UNNEST", "MISSING", "NAN", "SATISFIES"],
+  singlestore: ["ROWSTORE", "COLUMNSTORE", "SHARD KEY", "SORT KEY", "PIPELINED"],
+  standard: [],
+  generic: [],
+};
+
+const DIALECT_LEADING: Partial<Record<Dialect, string[]>> = {
+  postgresql: ["RETURNING"],
+  bigquery: ["QUALIFY"],
+  snowflake: ["QUALIFY"],
+  redshift: ["QUALIFY", "SORTKEY", "DISTKEY"],
+  sqlserver: ["PIVOT", "UNPIVOT"],
+  n1ql: ["NEST", "USE KEYS", "USE INDEX"],
+};
+
 function applyCase(word: string, kc: KeywordCase): string {
   if (kc === "upper") return word.toUpperCase();
   if (kc === "lower") return word.toLowerCase();
@@ -41,8 +69,9 @@ function applyCase(word: string, kc: KeywordCase): string {
   return word;
 }
 
-function highlightKeywords(sql: string, kc: KeywordCase): string {
-  const pattern = new RegExp(`\\b(${KEYWORDS.map((k) => k.replace(/\s+/g, "\\s+")).join("|")})\\b`, "gi");
+function highlightKeywords(sql: string, kc: KeywordCase, extra: string[] = []): string {
+  const all = [...KEYWORDS, ...extra].filter((k, i, arr) => arr.indexOf(k) === i);
+  const pattern = new RegExp(`\\b(${all.map((k) => k.replace(/\s+/g, "\\s+")).join("|")})\\b`, "gi");
   return sql.replace(pattern, (m) => applyCase(m, kc));
 }
 
@@ -75,8 +104,9 @@ function extractFunctions(sql: string): string[] {
   return [...new Set(funcs)];
 }
 
-function countKeywords(sql: string): number {
-  const pattern = new RegExp(`\\b(${KEYWORDS.map((k) => k.replace(/\s+/g, "\\s+")).join("|")})\\b`, "gi");
+function countKeywords(sql: string, extra: string[] = []): number {
+  const all = [...KEYWORDS, ...extra].filter((k, i, arr) => arr.indexOf(k) === i);
+  const pattern = new RegExp(`\\b(${all.map((k) => k.replace(/\s+/g, "\\s+")).join("|")})\\b`, "gi");
   const matches = sql.match(pattern);
   return matches ? matches.length : 0;
 }
@@ -95,6 +125,7 @@ export function SQLFormatter() {
   const [dialect, setDialect] = useState<Dialect>("generic");
   const [linesBetweenQueries, setLinesBetweenQueries] = useState<number>(1);
   const [operatorSpacing, setOperatorSpacing] = useState(true);
+  const [expandComma, setExpandComma] = useState(true);
   const timer = useRef<ReturnType<typeof setTimeout>>(null);
 
   const format = useCallback(() => {
@@ -103,6 +134,8 @@ export function SQLFormatter() {
       if (!sql) { setOutput(""); setError(""); return; }
 
       const indent = INDENT_MAP[indentW];
+      const dialectKeywords = DIALECT_KEYWORDS[dialect] || [];
+      const dialectLeading = DIALECT_LEADING[dialect] || [];
       let result = sql
         .replace(/\s+/g, " ")
         .replace(/\s*([(),;])\s*/g, "$1");
@@ -110,16 +143,20 @@ export function SQLFormatter() {
       if (operatorSpacing) {
         result = result.replace(/\s*=\s*/g, " = ")
           .replace(/\s*([<>!]=?)\s*/g, " $1 ")
-          .replace(/\s*([+\-*/%])\s*/g, " $1 ");
+          .replace(/\s*([+\-*/%])\s*/g, " $1 ")
+          .replace(/::/g, "::");
       } else {
         result = result.replace(/\s*=\s*/g, "=")
           .replace(/\s*([<>!]=?)\s*/g, "$1")
-          .replace(/\s*([+\-*/%])\s*/g, "$1");
+          .replace(/\s*([+\-*/%])\s*/g, "$1")
+          .replace(/::/g, "::");
       }
 
       result = result.trim();
 
-      const sortedKW = [...KEYWORDS].sort((a, b) => b.length - a.length);
+      const sortedKW = [...KEYWORDS, ...dialectKeywords]
+        .filter((k, i, arr) => arr.indexOf(k) === i)
+        .sort((a, b) => b.length - a.length);
       for (const kw of sortedKW) {
         const re = new RegExp(`\\b${kw.replace(/\s+/g, "\\s+")}\\b`, "gi");
         result = result.replace(re, `\n__KW__${kw}`);
@@ -136,10 +173,10 @@ export function SQLFormatter() {
       }
 
       if (commaPos === "before") {
-        result = result.replace(/,\s*/g, ",\n  ");
+        result = result.replace(/,\s*/g, expandComma ? ",\n  " : ", ");
         result = result.replace(/SELECT\n  \n  /g, "SELECT\n  ");
       } else {
-        result = result.replace(/,\s*/g, ",\n  ");
+        result = result.replace(/,\s*/g, expandComma ? ",\n  " : ", ");
         result = result.replace(/SELECT\n  ,/g, "SELECT\n  ");
       }
 
@@ -172,7 +209,8 @@ export function SQLFormatter() {
           upper.startsWith("OUTER") || upper.startsWith("CROSS") || upper.startsWith("FULL") ||
           upper.startsWith("JOIN") || upper.startsWith("ON") ||
           upper.startsWith("LATERAL") || upper.startsWith("PIVOT") || upper.startsWith("UNPIVOT") ||
-          upper.startsWith("MATCH_RECOGNIZE") || upper.startsWith("SAMPLE") || upper.startsWith("TABLESAMPLE");
+          upper.startsWith("MATCH_RECOGNIZE") || upper.startsWith("SAMPLE") || upper.startsWith("TABLESAMPLE") ||
+          dialectLeading.some((kw) => upper.startsWith(kw));
 
         const clause = upper.startsWith("AND") || upper.startsWith("OR") || upper.startsWith(",");
 
@@ -191,7 +229,7 @@ export function SQLFormatter() {
       let final = formattedLines.join("\n").replace(/\n{2,}/g, "\n").trim();
 
       if (keywordCase !== "preserve") {
-        final = highlightKeywords(final, keywordCase);
+        final = highlightKeywords(final, keywordCase, dialectKeywords);
       }
       final = final.replace(/\b\d{4}-\d{2}-\d{2}\b/g, (d) => `'${d}'`);
 
@@ -224,7 +262,7 @@ export function SQLFormatter() {
       setError((e as Error).message);
       setOutput("");
     }
-  }, [input, keywordCase, indentW, lineWidth, commaPos, newLineDistinct, logicalNewline, trailingCommas, linesBetweenQueries, operatorSpacing]);
+  }, [input, keywordCase, indentW, lineWidth, commaPos, newLineDistinct, logicalNewline, trailingCommas, linesBetweenQueries, operatorSpacing, dialect, expandComma]);
 
   const minify = useCallback(() => {
     try {
@@ -271,7 +309,7 @@ export function SQLFormatter() {
 
   const tables = useMemo(() => input ? extractTables(input) : [], [input]);
   const functions = useMemo(() => input ? extractFunctions(input) : [], [input]);
-  const keywordCount = useMemo(() => input ? countKeywords(input) : 0, [input]);
+  const keywordCount = useMemo(() => input ? countKeywords(input, DIALECT_KEYWORDS[dialect] || []) : 0, [input, dialect]);
 
   return (
     <div className="space-y-4">
@@ -338,6 +376,9 @@ export function SQLFormatter() {
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
           <input type="checkbox" checked={operatorSpacing} onChange={(e) => setOperatorSpacing(e.target.checked)} className="rounded border-surface-300" /> Operator spacing
+        </label>
+        <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
+          <input type="checkbox" checked={expandComma} onChange={(e) => setExpandComma(e.target.checked)} className="rounded border-surface-300" /> Expanded comma list
         </label>
       </div>
 

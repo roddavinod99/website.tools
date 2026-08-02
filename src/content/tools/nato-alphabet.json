@@ -33,5 +33,10 @@
     "Does this use the current NATO standard alphabet? — Yes, it uses the ICAO/NATO standard phonetic alphabet.",
     "What happens to numbers? — They use standard pronunciation: Zero, One, Two, ..., Niner.",
     "Can I use this for aviation or military comms? — Yes, the words match the official standard."
+  ],
+  "features": [
+    "Convert text to the NATO phonetic alphabet",
+    "Per-letter breakdown table",
+    "Copy the phonetic spelling"
   ]
 }

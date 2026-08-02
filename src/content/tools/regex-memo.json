@@ -37,5 +37,10 @@
     "When should I use the 'g' (global) flag? Use it when you want to find all matches in a string, not just the first one.",
     "How do I match literal special characters? Escape them with a backslash: \\. matches a literal dot.",
     "Can regex match HTML? Technically yes, but it's fragile and not recommended. Use a proper HTML parser instead."
+  ],
+  "features": [
+    "Regex pattern reference with examples",
+    "Searchable by purpose",
+    "Copy any pattern"
   ]
 }

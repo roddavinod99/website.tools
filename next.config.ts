@@ -9,8 +9,8 @@ const cspValue = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net",
+  "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com",
+  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com",
   "font-src 'self'",
   "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
   "frame-ancestors 'none'",
@@ -28,19 +28,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
-  turbopack: {},
-
-  webpack(config) {
-    config.experiments = {
-      ...config.experiments,
-      asyncWebAssembly: true,
-      layers: true,
-    };
-    config.module.rules.push({
-      test: /\.wasm$/,
-      type: 'webassembly/async',
-    });
-    return config;
+  experimental: {
+    optimizePackageImports: ["lucide-react", "highlight.js"],
+    cssChunking: "strict",
   },
 
   async redirects() {
@@ -112,9 +102,17 @@ const nextConfig: NextConfig = {
       ],
     },
     {
-      source: "/:path(.+\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|webp|avif|woff|woff2))",
+      source: "/_next/static/:path(.+\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|webp|avif|woff|woff2|ttf|otf))",
       headers: [
         { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+      ],
+    },
+    {
+      source: "/sw.js",
+      headers: [
+        { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+        { key: "Pragma", value: "no-cache" },
+        { key: "Expires", value: "0" },
       ],
     },
     {
@@ -125,10 +123,6 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
-
-  experimental: {
-    optimizePackageImports: ["lucide-react", "highlight.js"],
-  },
 };
 
 export default withBundleAnalyzer(nextConfig);

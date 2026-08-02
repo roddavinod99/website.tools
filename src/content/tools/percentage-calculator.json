@@ -41,5 +41,10 @@
     "Can I enter negative numbers? Yes — percentage change handles negative values correctly.",
     "What is the difference between percentage change and percentage points? Percentage change is relative (change/original × 100); percentage points are the absolute difference between two percentages.",
     "Is there a keyboard shortcut to switch modes? No — click the mode buttons to switch."
+  ],
+  "features": [
+    "Percentages, change, and increase/decrease",
+    "Quick presets for common math",
+    "Real-time results"
   ]
 }

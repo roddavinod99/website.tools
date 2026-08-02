@@ -42,5 +42,11 @@
     "What YAML features are supported? — This tool supports basic YAML: scalars, sequences, mappings, and inline collections. Advanced features like anchors and complex keys may not render correctly.",
     "Can I edit the highlighted output? — The output is read-only for viewing. Edit the input textarea to make changes.",
     "Is this tool suitable for large YAML files? — It works well for files up to a few hundred lines. For very large files, consider using a dedicated YAML editor."
+  ],
+  "features": [
+    "Pretty-print YAML with syntax highlighting",
+    "Validate structure and report problems",
+    "Open YAML files from disk",
+    "Copy the formatted output"
   ]
 }

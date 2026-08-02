@@ -182,7 +182,7 @@ export function JSONMinifier() {
           {reduction > 0 && (
             <div className="h-4 w-full rounded-full bg-surface-200 dark:bg-dark-border overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300"
+                className="h-full rounded-full bg-brand-500 transition-all duration-300"
                 style={{ width: `${Math.min(reduction, 100)}%` }}
               />
             </div>

@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allTools, categories, siteConfig } from "@/lib/constants";
+import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/constants";
+import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Search } from "lucide-react";
 import { AdBanner } from "@/components/ads";
 
+const toolCountText = `${TOOL_COUNT} free online developer tools`;
+
 export const metadata: Metadata = {
   title: "All Tools",
-  description: "Browse 140+ free online developer tools from DevStackIO. JSON formatters, JWT decoders, UUID generators, image compressors, and more — all client-side.",
+  description: `Browse ${toolCountText} from DevStackIO. JSON formatters, JWT decoders, UUID generators, image compressors, and more — all client-side.`,
   alternates: { canonical: `${siteConfig.url}/tools` },
   openGraph: {
     title: "All Developer Tools — DevStackIO",
-    description: "Browse 140+ free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
+    description: `Browse ${toolCountText} from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.`,
     url: `${siteConfig.url}/tools`,
     siteName: "DevStackIO Tools",
     type: "website",
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "All Developer Tools — DevStackIO",
-    description: "Browse 140+ free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
+    description: `Browse ${toolCountText} from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.`,
     images: [siteConfig.ogImage],
   },
 };
@@ -86,7 +89,7 @@ export default function ToolsPage() {
         <div className="flex flex-wrap gap-2 mb-8">
           <Link
             href="/tools"
-            className="rounded-full border border-brand-500 bg-brand-500 px-4 py-1.5 text-sm font-medium text-white"
+            className="rounded-full border border-brand-primary bg-brand-primary px-4 py-1.5 text-sm font-medium text-white"
           >
             All
           </Link>
@@ -94,7 +97,7 @@ export default function ToolsPage() {
             <Link
               key={cat.id}
               href={`/categories/${cat.slug}`}
-              className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-100 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+              className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-200 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
             >
               {cat.name}
             </Link>
@@ -122,6 +125,7 @@ export default function ToolsPage() {
                   trending: tool.trending,
                   new: tool.new,
                   icon: tool.icon,
+                  features: featuresBySlug[tool.slug],
                 }}
                 variant="default"
                 size="md"

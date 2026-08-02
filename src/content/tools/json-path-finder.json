@@ -38,5 +38,11 @@
     "Can I use filter expressions? Yes, use [?(@.key value)] format for conditional filtering.",
     "Does the tool validate the JSON before querying? Yes, invalid JSON shows a parse error.",
     "What are autocomplete suggestions based on? They are generated from the JSON structure and common JSONPath patterns."
+  ],
+  "features": [
+    "Query JSON with JSONPath expressions",
+    "Extract matching values instantly",
+    "Highlight matched locations",
+    "Copy extracted results"
   ]
 }

@@ -38,5 +38,11 @@
     "Can I convert HTML tables? Basic tables are converted, but complex rowspan/colspan may not work perfectly.",
     "What happens to <style> and <script> blocks? They are stripped from the output.",
     "Does it support nested lists? Yes, nested <ul>/<ol> elements are preserved as nested Markdown lists."
+  ],
+  "features": [
+    "Convert HTML to clean Markdown",
+    "Preserves headings, lists, links, and images",
+    "Configurable conversion options",
+    "Copy the generated Markdown"
   ]
 }

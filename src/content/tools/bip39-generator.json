@@ -37,5 +37,10 @@
     "How are mnemonics generated? Random entropy is converted to binary, a checksum is appended, and the result is split into 11-bit segments mapped to the BIP39 wordlist.",
     "What is the seed hex? The 512-bit (128 hex character) master key derived from the mnemonic using PBKDF2-SHA512 with 2048 iterations.",
     "Is this compatible with hardware wallets? Yes, these are standards-compliant BIP39 mnemonics compatible with all major wallets."
+  ],
+  "features": [
+    "Generate 12- or 24-word BIP39 mnemonic phrases",
+    "Validated against the official wordlist",
+    "Copy the full phrase"
   ]
 }

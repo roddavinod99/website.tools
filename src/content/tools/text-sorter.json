@@ -41,5 +41,11 @@
     "Does Randomize produce the same order every time? No — each click produces a fresh random order using a cryptographically secure PRNG.",
     "How large an input can the tool handle? Up to 100,000 lines or 5MB of text; larger inputs may cause performance degradation.",
     "Can I sort by a specific column or delimiter? Not in this tool — each line is treated as a single item. Use a spreadsheet for columnar sorting."
+  ],
+  "features": [
+    "Sort lines alphabetically or reverse",
+    "Remove duplicates and empty lines",
+    "Randomize line order",
+    "Copy the sorted output"
   ]
 }

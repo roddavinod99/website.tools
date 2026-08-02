@@ -38,5 +38,11 @@
     "What does the entropy value mean? Entropy measures unpredictability in bits — higher is better. 128 bits is considered secure.",
     "Can I use these for password reset tokens? Yes, but ensure the length is sufficient (32+ chars) and the charset includes enough variety.",
     "Why does custom charset override the symbol checkbox? When custom charset is enabled, it replaces the default symbol set entirely."
+  ],
+  "features": [
+    "Configurable character sets and length",
+    "Entropy estimation for each token",
+    "Bulk generation with copy support",
+    "Cryptographically secure randomness"
   ]
 }

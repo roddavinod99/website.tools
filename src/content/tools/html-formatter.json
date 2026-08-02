@@ -38,5 +38,11 @@
     "Can I format only a selection of the HTML? The tool formats the entire document; use an editor plugin for partial formatting.",
     "What happens to inline event handlers like onclick? They are preserved and not modified by formatting.",
     "Does it preserve conditional comments for IE? Yes, conditional comments are preserved during formatting."
+  ],
+  "features": [
+    "Format, validate, and minify HTML",
+    "Syntax error reporting with location hints",
+    "Custom indentation and attribute wrapping",
+    "Real-time output as you type"
   ]
 }

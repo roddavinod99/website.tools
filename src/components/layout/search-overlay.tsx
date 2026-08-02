@@ -3,15 +3,16 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useFuseSearch } from "@/lib/search-fuse";
-import { allTools } from "@/lib/data/tools";
 import { Search, X } from "lucide-react";
+import type { Tool } from "@/types";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  allTools: Tool[];
 }
 
-export function SearchOverlay({ isOpen, onClose }: Props) {
+export function SearchOverlay({ isOpen, onClose, allTools }: Props) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const { search, results, query, ready } = useFuseSearch(allTools);
@@ -84,7 +85,7 @@ export function SearchOverlay({ isOpen, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]" role="dialog" aria-modal="true" aria-label="Search tools">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/50" onClick={onClose} />
       <div className="relative w-full max-w-xl mx-4 rounded-xl border border-surface-200 bg-white shadow-2xl dark:border-dark-border dark:bg-dark-surface">
         <form onSubmit={handleSubmit} className="flex items-center border-b border-surface-200 px-4 dark:border-dark-border">
           <Search className="h-5 w-5 shrink-0 text-surface-400" />
@@ -133,7 +134,7 @@ export function SearchOverlay({ isOpen, onClose }: Props) {
                   data-search-result
                   onClick={() => handleSelect(tool.slug)}
                   onKeyDown={(e) => { if (e.key === "Enter") handleSelect(tool.slug); }}
-                  className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-surface-100 focus:bg-surface-100 focus:outline-none dark:hover:bg-dark-bg dark:focus:bg-dark-bg"
+                  className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-surface-200 focus:bg-surface-200 focus:outline-none dark:hover:bg-dark-bg dark:focus:bg-dark-bg"
                 >
                   <span className="shrink-0 rounded-md bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
                     {tool.category}

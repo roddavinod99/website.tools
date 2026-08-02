@@ -39,5 +39,10 @@
     "What does the thermometer bar show? It visually represents the current temperature on a scale from absolute zero to 100°C, with color coding for cold/comfortable/hot.",
     "Are the conversions exact? Yes — the tool uses the standard conversion formulas with no rounding until display.",
     "Which scale should I use for cooking? Most recipes use either Celsius or Fahrenheit. Use this tool to convert between them as needed."
+  ],
+  "features": [
+    "Convert between Celsius, Fahrenheit, and Kelvin",
+    "Real-time conversion while you type",
+    "Quick presets for common temperatures"
   ]
 }

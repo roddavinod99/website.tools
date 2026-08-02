@@ -38,5 +38,11 @@
     "Does it handle ES modules? Yes, import/export statements are preserved during minification.",
     "What size reductions are typical? 30-70% depending on variable shortening and comment removal.",
     "Can I minify TypeScript? The tool expects JavaScript; compile TypeScript to JS first."
+  ],
+  "features": [
+    "Minify JavaScript for production bundles",
+    "Beautify minified code for debugging",
+    "Syntax validation before minification",
+    "Size comparison with real savings numbers"
   ]
 }

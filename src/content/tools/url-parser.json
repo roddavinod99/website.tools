@@ -41,5 +41,11 @@
     "What happens with internationalized domain names (IDN)? They are shown punycode-encoded (xn--) in the host field and decoded in a separate label.",
     "Are URL fragments retained during normalization? Yes — fragments are preserved unless explicitly removed via an option.",
     "How are duplicate query parameters displayed? Each occurrence is shown as a separate row in the query table with its original order preserved."
+  ],
+  "features": [
+    "Decompose URLs into protocol, host, path, and query",
+    "Parse query parameters into a table",
+    "Copy any URL component",
+    "Real-time as you paste"
   ]
 }

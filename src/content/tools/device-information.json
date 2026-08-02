@@ -40,5 +40,10 @@
     "Is my data sent anywhere? No, all information is read locally from your browser. Nothing is transmitted.",
     "Why does my user agent look different from what I expect? Some browsers modify the user agent for privacy, and extensions can alter it too.",
     "Can I test a different device? Open this page in a different browser or on a different device to see its information."
+  ],
+  "features": [
+    "Report browser, OS, and screen info",
+    "Hardware and network details",
+    "Everything computed locally"
   ]
 }

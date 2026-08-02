@@ -173,7 +173,8 @@ export function QRGenerator() {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
-      const logoSize = mSize * cellSize * 0.25;
+      const eccRatio = { L: 0.07, M: 0.15, Q: 0.25, H: 0.30 }[ecc];
+      const logoSize = mSize * cellSize * eccRatio;
       const logoX = (canvas.width - logoSize) / 2;
       const logoY = (canvas.height - logoSize) / 2;
       const img = new Image();
@@ -244,6 +245,21 @@ export function QRGenerator() {
       setIncludeLogo(true);
     }
   }, [logoUrl]);
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+  }, []);
+
+  const exportHistory = useCallback(() => {
+    if (history.length === 0) return;
+    const blob = new Blob([JSON.stringify(history, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "qr-history.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [history]);
 
   return (
     <div className="space-y-6">
@@ -461,8 +477,16 @@ export function QRGenerator() {
 
       {history.length > 1 && (
         <details className="rounded-lg border border-surface-200 dark:border-dark-border">
-          <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
-            History ({history.length})
+          <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface flex items-center justify-between">
+            <span>History ({history.length})</span>
+            <div className="flex gap-1">
+              <button onClick={exportHistory} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface" title="Export history as JSON">
+                Export
+              </button>
+              <button onClick={clearHistory} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface" title="Clear history">
+                Clear
+              </button>
+            </div>
           </summary>
           <div className="max-h-32 overflow-y-auto border-t border-surface-200 dark:border-dark-border p-2 space-y-1">
             {history.map((item, i) => (

@@ -41,5 +41,11 @@
     "What happens if my JSON has inconsistent field names across objects? Missing fields are rendered as empty cells based on the null handling mode selected.",
     "Does this work with JSON arrays of primitives like [1,2,3]? Yes, but the output will be a single column with a default header name; best results come from arrays of objects.",
     "Can I import the CSV back into JSON? No, this is a one-way conversion; consider a separate CSV-to-JSON tool for reverse conversion."
+  ],
+  "features": [
+    "Convert JSON arrays to CSV",
+    "Custom delimiter and quote handling",
+    "Flatten nested objects to columns",
+    "Download the resulting CSV file"
   ]
 }

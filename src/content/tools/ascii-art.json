@@ -41,5 +41,11 @@
     "Why does my art look misaligned? — ASCII art relies on fixed-width characters. Ensure your display uses a monospace font.",
     "Is there a character limit? — No hard limit, but inputs over 50 characters produce very wide output.",
     "Can I save my creations? — Use copy to save to clipboard. Last 50 generations are stored in history."
+  ],
+  "features": [
+    "Render text as ASCII art in multiple fonts",
+    "Adjustable width and character density",
+    "Copy to clipboard or download as text",
+    "Live preview while you type"
   ]
 }

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Suspense } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig, allTools, featuredTools } from "@/lib/constants";
 import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
@@ -16,16 +18,33 @@ import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 import { AdSenseScript } from "@/components/ads/adsense-script";
 import { AdBanner } from "@/components/ads";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const ibmPlexMono = localFont({
+  variable: "--font-ibm-plex-mono",
   display: "swap",
+  preload: false,
+  src: [
+    { path: "../fonts/IBMPlexMono-Thin.ttf", weight: "100", style: "normal" },
+    { path: "../fonts/IBMPlexMono-ThinItalic.ttf", weight: "100", style: "italic" },
+    { path: "../fonts/IBMPlexMono-ExtraLight.ttf", weight: "200", style: "normal" },
+    { path: "../fonts/IBMPlexMono-ExtraLightItalic.ttf", weight: "200", style: "italic" },
+    { path: "../fonts/IBMPlexMono-Light.ttf", weight: "300", style: "normal" },
+    { path: "../fonts/IBMPlexMono-LightItalic.ttf", weight: "300", style: "italic" },
+    { path: "../fonts/IBMPlexMono-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../fonts/IBMPlexMono-Italic.ttf", weight: "400", style: "italic" },
+    { path: "../fonts/IBMPlexMono-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../fonts/IBMPlexMono-MediumItalic.ttf", weight: "500", style: "italic" },
+    { path: "../fonts/IBMPlexMono-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../fonts/IBMPlexMono-SemiBoldItalic.ttf", weight: "600", style: "italic" },
+    { path: "../fonts/IBMPlexMono-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../fonts/IBMPlexMono-BoldItalic.ttf", weight: "700", style: "italic" },
+  ],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const notoSansArabic = Noto_Sans_Arabic({
+  variable: "--font-noto-sans-arabic",
+  subsets: ["arabic"],
   display: "swap",
+  weight: "400",
 });
 
 const jsonLd = {
@@ -119,7 +138,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     title: "DevStackIO Tools — Free Online Developer Tools",
-    description: "Free online developer tools from DevStackIO. JSON formatters, JWT decoders, image compressors, and more — all in your browser.",
+    description: "Free online developer tools from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.",
     siteName: "DevStackIO Tools",
     images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Tools" }],
   },
@@ -151,10 +170,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${ibmPlexMono.variable} ${notoSansArabic.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark")}else if(t==="dark"){document.documentElement.classList.add("dark")}else{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches){document.documentElement.classList.remove("dark")}else{document.documentElement.classList.add("dark")}}}catch(e){document.documentElement.classList.add("dark")}})();`,
+          }}
+        />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
@@ -169,10 +195,9 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
           }}
         />
-
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
         <ConsentManager />
@@ -185,10 +210,10 @@ export default function RootLayout({
             <Suspense>
               <Analytics />
               <AnalyticsTracker />
-              <PreloadPopularTools />
+              <PreloadPopularTools featuredTools={featuredTools} />
             </Suspense>
             <AdSenseScript />
-            <Header />
+            <Header allTools={allTools} />
             <main id="main-content" className="flex-1">{children}</main>
             <AdBanner slot="4654925834" />
             <Footer />

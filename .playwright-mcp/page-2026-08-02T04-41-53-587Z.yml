@@ -1,0 +1,1711 @@
+- generic [active] [ref=f1e1]:
+  - link "Skip to content" [ref=f1e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - generic [ref=f1e5]:
+        - link "DevStackIO Tools - Home" [ref=f1e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f1e7]:
+            - generic [ref=f1e8]: DevStack
+            - generic [ref=f1e9]: IO
+            - generic [ref=f1e10]: Tools
+        - navigation "Main navigation" [ref=f1e11]:
+          - link "Tools" [ref=f1e12] [cursor=pointer]:
+            - /url: /tools
+          - link "Categories" [ref=f1e13] [cursor=pointer]:
+            - /url: /categories
+          - link "Guides" [ref=f1e14] [cursor=pointer]:
+            - /url: /guides
+          - link "Blog" [ref=f1e15] [cursor=pointer]:
+            - /url: /blog
+          - link "Learning" [ref=f1e16] [cursor=pointer]:
+            - /url: /learning
+          - link "DevStackIO Home" [ref=f1e18] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+      - generic [ref=f1e23]:
+        - button "Search tools (⌘K)" [ref=f1e24]:
+          - generic [ref=f1e28]: Search tools...
+          - generic [ref=f1e29]: K
+        - button "Toggle dark mode" [ref=f1e32]
+        - button "Keyboard shortcuts (?)" [ref=f1e40]
+  - main [ref=f1e44]:
+    - generic [ref=f1e47]:
+      - heading "All Tools" [level=1] [ref=f1e48]
+      - paragraph [ref=f1e49]: 128 free tools. No login required.
+      - textbox "Search tools..." [ref=f1e54]
+    - img "Advertisement placeholder" [ref=f1e55]:
+      - generic [ref=f1e56]: Ad Banner (728x90)
+    - generic [ref=f1e57]:
+      - generic [ref=f1e58]:
+        - link "All" [ref=f1e59] [cursor=pointer]:
+          - /url: /tools
+        - link "Encoders" [ref=f1e60] [cursor=pointer]:
+          - /url: /categories/encoders
+        - link "Formatters" [ref=f1e61] [cursor=pointer]:
+          - /url: /categories/formatters
+        - link "Generators" [ref=f1e62] [cursor=pointer]:
+          - /url: /categories/generators
+        - link "Converters" [ref=f1e63] [cursor=pointer]:
+          - /url: /categories/converters
+        - link "Security Tools" [ref=f1e64] [cursor=pointer]:
+          - /url: /categories/security
+        - link "Image Tools" [ref=f1e65] [cursor=pointer]:
+          - /url: /categories/image-tools
+        - link "Utilities" [ref=f1e66] [cursor=pointer]:
+          - /url: /categories/utilities
+      - generic [ref=f1e67]:
+        - link "Encoders Hot Featured 95% Base64 Encoder/Decoder Free online Base64 encoder and decoder tool for developers. Instantly convert text and files to Base64 format and decode Base64 strings back to readable text. Encode and decode text between plain text and Base64 URL-safe variant for use in URLs and filenames Real-time conversion with copy and download support +1 more" [ref=f1e68] [cursor=pointer]:
+          - /url: /tools/base64
+          - generic [ref=f1e69]:
+            - generic [ref=f1e70]:
+              - generic [ref=f1e71]: Encoders
+              - generic [ref=f1e72]:
+                - generic [ref=f1e73]: Hot
+                - generic [ref=f1e76]: Featured
+            - generic [ref=f1e79]: 95%
+          - heading "Base64 Encoder/Decoder" [level=3] [ref=f1e80]
+          - paragraph [ref=f1e81]: Free online Base64 encoder and decoder tool for developers. Instantly convert text and files to Base64 format and decode Base64 strings back to readable text.
+          - list [ref=f1e82]:
+            - listitem [ref=f1e83]: Encode and decode text between plain text and Base64
+            - listitem [ref=f1e84]: URL-safe variant for use in URLs and filenames
+            - listitem [ref=f1e85]: Real-time conversion with copy and download support
+            - listitem [ref=f1e86]: +1 more
+        - link "Encoders Featured 90% URL Encoder/Decoder Free URL encoder and decoder tool for web developers. Encode special characters in URLs and query parameters or decode percent-encoded strings instantly. Percent-encode URLs and query strings per RFC 3986 Decode percent-encoded text back to readable form Choose which characters to encode or preserve +1 more" [ref=f1e87] [cursor=pointer]:
+          - /url: /tools/url-encoder
+          - generic [ref=f1e88]:
+            - generic [ref=f1e89]:
+              - generic [ref=f1e90]: Encoders
+              - generic [ref=f1e91]: Featured
+            - generic [ref=f1e95]: 90%
+          - heading "URL Encoder/Decoder" [level=3] [ref=f1e96]
+          - paragraph [ref=f1e97]: Free URL encoder and decoder tool for web developers. Encode special characters in URLs and query parameters or decode percent-encoded strings instantly.
+          - list [ref=f1e98]:
+            - listitem [ref=f1e99]: Percent-encode URLs and query strings per RFC 3986
+            - listitem [ref=f1e100]: Decode percent-encoded text back to readable form
+            - listitem [ref=f1e101]: Choose which characters to encode or preserve
+            - listitem [ref=f1e102]: +1 more
+        - link "Encoders 70% HTML Entity Encoder/Decoder Free online HTML entity encoder and decoder. Convert special characters like angle brackets and ampersands to HTML entities and back for safe web dev. Encode special characters as named or numeric HTML entities Decode entities back to plain text Prevents XSS when embedding user text in markup +1 more" [ref=f1e103] [cursor=pointer]:
+          - /url: /tools/html-entity
+          - generic [ref=f1e104]:
+            - generic [ref=f1e105]: Encoders
+            - generic [ref=f1e107]: 70%
+          - heading "HTML Entity Encoder/Decoder" [level=3] [ref=f1e108]
+          - paragraph [ref=f1e109]: Free online HTML entity encoder and decoder. Convert special characters like angle brackets and ampersands to HTML entities and back for safe web dev.
+          - list [ref=f1e110]:
+            - listitem [ref=f1e111]: Encode special characters as named or numeric HTML entities
+            - listitem [ref=f1e112]: Decode entities back to plain text
+            - listitem [ref=f1e113]: Prevents XSS when embedding user text in markup
+            - listitem [ref=f1e114]: +1 more
+        - link "Encoders 65% Binary Encoder/Decoder Free binary encoder and decoder for developers. Convert any text string to binary representation and decode binary back to readable text instantly online. Convert text to binary and binary back to text 8-bit byte grouping with optional separators Handles ASCII and Unicode input +1 more" [ref=f1e115] [cursor=pointer]:
+          - /url: /tools/binary
+          - generic [ref=f1e116]:
+            - generic [ref=f1e117]: Encoders
+            - generic [ref=f1e119]: 65%
+          - heading "Binary Encoder/Decoder" [level=3] [ref=f1e120]
+          - paragraph [ref=f1e121]: Free binary encoder and decoder for developers. Convert any text string to binary representation and decode binary back to readable text instantly online.
+          - list [ref=f1e122]:
+            - listitem [ref=f1e123]: Convert text to binary and binary back to text
+            - listitem [ref=f1e124]: 8-bit byte grouping with optional separators
+            - listitem [ref=f1e125]: Handles ASCII and Unicode input
+            - listitem [ref=f1e126]: +1 more
+        - link "Encoders 68% Hex Encoder/Decoder Free hexadecimal encoder and decoder tool. Convert text to hex format and decode hexadecimal strings back to readable text with this easy online utility. Convert text to hex and hex back to text Configurable spacing and letter case Real-time conversion as you type +1 more" [ref=f1e127] [cursor=pointer]:
+          - /url: /tools/hex
+          - generic [ref=f1e128]:
+            - generic [ref=f1e129]: Encoders
+            - generic [ref=f1e131]: 68%
+          - heading "Hex Encoder/Decoder" [level=3] [ref=f1e132]
+          - paragraph [ref=f1e133]: Free hexadecimal encoder and decoder tool. Convert text to hex format and decode hexadecimal strings back to readable text with this easy online utility.
+          - list [ref=f1e134]:
+            - listitem [ref=f1e135]: Convert text to hex and hex back to text
+            - listitem [ref=f1e136]: Configurable spacing and letter case
+            - listitem [ref=f1e137]: Real-time conversion as you type
+            - listitem [ref=f1e138]: +1 more
+        - link "Encoders 72% String Escape/Unescape Free string escape and unescape tool for developers. Handle escape sequences for JavaScript, JSON, HTML, URL, and more with instant real-time conversion. Escape strings for JavaScript, JSON, HTML, CSS, and URLs Unescape escaped strings back to readable text Per-target escaping rules to match the context +1 more" [ref=f1e139] [cursor=pointer]:
+          - /url: /tools/escape-unescape
+          - generic [ref=f1e140]:
+            - generic [ref=f1e141]: Encoders
+            - generic [ref=f1e143]: 72%
+          - heading "String Escape/Unescape" [level=3] [ref=f1e144]
+          - paragraph [ref=f1e145]: Free string escape and unescape tool for developers. Handle escape sequences for JavaScript, JSON, HTML, URL, and more with instant real-time conversion.
+          - list [ref=f1e146]:
+            - listitem [ref=f1e147]: Escape strings for JavaScript, JSON, HTML, CSS, and URLs
+            - listitem [ref=f1e148]: Unescape escaped strings back to readable text
+            - listitem [ref=f1e149]: Per-target escaping rules to match the context
+            - listitem [ref=f1e150]: +1 more
+        - link "Encoders 74% Base64 Image Converter Convert images to Base64 encoded strings online for free. Generate Base64 data URIs for embedding images directly in HTML, CSS, and JavaScript code. Convert images to Base64 data URIs in one step Drag-and-drop file upload up to 10 MB Ready-to-paste HTML, CSS, and JS snippets +1 more" [ref=f1e151] [cursor=pointer]:
+          - /url: /tools/image-to-base64
+          - generic [ref=f1e152]:
+            - generic [ref=f1e153]: Encoders
+            - generic [ref=f1e155]: 74%
+          - heading "Base64 Image Converter" [level=3] [ref=f1e156]
+          - paragraph [ref=f1e157]: Convert images to Base64 encoded strings online for free. Generate Base64 data URIs for embedding images directly in HTML, CSS, and JavaScript code.
+          - list [ref=f1e158]:
+            - listitem [ref=f1e159]: Convert images to Base64 data URIs in one step
+            - listitem [ref=f1e160]: Drag-and-drop file upload up to 10 MB
+            - listitem [ref=f1e161]: Ready-to-paste HTML, CSS, and JS snippets
+            - listitem [ref=f1e162]: +1 more
+        - link "Encoders 55% Morse Code Converter Free online Morse code converter with audio playback. Translate text to Morse code and decode Morse code back to text with sound for easy learning. Translate text to International Morse code and back Audible playback of the encoded signal Customizable timing and separators +1 more" [ref=f1e163] [cursor=pointer]:
+          - /url: /tools/morse-code
+          - generic [ref=f1e164]:
+            - generic [ref=f1e165]: Encoders
+            - generic [ref=f1e167]: 55%
+          - heading "Morse Code Converter" [level=3] [ref=f1e168]
+          - paragraph [ref=f1e169]: Free online Morse code converter with audio playback. Translate text to Morse code and decode Morse code back to text with sound for easy learning.
+          - list [ref=f1e170]:
+            - listitem [ref=f1e171]: Translate text to International Morse code and back
+            - listitem [ref=f1e172]: Audible playback of the encoded signal
+            - listitem [ref=f1e173]: Customizable timing and separators
+            - listitem [ref=f1e174]: +1 more
+        - link "Encoders 60% Base64 Decoder Free Base64 decoder with automatic encoding detection and file download support. Paste or upload Base64 data to decode it back to text or binary files. Decode Base64 strings and encoded files Automatic charset handling for decoded output Download the decoded file back to disk +1 more" [ref=f1e175] [cursor=pointer]:
+          - /url: /tools/base64-decoder
+          - generic [ref=f1e176]:
+            - generic [ref=f1e177]: Encoders
+            - generic [ref=f1e179]: 60%
+          - heading "Base64 Decoder" [level=3] [ref=f1e180]
+          - paragraph [ref=f1e181]: Free Base64 decoder with automatic encoding detection and file download support. Paste or upload Base64 data to decode it back to text or binary files.
+          - list [ref=f1e182]:
+            - listitem [ref=f1e183]: Decode Base64 strings and encoded files
+            - listitem [ref=f1e184]: Automatic charset handling for decoded output
+            - listitem [ref=f1e185]: Download the decoded file back to disk
+            - listitem [ref=f1e186]: +1 more
+        - link "Encoders 60% Base64 Encoder Free Base64 encoder tool with multiple encoding presets for developers. Encode plain text and file uploads to Base64 format with customizable options. Encode text or uploaded files to Base64 Standard and URL-safe Base64 alphabets Real-time output with copy and download +1 more" [ref=f1e187] [cursor=pointer]:
+          - /url: /tools/base64-encoder
+          - generic [ref=f1e188]:
+            - generic [ref=f1e189]: Encoders
+            - generic [ref=f1e191]: 60%
+          - heading "Base64 Encoder" [level=3] [ref=f1e192]
+          - paragraph [ref=f1e193]: Free Base64 encoder tool with multiple encoding presets for developers. Encode plain text and file uploads to Base64 format with customizable options.
+          - list [ref=f1e194]:
+            - listitem [ref=f1e195]: Encode text or uploaded files to Base64
+            - listitem [ref=f1e196]: Standard and URL-safe Base64 alphabets
+            - listitem [ref=f1e197]: Real-time output with copy and download
+            - listitem [ref=f1e198]: +1 more
+        - link "Formatters Hot Featured 98% JSON Formatter Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection. Beautify, minify, and validate JSON Line-level syntax errors with position hints Syntax highlighting and optional sorting +1 more" [ref=f1e199] [cursor=pointer]:
+          - /url: /tools/json-formatter
+          - generic [ref=f1e200]:
+            - generic [ref=f1e201]:
+              - generic [ref=f1e202]: Formatters
+              - generic [ref=f1e203]:
+                - generic [ref=f1e204]: Hot
+                - generic [ref=f1e207]: Featured
+            - generic [ref=f1e210]: 98%
+          - heading "JSON Formatter" [level=3] [ref=f1e211]
+          - paragraph [ref=f1e212]: Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection.
+          - list [ref=f1e213]:
+            - listitem [ref=f1e214]: Beautify, minify, and validate JSON
+            - listitem [ref=f1e215]: Line-level syntax errors with position hints
+            - listitem [ref=f1e216]: Syntax highlighting and optional sorting
+            - listitem [ref=f1e217]: +1 more
+        - link "Formatters 82% HTML Formatter/Validator Free HTML formatter and validator tool for web developers. Beautify, minify, and validate HTML code online with syntax error detection and reporting. Format, validate, and minify HTML Syntax error reporting with location hints Custom indentation and attribute wrapping +1 more" [ref=f1e218] [cursor=pointer]:
+          - /url: /tools/html-formatter
+          - generic [ref=f1e219]:
+            - generic [ref=f1e220]: Formatters
+            - generic [ref=f1e222]: 82%
+          - heading "HTML Formatter/Validator" [level=3] [ref=f1e223]
+          - paragraph [ref=f1e224]: Free HTML formatter and validator tool for web developers. Beautify, minify, and validate HTML code online with syntax error detection and reporting.
+          - list [ref=f1e225]:
+            - listitem [ref=f1e226]: Format, validate, and minify HTML
+            - listitem [ref=f1e227]: Syntax error reporting with location hints
+            - listitem [ref=f1e228]: Custom indentation and attribute wrapping
+            - listitem [ref=f1e229]: +1 more
+        - link "Formatters 78% CSS Formatter/Minifier Free CSS formatter, beautifier, and minifier tool online. Format, prettify, and compress CSS code with syntax highlighting and customizable indentation. Beautify compressed CSS with custom indentation Syntax highlighting for selectors and properties Sort properties and remove empty rules +1 more" [ref=f1e230] [cursor=pointer]:
+          - /url: /tools/css-formatter
+          - generic [ref=f1e231]:
+            - generic [ref=f1e232]: Formatters
+            - generic [ref=f1e234]: 78%
+          - heading "CSS Formatter/Minifier" [level=3] [ref=f1e235]
+          - paragraph [ref=f1e236]: Free CSS formatter, beautifier, and minifier tool online. Format, prettify, and compress CSS code with syntax highlighting and customizable indentation.
+          - list [ref=f1e237]:
+            - listitem [ref=f1e238]: Beautify compressed CSS with custom indentation
+            - listitem [ref=f1e239]: Syntax highlighting for selectors and properties
+            - listitem [ref=f1e240]: Sort properties and remove empty rules
+            - listitem [ref=f1e241]: +1 more
+        - link "Formatters Featured 85% JavaScript Minifier/Beautifier Free JavaScript minifier and beautifier with customizable options. Minify JS code for production or beautify it for readability with syntax validation. Minify JavaScript for production bundles Beautify minified code for debugging Syntax validation before minification +1 more" [ref=f1e242] [cursor=pointer]:
+          - /url: /tools/js-minifier
+          - generic [ref=f1e243]:
+            - generic [ref=f1e244]:
+              - generic [ref=f1e245]: Formatters
+              - generic [ref=f1e246]: Featured
+            - generic [ref=f1e250]: 85%
+          - heading "JavaScript Minifier/Beautifier" [level=3] [ref=f1e251]
+          - paragraph [ref=f1e252]: Free JavaScript minifier and beautifier with customizable options. Minify JS code for production or beautify it for readability with syntax validation.
+          - list [ref=f1e253]:
+            - listitem [ref=f1e254]: Minify JavaScript for production bundles
+            - listitem [ref=f1e255]: Beautify minified code for debugging
+            - listitem [ref=f1e256]: Syntax validation before minification
+            - listitem [ref=f1e257]: +1 more
+        - link "Formatters Featured 92% SQL Formatter Free online SQL formatter and beautifier with syntax validation. Format and prettify complex SQL queries for MySQL, PostgreSQL, and SQLite databases. Format SQL across 11+ SQL dialects Control keyword case and comma placement Collapse or expand long statements +1 more" [ref=f1e258] [cursor=pointer]:
+          - /url: /tools/sql-formatter
+          - generic [ref=f1e259]:
+            - generic [ref=f1e260]:
+              - generic [ref=f1e261]: Formatters
+              - generic [ref=f1e262]: Featured
+            - generic [ref=f1e266]: 92%
+          - heading "SQL Formatter" [level=3] [ref=f1e267]
+          - paragraph [ref=f1e268]: Free online SQL formatter and beautifier with syntax validation. Format and prettify complex SQL queries for MySQL, PostgreSQL, and SQLite databases.
+          - list [ref=f1e269]:
+            - listitem [ref=f1e270]: Format SQL across 11+ SQL dialects
+            - listitem [ref=f1e271]: Control keyword case and comma placement
+            - listitem [ref=f1e272]: Collapse or expand long statements
+            - listitem [ref=f1e273]: +1 more
+        - link "Formatters 72% XML Formatter/Validator Free XML formatter, validator, and minifier tool online. Beautify, compress, and validate XML documents with real-time syntax error detection. Beautify, minify, and validate XML documents Real-time error detection with line numbers Custom indentation and newline handling +1 more" [ref=f1e274] [cursor=pointer]:
+          - /url: /tools/xml-formatter
+          - generic [ref=f1e275]:
+            - generic [ref=f1e276]: Formatters
+            - generic [ref=f1e278]: 72%
+          - heading "XML Formatter/Validator" [level=3] [ref=f1e279]
+          - paragraph [ref=f1e280]: Free XML formatter, validator, and minifier tool online. Beautify, compress, and validate XML documents with real-time syntax error detection.
+          - list [ref=f1e281]:
+            - listitem [ref=f1e282]: Beautify, minify, and validate XML documents
+            - listitem [ref=f1e283]: Real-time error detection with line numbers
+            - listitem [ref=f1e284]: Custom indentation and newline handling
+            - listitem [ref=f1e285]: +1 more
+        - link "Formatters 70% YAML Formatter/Validator Free online YAML formatter and validator for developers. Format, validate, and minify YAML files and configuration with syntax error detection. Format and validate YAML documents Minify output for compact configuration Syntax error reporting with location hints +1 more" [ref=f1e286] [cursor=pointer]:
+          - /url: /tools/yaml-formatter
+          - generic [ref=f1e287]:
+            - generic [ref=f1e288]: Formatters
+            - generic [ref=f1e290]: 70%
+          - heading "YAML Formatter/Validator" [level=3] [ref=f1e291]
+          - paragraph [ref=f1e292]: Free online YAML formatter and validator for developers. Format, validate, and minify YAML files and configuration with syntax error detection.
+          - list [ref=f1e293]:
+            - listitem [ref=f1e294]: Format and validate YAML documents
+            - listitem [ref=f1e295]: Minify output for compact configuration
+            - listitem [ref=f1e296]: Syntax error reporting with location hints
+            - listitem [ref=f1e297]: +1 more
+        - link "Formatters 76% Text Analyzer Free online text analyzer tool with character, word, and sentence counting. Analyze text readability with Flesch scores and language statistics. Count words, characters, and sentences Flesch reading ease and grade level scores Keyword density and character frequency +1 more" [ref=f1e298] [cursor=pointer]:
+          - /url: /tools/text-analyzer
+          - generic [ref=f1e299]:
+            - generic [ref=f1e300]: Formatters
+            - generic [ref=f1e302]: 76%
+          - heading "Text Analyzer" [level=3] [ref=f1e303]
+          - paragraph [ref=f1e304]: Free online text analyzer tool with character, word, and sentence counting. Analyze text readability with Flesch scores and language statistics.
+          - list [ref=f1e305]:
+            - listitem [ref=f1e306]: Count words, characters, and sentences
+            - listitem [ref=f1e307]: Flesch reading ease and grade level scores
+            - listitem [ref=f1e308]: Keyword density and character frequency
+            - listitem [ref=f1e309]: +1 more
+        - link "Formatters Featured 75% JSON Diff Checker Free JSON diff checker tool for developers. Compare two JSON objects side-by-side and highlight differences with detailed structural comparison. Compare two JSON documents side by side Highlight additions, removals, and changes Structural diff that ignores cosmetic formatting +1 more" [ref=f1e310] [cursor=pointer]:
+          - /url: /tools/json-diff
+          - generic [ref=f1e311]:
+            - generic [ref=f1e312]:
+              - generic [ref=f1e313]: Formatters
+              - generic [ref=f1e314]: Featured
+            - generic [ref=f1e318]: 75%
+          - heading "JSON Diff Checker" [level=3] [ref=f1e319]
+          - paragraph [ref=f1e320]: Free JSON diff checker tool for developers. Compare two JSON objects side-by-side and highlight differences with detailed structural comparison.
+          - list [ref=f1e321]:
+            - listitem [ref=f1e322]: Compare two JSON documents side by side
+            - listitem [ref=f1e323]: Highlight additions, removals, and changes
+            - listitem [ref=f1e324]: Structural diff that ignores cosmetic formatting
+            - listitem [ref=f1e325]: +1 more
+        - link "Formatters Featured 74% JSON Beautifier Free online JSON beautifier with configurable indentation and color themes. Format and style JSON data for improved readability and presentation. Pretty-print minified JSON with configurable indentation Colored syntax highlighting for readability Open files or paste directly +1 more" [ref=f1e326] [cursor=pointer]:
+          - /url: /tools/json-beautifier
+          - generic [ref=f1e327]:
+            - generic [ref=f1e328]:
+              - generic [ref=f1e329]: Formatters
+              - generic [ref=f1e330]: Featured
+            - generic [ref=f1e334]: 74%
+          - heading "JSON Beautifier" [level=3] [ref=f1e335]
+          - paragraph [ref=f1e336]: Free online JSON beautifier with configurable indentation and color themes. Format and style JSON data for improved readability and presentation.
+          - list [ref=f1e337]:
+            - listitem [ref=f1e338]: Pretty-print minified JSON with configurable indentation
+            - listitem [ref=f1e339]: Colored syntax highlighting for readability
+            - listitem [ref=f1e340]: Open files or paste directly
+            - listitem [ref=f1e341]: +1 more
+        - link "Formatters 70% JSON Minifier Free online JSON minifier tool for developers. Remove unnecessary whitespace and formatting from JSON data to reduce payload size for APIs. Strip whitespace and formatting to shrink payloads Original vs. minified size comparison Real-time minification while you type +1 more" [ref=f1e342] [cursor=pointer]:
+          - /url: /tools/json-minifier
+          - generic [ref=f1e343]:
+            - generic [ref=f1e344]: Formatters
+            - generic [ref=f1e346]: 70%
+          - heading "JSON Minifier" [level=3] [ref=f1e347]
+          - paragraph [ref=f1e348]: Free online JSON minifier tool for developers. Remove unnecessary whitespace and formatting from JSON data to reduce payload size for APIs.
+          - list [ref=f1e349]:
+            - listitem [ref=f1e350]: Strip whitespace and formatting to shrink payloads
+            - listitem [ref=f1e351]: Original vs. minified size comparison
+            - listitem [ref=f1e352]: Real-time minification while you type
+            - listitem [ref=f1e353]: +1 more
+        - link "Formatters 73% JSON Validator Free JSON validator tool with detailed error messages and line-level reporting. Validate JSON syntax instantly and find errors in your data. Validate JSON syntax with precise error locations Line and column reporting for quick fixes Handles deeply nested and large documents +1 more" [ref=f1e354] [cursor=pointer]:
+          - /url: /tools/json-validator
+          - generic [ref=f1e355]:
+            - generic [ref=f1e356]: Formatters
+            - generic [ref=f1e358]: 73%
+          - heading "JSON Validator" [level=3] [ref=f1e359]
+          - paragraph [ref=f1e360]: Free JSON validator tool with detailed error messages and line-level reporting. Validate JSON syntax instantly and find errors in your data.
+          - list [ref=f1e361]:
+            - listitem [ref=f1e362]: Validate JSON syntax with precise error locations
+            - listitem [ref=f1e363]: Line and column reporting for quick fixes
+            - listitem [ref=f1e364]: Handles deeply nested and large documents
+            - listitem [ref=f1e365]: +1 more
+        - link "Formatters 60% CSS Minifier Free online CSS minifier tool for web performance. Remove whitespace and comments from CSS code to reduce file size and speed up page loads. Minify CSS by removing whitespace and comments Preserve important structural characters Show size before and after minification +1 more" [ref=f1e366] [cursor=pointer]:
+          - /url: /tools/css-minifier
+          - generic [ref=f1e367]:
+            - generic [ref=f1e368]: Formatters
+            - generic [ref=f1e370]: 60%
+          - heading "CSS Minifier" [level=3] [ref=f1e371]
+          - paragraph [ref=f1e372]: Free online CSS minifier tool for web performance. Remove whitespace and comments from CSS code to reduce file size and speed up page loads.
+          - list [ref=f1e373]:
+            - listitem [ref=f1e374]: Minify CSS by removing whitespace and comments
+            - listitem [ref=f1e375]: Preserve important structural characters
+            - listitem [ref=f1e376]: Show size before and after minification
+            - listitem [ref=f1e377]: +1 more
+        - link "Formatters 62% HTML Minifier Free online HTML minifier for optimized web output. Remove unnecessary whitespace, comments, and redundant code from HTML for faster loading. Minify HTML by removing whitespace and comments Configurable collapse of attributes and text Original vs. minified size savings +1 more" [ref=f1e378] [cursor=pointer]:
+          - /url: /tools/html-minifier
+          - generic [ref=f1e379]:
+            - generic [ref=f1e380]: Formatters
+            - generic [ref=f1e382]: 62%
+          - heading "HTML Minifier" [level=3] [ref=f1e383]
+          - paragraph [ref=f1e384]: Free online HTML minifier for optimized web output. Remove unnecessary whitespace, comments, and redundant code from HTML for faster loading.
+          - list [ref=f1e385]:
+            - listitem [ref=f1e386]: Minify HTML by removing whitespace and comments
+            - listitem [ref=f1e387]: Configurable collapse of attributes and text
+            - listitem [ref=f1e388]: Original vs. minified size savings
+            - listitem [ref=f1e389]: +1 more
+        - link "Formatters 65% Docker Run to Compose Convert docker run commands to Docker Compose YAML files online for free. Simplify container orchestration with this easy migration tool. Convert docker run commands to Compose YAML Parses ports, volumes, env vars, and labels Detects docker CLI flags automatically +1 more" [ref=f1e390] [cursor=pointer]:
+          - /url: /tools/docker-run-to-compose
+          - generic [ref=f1e391]:
+            - generic [ref=f1e392]: Formatters
+            - generic [ref=f1e394]: 65%
+          - heading "Docker Run to Compose" [level=3] [ref=f1e395]
+          - paragraph [ref=f1e396]: Convert docker run commands to Docker Compose YAML files online for free. Simplify container orchestration with this easy migration tool.
+          - list [ref=f1e397]:
+            - listitem [ref=f1e398]: Convert docker run commands to Compose YAML
+            - listitem [ref=f1e399]: Parses ports, volumes, env vars, and labels
+            - listitem [ref=f1e400]: Detects docker CLI flags automatically
+            - listitem [ref=f1e401]: +1 more
+        - link "Formatters 62% YAML Viewer Free online YAML viewer and pretty-printer with syntax highlighting. View, format, and validate YAML configuration files in your browser. Pretty-print YAML with syntax highlighting Validate structure and report problems Open YAML files from disk +1 more" [ref=f1e402] [cursor=pointer]:
+          - /url: /tools/yaml-viewer
+          - generic [ref=f1e403]:
+            - generic [ref=f1e404]: Formatters
+            - generic [ref=f1e406]: 62%
+          - heading "YAML Viewer" [level=3] [ref=f1e407]
+          - paragraph [ref=f1e408]: Free online YAML viewer and pretty-printer with syntax highlighting. View, format, and validate YAML configuration files in your browser.
+          - list [ref=f1e409]:
+            - listitem [ref=f1e410]: Pretty-print YAML with syntax highlighting
+            - listitem [ref=f1e411]: Validate structure and report problems
+            - listitem [ref=f1e412]: Open YAML files from disk
+            - listitem [ref=f1e413]: +1 more
+        - link "Formatters 58% Benchmark Builder Free online JavaScript benchmark builder for measuring code execution time. Test and compare performance of different code snippets accurately. Time JavaScript snippets with high precision Compare multiple implementations side by side Configurable iterations and warm-up runs +1 more" [ref=f1e414] [cursor=pointer]:
+          - /url: /tools/benchmark-builder
+          - generic [ref=f1e415]:
+            - generic [ref=f1e416]: Formatters
+            - generic [ref=f1e418]: 58%
+          - heading "Benchmark Builder" [level=3] [ref=f1e419]
+          - paragraph [ref=f1e420]: Free online JavaScript benchmark builder for measuring code execution time. Test and compare performance of different code snippets accurately.
+          - list [ref=f1e421]:
+            - listitem [ref=f1e422]: Time JavaScript snippets with high precision
+            - listitem [ref=f1e423]: Compare multiple implementations side by side
+            - listitem [ref=f1e424]: Configurable iterations and warm-up runs
+            - listitem [ref=f1e425]: +1 more
+        - link "Generators Featured 90% UUID Generator Free online UUID generator tool for developers. Generate UUID v4 and v7 universally unique identifiers instantly with one-click copy to clipboard. Generate UUID v1, v4, and v7 variants Bulk generation up to 10,000 at once Uppercase, braces, and hyphen formatting +1 more" [ref=f1e426] [cursor=pointer]:
+          - /url: /tools/uuid-generator
+          - generic [ref=f1e427]:
+            - generic [ref=f1e428]:
+              - generic [ref=f1e429]: Generators
+              - generic [ref=f1e430]: Featured
+            - generic [ref=f1e434]: 90%
+          - heading "UUID Generator" [level=3] [ref=f1e435]
+          - paragraph [ref=f1e436]: Free online UUID generator tool for developers. Generate UUID v4 and v7 universally unique identifiers instantly with one-click copy to clipboard.
+          - list [ref=f1e437]:
+            - listitem [ref=f1e438]: Generate UUID v1, v4, and v7 variants
+            - listitem [ref=f1e439]: Bulk generation up to 10,000 at once
+            - listitem [ref=f1e440]: Uppercase, braces, and hyphen formatting
+            - listitem [ref=f1e441]: +1 more
+        - link "Generators Featured 85% Password Generator Free secure password generator with customizable length, characters, and complexity options. Create strong random passwords for accounts and apps. Length control with guaranteed character variety Uppercase, lowercase, digits, and symbol sets PIN mode for numeric passcodes +1 more" [ref=f1e442] [cursor=pointer]:
+          - /url: /tools/password-generator
+          - generic [ref=f1e443]:
+            - generic [ref=f1e444]:
+              - generic [ref=f1e445]: Generators
+              - generic [ref=f1e446]: Featured
+            - generic [ref=f1e450]: 85%
+          - heading "Password Generator" [level=3] [ref=f1e451]
+          - paragraph [ref=f1e452]: Free secure password generator with customizable length, characters, and complexity options. Create strong random passwords for accounts and apps.
+          - list [ref=f1e453]:
+            - listitem [ref=f1e454]: Length control with guaranteed character variety
+            - listitem [ref=f1e455]: Uppercase, lowercase, digits, and symbol sets
+            - listitem [ref=f1e456]: PIN mode for numeric passcodes
+            - listitem [ref=f1e457]: +1 more
+        - link "Generators Hot Featured 88% QR Code Generator Free online QR code generator with customizable colors, logos, and styling options. Create high-quality QR codes for URLs, text, and contact info. Generate QR codes for text, URLs, email, phone, SMS, and more Custom foreground, background, and logo SVG, PNG, and JPEG export +1 more" [ref=f1e458] [cursor=pointer]:
+          - /url: /tools/qr-generator
+          - generic [ref=f1e459]:
+            - generic [ref=f1e460]:
+              - generic [ref=f1e461]: Generators
+              - generic [ref=f1e462]:
+                - generic [ref=f1e463]: Hot
+                - generic [ref=f1e466]: Featured
+            - generic [ref=f1e469]: 88%
+          - heading "QR Code Generator" [level=3] [ref=f1e470]
+          - paragraph [ref=f1e471]: Free online QR code generator with customizable colors, logos, and styling options. Create high-quality QR codes for URLs, text, and contact info.
+          - list [ref=f1e472]:
+            - listitem [ref=f1e473]: Generate QR codes for text, URLs, email, phone, SMS, and more
+            - listitem [ref=f1e474]: Custom foreground, background, and logo
+            - listitem [ref=f1e475]: SVG, PNG, and JPEG export
+            - listitem [ref=f1e476]: +1 more
+        - link "Generators 74% Random Data Generator Free random data generator for software testing and development. Generate realistic fake names, emails, addresses, and other test data instantly. 8 categories and 29 field types Names, emails, companies, addresses, phone numbers, UUIDs, and more Locale-aware data for realistic results +2 more" [ref=f1e477] [cursor=pointer]:
+          - /url: /tools/random-data
+          - generic [ref=f1e478]:
+            - generic [ref=f1e479]: Generators
+            - generic [ref=f1e481]: 74%
+          - heading "Random Data Generator" [level=3] [ref=f1e482]
+          - paragraph [ref=f1e483]: Free random data generator for software testing and development. Generate realistic fake names, emails, addresses, and other test data instantly.
+          - list [ref=f1e484]:
+            - listitem [ref=f1e485]: 8 categories and 29 field types
+            - listitem [ref=f1e486]: Names, emails, companies, addresses, phone numbers, UUIDs, and more
+            - listitem [ref=f1e487]: Locale-aware data for realistic results
+            - listitem [ref=f1e488]: +2 more
+        - link "Generators 62% ASCII Art Generator Free online ASCII art text generator with various fonts and styles. Convert text to decorative ASCII art for terminals, comments, and documents. Render text as ASCII art in multiple fonts Adjustable width and character density Copy to clipboard or download as text +1 more" [ref=f1e489] [cursor=pointer]:
+          - /url: /tools/ascii-art
+          - generic [ref=f1e490]:
+            - generic [ref=f1e491]: Generators
+            - generic [ref=f1e493]: 62%
+          - heading "ASCII Art Generator" [level=3] [ref=f1e494]
+          - paragraph [ref=f1e495]: Free online ASCII art text generator with various fonts and styles. Convert text to decorative ASCII art for terminals, comments, and documents.
+          - list [ref=f1e496]:
+            - listitem [ref=f1e497]: Render text as ASCII art in multiple fonts
+            - listitem [ref=f1e498]: Adjustable width and character density
+            - listitem [ref=f1e499]: Copy to clipboard or download as text
+            - listitem [ref=f1e500]: +1 more
+        - link "Generators 66% Barcode Generator Free online barcode generator supporting Code128, EAN, UPC, and more formats. Create scannable barcodes for products, inventory, and labels. Generate Code 128, Code 39, EAN, UPC, and more Custom dimensions and color SVG and PNG export +1 more" [ref=f1e501] [cursor=pointer]:
+          - /url: /tools/barcode-generator
+          - generic [ref=f1e502]:
+            - generic [ref=f1e503]: Generators
+            - generic [ref=f1e505]: 66%
+          - heading "Barcode Generator" [level=3] [ref=f1e506]
+          - paragraph [ref=f1e507]: Free online barcode generator supporting Code128, EAN, UPC, and more formats. Create scannable barcodes for products, inventory, and labels.
+          - list [ref=f1e508]:
+            - listitem [ref=f1e509]: Generate Code 128, Code 39, EAN, UPC, and more
+            - listitem [ref=f1e510]: Custom dimensions and color
+            - listitem [ref=f1e511]: SVG and PNG export
+            - listitem [ref=f1e512]: +1 more
+        - link "Generators 70% Lorem Ipsum Generator Free Lorem Ipsum placeholder text generator with multiple styles. Generate dummy text paragraphs for web design, mockups, and content layouts. Generate lorem ipsum by paragraphs, sentences, or words Choose how many items and starting text Copy to clipboard or download +1 more" [ref=f1e513] [cursor=pointer]:
+          - /url: /tools/lorem-ipsum
+          - generic [ref=f1e514]:
+            - generic [ref=f1e515]: Generators
+            - generic [ref=f1e517]: 70%
+          - heading "Lorem Ipsum Generator" [level=3] [ref=f1e518]
+          - paragraph [ref=f1e519]: Free Lorem Ipsum placeholder text generator with multiple styles. Generate dummy text paragraphs for web design, mockups, and content layouts.
+          - list [ref=f1e520]:
+            - listitem [ref=f1e521]: Generate lorem ipsum by paragraphs, sentences, or words
+            - listitem [ref=f1e522]: Choose how many items and starting text
+            - listitem [ref=f1e523]: Copy to clipboard or download
+            - listitem [ref=f1e524]: +1 more
+        - link "Generators 60% Cron Expression Generator Free cron expression generator with visual editor and timezone support. Build and validate cron schedules for job automation and task scheduling. Visual cron builder with every field explained Presets and @-macro shortcuts Preview the next scheduled runs +1 more" [ref=f1e525] [cursor=pointer]:
+          - /url: /tools/cron-expression
+          - generic [ref=f1e526]:
+            - generic [ref=f1e527]: Generators
+            - generic [ref=f1e529]: 60%
+          - heading "Cron Expression Generator" [level=3] [ref=f1e530]
+          - paragraph [ref=f1e531]: Free cron expression generator with visual editor and timezone support. Build and validate cron schedules for job automation and task scheduling.
+          - list [ref=f1e532]:
+            - listitem [ref=f1e533]: Visual cron builder with every field explained
+            - listitem [ref=f1e534]: Presets and @-macro shortcuts
+            - listitem [ref=f1e535]: Preview the next scheduled runs
+            - listitem [ref=f1e536]: +1 more
+        - link "Generators 58% AI Prompt Generator Free AI prompt generator with customizable templates and variables. Create effective prompts for ChatGPT, Claude, and other AI tools easily. 6 categories covering 30+ real-world use cases Context, role, tone, and format fields One-click copy of the finished prompt +1 more" [ref=f1e537] [cursor=pointer]:
+          - /url: /tools/prompt-generator
+          - generic [ref=f1e538]:
+            - generic [ref=f1e539]: Generators
+            - generic [ref=f1e541]: 58%
+          - heading "AI Prompt Generator" [level=3] [ref=f1e542]
+          - paragraph [ref=f1e543]: Free AI prompt generator with customizable templates and variables. Create effective prompts for ChatGPT, Claude, and other AI tools easily.
+          - list [ref=f1e544]:
+            - listitem [ref=f1e545]: 6 categories covering 30+ real-world use cases
+            - listitem [ref=f1e546]: Context, role, tone, and format fields
+            - listitem [ref=f1e547]: One-click copy of the finished prompt
+            - listitem [ref=f1e548]: +1 more
+        - link "Generators 56% AI Prompt Improver Free AI prompt enhancer and optimizer tool. Refine and improve your prompts with structured revision templates for better AI-generated results. Analyze prompts across 8 quality dimensions Suggest concrete, actionable improvements Tone and detail adjustments +1 more" [ref=f1e549] [cursor=pointer]:
+          - /url: /tools/prompt-improver
+          - generic [ref=f1e550]:
+            - generic [ref=f1e551]: Generators
+            - generic [ref=f1e553]: 56%
+          - heading "AI Prompt Improver" [level=3] [ref=f1e554]
+          - paragraph [ref=f1e555]: Free AI prompt enhancer and optimizer tool. Refine and improve your prompts with structured revision templates for better AI-generated results.
+          - list [ref=f1e556]:
+            - listitem [ref=f1e557]: Analyze prompts across 8 quality dimensions
+            - listitem [ref=f1e558]: Suggest concrete, actionable improvements
+            - listitem [ref=f1e559]: Tone and detail adjustments
+            - listitem [ref=f1e560]: +1 more
+        - link "Generators 58% Random Port Generator Free random port number generator for software development. Generate available port numbers for local servers, databases, and applications. Generate random network ports Range control to stay in valid port space Bulk generation with copy support" [ref=f1e561] [cursor=pointer]:
+          - /url: /tools/random-port-generator
+          - generic [ref=f1e562]:
+            - generic [ref=f1e563]: Generators
+            - generic [ref=f1e565]: 58%
+          - heading "Random Port Generator" [level=3] [ref=f1e566]
+          - paragraph [ref=f1e567]: Free random port number generator for software development. Generate available port numbers for local servers, databases, and applications.
+          - list [ref=f1e568]:
+            - listitem [ref=f1e569]: Generate random network ports
+            - listitem [ref=f1e570]: Range control to stay in valid port space
+            - listitem [ref=f1e571]: Bulk generation with copy support
+        - link "Generators 68% Meta Tag Generator Free HTML meta tag generator for SEO and social media sharing. Create Open Graph, Twitter Card, and description meta tags for your website. Build Open Graph and Twitter Card tags SEO title, description, and canonical URLs Live preview of search snippets +1 more" [ref=f1e572] [cursor=pointer]:
+          - /url: /tools/meta-tag-generator
+          - generic [ref=f1e573]:
+            - generic [ref=f1e574]: Generators
+            - generic [ref=f1e576]: 68%
+          - heading "Meta Tag Generator" [level=3] [ref=f1e577]
+          - paragraph [ref=f1e578]: Free HTML meta tag generator for SEO and social media sharing. Create Open Graph, Twitter Card, and description meta tags for your website.
+          - list [ref=f1e579]:
+            - listitem [ref=f1e580]: Build Open Graph and Twitter Card tags
+            - listitem [ref=f1e581]: SEO title, description, and canonical URLs
+            - listitem [ref=f1e582]: Live preview of search snippets
+            - listitem [ref=f1e583]: +1 more
+        - link "Generators 62% Token Generator Free random API token and secret generator with configurable character sets and entropy. Create secure tokens for authentication and encryption. Configurable character sets and length Entropy estimation for each token Bulk generation with copy support +1 more" [ref=f1e584] [cursor=pointer]:
+          - /url: /tools/token-generator
+          - generic [ref=f1e585]:
+            - generic [ref=f1e586]: Generators
+            - generic [ref=f1e588]: 62%
+          - heading "Token Generator" [level=3] [ref=f1e589]
+          - paragraph [ref=f1e590]: Free random API token and secret generator with configurable character sets and entropy. Create secure tokens for authentication and encryption.
+          - list [ref=f1e591]:
+            - listitem [ref=f1e592]: Configurable character sets and length
+            - listitem [ref=f1e593]: Entropy estimation for each token
+            - listitem [ref=f1e594]: Bulk generation with copy support
+            - listitem [ref=f1e595]: +1 more
+        - link "Generators 66% WiFi QR Code Generator Free WiFi QR code generator for easy network sharing. Create QR codes that connect guests to your WiFi network automatically when scanned. Generate QR codes for Wi-Fi login credentials WPA/WEP and open network support Hidden network option +1 more" [ref=f1e596] [cursor=pointer]:
+          - /url: /tools/wifi-qr-generator
+          - generic [ref=f1e597]:
+            - generic [ref=f1e598]: Generators
+            - generic [ref=f1e600]: 66%
+          - heading "WiFi QR Code Generator" [level=3] [ref=f1e601]
+          - paragraph [ref=f1e602]: Free WiFi QR code generator for easy network sharing. Create QR codes that connect guests to your WiFi network automatically when scanned.
+          - list [ref=f1e603]:
+            - listitem [ref=f1e604]: Generate QR codes for Wi-Fi login credentials
+            - listitem [ref=f1e605]: WPA/WEP and open network support
+            - listitem [ref=f1e606]: Hidden network option
+            - listitem [ref=f1e607]: +1 more
+        - link "Generators 52% Numeronym Generator Free numeronym generator tool for developers. Create shorthand abbreviations like k8s, i18n, and a11y from words and phrases instantly. Create Kubernetes-style abbreviations Preserves first and last characters Custom word input with live preview" [ref=f1e608] [cursor=pointer]:
+          - /url: /tools/numeronym-generator
+          - generic [ref=f1e609]:
+            - generic [ref=f1e610]: Generators
+            - generic [ref=f1e612]: 52%
+          - heading "Numeronym Generator" [level=3] [ref=f1e613]
+          - paragraph [ref=f1e614]: Free numeronym generator tool for developers. Create shorthand abbreviations like k8s, i18n, and a11y from words and phrases instantly.
+          - list [ref=f1e615]:
+            - listitem [ref=f1e616]: Create Kubernetes-style abbreviations
+            - listitem [ref=f1e617]: Preserves first and last characters
+            - listitem [ref=f1e618]: Custom word input with live preview
+        - link "Converters Featured 84% JSON to CSV Converter Free online JSON to CSV converter with advanced formatting options. Transform JSON arrays into spreadsheet-ready CSV files with customizable delimiters. Convert JSON arrays to CSV Custom delimiter and quote handling Flatten nested objects to columns +1 more" [ref=f1e619] [cursor=pointer]:
+          - /url: /tools/json-to-csv
+          - generic [ref=f1e620]:
+            - generic [ref=f1e621]:
+              - generic [ref=f1e622]: Converters
+              - generic [ref=f1e623]: Featured
+            - generic [ref=f1e627]: 84%
+          - heading "JSON to CSV Converter" [level=3] [ref=f1e628]
+          - paragraph [ref=f1e629]: Free online JSON to CSV converter with advanced formatting options. Transform JSON arrays into spreadsheet-ready CSV files with customizable delimiters.
+          - list [ref=f1e630]:
+            - listitem [ref=f1e631]: Convert JSON arrays to CSV
+            - listitem [ref=f1e632]: Custom delimiter and quote handling
+            - listitem [ref=f1e633]: Flatten nested objects to columns
+            - listitem [ref=f1e634]: +1 more
+        - link "Converters 82% CSV to JSON Converter Free CSV to JSON converter tool for developers. Parse and convert CSV data to structured JSON format with advanced parsing and formatting options. Convert CSV to structured JSON Automatic delimiter detection Header row and type inference options +1 more" [ref=f1e635] [cursor=pointer]:
+          - /url: /tools/csv-to-json
+          - generic [ref=f1e636]:
+            - generic [ref=f1e637]: Converters
+            - generic [ref=f1e639]: 82%
+          - heading "CSV to JSON Converter" [level=3] [ref=f1e640]
+          - paragraph [ref=f1e641]: Free CSV to JSON converter tool for developers. Parse and convert CSV data to structured JSON format with advanced parsing and formatting options.
+          - list [ref=f1e642]:
+            - listitem [ref=f1e643]: Convert CSV to structured JSON
+            - listitem [ref=f1e644]: Automatic delimiter detection
+            - listitem [ref=f1e645]: Header row and type inference options
+            - listitem [ref=f1e646]: +1 more
+        - link "Converters 68% JSON to XML Converter Free online JSON to XML converter with customizable options. Transform JSON data into well-formatted XML documents for data interchange. Convert JSON to well-formed XML Custom root element and attribute handling Pretty-printed or compact output +1 more" [ref=f1e647] [cursor=pointer]:
+          - /url: /tools/json-to-xml
+          - generic [ref=f1e648]:
+            - generic [ref=f1e649]: Converters
+            - generic [ref=f1e651]: 68%
+          - heading "JSON to XML Converter" [level=3] [ref=f1e652]
+          - paragraph [ref=f1e653]: Free online JSON to XML converter with customizable options. Transform JSON data into well-formatted XML documents for data interchange.
+          - list [ref=f1e654]:
+            - listitem [ref=f1e655]: Convert JSON to well-formed XML
+            - listitem [ref=f1e656]: Custom root element and attribute handling
+            - listitem [ref=f1e657]: Pretty-printed or compact output
+            - listitem [ref=f1e658]: +1 more
+        - link "Converters 70% XML to JSON Converter Free online XML to JSON converter with customizable options. Parse and convert XML documents into structured JSON data for modern applications. Convert XML to structured JSON Preserve attributes and child elements Pretty-printed output for readability +1 more" [ref=f1e659] [cursor=pointer]:
+          - /url: /tools/xml-to-json
+          - generic [ref=f1e660]:
+            - generic [ref=f1e661]: Converters
+            - generic [ref=f1e663]: 70%
+          - heading "XML to JSON Converter" [level=3] [ref=f1e664]
+          - paragraph [ref=f1e665]: Free online XML to JSON converter with customizable options. Parse and convert XML documents into structured JSON data for modern applications.
+          - list [ref=f1e666]:
+            - listitem [ref=f1e667]: Convert XML to structured JSON
+            - listitem [ref=f1e668]: Preserve attributes and child elements
+            - listitem [ref=f1e669]: Pretty-printed output for readability
+            - listitem [ref=f1e670]: +1 more
+        - link "Converters 78% Markdown to HTML Converter Free Markdown to HTML converter with live preview and GitHub Flavored Markdown support. Transform Markdown documents into formatted HTML instantly. Convert Markdown to clean HTML GitHub-flavored Markdown support Live preview of the rendered result +1 more" [ref=f1e671] [cursor=pointer]:
+          - /url: /tools/markdown-to-html
+          - generic [ref=f1e672]:
+            - generic [ref=f1e673]: Converters
+            - generic [ref=f1e675]: 78%
+          - heading "Markdown to HTML Converter" [level=3] [ref=f1e676]
+          - paragraph [ref=f1e677]: Free Markdown to HTML converter with live preview and GitHub Flavored Markdown support. Transform Markdown documents into formatted HTML instantly.
+          - list [ref=f1e678]:
+            - listitem [ref=f1e679]: Convert Markdown to clean HTML
+            - listitem [ref=f1e680]: GitHub-flavored Markdown support
+            - listitem [ref=f1e681]: Live preview of the rendered result
+            - listitem [ref=f1e682]: +1 more
+        - link "Converters 72% HTML to Markdown Converter Free HTML to Markdown converter tool for developers. Convert HTML code and web pages into clean, readable Markdown format with customizable options. Convert HTML to clean Markdown Preserves headings, lists, links, and images Configurable conversion options +1 more" [ref=f1e683] [cursor=pointer]:
+          - /url: /tools/html-to-markdown
+          - generic [ref=f1e684]:
+            - generic [ref=f1e685]: Converters
+            - generic [ref=f1e687]: 72%
+          - heading "HTML to Markdown Converter" [level=3] [ref=f1e688]
+          - paragraph [ref=f1e689]: Free HTML to Markdown converter tool for developers. Convert HTML code and web pages into clean, readable Markdown format with customizable options.
+          - list [ref=f1e690]:
+            - listitem [ref=f1e691]: Convert HTML to clean Markdown
+            - listitem [ref=f1e692]: Preserves headings, lists, links, and images
+            - listitem [ref=f1e693]: Configurable conversion options
+            - listitem [ref=f1e694]: +1 more
+        - link "Converters 74% JSON to YAML Converter Free online JSON to YAML converter tool. Transform JSON data into clean, readable YAML format and vice versa with instant real-time conversion. Convert JSON to YAML and back Preserves nested structures and types Real-time conversion as you type +1 more" [ref=f1e695] [cursor=pointer]:
+          - /url: /tools/json-to-yaml
+          - generic [ref=f1e696]:
+            - generic [ref=f1e697]: Converters
+            - generic [ref=f1e699]: 74%
+          - heading "JSON to YAML Converter" [level=3] [ref=f1e700]
+          - paragraph [ref=f1e701]: Free online JSON to YAML converter tool. Transform JSON data into clean, readable YAML format and vice versa with instant real-time conversion.
+          - list [ref=f1e702]:
+            - listitem [ref=f1e703]: Convert JSON to YAML and back
+            - listitem [ref=f1e704]: Preserves nested structures and types
+            - listitem [ref=f1e705]: Real-time conversion as you type
+            - listitem [ref=f1e706]: +1 more
+        - link "Converters 58% TOML/JSON/YAML Converter Free TOML, JSON, and YAML converter tool for developers. Convert configuration files between these popular data serialization formats easily. Convert between TOML, JSON, and YAML Preserves tables, arrays, and primitives Real-time conversion with validation +1 more" [ref=f1e707] [cursor=pointer]:
+          - /url: /tools/toml-converter
+          - generic [ref=f1e708]:
+            - generic [ref=f1e709]: Converters
+            - generic [ref=f1e711]: 58%
+          - heading "TOML/JSON/YAML Converter" [level=3] [ref=f1e712]
+          - paragraph [ref=f1e713]: Free TOML, JSON, and YAML converter tool for developers. Convert configuration files between these popular data serialization formats easily.
+          - list [ref=f1e714]:
+            - listitem [ref=f1e715]: Convert between TOML, JSON, and YAML
+            - listitem [ref=f1e716]: Preserves tables, arrays, and primitives
+            - listitem [ref=f1e717]: Real-time conversion with validation
+            - listitem [ref=f1e718]: +1 more
+        - link "Converters Featured 79% Timestamp Converter Free Unix timestamp converter for developers. Convert Unix timestamps to human-readable dates and back with timezone support and multiple formats. Convert Unix timestamps to human-readable dates Convert dates back to Unix time Multiple timezone and format options +1 more" [ref=f1e719] [cursor=pointer]:
+          - /url: /tools/timestamp-converter
+          - generic [ref=f1e720]:
+            - generic [ref=f1e721]:
+              - generic [ref=f1e722]: Converters
+              - generic [ref=f1e723]: Featured
+            - generic [ref=f1e727]: 79%
+          - heading "Timestamp Converter" [level=3] [ref=f1e728]
+          - paragraph [ref=f1e729]: Free Unix timestamp converter for developers. Convert Unix timestamps to human-readable dates and back with timezone support and multiple formats.
+          - list [ref=f1e730]:
+            - listitem [ref=f1e731]: Convert Unix timestamps to human-readable dates
+            - listitem [ref=f1e732]: Convert dates back to Unix time
+            - listitem [ref=f1e733]: Multiple timezone and format options
+            - listitem [ref=f1e734]: +1 more
+        - link "Converters 76% Color Converter Free online color converter for designers and developers. Convert between HEX, RGB, HSL, HSV, and CMYK color formats with palette generation. Convert between HEX, RGB, HSL, HSV, and CMYK Live preview of the selected color Generate complementary palettes +1 more" [ref=f1e735] [cursor=pointer]:
+          - /url: /tools/color-converter
+          - generic [ref=f1e736]:
+            - generic [ref=f1e737]: Converters
+            - generic [ref=f1e739]: 76%
+          - heading "Color Converter" [level=3] [ref=f1e740]
+          - paragraph [ref=f1e741]: Free online color converter for designers and developers. Convert between HEX, RGB, HSL, HSV, and CMYK color formats with palette generation.
+          - list [ref=f1e742]:
+            - listitem [ref=f1e743]: Convert between HEX, RGB, HSL, HSV, and CMYK
+            - listitem [ref=f1e744]: Live preview of the selected color
+            - listitem [ref=f1e745]: Generate complementary palettes
+            - listitem [ref=f1e746]: +1 more
+        - link "Converters 72% Unit Converter Free online unit converter for measurement conversions. Convert between metric, imperial, and other unit systems for length, weight, and more. Convert across 13 unit categories Accurate formulas backed by real constants Batch conversion table for all units in a category +2 more" [ref=f1e747] [cursor=pointer]:
+          - /url: /tools/unit-converter
+          - generic [ref=f1e748]:
+            - generic [ref=f1e749]: Converters
+            - generic [ref=f1e751]: 72%
+          - heading "Unit Converter" [level=3] [ref=f1e752]
+          - paragraph [ref=f1e753]: Free online unit converter for measurement conversions. Convert between metric, imperial, and other unit systems for length, weight, and more.
+          - list [ref=f1e754]:
+            - listitem [ref=f1e755]: Convert across 13 unit categories
+            - listitem [ref=f1e756]: Accurate formulas backed by real constants
+            - listitem [ref=f1e757]: Batch conversion table for all units in a category
+            - listitem [ref=f1e758]: +2 more
+        - link "Converters 68% Case Converter Free online text case converter for developers. Convert strings between camelCase, snake_case, kebab-case, PascalCase, and other naming conventions. Convert to camelCase, PascalCase, snake_case, and more Real-time conversion as you type Multiple case options at once +1 more" [ref=f1e759] [cursor=pointer]:
+          - /url: /tools/case-converter
+          - generic [ref=f1e760]:
+            - generic [ref=f1e761]: Converters
+            - generic [ref=f1e763]: 68%
+          - heading "Case Converter" [level=3] [ref=f1e764]
+          - paragraph [ref=f1e765]: Free online text case converter for developers. Convert strings between camelCase, snake_case, kebab-case, PascalCase, and other naming conventions.
+          - list [ref=f1e766]:
+            - listitem [ref=f1e767]: Convert to camelCase, PascalCase, snake_case, and more
+            - listitem [ref=f1e768]: Real-time conversion as you type
+            - listitem [ref=f1e769]: Multiple case options at once
+            - listitem [ref=f1e770]: +1 more
+        - link "Converters 64% Base Converter Free online number base converter for developers. Convert numbers between binary, octal, decimal, hexadecimal, and base36 number systems instantly. Convert between binary, octal, decimal, and hexadecimal Support for arbitrary bases up to 36 Precision handling for large numbers +1 more" [ref=f1e771] [cursor=pointer]:
+          - /url: /tools/base-converter
+          - generic [ref=f1e772]:
+            - generic [ref=f1e773]: Converters
+            - generic [ref=f1e775]: 64%
+          - heading "Base Converter" [level=3] [ref=f1e776]
+          - paragraph [ref=f1e777]: Free online number base converter for developers. Convert numbers between binary, octal, decimal, hexadecimal, and base36 number systems instantly.
+          - list [ref=f1e778]:
+            - listitem [ref=f1e779]: Convert between binary, octal, decimal, and hexadecimal
+            - listitem [ref=f1e780]: Support for arbitrary bases up to 36
+            - listitem [ref=f1e781]: Precision handling for large numbers
+            - listitem [ref=f1e782]: +1 more
+        - link "Converters 56% Number to Words Free online number to words converter in English. Transform any numeric value into its written word representation for documents and checks. Convert numbers to written words Handles large numbers and decimals Copy the word form of the number" [ref=f1e783] [cursor=pointer]:
+          - /url: /tools/number-to-words
+          - generic [ref=f1e784]:
+            - generic [ref=f1e785]: Converters
+            - generic [ref=f1e787]: 56%
+          - heading "Number to Words" [level=3] [ref=f1e788]
+          - paragraph [ref=f1e789]: Free online number to words converter in English. Transform any numeric value into its written word representation for documents and checks.
+          - list [ref=f1e790]:
+            - listitem [ref=f1e791]: Convert numbers to written words
+            - listitem [ref=f1e792]: Handles large numbers and decimals
+            - listitem [ref=f1e793]: Copy the word form of the number
+        - link "Converters New Featured 80% JSON to TypeScript Free JSON to TypeScript converter tool. Automatically generate TypeScript interfaces, types, and type definitions from sample JSON data. Generate TypeScript interfaces and types Correctly types nested objects and arrays Optional, readonly, and export options +1 more" [ref=f1e794] [cursor=pointer]:
+          - /url: /tools/json-to-typescript
+          - generic [ref=f1e795]:
+            - generic [ref=f1e796]:
+              - generic [ref=f1e797]: Converters
+              - generic [ref=f1e798]:
+                - generic [ref=f1e799]: New
+                - generic [ref=f1e800]: Featured
+            - generic [ref=f1e803]: 80%
+          - heading "JSON to TypeScript" [level=3] [ref=f1e804]
+          - paragraph [ref=f1e805]: Free JSON to TypeScript converter tool. Automatically generate TypeScript interfaces, types, and type definitions from sample JSON data.
+          - list [ref=f1e806]:
+            - listitem [ref=f1e807]: Generate TypeScript interfaces and types
+            - listitem [ref=f1e808]: Correctly types nested objects and arrays
+            - listitem [ref=f1e809]: Optional, readonly, and export options
+            - listitem [ref=f1e810]: +1 more
+        - link "Converters 66% JSON to Go Struct Free JSON to Go struct converter for developers. Generate Go struct definitions with proper types and tags from JSON data automatically. Generate Go structs from JSON Correct types and json struct tags Nested struct generation +1 more" [ref=f1e811] [cursor=pointer]:
+          - /url: /tools/json-to-go
+          - generic [ref=f1e812]:
+            - generic [ref=f1e813]: Converters
+            - generic [ref=f1e815]: 66%
+          - heading "JSON to Go Struct" [level=3] [ref=f1e816]
+          - paragraph [ref=f1e817]: Free JSON to Go struct converter for developers. Generate Go struct definitions with proper types and tags from JSON data automatically.
+          - list [ref=f1e818]:
+            - listitem [ref=f1e819]: Generate Go structs from JSON
+            - listitem [ref=f1e820]: Correct types and json struct tags
+            - listitem [ref=f1e821]: Nested struct generation
+            - listitem [ref=f1e822]: +1 more
+        - link "Converters 65% Markdown Editor Free online Markdown editor with live preview and syntax highlighting. Write and preview Markdown with GitHub Flavored Markdown support built in. Write Markdown with live rendering GitHub-flavored Markdown support Export the rendered HTML +1 more" [ref=f1e823] [cursor=pointer]:
+          - /url: /tools/markdown-editor
+          - generic [ref=f1e824]:
+            - generic [ref=f1e825]: Converters
+            - generic [ref=f1e827]: 65%
+          - heading "Markdown Editor" [level=3] [ref=f1e828]
+          - paragraph [ref=f1e829]: Free online Markdown editor with live preview and syntax highlighting. Write and preview Markdown with GitHub Flavored Markdown support built in.
+          - list [ref=f1e830]:
+            - listitem [ref=f1e831]: Write Markdown with live rendering
+            - listitem [ref=f1e832]: GitHub-flavored Markdown support
+            - listitem [ref=f1e833]: Export the rendered HTML
+            - listitem [ref=f1e834]: +1 more
+        - link "Converters 60% Roman Numeral Converter Free online Roman numeral converter for quick translations. Convert between Roman numerals and integer values with instant real-time results. Convert integers to Roman numerals and back Real-time conversion with validation Copy the converted result" [ref=f1e835] [cursor=pointer]:
+          - /url: /tools/roman-numeral-converter
+          - generic [ref=f1e836]:
+            - generic [ref=f1e837]: Converters
+            - generic [ref=f1e839]: 60%
+          - heading "Roman Numeral Converter" [level=3] [ref=f1e840]
+          - paragraph [ref=f1e841]: Free online Roman numeral converter for quick translations. Convert between Roman numerals and integer values with instant real-time results.
+          - list [ref=f1e842]:
+            - listitem [ref=f1e843]: Convert integers to Roman numerals and back
+            - listitem [ref=f1e844]: Real-time conversion with validation
+            - listitem [ref=f1e845]: Copy the converted result
+        - link "Converters 55% Text to NATO Alphabet Free text to NATO phonetic alphabet converter online. Convert text to military phonetic alphabet for clear radio and voice communication. Convert text to the NATO phonetic alphabet Per-letter breakdown table Copy the phonetic spelling" [ref=f1e846] [cursor=pointer]:
+          - /url: /tools/nato-alphabet
+          - generic [ref=f1e847]:
+            - generic [ref=f1e848]: Converters
+            - generic [ref=f1e850]: 55%
+          - heading "Text to NATO Alphabet" [level=3] [ref=f1e851]
+          - paragraph [ref=f1e852]: Free text to NATO phonetic alphabet converter online. Convert text to military phonetic alphabet for clear radio and voice communication.
+          - list [ref=f1e853]:
+            - listitem [ref=f1e854]: Convert text to the NATO phonetic alphabet
+            - listitem [ref=f1e855]: Per-letter breakdown table
+            - listitem [ref=f1e856]: Copy the phonetic spelling
+        - 'link "Converters 58% Text to Unicode Free online text to Unicode code point converter for developers. Transform text characters into Unicode code points and decode them back easily. Encode text as Unicode code points Multiple escape formats: hex, decimal, \\u escapes Decode Unicode escapes back to text +1 more" [ref=f1e857] [cursor=pointer]':
+          - /url: /tools/text-to-unicode
+          - generic [ref=f1e858]:
+            - generic [ref=f1e859]: Converters
+            - generic [ref=f1e861]: 58%
+          - heading "Text to Unicode" [level=3] [ref=f1e862]
+          - paragraph [ref=f1e863]: Free online text to Unicode code point converter for developers. Transform text characters into Unicode code points and decode them back easily.
+          - list [ref=f1e864]:
+            - listitem [ref=f1e865]: Encode text as Unicode code points
+            - listitem [ref=f1e866]: "Multiple escape formats: hex, decimal, \\u escapes"
+            - listitem [ref=f1e867]: Decode Unicode escapes back to text
+            - listitem [ref=f1e868]: +1 more
+        - link "Converters 62% List Converter Free online list format converter for developers and data analysts. Convert between CSV, JSON, one-per-line, and other popular list formats instantly. Convert between CSV, JSON, and one-per-line lists Custom delimiter control Real-time conversion as you paste +1 more" [ref=f1e869] [cursor=pointer]:
+          - /url: /tools/list-converter
+          - generic [ref=f1e870]:
+            - generic [ref=f1e871]: Converters
+            - generic [ref=f1e873]: 62%
+          - heading "List Converter" [level=3] [ref=f1e874]
+          - paragraph [ref=f1e875]: Free online list format converter for developers and data analysts. Convert between CSV, JSON, one-per-line, and other popular list formats instantly.
+          - list [ref=f1e876]:
+            - listitem [ref=f1e877]: Convert between CSV, JSON, and one-per-line lists
+            - listitem [ref=f1e878]: Custom delimiter control
+            - listitem [ref=f1e879]: Real-time conversion as you paste
+            - listitem [ref=f1e880]: +1 more
+        - link "Converters 65% Temperature Converter Free online temperature converter for quick unit conversions. Convert between Celsius, Fahrenheit, and Kelvin with instant real-time results. Convert between Celsius, Fahrenheit, and Kelvin Real-time conversion while you type Quick presets for common temperatures" [ref=f1e881] [cursor=pointer]:
+          - /url: /tools/temperature-converter
+          - generic [ref=f1e882]:
+            - generic [ref=f1e883]: Converters
+            - generic [ref=f1e885]: 65%
+          - heading "Temperature Converter" [level=3] [ref=f1e886]
+          - paragraph [ref=f1e887]: Free online temperature converter for quick unit conversions. Convert between Celsius, Fahrenheit, and Kelvin with instant real-time results.
+          - list [ref=f1e888]:
+            - listitem [ref=f1e889]: Convert between Celsius, Fahrenheit, and Kelvin
+            - listitem [ref=f1e890]: Real-time conversion while you type
+            - listitem [ref=f1e891]: Quick presets for common temperatures
+        - img "Advertisement placeholder" [ref=f1e893]:
+          - generic [ref=f1e894]: Ad Banner (728x90)
+        - link "Security Tools Hot Featured 95% JWT Decoder Free online JWT decoder and analyzer for developers. Inspect JSON Web Token headers, payloads, and signatures with detailed breakdown and validation. Decode JWT header and payload in one click Verify signatures when a secret is provided Expiry and claim analysis +1 more" [ref=f1e895] [cursor=pointer]:
+          - /url: /tools/jwt-decoder
+          - generic [ref=f1e896]:
+            - generic [ref=f1e897]:
+              - generic [ref=f1e898]: Security Tools
+              - generic [ref=f1e899]:
+                - generic [ref=f1e900]: Hot
+                - generic [ref=f1e903]: Featured
+            - generic [ref=f1e906]: 95%
+          - heading "JWT Decoder" [level=3] [ref=f1e907]
+          - paragraph [ref=f1e908]: Free online JWT decoder and analyzer for developers. Inspect JSON Web Token headers, payloads, and signatures with detailed breakdown and validation.
+          - list [ref=f1e909]:
+            - listitem [ref=f1e910]: Decode JWT header and payload in one click
+            - listitem [ref=f1e911]: Verify signatures when a secret is provided
+            - listitem [ref=f1e912]: Expiry and claim analysis
+            - listitem [ref=f1e913]: +1 more
+        - link "Security Tools 78% JWT Generator Free online JWT generator for developers. Create JSON Web Tokens with custom claims, headers, and multiple signing algorithms like HMAC and RSA. Build JWTs with custom header and claims HS256/384/512 and RS256 signing Secret or PEM key input +1 more" [ref=f1e914] [cursor=pointer]:
+          - /url: /tools/jwt-generator
+          - generic [ref=f1e915]:
+            - generic [ref=f1e916]: Security Tools
+            - generic [ref=f1e918]: 78%
+          - heading "JWT Generator" [level=3] [ref=f1e919]
+          - paragraph [ref=f1e920]: Free online JWT generator for developers. Create JSON Web Tokens with custom claims, headers, and multiple signing algorithms like HMAC and RSA.
+          - list [ref=f1e921]:
+            - listitem [ref=f1e922]: Build JWTs with custom header and claims
+            - listitem [ref=f1e923]: HS256/384/512 and RS256 signing
+            - listitem [ref=f1e924]: Secret or PEM key input
+            - listitem [ref=f1e925]: +1 more
+        - link "Security Tools Featured 81% Hash Generator Free online hash generator supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512 algorithms. Generate cryptographic hashes for text and files. Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes HMAC variants with a secret key Salt support and bulk per-line mode +1 more" [ref=f1e926] [cursor=pointer]:
+          - /url: /tools/hash-generator
+          - generic [ref=f1e927]:
+            - generic [ref=f1e928]:
+              - generic [ref=f1e929]: Security Tools
+              - generic [ref=f1e930]: Featured
+            - generic [ref=f1e934]: 81%
+          - heading "Hash Generator" [level=3] [ref=f1e935]
+          - paragraph [ref=f1e936]: Free online hash generator supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512 algorithms. Generate cryptographic hashes for text and files.
+          - list [ref=f1e937]:
+            - listitem [ref=f1e938]: Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes
+            - listitem [ref=f1e939]: HMAC variants with a secret key
+            - listitem [ref=f1e940]: Salt support and bulk per-line mode
+            - listitem [ref=f1e941]: +1 more
+        - link "Security Tools 72% TOTP Generator Free TOTP generator for two-factor authentication setup and testing. Generate time-based one-time passwords compatible with authenticator apps. Generate TOTP codes compatible with authenticator apps Configurable period, digits, and algorithm One-click copy of the current code +1 more" [ref=f1e942] [cursor=pointer]:
+          - /url: /tools/totp-generator
+          - generic [ref=f1e943]:
+            - generic [ref=f1e944]: Security Tools
+            - generic [ref=f1e946]: 72%
+          - heading "TOTP Generator" [level=3] [ref=f1e947]
+          - paragraph [ref=f1e948]: Free TOTP generator for two-factor authentication setup and testing. Generate time-based one-time passwords compatible with authenticator apps.
+          - list [ref=f1e949]:
+            - listitem [ref=f1e950]: Generate TOTP codes compatible with authenticator apps
+            - listitem [ref=f1e951]: Configurable period, digits, and algorithm
+            - listitem [ref=f1e952]: One-click copy of the current code
+            - listitem [ref=f1e953]: +1 more
+        - link "Security Tools 68% SSL Certificate Decoder Free online SSL certificate decoder for security analysis. Decode and inspect PEM and X.509 SSL certificates with detailed field information. Decode X.509 PEM certificates Show subject, issuer, and validity dates Expiry warnings for expiring certs +1 more" [ref=f1e954] [cursor=pointer]:
+          - /url: /tools/ssl-decoder
+          - generic [ref=f1e955]:
+            - generic [ref=f1e956]: Security Tools
+            - generic [ref=f1e958]: 68%
+          - heading "SSL Certificate Decoder" [level=3] [ref=f1e959]
+          - paragraph [ref=f1e960]: Free online SSL certificate decoder for security analysis. Decode and inspect PEM and X.509 SSL certificates with detailed field information.
+          - list [ref=f1e961]:
+            - listitem [ref=f1e962]: Decode X.509 PEM certificates
+            - listitem [ref=f1e963]: Show subject, issuer, and validity dates
+            - listitem [ref=f1e964]: Expiry warnings for expiring certs
+            - listitem [ref=f1e965]: +1 more
+        - link "Security Tools 62% CSP Generator Free Content Security Policy header generator with visual builder. Create and test CSP policies to protect your website from XSS and injection attacks. Visually build Content-Security-Policy headers Directive presets and per-source controls Live policy preview +1 more" [ref=f1e966] [cursor=pointer]:
+          - /url: /tools/csp-generator
+          - generic [ref=f1e967]:
+            - generic [ref=f1e968]: Security Tools
+            - generic [ref=f1e970]: 62%
+          - heading "CSP Generator" [level=3] [ref=f1e971]
+          - paragraph [ref=f1e972]: Free Content Security Policy header generator with visual builder. Create and test CSP policies to protect your website from XSS and injection attacks.
+          - list [ref=f1e973]:
+            - listitem [ref=f1e974]: Visually build Content-Security-Policy headers
+            - listitem [ref=f1e975]: Directive presets and per-source controls
+            - listitem [ref=f1e976]: Live policy preview
+            - listitem [ref=f1e977]: +1 more
+        - link "Security Tools 66% File Checksum Calculator Free online file checksum calculator for integrity verification. Calculate MD5, SHA-1, SHA-256, and SHA-512 checksums for any file upload. Compute MD5, SHA-1, and SHA-256 checksums Drag-and-drop files up to 10 MB Compare files against an expected hash +1 more" [ref=f1e978] [cursor=pointer]:
+          - /url: /tools/file-checksum
+          - generic [ref=f1e979]:
+            - generic [ref=f1e980]: Security Tools
+            - generic [ref=f1e982]: 66%
+          - heading "File Checksum Calculator" [level=3] [ref=f1e983]
+          - paragraph [ref=f1e984]: Free online file checksum calculator for integrity verification. Calculate MD5, SHA-1, SHA-256, and SHA-512 checksums for any file upload.
+          - list [ref=f1e985]:
+            - listitem [ref=f1e986]: Compute MD5, SHA-1, and SHA-256 checksums
+            - listitem [ref=f1e987]: Drag-and-drop files up to 10 MB
+            - listitem [ref=f1e988]: Compare files against an expected hash
+            - listitem [ref=f1e989]: +1 more
+        - link "Security Tools New 74% JSON Schema Generator Free online JSON Schema generator from sample data. Automatically create JSON Schema definitions to validate and document your JSON structures. Generate JSON Schema drafts from sample data Infers types for nested structures Copy and download the schema" [ref=f1e990] [cursor=pointer]:
+          - /url: /tools/json-schema-generator
+          - generic [ref=f1e991]:
+            - generic [ref=f1e992]:
+              - generic [ref=f1e993]: Security Tools
+              - generic [ref=f1e994]: New
+            - generic [ref=f1e996]: 74%
+          - heading "JSON Schema Generator" [level=3] [ref=f1e997]
+          - paragraph [ref=f1e998]: Free online JSON Schema generator from sample data. Automatically create JSON Schema definitions to validate and document your JSON structures.
+          - list [ref=f1e999]:
+            - listitem [ref=f1e1000]: Generate JSON Schema drafts from sample data
+            - listitem [ref=f1e1001]: Infers types for nested structures
+            - listitem [ref=f1e1002]: Copy and download the schema
+        - link "Security Tools 72% Bcrypt Generator Free online bcrypt password hash generator and verifier for developers. Generate bcrypt hashes and verify passwords against existing hash values. Generate bcrypt hashes with configurable rounds Verify passwords against a stored hash Copy the generated hash" [ref=f1e1003] [cursor=pointer]:
+          - /url: /tools/bcrypt-generator
+          - generic [ref=f1e1004]:
+            - generic [ref=f1e1005]: Security Tools
+            - generic [ref=f1e1007]: 72%
+          - heading "Bcrypt Generator" [level=3] [ref=f1e1008]
+          - paragraph [ref=f1e1009]: Free online bcrypt password hash generator and verifier for developers. Generate bcrypt hashes and verify passwords against existing hash values.
+          - list [ref=f1e1010]:
+            - listitem [ref=f1e1011]: Generate bcrypt hashes with configurable rounds
+            - listitem [ref=f1e1012]: Verify passwords against a stored hash
+            - listitem [ref=f1e1013]: Copy the generated hash
+        - link "Security Tools 68% ULID Generator Free ULID generator tool for developers. Create Universally Unique Lexicographically Sortable Identifiers for database keys and distributed systems. Generate sortable ULIDs Bulk generation with copy support Monotonic ordering for time-ordered IDs" [ref=f1e1014] [cursor=pointer]:
+          - /url: /tools/ulid-generator
+          - generic [ref=f1e1015]:
+            - generic [ref=f1e1016]: Security Tools
+            - generic [ref=f1e1018]: 68%
+          - heading "ULID Generator" [level=3] [ref=f1e1019]
+          - paragraph [ref=f1e1020]: Free ULID generator tool for developers. Create Universally Unique Lexicographically Sortable Identifiers for database keys and distributed systems.
+          - list [ref=f1e1021]:
+            - listitem [ref=f1e1022]: Generate sortable ULIDs
+            - listitem [ref=f1e1023]: Bulk generation with copy support
+            - listitem [ref=f1e1024]: Monotonic ordering for time-ordered IDs
+        - link "Security Tools 70% HMAC Generator Free online HMAC signature generator supporting SHA-256, SHA-512, and more algorithms. Create hash-based message authentication codes for APIs. Compute HMAC with SHA-256, SHA-512, and more Secret key input with live output Bulk mode for multiple messages" [ref=f1e1025] [cursor=pointer]:
+          - /url: /tools/hmac-generator
+          - generic [ref=f1e1026]:
+            - generic [ref=f1e1027]: Security Tools
+            - generic [ref=f1e1029]: 70%
+          - heading "HMAC Generator" [level=3] [ref=f1e1030]
+          - paragraph [ref=f1e1031]: Free online HMAC signature generator supporting SHA-256, SHA-512, and more algorithms. Create hash-based message authentication codes for APIs.
+          - list [ref=f1e1032]:
+            - listitem [ref=f1e1033]: Compute HMAC with SHA-256, SHA-512, and more
+            - listitem [ref=f1e1034]: Secret key input with live output
+            - listitem [ref=f1e1035]: Bulk mode for multiple messages
+        - link "Security Tools 66% RSA Key Pair Generator Free online RSA key pair generator for developers. Create secure RSA public and private key pairs for encryption, decryption, and digital signatures. Generate RSA key pairs at 1024–4096 bits PEM export for public and private keys Copy keys to clipboard" [ref=f1e1036] [cursor=pointer]:
+          - /url: /tools/rsa-key-generator
+          - generic [ref=f1e1037]:
+            - generic [ref=f1e1038]: Security Tools
+            - generic [ref=f1e1040]: 66%
+          - heading "RSA Key Pair Generator" [level=3] [ref=f1e1041]
+          - paragraph [ref=f1e1042]: Free online RSA key pair generator for developers. Create secure RSA public and private key pairs for encryption, decryption, and digital signatures.
+          - list [ref=f1e1043]:
+            - listitem [ref=f1e1044]: Generate RSA key pairs at 1024–4096 bits
+            - listitem [ref=f1e1045]: PEM export for public and private keys
+            - listitem [ref=f1e1046]: Copy keys to clipboard
+        - link "Security Tools 74% Password Strength Analyser Free online password strength analyser tool. Evaluate password security, entropy level, and estimated crack time with detailed improvement suggestions. Score passwords across multiple strength metrics Entropy and crack-time estimates Concrete improvement suggestions +1 more" [ref=f1e1047] [cursor=pointer]:
+          - /url: /tools/password-strength
+          - generic [ref=f1e1048]:
+            - generic [ref=f1e1049]: Security Tools
+            - generic [ref=f1e1051]: 74%
+          - heading "Password Strength Analyser" [level=3] [ref=f1e1052]
+          - paragraph [ref=f1e1053]: Free online password strength analyser tool. Evaluate password security, entropy level, and estimated crack time with detailed improvement suggestions.
+          - list [ref=f1e1054]:
+            - listitem [ref=f1e1055]: Score passwords across multiple strength metrics
+            - listitem [ref=f1e1056]: Entropy and crack-time estimates
+            - listitem [ref=f1e1057]: Concrete improvement suggestions
+            - listitem [ref=f1e1058]: +1 more
+        - link "Security Tools 64% BIP39 Mnemonic Generator Free BIP39 mnemonic phrase generator for cryptocurrency wallets. Create secure seed phrases for Bitcoin, Ethereum, and other crypto wallet setup. Generate 12- or 24-word BIP39 mnemonic phrases Validated against the official wordlist Copy the full phrase" [ref=f1e1059] [cursor=pointer]:
+          - /url: /tools/bip39-generator
+          - generic [ref=f1e1060]:
+            - generic [ref=f1e1061]: Security Tools
+            - generic [ref=f1e1063]: 64%
+          - heading "BIP39 Mnemonic Generator" [level=3] [ref=f1e1064]
+          - paragraph [ref=f1e1065]: Free BIP39 mnemonic phrase generator for cryptocurrency wallets. Create secure seed phrases for Bitcoin, Ethereum, and other crypto wallet setup.
+          - list [ref=f1e1066]:
+            - listitem [ref=f1e1067]: Generate 12- or 24-word BIP39 mnemonic phrases
+            - listitem [ref=f1e1068]: Validated against the official wordlist
+            - listitem [ref=f1e1069]: Copy the full phrase
+        - link "Security Tools 60% MAC Address Lookup Free online MAC address lookup tool. Identify the manufacturer and vendor of any MAC address for network administration and security analysis. Look up vendor by MAC address prefix OUI database with format detection Supports common MAC address formats" [ref=f1e1070] [cursor=pointer]:
+          - /url: /tools/mac-address-lookup
+          - generic [ref=f1e1071]:
+            - generic [ref=f1e1072]: Security Tools
+            - generic [ref=f1e1074]: 60%
+          - heading "MAC Address Lookup" [level=3] [ref=f1e1075]
+          - paragraph [ref=f1e1076]: Free online MAC address lookup tool. Identify the manufacturer and vendor of any MAC address for network administration and security analysis.
+          - list [ref=f1e1077]:
+            - listitem [ref=f1e1078]: Look up vendor by MAC address prefix
+            - listitem [ref=f1e1079]: OUI database with format detection
+            - listitem [ref=f1e1080]: Supports common MAC address formats
+        - link "Security Tools 56% MAC Address Generator Free random MAC address generator for network testing and development. Generate valid MAC addresses with custom OUI prefixes for device simulation. Generate random MAC addresses Custom OUI prefix support Bulk generation with copy" [ref=f1e1081] [cursor=pointer]:
+          - /url: /tools/mac-address-generator
+          - generic [ref=f1e1082]:
+            - generic [ref=f1e1083]: Security Tools
+            - generic [ref=f1e1085]: 56%
+          - heading "MAC Address Generator" [level=3] [ref=f1e1086]
+          - paragraph [ref=f1e1087]: Free random MAC address generator for network testing and development. Generate valid MAC addresses with custom OUI prefixes for device simulation.
+          - list [ref=f1e1088]:
+            - listitem [ref=f1e1089]: Generate random MAC addresses
+            - listitem [ref=f1e1090]: Custom OUI prefix support
+            - listitem [ref=f1e1091]: Bulk generation with copy
+        - link "Security Tools 62% Phone Number Parser Free online international phone number parser and formatter. Validate and format phone numbers from any country with standardized output formats. Parse international phone numbers Country-aware formatting and validation Break down country, area, and subscriber parts +1 more" [ref=f1e1092] [cursor=pointer]:
+          - /url: /tools/phone-number-parser
+          - generic [ref=f1e1093]:
+            - generic [ref=f1e1094]: Security Tools
+            - generic [ref=f1e1096]: 62%
+          - heading "Phone Number Parser" [level=3] [ref=f1e1097]
+          - paragraph [ref=f1e1098]: Free online international phone number parser and formatter. Validate and format phone numbers from any country with standardized output formats.
+          - list [ref=f1e1099]:
+            - listitem [ref=f1e1100]: Parse international phone numbers
+            - listitem [ref=f1e1101]: Country-aware formatting and validation
+            - listitem [ref=f1e1102]: Break down country, area, and subscriber parts
+            - listitem [ref=f1e1103]: +1 more
+        - link "Security Tools 58% IBAN Validator Free online IBAN validator and parser for international banking. Validate and analyze International Bank Account Numbers with country-specific rules. Validate IBANs against country-specific rules Extract bank and account details Format IBANs with proper spacing" [ref=f1e1104] [cursor=pointer]:
+          - /url: /tools/iban-validator
+          - generic [ref=f1e1105]:
+            - generic [ref=f1e1106]: Security Tools
+            - generic [ref=f1e1108]: 58%
+          - heading "IBAN Validator" [level=3] [ref=f1e1109]
+          - paragraph [ref=f1e1110]: Free online IBAN validator and parser for international banking. Validate and analyze International Bank Account Numbers with country-specific rules.
+          - list [ref=f1e1111]:
+            - listitem [ref=f1e1112]: Validate IBANs against country-specific rules
+            - listitem [ref=f1e1113]: Extract bank and account details
+            - listitem [ref=f1e1114]: Format IBANs with proper spacing
+        - link "Security Tools 70% Encrypt / Decrypt Free online encryption and decryption tool supporting AES, TripleDES, Rabbit, and RC4 algorithms. Secure your text data with multiple cipher options. Encrypt text with AES, TripleDES, Rabbit, and RC4 Passphrase-based key derivation Copy ciphertext or plaintext instantly +1 more" [ref=f1e1115] [cursor=pointer]:
+          - /url: /tools/encrypt-decrypt
+          - generic [ref=f1e1116]:
+            - generic [ref=f1e1117]: Security Tools
+            - generic [ref=f1e1119]: 70%
+          - heading "Encrypt / Decrypt" [level=3] [ref=f1e1120]
+          - paragraph [ref=f1e1121]: Free online encryption and decryption tool supporting AES, TripleDES, Rabbit, and RC4 algorithms. Secure your text data with multiple cipher options.
+          - list [ref=f1e1122]:
+            - listitem [ref=f1e1123]: Encrypt text with AES, TripleDES, Rabbit, and RC4
+            - listitem [ref=f1e1124]: Passphrase-based key derivation
+            - listitem [ref=f1e1125]: Copy ciphertext or plaintext instantly
+            - listitem [ref=f1e1126]: +1 more
+        - link "Image Tools Featured 87% Image Compressor Free online image compressor with quality control for JPEG, PNG, and WebP formats. Reduce image file sizes without losing visible quality for web. Compress JPEG, PNG, WebP, and AVIF images Quality and preset controls Batch processing with download-all +1 more" [ref=f1e1127] [cursor=pointer]:
+          - /url: /tools/image-compressor
+          - generic [ref=f1e1128]:
+            - generic [ref=f1e1129]:
+              - generic [ref=f1e1130]: Image Tools
+              - generic [ref=f1e1131]: Featured
+            - generic [ref=f1e1135]: 87%
+          - heading "Image Compressor" [level=3] [ref=f1e1136]
+          - paragraph [ref=f1e1137]: Free online image compressor with quality control for JPEG, PNG, and WebP formats. Reduce image file sizes without losing visible quality for web.
+          - list [ref=f1e1138]:
+            - listitem [ref=f1e1139]: Compress JPEG, PNG, WebP, and AVIF images
+            - listitem [ref=f1e1140]: Quality and preset controls
+            - listitem [ref=f1e1141]: Batch processing with download-all
+            - listitem [ref=f1e1142]: +1 more
+        - link "Image Tools Featured 83% Image Resizer Free online image resizer, compressor, and converter with batch processing support. Resize multiple images to any dimensions with quality retention. Resize images to exact dimensions Batch resize multiple files at once Preset sizes and aspect-ratio lock +1 more" [ref=f1e1143] [cursor=pointer]:
+          - /url: /tools/image-resizer
+          - generic [ref=f1e1144]:
+            - generic [ref=f1e1145]:
+              - generic [ref=f1e1146]: Image Tools
+              - generic [ref=f1e1147]: Featured
+            - generic [ref=f1e1151]: 83%
+          - heading "Image Resizer" [level=3] [ref=f1e1152]
+          - paragraph [ref=f1e1153]: Free online image resizer, compressor, and converter with batch processing support. Resize multiple images to any dimensions with quality retention.
+          - list [ref=f1e1154]:
+            - listitem [ref=f1e1155]: Resize images to exact dimensions
+            - listitem [ref=f1e1156]: Batch resize multiple files at once
+            - listitem [ref=f1e1157]: Preset sizes and aspect-ratio lock
+            - listitem [ref=f1e1158]: +1 more
+        - link "Image Tools 70% Favicon Generator Free favicon generator tool for websites. Create favicons and app icons from images or text for all platforms including Apple and Android devices. Generate favicons from images or text Multiple platform sizes in one export Download as ICO or PNG set +1 more" [ref=f1e1159] [cursor=pointer]:
+          - /url: /tools/favicon-generator
+          - generic [ref=f1e1160]:
+            - generic [ref=f1e1161]: Image Tools
+            - generic [ref=f1e1163]: 70%
+          - heading "Favicon Generator" [level=3] [ref=f1e1164]
+          - paragraph [ref=f1e1165]: Free favicon generator tool for websites. Create favicons and app icons from images or text for all platforms including Apple and Android devices.
+          - list [ref=f1e1166]:
+            - listitem [ref=f1e1167]: Generate favicons from images or text
+            - listitem [ref=f1e1168]: Multiple platform sizes in one export
+            - listitem [ref=f1e1169]: Download as ICO or PNG set
+            - listitem [ref=f1e1170]: +1 more
+        - link "Image Tools 68% SVG Optimizer Free online SVG optimizer and minifier powered by SVGO. Reduce SVG file sizes by removing unnecessary metadata while preserving visual quality. Optimize SVG files with SVGO rules Strip metadata and unused definitions Report exact size savings +1 more" [ref=f1e1171] [cursor=pointer]:
+          - /url: /tools/svg-optimizer
+          - generic [ref=f1e1172]:
+            - generic [ref=f1e1173]: Image Tools
+            - generic [ref=f1e1175]: 68%
+          - heading "SVG Optimizer" [level=3] [ref=f1e1176]
+          - paragraph [ref=f1e1177]: Free online SVG optimizer and minifier powered by SVGO. Reduce SVG file sizes by removing unnecessary metadata while preserving visual quality.
+          - list [ref=f1e1178]:
+            - listitem [ref=f1e1179]: Optimize SVG files with SVGO rules
+            - listitem [ref=f1e1180]: Strip metadata and unused definitions
+            - listitem [ref=f1e1181]: Report exact size savings
+            - listitem [ref=f1e1182]: +1 more
+        - link "Image Tools 64% Placeholder Image Generator Free placeholder image generator with custom dimensions and colors. Create temporary placeholder images for web design and prototyping layouts. Generate placeholders with custom dimensions Custom colors and text labels SVG and PNG output +1 more" [ref=f1e1183] [cursor=pointer]:
+          - /url: /tools/placeholder-image
+          - generic [ref=f1e1184]:
+            - generic [ref=f1e1185]: Image Tools
+            - generic [ref=f1e1187]: 64%
+          - heading "Placeholder Image Generator" [level=3] [ref=f1e1188]
+          - paragraph [ref=f1e1189]: Free placeholder image generator with custom dimensions and colors. Create temporary placeholder images for web design and prototyping layouts.
+          - list [ref=f1e1190]:
+            - listitem [ref=f1e1191]: Generate placeholders with custom dimensions
+            - listitem [ref=f1e1192]: Custom colors and text labels
+            - listitem [ref=f1e1193]: SVG and PNG output
+            - listitem [ref=f1e1194]: +1 more
+        - link "Image Tools 66% SVG to CSS Converter Free SVG to CSS converter tool for web developers. Convert SVG code to optimized CSS background-image data URIs for inline embedding. Convert SVG files to CSS data URIs Optimized, minified output Copy the ready-to-use CSS value" [ref=f1e1195] [cursor=pointer]:
+          - /url: /tools/svg-to-css
+          - generic [ref=f1e1196]:
+            - generic [ref=f1e1197]: Image Tools
+            - generic [ref=f1e1199]: 66%
+          - heading "SVG to CSS Converter" [level=3] [ref=f1e1200]
+          - paragraph [ref=f1e1201]: Free SVG to CSS converter tool for web developers. Convert SVG code to optimized CSS background-image data URIs for inline embedding.
+          - list [ref=f1e1202]:
+            - listitem [ref=f1e1203]: Convert SVG files to CSS data URIs
+            - listitem [ref=f1e1204]: Optimized, minified output
+            - listitem [ref=f1e1205]: Copy the ready-to-use CSS value
+        - link "Image Tools 72% EXIF Reader Free online EXIF reader and metadata viewer for images. Extract and view camera settings, GPS coordinates, and other embedded image metadata. Extract EXIF metadata from images Camera settings, GPS, and date info Upload files directly from disk" [ref=f1e1206] [cursor=pointer]:
+          - /url: /tools/exif-reader
+          - generic [ref=f1e1207]:
+            - generic [ref=f1e1208]: Image Tools
+            - generic [ref=f1e1210]: 72%
+          - heading "EXIF Reader" [level=3] [ref=f1e1211]
+          - paragraph [ref=f1e1212]: Free online EXIF reader and metadata viewer for images. Extract and view camera settings, GPS coordinates, and other embedded image metadata.
+          - list [ref=f1e1213]:
+            - listitem [ref=f1e1214]: Extract EXIF metadata from images
+            - listitem [ref=f1e1215]: Camera settings, GPS, and date info
+            - listitem [ref=f1e1216]: Upload files directly from disk
+        - link "Image Tools 52% EXIF Transfer Free online EXIF metadata transfer tool. Copy and transfer EXIF data from one image to another while preserving original image quality intact. Copy EXIF metadata between images Preserve original image quality Batch transfer support" [ref=f1e1217] [cursor=pointer]:
+          - /url: /tools/exif-transfer
+          - generic [ref=f1e1218]:
+            - generic [ref=f1e1219]: Image Tools
+            - generic [ref=f1e1221]: 52%
+          - heading "EXIF Transfer" [level=3] [ref=f1e1222]
+          - paragraph [ref=f1e1223]: Free online EXIF metadata transfer tool. Copy and transfer EXIF data from one image to another while preserving original image quality intact.
+          - list [ref=f1e1224]:
+            - listitem [ref=f1e1225]: Copy EXIF metadata between images
+            - listitem [ref=f1e1226]: Preserve original image quality
+            - listitem [ref=f1e1227]: Batch transfer support
+        - link "Image Tools 60% Color Eyedropper Free online color eyedropper and picker tool for designers. Pick and extract colors from anywhere on your screen with HEX, RGB, and HSL values. Pick colors from anywhere on screen HEX, RGB, and HSL values at once Color history for quick reuse" [ref=f1e1228] [cursor=pointer]:
+          - /url: /tools/color-eyedropper
+          - generic [ref=f1e1229]:
+            - generic [ref=f1e1230]: Image Tools
+            - generic [ref=f1e1232]: 60%
+          - heading "Color Eyedropper" [level=3] [ref=f1e1233]
+          - paragraph [ref=f1e1234]: Free online color eyedropper and picker tool for designers. Pick and extract colors from anywhere on your screen with HEX, RGB, and HSL values.
+          - list [ref=f1e1235]:
+            - listitem [ref=f1e1236]: Pick colors from anywhere on screen
+            - listitem [ref=f1e1237]: HEX, RGB, and HSL values at once
+            - listitem [ref=f1e1238]: Color history for quick reuse
+        - link "Utilities Featured 77% Regex Tester Free online regex tester and debugger with real-time matching, capture groups, and extended flag support. Test and debug regular expressions easily. Test regular expressions with live matches Capture groups and detailed match info Configurable flags +1 more" [ref=f1e1239] [cursor=pointer]:
+          - /url: /tools/regex-tester
+          - generic [ref=f1e1240]:
+            - generic [ref=f1e1241]:
+              - generic [ref=f1e1242]: Utilities
+              - generic [ref=f1e1243]: Featured
+            - generic [ref=f1e1247]: 77%
+          - heading "Regex Tester" [level=3] [ref=f1e1248]
+          - paragraph [ref=f1e1249]: Free online regex tester and debugger with real-time matching, capture groups, and extended flag support. Test and debug regular expressions easily.
+          - list [ref=f1e1250]:
+            - listitem [ref=f1e1251]: Test regular expressions with live matches
+            - listitem [ref=f1e1252]: Capture groups and detailed match info
+            - listitem [ref=f1e1253]: Configurable flags
+            - listitem [ref=f1e1254]: +1 more
+        - link "Utilities 64% Text Diff Checker Free online text diff checker and comparison tool. Compare two texts side-by-side or in unified view with highlighted additions and deletions. Compare text side by side and unified Highlight additions, deletions, and changes Line numbers and match counts +1 more" [ref=f1e1255] [cursor=pointer]:
+          - /url: /tools/diff-checker
+          - generic [ref=f1e1256]:
+            - generic [ref=f1e1257]: Utilities
+            - generic [ref=f1e1259]: 64%
+          - heading "Text Diff Checker" [level=3] [ref=f1e1260]
+          - paragraph [ref=f1e1261]: Free online text diff checker and comparison tool. Compare two texts side-by-side or in unified view with highlighted additions and deletions.
+          - list [ref=f1e1262]:
+            - listitem [ref=f1e1263]: Compare text side by side and unified
+            - listitem [ref=f1e1264]: Highlight additions, deletions, and changes
+            - listitem [ref=f1e1265]: Line numbers and match counts
+            - listitem [ref=f1e1266]: +1 more
+        - link "Utilities Featured 80% Word Counter Free online word counter and text analyzer tool. Count words, characters, sentences, and analyze readability with Flesch reading ease scores. Count words, characters, and sentences Reading time estimate Flesch readability score +1 more" [ref=f1e1267] [cursor=pointer]:
+          - /url: /tools/word-counter
+          - generic [ref=f1e1268]:
+            - generic [ref=f1e1269]:
+              - generic [ref=f1e1270]: Utilities
+              - generic [ref=f1e1271]: Featured
+            - generic [ref=f1e1275]: 80%
+          - heading "Word Counter" [level=3] [ref=f1e1276]
+          - paragraph [ref=f1e1277]: Free online word counter and text analyzer tool. Count words, characters, sentences, and analyze readability with Flesch reading ease scores.
+          - list [ref=f1e1278]:
+            - listitem [ref=f1e1279]: Count words, characters, and sentences
+            - listitem [ref=f1e1280]: Reading time estimate
+            - listitem [ref=f1e1281]: Flesch readability score
+            - listitem [ref=f1e1282]: +1 more
+        - link "Utilities 62% Text Sorter & Deduplicator Free online text sorter and deduplicator tool. Sort lines alphabetically, remove duplicates, filter empty lines, and randomize text order. Sort lines alphabetically or reverse Remove duplicates and empty lines Randomize line order +1 more" [ref=f1e1283] [cursor=pointer]:
+          - /url: /tools/text-sorter
+          - generic [ref=f1e1284]:
+            - generic [ref=f1e1285]: Utilities
+            - generic [ref=f1e1287]: 62%
+          - heading "Text Sorter & Deduplicator" [level=3] [ref=f1e1288]
+          - paragraph [ref=f1e1289]: Free online text sorter and deduplicator tool. Sort lines alphabetically, remove duplicates, filter empty lines, and randomize text order.
+          - list [ref=f1e1290]:
+            - listitem [ref=f1e1291]: Sort lines alphabetically or reverse
+            - listitem [ref=f1e1292]: Remove duplicates and empty lines
+            - listitem [ref=f1e1293]: Randomize line order
+            - listitem [ref=f1e1294]: +1 more
+        - link "Utilities 68% HTTP Header Parser Free online HTTP header parser and analyzer for developers. Inspect and debug HTTP request and response headers with detailed field breakdown. Parse HTTP request and response headers Break down each header field Copy individual header values" [ref=f1e1295] [cursor=pointer]:
+          - /url: /tools/http-header-parser
+          - generic [ref=f1e1296]:
+            - generic [ref=f1e1297]: Utilities
+            - generic [ref=f1e1299]: 68%
+          - heading "HTTP Header Parser" [level=3] [ref=f1e1300]
+          - paragraph [ref=f1e1301]: Free online HTTP header parser and analyzer for developers. Inspect and debug HTTP request and response headers with detailed field breakdown.
+          - list [ref=f1e1302]:
+            - listitem [ref=f1e1303]: Parse HTTP request and response headers
+            - listitem [ref=f1e1304]: Break down each header field
+            - listitem [ref=f1e1305]: Copy individual header values
+        - link "Utilities 70% URL Parser Free online URL parser and analyzer tool for developers. Break down URLs into protocol, host, path, query parameters, and hash components. Decompose URLs into protocol, host, path, and query Parse query parameters into a table Copy any URL component +1 more" [ref=f1e1306] [cursor=pointer]:
+          - /url: /tools/url-parser
+          - generic [ref=f1e1307]:
+            - generic [ref=f1e1308]: Utilities
+            - generic [ref=f1e1310]: 70%
+          - heading "URL Parser" [level=3] [ref=f1e1311]
+          - paragraph [ref=f1e1312]: Free online URL parser and analyzer tool for developers. Break down URLs into protocol, host, path, query parameters, and hash components.
+          - list [ref=f1e1313]:
+            - listitem [ref=f1e1314]: Decompose URLs into protocol, host, path, and query
+            - listitem [ref=f1e1315]: Parse query parameters into a table
+            - listitem [ref=f1e1316]: Copy any URL component
+            - listitem [ref=f1e1317]: +1 more
+        - link "Utilities 66% User Agent Parser Free online user agent string parser and analyzer. Extract browser, OS, and device information from any User-Agent header string instantly. Extract browser, OS, and device from user agents Detailed breakdown with versions Real-time parsing as you paste" [ref=f1e1318] [cursor=pointer]:
+          - /url: /tools/user-agent-parser
+          - generic [ref=f1e1319]:
+            - generic [ref=f1e1320]: Utilities
+            - generic [ref=f1e1322]: 66%
+          - heading "User Agent Parser" [level=3] [ref=f1e1323]
+          - paragraph [ref=f1e1324]: Free online user agent string parser and analyzer. Extract browser, OS, and device information from any User-Agent header string instantly.
+          - list [ref=f1e1325]:
+            - listitem [ref=f1e1326]: Extract browser, OS, and device from user agents
+            - listitem [ref=f1e1327]: Detailed breakdown with versions
+            - listitem [ref=f1e1328]: Real-time parsing as you paste
+        - link "Utilities Featured 74% IP Address Calculator Free online IP address calculator and subnet tool. Calculate subnet masks, CIDR notation, host ranges, and network addresses for IPv4. Calculate IPv4 subnets from CIDR Network, broadcast, and host ranges Wildcard masks and host counts +1 more" [ref=f1e1329] [cursor=pointer]:
+          - /url: /tools/ip-calculator
+          - generic [ref=f1e1330]:
+            - generic [ref=f1e1331]:
+              - generic [ref=f1e1332]: Utilities
+              - generic [ref=f1e1333]: Featured
+            - generic [ref=f1e1337]: 74%
+          - heading "IP Address Calculator" [level=3] [ref=f1e1338]
+          - paragraph [ref=f1e1339]: Free online IP address calculator and subnet tool. Calculate subnet masks, CIDR notation, host ranges, and network addresses for IPv4.
+          - list [ref=f1e1340]:
+            - listitem [ref=f1e1341]: Calculate IPv4 subnets from CIDR
+            - listitem [ref=f1e1342]: Network, broadcast, and host ranges
+            - listitem [ref=f1e1343]: Wildcard masks and host counts
+            - listitem [ref=f1e1344]: +1 more
+        - link "Utilities 72% JSON Path Finder Free online JSON path finder and extractor tool. Find and extract specific values from complex JSON data using JSONPath expressions quickly. Query JSON with JSONPath expressions Extract matching values instantly Highlight matched locations +1 more" [ref=f1e1345] [cursor=pointer]:
+          - /url: /tools/json-path-finder
+          - generic [ref=f1e1346]:
+            - generic [ref=f1e1347]: Utilities
+            - generic [ref=f1e1349]: 72%
+          - heading "JSON Path Finder" [level=3] [ref=f1e1350]
+          - paragraph [ref=f1e1351]: Free online JSON path finder and extractor tool. Find and extract specific values from complex JSON data using JSONPath expressions quickly.
+          - list [ref=f1e1352]:
+            - listitem [ref=f1e1353]: Query JSON with JSONPath expressions
+            - listitem [ref=f1e1354]: Extract matching values instantly
+            - listitem [ref=f1e1355]: Highlight matched locations
+            - listitem [ref=f1e1356]: +1 more
+        - link "Utilities 76% Markdown Preview Free online Markdown preview editor with live syntax highlighting. Write and preview Markdown documents in real-time with formatted output. Live preview of Markdown as you type GitHub-flavored Markdown support Copy the rendered HTML output" [ref=f1e1357] [cursor=pointer]:
+          - /url: /tools/markdown-preview
+          - generic [ref=f1e1358]:
+            - generic [ref=f1e1359]: Utilities
+            - generic [ref=f1e1361]: 76%
+          - heading "Markdown Preview" [level=3] [ref=f1e1362]
+          - paragraph [ref=f1e1363]: Free online Markdown preview editor with live syntax highlighting. Write and preview Markdown documents in real-time with formatted output.
+          - list [ref=f1e1364]:
+            - listitem [ref=f1e1365]: Live preview of Markdown as you type
+            - listitem [ref=f1e1366]: GitHub-flavored Markdown support
+            - listitem [ref=f1e1367]: Copy the rendered HTML output
+        - link "Utilities 60% Slug Generator Free URL slug generator with transliteration support for web developers. Convert any text into URL-safe slug strings for clean web addresses. Generate URL-safe slugs from any text Transliteration for non-Latin scripts Custom separator and case options +1 more" [ref=f1e1368] [cursor=pointer]:
+          - /url: /tools/slug-generator
+          - generic [ref=f1e1369]:
+            - generic [ref=f1e1370]: Utilities
+            - generic [ref=f1e1372]: 60%
+          - heading "Slug Generator" [level=3] [ref=f1e1373]
+          - paragraph [ref=f1e1374]: Free URL slug generator with transliteration support for web developers. Convert any text into URL-safe slug strings for clean web addresses.
+          - list [ref=f1e1375]:
+            - listitem [ref=f1e1376]: Generate URL-safe slugs from any text
+            - listitem [ref=f1e1377]: Transliteration for non-Latin scripts
+            - listitem [ref=f1e1378]: Custom separator and case options
+            - listitem [ref=f1e1379]: +1 more
+        - link "Utilities 58% String Length Calculator Free online string length calculator for developers. Measure string length in bytes, characters, and Unicode code points with detailed breakdown. Count characters, bytes, and code points Encoding-aware measurement Real-time results while typing" [ref=f1e1380] [cursor=pointer]:
+          - /url: /tools/string-length
+          - generic [ref=f1e1381]:
+            - generic [ref=f1e1382]: Utilities
+            - generic [ref=f1e1384]: 58%
+          - heading "String Length Calculator" [level=3] [ref=f1e1385]
+          - paragraph [ref=f1e1386]: Free online string length calculator for developers. Measure string length in bytes, characters, and Unicode code points with detailed breakdown.
+          - list [ref=f1e1387]:
+            - listitem [ref=f1e1388]: Count characters, bytes, and code points
+            - listitem [ref=f1e1389]: Encoding-aware measurement
+            - listitem [ref=f1e1390]: Real-time results while typing
+        - link "Utilities 62% DNS Lookup Free online DNS lookup tool for network administrators. Perform A, AAAA, MX, NS, TXT, and CNAME record lookups for any domain name. Resolve A, AAAA, MX, NS, TXT, and CNAME records Live results from real DNS servers Query against a chosen nameserver" [ref=f1e1391] [cursor=pointer]:
+          - /url: /tools/dns-lookup
+          - generic [ref=f1e1392]:
+            - generic [ref=f1e1393]: Utilities
+            - generic [ref=f1e1395]: 62%
+          - heading "DNS Lookup" [level=3] [ref=f1e1396]
+          - paragraph [ref=f1e1397]: Free online DNS lookup tool for network administrators. Perform A, AAAA, MX, NS, TXT, and CNAME record lookups for any domain name.
+          - list [ref=f1e1398]:
+            - listitem [ref=f1e1399]: Resolve A, AAAA, MX, NS, TXT, and CNAME records
+            - listitem [ref=f1e1400]: Live results from real DNS servers
+            - listitem [ref=f1e1401]: Query against a chosen nameserver
+        - link "Utilities 65% IP Address Lookup Free online IP address lookup and geolocation tool. Find location, ISP, ASN, and network details for any IP address worldwide instantly. Geolocate an IP address ISP, ASN, and country details Live results from public databases" [ref=f1e1402] [cursor=pointer]:
+          - /url: /tools/ip-lookup
+          - generic [ref=f1e1403]:
+            - generic [ref=f1e1404]: Utilities
+            - generic [ref=f1e1406]: 65%
+          - heading "IP Address Lookup" [level=3] [ref=f1e1407]
+          - paragraph [ref=f1e1408]: Free online IP address lookup and geolocation tool. Find location, ISP, ASN, and network details for any IP address worldwide instantly.
+          - list [ref=f1e1409]:
+            - listitem [ref=f1e1410]: Geolocate an IP address
+            - listitem [ref=f1e1411]: ISP, ASN, and country details
+            - listitem [ref=f1e1412]: Live results from public databases
+        - link "Utilities 62% Basic Auth Generator Free HTTP Basic Authentication header generator tool for developers. Create Authorization headers for testing APIs and protected endpoints. Generate HTTP Basic Authorization headers Username and password input Copy the ready-to-use header" [ref=f1e1413] [cursor=pointer]:
+          - /url: /tools/basic-auth-generator
+          - generic [ref=f1e1414]:
+            - generic [ref=f1e1415]: Utilities
+            - generic [ref=f1e1417]: 62%
+          - heading "Basic Auth Generator" [level=3] [ref=f1e1418]
+          - paragraph [ref=f1e1419]: Free HTTP Basic Authentication header generator tool for developers. Create Authorization headers for testing APIs and protected endpoints.
+          - list [ref=f1e1420]:
+            - listitem [ref=f1e1421]: Generate HTTP Basic Authorization headers
+            - listitem [ref=f1e1422]: Username and password input
+            - listitem [ref=f1e1423]: Copy the ready-to-use header
+        - link "Utilities 60% MIME Types Lookup Free online MIME types lookup tool for web developers. Find MIME types by file extension or discover file extensions for any MIME type. Look up MIME types by file extension Reverse lookup by MIME type Searchable reference table" [ref=f1e1424] [cursor=pointer]:
+          - /url: /tools/mime-types
+          - generic [ref=f1e1425]:
+            - generic [ref=f1e1426]: Utilities
+            - generic [ref=f1e1428]: 60%
+          - heading "MIME Types Lookup" [level=3] [ref=f1e1429]
+          - paragraph [ref=f1e1430]: Free online MIME types lookup tool for web developers. Find MIME types by file extension or discover file extensions for any MIME type.
+          - list [ref=f1e1431]:
+            - listitem [ref=f1e1432]: Look up MIME types by file extension
+            - listitem [ref=f1e1433]: Reverse lookup by MIME type
+            - listitem [ref=f1e1434]: Searchable reference table
+        - link "Utilities 55% Keycode Info Free online keyboard keycode information reference tool. Display key codes, which, and location values for keyboard key press events in browsers. See live key, code, and location values Reference table for common keys Works without a mouse" [ref=f1e1435] [cursor=pointer]:
+          - /url: /tools/keycode-info
+          - generic [ref=f1e1436]:
+            - generic [ref=f1e1437]: Utilities
+            - generic [ref=f1e1439]: 55%
+          - heading "Keycode Info" [level=3] [ref=f1e1440]
+          - paragraph [ref=f1e1441]: Free online keyboard keycode information reference tool. Display key codes, which, and location values for keyboard key press events in browsers.
+          - list [ref=f1e1442]:
+            - listitem [ref=f1e1443]: See live key, code, and location values
+            - listitem [ref=f1e1444]: Reference table for common keys
+            - listitem [ref=f1e1445]: Works without a mouse
+        - link "Utilities 64% String to Slug Converter Free online string to URL slug converter. Transform any text into clean, URL-friendly slugs for web development and content management. Turn any string into a URL slug Real-time output as you type Copy the generated slug" [ref=f1e1446] [cursor=pointer]:
+          - /url: /tools/slugify-string
+          - generic [ref=f1e1447]:
+            - generic [ref=f1e1448]: Utilities
+            - generic [ref=f1e1450]: 64%
+          - heading "String to Slug Converter" [level=3] [ref=f1e1451]
+          - paragraph [ref=f1e1452]: Free online string to URL slug converter. Transform any text into clean, URL-friendly slugs for web development and content management.
+          - list [ref=f1e1453]:
+            - listitem [ref=f1e1454]: Turn any string into a URL slug
+            - listitem [ref=f1e1455]: Real-time output as you type
+            - listitem [ref=f1e1456]: Copy the generated slug
+        - link "Utilities 56% Safelink Decoder Free online safelink and URL shortener decoder tool. Reveal and decode redirect URLs from URL shorteners and safelink wrapper services. Decode safelink and URL-shortener wrappers Reveal the underlying redirect target Copy the decoded URL" [ref=f1e1457] [cursor=pointer]:
+          - /url: /tools/safelink-decoder
+          - generic [ref=f1e1458]:
+            - generic [ref=f1e1459]: Utilities
+            - generic [ref=f1e1461]: 56%
+          - heading "Safelink Decoder" [level=3] [ref=f1e1462]
+          - paragraph [ref=f1e1463]: Free online safelink and URL shortener decoder tool. Reveal and decode redirect URLs from URL shorteners and safelink wrapper services.
+          - list [ref=f1e1464]:
+            - listitem [ref=f1e1465]: Decode safelink and URL-shortener wrappers
+            - listitem [ref=f1e1466]: Reveal the underlying redirect target
+            - listitem [ref=f1e1467]: Copy the decoded URL
+        - link "Utilities 58% Device Information Free online device and browser information tool. Display detailed hardware, software, screen, and network information for your current device. Report browser, OS, and screen info Hardware and network details Everything computed locally" [ref=f1e1468] [cursor=pointer]:
+          - /url: /tools/device-information
+          - generic [ref=f1e1469]:
+            - generic [ref=f1e1470]: Utilities
+            - generic [ref=f1e1472]: 58%
+          - heading "Device Information" [level=3] [ref=f1e1473]
+          - paragraph [ref=f1e1474]: Free online device and browser information tool. Display detailed hardware, software, screen, and network information for your current device.
+          - list [ref=f1e1475]:
+            - listitem [ref=f1e1476]: Report browser, OS, and screen info
+            - listitem [ref=f1e1477]: Hardware and network details
+            - listitem [ref=f1e1478]: Everything computed locally
+        - link "Utilities 55% Email Normalizer Free online email address normalizer tool. Clean and normalize email addresses by removing aliases, plus addressing, and formatting inconsistencies. Normalize emails to canonical form Remove plus aliases and comments Lowercase domains for comparisons" [ref=f1e1479] [cursor=pointer]:
+          - /url: /tools/email-normalizer
+          - generic [ref=f1e1480]:
+            - generic [ref=f1e1481]: Utilities
+            - generic [ref=f1e1483]: 55%
+          - heading "Email Normalizer" [level=3] [ref=f1e1484]
+          - paragraph [ref=f1e1485]: Free online email address normalizer tool. Clean and normalize email addresses by removing aliases, plus addressing, and formatting inconsistencies.
+          - list [ref=f1e1486]:
+            - listitem [ref=f1e1487]: Normalize emails to canonical form
+            - listitem [ref=f1e1488]: Remove plus aliases and comments
+            - listitem [ref=f1e1489]: Lowercase domains for comparisons
+        - link "Utilities 65% Text Diff Visualizer Free online text diff visualizer for comparing documents. View side-by-side or inline text comparisons with clearly highlighted changes and edits. Compare text with a visual side-by-side diff Word- and line-level change detection Highlight additions and deletions" [ref=f1e1490] [cursor=pointer]:
+          - /url: /tools/text-diff-visual
+          - generic [ref=f1e1491]:
+            - generic [ref=f1e1492]: Utilities
+            - generic [ref=f1e1494]: 65%
+          - heading "Text Diff Visualizer" [level=3] [ref=f1e1495]
+          - paragraph [ref=f1e1496]: Free online text diff visualizer for comparing documents. View side-by-side or inline text comparisons with clearly highlighted changes and edits.
+          - list [ref=f1e1497]:
+            - listitem [ref=f1e1498]: Compare text with a visual side-by-side diff
+            - listitem [ref=f1e1499]: Word- and line-level change detection
+            - listitem [ref=f1e1500]: Highlight additions and deletions
+        - link "Utilities 60% String Obfuscator Free online string obfuscation tool for developers. Encode text using hex, binary, ROT13, Base64, and other encoding methods for protection. Obfuscate text with hex, binary, ROT13, and Base64 Multiple encoding methods at once Copy any encoded form" [ref=f1e1501] [cursor=pointer]:
+          - /url: /tools/string-obfuscator
+          - generic [ref=f1e1502]:
+            - generic [ref=f1e1503]: Utilities
+            - generic [ref=f1e1505]: 60%
+          - heading "String Obfuscator" [level=3] [ref=f1e1506]
+          - paragraph [ref=f1e1507]: Free online string obfuscation tool for developers. Encode text using hex, binary, ROT13, Base64, and other encoding methods for protection.
+          - list [ref=f1e1508]:
+            - listitem [ref=f1e1509]: Obfuscate text with hex, binary, ROT13, and Base64
+            - listitem [ref=f1e1510]: Multiple encoding methods at once
+            - listitem [ref=f1e1511]: Copy any encoded form
+        - link "Utilities 68% Math Evaluator Free online math expression evaluator and calculator. Evaluate complex mathematical expressions with support for functions and variables. Evaluate math expressions in real time Functions, constants, and variables Full operator precedence" [ref=f1e1512] [cursor=pointer]:
+          - /url: /tools/math-evaluator
+          - generic [ref=f1e1513]:
+            - generic [ref=f1e1514]: Utilities
+            - generic [ref=f1e1516]: 68%
+          - heading "Math Evaluator" [level=3] [ref=f1e1517]
+          - paragraph [ref=f1e1518]: Free online math expression evaluator and calculator. Evaluate complex mathematical expressions with support for functions and variables.
+          - list [ref=f1e1519]:
+            - listitem [ref=f1e1520]: Evaluate math expressions in real time
+            - listitem [ref=f1e1521]: Functions, constants, and variables
+            - listitem [ref=f1e1522]: Full operator precedence
+        - link "Utilities 58% Chronometer Free online stopwatch and chronometer with lap tracking. Measure precise time intervals with split timing for sports, cooking, and testing. Precision stopwatch with lap times Start, pause, reset, and lap controls Export lap history" [ref=f1e1523] [cursor=pointer]:
+          - /url: /tools/chronometer
+          - generic [ref=f1e1524]:
+            - generic [ref=f1e1525]: Utilities
+            - generic [ref=f1e1527]: 58%
+          - heading "Chronometer" [level=3] [ref=f1e1528]
+          - paragraph [ref=f1e1529]: Free online stopwatch and chronometer with lap tracking. Measure precise time intervals with split timing for sports, cooking, and testing.
+          - list [ref=f1e1530]:
+            - listitem [ref=f1e1531]: Precision stopwatch with lap times
+            - listitem [ref=f1e1532]: Start, pause, reset, and lap controls
+            - listitem [ref=f1e1533]: Export lap history
+        - link "Utilities 70% Percentage Calculator Free online percentage calculator for quick math calculations. Compute percentages, percentage changes, increases, decreases, and differences. Percentages, change, and increase/decrease Quick presets for common math Real-time results" [ref=f1e1534] [cursor=pointer]:
+          - /url: /tools/percentage-calculator
+          - generic [ref=f1e1535]:
+            - generic [ref=f1e1536]: Utilities
+            - generic [ref=f1e1538]: 70%
+          - heading "Percentage Calculator" [level=3] [ref=f1e1539]
+          - paragraph [ref=f1e1540]: Free online percentage calculator for quick math calculations. Compute percentages, percentage changes, increases, decreases, and differences.
+          - list [ref=f1e1541]:
+            - listitem [ref=f1e1542]: Percentages, change, and increase/decrease
+            - listitem [ref=f1e1543]: Quick presets for common math
+            - listitem [ref=f1e1544]: Real-time results
+        - link "Utilities 72% Emoji Picker Free online emoji picker and browser tool with search functionality. Find and copy the perfect emoji from categorized libraries with ease. Searchable emoji library Category filtering One-click copy to clipboard" [ref=f1e1545] [cursor=pointer]:
+          - /url: /tools/emoji-picker
+          - generic [ref=f1e1546]:
+            - generic [ref=f1e1547]: Utilities
+            - generic [ref=f1e1549]: 72%
+          - heading "Emoji Picker" [level=3] [ref=f1e1550]
+          - paragraph [ref=f1e1551]: Free online emoji picker and browser tool with search functionality. Find and copy the perfect emoji from categorized libraries with ease.
+          - list [ref=f1e1552]:
+            - listitem [ref=f1e1553]: Searchable emoji library
+            - listitem [ref=f1e1554]: Category filtering
+            - listitem [ref=f1e1555]: One-click copy to clipboard
+        - link "Utilities 64% IPv4 Subnet Calculator Free online IPv4 subnet calculator for network planning. Calculate subnets, ranges, broadcast addresses, and host counts from CIDR notation. CIDR-to-subnet details and vice versa Usable host range and counts Wildcard mask calculation +1 more" [ref=f1e1556] [cursor=pointer]:
+          - /url: /tools/ipv4-subnet-calculator
+          - generic [ref=f1e1557]:
+            - generic [ref=f1e1558]: Utilities
+            - generic [ref=f1e1560]: 64%
+          - heading "IPv4 Subnet Calculator" [level=3] [ref=f1e1561]
+          - paragraph [ref=f1e1562]: Free online IPv4 subnet calculator for network planning. Calculate subnets, ranges, broadcast addresses, and host counts from CIDR notation.
+          - list [ref=f1e1563]:
+            - listitem [ref=f1e1564]: CIDR-to-subnet details and vice versa
+            - listitem [ref=f1e1565]: Usable host range and counts
+            - listitem [ref=f1e1566]: Wildcard mask calculation
+            - listitem [ref=f1e1567]: +1 more
+        - link "Utilities 62% IPv4 Address Converter Free online IPv4 address format converter for network engineers. Convert between decimal, hexadecimal, binary, and dotted notation formats. Convert IPv4 between decimal, hex, binary, and dotted Real-time conversion across all formats Copy any representation" [ref=f1e1568] [cursor=pointer]:
+          - /url: /tools/ipv4-address-converter
+          - generic [ref=f1e1569]:
+            - generic [ref=f1e1570]: Utilities
+            - generic [ref=f1e1572]: 62%
+          - heading "IPv4 Address Converter" [level=3] [ref=f1e1573]
+          - paragraph [ref=f1e1574]: Free online IPv4 address format converter for network engineers. Convert between decimal, hexadecimal, binary, and dotted notation formats.
+          - list [ref=f1e1575]:
+            - listitem [ref=f1e1576]: Convert IPv4 between decimal, hex, binary, and dotted
+            - listitem [ref=f1e1577]: Real-time conversion across all formats
+            - listitem [ref=f1e1578]: Copy any representation
+        - link "Utilities 58% IPv4 Range Expander Free online IPv4 CIDR range expander tool. Expand CIDR notation ranges into lists of individual IP addresses for network configuration. Expand CIDR blocks to individual IPs Supports large ranges with pagination Export the full IP list" [ref=f1e1579] [cursor=pointer]:
+          - /url: /tools/ipv4-range-expander
+          - generic [ref=f1e1580]:
+            - generic [ref=f1e1581]: Utilities
+            - generic [ref=f1e1583]: 58%
+          - heading "IPv4 Range Expander" [level=3] [ref=f1e1584]
+          - paragraph [ref=f1e1585]: Free online IPv4 CIDR range expander tool. Expand CIDR notation ranges into lists of individual IP addresses for network configuration.
+          - list [ref=f1e1586]:
+            - listitem [ref=f1e1587]: Expand CIDR blocks to individual IPs
+            - listitem [ref=f1e1588]: Supports large ranges with pagination
+            - listitem [ref=f1e1589]: Export the full IP list
+        - link "Utilities 55% IPv6 ULA Generator Free online IPv6 Unique Local Address generator for network administrators. Create random ULA addresses for private internal network configurations. Generate random IPv6 ULA addresses Custom global ID and subnet prefixes Copy generated addresses" [ref=f1e1590] [cursor=pointer]:
+          - /url: /tools/ipv6-ula-generator
+          - generic [ref=f1e1591]:
+            - generic [ref=f1e1592]: Utilities
+            - generic [ref=f1e1594]: 55%
+          - heading "IPv6 ULA Generator" [level=3] [ref=f1e1595]
+          - paragraph [ref=f1e1596]: Free online IPv6 Unique Local Address generator for network administrators. Create random ULA addresses for private internal network configurations.
+          - list [ref=f1e1597]:
+            - listitem [ref=f1e1598]: Generate random IPv6 ULA addresses
+            - listitem [ref=f1e1599]: Custom global ID and subnet prefixes
+            - listitem [ref=f1e1600]: Copy generated addresses
+        - link "Utilities 60% Chmod Calculator Free online chmod calculator with visual checkbox grid for Unix file permissions. Calculate read, write, and execute permission modes easily. Convert between numeric and symbolic modes Visual checkbox grid for permissions Copy the chmod command" [ref=f1e1601] [cursor=pointer]:
+          - /url: /tools/chmod-calculator
+          - generic [ref=f1e1602]:
+            - generic [ref=f1e1603]: Utilities
+            - generic [ref=f1e1605]: 60%
+          - heading "Chmod Calculator" [level=3] [ref=f1e1606]
+          - paragraph [ref=f1e1607]: Free online chmod calculator with visual checkbox grid for Unix file permissions. Calculate read, write, and execute permission modes easily.
+          - list [ref=f1e1608]:
+            - listitem [ref=f1e1609]: Convert between numeric and symbolic modes
+            - listitem [ref=f1e1610]: Visual checkbox grid for permissions
+            - listitem [ref=f1e1611]: Copy the chmod command
+        - link "Utilities 56% ETA Calculator Free online ETA calculator for estimated travel time. Calculate arrival time based on distance, speed, and current time for trip planning. Estimate arrival time from distance and speed Multiple distance and speed units Real-time calculation" [ref=f1e1612] [cursor=pointer]:
+          - /url: /tools/eta-calculator
+          - generic [ref=f1e1613]:
+            - generic [ref=f1e1614]: Utilities
+            - generic [ref=f1e1616]: 56%
+          - heading "ETA Calculator" [level=3] [ref=f1e1617]
+          - paragraph [ref=f1e1618]: Free online ETA calculator for estimated travel time. Calculate arrival time based on distance, speed, and current time for trip planning.
+          - list [ref=f1e1619]:
+            - listitem [ref=f1e1620]: Estimate arrival time from distance and speed
+            - listitem [ref=f1e1621]: Multiple distance and speed units
+            - listitem [ref=f1e1622]: Real-time calculation
+        - link "Utilities 68% HTTP Status Codes Free HTTP status code reference guide for web developers. Quick lookup for all HTTP response codes with descriptions and common use cases. Reference for all HTTP status codes Searchable by number or phrase Copy any status code" [ref=f1e1623] [cursor=pointer]:
+          - /url: /tools/http-status-codes
+          - generic [ref=f1e1624]:
+            - generic [ref=f1e1625]: Utilities
+            - generic [ref=f1e1627]: 68%
+          - heading "HTTP Status Codes" [level=3] [ref=f1e1628]
+          - paragraph [ref=f1e1629]: Free HTTP status code reference guide for web developers. Quick lookup for all HTTP response codes with descriptions and common use cases.
+          - list [ref=f1e1630]:
+            - listitem [ref=f1e1631]: Reference for all HTTP status codes
+            - listitem [ref=f1e1632]: Searchable by number or phrase
+            - listitem [ref=f1e1633]: Copy any status code
+        - link "Utilities 72% Git Cheatsheet Free interactive Git cheatsheet and command reference for developers. Quickly find and copy Git commands for common version control operations. Searchable Git command reference Categorized commands with examples Copy any command snippet" [ref=f1e1634] [cursor=pointer]:
+          - /url: /tools/git-cheatsheet
+          - generic [ref=f1e1635]:
+            - generic [ref=f1e1636]: Utilities
+            - generic [ref=f1e1638]: 72%
+          - heading "Git Cheatsheet" [level=3] [ref=f1e1639]
+          - paragraph [ref=f1e1640]: Free interactive Git cheatsheet and command reference for developers. Quickly find and copy Git commands for common version control operations.
+          - list [ref=f1e1641]:
+            - listitem [ref=f1e1642]: Searchable Git command reference
+            - listitem [ref=f1e1643]: Categorized commands with examples
+            - listitem [ref=f1e1644]: Copy any command snippet
+        - link "Utilities 64% Regex Cheatsheet Free interactive regular expression cheatsheet with examples. Quick reference for regex patterns, syntax, and common matching expressions. Regex pattern reference with examples Searchable by purpose Copy any pattern" [ref=f1e1645] [cursor=pointer]:
+          - /url: /tools/regex-memo
+          - generic [ref=f1e1646]:
+            - generic [ref=f1e1647]: Utilities
+            - generic [ref=f1e1649]: 64%
+          - heading "Regex Cheatsheet" [level=3] [ref=f1e1650]
+          - paragraph [ref=f1e1651]: Free interactive regular expression cheatsheet with examples. Quick reference for regex patterns, syntax, and common matching expressions.
+          - list [ref=f1e1652]:
+            - listitem [ref=f1e1653]: Regex pattern reference with examples
+            - listitem [ref=f1e1654]: Searchable by purpose
+            - listitem [ref=f1e1655]: Copy any pattern
+  - img "Advertisement placeholder" [ref=f1e1656]:
+    - generic [ref=f1e1657]: Ad Banner (728x90)
+  - contentinfo [ref=f1e1658]:
+    - generic [ref=f1e1659]:
+      - generic [ref=f1e1660]:
+        - generic [ref=f1e1661]:
+          - link "DevStack IO Tools" [ref=f1e1662] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f1e1663]:
+              - generic [ref=f1e1664]: DevStack
+              - generic [ref=f1e1665]: IO
+              - generic [ref=f1e1666]: Tools
+          - paragraph [ref=f1e1667]: Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
+          - paragraph [ref=f1e1668]:
+            - text: DevStackIO Tools is part of the
+            - link "DevStackIO" [ref=f1e1669] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - text: developer platform.
+          - generic [ref=f1e1670]:
+            - link "DevStackIO Home" [ref=f1e1671] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - generic [ref=f1e1676]: "|"
+            - link "GitHub" [ref=f1e1677] [cursor=pointer]:
+              - /url: https://github.com/roddavinod99
+        - generic [ref=f1e1680]:
+          - heading "Tools" [level=3] [ref=f1e1681]
+          - list [ref=f1e1682]:
+            - listitem [ref=f1e1683]:
+              - link "All Tools" [ref=f1e1684] [cursor=pointer]:
+                - /url: /tools
+            - listitem [ref=f1e1685]:
+              - link "Categories" [ref=f1e1686] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=f1e1687]:
+              - link "Popular" [ref=f1e1688] [cursor=pointer]:
+                - /url: /popular
+            - listitem [ref=f1e1689]:
+              - link "Recently Added" [ref=f1e1690] [cursor=pointer]:
+                - /url: /new
+            - listitem [ref=f1e1691]:
+              - link "Sitemap" [ref=f1e1692] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=f1e1693]:
+          - heading "Learn" [level=3] [ref=f1e1694]
+          - list [ref=f1e1695]:
+            - listitem [ref=f1e1696]:
+              - link "Guides" [ref=f1e1697] [cursor=pointer]:
+                - /url: /guides
+            - listitem [ref=f1e1698]:
+              - link "Tutorials" [ref=f1e1699] [cursor=pointer]:
+                - /url: /tutorials
+            - listitem [ref=f1e1700]:
+              - link "Blog" [ref=f1e1701] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=f1e1702]:
+              - link "Best Practices" [ref=f1e1703] [cursor=pointer]:
+                - /url: /best-practices
+            - listitem [ref=f1e1704]:
+              - link "RSS Feed" [ref=f1e1705] [cursor=pointer]:
+                - /url: /feed.xml
+        - generic [ref=f1e1706]:
+          - heading "Company" [level=3] [ref=f1e1707]
+          - list [ref=f1e1708]:
+            - listitem [ref=f1e1709]:
+              - link "About" [ref=f1e1710] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f1e1711]:
+              - link "Roadmap" [ref=f1e1712] [cursor=pointer]:
+                - /url: /roadmap
+            - listitem [ref=f1e1713]:
+              - link "Changelog" [ref=f1e1714] [cursor=pointer]:
+                - /url: /changelog
+        - generic [ref=f1e1715]:
+          - heading "Support" [level=3] [ref=f1e1716]
+          - list [ref=f1e1717]:
+            - listitem [ref=f1e1718]:
+              - link "Contact" [ref=f1e1719] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=f1e1720]:
+              - link "Privacy Policy" [ref=f1e1721] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=f1e1722]:
+              - link "Terms & Conditions" [ref=f1e1723] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=f1e1724]:
+              - link "Cookie Policy" [ref=f1e1725] [cursor=pointer]:
+                - /url: /cookie-policy
+            - listitem [ref=f1e1726]:
+              - link "Disclaimer" [ref=f1e1727] [cursor=pointer]:
+                - /url: /disclaimer
+      - generic [ref=f1e1729]:
+        - paragraph [ref=f1e1730]: © 2026 DevStackIO. All rights reserved.
+        - generic [ref=f1e1731]:
+          - link "Privacy" [ref=f1e1732] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=f1e1733] [cursor=pointer]:
+            - /url: /terms
+          - link "Cookies" [ref=f1e1734] [cursor=pointer]:
+            - /url: /cookie-policy
+          - link "Disclaimer" [ref=f1e1735] [cursor=pointer]:
+            - /url: /disclaimer
+          - link "About" [ref=f1e1736] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f1e1737] [cursor=pointer]:
+            - /url: /contact
+          - link "Sitemap" [ref=f1e1738] [cursor=pointer]:
+            - /url: /sitemap
+          - link "RSS" [ref=f1e1739] [cursor=pointer]:
+            - /url: /feed.xml
+  - button "Open Next.js Dev Tools" [ref=f1e1745] [cursor=pointer]

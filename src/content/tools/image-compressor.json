@@ -38,5 +38,11 @@
     "Does batch processing preserve folder structure? No, all images are downloaded flat or in a zip.",
     "How is the reduction percentage calculated? (Original size - Compressed size) / Original size * 100.",
     "Can I keep EXIF data? Currently compression strips EXIF to maximize reduction; use the image-resizer tool for EXIF control."
+  ],
+  "features": [
+    "Compress JPEG, PNG, WebP, and AVIF images",
+    "Quality and preset controls",
+    "Batch processing with download-all",
+    "Before/after preview and size savings"
   ]
 }

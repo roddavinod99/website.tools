@@ -4,7 +4,11 @@ import type { Tool } from "@/types";
  * Calculate relevance score for a tool based on search query.
  * Higher score = more relevant match.
  */
-function calculateScore(tool: Tool, query: string): number {
+function calculateScore(
+  tool: Tool,
+  query: string,
+  featuresBySlug?: Record<string, string[]>
+): number {
   const name = tool.name.toLowerCase();
   const description = tool.description.toLowerCase();
   const category = tool.category.toLowerCase();
@@ -25,6 +29,11 @@ function calculateScore(tool: Tool, query: string): number {
     score = 10;
   }
 
+  const features = featuresBySlug?.[tool.slug];
+  if (features && features.some((f) => f.toLowerCase().includes(query))) {
+    score = Math.max(score, 18);
+  }
+
   if (score > 0) {
     score += (tool.popularity / 100) * 5;
   }
@@ -36,13 +45,17 @@ function calculateScore(tool: Tool, query: string): number {
  * Search and rank tools by relevance.
  * Returns tools sorted by score (highest first), excluding zero-score matches.
  */
-export function searchTools(allTools: Tool[], query: string): Tool[] {
+export function searchTools(
+  allTools: Tool[],
+  query: string,
+  featuresBySlug?: Record<string, string[]>
+): Tool[] {
   if (!query) return [];
 
   const q = query.toLowerCase().trim();
 
   const scored = allTools
-    .map((tool) => ({ tool, score: calculateScore(tool, q) }))
+    .map((tool) => ({ tool, score: calculateScore(tool, q, featuresBySlug) }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score);
 

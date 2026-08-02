@@ -2,6 +2,7 @@
 
 import { useEffect, useState, lazy, Suspense } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
 import { mainNav, siteConfig } from "@/lib/data/site-config";
 import { setStorageItem } from "@/lib/client-storage";
@@ -10,19 +11,45 @@ import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
 
 // Text-based logo component
-function Logo() {
+function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+  const sizes = {
+    sm: { font: "text-lg", badge: "text-xs px-1.5 py-0.5" },
+    md: { font: "text-xl", badge: "text-xs px-2 py-0.5" },
+    lg: { font: "text-2xl", badge: "text-sm px-2.5 py-0.5" },
+  };
+  const s = sizes[size];
   return (
-    <span className="flex items-center gap-1 font-bold text-xl text-surface-900 dark:text-dark-text">
-      <span className="text-indigo-600 dark:text-indigo-400">DevStack</span>
-      <span className="text-gray-900 dark:text-gray-100">IoTools</span>
+    <span className={`flex items-center gap-1 font-bold ${s.font} text-surface-900 dark:text-dark-text`}>
+      <span className="text-brand-600 dark:text-brand-400">DevStack</span>
+      <span className="text-neutral-900 dark:text-neutral-100">IO</span>
+      <span className={`ml-1 rounded bg-brand-100 px-1.5 py-0.5 text-xs font-semibold text-brand-700 dark:bg-brand-900/30 dark:text-brand-400`}>
+        Tools
+      </span>
     </span>
   );
 }
 
-export function Header() {
+const NAV_SHORTCUTS: Record<string, string> = {
+  "1": "/tools",
+  "2": "/categories",
+  "3": "/guides",
+  "4": "/learning",
+};
+
+export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -31,10 +58,17 @@ export function Header() {
         setSearchOpen(true);
         return;
       }
+      const isTyping =
+        document.activeElement?.tagName === "INPUT" ||
+        document.activeElement?.tagName === "TEXTAREA" ||
+        document.activeElement?.getAttribute("contenteditable") === "true";
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey && NAV_SHORTCUTS[e.key] && !isTyping) {
+        e.preventDefault();
+        router.push(NAV_SHORTCUTS[e.key]);
+        return;
+      }
       if (e.key === "?" && !e.metaKey && !e.ctrlKey && !e.altKey) {
-        const activeElement = document.activeElement;
-        const isInput = activeElement?.tagName === "INPUT" || activeElement?.tagName === "TEXTAREA" || activeElement?.getAttribute("contenteditable") === "true";
-        if (!isInput) {
+        if (!isTyping) {
           e.preventDefault();
           setShortcutsOpen(true);
         }
@@ -47,7 +81,7 @@ export function Header() {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [router]);
 
   const toggleDark = () => {
     const isDark = document.documentElement.classList.toggle("dark");
@@ -59,73 +93,81 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-surface-200 bg-white/80 backdrop-blur-xl dark:border-dark-border dark:bg-dark-bg/80">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-8">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
+        scrolled
+          ? "border-b border-surface-200 bg-white dark:border-dark-border dark:bg-dark-bg shadow-sm"
+          : "border-b border-transparent bg-transparent"
+      }`}
+      role="banner"
+    >
+      <div className="container flex h-16 items-center justify-between gap-4">
+        <div className="flex items-center gap-6 flex-1 min-w-0">
           <Link
             href="/"
-            className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text"
+            className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text shrink-0"
+            aria-label="DevStackIO Tools - Home"
           >
-            <Logo />
-            <span className="hidden sm:inline">{siteConfig.name}</span>
+            <Logo size="md" />
           </Link>
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
             {mainNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-100 dark:hover:bg-dark-surface"
+                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-200 dark:hover:bg-dark-surface"
               >
                 {item.title}
               </Link>
             ))}
-            <div className="mx-2 h-5 w-px bg-surface-300 dark:bg-dark-border" />
+            <div className="mx-2 h-5 w-px bg-surface-300 dark:bg-dark-border" aria-hidden="true" />
             <a
               href={siteConfig.mainSiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-100 dark:hover:bg-dark-surface"
+              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-200 dark:hover:bg-dark-surface"
             >
               DevStackIO Home
-              <ExternalLink className="h-3 w-3" />
+              <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </a>
           </nav>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleSearchClick}
-            aria-label="Search tools"
-            className="hidden sm:flex items-center gap-2 h-9 flex-1 max-w-md sm:max-w-lg rounded-lg border border-surface-200 bg-surface-50 px-3 text-sm text-surface-400 transition-colors hover:border-surface-300 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
+            aria-label="Search tools (⌘K)"
+            className="hidden sm:flex items-center gap-2 h-10 flex-1 max-w-md sm:max-w-lg rounded-lg border border-surface-200 bg-surface-50 px-3 text-sm text-surface-400 transition-colors hover:border-surface-300 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-4 w-4" aria-hidden="true" />
             <span>Search tools...</span>
             <kbd className="ml-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg">
-              <Command className="h-3 w-3" />
+              <Command className="h-3 w-3" aria-hidden="true" />
               K
             </kbd>
           </button>
           <button
             onClick={toggleDark}
             aria-label="Toggle dark mode"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
             suppressHydrationWarning
           >
-            <span className="hidden dark:inline" suppressHydrationWarning><Sun className="h-4 w-4" /></span>
-            <span className="inline dark:hidden" suppressHydrationWarning><Moon className="h-4 w-4" /></span>
+            <span className="hidden dark:inline" suppressHydrationWarning><Sun className="h-5 w-5" aria-hidden="true" /></span>
+            <span className="inline dark:hidden" suppressHydrationWarning><Moon className="h-5 w-5" aria-hidden="true" /></span>
           </button>
           <button
             onClick={() => setShortcutsOpen(true)}
-            aria-label="Keyboard shortcuts"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+            aria-label="Keyboard shortcuts (?)"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
           >
-            <HelpCircle className="h-4 w-4" />
+            <HelpCircle className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
-            className="flex md:hidden h-9 w-9 items-center justify-center rounded-lg text-surface-500 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+            aria-expanded={isOpen}
+            className="flex md:hidden h-10 w-10 items-center justify-center rounded-lg text-surface-500 hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
           </button>
         </div>
       </div>
@@ -137,7 +179,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
+                className="block px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
               >
                 {item.title}
               </Link>
@@ -145,9 +187,9 @@ export function Header() {
             <div className="pt-2 space-y-1">
               <button
                 onClick={() => { setIsOpen(false); setSearchOpen(true); }}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left"
+                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left"
               >
-                <Search className="h-4 w-4" />
+                <Search className="h-4 w-4" aria-hidden="true" />
                 Search
               </button>
               <a
@@ -155,9 +197,9 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-500 rounded-md hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface w-full"
+                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-500 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full"
               >
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 DevStackIO Home
               </a>
             </div>
@@ -166,7 +208,7 @@ export function Header() {
       )}
 
       <Suspense fallback={null}>
-        <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+        <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} allTools={allTools} />
       </Suspense>
 
       <ShortcutsModal isOpen={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />

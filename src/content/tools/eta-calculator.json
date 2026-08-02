@@ -39,5 +39,10 @@
     "Can I enter decimals? Yes — both distance and speed accept decimal values like 12.5 km or 65.5 mph.",
     "What does the arrival time mean? It is calculated by adding the travel duration to the current time, assuming you start immediately.",
     "Does the swap button change my input values? No — it only switches the display units. Your original inputs remain unchanged."
+  ],
+  "features": [
+    "Estimate arrival time from distance and speed",
+    "Multiple distance and speed units",
+    "Real-time calculation"
   ]
 }

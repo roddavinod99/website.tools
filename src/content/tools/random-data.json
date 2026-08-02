@@ -41,5 +41,12 @@
     "Is the financial data valid for testing? Credit card numbers use test ranges (e.g., 4111...) that pass Luhn checks but are invalid for real transactions.",
     "Can I generate relational data (e.g., users with company IDs)? The tool generates flat records per category; manual cross-referencing is needed for relational data.",
     "Does the seed guarantee identical output across sessions? Yes, the same seed, locale, and field selection always produces identical data."
+  ],
+  "features": [
+    "8 categories and 29 field types",
+    "Names, emails, companies, addresses, phone numbers, UUIDs, and more",
+    "Locale-aware data for realistic results",
+    "Seed-based reproducible generation",
+    "JSON, CSV, and more export formats"
   ]
 }

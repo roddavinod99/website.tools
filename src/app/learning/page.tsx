@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
-import { learningTopics, siteConfig } from "@/lib/constants";
+import { learningTopics, learningCategories, siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Learning Center",
@@ -22,14 +22,6 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
 };
-
-const categories = [
-  { name: "JSON", count: 4 },
-  { name: "JWT & Security", count: 3 },
-  { name: "Image Optimization", count: 2 },
-  { name: "Web Performance", count: 3 },
-  { name: "Data Formats", count: 5 },
-];
 
 export default function LearningPage() {
   return (
@@ -92,10 +84,10 @@ export default function LearningPage() {
             Topics
           </h2>
           <div className="mt-4 flex flex-wrap gap-2">
-            {categories.map((cat) => (
+            {learningCategories.map((cat) => (
               <Link
                 key={cat.name}
-                href={`/guides?topic=${cat.name.toLowerCase()}`}
+                href={`/guides?topic=${encodeURIComponent(cat.name)}`}
                 className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-100 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
               >
                 {cat.name} ({cat.count})

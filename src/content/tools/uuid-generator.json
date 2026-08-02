@@ -41,5 +41,11 @@
     "Can v7 UUIDs be sorted by creation time? Yes — the time-ordered prefix means v7 UUIDs sort chronologically, improving database index performance.",
     "What is a Snowflake ID? A 64-bit ID popularized by Twitter: 41-bit timestamp + 10-bit worker ID + 12-bit sequence. It fits in a 64-bit integer and is time-sortable.",
     "What is NanoID? A compact, URL-safe, customizable unique ID. Unlike UUIDs, you choose the alphabet and length (default: 21 characters with A-Za-z0-9_-)."
+  ],
+  "features": [
+    "Generate UUID v1, v4, and v7 variants",
+    "Bulk generation up to 10,000 at once",
+    "Uppercase, braces, and hyphen formatting",
+    "JSON and CSV export of generated IDs"
   ]
 }

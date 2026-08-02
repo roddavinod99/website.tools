@@ -334,6 +334,50 @@ export function UnitConverter() {
         </div>
       )}
 
+      {result && fromDef && (
+        <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
+          <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">
+            {value} {fromDef.label} in every {current.label} unit
+          </p>
+          <div className="overflow-hidden rounded-lg border border-surface-200 dark:border-dark-border">
+            <table className="w-full text-sm">
+              <caption className="sr-only">Conversion of {value} {fromDef.label} to all {current.label} units</caption>
+              <thead>
+                <tr className="border-b border-surface-200 bg-surface-50 text-left text-xs uppercase tracking-wide text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+                  <th scope="col" className="px-3 py-2 font-medium">Unit</th>
+                  <th scope="col" className="px-3 py-2 text-right font-medium">Value</th>
+                  <th scope="col" className="px-3 py-2 text-right font-medium">Copy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {current.units.map((u) => {
+                  const raw = u.fromBase(fromDef.toBase(resultNum));
+                  const formatted = Math.abs(raw) < 0.001 || Math.abs(raw) > 1e9
+                    ? raw.toExponential(6)
+                    : raw.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "");
+                  return (
+                    <tr key={u.value} className="border-b border-surface-100 last:border-b-0 dark:border-dark-border">
+                      <td className="px-3 py-1.5 text-surface-700 dark:text-dark-text">{u.label} ({u.value})</td>
+                      <td className="px-3 py-1.5 text-right font-mono text-surface-900 dark:text-dark-text select-all">{formatted}</td>
+                      <td className="px-3 py-1.5 text-right">
+                        <button
+                          onClick={() => copy(`${formatted} ${u.value}`)}
+                          className="text-xs text-brand-500 hover:text-brand-600 transition-colors"
+                          aria-label={`Copy ${u.label} result`}
+                        >
+                          Copy
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+
       {favorites.length > 0 && (
         <div className="border-t border-surface-200 pt-3 dark:border-dark-border">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Favorite Conversions</p>

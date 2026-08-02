@@ -41,5 +41,11 @@
     "How does encoding detection work? — It examines byte patterns and BOM markers for UTF-16 vs UTF-8 vs ASCII.",
     "What if my decoded output is garbled? — Try switching source encoding manually. Auto-detection may be wrong for short strings.",
     "Can I decode large strings? — Yes, but multi-megabyte strings may take a few seconds."
+  ],
+  "features": [
+    "Decode Base64 strings and encoded files",
+    "Automatic charset handling for decoded output",
+    "Download the decoded file back to disk",
+    "Live error reporting on malformed input"
   ]
 }

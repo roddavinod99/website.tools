@@ -38,5 +38,10 @@
     "What about Yahoo or Outlook? They do NOT ignore dots. Only enable strip dots if you are specifically targeting Gmail users.",
     "Is strip + aliases safe? The + symbol is a standard alias separator used by Gmail, Outlook, and many others. It is generally safe to strip.",
     "Can I use this for validating email format? No — this tool normalizes format, not validity. Use an email validator for format checking."
+  ],
+  "features": [
+    "Normalize emails to canonical form",
+    "Remove plus aliases and comments",
+    "Lowercase domains for comparisons"
   ]
 }

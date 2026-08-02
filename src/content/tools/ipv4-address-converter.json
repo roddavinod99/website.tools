@@ -32,5 +32,10 @@
     "Why are there two hex representations? — One shows raw hex (C0A80101) and the other includes the 0x prefix (0xC0A80101) commonly used in code and documentation.",
     "Does this handle IPv6? — No, this tool is for IPv4 addresses only. Use an IPv6 tool for 128-bit addresses.",
     "What is the integer range for IPv4? — 0 to 4,294,967,295 (2^32 - 1), covering all possible 32-bit IPv4 addresses."
+  ],
+  "features": [
+    "Convert IPv4 between decimal, hex, binary, and dotted",
+    "Real-time conversion across all formats",
+    "Copy any representation"
   ]
 }

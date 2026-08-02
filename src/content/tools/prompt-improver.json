@@ -41,5 +41,11 @@
     "Can I improve prompts for specific AI models? The tool optimizes for general AI prompt effectiveness; some models may benefit from additional model-specific tuning.",
     "Is the original prompt stored anywhere? Improvement history is stored in localStorage; original and improved versions are saved for comparison.",
     "How does tone adjustment work? The tool rewrites the prompt using vocabulary, sentence structure, and formality level appropriate for the selected tone."
+  ],
+  "features": [
+    "Analyze prompts across 8 quality dimensions",
+    "Suggest concrete, actionable improvements",
+    "Tone and detail adjustments",
+    "Side-by-side diff of before and after"
   ]
 }

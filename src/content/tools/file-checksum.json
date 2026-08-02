@@ -39,5 +39,11 @@
     "Does the tool compare hashes automatically? Yes, enable compare mode and paste the expected hash for instant matching.",
     "What format does CSV export use? Each row is filename, algorithm, hash, and timestamp.",
     "Can I hash text instead of files? Yes, switch to text mode and type or paste the string."
+  ],
+  "features": [
+    "Compute MD5, SHA-1, and SHA-256 checksums",
+    "Drag-and-drop files up to 10 MB",
+    "Compare files against an expected hash",
+    "Copy individual checksums"
   ]
 }

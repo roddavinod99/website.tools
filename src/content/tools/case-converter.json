@@ -41,5 +41,11 @@
     "Can I convert an entire file? — Yes, paste the whole file. For code, use single identifiers for best results.",
     "Why are some variants identical for single words? — Single-word inputs naturally produce the same output across many variants.",
     "Is there a way to preserve abbreviations? — Not automatically. Edit the output after conversion."
+  ],
+  "features": [
+    "Convert to camelCase, PascalCase, snake_case, and more",
+    "Real-time conversion as you type",
+    "Multiple case options at once",
+    "Copy any variant instantly"
   ]
 }

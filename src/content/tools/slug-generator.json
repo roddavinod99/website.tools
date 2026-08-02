@@ -41,5 +41,11 @@
     "Does transliteration work for all languages? It supports Latin-based scripts, Cyrillic, Greek, Arabic, Chinese (Pinyin), and many others via ICU rules.",
     "Why is my slug empty after generation? The source text may contain only characters removed by the sanitize mode — try a more relaxed sanitize level.",
     "How many entries does the history store? The last 50 unique slugs are saved in browser local storage and displayed in reverse chronological order."
+  ],
+  "features": [
+    "Generate URL-safe slugs from any text",
+    "Transliteration for non-Latin scripts",
+    "Custom separator and case options",
+    "Real-time generation"
   ]
 }

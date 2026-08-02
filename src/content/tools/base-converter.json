@@ -41,5 +41,11 @@
     "How does two's complement work for non-8-bit widths? — The tool uses output base to determine bit width.",
     "Can I convert fractional numbers like 3.14159? — Yes, both integer and fractional parts are converted separately.",
     "What does ASCII interpretation show? — Groups the number into bytes and maps each to its ASCII character."
+  ],
+  "features": [
+    "Convert between binary, octal, decimal, and hexadecimal",
+    "Support for arbitrary bases up to 36",
+    "Precision handling for large numbers",
+    "Real-time conversion across all bases"
   ]
 }

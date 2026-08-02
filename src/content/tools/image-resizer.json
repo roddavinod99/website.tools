@@ -38,5 +38,11 @@
     "Does batch resize preserve filenames? Yes, filenames are kept with a dimension suffix appended.",
     "What does 'max file size target' do? It automatically adjusts JPEG/WebP quality to stay under the specified size.",
     "Can I resize and convert format at the same time? Yes, format conversion and resizing happen in one operation."
+  ],
+  "features": [
+    "Resize images to exact dimensions",
+    "Batch resize multiple files at once",
+    "Preset sizes and aspect-ratio lock",
+    "Format conversion on export"
   ]
 }

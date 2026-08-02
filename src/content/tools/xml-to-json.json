@@ -40,5 +40,11 @@
     "How are XML namespaces handled? They can be stripped (flattened) or preserved as prefix:localname keys.",
     "What happens to XML attributes? They can be prefixed with @, flattened with elements, or promoted to top-level keys.",
     "Does it handle XSD or DTD schemas? No, this is a structural converter — validation against schemas is not supported."
+  ],
+  "features": [
+    "Convert XML to structured JSON",
+    "Preserve attributes and child elements",
+    "Pretty-printed output for readability",
+    "Copy and download the JSON"
   ]
 }

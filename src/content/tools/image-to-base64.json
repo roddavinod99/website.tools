@@ -38,5 +38,11 @@
     "Can I decode a data URI back to an image? Yes, use decode-back mode and paste the full data URI string.",
     "Is there a size limit for uploads? Very large images (>50MB) may time out; resize first for such files.",
     "What file formats are supported? JPEG, PNG, GIF, WebP, SVG, BMP, and ICO."
+  ],
+  "features": [
+    "Convert images to Base64 data URIs in one step",
+    "Drag-and-drop file upload up to 10 MB",
+    "Ready-to-paste HTML, CSS, and JS snippets",
+    "Optional image compression before encoding"
   ]
 }

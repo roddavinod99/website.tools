@@ -41,5 +41,11 @@
     "Can I format only part of a query? The tool formats the entire input; for partial formatting, extract the relevant subquery first.",
     "What about DDL and DML statements? CREATE, ALTER, INSERT, UPDATE, DELETE are all supported with proper formatting.",
     "Does it preserve comments? Yes — single-line (--) and block (/* */) comments are preserved in the output."
+  ],
+  "features": [
+    "Format SQL across 11+ SQL dialects",
+    "Control keyword case and comma placement",
+    "Collapse or expand long statements",
+    "Validation feedback on malformed queries"
   ]
 }

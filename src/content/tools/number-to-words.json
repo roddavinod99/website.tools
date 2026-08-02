@@ -41,5 +41,10 @@
     "How are decimals handled in currency mode? Decimals are shown as fractional currency units (e.g., \"Forty-Five Cents\" for USD, \"Seventy-Five Paise\" for INR).",
     "Does it support all Indian numbering units? Yes, including lakh (10^5), crore (10^7), arab (10^9), kharab (10^11), and higher.",
     "Can it convert negative numbers? Yes, negative numbers are prefixed with \"Negative\" in the word output."
+  ],
+  "features": [
+    "Convert numbers to written words",
+    "Handles large numbers and decimals",
+    "Copy the word form of the number"
   ]
 }

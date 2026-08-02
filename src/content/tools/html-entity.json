@@ -38,5 +38,11 @@
     "Why does the attribute preset also escape quotes? Quotes delimit attribute values and must be escaped to prevent breaking the HTML.",
     "Can I decode HTML entities from an RSS feed? Yes, paste the feed content and switch to decode mode.",
     "Is the entity reference table searchable? Yes, type a character name, entity name, or code point to filter."
+  ],
+  "features": [
+    "Encode special characters as named or numeric HTML entities",
+    "Decode entities back to plain text",
+    "Prevents XSS when embedding user text in markup",
+    "Real-time conversion with copy support"
   ]
 }

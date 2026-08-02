@@ -41,5 +41,10 @@
     "Can I edit EXIF instead of just reading/stripping? — Use the EXIF Transfer tool for editing. This tool focuses on reading and removal.",
     "Does this support RAW files (NEF, CR2, ARW)? — No, only JPEG, TIFF, WebP, and PNG. Convert RAW first.",
     "Is stripping 100% effective? — Standard EXIF, IPTC, and XMP are removed. Some proprietary formats may remain."
+  ],
+  "features": [
+    "Extract EXIF metadata from images",
+    "Camera settings, GPS, and date info",
+    "Upload files directly from disk"
   ]
 }

@@ -2,11 +2,20 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 
-function Logo() {
+function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+  const sizes = {
+    sm: { font: "text-lg", badge: "text-xs px-1.5 py-0.5" },
+    md: { font: "text-xl", badge: "text-xs px-2 py-0.5" },
+    lg: { font: "text-2xl", badge: "text-sm px-2.5 py-0.5" },
+  };
+  const s = sizes[size];
   return (
-    <span className="flex items-center gap-1 font-bold text-xl text-surface-900 dark:text-dark-text">
-      <span className="text-indigo-600 dark:text-indigo-400">DevStack</span>
-      <span className="text-gray-900 dark:text-gray-100">IoTools</span>
+    <span className={`flex items-center gap-1 font-bold ${s.font} text-surface-900 dark:text-dark-text`}>
+      <span className="text-brand-600 dark:text-brand-400">DevStack</span>
+      <span className="text-neutral-900 dark:text-neutral-100">IO</span>
+      <span className={`ml-1 rounded bg-brand-100 px-1.5 py-0.5 text-xs font-semibold text-brand-700 dark:bg-brand-900/30 dark:text-brand-400`}>
+        Tools
+      </span>
     </span>
   );
 }
@@ -38,7 +47,6 @@ const footerLinks = [
       { label: "About", href: "/about" },
       { label: "Roadmap", href: "/roadmap" },
       { label: "Changelog", href: "/changelog" },
-      { label: "API", href: "/api" },
     ],
   },
   {
@@ -55,45 +63,44 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
-      <div className="container py-12">
+    <footer className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface" role="contentinfo">
+      <div className="container py-16 md:py-20">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text">
-              <Logo />
-              {siteConfig.name}
+            <Link href="/" className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text mb-4">
+              <Logo size="md" />
             </Link>
-            <p className="mt-3 text-sm text-surface-500 dark:text-dark-muted max-w-xs">
+            <p className="text-sm text-surface-600 dark:text-dark-muted max-w-xs leading-relaxed">
               Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
             </p>
-            <p className="mt-3 text-sm text-surface-400 dark:text-dark-muted max-w-xs">
+            <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted max-w-xs">
               DevStackIO Tools is part of the{" "}
               <a
                 href={siteConfig.mainSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-500 hover:text-brand-600 underline underline-offset-2"
+                className="text-brand-600 hover:text-brand-700 underline underline-offset-2"
               >
                 DevStackIO
               </a>{" "}
               developer platform.
             </p>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-6 flex gap-4">
               <a
                 href={siteConfig.mainSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-surface-500 hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text transition-colors"
+                className="flex items-center gap-1 text-sm text-surface-600 hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text transition-colors"
               >
                 DevStackIO Home
-                <ExternalLink className="h-3 w-3" />
+                <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
               <span className="text-surface-300 dark:text-dark-border">|</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-surface-400 hover:text-surface-600 dark:hover:text-dark-text transition-colors"
+                className="text-surface-500 hover:text-surface-600 dark:hover:text-dark-text transition-colors"
                 aria-label="GitHub"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -104,15 +111,15 @@ export function Footer() {
           </div>
           {footerLinks.map((group) => (
             <div key={group.title}>
-              <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text">
+              <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text uppercase tracking-wider">
                 {group.title}
               </h3>
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
+                      className="text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
                     >
                       {link.label}
                     </Link>
@@ -122,34 +129,34 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-surface-200 pt-6 dark:border-dark-border">
+        <div className="mt-12 border-t border-surface-200 pt-8 dark:border-dark-border">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-surface-500 dark:text-dark-muted">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>
-            <div className="flex flex-wrap gap-4 text-sm text-surface-500 dark:text-dark-muted">
-              <Link href="/privacy" className="hover:text-surface-900 dark:hover:text-dark-text">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-surface-500 dark:text-dark-muted">
+              <Link href="/privacy" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/terms" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Terms
               </Link>
-              <Link href="/cookie-policy" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/cookie-policy" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Cookies
               </Link>
-              <Link href="/disclaimer" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/disclaimer" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Disclaimer
               </Link>
-              <Link href="/about" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/about" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/contact" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Contact
               </Link>
-              <Link href="/sitemap" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <Link href="/sitemap" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 Sitemap
               </Link>
-              <a href="/feed.xml" className="hover:text-surface-900 dark:hover:text-dark-text">
+              <a href="/feed.xml" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
                 RSS
               </a>
             </div>

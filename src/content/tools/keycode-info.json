@@ -35,5 +35,10 @@
     "Why are some keyCode values showing 0? — keyCode is deprecated and some events may not provide it reliably.",
     "Does this capture key events on mobile? — No, this tool works with physical keyboard events only.",
     "What's the difference between key and code? — key is the character produced (layout-dependent), code is the physical key position (layout-independent)."
+  ],
+  "features": [
+    "See live key, code, and location values",
+    "Reference table for common keys",
+    "Works without a mouse"
   ]
 }

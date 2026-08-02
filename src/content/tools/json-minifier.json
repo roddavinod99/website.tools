@@ -38,5 +38,11 @@
     "Does the frequency chart count nested values? Yes, it recursively traverses the entire document.",
     "Can I restore stripped values? No, stripping is irreversible; keep the original copy before minifying.",
     "What is the difference between this and json-beautifier? This focuses on compression with size stats; beautifier focuses on formatting with themes."
+  ],
+  "features": [
+    "Strip whitespace and formatting to shrink payloads",
+    "Original vs. minified size comparison",
+    "Real-time minification while you type",
+    "Copy and download the minified output"
   ]
 }

@@ -38,5 +38,11 @@
     "What is the difference between subnetting and supernetting? Subnetting splits a network into smaller ones; supernetting combines multiple networks into a larger one.",
     "How does class/type detection work? It identifies Class A (1-126), B (128-191), C (192-223) and special ranges like private (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).",
     "Can I calculate the subnet for a host IP without CIDR? Enter the IP and mask separately, e.g., 192.168.1.50 with mask 255.255.255.0."
+  ],
+  "features": [
+    "Calculate IPv4 subnets from CIDR",
+    "Network, broadcast, and host ranges",
+    "Wildcard masks and host counts",
+    "Subnet table export"
   ]
 }

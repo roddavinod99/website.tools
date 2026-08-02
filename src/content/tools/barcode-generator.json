@@ -41,5 +41,11 @@
     "Can I generate QR codes instead of linear barcodes? — Yes, select QR Code from the symbology dropdown for matrix-style 2D barcodes.",
     "What is the quiet zone? — The blank margin around the barcode required for reliable scanning. Minimum 10x the narrow bar width on each side.",
     "Are the barcodes compliant with GS1 standards? — Yes, the generated barcodes follow GS1 specifications for retail and logistics use."
+  ],
+  "features": [
+    "Generate Code 128, Code 39, EAN, UPC, and more",
+    "Custom dimensions and color",
+    "SVG and PNG export",
+    "Live validation of the barcode value"
   ]
 }

@@ -41,5 +41,11 @@
     "Can I decode a URL that has been encoded multiple times? Yes — but you need to decode it multiple times until no %xx sequences remain.",
     "What is the %20 vs + difference? %20 is the percent-encoded space; + is the application/x-www-form-urlencoded space (used in form submission, not URL encoding).",
     "Does the tool handle Unicode characters? Yes — Unicode characters are encoded as UTF-8 byte sequences (e.g., ñ → %C3%B1)."
+  ],
+  "features": [
+    "Percent-encode URLs and query strings per RFC 3986",
+    "Decode percent-encoded text back to readable form",
+    "Choose which characters to encode or preserve",
+    "Real-time conversion with copy support"
   ]
 }

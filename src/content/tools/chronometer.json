@@ -42,5 +42,10 @@
     "Does the timer continue when the tab is in the background? — The display may pause due to browser throttling, but accumulated time is tracked correctly when you return to the tab.",
     "What do BEST and SLOWEST mean? — BEST highlights the fastest lap time and SLOWEST highlights the longest lap time in your current session.",
     "Can I export lap data? — Click Copy Laps to copy all lap times to your clipboard in text format."
+  ],
+  "features": [
+    "Precision stopwatch with lap times",
+    "Start, pause, reset, and lap controls",
+    "Export lap history"
   ]
 }

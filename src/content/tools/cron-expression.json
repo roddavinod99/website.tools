@@ -41,5 +41,11 @@
     "How are @macros expanded? — @yearly = 0 0 1 1 *, @monthly = 0 0 1 * *, @daily = 0 0 * * *, @hourly = 0 * * * *",
     "Can I export to systemd? — Yes, click 'Export as Systemd Timer' for OnCalendar= syntax.",
     "Do next 10 executions account for DST? — Yes, timezone-aware calculation handles daylight saving transitions."
+  ],
+  "features": [
+    "Visual cron builder with every field explained",
+    "Presets and @-macro shortcuts",
+    "Preview the next scheduled runs",
+    "Timezone-aware scheduling"
   ]
 }

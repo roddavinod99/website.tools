@@ -41,5 +41,10 @@
     "Can I use this for SVG sprites? No — this tool is for individual SVGs; use an SVG sprite generator for multiple icons.",
     "Does clip-path support all SVG paths? clip-path uses only the path's geometry — fill, stroke, and colors are ignored.",
     "Will animations inside the SVG work? No — CSS background-images and masks do not render SVG animations."
+  ],
+  "features": [
+    "Convert SVG files to CSS data URIs",
+    "Optimized, minified output",
+    "Copy the ready-to-use CSS value"
   ]
 }

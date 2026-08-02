@@ -1,0 +1,142 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to content" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f6e3]:
+    - generic [ref=f6e4]:
+      - generic [ref=f6e5]:
+        - link "DevStackIO Tools - Home" [ref=f6e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f6e7]:
+            - generic [ref=f6e8]: DevStack
+            - generic [ref=f6e9]: IO
+            - generic [ref=f6e10]: Tools
+        - navigation "Main navigation" [ref=f6e11]:
+          - link "Tools" [ref=f6e12] [cursor=pointer]:
+            - /url: /tools
+          - link "Categories" [ref=f6e13] [cursor=pointer]:
+            - /url: /categories
+          - link "Guides" [ref=f6e14] [cursor=pointer]:
+            - /url: /guides
+          - link "Blog" [ref=f6e15] [cursor=pointer]:
+            - /url: /blog
+          - link "Learning" [ref=f6e16] [cursor=pointer]:
+            - /url: /learning
+          - link "DevStackIO Home" [ref=f6e18] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+      - generic [ref=f6e23]:
+        - button "Search tools (⌘K)" [ref=f6e24]:
+          - generic [ref=f6e28]: Search tools...
+          - generic [ref=f6e29]: K
+        - button "Toggle dark mode" [ref=f6e32]
+        - button "Keyboard shortcuts (?)" [ref=f6e36]
+  - main [ref=f6e40]
+  - img "Advertisement placeholder" [ref=f6e70]:
+    - generic [ref=f6e71]: Ad Banner (728x90)
+  - contentinfo [ref=f6e72]:
+    - generic [ref=f6e73]:
+      - generic [ref=f6e74]:
+        - generic [ref=f6e75]:
+          - link "DevStack IO Tools" [ref=f6e76] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f6e77]:
+              - generic [ref=f6e78]: DevStack
+              - generic [ref=f6e79]: IO
+              - generic [ref=f6e80]: Tools
+          - paragraph [ref=f6e81]: Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
+          - paragraph [ref=f6e82]:
+            - text: DevStackIO Tools is part of the
+            - link "DevStackIO" [ref=f6e83] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - text: developer platform.
+          - generic [ref=f6e84]:
+            - link "DevStackIO Home" [ref=f6e85] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - generic [ref=f6e90]: "|"
+            - link "GitHub" [ref=f6e91] [cursor=pointer]:
+              - /url: https://github.com/roddavinod99
+        - generic [ref=f6e94]:
+          - heading "Tools" [level=3] [ref=f6e95]
+          - list [ref=f6e96]:
+            - listitem [ref=f6e97]:
+              - link "All Tools" [ref=f6e98] [cursor=pointer]:
+                - /url: /tools
+            - listitem [ref=f6e99]:
+              - link "Categories" [ref=f6e100] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=f6e101]:
+              - link "Popular" [ref=f6e102] [cursor=pointer]:
+                - /url: /popular
+            - listitem [ref=f6e103]:
+              - link "Recently Added" [ref=f6e104] [cursor=pointer]:
+                - /url: /new
+            - listitem [ref=f6e105]:
+              - link "Sitemap" [ref=f6e106] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=f6e107]:
+          - heading "Learn" [level=3] [ref=f6e108]
+          - list [ref=f6e109]:
+            - listitem [ref=f6e110]:
+              - link "Guides" [ref=f6e111] [cursor=pointer]:
+                - /url: /guides
+            - listitem [ref=f6e112]:
+              - link "Tutorials" [ref=f6e113] [cursor=pointer]:
+                - /url: /tutorials
+            - listitem [ref=f6e114]:
+              - link "Blog" [ref=f6e115] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=f6e116]:
+              - link "Best Practices" [ref=f6e117] [cursor=pointer]:
+                - /url: /best-practices
+            - listitem [ref=f6e118]:
+              - link "RSS Feed" [ref=f6e119] [cursor=pointer]:
+                - /url: /feed.xml
+        - generic [ref=f6e120]:
+          - heading "Company" [level=3] [ref=f6e121]
+          - list [ref=f6e122]:
+            - listitem [ref=f6e123]:
+              - link "About" [ref=f6e124] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f6e125]:
+              - link "Roadmap" [ref=f6e126] [cursor=pointer]:
+                - /url: /roadmap
+            - listitem [ref=f6e127]:
+              - link "Changelog" [ref=f6e128] [cursor=pointer]:
+                - /url: /changelog
+        - generic [ref=f6e129]:
+          - heading "Support" [level=3] [ref=f6e130]
+          - list [ref=f6e131]:
+            - listitem [ref=f6e132]:
+              - link "Contact" [ref=f6e133] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=f6e134]:
+              - link "Privacy Policy" [ref=f6e135] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=f6e136]:
+              - link "Terms & Conditions" [ref=f6e137] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=f6e138]:
+              - link "Cookie Policy" [ref=f6e139] [cursor=pointer]:
+                - /url: /cookie-policy
+            - listitem [ref=f6e140]:
+              - link "Disclaimer" [ref=f6e141] [cursor=pointer]:
+                - /url: /disclaimer
+      - generic [ref=f6e143]:
+        - paragraph [ref=f6e144]: © 2026 DevStackIO. All rights reserved.
+        - generic [ref=f6e145]:
+          - link "Privacy" [ref=f6e146] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=f6e147] [cursor=pointer]:
+            - /url: /terms
+          - link "Cookies" [ref=f6e148] [cursor=pointer]:
+            - /url: /cookie-policy
+          - link "Disclaimer" [ref=f6e149] [cursor=pointer]:
+            - /url: /disclaimer
+          - link "About" [ref=f6e150] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f6e151] [cursor=pointer]:
+            - /url: /contact
+          - link "Sitemap" [ref=f6e152] [cursor=pointer]:
+            - /url: /sitemap
+          - link "RSS" [ref=f6e153] [cursor=pointer]:
+            - /url: /feed.xml
+  - button "Open Next.js Dev Tools" [ref=f6e159] [cursor=pointer]

@@ -41,5 +41,11 @@
     "What is E.164 format? — E.164 is the international phone number standard: +[country code][national number] with no spaces or special characters.",
     "Why are some numbers marked as invalid? — The regex patterns expect standard formats. Non-standard or abbreviated numbers may not match.",
     "Can I parse numbers without selecting a country? — This tool requires a country selection to apply the correct format rules."
+  ],
+  "features": [
+    "Parse international phone numbers",
+    "Country-aware formatting and validation",
+    "Break down country, area, and subscriber parts",
+    "Copy the canonical E.164 form"
   ]
 }

@@ -38,5 +38,11 @@
     "Can I diff JSON from two different files? Yes, drag-and-drop files A and B into their respective upload areas.",
     "What is JSON Patch (RFC 6902)? A standard format describing changes as an array of operations: add, remove, replace, move, copy.",
     "Does it handle large files? Files up to ~10MB are handled well; larger files may need server-side processing."
+  ],
+  "features": [
+    "Compare two JSON documents side by side",
+    "Highlight additions, removals, and changes",
+    "Structural diff that ignores cosmetic formatting",
+    "Copy the merged or changed sections"
   ]
 }

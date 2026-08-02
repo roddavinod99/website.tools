@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 import { logSecurityEvent } from "@/lib/security-logger";
+import { persistSubmission } from "@/lib/submissions";
 
 const TYPES = ["suggest", "feature-request", "feedback", "report-bug", "newsletter"] as const;
 type FormType = typeof TYPES[number];
 const MAX_BODY_BYTES = 10_000;
 const MAX_FIELD_LENGTH = 2000;
-const MAX_QUEUED = 500;
-
-const submissionQueue: Array<{ type: FormType; data: unknown; timestamp: string }> = [];
 
 type QueueEntry = { timestamp: string; ip: string };
 const requestLog = new Map<string, QueueEntry[]>();
@@ -104,10 +102,14 @@ export async function POST(request: Request) {
     timestamp: new Date().toISOString(),
   };
 
-  submissionQueue.push(submission);
-
-  if (submissionQueue.length > MAX_QUEUED) {
-    submissionQueue.splice(0, submissionQueue.length - MAX_QUEUED);
+  try {
+    persistSubmission(submission.type, submission.data, submission.timestamp);
+  } catch (err) {
+    logSecurityEvent("submission_persist_failed", ip, "/api/submit", `Persist error: ${String(err)}`);
+    return NextResponse.json(
+      { error: "We could not save your submission right now. Please try again later." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({ success: true, message: "Submission received" });

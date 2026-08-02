@@ -41,5 +41,11 @@
     "Can I encode multiple files at once? — One file at a time. For batch, use the combined Base64 tool.",
     "Does the tool work offline? — Yes, it runs entirely in the browser with no server communication needed.",
     "What MIME type is used for data URI? — Auto-detected from file extension. Unknown types use application/octet-stream."
+  ],
+  "features": [
+    "Encode text or uploaded files to Base64",
+    "Standard and URL-safe Base64 alphabets",
+    "Real-time output with copy and download",
+    "Progress feedback for large inputs"
   ]
 }

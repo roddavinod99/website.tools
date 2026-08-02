@@ -41,5 +41,11 @@
     "Does the tool handle timezone abbreviations like PST/EST? Use IANA timezone names (e.g., America/Los_Angeles) — ambiguous abbreviations are not supported.",
     "How accurate is the countdown timer? The countdown refreshes every second and is synchronized with the system clock.",
     "Can I convert dates before 1970? Yes — Unix timestamps can represent dates from 1901 to 2038 (32-bit) and beyond (64-bit timestamps handled)."
+  ],
+  "features": [
+    "Convert Unix timestamps to human-readable dates",
+    "Convert dates back to Unix time",
+    "Multiple timezone and format options",
+    "Live clock with the current timestamp"
   ]
 }

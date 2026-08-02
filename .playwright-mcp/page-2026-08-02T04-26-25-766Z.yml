@@ -1,0 +1,566 @@
+- generic [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f5e3]:
+    - generic [ref=f5e4]:
+      - generic [ref=f5e5]:
+        - link "DevStackIO Tools - Home" [ref=f5e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f5e7]:
+            - generic [ref=f5e8]: DevStack
+            - generic [ref=f5e9]: IO
+            - generic [ref=f5e10]: Tools
+        - navigation "Main navigation" [ref=f5e11]:
+          - link "Tools" [ref=f5e12] [cursor=pointer]:
+            - /url: /tools
+          - link "Categories" [ref=f5e13] [cursor=pointer]:
+            - /url: /categories
+          - link "Guides" [ref=f5e14] [cursor=pointer]:
+            - /url: /guides
+          - link "Blog" [ref=f5e15] [cursor=pointer]:
+            - /url: /blog
+          - link "Learning" [ref=f5e16] [cursor=pointer]:
+            - /url: /learning
+          - link "DevStackIO Home" [ref=f5e18] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+      - generic [ref=f5e23]:
+        - button "Search tools (⌘K)" [ref=f5e24]:
+          - generic [ref=f5e28]: Search tools...
+          - generic [ref=f5e29]: K
+        - button "Toggle dark mode" [ref=f5e32]
+        - button "Keyboard shortcuts (?)" [ref=f5e40]
+  - main [ref=f5e44]:
+    - generic [ref=f5e47]:
+      - generic [ref=f5e48]: 128 free tools. No login required.
+      - heading "The internet's best collection of developer tools" [level=1] [ref=f5e50]:
+        - text: The internet's best
+        - generic [ref=f5e51]: collection of developer tools
+      - paragraph [ref=f5e52]: Format, validate, encode, decode, generate, and convert. Every tool is free, fast, and works entirely in your browser — zero server uploads.
+      - generic [ref=f5e54]:
+        - textbox "Search tools" [active] [ref=f5e58]:
+          - /placeholder: Search 128 tools...
+        - generic [ref=f5e59]: K
+      - generic [ref=f5e62]:
+        - generic [ref=f5e63]: "Popular:"
+        - button "JSON Formatter" [ref=f5e64]
+        - button "JWT Decoder" [ref=f5e65]
+        - button "UUID Generator" [ref=f5e66]
+        - button "Regex Tester" [ref=f5e67]
+        - button "Base64 Encoder" [ref=f5e68]
+        - button "Color Converter" [ref=f5e69]
+      - generic [ref=f5e70]:
+        - button "Explore Tools" [ref=f5e71]
+        - button "View Categories" [ref=f5e74]
+      - generic [ref=f5e75]:
+        - generic [ref=f5e81]:
+          - generic [ref=f5e82]: 0+
+          - generic [ref=f5e83]: Free Tools
+        - generic [ref=f5e89]:
+          - generic [ref=f5e90]: "0"
+          - generic [ref=f5e91]: Zero Uploads
+        - generic [ref=f5e96]:
+          - generic [ref=f5e97]: 100%
+          - generic [ref=f5e98]: Client-Side
+      - generic [ref=f5e99]:
+        - generic [ref=f5e100]: Client-side only
+        - generic [ref=f5e103]: No tracking
+        - generic [ref=f5e107]: Open source
+    - img "Advertisement placeholder" [ref=f5e112]:
+      - generic [ref=f5e113]: Ad Banner (728x90)
+    - generic [ref=f5e114]:
+      - generic [ref=f5e116]:
+        - heading "Browse by Category" [level=2] [ref=f5e117]
+        - paragraph [ref=f5e118]: Find the right tool for any task
+      - generic [ref=f5e119]:
+        - link [ref=f5e120] [cursor=pointer]:
+          - /url: /categories/encoders
+          - generic [ref=f5e127]:
+            - paragraph [ref=f5e128]: Encoders
+            - paragraph [ref=f5e129]: 10 tools
+        - link [ref=f5e130] [cursor=pointer]:
+          - /url: /categories/formatters
+          - generic [ref=f5e135]:
+            - paragraph [ref=f5e136]: Formatters
+            - paragraph [ref=f5e137]: 17 tools
+        - link [ref=f5e138] [cursor=pointer]:
+          - /url: /categories/generators
+          - generic [ref=f5e145]:
+            - paragraph [ref=f5e146]: Generators
+            - paragraph [ref=f5e147]: 15 tools
+        - link [ref=f5e148] [cursor=pointer]:
+          - /url: /categories/converters
+          - generic [ref=f5e153]:
+            - paragraph [ref=f5e154]: Converters
+            - paragraph [ref=f5e155]: 22 tools
+        - link [ref=f5e156] [cursor=pointer]:
+          - /url: /categories/security
+          - generic [ref=f5e160]:
+            - paragraph [ref=f5e161]: Security Tools
+            - paragraph [ref=f5e162]: 19 tools
+        - link [ref=f5e163] [cursor=pointer]:
+          - /url: /categories/image-tools
+          - generic [ref=f5e169]:
+            - paragraph [ref=f5e170]: Image Tools
+            - paragraph [ref=f5e171]: 9 tools
+        - link [ref=f5e172] [cursor=pointer]:
+          - /url: /categories/utilities
+          - generic [ref=f5e176]:
+            - paragraph [ref=f5e177]: Utilities
+            - paragraph [ref=f5e178]: 36 tools
+      - link "View all categories →" [ref=f5e180] [cursor=pointer]:
+        - /url: /categories
+    - generic [ref=f5e182]:
+      - generic [ref=f5e183]:
+        - generic [ref=f5e184]:
+          - heading "Featured Tools" [level=2] [ref=f5e185]
+          - paragraph [ref=f5e186]: Our most popular and frequently used tools
+        - link "View all tools →" [ref=f5e187] [cursor=pointer]:
+          - /url: /tools
+      - generic [ref=f5e188]:
+        - link "Trending Base64 Encoder/Decoder Free online Base64 encoder and decoder tool for developers. Instantly convert text and files to Base64 format and decode Base64 strings back to readable text. Encode and decode text between plain text and Base64 URL-safe variant for use in URLs and filenames Encoders Popularity 95%" [ref=f5e189] [cursor=pointer]:
+          - /url: /tools/base64
+          - generic [ref=f5e190]: Trending
+          - heading "Base64 Encoder/Decoder" [level=3] [ref=f5e199]
+          - paragraph [ref=f5e200]: Free online Base64 encoder and decoder tool for developers. Instantly convert text and files to Base64 format and decode Base64 strings back to readable text.
+          - list [ref=f5e201]:
+            - listitem [ref=f5e202]: Encode and decode text between plain text and Base64
+            - listitem [ref=f5e203]: URL-safe variant for use in URLs and filenames
+          - generic [ref=f5e204]:
+            - generic [ref=f5e205]: Encoders
+            - generic [ref=f5e206]: Popularity 95%
+        - link "URL Encoder/Decoder Free URL encoder and decoder tool for web developers. Encode special characters in URLs and query parameters or decode percent-encoded strings instantly. Percent-encode URLs and query strings per RFC 3986 Decode percent-encoded text back to readable form Encoders Popularity 90%" [ref=f5e207] [cursor=pointer]:
+          - /url: /tools/url-encoder
+          - heading "URL Encoder/Decoder" [level=3] [ref=f5e213]
+          - paragraph [ref=f5e214]: Free URL encoder and decoder tool for web developers. Encode special characters in URLs and query parameters or decode percent-encoded strings instantly.
+          - list [ref=f5e215]:
+            - listitem [ref=f5e216]: Percent-encode URLs and query strings per RFC 3986
+            - listitem [ref=f5e217]: Decode percent-encoded text back to readable form
+          - generic [ref=f5e218]:
+            - generic [ref=f5e219]: Encoders
+            - generic [ref=f5e220]: Popularity 90%
+        - link "Trending JSON Formatter Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection. Beautify, minify, and validate JSON Line-level syntax errors with position hints Formatters Popularity 98%" [ref=f5e221] [cursor=pointer]:
+          - /url: /tools/json-formatter
+          - generic [ref=f5e222]: Trending
+          - heading "JSON Formatter" [level=3] [ref=f5e229]
+          - paragraph [ref=f5e230]: Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection.
+          - list [ref=f5e231]:
+            - listitem [ref=f5e232]: Beautify, minify, and validate JSON
+            - listitem [ref=f5e233]: Line-level syntax errors with position hints
+          - generic [ref=f5e234]:
+            - generic [ref=f5e235]: Formatters
+            - generic [ref=f5e236]: Popularity 98%
+        - link "JavaScript Minifier/Beautifier Free JavaScript minifier and beautifier with customizable options. Minify JS code for production or beautify it for readability with syntax validation. Minify JavaScript for production bundles Beautify minified code for debugging Formatters Popularity 85%" [ref=f5e237] [cursor=pointer]:
+          - /url: /tools/js-minifier
+          - heading "JavaScript Minifier/Beautifier" [level=3] [ref=f5e245]
+          - paragraph [ref=f5e246]: Free JavaScript minifier and beautifier with customizable options. Minify JS code for production or beautify it for readability with syntax validation.
+          - list [ref=f5e247]:
+            - listitem [ref=f5e248]: Minify JavaScript for production bundles
+            - listitem [ref=f5e249]: Beautify minified code for debugging
+          - generic [ref=f5e250]:
+            - generic [ref=f5e251]: Formatters
+            - generic [ref=f5e252]: Popularity 85%
+        - link "SQL Formatter Free online SQL formatter and beautifier with syntax validation. Format and prettify complex SQL queries for MySQL, PostgreSQL, and SQLite databases. Format SQL across 11+ SQL dialects Control keyword case and comma placement Formatters Popularity 92%" [ref=f5e253] [cursor=pointer]:
+          - /url: /tools/sql-formatter
+          - heading "SQL Formatter" [level=3] [ref=f5e260]
+          - paragraph [ref=f5e261]: Free online SQL formatter and beautifier with syntax validation. Format and prettify complex SQL queries for MySQL, PostgreSQL, and SQLite databases.
+          - list [ref=f5e262]:
+            - listitem [ref=f5e263]: Format SQL across 11+ SQL dialects
+            - listitem [ref=f5e264]: Control keyword case and comma placement
+          - generic [ref=f5e265]:
+            - generic [ref=f5e266]: Formatters
+            - generic [ref=f5e267]: Popularity 92%
+        - link "JSON Diff Checker Free JSON diff checker tool for developers. Compare two JSON objects side-by-side and highlight differences with detailed structural comparison. Compare two JSON documents side by side Highlight additions, removals, and changes Formatters Popularity 75%" [ref=f5e268] [cursor=pointer]:
+          - /url: /tools/json-diff
+          - heading "JSON Diff Checker" [level=3] [ref=f5e274]
+          - paragraph [ref=f5e275]: Free JSON diff checker tool for developers. Compare two JSON objects side-by-side and highlight differences with detailed structural comparison.
+          - list [ref=f5e276]:
+            - listitem [ref=f5e277]: Compare two JSON documents side by side
+            - listitem [ref=f5e278]: Highlight additions, removals, and changes
+          - generic [ref=f5e279]:
+            - generic [ref=f5e280]: Formatters
+            - generic [ref=f5e281]: Popularity 75%
+        - link "JSON Beautifier Free online JSON beautifier with configurable indentation and color themes. Format and style JSON data for improved readability and presentation. Pretty-print minified JSON with configurable indentation Colored syntax highlighting for readability Formatters Popularity 74%" [ref=f5e282] [cursor=pointer]:
+          - /url: /tools/json-beautifier
+          - heading "JSON Beautifier" [level=3] [ref=f5e288]
+          - paragraph [ref=f5e289]: Free online JSON beautifier with configurable indentation and color themes. Format and style JSON data for improved readability and presentation.
+          - list [ref=f5e290]:
+            - listitem [ref=f5e291]: Pretty-print minified JSON with configurable indentation
+            - listitem [ref=f5e292]: Colored syntax highlighting for readability
+          - generic [ref=f5e293]:
+            - generic [ref=f5e294]: Formatters
+            - generic [ref=f5e295]: Popularity 74%
+        - link "UUID Generator Free online UUID generator tool for developers. Generate UUID v4 and v7 universally unique identifiers instantly with one-click copy to clipboard. Generate UUID v1, v4, and v7 variants Bulk generation up to 10,000 at once Generators Popularity 90%" [ref=f5e296] [cursor=pointer]:
+          - /url: /tools/uuid-generator
+          - heading "UUID Generator" [level=3] [ref=f5e308]
+          - paragraph [ref=f5e309]: Free online UUID generator tool for developers. Generate UUID v4 and v7 universally unique identifiers instantly with one-click copy to clipboard.
+          - list [ref=f5e310]:
+            - listitem [ref=f5e311]: Generate UUID v1, v4, and v7 variants
+            - listitem [ref=f5e312]: Bulk generation up to 10,000 at once
+          - generic [ref=f5e313]:
+            - generic [ref=f5e314]: Generators
+            - generic [ref=f5e315]: Popularity 90%
+        - link "Password Generator Free secure password generator with customizable length, characters, and complexity options. Create strong random passwords for accounts and apps. Length control with guaranteed character variety Uppercase, lowercase, digits, and symbol sets Generators Popularity 85%" [ref=f5e316] [cursor=pointer]:
+          - /url: /tools/password-generator
+          - heading "Password Generator" [level=3] [ref=f5e322]
+          - paragraph [ref=f5e323]: Free secure password generator with customizable length, characters, and complexity options. Create strong random passwords for accounts and apps.
+          - list [ref=f5e324]:
+            - listitem [ref=f5e325]: Length control with guaranteed character variety
+            - listitem [ref=f5e326]: Uppercase, lowercase, digits, and symbol sets
+          - generic [ref=f5e327]:
+            - generic [ref=f5e328]: Generators
+            - generic [ref=f5e329]: Popularity 85%
+        - link "Trending QR Code Generator Free online QR code generator with customizable colors, logos, and styling options. Create high-quality QR codes for URLs, text, and contact info. Generate QR codes for text, URLs, email, phone, SMS, and more Custom foreground, background, and logo Generators Popularity 88%" [ref=f5e330] [cursor=pointer]:
+          - /url: /tools/qr-generator
+          - generic [ref=f5e331]: Trending
+          - heading "QR Code Generator" [level=3] [ref=f5e341]
+          - paragraph [ref=f5e342]: Free online QR code generator with customizable colors, logos, and styling options. Create high-quality QR codes for URLs, text, and contact info.
+          - list [ref=f5e343]:
+            - listitem [ref=f5e344]: Generate QR codes for text, URLs, email, phone, SMS, and more
+            - listitem [ref=f5e345]: Custom foreground, background, and logo
+          - generic [ref=f5e346]:
+            - generic [ref=f5e347]: Generators
+            - generic [ref=f5e348]: Popularity 88%
+        - link "JSON to CSV Converter Free online JSON to CSV converter with advanced formatting options. Transform JSON arrays into spreadsheet-ready CSV files with customizable delimiters. Convert JSON arrays to CSV Custom delimiter and quote handling Converters Popularity 84%" [ref=f5e349] [cursor=pointer]:
+          - /url: /tools/json-to-csv
+          - heading "JSON to CSV Converter" [level=3] [ref=f5e354]
+          - paragraph [ref=f5e355]: Free online JSON to CSV converter with advanced formatting options. Transform JSON arrays into spreadsheet-ready CSV files with customizable delimiters.
+          - list [ref=f5e356]:
+            - listitem [ref=f5e357]: Convert JSON arrays to CSV
+            - listitem [ref=f5e358]: Custom delimiter and quote handling
+          - generic [ref=f5e359]:
+            - generic [ref=f5e360]: Converters
+            - generic [ref=f5e361]: Popularity 84%
+        - link "Timestamp Converter Free Unix timestamp converter for developers. Convert Unix timestamps to human-readable dates and back with timezone support and multiple formats. Convert Unix timestamps to human-readable dates Convert dates back to Unix time Converters Popularity 79%" [ref=f5e362] [cursor=pointer]:
+          - /url: /tools/timestamp-converter
+          - heading "Timestamp Converter" [level=3] [ref=f5e368]
+          - paragraph [ref=f5e369]: Free Unix timestamp converter for developers. Convert Unix timestamps to human-readable dates and back with timezone support and multiple formats.
+          - list [ref=f5e370]:
+            - listitem [ref=f5e371]: Convert Unix timestamps to human-readable dates
+            - listitem [ref=f5e372]: Convert dates back to Unix time
+          - generic [ref=f5e373]:
+            - generic [ref=f5e374]: Converters
+            - generic [ref=f5e375]: Popularity 79%
+        - link "New JSON to TypeScript Free JSON to TypeScript converter tool. Automatically generate TypeScript interfaces, types, and type definitions from sample JSON data. Generate TypeScript interfaces and types Correctly types nested objects and arrays Converters Popularity 80%" [ref=f5e376] [cursor=pointer]:
+          - /url: /tools/json-to-typescript
+          - generic [ref=f5e377]: New
+          - heading "JSON to TypeScript" [level=3] [ref=f5e386]
+          - paragraph [ref=f5e387]: Free JSON to TypeScript converter tool. Automatically generate TypeScript interfaces, types, and type definitions from sample JSON data.
+          - list [ref=f5e388]:
+            - listitem [ref=f5e389]: Generate TypeScript interfaces and types
+            - listitem [ref=f5e390]: Correctly types nested objects and arrays
+          - generic [ref=f5e391]:
+            - generic [ref=f5e392]: Converters
+            - generic [ref=f5e393]: Popularity 80%
+        - link "Trending JWT Decoder Free online JWT decoder and analyzer for developers. Inspect JSON Web Token headers, payloads, and signatures with detailed breakdown and validation. Decode JWT header and payload in one click Verify signatures when a secret is provided Security Tools Popularity 95%" [ref=f5e394] [cursor=pointer]:
+          - /url: /tools/jwt-decoder
+          - generic [ref=f5e395]: Trending
+          - heading "JWT Decoder" [level=3] [ref=f5e403]
+          - paragraph [ref=f5e404]: Free online JWT decoder and analyzer for developers. Inspect JSON Web Token headers, payloads, and signatures with detailed breakdown and validation.
+          - list [ref=f5e405]:
+            - listitem [ref=f5e406]: Decode JWT header and payload in one click
+            - listitem [ref=f5e407]: Verify signatures when a secret is provided
+          - generic [ref=f5e408]:
+            - generic [ref=f5e409]: Security Tools
+            - generic [ref=f5e410]: Popularity 95%
+        - link "Hash Generator Free online hash generator supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512 algorithms. Generate cryptographic hashes for text and files. Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes HMAC variants with a secret key Security Tools Popularity 81%" [ref=f5e411] [cursor=pointer]:
+          - /url: /tools/hash-generator
+          - heading "Hash Generator" [level=3] [ref=f5e416]
+          - paragraph [ref=f5e417]: Free online hash generator supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512 algorithms. Generate cryptographic hashes for text and files.
+          - list [ref=f5e418]:
+            - listitem [ref=f5e419]: Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes
+            - listitem [ref=f5e420]: HMAC variants with a secret key
+          - generic [ref=f5e421]:
+            - generic [ref=f5e422]: Security Tools
+            - generic [ref=f5e423]: Popularity 81%
+        - link "Image Compressor Free online image compressor with quality control for JPEG, PNG, and WebP formats. Reduce image file sizes without losing visible quality for web. Compress JPEG, PNG, WebP, and AVIF images Quality and preset controls Image Tools Popularity 87%" [ref=f5e424] [cursor=pointer]:
+          - /url: /tools/image-compressor
+          - heading "Image Compressor" [level=3] [ref=f5e431]
+          - paragraph [ref=f5e432]: Free online image compressor with quality control for JPEG, PNG, and WebP formats. Reduce image file sizes without losing visible quality for web.
+          - list [ref=f5e433]:
+            - listitem [ref=f5e434]: Compress JPEG, PNG, WebP, and AVIF images
+            - listitem [ref=f5e435]: Quality and preset controls
+          - generic [ref=f5e436]:
+            - generic [ref=f5e437]: Image Tools
+            - generic [ref=f5e438]: Popularity 87%
+        - link "Image Resizer Free online image resizer, compressor, and converter with batch processing support. Resize multiple images to any dimensions with quality retention. Resize images to exact dimensions Batch resize multiple files at once Image Tools Popularity 83%" [ref=f5e439] [cursor=pointer]:
+          - /url: /tools/image-resizer
+          - heading "Image Resizer" [level=3] [ref=f5e445]
+          - paragraph [ref=f5e446]: Free online image resizer, compressor, and converter with batch processing support. Resize multiple images to any dimensions with quality retention.
+          - list [ref=f5e447]:
+            - listitem [ref=f5e448]: Resize images to exact dimensions
+            - listitem [ref=f5e449]: Batch resize multiple files at once
+          - generic [ref=f5e450]:
+            - generic [ref=f5e451]: Image Tools
+            - generic [ref=f5e452]: Popularity 83%
+        - link "Regex Tester Free online regex tester and debugger with real-time matching, capture groups, and extended flag support. Test and debug regular expressions easily. Test regular expressions with live matches Capture groups and detailed match info Utilities Popularity 77%" [ref=f5e453] [cursor=pointer]:
+          - /url: /tools/regex-tester
+          - heading "Regex Tester" [level=3] [ref=f5e461]
+          - paragraph [ref=f5e462]: Free online regex tester and debugger with real-time matching, capture groups, and extended flag support. Test and debug regular expressions easily.
+          - list [ref=f5e463]:
+            - listitem [ref=f5e464]: Test regular expressions with live matches
+            - listitem [ref=f5e465]: Capture groups and detailed match info
+          - generic [ref=f5e466]:
+            - generic [ref=f5e467]: Utilities
+            - generic [ref=f5e468]: Popularity 77%
+        - link "Word Counter Free online word counter and text analyzer tool. Count words, characters, sentences, and analyze readability with Flesch reading ease scores. Count words, characters, and sentences Reading time estimate Utilities Popularity 80%" [ref=f5e469] [cursor=pointer]:
+          - /url: /tools/word-counter
+          - heading "Word Counter" [level=3] [ref=f5e475]
+          - paragraph [ref=f5e476]: Free online word counter and text analyzer tool. Count words, characters, sentences, and analyze readability with Flesch reading ease scores.
+          - list [ref=f5e477]:
+            - listitem [ref=f5e478]: Count words, characters, and sentences
+            - listitem [ref=f5e479]: Reading time estimate
+          - generic [ref=f5e480]:
+            - generic [ref=f5e481]: Utilities
+            - generic [ref=f5e482]: Popularity 80%
+        - link "IP Address Calculator Free online IP address calculator and subnet tool. Calculate subnet masks, CIDR notation, host ranges, and network addresses for IPv4. Calculate IPv4 subnets from CIDR Network, broadcast, and host ranges Utilities Popularity 74%" [ref=f5e483] [cursor=pointer]:
+          - /url: /tools/ip-calculator
+          - heading "IP Address Calculator" [level=3] [ref=f5e491]
+          - paragraph [ref=f5e492]: Free online IP address calculator and subnet tool. Calculate subnet masks, CIDR notation, host ranges, and network addresses for IPv4.
+          - list [ref=f5e493]:
+            - listitem [ref=f5e494]: Calculate IPv4 subnets from CIDR
+            - listitem [ref=f5e495]: Network, broadcast, and host ranges
+          - generic [ref=f5e496]:
+            - generic [ref=f5e497]: Utilities
+            - generic [ref=f5e498]: Popularity 74%
+    - img "Advertisement placeholder" [ref=f5e499]:
+      - generic [ref=f5e500]: Ad Banner (728x90)
+    - generic [ref=f5e502]:
+      - generic [ref=f5e503]:
+        - heading "Why Choose DevStackIO" [level=2] [ref=f5e504]
+        - paragraph [ref=f5e505]: Built for developers who value speed, privacy, and simplicity
+      - generic [ref=f5e506]:
+        - generic [ref=f5e507]:
+          - heading "Free Forever" [level=3] [ref=f5e513]
+          - paragraph [ref=f5e514]: All tools are completely free. No hidden charges, no credit card needed.
+        - generic [ref=f5e515]:
+          - heading "Browser-Based" [level=3] [ref=f5e520]
+          - paragraph [ref=f5e521]: Everything runs in your browser. No downloads or installations required.
+        - generic [ref=f5e522]:
+          - heading "No Login" [level=3] [ref=f5e527]
+          - paragraph [ref=f5e528]: Start using tools immediately. No account creation, no passwords to remember.
+        - generic [ref=f5e529]:
+          - heading "Privacy-First" [level=3] [ref=f5e533]
+          - paragraph [ref=f5e534]: Your data stays on your device. We never store or share your information.
+        - generic [ref=f5e535]:
+          - heading "Lightning Fast" [level=3] [ref=f5e539]
+          - paragraph [ref=f5e540]: Optimized for speed. Tools load instantly and respond in real-time.
+        - generic [ref=f5e541]:
+          - heading "Mobile Friendly" [level=3] [ref=f5e545]
+          - paragraph [ref=f5e546]: Fully responsive design that works on any device, from phone to desktop.
+        - generic [ref=f5e547]:
+          - heading "Keyboard Shortcuts" [level=3] [ref=f5e551]
+          - paragraph [ref=f5e552]: Power-user shortcuts for efficient workflows and quick tool access.
+        - generic [ref=f5e553]:
+          - heading "Secure" [level=3] [ref=f5e558]
+          - paragraph [ref=f5e559]: HTTPS everywhere. Your data is encrypted in transit and never persisted.
+    - generic [ref=f5e560]:
+      - generic [ref=f5e561]:
+        - generic [ref=f5e562]:
+          - heading "Learning Center" [level=2] [ref=f5e563]
+          - paragraph [ref=f5e564]: Tutorials, guides, and best practices
+        - link "View all" [ref=f5e565] [cursor=pointer]:
+          - /url: /guides
+      - generic [ref=f5e568]:
+        - link [ref=f5e569] [cursor=pointer]:
+          - /url: /guides/getting-started-json
+          - heading "Getting Started with JSON" [level=3] [ref=f5e570]
+          - paragraph [ref=f5e571]: Learn the fundamentals of JSON syntax, structure, and common use cases in modern web development.
+          - generic [ref=f5e572]: 5 min read
+        - link [ref=f5e576] [cursor=pointer]:
+          - /url: /guides/understanding-jwt
+          - heading "Understanding JWT Tokens" [level=3] [ref=f5e577]
+          - paragraph [ref=f5e578]: A comprehensive guide to JSON Web Tokens, how they work, and best practices for implementation.
+          - generic [ref=f5e579]: 8 min read
+        - link [ref=f5e583] [cursor=pointer]:
+          - /url: /guides/image-optimization-guide
+          - heading "Image Optimization Guide" [level=3] [ref=f5e584]
+          - paragraph [ref=f5e585]: Best practices for optimizing images for the web without sacrificing quality.
+          - generic [ref=f5e586]: 6 min read
+        - link [ref=f5e590] [cursor=pointer]:
+          - /url: /guides/password-security
+          - heading "Password Security Best Practices" [level=3] [ref=f5e591]
+          - paragraph [ref=f5e592]: How to create and manage secure passwords, plus common pitfalls to avoid.
+          - generic [ref=f5e593]: 4 min read
+        - link [ref=f5e597] [cursor=pointer]:
+          - /url: /guides/understanding-base64
+          - heading "Understanding Base64 Encoding" [level=3] [ref=f5e598]
+          - paragraph [ref=f5e599]: What Base64 is, how it works, and when to use it in web development.
+          - generic [ref=f5e600]: 6 min read
+        - link [ref=f5e604] [cursor=pointer]:
+          - /url: /guides/css-minification-guide
+          - heading "CSS Minification Guide" [level=3] [ref=f5e605]
+          - paragraph [ref=f5e606]: How to minify CSS for production and why it matters for performance.
+          - generic [ref=f5e607]: 5 min read
+        - link [ref=f5e611] [cursor=pointer]:
+          - /url: /guides/regex-fundamentals
+          - heading "Regex Fundamentals" [level=3] [ref=f5e612]
+          - paragraph [ref=f5e613]: Learn regular expressions from basics to advanced patterns with practical examples.
+          - generic [ref=f5e614]: 10 min read
+        - link [ref=f5e618] [cursor=pointer]:
+          - /url: /guides/unix-timestamps-explained
+          - heading "Unix Timestamps Explained" [level=3] [ref=f5e619]
+          - paragraph [ref=f5e620]: Everything you need to know about Unix timestamps, timezones, and date handling.
+          - generic [ref=f5e621]: 7 min read
+        - link [ref=f5e625] [cursor=pointer]:
+          - /url: /guides/html-encoding-guide
+          - heading "HTML Encoding & Special Characters" [level=3] [ref=f5e626]
+          - paragraph [ref=f5e627]: A guide to HTML entities, special characters, and why encoding matters for security.
+          - generic [ref=f5e628]: 5 min read
+        - link [ref=f5e632] [cursor=pointer]:
+          - /url: /guides/data-serialization-formats
+          - heading "Data Serialization Formats" [level=3] [ref=f5e633]
+          - paragraph [ref=f5e634]: Compare JSON, YAML, TOML, and XML to choose the right format for your project.
+          - generic [ref=f5e635]: 8 min read
+    - img "Advertisement placeholder" [ref=f5e639]:
+      - generic [ref=f5e640]: Ad Banner (728x90)
+    - generic [ref=f5e642]:
+      - generic [ref=f5e643]:
+        - heading "Community Driven" [level=2] [ref=f5e644]
+        - paragraph [ref=f5e645]: Help us build the tools you need
+      - generic [ref=f5e646]:
+        - link [ref=f5e647] [cursor=pointer]:
+          - /url: /suggest
+          - heading "Suggest a Tool" [level=3] [ref=f5e651]
+          - paragraph [ref=f5e652]: Have an idea? Let us know what tool you need.
+        - link [ref=f5e653] [cursor=pointer]:
+          - /url: /feature-request
+          - heading "Request a Feature" [level=3] [ref=f5e658]
+          - paragraph [ref=f5e659]: Help shape the future of DevStackIO.
+        - link [ref=f5e660] [cursor=pointer]:
+          - /url: /report-bug
+          - heading "Report a Bug" [level=3] [ref=f5e671]
+          - paragraph [ref=f5e672]: Found something broken? Let us fix it.
+        - link [ref=f5e673] [cursor=pointer]:
+          - /url: /feedback
+          - heading "Share Feedback" [level=3] [ref=f5e677]
+          - paragraph [ref=f5e678]: We'd love to hear your thoughts.
+    - generic [ref=f5e681]:
+      - heading "Stay Updated" [level=2] [ref=f5e687]
+      - paragraph [ref=f5e688]: Get notified when we add new tools, tutorials, and resources.
+      - generic [ref=f5e689]:
+        - textbox "Enter your email" [ref=f5e690]
+        - button "Subscribe" [ref=f5e691]
+      - paragraph [ref=f5e692]: No spam. Unsubscribe anytime.
+    - generic [ref=f5e695]:
+      - heading "Frequently Asked Questions" [level=2] [ref=f5e696]
+      - generic [ref=f5e697]:
+        - generic [ref=f5e698]:
+          - button "Are the tools really free?" [expanded] [ref=f5e699]
+          - paragraph [ref=f5e704]: Yes, all tools on DevStackIO are completely free. We believe developer tools should be accessible to everyone.
+        - button "Do I need to create an account?" [ref=f5e706]
+        - button "Is my data secure?" [ref=f5e711]
+        - button "Can I use these tools offline?" [ref=f5e716]
+        - button "How do you sustain the platform?" [ref=f5e721]
+        - button "How many tools are available?" [ref=f5e726]
+        - button "Do you support mobile devices?" [ref=f5e731]
+        - button "Can I request a new tool?" [ref=f5e736]
+  - img "Advertisement placeholder" [ref=f5e740]:
+    - generic [ref=f5e741]: Ad Banner (728x90)
+  - contentinfo [ref=f5e742]:
+    - generic [ref=f5e743]:
+      - generic [ref=f5e744]:
+        - generic [ref=f5e745]:
+          - link "DevStack IO Tools" [ref=f5e746] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f5e747]:
+              - generic [ref=f5e748]: DevStack
+              - generic [ref=f5e749]: IO
+              - generic [ref=f5e750]: Tools
+          - paragraph [ref=f5e751]: Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
+          - paragraph [ref=f5e752]:
+            - text: DevStackIO Tools is part of the
+            - link "DevStackIO" [ref=f5e753] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - text: developer platform.
+          - generic [ref=f5e754]:
+            - link "DevStackIO Home" [ref=f5e755] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - generic [ref=f5e760]: "|"
+            - link "GitHub" [ref=f5e761] [cursor=pointer]:
+              - /url: https://github.com/roddavinod99
+        - generic [ref=f5e764]:
+          - heading "Tools" [level=3] [ref=f5e765]
+          - list [ref=f5e766]:
+            - listitem [ref=f5e767]:
+              - link "All Tools" [ref=f5e768] [cursor=pointer]:
+                - /url: /tools
+            - listitem [ref=f5e769]:
+              - link "Categories" [ref=f5e770] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=f5e771]:
+              - link "Popular" [ref=f5e772] [cursor=pointer]:
+                - /url: /popular
+            - listitem [ref=f5e773]:
+              - link "Recently Added" [ref=f5e774] [cursor=pointer]:
+                - /url: /new
+            - listitem [ref=f5e775]:
+              - link "Sitemap" [ref=f5e776] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=f5e777]:
+          - heading "Learn" [level=3] [ref=f5e778]
+          - list [ref=f5e779]:
+            - listitem [ref=f5e780]:
+              - link "Guides" [ref=f5e781] [cursor=pointer]:
+                - /url: /guides
+            - listitem [ref=f5e782]:
+              - link "Tutorials" [ref=f5e783] [cursor=pointer]:
+                - /url: /tutorials
+            - listitem [ref=f5e784]:
+              - link "Blog" [ref=f5e785] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=f5e786]:
+              - link "Best Practices" [ref=f5e787] [cursor=pointer]:
+                - /url: /best-practices
+            - listitem [ref=f5e788]:
+              - link "RSS Feed" [ref=f5e789] [cursor=pointer]:
+                - /url: /feed.xml
+        - generic [ref=f5e790]:
+          - heading "Company" [level=3] [ref=f5e791]
+          - list [ref=f5e792]:
+            - listitem [ref=f5e793]:
+              - link "About" [ref=f5e794] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f5e795]:
+              - link "Roadmap" [ref=f5e796] [cursor=pointer]:
+                - /url: /roadmap
+            - listitem [ref=f5e797]:
+              - link "Changelog" [ref=f5e798] [cursor=pointer]:
+                - /url: /changelog
+        - generic [ref=f5e799]:
+          - heading "Support" [level=3] [ref=f5e800]
+          - list [ref=f5e801]:
+            - listitem [ref=f5e802]:
+              - link "Contact" [ref=f5e803] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=f5e804]:
+              - link "Privacy Policy" [ref=f5e805] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=f5e806]:
+              - link "Terms & Conditions" [ref=f5e807] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=f5e808]:
+              - link "Cookie Policy" [ref=f5e809] [cursor=pointer]:
+                - /url: /cookie-policy
+            - listitem [ref=f5e810]:
+              - link "Disclaimer" [ref=f5e811] [cursor=pointer]:
+                - /url: /disclaimer
+      - generic [ref=f5e813]:
+        - paragraph [ref=f5e814]: © 2026 DevStackIO. All rights reserved.
+        - generic [ref=f5e815]:
+          - link "Privacy" [ref=f5e816] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=f5e817] [cursor=pointer]:
+            - /url: /terms
+          - link "Cookies" [ref=f5e818] [cursor=pointer]:
+            - /url: /cookie-policy
+          - link "Disclaimer" [ref=f5e819] [cursor=pointer]:
+            - /url: /disclaimer
+          - link "About" [ref=f5e820] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=f5e821] [cursor=pointer]:
+            - /url: /contact
+          - link "Sitemap" [ref=f5e822] [cursor=pointer]:
+            - /url: /sitemap
+          - link "RSS" [ref=f5e823] [cursor=pointer]:
+            - /url: /feed.xml
+  - button "Open Next.js Dev Tools" [ref=f5e829] [cursor=pointer]

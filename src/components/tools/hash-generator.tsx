@@ -4,108 +4,122 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Copy, Download } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
 
-function rotateLeft(x: number, n: number) { return (x << n) | (x >>> (32 - n)); }
+// sha512-224/256 hand-rolled for unsupported WebCrypto envs
 
-function md5(text: string): string {
-  const F = (x: number, y: number, z: number) => (x & y) | (~x & z);
-  const G = (x: number, y: number, z: number) => (x & z) | (y & ~z);
-  const H = (x: number, y: number, z: number) => x ^ y ^ z;
-  const I = (x: number, y: number, z: number) => y ^ (x | ~z);
-  const T: number[] = [];
-  for (let i = 1; i <= 64; i++) T[i] = Math.floor(Math.abs(Math.sin(i)) * 0x100000000);
-  const bytes = new TextEncoder().encode(text);
-  const ml = bytes.length * 8;
-  const paddedLen = (((bytes.length + 8) >>> 6) + 1) << 6;
-  const padded = new Uint8Array(paddedLen);
-  padded.set(bytes);
-  padded[bytes.length] = 0x80;
-  const dv = new DataView(padded.buffer);
-  dv.setUint32(paddedLen - 8, ml >>> 32, true);
-  dv.setUint32(paddedLen - 4, ml & 0xffffffff, true);
-  let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
-  const S = [[7, 12, 17, 22], [5, 9, 14, 20], [4, 11, 16, 23], [6, 10, 15, 21]];
-  for (let offset = 0; offset < paddedLen; offset += 64) {
-    const M: number[] = [];
-    for (let i = 0; i < 16; i++) M[i] = dv.getUint32(offset + i * 4, true);
-    let A = a0, B = b0, C = c0, D = d0;
-    for (let i = 0; i < 64; i++) {
-      let Fn: (x: number, y: number, z: number) => number, g: number;
-      if (i < 16) { Fn = F; g = i; }
-      else if (i < 32) { Fn = G; g = (5 * i + 1) % 16; }
-      else if (i < 48) { Fn = H; g = (3 * i + 5) % 16; }
-      else { Fn = I; g = (7 * i) % 16; }
-      const s = S[Math.floor(i / 16)][i % 4];
-      const temp = D; D = C; C = B;
-      B = (B + rotateLeft((A + Fn(B, C, D) + M[g] + T[i + 1]) >>> 0, s)) >>> 0;
-      A = temp;
-    }
-    a0 = (a0 + A) >>> 0; b0 = (b0 + B) >>> 0; c0 = (c0 + C) >>> 0; d0 = (d0 + D) >>> 0;
-  }
-  const toHex = (n: number) => n.toString(16).padStart(8, "0");
-  return toHex(a0) + toHex(b0) + toHex(c0) + toHex(d0);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type CryptoJSApi = any;
+
+let cryptoJSPromise: Promise<CryptoJSApi> | null = null;
+function getCryptoJS(): Promise<CryptoJSApi> {
+  if (!cryptoJSPromise) cryptoJSPromise = import("crypto-js");
+  return cryptoJSPromise;
+}
+
+async function md5Hex(data: string): Promise<string> {
+  const C = await getCryptoJS();
+  return C.MD5(data).toString();
+}
+
+async function md5BytesHex(data: Uint8Array): Promise<string> {
+  const C = await getCryptoJS();
+  return C.MD5(C.lib.WordArray.create(data)).toString();
+}
+
+async function rmd160Hex(data: string): Promise<string> {
+  const C = await getCryptoJS();
+  return C.RIPEMD160(data).toString();
 }
 
 async function sha224(data: string): Promise<string> {
-  const buf = await crypto.subtle.digest("SHA-224", new TextEncoder().encode(data));
-  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  const C = await getCryptoJS();
+  return C.SHA224(data).toString();
+}
+
+const SHA512_K = [
+  0x428a2f98d728ae22n, 0x7137449123ef65cdn, 0xb5c0fbcfec4d3b2fn, 0xe9b5dba58189dbbcn,
+  0x3956c25bf348b538n, 0x59f111f1b605d019n, 0x923f82a4af194f9bn, 0xab1c5ed5da6d8118n,
+  0xd807aa98a3030242n, 0x12835b0145706fben, 0x243185be4ee4b28cn, 0x550c7dc3d5ffb4e2n,
+  0x72be5d74f27b896fn, 0x80deb1fe3b1696b1n, 0x9bdc06a725c71235n, 0xc19bf174cf692694n,
+  0xe49b69c19ef14ad2n, 0xefbe4786384f25e3n, 0x0fc19dc68b8cd5b5n, 0x240ca1cc77ac9c65n,
+  0x2de92c6f592b0275n, 0x4a7484aa6ea6e483n, 0x5cb0a9dcbd41fbd4n, 0x76f988da831153b5n,
+  0x983e5152ee66dfabn, 0xa831c66d2db43210n, 0xb00327c898fb213fn, 0xbf597fc7beef0ee4n,
+  0xc6e00bf33da88fc2n, 0xd5a79147930aa725n, 0x06ca6351e003826fn, 0x142929670a0e6e70n,
+  0x27b70a8546d22ffcn, 0x2e1b21385c26c926n, 0x4d2c6dfc5ac42aedn, 0x53380d139d95b3dfn,
+  0x650a73548baf63den, 0x766a0abb3c77b2a8n, 0x81c2c92e47edaee6n, 0x92722c851482353bn,
+  0xa2bfe8a14cf10364n, 0xa81a664bbc423001n, 0xc24b8b70d0f89791n, 0xc76c51a30654be30n,
+  0xd192e819d6ef5218n, 0xd69906245565a910n, 0xf40e35855771202an, 0x106aa07032bbd1b8n,
+  0x19a4c116b8d2d0c8n, 0x1e376c085141ab53n, 0x2748774cdf8eeb99n, 0x34b0bcb5e19b48a8n,
+  0x391c0cb3c5c95a63n, 0x4ed8aa4ae3418acbn, 0x5b9cca4f7763e373n, 0x682e6ff3d6b2b8a3n,
+  0x748f82ee5defb2fcn, 0x78a5636f43172f60n, 0x84c87814a1f0ab72n, 0x8cc702081a6439ecn,
+  0x90befffa23631e28n, 0xa4506cebde82bde9n, 0xbef9a3f7b2c67915n, 0xc67178f2e372532bn,
+  0xca273eceea26619cn, 0xd186b8c721c0c207n, 0xeada7dd6cde0eb1en, 0xf57d4f7fee6ed178n,
+  0x06f067aa72176fban, 0x0a637dc5a2c898a6n, 0x113f9804bef90daen, 0x1b710b35131c471bn,
+  0x28db77f523047d84n, 0x32caab7b40c72493n, 0x3c9ebe0a15c9bebcn, 0x431d67c49c100d4cn,
+  0x4cc5d4becb3e42b6n, 0x597f299cfc657e2an, 0x5fcb6fab3ad6faecn, 0x6c44198c4a475817n,
+];
+
+const SHA512_MASK = (1n << 64n) - 1n;
+
+function sha512Core(data: Uint8Array, iv: bigint[]): Uint8Array {
+  const rotr = (x: bigint, n: bigint) => ((x >> n) | (x << (64n - n))) & SHA512_MASK;
+  const ml = data.length;
+  const rem = (ml + 1) % 128;
+  const padLen = rem <= 112 ? 112 - rem : 240 - rem;
+  const total = ml + 1 + padLen + 16;
+  const buf = new Uint8Array(total);
+  buf.set(data);
+  buf[ml] = 0x80;
+  const dv = new DataView(buf.buffer);
+  dv.setBigUint64(total - 8, BigInt(ml * 8), false);
+  const h = iv.map((x) => BigInt(x));
+  for (let i = 0; i < total; i += 128) {
+    const w = new Array<bigint>(80).fill(0n);
+    for (let j = 0; j < 16; j++) w[j] = dv.getBigUint64(i + j * 8, false);
+    for (let j = 16; j < 80; j++) {
+      const s0 = rotr(w[j - 15], 1n) ^ rotr(w[j - 15], 8n) ^ (w[j - 15] >> 7n);
+      const s1 = rotr(w[j - 2], 19n) ^ rotr(w[j - 2], 61n) ^ (w[j - 2] >> 6n);
+      w[j] = (w[j - 16] + s0 + w[j - 7] + s1) & SHA512_MASK;
+    }
+    let a = h[0], b = h[1], c = h[2], d = h[3], e = h[4], f = h[5], g = h[6], hh = h[7];
+    for (let j = 0; j < 80; j++) {
+      const S1 = rotr(e, 14n) ^ rotr(e, 18n) ^ rotr(e, 41n);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (hh + S1 + ch + SHA512_K[j] + w[j]) & SHA512_MASK;
+      const S0 = rotr(a, 28n) ^ rotr(a, 34n) ^ rotr(a, 39n);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) & SHA512_MASK;
+      hh = g; g = f; f = e; e = (d + t1) & SHA512_MASK; d = c; c = b; b = a; a = (t1 + t2) & SHA512_MASK;
+    }
+    h[0] = (h[0] + a) & SHA512_MASK; h[1] = (h[1] + b) & SHA512_MASK;
+    h[2] = (h[2] + c) & SHA512_MASK; h[3] = (h[3] + d) & SHA512_MASK;
+    h[4] = (h[4] + e) & SHA512_MASK; h[5] = (h[5] + f) & SHA512_MASK;
+    h[6] = (h[6] + g) & SHA512_MASK; h[7] = (h[7] + hh) & SHA512_MASK;
+  }
+  const out = new Uint8Array(64);
+  const odv = new DataView(out.buffer);
+  for (let i = 0; i < 8; i++) odv.setBigUint64(i * 8, h[i], false);
+  return out;
+}
+
+const SHA512_224_IV = [
+  0x8c3d37c819544da2n, 0x73e1996689dcd4d6n, 0x1dfab7ae32ff9c82n, 0x679dd514582f9fcfn,
+  0x0f6d2b697bd44da8n, 0x77e36f7304c48942n, 0x3f9d85a86a1d36c8n, 0x1112e6ad91d692a1n,
+];
+const SHA512_256_IV = [
+  0x22312194fc2bf72cn, 0x9f555fa3c84c64c2n, 0x2393b86b6f53b151n, 0x963877195940eabdn,
+  0x96283ee2a88effe3n, 0xbe5e1e2553863992n, 0x2b0199fc2c85b8aan, 0x0eb72ddc81c52ca2n,
+];
+
+function bytesToHex(buf: Uint8Array): string {
+  return Array.from(buf).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 async function sha512_224(data: string): Promise<string> {
-  const buf = await crypto.subtle.digest("SHA-512/224", new TextEncoder().encode(data));
-  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return bytesToHex(sha512Core(new TextEncoder().encode(data), SHA512_224_IV).slice(0, 28));
 }
 
 async function sha512_256(data: string): Promise<string> {
-  const buf = await crypto.subtle.digest("SHA-512/256", new TextEncoder().encode(data));
-  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-function rmd160(data: string): string {
-  const bytes = new TextEncoder().encode(data);
-  const ml = bytes.length * 8;
-  const paddedLen = (((bytes.length + 8) >>> 6) + 1) << 6;
-  const padded = new Uint8Array(paddedLen);
-  padded.set(bytes);
-  padded[bytes.length] = 0x80;
-  const dv = new DataView(padded.buffer);
-  dv.setUint32(paddedLen - 8, ml >>> 32, true);
-  dv.setUint32(paddedLen - 4, ml & 0xffffffff, true);
-  let h0 = 0x67452301, h1 = 0xefcdab89, h2 = 0x98badcfe, h3 = 0x10325476, h4 = 0xc3d2e1f0;
-  const rol = (x: number, n: number) => (x << n) | (x >>> (32 - n));
-  const f1 = (x: number, y: number, z: number) => x ^ y ^ z;
-  const f2 = (x: number, y: number, z: number) => (x & y) | (~x & z);
-  const f3 = (x: number, y: number, z: number) => (x | ~y) ^ z;
-  const f4 = (x: number, y: number, z: number) => (x & z) | (y & ~z);
-  const f5 = (x: number, y: number, z: number) => x ^ (y | ~z);
-  const k1 = 0x00000000, k2 = 0x5a827999, k3 = 0x6ed9eba1, k4 = 0x8f1bbcdc, k5 = 0xa953fd4e;
-  const k1r = 0x50a28be6, k2r = 0x5c4dd124, k3r = 0x6d703ef3, k4r = 0x7a6d76e9, k5r = 0x00000000;
-  const r = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13, 11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9, 7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13];
-  const rr = [5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5, 10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10, 0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10, 4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11];
-  const s = [11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9, 7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13, 6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9, 15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6];
-  const sr = [8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8, 9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14, 13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11];
-  for (let offset = 0; offset < paddedLen; offset += 64) {
-    const M: number[] = [];
-    for (let i = 0; i < 16; i++) M[i] = dv.getUint32(offset + i * 4, true);
-    let A = h0, B = h1, C = h2, D = h3, E = h4;
-    let Ar = h0, Br = h1, Cr = h2, Dr = h3, Er = h4;
-    for (let i = 0; i < 80; i++) {
-      const j = Math.floor(i / 16);
-      const f = [f1, f2, f3, f4, f5][j](B, C, D);
-      const k = [k1, k2, k3, k4, k5][j];
-      const T = (rol((A + f + M[r[i]] + k) >>> 0, s[i]) + E) >>> 0;
-      A = E; E = D; D = rol(C, 10); C = B; B = T;
-      const jr = Math.floor(i / 16);
-      const fr = [f5, f4, f3, f2, f1][jr](Br, Cr, Dr);
-      const kr = [k1r, k2r, k3r, k4r, k5r][jr];
-      const Tr = (rol((Ar + fr + M[rr[i]] + kr) >>> 0, sr[i]) + Er) >>> 0;
-      Ar = Er; Er = Dr; Dr = rol(Cr, 10); Cr = Br; Br = Tr;
-    }
-    const T = (h1 + C + Dr) >>> 0;
-    h1 = (h2 + D + Er) >>> 0; h2 = (h3 + E + Ar) >>> 0;
-    h3 = (h4 + A + Br) >>> 0; h4 = (h0 + B + Cr) >>> 0; h0 = T;
-  }
-  const toHex = (n: number) => (n >>> 0).toString(16).padStart(8, "0");
-  return toHex(h0) + toHex(h1) + toHex(h2) + toHex(h3) + toHex(h4);
+  return bytesToHex(sha512Core(new TextEncoder().encode(data), SHA512_256_IV).slice(0, 32));
 }
 
 const CRC32_TABLE = new Uint32Array(256).map((_, i) => {
@@ -150,7 +164,7 @@ type HashAlgorithm = {
 };
 
 const ALL_ALGORITHMS: HashAlgorithm[] = [
-  { id: "MD5", label: "MD5", bits: 128, hash: async (d) => md5(d) },
+  { id: "MD5", label: "MD5", bits: 128, hash: async (d) => md5Hex(d) },
   { id: "SHA-1", label: "SHA-1", bits: 160, hash: async (d) => hexDigest("SHA-1", d) },
   { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => sha224(d) },
   { id: "SHA-256", label: "SHA-256", bits: 256, hash: async (d) => hexDigest("SHA-256", d) },
@@ -158,7 +172,7 @@ const ALL_ALGORITHMS: HashAlgorithm[] = [
   { id: "SHA-512", label: "SHA-512", bits: 512, hash: async (d) => hexDigest("SHA-512", d) },
   { id: "SHA-512/224", label: "SHA-512/224", bits: 224, hash: async (d) => sha512_224(d) },
   { id: "SHA-512/256", label: "SHA-512/256", bits: 256, hash: async (d) => sha512_256(d) },
-  { id: "RIPEMD-160", label: "RIPEMD-160", bits: 160, hash: async (d) => rmd160(d) },
+  { id: "RIPEMD-160", label: "RIPEMD-160", bits: 160, hash: async (d) => rmd160Hex(d) },
   { id: "CRC32", label: "CRC32", bits: 32, hash: async (d) => crc32(d) },
   { id: "CRC32C", label: "CRC32C", bits: 32, hash: async (d) => crc32c(d) },
 ];
@@ -170,9 +184,27 @@ async function hexDigest(algo: string, data: string): Promise<string> {
   return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
+const CRYPTOJS_HMAC: Record<string, string> = {
+  MD5: "HmacMD5",
+  "SHA-1": "HmacSHA1",
+  "SHA-224": "HmacSHA224",
+  "SHA-256": "HmacSHA256",
+  "SHA-384": "HmacSHA384",
+  "SHA-512": "HmacSHA512",
+  "RIPEMD-160": "HmacRIPEMD160",
+};
+
+function canHmac(algoId: string): boolean {
+  return !!CRYPTOJS_HMAC[algoId];
+}
+
 async function hmacDigest(algo: string, data: string, secret: string): Promise<string> {
-  const hashName = algo === "MD5" ? "SHA-256" : algo;
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: hashName }, false, ["sign"]);
+  const fn = CRYPTOJS_HMAC[algo];
+  if (fn) {
+    const C = await getCryptoJS();
+    return C[fn](data, secret).toString();
+  }
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: algo }, false, ["sign"]);
   const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(data));
   return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -193,6 +225,7 @@ export function HashGenerator() {
   const [saltPos, setSaltPos] = useState<"prepend" | "append">("prepend");
   const [hashFmt, setHashFmt] = useState<"hex" | "base64" | "binary">("hex");
   const [compareMode, setCompareMode] = useState(false);
+  const [verifyHash, setVerifyHash] = useState("");
   const [compareA, setCompareA] = useState("");
   const [compareB, setCompareB] = useState("");
   const [compareResult, setCompareResult] = useState<boolean | null>(null);
@@ -216,7 +249,7 @@ export function HashGenerator() {
         if (salt) data = saltPos === "prepend" ? salt + text : text + salt;
         let hex: string;
         if (hmac && !["CRC32", "CRC32C"].includes(algo.id)) {
-          hex = await hmacDigest(algo.id === "MD5" ? "SHA-256" : algo.id, data, hmacKey || "secret");
+          hex = canHmac(algo.id) ? await hmacDigest(algo.id, data, hmacKey || "secret") : "N/A";
         } else {
           hex = await algo.hash(data);
         }
@@ -247,7 +280,7 @@ export function HashGenerator() {
             if (salt) data = saltPos === "prepend" ? salt + line : line + salt;
             let hex: string;
             if (hmac && !["CRC32", "CRC32C"].includes(algo.id)) {
-              hex = await hmacDigest(algo.id === "MD5" ? "SHA-256" : algo.id, data, hmacKey || "secret");
+              hex = canHmac(algo.id) ? await hmacDigest(algo.id, data, hmacKey || "secret") : "N/A";
             } else {
               hex = await algo.hash(data);
             }
@@ -278,8 +311,7 @@ export function HashGenerator() {
     let hex: string;
     try {
       if (fileAlgo === "MD5") {
-        const text = new TextDecoder().decode(buf);
-        hex = md5(text);
+        hex = await md5BytesHex(new Uint8Array(buf));
       } else {
         const hashBuf = await crypto.subtle.digest(fileAlgo, buf);
         hex = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -320,6 +352,12 @@ export function HashGenerator() {
   const coreAlgos = ALL_ALGORITHMS.filter((a) => CORE_ALGO_IDS.includes(a.id));
   const extraAlgos = ALL_ALGORITHMS.filter((a) => !CORE_ALGO_IDS.includes(a.id));
   const activeAlgos = ALL_ALGORITHMS.filter((a) => selected.includes(a.id));
+  const normHash = (h: string) => h.trim().toLowerCase().replace(/\s+/g, "");
+  const expectedNormalized = normHash(verifyHash);
+  const verifiedCount = expectedNormalized
+    ? activeAlgos.filter((a) => results[a.id] && normHash(results[a.id]) === expectedNormalized).length
+    : 0;
+  const fileMatchesExpected = expectedNormalized ? normHash(fileHash) === expectedNormalized : null;
 
   return (
     <div className="space-y-4">
@@ -474,6 +512,11 @@ export function HashGenerator() {
           <div className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">{file?.name} ({file ? (file.size / 1024).toFixed(1) : 0} KB)</p>
             <code className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all select-all">{fileHash}</code>
+            {fileMatchesExpected !== null && (
+              <p className={`mt-1 text-xs font-medium ${fileMatchesExpected ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                {fileMatchesExpected ? "✓ File hash matches expected" : "✗ File hash does not match expected"}
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -489,15 +532,31 @@ export function HashGenerator() {
               navigator.clipboard.writeText(json);
             }} className="text-xs text-brand-500 hover:text-brand-600">Copy All as JSON</button>
           </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="hash-verify" className="text-xs text-surface-500 dark:text-dark-muted shrink-0">Expected hash (verify):</label>
+            <input type="text" id="hash-verify" value={verifyHash} onChange={(e) => setVerifyHash(e.target.value)} placeholder="Paste a hash to verify results against..."
+              className="flex-1 min-w-0 rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            {expectedNormalized && (
+              <span className={`text-xs font-medium shrink-0 ${verifiedCount === activeAlgos.length ? "text-green-600 dark:text-green-400" : "text-amber-600 dark:text-amber-400"}`}>
+                {verifiedCount}/{activeAlgos.length} match
+              </span>
+            )}
+          </div>
           {activeAlgos.map((algo) => {
             const hash = results[algo.id];
             if (!hash) return null;
+            const matches = expectedNormalized ? normHash(hash) === expectedNormalized : null;
             return (
               <div key={algo.id} className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">{algo.label}</span>
                     <span className="text-xs text-surface-400 dark:text-dark-muted">{algo.bits} bits ({algo.bits / 4} hex chars)</span>
+                    {matches !== null && (
+                      <span className={`text-xs font-medium ${matches ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                        {matches ? "✓ matches" : "✗ differs"}
+                      </span>
+                    )}
                   </div>
                   <div className="flex gap-1">
                     <button onClick={() => downloadHash(algo.id, hash)} className="text-xs text-surface-500 hover:text-brand-600 flex items-center gap-0.5" title="Download hash file">

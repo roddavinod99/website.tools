@@ -6,7 +6,16 @@ function toPascalCase(str: string): string {
   return str.replace(/[_-]+/g, " ").replace(/\s+/g, " ").split(" ").map((s) => s[0]?.toUpperCase() + s.slice(1)).join("").replace(/[^a-zA-Z0-9]/g, "");
 }
 
-function generateTypescript(input: string, opts: { outputType: "interface" | "type"; optional: boolean; readonly: boolean; export_: boolean; pascalCase: boolean }): string {
+function samplePreview(value: unknown): string {
+  if (typeof value === "string") return `"${value.length > 40 ? value.slice(0, 40) + "…" : value}"`;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (value === null) return "null";
+  if (Array.isArray(value)) return value.length > 0 ? `${samplePreview(value[0])} …` : "[]";
+  if (typeof value === "object") return "{ … }";
+  return "";
+}
+
+function generateTypescript(input: string, opts: { outputType: "interface" | "type"; optional: boolean; readonly: boolean; export_: boolean; pascalCase: boolean; jsdoc: boolean }): string {
   const parsed = JSON.parse(input);
   const lines: string[] = [];
   function getTypeName(key: string): string {
@@ -70,6 +79,12 @@ function generateTypescript(input: string, opts: { outputType: "interface" | "ty
         valType = inferType(value, key, undefined);
       }
 
+      if (opts.jsdoc) {
+        const preview = samplePreview(value);
+        props.push(`  /**`);
+        props.push(`   * ${key} (${valType.replace(/\s+/g, " ").slice(0, 60)})${preview ? ` — e.g. ${preview}` : ""}`);
+        props.push(`   */`);
+      }
       props.push(`  ${readonly}${key}${optional}: ${valType};`);
     }
 
@@ -101,6 +116,7 @@ export function JsonToTypescript() {
   const [readonly, setReadonly] = useState(false);
   const [export_, setExport_] = useState(true);
   const [pascalCase, setPascalCase] = useState(true);
+  const [jsdoc, setJsdoc] = useState(false);
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
@@ -109,7 +125,7 @@ export function JsonToTypescript() {
     const timer = setTimeout(() => {
       if (!input.trim()) { setOutput(""); setError(""); return; }
       try {
-        const result = generateTypescript(input, { outputType, optional, readonly, export_, pascalCase });
+        const result = generateTypescript(input, { outputType, optional, readonly, export_, pascalCase, jsdoc });
         setOutput(result);
         setError("");
       } catch (e) {
@@ -118,7 +134,7 @@ export function JsonToTypescript() {
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [input, outputType, optional, readonly, export_, pascalCase]);
+  }, [input, outputType, optional, readonly, export_, pascalCase, jsdoc]);
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(output); setCopied(true); setTimeout(() => setCopied(false), 1500);
@@ -152,6 +168,7 @@ export function JsonToTypescript() {
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={readonly} onChange={(e) => setReadonly(e.target.checked)} className="accent-brand-500" /> Readonly</label>
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={export_} onChange={(e) => setExport_(e.target.checked)} className="accent-brand-500" /> Export</label>
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={pascalCase} onChange={(e) => setPascalCase(e.target.checked)} className="accent-brand-500" /> PascalCase names</label>
+          <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={jsdoc} onChange={(e) => setJsdoc(e.target.checked)} className="accent-brand-500" /> JSDoc comments</label>
         </div>
       </div>
 

@@ -38,5 +38,11 @@
     "Does it validate JSON before formatting? Yes, invalid JSON is flagged with a parse error message.",
     "Can I convert JSON to YAML? No, this tool focuses on JSON and JS object formats.",
     "What is JSONP output? It wraps the JSON in a callback function: callbackName({\"key\":\"value\"})"
+  ],
+  "features": [
+    "Pretty-print minified JSON with configurable indentation",
+    "Colored syntax highlighting for readability",
+    "Open files or paste directly",
+    "Copy and download the formatted result"
   ]
 }

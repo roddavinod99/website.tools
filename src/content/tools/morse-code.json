@@ -41,5 +41,11 @@
     "Does it support all international Morse characters? Yes, including A-Z, 0-9, common punctuation, and procedural prosigns.",
     "Can I save the audio output? Audio is generated in real-time via Web Audio API; you can record using browser tools or external software.",
     "What are prosigns? They're procedural signals like BT (-...-) for break, AR (.-.-.) for end of message, used in amateur radio communication."
+  ],
+  "features": [
+    "Translate text to International Morse code and back",
+    "Audible playback of the encoded signal",
+    "Customizable timing and separators",
+    "Copy or share the encoded message"
   ]
 }

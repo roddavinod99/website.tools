@@ -34,5 +34,10 @@
     "How many MIME types are in the database? — Over 100 common types covering web, document, media, and font formats.",
     "Does it handle charset parameters in MIME types? — Yes, charset suffixes are stripped before matching.",
     "Can I look up custom or vendor-specific MIME types? — Only if they're in the built-in database; no external API is used."
+  ],
+  "features": [
+    "Look up MIME types by file extension",
+    "Reverse lookup by MIME type",
+    "Searchable reference table"
   ]
 }

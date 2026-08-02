@@ -35,5 +35,10 @@
     "Does this handle Unicode or accented characters? — Accented characters are preserved unless Remove Special Chars is enabled, which may strip them.",
     "Can I use this for file names? — Yes, but be aware some file systems have additional restrictions beyond URL safety.",
     "What happens with multiple consecutive spaces or hyphens? — They are collapsed into a single hyphen automatically."
+  ],
+  "features": [
+    "Turn any string into a URL slug",
+    "Real-time output as you type",
+    "Copy the generated slug"
   ]
 }

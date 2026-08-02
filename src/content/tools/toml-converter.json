@@ -41,5 +41,11 @@
     "Does it handle nested TOML tables? Yes — TOML tables like [server.database] are converted to nested objects in JSON/YAML.",
     "What happens with TOML inline tables vs. standard tables? Both are supported and produce equivalent nested output in JSON/YAML.",
     "Can I convert very large files? Files up to 10MB are supported; larger files may cause performance issues in the browser."
+  ],
+  "features": [
+    "Convert between TOML, JSON, and YAML",
+    "Preserves tables, arrays, and primitives",
+    "Real-time conversion with validation",
+    "Copy and download the output"
   ]
 }

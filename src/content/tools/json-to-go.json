@@ -41,5 +41,11 @@
     "Can I generate time.Time fields for date strings? Yes, toggle the timeType option to convert matching patterns to time.Time instead of string.",
     "What about nullable fields? Enable omitempty to mark fields as optional, and null values in JSON will be represented as pointer types where appropriate.",
     "Does it generate JSON tags with dashes or underscores? You can choose between snake_case, camelCase, or disable JSON tags entirely."
+  ],
+  "features": [
+    "Generate Go structs from JSON",
+    "Correct types and json struct tags",
+    "Nested struct generation",
+    "Copy or download the Go code"
   ]
 }

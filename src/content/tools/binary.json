@@ -41,5 +41,11 @@
     "What is 7-bit vs 8-bit? — 7-bit uses ASCII range (0-127), 8-bit extends to Latin-1 (0-255).",
     "Can I convert a file to binary? — Yes, drag-and-drop any file. Reads as text or raw bytes.",
     "How do I decode binary without spaces? — Select 'Continuous' mode; tool auto-groups into 7/8-bit chunks."
+  ],
+  "features": [
+    "Convert text to binary and binary back to text",
+    "8-bit byte grouping with optional separators",
+    "Handles ASCII and Unicode input",
+    "Copy or download the converted output"
   ]
 }

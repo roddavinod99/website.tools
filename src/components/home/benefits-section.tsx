@@ -16,7 +16,7 @@ export function BenefitsSection() {
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
             Why Choose DevStackIO
           </h2>
-          <p className="mt-2 text-surface-500 dark:text-dark-muted">
+          <p className="mt-2 text-surface-600 dark:text-dark-muted">
             Built for developers who value speed, privacy, and simplicity
           </p>
         </div>
@@ -26,15 +26,15 @@ export function BenefitsSection() {
             return (
               <div
                 key={benefit.title}
-                className="rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-bg"
+                className="group rounded-xl border border-surface-200 bg-white p-6 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
-                  <Icon className="h-5 w-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 font-semibold text-surface-900 dark:text-dark-text">
                   {benefit.title}
                 </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted">
+                <p className="mt-1 text-sm text-surface-600 dark:text-dark-muted">
                   {benefit.description}
                 </p>
               </div>

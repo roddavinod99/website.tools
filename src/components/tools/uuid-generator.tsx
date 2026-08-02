@@ -188,20 +188,37 @@ function extractTimestamp(raw: string, version: UuidVersion): string | null {
   return null;
 }
 
-function generateTimestampId(type: "snowflake" | "nanoid"): string {
-  if (type === "snowflake") {
-    const ts = Date.now().toString(36).padStart(8, "0");
-    const buf = new Uint8Array(3);
-    crypto.getRandomValues(buf);
-    const rand = Array.from(buf, (b) => b.toString(36).padStart(2, "0")).join("");
-    return `${ts}-${rand}`;
+const SNOWFLAKE_EPOCH = 1704067200000n; // 2024-01-01T00:00:00Z
+const NANOID_DEFAULT_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-";
+
+function snowflakeId(workerId: number, sequenceOffset = 0): string {
+  const ts = BigInt(Date.now()) - SNOWFLAKE_EPOCH;
+  const worker = BigInt(workerId & 0x3ff) << 12n;
+  const seq = BigInt(sequenceOffset & 0xfff);
+  const id = (ts << 22n) | worker | seq;
+  const buffer = new Uint8Array(8);
+  let value = id;
+  for (let i = 7; i >= 0; i--) {
+    buffer[i] = Number(value & 0xffn);
+    value >>= 8n;
   }
-  const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-";
-  const len = 21;
+  let binary = "";
+  for (const b of buffer) binary += b.toString(2).padStart(8, "0");
+  let base64url = "";
+  for (let i = 0; i < binary.length; i += 6) {
+    const chunk = binary.slice(i, i + 6).padEnd(6, "0");
+    base64url += "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"[parseInt(chunk, 2)];
+  }
+  return `${id.toString()} (base64url: ${base64url.slice(0, 11)})`;
+}
+
+function nanoidId(alphabet: string, length: number): string {
+  const chars = alphabet.length > 0 ? alphabet : NANOID_DEFAULT_ALPHABET;
+  const len = Math.max(1, Math.min(256, length));
   let id = "";
   const buf = new Uint32Array(len);
   crypto.getRandomValues(buf);
-  for (let i = 0; i < len; i++) id += alphabet[buf[i] % alphabet.length];
+  for (let i = 0; i < len; i++) id += chars[buf[i] % chars.length];
   return id;
 }
 
@@ -238,6 +255,9 @@ export function UUIDGenerator() {
   const [validateResult, setValidateResult] = useState<ReturnType<typeof validateUuid> | null>(null);
   const [tsIdType, setTsIdType] = useState<"snowflake" | "nanoid">("snowflake");
   const [tsIds, setTsIds] = useState<string[]>([]);
+  const [workerId, setWorkerId] = useState(1);
+  const [nanoidAlphabet, setNanoidAlphabet] = useState(NANOID_DEFAULT_ALPHABET);
+  const [nanoidLength, setNanoidLength] = useState(21);
   const cancelRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [namespace, setNamespace] = useState<keyof typeof UUID_NAMESPACES>("DNS");
@@ -331,7 +351,9 @@ export function UUIDGenerator() {
   };
 
   const handleGenTsId = () => {
-    setTsIds(Array.from({ length: 5 }, () => generateTimestampId(tsIdType)));
+    setTsIds(Array.from({ length: 5 }, (_, i) =>
+      tsIdType === "snowflake" ? snowflakeId(workerId, i) : nanoidId(nanoidAlphabet, nanoidLength)
+    ));
   };
 
   const stats = uuids.length > 0 && format !== "base64" ? (() => {
@@ -472,15 +494,43 @@ export function UUIDGenerator() {
 
       <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
         <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Timestamp-based IDs</p>
-        <div className="flex gap-2 mb-2">
+        <div className="flex flex-wrap gap-2 mb-2">
           <label htmlFor="uuid-ts-id-type" className="sr-only">Timestamp ID type</label>
           <select id="uuid-ts-id-type" value={tsIdType} onChange={(e) => setTsIdType(e.target.value as "snowflake" | "nanoid")}
             className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="snowflake">Snowflake-style</option>
-            <option value="nanoid">NanoID-style</option>
+            <option value="snowflake">Snowflake (64-bit)</option>
+            <option value="nanoid">NanoID</option>
           </select>
+          {tsIdType === "snowflake" ? (
+            <div className="flex items-center gap-2">
+              <label htmlFor="uuid-worker-id" className="text-xs text-surface-500 dark:text-dark-muted">Worker ID (0–1023):</label>
+              <input type="number" id="uuid-worker-id" min={0} max={1023} value={workerId}
+                onChange={(e) => setWorkerId(Math.max(0, Math.min(1023, parseInt(e.target.value) || 0)))}
+                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-2">
+                <label htmlFor="uuid-nanoid-length" className="text-xs text-surface-500 dark:text-dark-muted">Length:</label>
+                <input type="number" id="uuid-nanoid-length" min={1} max={256} value={nanoidLength}
+                  onChange={(e) => setNanoidLength(Math.max(1, Math.min(256, parseInt(e.target.value) || 1)))}
+                  className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+              <div className="flex items-center gap-2 flex-1 min-w-[220px]">
+                <label htmlFor="uuid-nanoid-alphabet" className="text-xs text-surface-500 dark:text-dark-muted shrink-0">Alphabet:</label>
+                <input type="text" id="uuid-nanoid-alphabet" value={nanoidAlphabet}
+                  onChange={(e) => setNanoidAlphabet(e.target.value)}
+                  className="w-full rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </>
+          )}
           <button onClick={handleGenTsId} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
         </div>
+        {tsIdType === "snowflake" && (
+          <p className="mb-2 text-xs text-surface-400 dark:text-dark-muted">
+            64-bit: 41-bit millisecond timestamp · 10-bit worker ID · 12-bit sequence, epoch 2024-01-01
+          </p>
+        )}
         {tsIds.length > 0 && (
           <div className="space-y-1">
             {tsIds.map((id, i) => (

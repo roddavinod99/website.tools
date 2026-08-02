@@ -39,5 +39,11 @@
     "Does the tool support Unicode characters? Yes, it handles UTF-8 input strings correctly.",
     "How does bulk per-line mode work? Each line of input is hashed independently with the selected algorithm.",
     "Can I hash a file by dragging it in? Yes, drag-and-drop a file and its content will be hashed."
+  ],
+  "features": [
+    "Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes",
+    "HMAC variants with a secret key",
+    "Salt support and bulk per-line mode",
+    "Hash files with drag-and-drop"
   ]
 }

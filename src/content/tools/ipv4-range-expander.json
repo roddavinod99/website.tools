@@ -32,5 +32,10 @@
     "What is the maximum range size? — The tool supports up to /16 (65,536 addresses) but will warn for ranges over 1,024 IPs.",
     "Does it show network and broadcast addresses? — Yes, all addresses including network and broadcast are listed.",
     "Can I export the list? — Use the Copy All button to copy the full list to your clipboard for pasting into a file or configuration."
+  ],
+  "features": [
+    "Expand CIDR blocks to individual IPs",
+    "Supports large ranges with pagination",
+    "Export the full IP list"
   ]
 }

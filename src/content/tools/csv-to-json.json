@@ -41,5 +41,11 @@
     "Does it convert data types? — No, all values remain as strings. Use JSON.parse() after conversion.",
     "Maximum file size? — ~200 MB browser-based. For larger files, use command-line tool or split CSV.",
     "Can I use custom column names? — Yes, disable 'First Row as Headers' to get key0, key1, key2... names."
+  ],
+  "features": [
+    "Convert CSV to structured JSON",
+    "Automatic delimiter detection",
+    "Header row and type inference options",
+    "Copy and download the JSON output"
   ]
 }

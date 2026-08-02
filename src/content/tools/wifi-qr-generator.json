@@ -37,5 +37,11 @@
     "Can I embed a WiFi QR code in a webpage? Yes — download the PNG and embed it with an img tag.",
     "Does the QR code work with hidden networks? Yes, but the device will attempt to connect even though the SSID is hidden.",
     "What if the password contains special characters? The tool handles standard WiFi password characters, but test before distributing."
+  ],
+  "features": [
+    "Generate QR codes for Wi-Fi login credentials",
+    "WPA/WEP and open network support",
+    "Hidden network option",
+    "SVG and PNG export"
   ]
 }

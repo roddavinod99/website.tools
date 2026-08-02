@@ -37,5 +37,10 @@
     "Can numeronyms be used as identifiers in code? Yes, many projects use them as package names or CLI aliases (k8s, d3, s3).",
     "Is there a minimum word length for numeronyms? Technically no, but numeronyms for words with fewer than 5 middle characters are rarely useful.",
     "How do I know if a numeronym already exists? Search for it — many common tech numeronyms are already in use."
+  ],
+  "features": [
+    "Create Kubernetes-style abbreviations",
+    "Preserves first and last characters",
+    "Custom word input with live preview"
   ]
 }

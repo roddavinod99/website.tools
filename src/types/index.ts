@@ -59,6 +59,7 @@ export interface ToolContent {
   bestPractices: string[];
   commonMistakes: string[];
   faq: string[];
+  features?: string[];
 }
 
 export interface FooterGroup {

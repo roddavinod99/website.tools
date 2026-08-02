@@ -41,5 +41,11 @@
     "What's the maximum resolution supported? SVG has no resolution limit; PNG/JPEG/WebP are capped at 8192x8192 pixels.",
     "Are the images generated client-side or server-side? All generation happens in-browser using Canvas API for raster and markup for SVG; no server calls.",
     "Can I customize the gradient direction? Yes, you can choose between linear (top-to-bottom, left-to-right, diagonal) and radial gradient types."
+  ],
+  "features": [
+    "Generate placeholders with custom dimensions",
+    "Custom colors and text labels",
+    "SVG and PNG output",
+    "Copy the direct URL"
   ]
 }

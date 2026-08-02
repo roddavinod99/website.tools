@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logSecurityEvent } from "@/lib/security-logger";
+import { persistSubmission } from "@/lib/submissions";
 
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 3;
@@ -113,6 +114,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Message must be at least 10 characters." },
         { status: 400 }
+      );
+    }
+
+    try {
+      persistSubmission("contact", {
+        name: sanitizedName,
+        email: sanitizedEmail,
+        subject: sanitizedSubject,
+        message: sanitizedMessage,
+      });
+    } catch {
+      logSecurityEvent("submission_persist_failed", ip, "/api/contact", "Persist error");
+      return NextResponse.json(
+        { error: "We could not save your message right now. Please try again later." },
+        { status: 500 }
       );
     }
 

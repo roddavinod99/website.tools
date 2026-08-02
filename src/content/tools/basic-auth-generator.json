@@ -34,5 +34,10 @@
     "Is Basic Auth secure? — Only over HTTPS. The base64 encoding is not encryption — it's trivially reversible.",
     "Does it handle special characters in passwords? — Yes, all characters are correctly base64-encoded.",
     "Can I use this for OAuth or Bearer tokens? — No, this tool specifically generates Basic Auth headers."
+  ],
+  "features": [
+    "Generate HTTP Basic Authorization headers",
+    "Username and password input",
+    "Copy the ready-to-use header"
   ]
 }

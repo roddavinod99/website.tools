@@ -1,0 +1,297 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DevStackIO Tools - Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]:
+            - generic [ref=e8]: DevStack
+            - generic [ref=e9]: IO
+            - generic [ref=e10]: Tools
+        - navigation "Main navigation" [ref=e11]:
+          - link "Tools" [ref=e12] [cursor=pointer]:
+            - /url: /tools
+          - link "Categories" [ref=e13] [cursor=pointer]:
+            - /url: /categories
+          - link "Guides" [ref=e14] [cursor=pointer]:
+            - /url: /guides
+          - link "Blog" [ref=e15] [cursor=pointer]:
+            - /url: /blog
+          - link "Learning" [ref=e16] [cursor=pointer]:
+            - /url: /learning
+          - link "DevStackIO Home" [ref=e18] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+      - generic [ref=e23]:
+        - button "Search tools (⌘K)" [ref=e24]:
+          - generic [ref=e28]: Search tools...
+          - generic [ref=e29]: K
+        - button "Toggle dark mode" [ref=e32]
+        - button "Keyboard shortcuts (?)" [ref=e36]
+  - main [ref=e40]:
+    - navigation "Breadcrumb" [ref=e43]:
+      - link "Home" [ref=e44] [cursor=pointer]:
+        - /url: /
+      - link "Tools" [ref=e47] [cursor=pointer]:
+        - /url: /tools
+      - generic [ref=e50]: JSON Formatter
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]: Formatters
+        - generic [ref=e56]: Trending
+      - heading "JSON Formatter" [level=1] [ref=e57]
+      - paragraph [ref=e58]: Free online JSON formatter and validator with syntax highlighting. Beautify, validate, and minify JSON data instantly with real-time error detection.
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]: Input JSON
+          - generic [ref=e64]:
+            - textbox "Input JSON" [ref=e65]:
+              - /placeholder: "{\"key\": \"value\"}"
+            - generic [ref=e66]:
+              - generic [ref=e67]: 1L
+              - generic [ref=e68]: "|"
+              - generic [ref=e69]: 0C
+              - generic [ref=e70]: "|"
+              - generic [ref=e71]: 0.0KB
+        - generic [ref=e72]:
+          - button "Format" [ref=e73]
+          - button "Minify" [ref=e74]
+          - button "Validate" [ref=e75]
+          - button "Copy formatted JSON to clipboard" [disabled] [ref=e76]: Copy Formatted
+          - button "Copy minified JSON to clipboard" [disabled] [ref=e77]: Copy Minified
+          - button "Download formatted JSON as file" [disabled] [ref=e78]: Download
+          - button "Clear" [ref=e79]
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]: "Indent:"
+            - combobox "Indent:" [ref=e83]:
+              - option "2 spaces" [selected]
+              - option "4 spaces"
+              - option "8 spaces"
+              - option "Tab"
+          - generic [ref=e84] [cursor=pointer]:
+            - checkbox "Sort keys" [ref=e85]
+            - text: Sort keys
+          - generic [ref=e86] [cursor=pointer]:
+            - checkbox "Strip key quotes" [ref=e87]
+            - text: Strip key quotes
+          - generic [ref=e88] [cursor=pointer]:
+            - checkbox "Compact arrays" [ref=e89]
+            - text: Compact arrays
+          - generic [ref=e90] [cursor=pointer]:
+            - checkbox "Word wrap" [checked] [ref=e91]
+            - text: Word wrap
+      - img "Advertisement placeholder" [ref=e92]:
+        - generic [ref=e93]: In-Content Ad (336x280)
+    - generic [ref=e96]:
+      - heading "Key Features" [level=2] [ref=e97]
+      - list [ref=e98]:
+        - listitem [ref=e99]:
+          - generic [ref=e103]: Beautify, minify, and validate JSON
+        - listitem [ref=e104]:
+          - generic [ref=e108]: Line-level syntax errors with position hints
+        - listitem [ref=e109]:
+          - generic [ref=e113]: Syntax highlighting and optional sorting
+        - listitem [ref=e114]:
+          - generic [ref=e118]: Copy, download, and load from file
+    - generic [ref=e121]:
+      - heading "About" [level=2] [ref=e122]
+      - generic [ref=e123]:
+        - paragraph [ref=e124]: Formats JSON with syntax highlighting using colored keys, strings, numbers, and booleans, plus line numbers for easy reference. Supports configurable indentation, key sorting, full-text search with navigation arrows to jump between matches, auto-format on paste, and displays input statistics (character count, line count, key count, depth).
+        - paragraph [ref=e125]: Reading raw JSON from APIs or logs is painful without syntax highlighting and line numbers. This tool makes JSON instantly readable with search and navigation, and the auto-format paste feature eliminates the extra step of hitting a Format button.
+        - paragraph [ref=e126]:
+          - text: This tool is part of the
+          - link "DevStackIO" [ref=e127] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+          - text: platform — a collection of free online developer tools from DevStackIO. Browse more free developer resources on
+          - link "DevStackIO" [ref=e128] [cursor=pointer]:
+            - /url: https://www.devstackio.com
+          - text: .
+        - generic [ref=e129]:
+          - heading "Who should use this tool?" [level=3] [ref=e130]
+          - paragraph [ref=e131]: API developers reading JSON responses, data analysts exploring JSON datasets, and developers debugging JSON configuration files.
+        - generic [ref=e132]:
+          - heading "Common use cases" [level=3] [ref=e133]
+          - list [ref=e134]:
+            - listitem [ref=e135]:
+              - generic [ref=e139]: Paste a minified API response and have it auto-format with colored syntax highlighting
+            - listitem [ref=e140]:
+              - generic [ref=e144]: Search for a specific key or value in a large JSON document with navigation between matches
+            - listitem [ref=e145]:
+              - generic [ref=e149]: Check the depth of a nested JSON structure using the input stats (depth, key count, etc.)
+            - listitem [ref=e150]:
+              - generic [ref=e154]: Format JSON with sorted keys and line numbers for code review in a pull request
+            - listitem [ref=e155]:
+              - generic [ref=e159]: Troubleshoot a malformed JSON configuration by pasting it and seeing the auto-format correction
+    - generic [ref=e162]:
+      - heading "How to Use" [level=2] [ref=e163]
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - generic [ref=e166]: "1"
+          - paragraph [ref=e168]: Paste JSON into the input area; auto-format on paste instantly beautifies it with highlighting
+        - generic [ref=e169]:
+          - generic [ref=e170]: "2"
+          - paragraph [ref=e172]: Adjust indent size (2 or 4 spaces) and toggle key sorting on or off
+        - generic [ref=e173]:
+          - generic [ref=e174]: "3"
+          - paragraph [ref=e176]: Use the search bar to type a key or value; matching lines are highlighted with navigation arrows
+        - generic [ref=e177]:
+          - generic [ref=e178]: "4"
+          - paragraph [ref=e180]: "View input stats: character count, line count, key count, and maximum nesting depth"
+        - generic [ref=e181]:
+          - generic [ref=e182]: "5"
+          - paragraph [ref=e184]: Toggle line numbers on/off and copy the formatted output
+        - generic [ref=e185]:
+          - generic [ref=e186]: "6"
+          - paragraph [ref=e188]: Invalid JSON shows a parse error with line number and character position for debugging
+    - img "Advertisement placeholder" [ref=e189]:
+      - generic [ref=e190]: In-Content Ad (336x280)
+    - generic [ref=e193]:
+      - heading "Examples" [level=2] [ref=e194]
+      - generic [ref=e195]:
+        - code [ref=e198]: "Input: '{\"users\":[{\"name\":\"Alice\"}]}' pasted with auto-format. Output: Colored, indented JSON showing 'users' as a key (purple), 'Alice' as a string (green), line numbers 1-4."
+        - code [ref=e201]: "Input: Search for 'email' in a 500-line JSON document. Output: 12 matches highlighted with prev/next navigation arrows."
+    - generic [ref=e204]:
+      - heading "Best Practices" [level=2] [ref=e205]
+      - list [ref=e206]:
+        - listitem [ref=e207]:
+          - generic [ref=e210]: Enable auto-format on paste to save time; it eliminates the extra Format button click
+        - listitem [ref=e211]:
+          - generic [ref=e214]: Use search with navigation for large JSON files instead of scrolling manually
+        - listitem [ref=e215]:
+          - generic [ref=e218]: Check the depth stat to understand how nested a JSON structure is before writing traversal code
+        - listitem [ref=e219]:
+          - generic [ref=e222]: Use sorted keys to quickly locate keys in alphabetical order within the formatted output
+    - group [ref=e223]
+    - generic [ref=e232]:
+      - heading "FAQ" [level=2] [ref=e233]
+      - generic [ref=e234]:
+        - group [ref=e235]:
+          - generic "What syntax highlighting colors are used? Keys are typically blue/purple, strings green, numbers orange, booleans red, brackets gray." [ref=e236] [cursor=pointer]
+        - group [ref=e239]:
+          - generic "Does auto-format work for partial or invalid JSON? It attempts to format valid portions and highlights the error location." [ref=e240] [cursor=pointer]
+        - group [ref=e243]:
+          - generic "Can I copy only a selection of the formatted JSON? Use the copy all button; for partial copy, select text manually." [ref=e244] [cursor=pointer]
+        - group [ref=e247]:
+          - generic "What does the depth stat mean? It shows the maximum nesting level of objects/arrays in the JSON." [ref=e248] [cursor=pointer]
+    - img "Advertisement placeholder" [ref=e251]:
+      - generic [ref=e252]: In-Content Ad (336x280)
+    - group [ref=e253]:
+      - generic "Related Tools" [ref=e254] [cursor=pointer]
+    - group [ref=e258]
+    - generic [ref=e266]:
+      - heading "Share" [level=2] [ref=e267]
+      - generic [ref=e268]:
+        - button "Copy URL" [ref=e269]
+        - button "Share" [ref=e273]
+  - img "Advertisement placeholder" [ref=e280]:
+    - generic [ref=e281]: Ad Banner (728x90)
+  - contentinfo [ref=e282]:
+    - generic [ref=e283]:
+      - generic [ref=e284]:
+        - generic [ref=e285]:
+          - link "DevStack IO Tools" [ref=e286] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e287]:
+              - generic [ref=e288]: DevStack
+              - generic [ref=e289]: IO
+              - generic [ref=e290]: Tools
+          - paragraph [ref=e291]: Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
+          - paragraph [ref=e292]:
+            - text: DevStackIO Tools is part of the
+            - link "DevStackIO" [ref=e293] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - text: developer platform.
+          - generic [ref=e294]:
+            - link "DevStackIO Home" [ref=e295] [cursor=pointer]:
+              - /url: https://www.devstackio.com
+            - generic [ref=e300]: "|"
+            - link "GitHub" [ref=e301] [cursor=pointer]:
+              - /url: https://github.com/roddavinod99
+        - generic [ref=e304]:
+          - heading "Tools" [level=3] [ref=e305]
+          - list [ref=e306]:
+            - listitem [ref=e307]:
+              - link "All Tools" [ref=e308] [cursor=pointer]:
+                - /url: /tools
+            - listitem [ref=e309]:
+              - link "Categories" [ref=e310] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=e311]:
+              - link "Popular" [ref=e312] [cursor=pointer]:
+                - /url: /popular
+            - listitem [ref=e313]:
+              - link "Recently Added" [ref=e314] [cursor=pointer]:
+                - /url: /new
+            - listitem [ref=e315]:
+              - link "Sitemap" [ref=e316] [cursor=pointer]:
+                - /url: /sitemap
+        - generic [ref=e317]:
+          - heading "Learn" [level=3] [ref=e318]
+          - list [ref=e319]:
+            - listitem [ref=e320]:
+              - link "Guides" [ref=e321] [cursor=pointer]:
+                - /url: /guides
+            - listitem [ref=e322]:
+              - link "Tutorials" [ref=e323] [cursor=pointer]:
+                - /url: /tutorials
+            - listitem [ref=e324]:
+              - link "Blog" [ref=e325] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e326]:
+              - link "Best Practices" [ref=e327] [cursor=pointer]:
+                - /url: /best-practices
+            - listitem [ref=e328]:
+              - link "RSS Feed" [ref=e329] [cursor=pointer]:
+                - /url: /feed.xml
+        - generic [ref=e330]:
+          - heading "Company" [level=3] [ref=e331]
+          - list [ref=e332]:
+            - listitem [ref=e333]:
+              - link "About" [ref=e334] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e335]:
+              - link "Roadmap" [ref=e336] [cursor=pointer]:
+                - /url: /roadmap
+            - listitem [ref=e337]:
+              - link "Changelog" [ref=e338] [cursor=pointer]:
+                - /url: /changelog
+        - generic [ref=e339]:
+          - heading "Support" [level=3] [ref=e340]
+          - list [ref=e341]:
+            - listitem [ref=e342]:
+              - link "Contact" [ref=e343] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e344]:
+              - link "Privacy Policy" [ref=e345] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e346]:
+              - link "Terms & Conditions" [ref=e347] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e348]:
+              - link "Cookie Policy" [ref=e349] [cursor=pointer]:
+                - /url: /cookie-policy
+            - listitem [ref=e350]:
+              - link "Disclaimer" [ref=e351] [cursor=pointer]:
+                - /url: /disclaimer
+      - generic [ref=e353]:
+        - paragraph [ref=e354]: © 2026 DevStackIO. All rights reserved.
+        - generic [ref=e355]:
+          - link "Privacy" [ref=e356] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=e357] [cursor=pointer]:
+            - /url: /terms
+          - link "Cookies" [ref=e358] [cursor=pointer]:
+            - /url: /cookie-policy
+          - link "Disclaimer" [ref=e359] [cursor=pointer]:
+            - /url: /disclaimer
+          - link "About" [ref=e360] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e361] [cursor=pointer]:
+            - /url: /contact
+          - link "Sitemap" [ref=e362] [cursor=pointer]:
+            - /url: /sitemap
+          - link "RSS" [ref=e363] [cursor=pointer]:
+            - /url: /feed.xml
+  - button "Open Next.js Dev Tools" [ref=e369] [cursor=pointer]

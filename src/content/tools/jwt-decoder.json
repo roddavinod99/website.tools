@@ -41,5 +41,11 @@
     "Can it verify JWTs signed with RS256 or ES256? Yes, if you provide the corresponding public key for asymmetric algorithms.",
     "How does it handle custom claims? All custom claims are displayed as-is in the payload section with their raw values.",
     "Does it store or transmit the token anywhere? No, all decoding happens client-side in the browser; no data is sent to any server."
+  ],
+  "features": [
+    "Decode JWT header and payload in one click",
+    "Verify signatures when a secret is provided",
+    "Expiry and claim analysis",
+    "Copy any decoded value"
   ]
 }

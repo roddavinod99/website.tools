@@ -39,5 +39,11 @@
     "Why does the output change completely with a one-character key change? Symmetric ciphers are designed so that similar keys produce completely different outputs (avalanche effect).",
     "Can I encrypt binary data? Currently the tool accepts text and hex input. For binary, convert to hex first and use hex mode.",
     "Which algorithm is fastest? RC4 and Rabbit are stream ciphers and tend to be faster. AES and TripleDES are block ciphers with more overhead."
+  ],
+  "features": [
+    "Encrypt text with AES, TripleDES, Rabbit, and RC4",
+    "Passphrase-based key derivation",
+    "Copy ciphertext or plaintext instantly",
+    "Detect and decrypt supported ciphertexts"
   ]
 }

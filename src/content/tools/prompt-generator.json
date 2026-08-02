@@ -41,5 +41,11 @@
     "Are the prompts saved locally or in the cloud? History and favorites are stored in browser localStorage; clearing browser data will erase them.",
     "How many context fields can I fill in? Each use case has 3-5 context fields; you can also add custom context in the free-form text area.",
     "Does the tool support non-English prompts? Yes, enter context in any language; the generated prompt will match the input language."
+  ],
+  "features": [
+    "6 categories covering 30+ real-world use cases",
+    "Context, role, tone, and format fields",
+    "One-click copy of the finished prompt",
+    "Save favorites for later reuse"
   ]
 }

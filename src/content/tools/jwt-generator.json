@@ -41,5 +41,11 @@
     "How is the expiry time calculated? The exp claim is set as the Unix epoch timestamp of the selected date/time in UTC.",
     "Does the tool store the generated token or secret? No, all generation happens client-side; nothing is persisted or transmitted.",
     "Can I generate multiple tokens at once? The tool generates one token per configuration; use the \"Regenerate\" button after changing claims or settings."
+  ],
+  "features": [
+    "Build JWTs with custom header and claims",
+    "HS256/384/512 and RS256 signing",
+    "Secret or PEM key input",
+    "Copy the generated token"
   ]
 }

@@ -37,5 +37,10 @@
     "When should I use 204 No Content? Use it when the request succeeds but there's no response body, like after a successful DELETE.",
     "Why is 418 I'm a teapot in the list? It's an April Fools joke from RFC 2324, but it is a real registered status code.",
     "Should I return 400 or 422 for validation errors? 400 for malformed requests, 422 for well-formed requests with invalid data."
+  ],
+  "features": [
+    "Reference for all HTTP status codes",
+    "Searchable by number or phrase",
+    "Copy any status code"
   ]
 }

@@ -37,5 +37,10 @@
     "Are these keys secure enough for production? Yes, the Web Crypto API uses the same cryptographic libraries as the operating system.",
     "Can I use these keys for SSH? Yes, but you may need to convert the format using ssh-keygen.",
     "How long does key generation take? 1024-bit is nearly instant; 2048-bit takes a moment; 4096-bit may take several seconds."
+  ],
+  "features": [
+    "Generate RSA key pairs at 1024–4096 bits",
+    "PEM export for public and private keys",
+    "Copy keys to clipboard"
   ]
 }

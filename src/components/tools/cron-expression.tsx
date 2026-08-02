@@ -114,10 +114,120 @@ function validateCron(raw: string): ValidationResult {
         if (idx === 3) { if (!MONTH_NAMES.slice(1).includes(token.toUpperCase())) return { valid: false, error: `Unknown month: ${token}`, field: i }; }
         else if (idx === 4) { if (!DAY_NAMES.slice(0, 7).includes(token.toUpperCase())) return { valid: false, error: `Unknown day: ${token}`, field: i }; }
         else return { valid: false, error: `Unexpected text in ${ranges[idx].name}: ${token}`, field: i };
+      } else if (token.includes("L") || token.includes("W") || token.includes("#")) {
+        const fname = ranges[idx].name;
+        if (fname === "Day of Month" && /^(L|LW|\d{1,2}W)$/i.test(token)) continue;
+        if (fname === "Day of Week" && /^(\d{1,2}L|L|\d{1,2}#\d{1,2})$/i.test(token)) continue;
+        return { valid: false, error: `Invalid token in ${fname}: ${token}`, field: i };
       } else return { valid: false, error: `Invalid token in ${ranges[idx].name}: ${token}`, field: i };
     }
   }
   return { valid: true };
+}
+
+const MONTH_INDEX: Record<string, number> = { JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12 };
+const DOW_INDEX: Record<string, number> = { SUN: 0, MON: 1, TUE: 2, WED: 3, THU: 4, FRI: 5, SAT: 6 };
+
+function normalizeToken(token: string, names: Record<string, number>): string {
+  let t = token.toUpperCase();
+  for (const name of Object.keys(names)) t = t.split(name).join(String(names[name]));
+  return t;
+}
+
+function toNumberList(field: string, min: number, max: number, names?: Record<string, number>): number[] | null {
+  if (field === "*" || field === "?") return Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const out = new Set<number>();
+  for (const raw of field.split(",")) {
+    let token = raw.trim();
+    if (!token) return null;
+    if (names) token = normalizeToken(token, names);
+    const slash = token.split("/");
+    if (slash.length > 2) return null;
+    const hasStep = slash.length === 2;
+    let step = 1;
+    if (hasStep) {
+      step = parseInt(slash[1], 10);
+      if (isNaN(step) || step < 1) return null;
+    }
+    token = slash[0];
+    if (token === "*") {
+      for (let v = min; v <= max; v += step) out.add(v);
+      continue;
+    }
+    const range = token.split("-");
+    if (range.length > 2) return null;
+    const a = parseInt(range[0], 10);
+    const b = range.length === 2 ? parseInt(range[1], 10) : hasStep ? max : a;
+    if (isNaN(a) || isNaN(b) || a < min || b > max || a > b) return null;
+    for (let v = a; v <= b; v += step) out.add(v);
+  }
+  return [...out];
+}
+
+function daysInMonth(date: Date): number {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+}
+
+function nearestWeekdayDay(n: number, year: number, month: number): number {
+  const dim = new Date(year, month + 1, 0).getDate();
+  const target = Math.min(Math.max(n, 1), dim);
+  const dow = new Date(year, month, target).getDay();
+  if (dow === 6) return target > 1 ? target - 1 : target + 2;
+  if (dow === 0) return target + 1 <= dim ? target + 1 : target - 2;
+  return target;
+}
+
+function lastDowDay(year: number, month: number, dow: number): number {
+  const dim = new Date(year, month + 1, 0).getDate();
+  const last = new Date(year, month, dim).getDay();
+  return dim - ((last - dow + 7) % 7);
+}
+
+function nthDowDay(year: number, month: number, dow: number, nth: number): number {
+  const firstDow = new Date(year, month, 1).getDay();
+  const first = 1 + ((dow - firstDow + 7) % 7);
+  const day = first + (nth - 1) * 7;
+  return day <= new Date(year, month + 1, 0).getDate() ? day : -1;
+}
+
+function matchDom(field: string, date: Date): boolean {
+  const tokens = field.split(",");
+  for (const raw of tokens) {
+    const token = raw.trim();
+    if (token === "*" || token === "?") return true;
+    const y = date.getFullYear();
+    const m = date.getMonth();
+    const d = date.getDate();
+    if (token === "L") return d === daysInMonth(date);
+    if (/^LW$/i.test(token)) return d === nearestWeekdayDay(daysInMonth(date), y, m);
+    if (/^\d{1,2}W$/i.test(token)) return d === nearestWeekdayDay(parseInt(token, 10), y, m);
+    if (token.includes("L") || token.includes("#") || token.includes("W")) return false;
+    const list = toNumberList(token, 1, 31);
+    if (list && list.includes(d)) return true;
+  }
+  return false;
+}
+
+function matchDow(field: string, date: Date): boolean {
+  const tokens = field.split(",");
+  for (const raw of tokens) {
+    const token = normalizeToken(raw.trim(), DOW_INDEX);
+    if (token === "*" || token === "?") return true;
+    const v = date.getDay();
+    const y = date.getFullYear();
+    const m = date.getMonth();
+    if (token === "L") return v === 6;
+    const last = token.match(/^(\d{1,2})L$/);
+    if (last) return date.getDate() === lastDowDay(y, m, parseInt(last[1], 10) % 7);
+    const nth = token.match(/^(\d{1,2})#(\d{1,2})$/);
+    if (nth) {
+      const day = nthDowDay(y, m, parseInt(nth[1], 10) % 7, parseInt(nth[2], 10));
+      return day !== -1 && date.getDate() === day;
+    }
+    const list = toNumberList(token, 0, 7, DOW_INDEX);
+    if (list && list.map((x) => x % 7).includes(v)) return true;
+  }
+  return false;
 }
 
 function computeNextTimes(cron: string, count: number, tz?: string): { times: Date[]; errors: string[] } {
@@ -134,17 +244,23 @@ function computeNextTimes(cron: string, count: number, tz?: string): { times: Da
     try { const t = new Date(current.toLocaleString("en-US", { timeZone: tz })); if (!isNaN(t.getTime())) current = t; }
     catch { /* ignore */ }
   }
-  current.setMinutes(current.getMinutes() + 1 - (current.getMinutes() % 1));
-  const maxIter = 525600;
+  current.setMinutes(current.getMinutes() + 1);
+  const minList = toNumberList(min, 0, 59);
+  const hourList = toNumberList(hour, 0, 23);
+  const monList = toNumberList(mon, 1, 12, MONTH_INDEX);
+  const domRestricted = dom !== "*" && dom !== "?";
+  const dowRestricted = dow !== "*" && dow !== "?";
+  const maxIter = 4204800; // 8 years of minutes
   for (let iter = 0; iter < maxIter && times.length < count; iter++) {
-    const mOk = min === "*" || min.split(",").map(Number).includes(current.getMinutes());
-    const hOk = hour === "*" || hour.split(",").map(Number).includes(current.getHours());
-    const domOk = dom === "*" || dom === "?" || dom.split(",").map(Number).includes(current.getDate());
-    const monOk = mon === "*" || mon === "?" || mon.split(",").map(Number).includes(current.getMonth() + 1);
-    const dowOk = dow === "*" || dow === "?" || dow.split(",").map(Number).includes(current.getDay());
-    if (mOk && hOk && domOk && monOk && dowOk) times.push(new Date(current));
+    const mOk = !!minList && minList.includes(current.getMinutes());
+    const hOk = !!hourList && hourList.includes(current.getHours());
+    const monOk = !!monList && monList.includes(current.getMonth() + 1);
+    const domMatch = domRestricted ? matchDom(dom, current) : true;
+    const dowMatch = dowRestricted ? matchDow(dow, current) : true;
+    const domOk = domRestricted && dowRestricted ? domMatch || dowMatch : domMatch && dowMatch;
+    if (mOk && hOk && monOk && domOk) times.push(new Date(current));
     current.setMinutes(current.getMinutes() + 1);
-    if (current.getFullYear() > now.getFullYear() + 5) break;
+    if (current.getFullYear() > now.getFullYear() + 8) break;
   }
   return { times, errors };
 }

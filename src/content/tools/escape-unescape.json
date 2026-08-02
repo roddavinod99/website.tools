@@ -41,5 +41,11 @@
     "Can this help prevent XSS? — Yes, with correct context matching. But sanitization libraries are recommended for comprehensive XSS prevention.",
     "What is CSV injection? — When a cell starts with =, +, -, or @, interpreted as formulas. CSV escape prevents this.",
     "SQL double-quote mode? — Escapes double quotes by doubling them. For identifier quoting (table/column names) in double quotes."
+  ],
+  "features": [
+    "Escape strings for JavaScript, JSON, HTML, CSS, and URLs",
+    "Unescape escaped strings back to readable text",
+    "Per-target escaping rules to match the context",
+    "Real-time conversion with copy support"
   ]
 }

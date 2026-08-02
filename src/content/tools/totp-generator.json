@@ -41,5 +41,11 @@
     "Why does my generated code not match my server? Check that the secret, algorithm, digits, and time step match exactly. Also verify the server clock is synchronized via NTP.",
     "Can I use this as my primary authenticator? It is designed for development/testing; for daily use, a dedicated authenticator app with backups is recommended.",
     "What is the Steam TOTP format? Steam uses a modified TOTP that produces a 5-character alphanumeric code (including digits and letters) prefixed with \"ST-\" rather than a standard 6-digit numeric code."
+  ],
+  "features": [
+    "Generate TOTP codes compatible with authenticator apps",
+    "Configurable period, digits, and algorithm",
+    "One-click copy of the current code",
+    "Countdown to the next refresh"
   ]
 }

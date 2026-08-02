@@ -32,5 +32,11 @@
     "What input formats are supported? — CIDR notation (192.168.1.0/24), IP + subnet mask (192.168.1.0 255.255.255.0), or IP/slash-mask (192.168.1.0/255.255.255.0).",
     "What is a wildcard mask? — It is the bitwise inverse of the subnet mask, commonly used in ACLs and routing protocols.",
     "Why does /31 show a different host range? — /31 subnets use point-to-point conventions where both addresses can be assigned to hosts."
+  ],
+  "features": [
+    "CIDR-to-subnet details and vice versa",
+    "Usable host range and counts",
+    "Wildcard mask calculation",
+    "Copy any computed value"
   ]
 }

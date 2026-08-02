@@ -6,7 +6,9 @@ export function ServiceWorkerRegister() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       if (process.env.NODE_ENV === "production") {
-        navigator.serviceWorker.register("/sw.js").catch(() => {
+        navigator.serviceWorker.register("/sw.js").then((registration) => {
+          registration.update();
+        }).catch(() => {
           // SW registration failed silently
         });
       } else {

@@ -38,5 +38,10 @@
     "Can I parse headers from a HAR file? Yes, extract the headers section from the HAR JSON and paste them.",
     "Does it support HTTP/2 pseudo-headers? Yes, :method, :path, :scheme, :authority are parsed correctly.",
     "Can I export as Python requests code? Currently supports cURL and Fetch export; Python coming soon."
+  ],
+  "features": [
+    "Parse HTTP request and response headers",
+    "Break down each header field",
+    "Copy individual header values"
   ]
 }

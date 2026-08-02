@@ -34,5 +34,10 @@
     "What is the difference between local and universal MAC addresses? — Universal (U/L bit = 0) addresses are assigned by the manufacturer; local (U/L bit = 1) addresses are manually configured or software-generated.",
     "Why would I need random MAC addresses? — Common uses include VM provisioning, network testing, MAC authentication bypass research, and lab environments.",
     "Can these MACs conflict with real hardware? — Globally unique (non-local) generated MACs may theoretically conflict. Use the Local bit for testing to avoid this."
+  ],
+  "features": [
+    "Generate random MAC addresses",
+    "Custom OUI prefix support",
+    "Bulk generation with copy"
   ]
 }

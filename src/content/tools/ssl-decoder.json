@@ -41,5 +41,11 @@
     "Can I decode a certificate from a remote server directly? Not yet — paste the PEM content obtained via openssl s_client or your browser.",
     "What is the difference between SHA-1 and SHA-256 fingerprints? SHA-256 is the modern, cryptographically stronger hash; SHA-1 is deprecated for security.",
     "Does it support wildcard certificates? Yes — wildcard SANs like *.example.com are shown with the asterisk preserved."
+  ],
+  "features": [
+    "Decode X.509 PEM certificates",
+    "Show subject, issuer, and validity dates",
+    "Expiry warnings for expiring certs",
+    "Full extension breakdown"
   ]
 }

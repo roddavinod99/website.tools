@@ -37,5 +37,10 @@
     "How is HMAC different from a plain hash? HMAC includes a secret key, so only someone with the key can produce or verify the signature.",
     "Which algorithm should I choose? SHA-256 is the most widely used; SHA-512 for maximum security; SHA-1 only for legacy compatibility.",
     "Is HMAC the same as a digital signature? No — HMAC uses a symmetric key (shared secret), while digital signatures use asymmetric keys (public/private)."
+  ],
+  "features": [
+    "Compute HMAC with SHA-256, SHA-512, and more",
+    "Secret key input with live output",
+    "Bulk mode for multiple messages"
   ]
 }

@@ -41,5 +41,10 @@
     "When should I use ROT13? — ROT13 is mainly used for hiding spoilers or in CTF challenges. It provides zero real security.",
     "Why does my URL-encoded string look different from what I expected? — URL encoding can vary based on what characters are encoded. This tool encodes all non-alphanumeric characters for safety.",
     "Can I use HTML entities in JavaScript strings? — HTML entities are interpreted by browsers in HTML context, not in JavaScript strings. Use unicode escapes (\\uXXXX) for JavaScript."
+  ],
+  "features": [
+    "Obfuscate text with hex, binary, ROT13, and Base64",
+    "Multiple encoding methods at once",
+    "Copy any encoded form"
   ]
 }

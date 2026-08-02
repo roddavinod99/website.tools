@@ -2,8 +2,10 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { categories, allTools, siteConfig } from "@/lib/constants";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight } from "lucide-react";
+import { categoryMetas } from "@/lib/data/categories";
+import { featuresBySlug } from "@/lib/data/tool-features";
+import { ToolCard } from "@/components/ui/tool-card";
+import { ChevronRight, CircleCheck } from "lucide-react";
 import { AdBanner } from "@/components/ads";
 
 interface Props {
@@ -108,6 +110,20 @@ export default async function CategoryPage({ params }: Props) {
           <p className="mt-1 text-sm text-surface-400 dark:text-dark-muted">
             {tools.length} tools available
           </p>
+          {(() => {
+            const meta = categoryMetas.find((c) => c.slug === slug);
+            if (!meta?.seoFeatures?.length) return null;
+            return (
+              <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+                {meta.seoFeatures.slice(0, 6).map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 text-sm text-surface-600 dark:text-dark-muted">
+                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            );
+          })()}
         </div>
 
         {tools.length > 0 ? (
@@ -119,22 +135,24 @@ export default async function CategoryPage({ params }: Props) {
                     <AdBanner className="my-8" slot="5678901234" />
                   </div>
                 )}
-                <Link
+                <ToolCard
                   key={tool.id}
-                  href={`/tools/${tool.slug}`}
-                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-                >
-                  <div className="flex items-start justify-between">
-                    <Badge variant="default">{tool.category}</Badge>
-                    {tool.trending && <Badge variant="warning">Trending</Badge>}
-                  </div>
-                  <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                    {tool.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                    {tool.description}
-                  </p>
-                </Link>
+                  tool={{
+                    id: tool.id,
+                    name: tool.name,
+                    description: tool.description,
+                    category: tool.category,
+                    slug: tool.slug,
+                    popularity: tool.popularity,
+                    featured: tool.featured,
+                    trending: tool.trending,
+                    new: tool.new,
+                    icon: tool.icon,
+                    features: featuresBySlug[tool.slug],
+                  }}
+                  variant="default"
+                  size="md"
+                />
               </>
             ))}
           </div>

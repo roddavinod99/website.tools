@@ -37,5 +37,10 @@
     "How does ULID sorting work? ULIDs sort lexicographically in time order because the timestamp occupies the most significant bits.",
     "Are ULIDs collision-resistant? Yes, the 80-bit random component provides collision resistance comparable to UUIDv4.",
     "Can I extract the timestamp from a ULID? Yes, the first 10 characters encode the millisecond-precision Unix timestamp."
+  ],
+  "features": [
+    "Generate sortable ULIDs",
+    "Bulk generation with copy support",
+    "Monotonic ordering for time-ordered IDs"
   ]
 }

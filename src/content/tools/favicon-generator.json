@@ -41,5 +41,11 @@
     "Can I use emoji as favicons? — Yes. Emoji render colorfully at all sizes, looking great at 16x16 on retina displays.",
     "What format is the ICO? — Contains embedded PNGs at 16, 32, and 48 pixels. Modern browsers read the 32x32 PNG from within.",
     "Do I need dark mode favicons? — Not from this generator, but you can add prefers-color-scheme media queries to the HTML manually."
+  ],
+  "features": [
+    "Generate favicons from images or text",
+    "Multiple platform sizes in one export",
+    "Download as ICO or PNG set",
+    "Live preview of the result"
   ]
 }

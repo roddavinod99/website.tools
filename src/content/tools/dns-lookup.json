@@ -41,5 +41,10 @@
     "What does TTL mean? — Seconds a resolver should cache the record. Lower TTL = faster propagation.",
     "Can I query specific DNS servers? — Not directly. Use command-line dig for specific servers.",
     "Why do some records return nothing? — Not all domains have all record types (e.g. SRV is service-specific)."
+  ],
+  "features": [
+    "Resolve A, AAAA, MX, NS, TXT, and CNAME records",
+    "Live results from real DNS servers",
+    "Query against a chosen nameserver"
   ]
 }

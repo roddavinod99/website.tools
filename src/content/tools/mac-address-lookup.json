@@ -33,5 +33,10 @@
     "Why is my MAC not found? — The built-in database covers 200+ common vendors. For a complete lookup, try a service like IEEE's OUI registry.",
     "What is an OUI? — Organizationally Unique Identifier, the first 24 bits of a MAC address assigned to hardware manufacturers by IEEE.",
     "Can a MAC address be spoofed? — Yes, software can change the reported MAC address, so the vendor lookup shows the manufacturer of the original hardware, not necessarily the current configuration."
+  ],
+  "features": [
+    "Look up vendor by MAC address prefix",
+    "OUI database with format detection",
+    "Supports common MAC address formats"
   ]
 }

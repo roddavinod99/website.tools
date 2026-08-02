@@ -38,5 +38,11 @@
     "Does minification affect SEO? No, search engines parse minified HTML the same as formatted HTML.",
     "Can I undo minification? Use the html-formatter tool to beautify minified HTML back to readable form.",
     "Are preserve selectors case-sensitive? Yes, they follow standard CSS selector case sensitivity."
+  ],
+  "features": [
+    "Minify HTML by removing whitespace and comments",
+    "Configurable collapse of attributes and text",
+    "Original vs. minified size savings",
+    "Copy and download the minified output"
   ]
 }

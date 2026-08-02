@@ -41,5 +41,11 @@
     "Does color compression change appearance? — No. #FF6600 and #f60 are identical in every browser.",
     "Can I reverse minification? — No, it's lossy for formatting. Use CSS Formatter to beautify but comments are lost.",
     "Does this handle @import and url()? — Yes, preserves them. 'Remove Quotes' strips unnecessary url() quotes."
+  ],
+  "features": [
+    "Minify CSS by removing whitespace and comments",
+    "Preserve important structural characters",
+    "Show size before and after minification",
+    "Copy and download the minified CSS"
   ]
 }

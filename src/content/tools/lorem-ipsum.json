@@ -41,5 +41,11 @@
     "Can I generate the same text consistently? Yes, use the seed option with the same settings to reproduce identical output for team consistency.",
     "What's the difference between paragraph styles? Short has 1-2 sentences, Medium has 3-5, and Long has 5-8 sentences per paragraph.",
     "Does the HTML format include any styling? No, it outputs semantic HTML tags (<p>, <h2>, <pre><code>) without inline styles or CSS classes."
+  ],
+  "features": [
+    "Generate lorem ipsum by paragraphs, sentences, or words",
+    "Choose how many items and starting text",
+    "Copy to clipboard or download",
+    "Bulk generation for mockups"
   ]
 }

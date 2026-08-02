@@ -10,7 +10,8 @@ type SecurityEvent =
   | "malicious_request"
   | "invalid_origin"
   | "body_too_large"
-  | "missing_content_type";
+  | "missing_content_type"
+  | "submission_persist_failed";
 
 interface SecurityLogEntry {
   timestamp: string;

@@ -43,5 +43,11 @@
     "Is this safe to run arbitrary code? — The code runs in the browser sandbox via the Function constructor. It cannot access files or system resources, but it can consume CPU and memory.",
     "What does ops/sec mean? — Operations per second is the inverse of average time: 1000 / avgTime(ms). Higher is better.",
     "Can I benchmark async code? — This tool benchmarks synchronous code only. For async benchmarks, you would need a custom setup with await."
+  ],
+  "features": [
+    "Time JavaScript snippets with high precision",
+    "Compare multiple implementations side by side",
+    "Configurable iterations and warm-up runs",
+    "Results table with ops/sec and confidence"
   ]
 }

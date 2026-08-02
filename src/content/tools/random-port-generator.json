@@ -40,5 +40,10 @@
     "Are these ports guaranteed to be available? No — this tool generates random numbers. You should verify the port is not in use before starting your service.",
     "What port range should I use for development? Ports 3000-9000 are commonly used for local development servers.",
     "Can I use port 0? Port 0 tells the OS to assign any available port dynamically, but this tool generates specific port numbers."
+  ],
+  "features": [
+    "Generate random network ports",
+    "Range control to stay in valid port space",
+    "Bulk generation with copy support"
   ]
 }

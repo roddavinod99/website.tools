@@ -42,5 +42,10 @@
     "Does it handle large files? — The tool works best with text under a few hundred lines. Very large files may slow down the browser.",
     "Can I diff binary files? — No, this tool is designed for text comparison only.",
     "What does the Copy Diff button copy? — It copies a unified diff format with + for additions, - for deletions, and space for unchanged lines."
+  ],
+  "features": [
+    "Compare text with a visual side-by-side diff",
+    "Word- and line-level change detection",
+    "Highlight additions and deletions"
   ]
 }
