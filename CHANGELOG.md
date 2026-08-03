@@ -156,6 +156,11 @@
 ### Infrastructure
 
 - add WASM build step with caching to deploy workflow
+## [0.2.7] - 2026-08-03
+
+### Infrastructure
+
+- copy WASM pkg to src/lib/wasm for Next.js build
 ## Template
 
 For future releases:
