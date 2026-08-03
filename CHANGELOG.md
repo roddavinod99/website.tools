@@ -161,6 +161,11 @@
 ### Infrastructure
 
 - copy WASM pkg to src/lib/wasm for Next.js build
+## [0.2.8] - 2026-08-03
+
+### Changed
+
+- fix X-Frame-Options expectation to match config
 ## Template
 
 For future releases:
