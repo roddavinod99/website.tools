@@ -127,6 +127,12 @@
 ### Changed
 
 - New updates
+## [0.2.2] - 2026-08-03
+
+### Changed
+
+- Merge branch 'main' of https://github.com/roddavinod99/website.tools
+- all new changes
 ## Template
 
 For future releases:
