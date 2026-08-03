@@ -5,14 +5,15 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-const cspValue = [
+// Report-Only CSP - won't block, only reports violations
+const cspReportOnly = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com https://ep1.adtrafficquality.google https://tpc.googlesyndication.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com",
+  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com https://ep1.adtrafficquality.google",
   "font-src 'self'",
-  "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
+  "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com",
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",
@@ -20,6 +21,7 @@ const cspValue = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  productionBrowserSourceMaps: true,
 
   images: {
     formats: ["image/avif", "image/webp"],
@@ -48,12 +50,12 @@ const nextConfig: NextConfig = {
       source: "/(.*)",
       headers: [
         { key: "X-Content-Type-Options", value: "nosniff" },
-        { key: "X-Frame-Options", value: "DENY" },
+        { key: "X-Frame-Options", value: "SAMEORIGIN" },
         { key: "X-XSS-Protection", value: "1; mode=block" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
         { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-        { key: "Content-Security-Policy", value: cspValue },
+        { key: "Content-Security-Policy-Report-Only", value: cspReportOnly },
         { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
         { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
         { key: "Link", value: "</llms.txt>; rel=alternate; type=text/plain; title=AI Guide" },

@@ -138,9 +138,17 @@ const toolLoaders: Record<string, ToolLoader> = {
   "numeronym-generator": () => import("./numeronym-generator").then((m) => ({ default: m.NumeronymGenerator })),
 };
 
+// Pre-create dynamic components at module level (singletons)
 const toolComponents: Record<string, ComponentType> = {};
 for (const [slug, loader] of Object.entries(toolLoaders)) {
-  toolComponents[slug] = dynamic(loader, {});
+  toolComponents[slug] = dynamic(loader, {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center min-h-[200px]">
+        <div className="text-sm text-surface-400 dark:text-dark-muted">Loading tool...</div>
+      </div>
+    ),
+  });
 }
 
 export function preloadTool(slug: string) {
