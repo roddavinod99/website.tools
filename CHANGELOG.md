@@ -145,6 +145,12 @@
 
 - Merge branch 'main' of https://github.com/roddavinod99/website.tools
 - changes done 0.2.3
+## [0.2.5] - 2026-08-03
+
+### Changed
+
+- Merge branch 'main' of https://github.com/roddavinod99/website.tools
+- new changes
 ## Template
 
 For future releases:
