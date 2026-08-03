@@ -151,6 +151,11 @@
 
 - Merge branch 'main' of https://github.com/roddavinod99/website.tools
 - new changes
+## [0.2.6] - 2026-08-03
+
+### Infrastructure
+
+- add WASM build step with caching to deploy workflow
 ## Template
 
 For future releases:
