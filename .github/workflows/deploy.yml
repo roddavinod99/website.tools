@@ -85,6 +85,10 @@ jobs:
         run: |
           cd wasm
           wasm-pack build --target web --release
+      - name: Copy WASM to src/lib/wasm
+        run: |
+          mkdir -p src/lib/wasm/pkg
+          cp -r wasm/pkg/* src/lib/wasm/pkg/
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -159,6 +163,10 @@ jobs:
             cd wasm
             wasm-pack build --target web --release
             cd ..
+
+            # Copy WASM to src/lib/wasm for Next.js build
+            mkdir -p src/lib/wasm/pkg
+            cp -r wasm/pkg/* src/lib/wasm/pkg/
 
             # Create .env from GitHub Secrets
             # Values are injected at deploy time, never committed to git
