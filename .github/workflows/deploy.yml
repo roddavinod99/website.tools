@@ -51,7 +51,7 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     needs: version
     steps:
       - uses: actions/checkout@v4
@@ -59,6 +59,32 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Cache wasm-pack
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/wasm-pack
+          key: wasm-pack-${{ runner.os }}-${{ hashFiles('wasm/Cargo.lock') }}
+          restore-keys: |
+            wasm-pack-${{ runner.os }}-
+      - name: Install wasm-pack
+        if: steps.cache-wasm-pack.outputs.cache-hit != 'true'
+        run: cargo install wasm-pack
+      - name: Cache WASM build
+        uses: actions/cache@v4
+        with:
+          path: wasm/pkg
+          key: wasm-build-${{ runner.os }}-${{ hashFiles('wasm/Cargo.lock', 'wasm/src/**/*.rs') }}
+          restore-keys: |
+            wasm-build-${{ runner.os }}-
+      - name: Build WASM
+        if: steps.cache-wasm-build.outputs.cache-hit != 'true'
+        run: |
+          cd wasm
+          wasm-pack build --target web --release
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -95,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [version, validate, security-scan]
     if: github.ref == 'refs/heads/main'
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
@@ -117,6 +143,22 @@ jobs:
             # Pull latest changes
             git fetch origin
             git reset --hard origin/main
+
+            # Install Rust and wasm-pack for WASM build (with caching)
+            if [ ! -f "$HOME/.cargo/bin/rustc" ]; then
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            fi
+            source "$HOME/.cargo/env"
+            rustup target add wasm32-unknown-unknown
+
+            if [ ! -f "$HOME/.cargo/bin/wasm-pack" ]; then
+              cargo install wasm-pack
+            fi
+
+            # Build WASM module
+            cd wasm
+            wasm-pack build --target web --release
+            cd ..
 
             # Create .env from GitHub Secrets
             # Values are injected at deploy time, never committed to git
