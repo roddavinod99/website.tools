@@ -400,21 +400,767 @@ Follow WCAG 2.2 AA requirements.
 Do not remove:
 
 -   metadata generation
--   structured data
+-   structured data (JSON-LD)
 -   canonical URLs
 -   robots.txt
--   sitemap.xml
+-   sitemap.xml (auto-generated from tool registry)
 -   llms.txt
 -   OpenGraph metadata
+-   X (Twitter) Cards
+-   Web Manifest
+-   security.txt
+-   humans.txt
 
-Every page should include:
+Every page must include:
 
--   title
--   description
--   canonical
--   social metadata
+-   title (unique, ≤60 chars)
+-   description (unique, ≤160 chars)
+-   canonical URL (absolute, self-referencing)
+-   OpenGraph: og:title, og:description, og:type, og:url, og:image
+-   Twitter Cards: twitter:card, twitter:title, twitter:description, twitter:image
+-   JSON-LD structured data (see Structured Data Templates section)
 
-------------------------------------------------------------------------
+Structured data requirements by page type:
+
+-   Homepage: WebSite + Organization + SearchAction
+-   Tool pages: SoftwareApplication + BreadcrumbList + FAQPage (if FAQ exists) + HowTo (if guide exists)
+-   Category/Listing pages: CollectionPage + BreadcrumbList + ItemList
+-   Learning/Article pages: TechArticle/BlogPosting + BreadcrumbList + Organization
+-   All pages: Organization (in footer or global)
+
+Sitemap requirements:
+
+-   Auto-generated from tool registry at build time
+-   Include all tool pages, category pages, static pages
+-   lastmod from git commit date or content hash
+-   changefreq: weekly (tools), monthly (static)
+-   priority: 1.0 (home), 0.8 (tools), 0.6 (categories), 0.5 (static)
+-   Submit to Google Search Console + Bing Webmaster + IndexNow
+
+Robots.txt requirements:
+
+-   Allow all tool pages, category pages, learning resources
+-   Disallow: /api/*, /admin/*, /_next/*, /private/*
+-   Reference sitemap.xml location
+-   Crawl-delay: 10 (if needed)
+
+Core Web Vitals targets (enforced in CI):
+
+-   LCP ≤ 2.5s
+-   INP ≤ 200ms
+-   CLS ≤ 0.1
+-   Lighthouse Performance ≥ 90
+
+-----------------------------------------------------------------------
+
+## Structured Data Templates (JSON-LD)
+
+Every page must include appropriate JSON-LD structured data. Use the templates below with Next.js App Router's `metadata` export or a dedicated `JsonLd` component.
+
+### Validation
+
+-   Test with [Rich Results Test](https://search.google.com/test/rich-results)
+-   Validate with [Schema.org Validator](https://validator.schema.org)
+
+### Standardized Placeholders
+
+Use these placeholders across all templates. Replace with actual values at render time.
+
+| Placeholder | Description | Example |
+|-------------|-------------|---------|
+| `{{SITE_URL}}` | Base site URL | `https://tools.devstackio.com` |
+| `{{SITE_NAME}}` | Site brand name | `Website.Tools` |
+| `{{TOOL_SLUG}}` | Tool URL slug | `json-formatter` |
+| `{{TOOL_NAME}}` | Tool display name | `JSON Formatter` |
+| `{{TOOL_DESCRIPTION}}` | Tool description (≤160 chars) | `Format, validate, and beautify JSON...` |
+| `{{TOOL_CATEGORY}}` | Schema.org application category | `DeveloperApplication` |
+| `{{FEATURE_LIST}}` | Array of feature strings | `["Syntax highlighting", "Error detection"]` |
+| `{{BREADCRUMBS}}` | Array of `{name, url}` objects | `[{name: "Home", url: "{{SITE_URL}}"}, ...]` |
+| `{{FAQ_ITEMS}}` | Array of `{question, answer}` objects | `[{question: "How to...", answer: "..."}]` |
+| `{{HOWTO_STEPS}}` | Array of `{name, text, url?}` objects | `[{name: "Step 1", text: "Paste JSON..."}]` |
+
+### Helper: JsonLd Component Pattern
+
+```tsx
+// components/JsonLd.tsx
+export function JsonLd({ data }: { data: object | object[] }) {
+  const jsonLd = Array.isArray(data) ? { "@context": "https://schema.org", "@graph": data } : { "@context": "https://schema.org", ...data };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
+}
+```
+
+Usage in a page:
+```tsx
+import { JsonLd } from "@/components/JsonLd";
+
+export default function ToolPage({ params }: { params: { slug: string } }) {
+  const tool = getTool(params.slug);
+  return (
+    <>
+      <JsonLd data={[
+        generateSoftwareApplicationJsonLd(tool),
+        generateBreadcrumbListJsonLd(tool.breadcrumbs),
+        tool.faq && generateFAQPageJsonLd(tool.faq),
+        tool.howto && generateHowToJsonLd(tool.howto),
+        generateOrganizationJsonLd(),
+      ].filter(Boolean)} />
+      {/* Page content */}
+    </>
+  );
+}
+```
+
+---
+
+### 1. WebSite (Homepage Only)
+
+Includes `SearchAction` for site-wide search box in SERPs.
+
+```ts
+/**
+ * Generates WebSite structured data with SearchAction.
+ * @param siteUrl - Base URL of the site (e.g., "https://tools.devstackio.com")
+ * @param siteName - Brand name (e.g., "Website.Tools")
+ * @returns WebSite schema object
+ */
+const generateWebSiteJsonLd = (siteUrl: string, siteName: string) => ({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteName,
+  "url": siteUrl,
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${siteUrl}/tools?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Website.Tools",
+  "url": "https://tools.devstackio.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://tools.devstackio.com/tools?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+```
+
+---
+
+### 2. Organization (All Pages — Global or Footer)
+
+Represents the publisher/brand. Include on every page (homepage, tool pages, articles).
+
+```ts
+/**
+ * Generates Organization structured data.
+ * @param siteUrl - Base URL
+ * @param siteName - Brand name
+ * @param logoUrl - Absolute URL to logo image (recommended: 512x512 PNG)
+ * @param sameAs - Array of social/profile URLs
+ * @returns Organization schema object
+ */
+const generateOrganizationJsonLd = (
+  siteUrl: string,
+  siteName: string,
+  logoUrl: string,
+  sameAs: string[]
+) => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": siteName,
+  "url": siteUrl,
+  "logo": logoUrl,
+  "sameAs": sameAs,
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Website.Tools",
+  "url": "https://tools.devstackio.com",
+  "logo": "https://tools.devstackio.com/logo.png",
+  "sameAs": [
+    "https://github.com/website-tools",
+    "https://twitter.com/website_tools",
+    "https://linkedin.com/company/website-tools"
+  ]
+}
+```
+
+---
+
+### 3. SoftwareApplication (Every Tool Page) — PRIMARY
+
+**Required for tool rich results in Google Search.** Every tool page must include this.
+
+```ts
+/**
+ * Generates SoftwareApplication structured data for a developer tool.
+ * @param tool - Tool metadata object
+ * @returns SoftwareApplication schema object
+ */
+const generateSoftwareApplicationJsonLd = (tool: {
+  slug: string;
+  name: string;
+  description: string;
+  category: string; // e.g., "DeveloperApplication", "UtilitiesApplication"
+  features: string[];
+  siteUrl: string;
+  siteName: string;
+  screenshotUrl?: string; // Optional: tool screenshot
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": tool.name,
+  "applicationCategory": tool.category,
+  "operatingSystem": "Cloud", // Browser-based tools
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+  },
+  "description": tool.description,
+  "featureList": tool.features,
+  "url": `${tool.siteUrl}/tools/${tool.slug}`,
+  "publisher": {
+    "@type": "Organization",
+    "name": tool.siteName,
+    "url": tool.siteUrl,
+  },
+  ...(tool.screenshotUrl && { "screenshot": tool.screenshotUrl }),
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "JSON Formatter",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Cloud",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "description": "Format, validate, and beautify JSON with syntax highlighting and error detection.",
+  "featureList": [
+    "Syntax highlighting",
+    "Error detection with line numbers",
+    "Minify/pretty-print toggle",
+    "Copy to clipboard",
+    "Download formatted file"
+  ],
+  "url": "https://tools.devstackio.com/tools/json-formatter",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Website.Tools",
+    "url": "https://tools.devstackio.com"
+  }
+}
+```
+
+---
+
+### 4. TechArticle / BlogPosting (Learning Resources, Docs)
+
+Use `TechArticle` for technical guides, `BlogPosting` for blog-style content.
+
+```ts
+/**
+ * Generates TechArticle (or BlogPosting) structured data.
+ * @param article - Article metadata
+ * @param type - "TechArticle" or "BlogPosting"
+ * @returns Article schema object
+ */
+const generateTechArticleJsonLd = (article: {
+  title: string;
+  description: string;
+  url: string;
+  authorName: string;
+  authorUrl?: string;
+  datePublished: string; // ISO 8601
+  dateModified: string; // ISO 8601
+  imageUrl?: string;
+  siteName: string;
+  siteUrl: string;
+}, type: "TechArticle" | "BlogPosting" = "TechArticle") => ({
+  "@context": "https://schema.org",
+  "@type": type,
+  "headline": article.title,
+  "description": article.description,
+  "url": article.url,
+  "author": {
+    "@type": "Person",
+    "name": article.authorName,
+    ...(article.authorUrl && { "url": article.authorUrl }),
+  },
+  "datePublished": article.datePublished,
+  "dateModified": article.dateModified,
+  "publisher": {
+    "@type": "Organization",
+    "name": article.siteName,
+    "url": article.siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${article.siteUrl}/logo.png`,
+    },
+  },
+  ...(article.imageUrl && { "image": article.imageUrl }),
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How to Format JSON for APIs",
+  "description": "Learn best practices for formatting JSON payloads in REST APIs.",
+  "url": "https://tools.devstackio.com/learn/json-formatting-api",
+  "author": {
+    "@type": "Person",
+    "name": "Jane Developer"
+  },
+  "datePublished": "2025-01-15T10:00:00Z",
+  "dateModified": "2025-06-20T14:30:00Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Website.Tools",
+    "url": "https://tools.devstackio.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tools.devstackio.com/logo.png"
+    }
+  }
+}
+```
+
+---
+
+### 5. CollectionPage (Category Pages, Tools Listing)
+
+For pages listing multiple tools (category pages, /tools listing).
+
+```ts
+/**
+ * Generates CollectionPage with ItemList for tool listings.
+ * @param page - Page metadata
+ * @param items - Array of tool summaries for ItemList
+ * @returns CollectionPage schema object
+ */
+const generateCollectionPageJsonLd = (page: {
+  name: string;
+  description: string;
+  url: string;
+  siteName: string;
+  siteUrl: string;
+}, items: Array<{
+  position: number;
+  name: string;
+  url: string;
+  description: string;
+}>) => ({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": page.name,
+  "description": page.description,
+  "url": page.url,
+  "publisher": {
+    "@type": "Organization",
+    "name": page.siteName,
+    "url": page.siteUrl,
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": items.map((item) => ({
+      "@type": "ListItem",
+      "position": item.position,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": item.name,
+        "description": item.description,
+        "url": item.url,
+      },
+    })),
+  },
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Formatter Tools",
+  "description": "Online formatters for JSON, XML, YAML, CSV, and more.",
+  "url": "https://tools.devstackio.com/tools/category/formatters",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Website.Tools",
+    "url": "https://tools.devstackio.com"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "JSON Formatter",
+          "description": "Format and validate JSON",
+          "url": "https://tools.devstackio.com/tools/json-formatter"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "XML Formatter",
+          "description": "Format and validate XML",
+          "url": "https://tools.devstackio.com/tools/xml-formatter"
+        }
+      }
+    ]
+  }
+}
+```
+
+---
+
+### 6. BreadcrumbList (All Pages Except Home)
+
+Required for breadcrumb rich results. Include on every page except homepage.
+
+```ts
+/**
+ * Generates BreadcrumbList structured data.
+ * @param breadcrumbs - Array of {name, url} from home to current page
+ * @returns BreadcrumbList schema object
+ */
+const generateBreadcrumbListJsonLd = (breadcrumbs: Array<{ name: string; url: string }>) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((crumb, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": crumb.name,
+    "item": crumb.url,
+  })),
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://tools.devstackio.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Formatters",
+      "item": "https://tools.devstackio.com/tools/category/formatters"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "JSON Formatter",
+      "item": "https://tools.devstackio.com/tools/json-formatter"
+    }
+  ]
+}
+```
+
+---
+
+### 7. FAQPage (Tool Pages with FAQ Section)
+
+Only include if the page has a genuine FAQ section with Q&A pairs.
+
+```ts
+/**
+ * Generates FAQPage structured data.
+ * @param faqs - Array of {question, answer}
+ * @returns FAQPage schema object
+ */
+const generateFAQPageJsonLd = (faqs: Array<{ question: string; answer: string }>) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer,
+    },
+  })),
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this tool store my data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, all processing happens in your browser. No data is sent to our servers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the maximum file size?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10 MB. Larger files may cause browser performance issues."
+      }
+    }
+  ]
+}
+```
+
+---
+
+### 8. HowTo (Tool Pages with Step-by-Step Guides)
+
+Only include if the page has a genuine how-to guide with sequential steps.
+
+```ts
+/**
+ * Generates HowTo structured data.
+ * @param howto - How-to guide metadata
+ * @returns HowTo schema object
+ */
+const generateHowToJsonLd = (howto: {
+  name: string;
+  description: string;
+  steps: Array<{ name: string; text: string; url?: string; imageUrl?: string }>;
+  totalTime?: string; // ISO 8601 duration (e.g., "PT2M")
+  estimatedCost?: { "@type": "MonetaryAmount"; "currency": "USD"; "value": "0" };
+  supply?: Array<{ "@type": "HowToSupply"; "name": string }>;
+  tool?: Array<{ "@type": "HowToTool"; "name": string }>;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": howto.name,
+  "description": howto.description,
+  "step": howto.steps.map((step, index) => ({
+    "@type": "HowToStep",
+    "position": index + 1,
+    "name": step.name,
+    "text": step.text,
+    ...(step.url && { "url": step.url }),
+    ...(step.imageUrl && { "image": step.imageUrl }),
+  })),
+  ...(howto.totalTime && { "totalTime": howto.totalTime }),
+  ...(howto.estimatedCost && { "estimatedCost": howto.estimatedCost }),
+  ...(howto.supply && { "supply": howto.supply }),
+  ...(howto.tool && { "tool": howto.tool }),
+});
+```
+
+**JSON-LD Output:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Format JSON",
+  "description": "Step-by-step guide to formatting JSON using the JSON Formatter tool.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Open the tool",
+      "text": "Navigate to the JSON Formatter tool page."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Paste your JSON",
+      "text": "Copy your raw JSON and paste it into the input editor."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Click Format",
+      "text": "Press the Format button to beautify your JSON with proper indentation."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Copy or download",
+      "text": "Use the Copy button or download the formatted JSON as a file."
+    }
+  ],
+  "totalTime": "PT1M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  }
+}
+```
+
+---
+
+### Complete Tool Page Example (Combined @graph)
+
+This shows how to combine multiple schemas in a single `<script type="application/ld+json">` tag using `@graph`. This is the recommended pattern for tool pages.
+
+```tsx
+// app/tools/[slug]/page.tsx (Server Component)
+import { JsonLd } from "@/components/JsonLd";
+import { getTool } from "@/lib/tools";
+
+export default async function ToolPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const tool = getTool(slug);
+
+  if (!tool) notFound();
+
+  const breadcrumbs = [
+    { name: "Home", url: "{{SITE_URL}}" },
+    { name: "Tools", url: "{{SITE_URL}}/tools" },
+    { name: tool.categoryName, url: `{{SITE_URL}}/tools/category/${tool.categorySlug}` },
+    { name: tool.name, url: `{{SITE_URL}}/tools/${tool.slug}` },
+  ];
+
+  const structuredData = [
+    // Organization (global, included on every page)
+    generateOrganizationJsonLd(
+      "{{SITE_URL}}",
+      "{{SITE_NAME}}",
+      "{{SITE_URL}}/logo.png",
+      [
+        "https://github.com/website-tools",
+        "https://twitter.com/website_tools",
+      ]
+    ),
+    // SoftwareApplication (PRIMARY - required for tool rich results)
+    generateSoftwareApplicationJsonLd({
+      slug: tool.slug,
+      name: tool.name,
+      description: tool.description,
+      category: "DeveloperApplication",
+      features: tool.features,
+      siteUrl: "{{SITE_URL}}",
+      siteName: "{{SITE_NAME}}",
+      screenshotUrl: tool.screenshotUrl,
+    }),
+    // BreadcrumbList (required for breadcrumb rich results)
+    generateBreadcrumbListJsonLd(breadcrumbs),
+    // FAQPage (conditional - only if FAQ exists)
+    tool.faq && generateFAQPageJsonLd(tool.faq),
+    // HowTo (conditional - only if guide exists)
+    tool.howto && generateHowToJsonLd(tool.howto),
+  ].filter(Boolean);
+
+  return (
+    <>
+      <JsonLd data={structuredData} />
+      <main>
+        {/* Tool UI */}
+        <ToolInterface tool={tool} />
+        {/* FAQ Section */}
+        {tool.faq && <FAQSection faqs={tool.faq} />}
+        {/* How-to Guide */}
+        {tool.howto && <HowToSection howto={tool.howto} />}
+      </main>
+    </>
+  );
+}
+```
+
+**Rendered JSON-LD (single script tag with @graph):**
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Website.Tools",
+      "url": "https://tools.devstackio.com",
+      "logo": "https://tools.devstackio.com/logo.png",
+      "sameAs": ["https://github.com/website-tools", "https://twitter.com/website_tools"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "JSON Formatter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Cloud",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
+      "description": "Format, validate, and beautify JSON...",
+      "featureList": ["Syntax highlighting", "Error detection", "..."],
+      "url": "https://tools.devstackio.com/tools/json-formatter",
+      "publisher": { "@type": "Organization", "name": "Website.Tools", "url": "https://tools.devstackio.com" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tools.devstackio.com" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://tools.devstackio.com/tools" },
+        { "@type": "ListItem", "position": 3, "name": "Formatters", "item": "https://tools.devstackio.com/tools/category/formatters" },
+        { "@type": "ListItem", "position": 4, "name": "JSON Formatter", "item": "https://tools.devstackio.com/tools/json-formatter" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Does this tool store my data?", "acceptedAnswer": { "@type": "Answer", "text": "No..." } }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### Key Rules for AI Agents
+
+1.  **Always use `@graph`** when combining multiple schemas in one script tag
+2.  **Include Organization on every page** (global footer or layout)
+3.  **SoftwareApplication is mandatory** for every tool page — no exceptions
+4.  **BreadcrumbList is mandatory** for every page except homepage
+5.  **FAQPage/HowTo are conditional** — only include if content exists
+6.  **Never include empty arrays** — omit the property entirely
+7.  **Validate every deployment** with Rich Results Test
+8.  **Keep descriptions ≤160 chars** for optimal SERP display
+9.  **Use absolute URLs** everywhere (no relative paths)
+10. **Test after changes** — run `npm run build` and verify structured data in page source
+
+-----------------------------------------------------------------------
 
 # Ad Implementation Guidelines
 
@@ -935,11 +1681,66 @@ considered finished.
 
 ## SEO
 
--   <https://developers.google.com/search/docs>
--   <https://web.dev/vitals/>
--   <https://schema.org/>
+### Google Search Central
+- Search Essentials: https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+- How Search Works: https://developers.google.com/search/docs/fundamentals/how-search-works
+- Crawling & Indexing: https://developers.google.com/search/docs/crawling-indexing
+- Robots.txt: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+- Robots Meta Tag: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag
+- JavaScript SEO: https://developers.google.com/search/docs/crawling-indexing/javascript
+- Canonical URLs: https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+- Redirects: https://developers.google.com/search/docs/crawling-indexing/301-redirects
+- Sitemaps: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
 
-------------------------------------------------------------------------
+### Structured Data
+- Overview: https://developers.google.com/search/docs/appearance/structured-data
+- Search Gallery: https://developers.google.com/search/docs/appearance/structured-data/search-gallery
+- Organization: https://developers.google.com/search/docs/appearance/structured-data/organization
+- SoftwareApplication: https://developers.google.com/search/docs/appearance/structured-data/software-application
+- Breadcrumb: https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
+- FAQPage: https://developers.google.com/search/docs/appearance/structured-data/faqpage
+- HowTo: https://developers.google.com/search/docs/appearance/structured-data/how-to
+- Article/TechArticle: https://developers.google.com/search/docs/appearance/structured-data/article
+
+### Schema.org Types (Primary for this project)
+- WebSite: https://schema.org/WebSite
+- Organization: https://schema.org/Organization
+- SoftwareApplication: https://schema.org/SoftwareApplication
+- TechArticle: https://schema.org/TechArticle
+- BlogPosting: https://schema.org/BlogPosting
+- CollectionPage: https://schema.org/CollectionPage
+- BreadcrumbList: https://schema.org/BreadcrumbList
+- SearchAction: https://schema.org/SearchAction
+- FAQPage: https://schema.org/FAQPage
+- HowTo: https://schema.org/HowTo
+
+### Testing & Validation
+- Rich Results Test: https://search.google.com/test/rich-results
+- Schema.org Validator: https://validator.schema.org
+- PageSpeed Insights: https://pagespeed.web.dev
+- Lighthouse: https://developer.chrome.com/docs/lighthouse
+
+### Standards & Protocols
+- Sitemaps Protocol: https://www.sitemaps.org/protocol.html
+- Robots.txt RFC 9309: https://www.rfc-editor.org/rfc/rfc9309
+- Open Graph: https://ogp.me
+- X/Twitter Cards: https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards
+- JSON-LD Spec: https://json-ld.org / https://www.w3.org/TR/json-ld11/
+- Web Manifest: https://developer.mozilla.org/docs/Web/Manifest
+- security.txt: https://securitytxt.org / RFC 9116
+- llms.txt: https://llmstxt.org
+- humans.txt: https://humanstxt.org
+- IndexNow: https://www.indexnow.org/documentation
+
+### Other Search Engines
+- Bing Webmaster: https://www.bing.com/webmasters
+- Yandex Webmaster: https://webmaster.yandex.com
+
+### Validators
+- W3C HTML: https://validator.w3.org
+- W3C CSS: https://jigsaw.w3.org/css-validator
+
+-----------------------------------------------------------------------
 
 ## Performance
 

@@ -1,0 +1,67 @@
+name: Lighthouse CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            https://tools.devstackio.com
+            https://tools.devstackio.com/tools
+            https://tools.devstackio.com/tools/json-formatter
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Find the latest lighthouse results
+            const resultsDir = '.lighthouseci';
+            if (!fs.existsSync(resultsDir)) {
+              console.log('No Lighthouse results found');
+              return;
+            }
+            
+            const runs = fs.readdirSync(resultsDir).filter(f => f.startsWith('run_')).sort().reverse();
+            if (runs.length === 0) return;
+            
+            const latestRun = runs[0];
+            const runPath = path.join(resultsDir, latestRun);
+            const htmlFiles = fs.readdirSync(runPath).filter(f => f.endsWith('.html'));
+            
+            let comment = '## 📊 Lighthouse CI Results\n\n';
+            
+            for (const htmlFile of htmlFiles) {
+              const urlMatch = htmlFile.match(/^(.+)-report\.html$/);
+              const url = urlMatch ? decodeURIComponent(urlMatch[1]) : htmlFile;
+              comment += `- [${url}](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}/artifacts) (artifact)\n`;
+            }
+            
+            comment += '\n*Note: This is a non-blocking check. Deployment proceeds regardless of scores.*';
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

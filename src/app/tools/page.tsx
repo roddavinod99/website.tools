@@ -29,19 +29,25 @@ export const metadata: Metadata = {
 };
 
 export default function ToolsPage() {
-  const itemListJsonLd = {
+  const collectionPageJsonLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
+    "@type": "CollectionPage",
     name: "All Developer Tools",
     description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
     url: `${siteConfig.url}/tools`,
-    numberOfItems: allTools.length,
-    itemListElement: allTools.map((tool, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: tool.name,
-      url: `${siteConfig.url}/tools/${tool.slug}`,
-    })),
+    mainEntity: {
+      "@type": "ItemList",
+      name: "All Developer Tools",
+      description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
+      url: `${siteConfig.url}/tools`,
+      numberOfItems: allTools.length,
+      itemListElement: allTools.map((tool, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: tool.name,
+        url: `${siteConfig.url}/tools/${tool.slug}`,
+      })),
+    },
   };
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -60,7 +66,7 @@ export default function ToolsPage() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
       />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-12 md:py-16">

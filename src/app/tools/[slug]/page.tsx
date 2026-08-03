@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { allTools, siteConfig, learningTopics, categories } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
+import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolClient } from "./tool-client";
 
 interface Props {
@@ -128,19 +129,19 @@ export default async function ToolPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": ["SoftwareApplication", "WebApplication"],
+            "@type": "SoftwareApplication",
             name: tool.name,
             url: `${siteConfig.url}/tools/${tool.slug}`,
             description: tool.description,
-            applicationCategory: "UtilitiesApplication",
-            operatingSystem: "All",
-            browserRequirements: "Modern browser with JavaScript enabled",
-            image: `${siteConfig.url}${siteConfig.ogImage}`,
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Cloud",
             offers: {
               "@type": "Offer",
               price: "0",
               priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
             },
+            featureList: featuresBySlug[tool.slug] ?? [],
             author: {
               "@type": "Organization",
               name: "DevStackIO",
@@ -176,8 +177,10 @@ export default async function ToolPage({ params }: Props) {
               "@context": "https://schema.org",
               "@type": "FAQPage",
               mainEntity: content.faq.map((item) => {
-                const q = item.includes(" — ") ? item.split(" — ")[0] : item.split(" | A:")[0];
-                const a = item.includes(" — ") ? item.split(" — ").slice(1).join(" — ") : item.split(" | A:")[1] || "";
+                // Try to split on common patterns, fallback to using full string as question
+                const parts = item.split(/ — | \| A: /);
+                const q = parts[0];
+                const a = parts.length > 1 ? parts.slice(1).join(" ") : item;
                 return {
                   "@type": "Question",
                   name: q,
@@ -199,6 +202,18 @@ export default async function ToolPage({ params }: Props) {
               description: `Step-by-step guide to using ${tool.name} for ${tool.description.split(" ").slice(0, 8).join(" ").toLowerCase()}.`,
               image: `${siteConfig.url}${siteConfig.ogImage}`,
               totalTime: "PT5M",
+              estimatedCost: {
+                "@type": "MonetaryAmount",
+                currency: "USD",
+                value: "0",
+              },
+              supply: [
+                { "@type": "HowToSupply", name: "Web browser" },
+                { "@type": "HowToSupply", name: "Internet connection" },
+              ],
+              tool: [
+                { "@type": "HowToTool", name: tool.name, url: `${siteConfig.url}/tools/${tool.slug}` },
+              ],
               step: content.instructions.map((instruction, index) => ({
                 "@type": "HowToStep",
                 position: index + 1,

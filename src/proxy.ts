@@ -61,6 +61,39 @@ function isRateLimited(request: NextRequest): string | null {
   return null;
 }
 
+// Report-Only CSP - won't block, only reports violations
+const cspReportOnly = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://www.google-analytics.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  "img-src 'self' data: blob: https:",
+  "connect-src 'self' https://www.google-analytics.com https://pagead2.googlesyndication.com https://www.googletagmanager.com",
+  "frame-src https://www.google.com https://pagead2.googlesyndication.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+function addSecurityHeaders(response: NextResponse) {
+  // Report-Only CSP (won't block, only reports violations)
+  response.headers.set("Content-Security-Policy-Report-Only", cspReportOnly);
+
+  // Other security headers (enforced)
+  response.headers.set("X-Frame-Options", "SAMEORIGIN");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  response.headers.set("X-DNS-Prefetch-Control", "on");
+
+  // HSTS (only in production with HTTPS)
+  if (process.env.NODE_ENV === "production") {
+    response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  }
+
+  return response;
+}
+
 export default function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
@@ -74,7 +107,8 @@ export default function proxy(request: NextRequest) {
     }
   }
 
-  return response;
+  // Add security headers to all responses
+  return addSecurityHeaders(response);
 }
 
 export const config = {

@@ -80,7 +80,7 @@ const jsonLd = {
       url: siteConfig.mainSiteUrl,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/favicon.svg`,
+        url: `${siteConfig.url}/logo-light.png`,
       },
       description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
       email: siteConfig.contactEmail,

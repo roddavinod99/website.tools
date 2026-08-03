@@ -1,0 +1,7 @@
+# DevStackIO Tools - Human-readable credits
+TEAM: DevStackIO Developers
+SITE: https://tools.devstackio.com
+CONTACT: contact@devstackio.com
+TECHNOLOGY: Next.js, TypeScript, TailwindCSS, Web Workers
+STANDARDS: HTML5, CSS3, ES2022, Schema.org JSON-LD
+LAST_UPDATED: 2026

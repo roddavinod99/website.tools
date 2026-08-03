@@ -32,6 +32,8 @@ const legalTerms = dateFrom(LEGAL.terms);
 const legalCookie = dateFrom(LEGAL.cookie);
 const legalDisclaimer = dateFrom(LEGAL.disclaimer);
 
+// Per AGENTS.md: Home=1.0 weekly, Tools=0.8 weekly, Tool pages=0.8 monthly, 
+// Categories=0.6 weekly, Category pages=0.7 monthly, Static=0.5 monthly
 const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/`, {
     lastModified: latestBlogDate,
@@ -40,15 +42,15 @@ const staticPages: MetadataRoute.Sitemap = [
   }),
   entry(`${BASE}/tools`, {
     changeFrequency: "weekly",
-    priority: 0.9,
+    priority: 0.8,
   }),
   entry(`${BASE}/categories`, {
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.6,
   }),
   entry(`${BASE}/guides`, {
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.6,
   }),
   entry(`${BASE}/blog`, {
     lastModified: latestBlogDate,
@@ -57,19 +59,19 @@ const staticPages: MetadataRoute.Sitemap = [
   }),
   entry(`${BASE}/learning`, {
     changeFrequency: "monthly",
-    priority: 0.7,
+    priority: 0.5,
   }),
   entry(`${BASE}/popular`, {
     changeFrequency: "weekly",
-    priority: 0.7,
+    priority: 0.5,
   }),
   entry(`${BASE}/new`, {
     changeFrequency: "weekly",
-    priority: 0.7,
+    priority: 0.5,
   }),
   entry(`${BASE}/changelog`, {
     changeFrequency: "weekly",
-    priority: 0.6,
+    priority: 0.5,
   }),
   entry(`${BASE}/about`, {
     changeFrequency: "monthly",
@@ -133,14 +135,14 @@ const staticPages: MetadataRoute.Sitemap = [
   }),
   entry(`${BASE}/tutorials`, {
     changeFrequency: "monthly",
-    priority: 0.6,
+    priority: 0.5,
   }),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const categoriesPages: MetadataRoute.Sitemap = categories.map((cat) =>
     entry(`${BASE}/categories/${cat.slug}`, {
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.7,
     })
   );
