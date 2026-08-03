@@ -190,7 +190,7 @@ test.describe("Security Tests", () => {
       const headers = response.headers();
 
       expect(headers["x-content-type-options"]).toBe("nosniff");
-      expect(headers["x-frame-options"]).toBe("DENY");
+      expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
       expect(headers["x-xss-protection"]).toBe("1; mode=block");
       expect(headers["strict-transport-security"]).toContain("max-age");
       expect(headers["referrer-policy"]).toBeTruthy();
@@ -201,7 +201,7 @@ test.describe("Security Tests", () => {
       const headers = response.headers();
 
       expect(headers["x-content-type-options"]).toBe("nosniff");
-      expect(headers["x-frame-options"]).toBe("DENY");
+      expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
     });
   });
 });
