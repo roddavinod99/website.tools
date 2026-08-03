@@ -1,0 +1,23 @@
+{
+  "version": "0.2.1",
+  "buildNumber": 5,
+  "gitCommit": "4a6bb9775a8194f43d74ab7f2176ebf0bf2d8dc6",
+  "buildDate": "2026-08-02T16:21:51.670Z",
+  "environment": "development",
+  "features": [],
+  "fixes": [
+    "restart devstackio app, not stale tools process",
+    "commit wasm glue module missing from gitignore'ed pkg dir",
+    "silence hydration-mount lint error and ignore wasm generated types",
+    "enable cssChunking strict to ensure CSS chunks emit in standalone output"
+  ],
+  "breakingChanges": [
+    "New updates"
+  ],
+  "security": [],
+  "performance": [],
+  "infrastructure": [
+    "add .npmrc to gitignore",
+    "remove playwright-mcp reports and snapshots from repo, add to gitignore"
+  ]
+}

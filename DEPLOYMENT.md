@@ -16,7 +16,7 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
               ↓                       ↓
          SSL/TLS 1.2/1.3        Next.js Standalone
               ↓                       ↓
-         Rate Limiting          137 SSG Pages
+         Rate Limiting          123 SSG Pages
               ↓                       ↓
          Attack Blocking        API Routes
 ```

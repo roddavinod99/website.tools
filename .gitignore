@@ -39,7 +39,7 @@ yarn-error.log*
 
 # npm
 .npmrc
-
+deploymentfailed.txt
 # env files
 .env
 .env.local
@@ -53,6 +53,10 @@ yarn-error.log*
 !/data/.gitkeep
 !/data/submissions/
 !/data/submissions/.gitkeep
+!/data/release.json
+!/data/build-number.json
+!/data/releases/
+!/data/releases/*.json
 
 # vercel
 .vercel
@@ -100,3 +104,4 @@ Desktop.ini
 
 # suggestions / notes
 suggestions.md
+SEO.md

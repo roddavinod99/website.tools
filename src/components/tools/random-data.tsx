@@ -158,7 +158,14 @@ export function RandomData() {
   const [format, setFormat] = useState<ExportFormat>("json");
   const [output, setOutput] = useState("");
   const [includeHeader, setIncludeHeader] = useState(true);
-  const [checked, setChecked] = useState<Record<string, boolean>>(Object.fromEntries(ALL_FIELDS.map((f) => [f.id, f.enabled])));
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const f of ALL_FIELDS) {
+      // Enable all fields by default so every category works out of the box
+      initial[f.id] = true;
+    }
+    return initial;
+  });
   const [copied, setCopied] = useState(false);
   const [textPrefix, setTextPrefix] = useState("");
   const [textSuffix, setTextSuffix] = useState("");

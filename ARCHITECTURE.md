@@ -18,7 +18,7 @@ DevStackIO is a privacy-first developer tools platform built with Next.js 16. Th
 │  - Attack path blocking                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                  Next.js (PM2 Cluster x2)                    │
-│  ├── Static Pages (SSG) ── 137 tool pages, categories       │
+│  ├── Static Pages (SSG) ── 123 tool pages, categories       │
 │  ├── ISR ── sitemap.xml (24h revalidation)                  │
 │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
 │  └── Middleware ── Rate limiter (proxy.ts)                  │
@@ -38,7 +38,7 @@ All tool processing runs client-side using Web APIs. No file uploads or text inp
 
 ### 2. Static-First Rendering
 Tool pages use Static Site Generation (SSG) with `generateStaticParams`. This means:
-- All 137+ tool pages are pre-rendered at build time
+- All 123 tool pages are pre-rendered at build time
 - Instant page loads (no server processing)
 - Excellent SEO (fully rendered HTML)
 - Minimal server resource usage

@@ -1,0 +1,23 @@
+{
+  "version": "0.1.3",
+  "buildNumber": 3,
+  "gitCommit": "cde83c87812f4cb74d3af1be642e98790aa34d44",
+  "buildDate": "2026-07-28T18:38:45.172Z",
+  "environment": "development",
+  "features": [
+    "Pre-deploy cleanup in GitHub Actions to clear stale artifacts on Oracle server",
+    "Post-build cleanup in CI/CD to keep runners lean"
+  ],
+  "fixes": [],
+  "breakingChanges": [
+    "Deploy workflow: added rm -rf .next wasm/target test-results playwright-report node_modules/.cache before build on server",
+    "Deploy workflow: added npm run clean after build (before standalone prep)",
+    "Validate workflow: added npm run clean after build to free GitHub runner space"
+  ],
+  "security": [],
+  "performance": [],
+  "infrastructure": [
+    "Storage savings: ~2.8 GB per deploy (local + server)",
+    "Faster CI runs (no accumulated cache)"
+  ]
+}

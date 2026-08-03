@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "version": "node scripts/release.mjs",
+    "version:auto": "node scripts/auto-release.mjs",
     "lint": "eslint",
     "sitemap:submit": "node scripts/sitemap-submitter.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",

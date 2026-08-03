@@ -13,10 +13,46 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  version:
+    name: Auto Version Bump
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: Determine and apply version
+        id: version
+        run: |
+          node scripts/auto-release.mjs
+      - name: Sync package-lock.json
+        run: npm install --package-lock-only --no-audit --no-fund
+      - name: Commit and tag
+        id: bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          git add -A
+          git diff --cached --quiet || git commit -m "release: v${NEW_VERSION} [skip ci]"
+          git tag "v${NEW_VERSION}"
+          git push origin main --tags
+
   validate:
     name: Validate
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: version
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,6 +76,7 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: version
     steps:
       - uses: actions/checkout@v4
       - name: Run Gitleaks
@@ -56,7 +93,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [validate, security-scan]
+    needs: [version, validate, security-scan]
     if: github.ref == 'refs/heads/main'
     timeout-minutes: 15
     steps:

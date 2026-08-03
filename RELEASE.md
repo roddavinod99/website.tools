@@ -7,7 +7,9 @@ This document describes the Enterprise Release & Version Management System built
 ## Architecture
 
 ```
-scripts/release.mjs          ← CLI entry point
+scripts/release.mjs          ← CLI entry point (manual/interactive)
+scripts/auto-release.mjs     ← Auto-release CLI (CI-driven, conventional commits)
+scripts/lib/auto-version.mjs ← Pure functions for commit parsing/version computation
 src/lib/version/
 ├── types.ts                 ← All type definitions
 ├── validation.ts            ← SemVer parsing, validation, comparison
@@ -34,7 +36,8 @@ data/
 
 tests/version/
 ├── validation.test.ts       ← SemVer/release/duplicate validation tests
-└── changelog.test.ts        ← Release notes generation tests
+├── changelog.test.ts        ← Release notes generation tests
+└── auto-release.test.ts     ← Auto-version commit parsing tests
 ```
 
 ## CLI Usage
@@ -57,10 +60,40 @@ npm run version -- patch --entry "[Fixed] Login timeout"
 npm run version -- minor --file changes.txt
 ```
 
+### Automated CI Mode
+
+The deploy workflow (`.github/workflows/deploy.yml`) includes an **Auto Version Bump** job that runs on every push to `main`:
+
+1. Computes the next version from conventional commits since the last git tag `v*`
+2. Bumps `package.json`, `data/build-number.json`, `data/release.json`, `data/releases/`, `CHANGELOG.md`, and release notes
+3. Syncs `package-lock.json`
+4. Commits with `release: vX.Y.Z [skip ci]`, tags `vX.Y.Z`, and pushes to `main`
+5. The `[skip ci]` suffix prevents the bump commit from re-triggering the workflow
+6. The deploy job pulls the bumped commit and builds with the new version
+
+**Conventional commit mapping:**
+
+| Commit Prefix | Release Type | Changelog Category |
+|---------------|--------------|-------------------|
+| `feat:` / `feat(scope):` | minor | Added |
+| `feat!:` / `BREAKING CHANGE` | major | Changed |
+| `fix:` / `chore:` / `docs:` / `perf:` / `refactor:` / `build:` / `ci:` / `test:` / `style:` / `security:` | patch | Fixed / Infrastructure / Documentation / Performance / Refactored / Security / Changed |
+| Non-conventional (e.g. "New updates") | patch | Changed |
+
+Run locally for testing:
+
+```bash
+# Dry run (shows what would happen)
+npm run version:auto -- --dry-run --verbose
+
+# Actual auto-release (requires git history)
+npm run version:auto
+```
+
 ## Release Workflow
 
 ```bash
-# 1. Create a release
+# 1. Create a release (manual)
 npm run version minor
 
 # 2. Commit the release artifacts
@@ -69,6 +102,16 @@ git commit -m "release: v1.1.0"
 git push
 
 # 3. CI/CD automatically deploys (via GitHub Actions)
+```
+
+**Automatic workflow (push to main):**
+
+```bash
+# Push changes with conventional commits
+git commit -m "feat: add new feature"
+git commit -m "fix: resolve login bug"
+git push origin main
+# → CI auto-bumps version, commits, tags, and deploys
 ```
 
 ## Version Schema
@@ -165,7 +208,10 @@ import { VersionHistory } from "@/components/version/version-history";
 ## Deployment
 
 The `data/` directory is copied into the standalone build output during CI/CD
-to preserve release history at runtime.
+to preserve release history at runtime. The following files are tracked in git:
+- `data/release.json` — current release manifest
+- `data/build-number.json` — auto-incrementing build counter
+- `data/releases/*.json` — archived release manifests
 
 ### Rollback
 

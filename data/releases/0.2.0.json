@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "buildNumber": 4,
+  "gitCommit": "cde83c87812f4cb74d3af1be642e98790aa34d44",
+  "buildDate": "2026-07-28T18:57:49.035Z",
+  "environment": "development",
+  "features": [
+    "Google AdSense Integration for sustainable free access - Auto Ads enabled, manual ad components, strategic placements, GDPR/CCPA compliant"
+  ],
+  "fixes": [
+    "Fixed package-lock.json mismatch: sharp@0.34.5 vs package.json sharp@^0.35.3"
+  ],
+  "breakingChanges": [],
+  "security": [],
+  "performance": [
+    "Bundle size optimization: Replaced full import highlight.js (384 langs) with highlight-lazy.ts (core + 25 common langs)",
+    "Bundle size optimization: Replaced mathjs all preset (371+ factories) with math-lite.ts (27 specific function dependencies)",
+    "Largest chunk reduced from 936 KB to 310 KB (67% reduction)",
+    "Bundle size budget test now passes (all chunks under 500 KB)"
+  ],
+  "infrastructure": [
+    "Updated DEPLOYMENT.md, TROUBLESHOOTING.md with lock file sync and bundle size debugging guidance",
+    "Updated README.md with new scripts and project structure documentation",
+    "Updated ARCHITECTURE.md with AdSense monetization layer documentation"
+  ]
+}

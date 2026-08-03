@@ -47,7 +47,7 @@
 
 ### Added
 
-- Initial release with 137+ developer tools
+- Initial release with 123 developer tools
 - Tool categories: Encoders, Formatters, Generators, Converters, Security Tools, Image Tools, Utilities
 - Static Site Generation with 208 prerendered pages
 - PWA support with service worker and manifest
@@ -112,6 +112,21 @@
 - Updated README.md with new scripts and project structure documentation
 - Updated ARCHITECTURE.md with AdSense monetization layer documentation
 
+## [0.2.1] - 2026-08-02
+
+### Fixed
+
+- restart devstackio app, not stale tools process
+- commit wasm glue module missing from gitignore'ed pkg dir
+- silence hydration-mount lint error and ignore wasm generated types
+- enable cssChunking strict to ensure CSS chunks emit in standalone output
+### Infrastructure
+
+- add .npmrc to gitignore
+- remove playwright-mcp reports and snapshots from repo, add to gitignore
+### Changed
+
+- New updates
 ## Template
 
 For future releases:
