@@ -139,6 +139,12 @@
 
 - Merge remote changes, resolve conflicts
 - SEO & Performance: Dynamic imports, CSP fixes, source maps, sitemap enhancements
+## [0.2.4] - 2026-08-03
+
+### Changed
+
+- Merge branch 'main' of https://github.com/roddavinod99/website.tools
+- changes done 0.2.3
 ## Template
 
 For future releases:
