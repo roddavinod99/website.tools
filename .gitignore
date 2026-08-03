@@ -101,6 +101,7 @@ Desktop.ini
 # wasm build output
 /wasm/pkg/
 /wasm/target/
+/src/lib/wasm/pkg/
 
 # suggestions / notes
 suggestions.md

@@ -1,12 +1,12 @@
-# DevStackIO — Free Online Developer Tools
+# Website.Tools — Free Online Developer Tools
 
-> **123 privacy-first developer tools. 100% free. Zero data leaves your browser.**
+> **Privacy-first developer tools platform. 100% free. Zero data leaves your browser.**
 
 [Live Demo](https://tools.devstackio.com) · [Report Bug](https://github.com/roddavinod99/tools/issues) · [Request Feature](https://github.com/roddavinod99/tools/issues)
 
 ## ✨ Features
 
-- **123 Developer Tools** — JSON formatters, code validators, generators, converters, security tools, image utilities, and more
+- **Developer Tools** — Formatters, validators, generators, converters, security tools, image utilities, and more
 - **Privacy First** — All processing happens in your browser. No data is ever sent to a server
 - **Fast** — Built with Next.js 16, Turbopack, and ISR for instant page loads
 - **Mobile Friendly** — Fully responsive design that works on any device
@@ -52,7 +52,7 @@ npm start
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Language | TypeScript 5 |
 | Styling | Tailwind CSS v4 |
 | Icons | Lucide React |
@@ -76,7 +76,7 @@ npm start
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── tools/[slug]/       # 123 individual tool pages
+│   ├── tools/[slug]/       # Individual tool pages
 │   ├── categories/[slug]/  # Category listing pages
 │   ├── api/                # Server endpoints
 │   └── ...
