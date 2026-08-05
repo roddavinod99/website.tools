@@ -166,6 +166,12 @@
 ### Changed
 
 - fix X-Frame-Options expectation to match config
+## [0.2.9] - 2026-08-05
+
+### Changed
+
+- Merge remote-tracking branch 'origin/main' - resolve version conflicts
+- New changes
 ## Template
 
 For future releases:
