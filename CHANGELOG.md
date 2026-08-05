@@ -178,6 +178,11 @@
 
 - update gitignore and remove lighthouse budget
 - fix wasm-pack cache step IDs to prevent reinstall on cache hit
+## [0.2.11] - 2026-08-05
+
+### Infrastructure
+
+- move auto-version bump to deploy job only (fixes merge conflicts on push)
 ## Template
 
 For future releases:
