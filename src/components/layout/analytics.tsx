@@ -4,6 +4,7 @@ import Script from "next/script";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getStorageJSON } from "@/lib/client-storage";
+import { useNonce } from "@/components/layout/nonce-provider";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
@@ -27,6 +28,7 @@ export function Analytics() {
   const [consented, setConsented] = useState(() => getStoredConsent());
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const nonce = useNonce();
 
   const handleStorageChange = useCallback(() => {
     setConsented(getStoredConsent());
@@ -55,8 +57,9 @@ export function Analytics() {
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="lazyOnload"
+        nonce={nonce || undefined}
       />
-      <Script id="google-analytics" strategy="lazyOnload">
+      <Script id="google-analytics" strategy="lazyOnload" nonce={nonce || undefined}>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

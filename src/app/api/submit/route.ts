@@ -43,7 +43,7 @@ export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
   if (isRateLimited(ip)) {
-    logSecurityEvent("rate_limit_violation", ip, "/api/submit", "Rate limit exceeded");
+    await logSecurityEvent("rate_limit_violation", ip, "/api/submit", "Rate limit exceeded");
     return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
   }
 

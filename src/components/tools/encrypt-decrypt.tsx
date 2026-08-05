@@ -1,73 +1,52 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { encryptAESGCM, decryptAESGCM, formatEncryptedResult, parseEncryptedResult, legacyFormatToWebCrypto } from "@/lib/web-crypto";
 
-type Algorithm = "aes" | "tripledes" | "rabbit" | "rc4";
 type Mode = "encrypt" | "decrypt";
-
-const ALGO_OPTIONS: { id: Algorithm; label: string }[] = [
-  { id: "aes", label: "AES" },
-  { id: "tripledes", label: "TripleDES" },
-  { id: "rabbit", label: "Rabbit" },
-  { id: "rc4", label: "RC4" },
-];
 
 export function EncryptDecrypt() {
   const [encryptInput, setEncryptInput] = useState("Lorem ipsum dolor sit amet");
-  const [decryptInput, setDecryptInput] = useState("U2FsdGVkX1/EC3+6P5dbbkZ3e1kQ5o2yzuU0NHTjmrKnLBEwreV489Kr0DIB+uBs");
-  const [algorithm, setAlgorithm] = useState<Algorithm>("aes");
+  const [decryptInput, setDecryptInput] = useState("");
   const [secretKey, setSecretKey] = useState("my secret key");
   const [mode, setMode] = useState<Mode>("encrypt");
   const [encryptOutput, setEncryptOutput] = useState("");
   const [decryptOutput, setDecryptOutput] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState("");
-  const [libLoading, setLibLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [cryptoLib, setCryptoLib] = useState<{ algoMap: Record<Algorithm, any>; enc: any } | null>(null);
 
-  useEffect(() => {
-    import("crypto-js").then((mod) => {
-      const { AES, TripleDES, Rabbit, RC4, enc } = mod;
-      setCryptoLib({
-        algoMap: { aes: AES, tripledes: TripleDES, rabbit: Rabbit, rc4: RC4 },
-        enc,
-      });
-      setLibLoading(false);
-    });
-  }, []);
-
-  const encrypt = useCallback(() => {
+  const encrypt = useCallback(async () => {
     setError("");
     if (!encryptInput.trim()) { setEncryptOutput(""); return; }
-    if (!cryptoLib) return;
     try {
-      const result = cryptoLib.algoMap[algorithm].encrypt(encryptInput, secretKey).toString();
-      setEncryptOutput(result);
+      const result = await encryptAESGCM(encryptInput, secretKey);
+      setEncryptOutput(formatEncryptedResult(result));
     } catch {
       setError("Encryption failed");
       setEncryptOutput("");
     }
-  }, [encryptInput, algorithm, secretKey, cryptoLib]);
+  }, [encryptInput, secretKey]);
 
-  const decrypt = useCallback(() => {
+  const decrypt = useCallback(async () => {
     setError("");
     if (!decryptInput.trim()) { setDecryptOutput(""); return; }
-    if (!cryptoLib) return;
     try {
-      const bytes = cryptoLib.algoMap[algorithm].decrypt(decryptInput, secretKey);
-      const result = bytes.toString(cryptoLib.enc.Utf8);
-      if (!result) {
-        setError("Unable to decrypt your text. Check the key and input.");
-        setDecryptOutput("");
-      } else {
-        setDecryptOutput(result);
+      let params = parseEncryptedResult(decryptInput);
+      if (!params) {
+        params = legacyFormatToWebCrypto(decryptInput);
       }
+      if (!params) {
+        setError("Invalid encrypted data format. Use JSON format from this tool.");
+        setDecryptOutput("");
+        return;
+      }
+      const result = await decryptAESGCM(params, secretKey);
+      setDecryptOutput(result);
     } catch {
-      setError("Unable to decrypt your text");
+      setError("Unable to decrypt. Check the key and input format.");
       setDecryptOutput("");
     }
-  }, [decryptInput, algorithm, secretKey, cryptoLib]);
+  }, [decryptInput, secretKey]);
 
   const handleProcess = () => {
     if (mode === "encrypt") encrypt();
@@ -84,11 +63,6 @@ export function EncryptDecrypt() {
 
   return (
     <div className="space-y-4">
-      {libLoading && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
-          <p className="text-sm text-surface-500 dark:text-dark-muted">Loading crypto library...</p>
-        </div>
-      )}
       <div className="flex flex-wrap gap-2">
         {(["encrypt", "decrypt"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
@@ -100,11 +74,17 @@ export function EncryptDecrypt() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Encryption Algorithm</label>
-          <select value={algorithm} onChange={(e) => setAlgorithm(e.target.value as Algorithm)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            {ALGO_OPTIONS.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+          <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Algorithm</label>
+          <select
+            value="aes-gcm"
+            disabled
+            className="w-full rounded-lg border border-surface-200 bg-surface-100 px-3 py-2 text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted cursor-not-allowed"
+          >
+            <option value="aes-gcm">AES-GCM (Web Crypto API)</option>
           </select>
+          <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">
+            Modern authenticated encryption. Legacy algorithms (TripleDES, RC4, Rabbit) removed for security.
+          </p>
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Secret Key</label>
@@ -126,7 +106,7 @@ export function EncryptDecrypt() {
         <div>
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Your encrypted text:</label>
           <textarea value={decryptInput} onChange={(e) => setDecryptInput(e.target.value)}
-            placeholder="The string to decrypt" rows={4} spellCheck={false}
+            placeholder='Paste JSON output from encryption: {"data":"...","iv":"...","salt":"..."}' rows={4} spellCheck={false}
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       )}
@@ -145,7 +125,7 @@ export function EncryptDecrypt() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="text-sm font-medium text-surface-700 dark:text-dark-text">
-              {mode === "encrypt" ? "Your text encrypted:" : "Your decrypted text:"}
+              {mode === "encrypt" ? "Your text encrypted (JSON):" : "Your decrypted text:"}
             </label>
             <button onClick={() => copy(currentOutput, "output")} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">
               {copied === "output" ? "Copied!" : "Copy"}

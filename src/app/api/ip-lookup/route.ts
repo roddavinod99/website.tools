@@ -83,7 +83,7 @@ export async function GET(request: Request) {
     clearTimeout(timeout);
 
     if (!res.ok) {
-      return NextResponse.json({ error: "Upstream IP service error" }, { status: 502 });
+      return NextResponse.json({ error: "Service temporarily unavailable" }, { status: 502 });
     }
 
     const data = await res.json();

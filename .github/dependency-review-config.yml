@@ -1,0 +1,22 @@
+# Dependency Review Configuration
+# Used by actions/dependency-review-action@v4
+
+# Severity levels that will fail the check
+fail-on-severity: high
+
+# Allow specific vulnerabilities by GHSA ID (use sparingly)
+# allow-ghsas:
+#   - GHSA-xxxx-xxxx-xxxx
+
+# Deny specific licenses
+# deny-licenses:
+#   - GPL-3.0
+#   - AGPL-3.0
+
+# Scope to check (runtime, development, or all)
+# scope: all
+
+# Optional: Configuration for private registries
+# registries:
+#   - url: https://npm.pkg.github.com
+#     token: ${{ secrets.GITHUB_TOKEN }}

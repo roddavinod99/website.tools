@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { getIPHashSalt } from "./env";
 
 type SecurityEvent =
@@ -25,12 +24,13 @@ interface SecurityLogEntry {
 const SECURITY_LOG: SecurityLogEntry[] = [];
 const MAX_LOG_ENTRIES = 1000;
 
-function hashIP(ip: string): string {
+async function hashIP(ip: string): Promise<string> {
   const salt = getIPHashSalt();
-  return createHash("sha256")
-    .update(ip.replace(/::ffff:/, "") + salt)
-    .digest("hex")
-    .slice(0, 16);
+  const encoder = new TextEncoder();
+  const data = encoder.encode(ip.replace(/::ffff:/, "") + salt);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 16);
 }
 
 function truncateLog(): void {
@@ -39,17 +39,18 @@ function truncateLog(): void {
   }
 }
 
-export function logSecurityEvent(
+export async function logSecurityEvent(
   event: SecurityEvent,
   ip: string,
   path: string,
   details: string,
   userAgent?: string
-): void {
+): Promise<void> {
+  const hashedIP = await hashIP(ip);
   const entry: SecurityLogEntry = {
     timestamp: new Date().toISOString(),
     event,
-    ip: hashIP(ip),
+    ip: hashedIP,
     path,
     details,
     userAgent,
@@ -71,8 +72,8 @@ export function getSecurityLogByEvent(event: SecurityEvent): SecurityLogEntry[] 
   return SECURITY_LOG.filter((e) => e.event === event);
 }
 
-export function getSecurityLogByIP(ip: string): SecurityLogEntry[] {
-  const hashed = hashIP(ip);
+export async function getSecurityLogByIP(ip: string): Promise<SecurityLogEntry[]> {
+  const hashed = await hashIP(ip);
   return SECURITY_LOG.filter((e) => e.ip === hashed);
 }
 

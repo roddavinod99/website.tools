@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
 
   if (isRateLimited(ip)) {
-    logSecurityEvent("rate_limit_violation", ip, "/api/contact", "Rate limit exceeded");
+    await logSecurityEvent("rate_limit_violation", ip, "/api/contact", "Rate limit exceeded");
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
       { status: 429 }
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
   const contentType = request.headers.get("content-type") || "";
   if (!contentType.includes("application/json")) {
-    logSecurityEvent("missing_content_type", ip, "/api/contact", `Content-Type: ${contentType}`);
+    await logSecurityEvent("missing_content_type", ip, "/api/contact", `Content-Type: ${contentType}`);
     return NextResponse.json(
       { error: "Invalid request format." },
       { status: 415 }
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
   try {
     const text = await request.text();
     if (text.length > MAX_BODY_SIZE) {
-      logSecurityEvent("body_too_large", ip, "/api/contact", `Body size: ${text.length}`);
+      await logSecurityEvent("body_too_large", ip, "/api/contact", `Body size: ${text.length}`);
       return NextResponse.json(
         { error: "Request body too large." },
         { status: 413 }
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     const { name, email, subject, message, website_url } = body;
 
     if (website_url) {
-      logSecurityEvent("malicious_request", ip, "/api/contact", "Honeypot triggered");
+      await logSecurityEvent("malicious_request", ip, "/api/contact", "Honeypot triggered");
       return NextResponse.json(
         { error: "Spam detected." },
         { status: 400 }
