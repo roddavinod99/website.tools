@@ -172,6 +172,12 @@
 
 - Merge remote-tracking branch 'origin/main' - resolve version conflicts
 - New changes
+## [0.2.10] - 2026-08-05
+
+### Infrastructure
+
+- update gitignore and remove lighthouse budget
+- fix wasm-pack cache step IDs to prevent reinstall on cache hit
 ## Template
 
 For future releases:
