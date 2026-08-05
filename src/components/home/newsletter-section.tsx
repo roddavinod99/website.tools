@@ -42,7 +42,7 @@ export function NewsletterSection() {
           <h2 className="mt-4 text-2xl font-bold text-white sm:text-3xl">
             Stay Updated
           </h2>
-          <p className="mt-2 text-white/80">
+          <p className="mt-2 text-white">
             Get notified when we add new tools, tutorials, and resources.
           </p>
           {status === "success" ? (
@@ -52,7 +52,7 @@ export function NewsletterSection() {
               <input
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
                 placeholder="Enter your email"
-                className="h-11 sm:w-80 rounded-lg border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:bg-white/20 focus:ring-2 focus:ring-white/30"
+                className="h-11 sm:w-80 rounded-lg border border-white/20 bg-black/20 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:bg-black/30 focus:ring-2 focus:ring-white/30"
               />
               <button type="submit" disabled={status === "loading"}
                 className="inline-flex h-11 items-center justify-center rounded-lg bg-white px-6 text-sm font-medium text-brand-700 hover:bg-brand-50 disabled:opacity-50 transition-colors">
@@ -63,7 +63,7 @@ export function NewsletterSection() {
           {status === "error" && (
             <p className="mt-2 text-sm text-red-100">Something went wrong. Please try again.</p>
           )}
-          <p className="mt-3 text-xs text-white/60">
+          <p className="mt-3 text-xs text-white">
             No spam. Unsubscribe anytime.
           </p>
         </div>

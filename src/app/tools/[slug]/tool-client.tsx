@@ -267,7 +267,7 @@ export function ToolClient({
             <div className="mt-6 space-y-4">
               {content.examples.map((ex, i) => (
                 <Card key={i}>
-                  <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-surface-50 p-3 text-sm dark:bg-dark-bg">
+                  <pre tabIndex={0} className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-surface-50 p-3 text-sm dark:bg-dark-bg">
                     <code>{ex}</code>
                   </pre>
                 </Card>

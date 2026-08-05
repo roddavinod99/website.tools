@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Suspense } from "react";
-import localFont from "next/font/local";
 import { Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -17,28 +16,6 @@ import { PreloadPopularTools } from "@/components/layout/tool-preloader";
 import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 import { AdSenseScript } from "@/components/ads/adsense-script";
 import { AdBanner } from "@/components/ads";
-
-const ibmPlexMono = localFont({
-  variable: "--font-ibm-plex-mono",
-  display: "swap",
-  preload: false,
-  src: [
-    { path: "../fonts/IBMPlexMono-Thin.ttf", weight: "100", style: "normal" },
-    { path: "../fonts/IBMPlexMono-ThinItalic.ttf", weight: "100", style: "italic" },
-    { path: "../fonts/IBMPlexMono-ExtraLight.ttf", weight: "200", style: "normal" },
-    { path: "../fonts/IBMPlexMono-ExtraLightItalic.ttf", weight: "200", style: "italic" },
-    { path: "../fonts/IBMPlexMono-Light.ttf", weight: "300", style: "normal" },
-    { path: "../fonts/IBMPlexMono-LightItalic.ttf", weight: "300", style: "italic" },
-    { path: "../fonts/IBMPlexMono-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../fonts/IBMPlexMono-Italic.ttf", weight: "400", style: "italic" },
-    { path: "../fonts/IBMPlexMono-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../fonts/IBMPlexMono-MediumItalic.ttf", weight: "500", style: "italic" },
-    { path: "../fonts/IBMPlexMono-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../fonts/IBMPlexMono-SemiBoldItalic.ttf", weight: "600", style: "italic" },
-    { path: "../fonts/IBMPlexMono-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../fonts/IBMPlexMono-BoldItalic.ttf", weight: "700", style: "italic" },
-  ],
-});
 
 const notoSansArabic = Noto_Sans_Arabic({
   variable: "--font-noto-sans-arabic",
@@ -170,7 +147,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ibmPlexMono.variable} ${notoSansArabic.variable} h-full antialiased`}
+      className={`${notoSansArabic.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

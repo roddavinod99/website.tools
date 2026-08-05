@@ -18,7 +18,7 @@ const PAGES_TO_TEST = [
   "/categories/formatters",
   "/categories/encoders",
   "/blog",
-  "/blog/building-developer-tools-platform",
+  "/blog/how-to-format-json-online",
 ];
 
 test.describe("Accessibility audit (@axe-core/playwright)", () => {

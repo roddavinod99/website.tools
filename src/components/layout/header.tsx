@@ -94,10 +94,8 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-        scrolled
-          ? "border-b border-surface-200 bg-white dark:border-dark-border dark:bg-dark-bg shadow-sm"
-          : "border-b border-transparent bg-transparent"
+      className={`sticky top-0 z-50 w-full border-b border-surface-200 bg-white dark:border-dark-border dark:bg-dark-bg transition-all duration-200 ${
+        scrolled ? "shadow-sm" : ""
       }`}
       role="banner"
     >
@@ -115,7 +113,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-200 dark:hover:bg-dark-surface"
+                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md"
               >
                 {item.title}
               </Link>
@@ -125,7 +123,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
               href={siteConfig.mainSiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md hover:bg-surface-200 dark:hover:bg-dark-surface"
+              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md"
             >
               DevStackIO Home
               <ExternalLink className="h-3 w-3" aria-hidden="true" />

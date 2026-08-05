@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 import { getBlogPost, getPostContent, getPostUrl, blogPosts } from "@/lib/blog";
+import { markdownToHtml } from "@/lib/markdown";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -38,30 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function renderContent(text: string) {
-  return text.split("\n\n").map((block, i) => {
-    const trimmed = block.trim();
-    if (trimmed.startsWith("## ")) {
-      return <h2 key={i} className="mt-8 text-xl font-bold text-surface-900 dark:text-dark-text">{trimmed.slice(3)}</h2>;
-    }
-    if (trimmed.startsWith("- ")) {
-      const items = trimmed.split("\n").map((line) => line.replace(/^- /, ""));
-      return (
-        <ul key={i} className="mt-2 space-y-1 list-disc pl-5 text-surface-600 dark:text-dark-muted">
-          {items.map((item, j) => <li key={j}>{item}</li>)}
-        </ul>
-      );
-    }
-    return <p key={i} className="mt-4 text-surface-600 dark:text-dark-muted leading-relaxed">{trimmed}</p>;
-  });
-}
-
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const blogPost = getBlogPost(slug);
   if (!blogPost) notFound();
   const content = await getPostContent(slug);
   if (!content) notFound();
+  const htmlContent = await markdownToHtml(content);
 
   return (
     <>
@@ -131,7 +115,7 @@ export default async function BlogPostPage({ params }: Props) {
             {blogPost.excerpt}
           </p>
           <div className="mt-8 prose prose-surface dark:prose-invert max-w-none">
-            {renderContent(content)}
+            <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </div>
         </div>
       </article>
