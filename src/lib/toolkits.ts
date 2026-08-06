@@ -9,7 +9,7 @@ export interface Toolkit {
   color: string;
 }
 
-const toolkitSlugs: Record<string, string[]> = {
+export const toolkitSlugs: Record<string, string[]> = {
   "json-toolkit": [
     "json-formatter", "json-validator", "json-minifier", "json-beautifier",
     "json-diff", "json-to-csv", "json-to-yaml", "json-to-xml",

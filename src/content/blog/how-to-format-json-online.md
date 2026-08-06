@@ -70,6 +70,29 @@ Minify a pretty JSON object for a `curl` request or Postman body.
 ### Comparing Two JSON Documents
 Use the [JSON Diff Checker](/tools/json-diff) side-by-side to see what changed between API versions.
 
+## Common JSON Errors to Fix While Formatting
+
+Formatting exposes errors you can't see in minified text. Here are the most frequent ones and how to correct them:
+
+| Error | Cause | Fix |
+|---|---|---|
+| `Trailing comma` | `[1, 2, 3,]` or `{"a": 1,}` | Remove the comma before the closing bracket/brace |
+| `Unexpected token }` | Unbalanced braces or brackets | Match every `{`/`[` with a closing `}`/`]` |
+| `Unexpected string` | Missing colon after a key | Write keys as `"key": value`, never `"key" value` |
+| `Unquoted key` | `{id: 1}` | Quote keys: `{"id": 1}` |
+| `Single quotes` | `{'name': ...}` or `'...'` strings | JSON requires double quotes |
+| `Client error: unexpected token` | Copy-paste introduced smart quotes `""` | Replace curly quotes with straight ones |
+
+A reliable formatter reports the **line and column** of the first problem, so you can jump straight to the offending character instead of hunting through the document.
+
+## JSON Formatting Best Practices
+
+- **Use 2-space or 4-space indentation consistently** across your team to keep diffs clean.
+- **Keep keys quoted** even in JavaScript configs that allow unquoted keys — strict JSON is more portable.
+- **Prefer pretty-printed JSON in source control**, and minify only in build steps or when sending payloads.
+- **Do not rely on property order** for correctness; order is not significant in JSON objects.
+- **Validate size before formatting** — if a payload is hundreds of MB, format a sample first to avoid browser memory pressure.
+
 ## Privacy & Performance
 
 DevStackIO's JSON Formatter runs entirely in your browser using a Web Worker. Your data never leaves your device. No server uploads, no logging, no tracking. It handles 50MB+ files smoothly because parsing happens off the main thread.

@@ -6,6 +6,13 @@ import { siteConfig } from "@/lib/constants";
 import { getBlogPost, getPostContent, getPostUrl, blogPosts } from "@/lib/blog";
 import { markdownToHtml } from "@/lib/markdown";
 
+const blogToGuide: Record<string, { slug: string; title: string }> = {
+  "getting-started-json": { slug: "getting-started-json", title: "Getting Started with JSON Guide" },
+  "understanding-jwt": { slug: "understanding-jwt", title: "Understanding JWT Tokens Guide" },
+  "image-optimization": { slug: "image-optimization-guide", title: "Image Optimization Guide" },
+  "password-security": { slug: "password-security", title: "Password Security Best Practices" },
+};
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -62,7 +69,15 @@ export default async function BlogPostPage({ params }: Props) {
             dateModified: blogPost.dateISO,
             image: `${siteConfig.url}${siteConfig.ogImage}`,
             wordCount: content.split(/\s+/).length,
-            author: { "@type": "Person", name: siteConfig.name, url: `${siteConfig.url}/about` },
+            author: {
+              "@type": "Organization",
+              name: siteConfig.name,
+              url: `${siteConfig.url}/about`,
+              logo: {
+                "@type": "ImageObject",
+                url: `${siteConfig.url}/favicon.svg`,
+              },
+            },
             publisher: {
               "@type": "Organization",
               name: siteConfig.name,
@@ -104,6 +119,13 @@ export default async function BlogPostPage({ params }: Props) {
       <article className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
           <div className="flex items-center gap-3 text-sm text-surface-400 dark:text-dark-muted">
+            <Link
+              href="/about"
+              className="font-medium text-surface-600 hover:text-brand-500 dark:text-dark-muted dark:hover:text-brand-400"
+            >
+              {siteConfig.name} Team
+            </Link>
+            <span>&middot;</span>
             <span>{blogPost.date}</span>
             <span>&middot;</span>
             <span>{blogPost.readTime} read</span>
@@ -117,6 +139,19 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="mt-8 prose prose-surface dark:prose-invert max-w-none">
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </div>
+          {blogToGuide[blogPost.slug] && (
+            <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+                Quick guide
+              </h3>
+              <Link
+                href={`/guides/${blogToGuide[blogPost.slug].slug}`}
+                className="mt-2 inline-flex items-center gap-2 font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400"
+              >
+                {blogToGuide[blogPost.slug].title}
+              </Link>
+            </div>
+          )}
         </div>
       </article>
     </>

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowRight } from "lucide-react";
 import { learningTopics, siteConfig } from "@/lib/constants";
 
 const guideDates: Record<string, { published: string; modified: string }> = {
@@ -15,6 +15,25 @@ const guideDates: Record<string, { published: string; modified: string }> = {
   "unix-timestamps-explained": { published: "2026-07-04", modified: "2026-07-04" },
   "html-encoding-guide": { published: "2026-07-05", modified: "2026-07-05" },
   "data-serialization-formats": { published: "2026-07-06", modified: "2026-07-06" },
+};
+
+const guideToBlog: Record<string, { slug: string; title: string }> = {
+  "getting-started-json": {
+    slug: "getting-started-json",
+    title: "Getting Started with JSON: A Complete Guide",
+  },
+  "understanding-jwt": {
+    slug: "understanding-jwt",
+    title: "Understanding JWT Tokens: How They Work",
+  },
+  "image-optimization-guide": {
+    slug: "image-optimization",
+    title: "Image Optimization for the Web",
+  },
+  "password-security": {
+    slug: "password-security",
+    title: "Password Security: Best Practices for 2026",
+  },
 };
 
 const guideContent: Record<string, { sections: { title: string; body: string }[] }> = {
@@ -216,6 +235,21 @@ export default async function GuidePage({ params }: Props) {
           ) : (
             <div className="mt-8 rounded-xl border border-surface-200 bg-surface-50 p-8 text-center dark:border-dark-border dark:bg-dark-surface">
               <p className="text-surface-500 dark:text-dark-muted">Content for this guide is being written. Check back soon.</p>
+            </div>
+          )}
+
+          {guideToBlog[slug] && (
+            <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+                Read the full guide
+              </h3>
+              <Link
+                href={`/blog/${guideToBlog[slug].slug}`}
+                className="group mt-2 flex items-center gap-2 text-brand-500 hover:text-brand-600 dark:text-brand-400"
+              >
+                <span className="font-medium">{guideToBlog[slug].title}</span>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
             </div>
           )}
         </div>

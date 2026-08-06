@@ -4,6 +4,7 @@ import { TOOL_COUNT, siteConfig, featuredTools, faqItems } from "@/lib/constants
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
+import { ToolkitSection } from "@/components/home/toolkit-section";
 import { BenefitsSection } from "@/components/home/benefits-section";
 import { LearningSection } from "@/components/home/learning-section";
 import { CommunitySection } from "@/components/home/community-section";
@@ -54,6 +55,7 @@ export default function Home() {
       <AdBanner className="my-12" slot="1234567890" />
       <CategoriesSection />
       <FeaturedTools featuredTools={featuredTools} featuresBySlug={featuresBySlug} />
+      <ToolkitSection />
       <AdBanner className="my-12" slot="2345678901" />
       <BenefitsSection />
       <LearningSection />
