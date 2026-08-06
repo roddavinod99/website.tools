@@ -183,6 +183,27 @@
 ### Infrastructure
 
 - move auto-version bump to deploy job only (fixes merge conflicts on push)
+## [0.3.0] - 2026-08-06
+
+### Changed
+
+- new changes
+- Merge remote-tracking branch 'origin/main' (v0.2.11) with security hardening
+- Security hardening: Comprehensive vulnerability remediation
+### Infrastructure
+
+- set Node version to 24 across workflows
+- enterprise & solo-maintainer project posture
+### Refactored
+
+- remove crypto-js dependency, implement native crypto-hash module
+### Added
+
+- blog/guide E-E-A-T, cross-links, and content cleanup
+- add References section and relevance-based related-tools linking to all tool pages
+### Fixed
+
+- restore typecheck, remove dead tool-actions UI, make copy functional
 ## Template
 
 For future releases:
