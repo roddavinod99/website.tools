@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve version
+        id: meta
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "v${{ steps.meta.outputs.version }}"
+          generate_release_notes: true
+          make_latest: true
+          draft: false
+          prerelease: false
+          body: |
+            Release **v${{ steps.meta.outputs.version }}** of Website.Tools.
+
+            Automated release notes were generated from the merged commits. For
+            the full changelog, see
+            [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
+
+            - Status page: https://tools.devstackio.com/status
+            - Changelog page: https://tools.devstackio.com/changelog
+          fail_on_unmatched_files: true

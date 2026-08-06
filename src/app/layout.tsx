@@ -136,6 +136,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: {
     canonical: siteConfig.url,
+    languages: {
+      "x-default": siteConfig.url,
+      en: siteConfig.url,
+    },
     types: {
       "application/rss+xml": `${siteConfig.url}/feed.xml`,
     },

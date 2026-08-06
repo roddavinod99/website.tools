@@ -72,11 +72,16 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
-        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check for secrets
         run: |
           echo "Checking for committed .env files..."
@@ -201,4 +206,9 @@ jobs:
             sleep 5
             curl -sf http://localhost:3000/api/health || exit 1
             curl -sf -o /dev/null -w "%{http_code}" http://localhost:3000/ | grep -q 200 || { echo "ERROR: Homepage 500" >&2; exit 1; }
+
+            # Best-effort sitemap + IndexNow submission (needs INDEXNOW_KEY + network)
+            set +e
+            ( . ./.env 2>/dev/null; node scripts/sitemap-submitter.mjs ) || echo "WARN: sitemap submission skipped"
+            set -e
             echo "Deployment successful"

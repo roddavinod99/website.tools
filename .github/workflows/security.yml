@@ -76,6 +76,8 @@ jobs:
   codeql-analysis:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
+    # GHAS/CodeQL is not available on free private repos; only run when public.
+    if: github.repository_visibility == 'public'
     permissions:
       actions: read
       contents: read

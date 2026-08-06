@@ -1,0 +1,37 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: "30 3 * * *"
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: >-
+            This issue has been inactive for 60 days and is marked as stale.
+            Please comment or it will be closed in 30 days.
+          stale-pr-message: >-
+            This pull request has been inactive for 60 days and is marked as
+            stale. Please update it or it will be closed in 30 days.
+          close-issue-message: >-
+            This issue has been closed due to inactivity. Feel free to reopen
+            if it is still relevant.
+          close-pr-message: >-
+            This pull request has been closed due to inactivity. It can be
+            reopened if work resumes.
+          days-before-stale: 60
+          days-before-close: 30
+          stale-issue-label: "stale"
+          stale-pr-label: "stale"
+          exempt-issue-labels: "security,good first issue,bug,critical"
+          exempt-pr-labels: "security,dependencies,keep"
+          only-issue-labels: ""
+          operations-per-run: 200
+          remove-stale-when-updated: true

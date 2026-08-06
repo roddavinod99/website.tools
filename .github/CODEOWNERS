@@ -1,6 +1,13 @@
 # Default owner for all files
 * @roddavinod99
 
+# Governance & legal files
+LICENSE @roddavinod99
+CODE_OF_CONDUCT.md @roddavinod99
+AUTHORS @roddavinod99
+MAINTAINERS.md @roddavinod99
+GO-PUBLIC.md @roddavinod99
+
 # CI/CD workflows
 .github/workflows/ @roddavinod99
 

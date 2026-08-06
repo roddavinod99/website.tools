@@ -1,102 +1,66 @@
-# Contributing
+# Contribution & Maintenance Policy
 
-Thank you for considering contributing to DevStackIO! We welcome contributions of all kinds — bug fixes, new tools, documentation improvements, and feature requests.
+Website.Tools is a **personal, solo-maintained project**. It is funded
+entirely by advertising (Google AdSense and related sponsorships). All ad,
+sponsor, and donation revenue is retained by the owner and is **not shared**
+with contributors.
 
-## Table of Contents
+This policy exists so that anyone viewing or using the repository has clear,
+realistic expectations — no compensation expectations, no ownership disputes,
+and no ambiguity about how the project is maintained.
 
-1. [Code of Conduct](#code-of-conduct)
-2. [Getting Started](#getting-started)
-3. [Development Workflow](#development-workflow)
-4. [Adding a New Tool](#adding-a-new-tool)
-5. [Pull Request Guidelines](#pull-request-guidelines)
-6. [Style Guide](#style-guide)
-7. [Testing](#testing)
+## Ownership & Monetization
 
-## Code of Conduct
+- **Sole maintainer:** roddavinod99
+- **Funding:** advertising (AdSense). Revenue is not shared.
+- **Copyright/license:** MIT, copyright held by roddavinod99. See
+  [LICENSE](LICENSE) and [AUTHORS](AUTHORS).
+- **Governance:** see [MAINTAINERS.md](MAINTAINERS.md) — there are no
+  additional maintainers.
 
-This project adheres to the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct. By participating, you agree to maintain a respectful and inclusive environment.
+## External Contributions
 
-## Getting Started
+This project is a personal, ad-funded product. **Public code contributions are
+generally not accepted**, and the owner does not solicit them. By default, do
+not open pull requests expecting your work to be merged.
 
-1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/tools.git`
-3. Install dependencies: `npm install`
-4. Start development: `npm run dev`
-5. Open http://localhost:3000
+If the owner has explicitly invited a specific, narrow contribution, the
+following applies:
 
-## Development Workflow
+- Contributions are **non-compensated** — you receive no money, revenue
+  share, equity, or ongoing attribution.
+- By submitting a change you grant the owner the rights needed to include,
+  modify, and use your work as part of a commercial, ad-supported product,
+  and you agree the ad revenue it generates belongs to the owner.
+- The work must be licensed back to the project under the same [MIT
+  License](LICENSE).
+- You must add a DCO sign-off to your commit:
 
 ```
-1. Create a branch: git checkout -b feature/my-feature
-2. Make changes
-3. Run lint: npm run lint
-4. Run typecheck: npx tsc --noEmit
-5. Run build: npm run build
-6. Run tests: npm test
-7. Commit: git commit -m "feat: description"
-8. Push: git push origin feature/my-feature
-9. Open a pull request
+Signed-off-by: Your Name <you@example.com>
 ```
 
-### Branch Naming
+The `Signed-off-by` line confirms you authored the change and agree to release
+it under the MIT License.
 
-- `feat/` — New features or tools
-- `fix/` — Bug fixes
-- `docs/` — Documentation changes
-- `perf/` — Performance improvements
-- `security/` — Security fixes
-- `chore/` — Maintenance tasks
+## Reporting Issues
 
-## Adding a New Tool
+Because this is a solo project, please only report things that are genuinely
+relevant to you. When you do:
 
-1. **Add tool definition** in `src/lib/constants.ts` (add to `allTools` array)
-2. **Create tool component** in `src/components/tools/` (name matches slug)
-3. **Register in tool-interface.tsx** — add `React.lazy` import
-4. **Add tool content** in `src/lib/tool-content.ts` (descriptions, use cases, FAQ)
-5. **Add test data** in `tests/fixtures/` (if applicable)
-6. **Verify** — page auto-generates via `generateStaticParams`
+- be concise and reproducible;
+- note the browser, OS, and steps; and
+- understand that response/review depends on the owner's availability and
+  priority. There is no committed timeline.
 
-### Tool Component Requirements
+## Security
 
-- Must be a client component (`"use client"`)
-- Must export a named function matching the tool name
-- Must handle empty state, error state, and edge cases
-- Must be keyboard accessible
-- Must work on mobile (responsive design)
-- Must not send data to any server (privacy-first)
+For security concerns, please follow [SECURITY.md](SECURITY.md) and report
+privately rather than opening a public issue.
 
-## Pull Request Guidelines
+## Standards
 
-- Keep PRs focused — one feature/fix per PR
-- Update documentation if needed
-- Add or update tests
-- Ensure all checks pass (lint, typecheck, build, tests)
-- Follow the PR template
-
-## Style Guide
-
-- **TypeScript** — Strict mode, no `any` where avoidable
-- **Components** — Functional with hooks, no class components
-- **CSS** — Tailwind utility classes, no custom CSS files
-- **Imports** — Group by: React/Next → libraries → local
-- **Naming** — PascalCase for components, camelCase for functions/variables
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run specific test suites
-npm run test:security
-npm run test:a11y
-npm run test:api
-npm run test:tools
-
-# Run Playwright in UI mode
-npx playwright test --ui
-```
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
+The project follows strict engineering guards (lint, typecheck, build, and
+automated tests) enforced by CI. The owner adheres to the rules in
+[AGENTS.md](AGENTS.md). These govern architecture, privacy, security, and
+the Definition of Done — they are non-negotiable.

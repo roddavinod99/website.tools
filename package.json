@@ -16,6 +16,7 @@
     "seo:audit:submit": "node scripts/seo-audit.mjs --submit",
     "production:readiness": "node scripts/production-readiness.mjs",
     "test": "playwright test",
+    "test:unit": "vitest run",
     "test:a11y": "playwright test tests/a11y.spec.ts",
     "test:api": "playwright test tests/api.spec.ts",
     "test:tools": "playwright test tests/tools.spec.ts",

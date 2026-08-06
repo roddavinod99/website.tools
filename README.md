@@ -2,7 +2,7 @@
 
 > **Privacy-first developer tools platform. 100% free. Zero data leaves your browser.**
 
-[Live Demo](https://tools.devstackio.com) · [Report Bug](https://github.com/roddavinod99/tools/issues) · [Request Feature](https://github.com/roddavinod99/tools/issues)
+[Live Demo](https://tools.devstackio.com) · [Privacy-First Developer Tools](https://tools.devstackio.com/about)
 
 ## ✨ Features
 
@@ -177,9 +177,19 @@ pm2 start ecosystem.config.js
 
 See [`.env.example`](.env.example) for all available configuration options.
 
-## 🤝 Contributing
+## 🧑‍💻 Project Status
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+Website.Tools is a **personal, solo-maintained project** funded entirely by
+advertising (AdSense). Ad, sponsor, and donation revenue is retained by the
+owner and is **not shared**.
+
+- **Sole maintainer:** roddavinod99
+- **Governance:** [MAINTAINERS.md](MAINTAINERS.md)
+- **Contribution policy:** [CONTRIBUTING.md](CONTRIBUTING.md) — external
+  contributions are generally not accepted.
+- **Code of conduct:** [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- **Report issues / request features:** paid users and supporters may use the
+  GitHub issues tab at your discretion.
 
 ## 📄 License
 

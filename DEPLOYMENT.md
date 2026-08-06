@@ -93,6 +93,60 @@ Ads are **disabled in development** (`NODE_ENV=development`). Placeholders show 
 - Respects AdSense Program Policies
 - Works with Consent Management Platform (CMP) for GDPR/CCPA
 
+## Public API
+
+The site exposes a small, privacy-safe public API used by several tools. These
+endpoints are rate-limited, validate input, apply origin/referer checks, and
+never log user content.
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/dns-lookup` | GET | DNS record resolution (A, AAAA, MX, NS, TXT, CNAME) — SSRF-protected |
+| `/api/ip-lookup` | GET | IP geolocation, ISP, ASN, and network details |
+| `/api/version` | GET | Current deployed version and release metadata |
+| `/api/health` | GET | Uptime/readiness probe for monitoring |
+
+### Usage & Terms
+
+- **No authentication required** for the current public endpoints.
+- Requests are **rate-limited** at both the application (`src/proxy.ts`) and
+  Nginx layers. Excessive requests may be rejected with `429 Too Many
+  Requests`.
+- Inputs are **validated and size-limited**; `domain`/`ip` values resolve
+  against allowlists and SSRF protections (hostname validation, private IP
+  blocking).
+- Responses carry `Cache-Control: no-store` to avoid caching dynamic/geo data.
+- Do **not** send private or regulated personal data — these endpoints are not
+  a data storage service. All data is processed in memory and not persisted.
+- Programmatic access is subject to the [Acceptable Use
+  Policy](https://tools.devstackio.com/acceptable-use) and [Terms of
+  Service](https://tools.devstackio.com/terms).
+
+### Adding a commercial API tier
+
+If a paid/freemium tier is introduced (per the monetization roadmap):
+1. Add API key authentication (`Authorization: Bearer <key>`) with per-key
+   quotas, **never** logging or storing keys in plaintext.
+2. Keep the existing free endpoints intact for the public tools.
+3. Document quotas, pricing, and SLAs on a dedicated `/api-pricing` page and
+   link it from `/api`.
+4. Re-run `npm run production:readiness` and the security test suite before
+   releasing any new endpoint.
+
+## Compliance & Internationalization
+
+- The site ships GDPR/CCPA-oriented legal pages: Privacy, Cookies, DPA, Terms,
+  DMCA, Acceptable-Use, Disclaimer. The consent manager (`ConsentManager`) and
+  cookie banner supply a consent management layer for AdSense and analytics.
+- **i18n:** content is English-only. The root layout sets `lang="en"` and an
+  `x-default` + `en` hreflang. Metadata uses absolute canonical URLs. If
+  additional locales are added, add per-locale routes and `languages` entries
+  in the metadata `alternates`.
+- **International search:** after each deploy, `sitemap-submitter.mjs` fires
+  sitemap + IndexNow pings (Google/Bing/Yandex/Seznam/Naver) when
+  `INDEXNOW_KEY` is configured. Set the key in the server `.env` and publish
+  `/<key>.txt` to enable.
+
 ## One-time server setup (manual, first deploy only):
 
 ```bash
