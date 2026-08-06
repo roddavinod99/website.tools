@@ -1,4 +1,4 @@
-const SW_VERSION = "0.2.11-1786042462426";
+const SW_VERSION = "0.2.11-1786054879284";
 
 const PRECACHE_CACHE = `devstackio-precache-${SW_VERSION}`;
 const STATIC_CACHE = `devstackio-static-${SW_VERSION}`;
