@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
-import { mainNav, siteConfig } from "@/lib/data/site-config";
+import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command, ChevronDown, ChevronRight } from "lucide-react";
+import { mainNav, siteConfig, categories } from "@/lib/data";
 import { setStorageItem } from "@/lib/client-storage";
+import { cn } from "@/lib/utils";
 import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
@@ -35,6 +36,85 @@ const NAV_SHORTCUTS: Record<string, string> = {
   "3": "/guides",
   "4": "/learning",
 };
+
+function CategoryMenu({ allTools }: { allTools: import("@/types").Tool[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (buttonRef.current && !buttonRef.current.contains(e.target as Node) &&
+          menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Get categories with tool counts
+  const catsWithCounts = categories.map((c) => ({
+    ...c,
+    toolCount: allTools.filter((t) => t.category === c.name).length,
+  })).filter((c) => c.toolCount > 0);
+
+  return (
+    <div className="relative">
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-label="Browse categories"
+        className="hidden md:flex items-center gap-1.5 h-10 px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
+      >
+        <span>Categories</span>
+        <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} aria-hidden="true" />
+      </button>
+
+      {isOpen && (
+        <div
+          ref={menuRef}
+          className="absolute right-0 mt-2 w-72 rounded-xl border border-surface-200 bg-white py-2 shadow-lg dark:border-dark-border dark:bg-dark-surface animate-fade-in-up z-dropdown"
+          role="menu"
+        >
+          <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+            {catsWithCounts.length} Categories
+          </div>
+          <nav className="max-h-96 overflow-y-auto" aria-label="Tool categories">
+            {catsWithCounts.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/categories/${cat.slug}`}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 text-sm text-surface-600 hover:bg-surface-100 hover:text-surface-900 dark:text-dark-muted dark:hover:bg-dark-bg dark:hover:text-dark-text transition-colors"
+                role="menuitem"
+              >
+                <span className="shrink-0 rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                  {cat.toolCount}
+                </span>
+                <span className="flex-1 truncate font-medium">{cat.name}</span>
+                <ChevronRight className="h-4 w-4 text-surface-400" aria-hidden="true" />
+              </Link>
+            ))}
+          </nav>
+          <div className="border-t border-surface-200 dark:border-dark-border mt-2 pt-2">
+            <Link
+              href="/categories"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+              role="menuitem"
+            >
+              <span>View all categories</span>
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
   const router = useRouter();
@@ -113,17 +193,18 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md"
+                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
               >
                 {item.title}
               </Link>
             ))}
+            <CategoryMenu allTools={allTools} />
             <div className="mx-2 h-5 w-px bg-surface-300 dark:bg-dark-border" aria-hidden="true" />
             <a
               href={siteConfig.mainSiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md"
+              className="flex items-center gap-1 px-3 py-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
             >
               DevStackIO Home
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -146,7 +227,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
           <button
             onClick={toggleDark}
             aria-label="Toggle dark mode"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
             suppressHydrationWarning
           >
             <span className="hidden dark:inline" suppressHydrationWarning><Sun className="h-5 w-5" aria-hidden="true" /></span>
@@ -155,7 +236,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
           <button
             onClick={() => setShortcutsOpen(true)}
             aria-label="Keyboard shortcuts (?)"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
           >
             <HelpCircle className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -163,7 +244,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
-            className="flex md:hidden h-10 w-10 items-center justify-center rounded-lg text-surface-500 hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
+            className="flex md:hidden h-10 w-10 items-center justify-center rounded-lg text-surface-500 hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
           >
             {isOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
           </button>
@@ -177,7 +258,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface"
+                className="block px-3 py-3 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
               >
                 {item.title}
               </Link>
@@ -185,7 +266,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
             <div className="pt-2 space-y-1">
               <button
                 onClick={() => { setIsOpen(false); setSearchOpen(true); }}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left"
+                className="flex items-center gap-2 px-3 py-3 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full text-left touch-target"
               >
                 <Search className="h-4 w-4" aria-hidden="true" />
                 Search
@@ -195,7 +276,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-surface-500 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full"
+                className="flex items-center gap-2 px-3 py-3 text-sm text-surface-500 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface w-full touch-target"
               >
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 DevStackIO Home

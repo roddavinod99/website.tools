@@ -69,12 +69,13 @@ export function KeycodeInfo() {
           </div>
 
           <div className="rounded-lg border border-surface-200 bg-white overflow-hidden dark:border-dark-border dark:bg-dark-surface">
-            <table className="w-full text-sm">
+            <div className="table-responsive">
+            <table className="table-base">
               <tbody>
                 {rows.map(([label, value]) => (
                   <tr key={String(label)} className="border-b border-surface-100 last:border-0 dark:border-dark-border">
-                    <td className="px-4 py-2 font-medium text-surface-600 dark:text-dark-muted">{String(label)}</td>
-                    <td className="px-4 py-2 font-mono text-surface-900 dark:text-dark-text">
+                    <td className="table-cell font-medium text-surface-600 dark:text-dark-muted">{String(label)}</td>
+                    <td className="table-cell font-mono text-surface-900 dark:text-dark-text">
                       {typeof value === "boolean" ? (
                         <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${value ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-surface-100 text-surface-500 dark:bg-dark-bg dark:text-dark-muted"}`}>
                           {String(value)}
@@ -87,6 +88,7 @@ export function KeycodeInfo() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </>
       )}

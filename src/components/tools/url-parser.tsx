@@ -173,22 +173,24 @@ export function UrlParser() {
             <div>
               <span className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Query Parameters</span>
               <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
-                <table className="w-full text-xs">
+                <div className="table-responsive">
+                <table className="table-base">
                   <thead><tr className="bg-surface-50 dark:bg-dark-surface">
-                    <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Key</th>
-                    <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Decoded Value</th>
-                    <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Encoded</th>
+                    <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">Key</th>
+                    <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">Decoded Value</th>
+                    <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">Encoded</th>
                   </tr></thead>
                   <tbody>
                     {Object.entries(parsed.searchParams).map(([k, v]) => (
                       <tr key={k} className="border-t border-surface-200 dark:border-dark-border">
-                        <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text">{k}</td>
-                        <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text break-all">{decodeURIComponent(v)}</td>
-                        <td className="px-3 py-1.5 font-mono text-surface-400 dark:text-dark-muted">{v}</td>
+                        <td className="table-cell font-mono text-surface-900 dark:text-dark-text">{k}</td>
+                        <td className="table-cell font-mono text-surface-900 dark:text-dark-text break-all">{decodeURIComponent(v)}</td>
+                        <td className="table-cell font-mono text-surface-400 dark:text-dark-muted">{v}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                </div>
               </div>
             </div>
           )}

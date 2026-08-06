@@ -146,17 +146,17 @@ export function ChmodCalculator() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-2">
           Permissions
         </label>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="table-responsive">
+          <table className="table-base">
             <thead>
               <tr className="border-b border-surface-200 dark:border-dark-border">
-                <th className="py-2 px-3 text-left text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted"></th>
+                <th className="table-header text-left text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted"></th>
                 {perms.map((p) => (
-                  <th key={p.key} className="py-2 px-3 text-center text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                  <th key={p.key} className="table-header text-center text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
                     {p.label}
                   </th>
                 ))}
-                <th className="py-2 px-3 text-center text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                <th className="table-header text-center text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
                   Octal
                 </th>
               </tr>
@@ -167,9 +167,9 @@ export function ChmodCalculator() {
                 const groupOctal = (groupPerms.read ? 4 : 0) + (groupPerms.write ? 2 : 0) + (groupPerms.execute ? 1 : 0);
                 return (
                   <tr key={g.key} className="border-b border-surface-100 dark:border-dark-border">
-                    <td className="py-3 px-3 font-medium text-surface-700 dark:text-dark-text">{g.label}</td>
+                    <td className="table-cell font-medium text-surface-700 dark:text-dark-text">{g.label}</td>
                     {perms.map((p) => (
-                      <td key={p.key} className="py-3 px-3 text-center">
+                      <td key={p.key} className="table-cell text-center">
                         <input
                           type="checkbox"
                           checked={groupPerms[p.key]}
@@ -178,7 +178,7 @@ export function ChmodCalculator() {
                         />
                       </td>
                     ))}
-                    <td className="py-3 px-3 text-center font-mono text-surface-900 dark:text-dark-text">
+                    <td className="table-cell text-center font-mono text-surface-900 dark:text-dark-text">
                       {groupOctal}
                     </td>
                   </tr>

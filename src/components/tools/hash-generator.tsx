@@ -470,24 +470,26 @@ export function HashGenerator() {
             className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           {bulkResults.length > 0 && (
             <div className="mt-2 max-h-64 overflow-auto">
-              <table className="w-full text-xs border-collapse">
+              <div className="table-responsive">
+              <table className="table-base table-hover">
                 <thead>
                   <tr className="bg-surface-100 dark:bg-dark-surface">
-                    <th className="border border-surface-200 dark:border-dark-border px-2 py-1 text-left">#</th>
-                    <th className="border border-surface-200 dark:border-dark-border px-2 py-1 text-left">Input</th>
-                    {activeAlgos.map((a) => <th key={a.id} className="border border-surface-200 dark:border-dark-border px-2 py-1 text-left">{a.label}</th>)}
+                    <th className="table-header text-left">#</th>
+                    <th className="table-header text-left">Input</th>
+                    {activeAlgos.map((a) => <th key={a.id} className="table-header text-left">{a.label}</th>)}
                   </tr>
                 </thead>
                 <tbody>
                   {bulkResults.map((br) => (
-                    <tr key={br.idx} className="hover:bg-surface-50 dark:hover:bg-dark-surface">
-                      <td className="border border-surface-200 dark:border-dark-border px-2 py-1 font-mono">{br.idx + 1}</td>
-                      <td className="border border-surface-200 dark:border-dark-border px-2 py-1 max-w-[120px] truncate">{br.line}</td>
-                      {activeAlgos.map((a) => <td key={a.id} className="border border-surface-200 dark:border-dark-border px-2 py-1 font-mono max-w-[180px] truncate">{br.results[a.label] || ""}</td>)}
+                    <tr key={br.idx}>
+                      <td className="table-cell font-mono">{br.idx + 1}</td>
+                      <td className="table-cell max-w-[120px] truncate">{br.line}</td>
+                      {activeAlgos.map((a) => <td key={a.id} className="table-cell font-mono max-w-[180px] truncate">{br.results[a.label] || ""}</td>)}
                     </tr>
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </div>

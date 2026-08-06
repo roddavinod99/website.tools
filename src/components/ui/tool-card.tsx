@@ -33,16 +33,16 @@ interface ToolCardProps {
 
 const sizeClasses: Record<ToolCardSize, { padding: string; title: string; desc: string; gap: string }> = {
   sm: { padding: "p-3", title: "text-sm font-semibold", desc: "text-xs", gap: "gap-2" },
-  md: { padding: "p-5", title: "font-semibold text-surface-900 dark:text-dark-text", desc: "text-sm text-surface-500 dark:text-dark-muted", gap: "gap-3" },
-  lg: { padding: "p-6", title: "text-lg font-semibold text-surface-900 dark:text-dark-text", desc: "text-base text-surface-500 dark:text-dark-muted", gap: "gap-4" },
+  md: { padding: "p-4", title: "font-semibold text-surface-900 dark:text-dark-text", desc: "text-sm text-surface-500 dark:text-dark-muted", gap: "gap-3" },
+  lg: { padding: "p-5", title: "text-lg font-semibold text-surface-900 dark:text-dark-text", desc: "text-base text-surface-500 dark:text-dark-muted", gap: "gap-4" },
 };
 
 const variantClasses: Record<ToolCardVariant, string> = {
-  default: "group rounded-xl border border-surface-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
-  compact: "group rounded-lg border border-surface-200 bg-white transition-all duration-200 hover:border-brand-300 dark:border-dark-border dark:bg-dark-surface",
-  featured: "group relative rounded-2xl border border-surface-200 bg-white p-6 shadow-lg transition-all duration-200 hover:shadow-xl dark:border-dark-border dark:bg-dark-surface",
-  related: "group rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
-  home: "group relative rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
+  default: "group rounded-xl border border-surface-200 bg-white shadow-sm transition-all duration-150 hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  compact: "group rounded-lg border border-surface-200 bg-white transition-all duration-150 hover:border-brand-300 dark:border-dark-border dark:bg-dark-surface",
+  featured: "group relative rounded-2xl border border-surface-200 bg-white p-5 shadow-lg transition-all duration-150 hover:shadow-xl dark:border-dark-border dark:bg-dark-surface",
+  related: "group rounded-xl border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  home: "group relative rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
 };
 
 export function ToolCard({ 
@@ -57,6 +57,10 @@ export function ToolCard({
   const sizes = sizeClasses[size];
   const isFeatured = variant === "featured";
   const isHome = variant === "home";
+  const variantBase = variantClasses[variant];
+  
+  // For featured variant, padding is already in variant class, don't double-apply
+  const paddingClass = variant === "featured" ? "" : sizes.padding;
   
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (onClick) {
@@ -71,8 +75,8 @@ export function ToolCard({
       onClick={handleClick}
       className={cn(
         "flex flex-col",
-        variantClasses[variant],
-        sizes.padding,
+        variantBase,
+        paddingClass,
         className
       )}
     >

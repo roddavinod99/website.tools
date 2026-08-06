@@ -249,12 +249,12 @@ export function CsvToJson() {
       </div>
 
       {preview.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-surface-200 dark:border-dark-border">
-          <table className="w-full text-xs font-mono">
+        <div className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+          <table className="table-base font-mono table-striped">
             <thead>
               <tr className="bg-surface-50 dark:bg-dark-surface">
                 {preview[0].map((h, i) => (
-                  <th key={i} className="px-3 py-1.5 text-left text-surface-600 dark:text-dark-muted font-medium border-r border-surface-200 dark:border-dark-border last:border-r-0">{h}</th>
+                  <th key={i} className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -262,7 +262,7 @@ export function CsvToJson() {
               {preview.slice(1, 6).map((row, ri) => (
                 <tr key={ri} className="border-t border-surface-200 dark:border-dark-border">
                   {row.map((cell, ci) => (
-                    <td key={ci} className="px-3 py-1.5 text-surface-900 dark:text-dark-text border-r border-surface-200 dark:border-dark-border last:border-r-0">{cell}</td>
+                    <td key={ci} className="table-cell text-surface-900 dark:text-dark-text">{cell}</td>
                   ))}
                 </tr>
               ))}

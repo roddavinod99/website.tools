@@ -207,28 +207,30 @@ export function Binary() {
         <div>
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Breakdown</p>
           <div className="max-h-48 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
-            <table className="w-full text-xs font-mono">
+            <div className="table-responsive">
+            <table className="table-base table-hover font-mono">
               <thead>
                 <tr className="bg-surface-50 text-surface-500 dark:bg-dark-surface dark:text-dark-muted">
-                  <th className="px-2 py-1 text-left">Char</th>
-                  <th className="px-2 py-1 text-left">Code</th>
-                  <th className="px-2 py-1 text-left">Binary</th>
-                  <th className="px-2 py-1 text-left">Hex</th>
-                  <th className="px-2 py-1 text-left">Octal</th>
+                  <th className="table-header text-left">Char</th>
+                  <th className="table-header text-left">Code</th>
+                  <th className="table-header text-left">Binary</th>
+                  <th className="table-header text-left">Hex</th>
+                  <th className="table-header text-left">Octal</th>
                 </tr>
               </thead>
               <tbody>
                 {charMap.map((entry, i) => (
-                  <tr key={i} className="border-t border-surface-100 text-surface-700 dark:border-dark-border dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
-                    <td className="px-2 py-1">{entry.char === " " ? "␣" : entry.char}</td>
-                    <td className="px-2 py-1 text-surface-400">{entry.code}</td>
-                    <td className="px-2 py-1 text-brand-500">{entry.binary}</td>
-                    <td className="px-2 py-1">{entry.hex}</td>
-                    <td className="px-2 py-1">{entry.octal}</td>
+                  <tr key={i} className="border-t border-surface-100 text-surface-700 dark:border-dark-border dark:text-dark-text">
+                    <td className="table-cell">{entry.char === " " ? "␣" : entry.char}</td>
+                    <td className="table-cell text-surface-400">{entry.code}</td>
+                    <td className="table-cell text-brand-500">{entry.binary}</td>
+                    <td className="table-cell">{entry.hex}</td>
+                    <td className="table-cell">{entry.octal}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       )}

@@ -340,13 +340,14 @@ export function UnitConverter() {
             {value} {fromDef.label} in every {current.label} unit
           </p>
           <div className="overflow-hidden rounded-lg border border-surface-200 dark:border-dark-border">
-            <table className="w-full text-sm">
+            <div className="table-responsive">
+            <table className="table-base">
               <caption className="sr-only">Conversion of {value} {fromDef.label} to all {current.label} units</caption>
               <thead>
                 <tr className="border-b border-surface-200 bg-surface-50 text-left text-xs uppercase tracking-wide text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
-                  <th scope="col" className="px-3 py-2 font-medium">Unit</th>
-                  <th scope="col" className="px-3 py-2 text-right font-medium">Value</th>
-                  <th scope="col" className="px-3 py-2 text-right font-medium">Copy</th>
+                  <th scope="col" className="table-header font-medium">Unit</th>
+                  <th scope="col" className="table-header text-right font-medium">Value</th>
+                  <th scope="col" className="table-header text-right font-medium">Copy</th>
                 </tr>
               </thead>
               <tbody>
@@ -357,9 +358,9 @@ export function UnitConverter() {
                     : raw.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "");
                   return (
                     <tr key={u.value} className="border-b border-surface-100 last:border-b-0 dark:border-dark-border">
-                      <td className="px-3 py-1.5 text-surface-700 dark:text-dark-text">{u.label} ({u.value})</td>
-                      <td className="px-3 py-1.5 text-right font-mono text-surface-900 dark:text-dark-text select-all">{formatted}</td>
-                      <td className="px-3 py-1.5 text-right">
+                      <td className="table-cell text-surface-700 dark:text-dark-text">{u.label} ({u.value})</td>
+                      <td className="table-cell text-right font-mono text-surface-900 dark:text-dark-text select-all">{formatted}</td>
+                      <td className="table-cell text-right">
                         <button
                           onClick={() => copy(`${formatted} ${u.value}`)}
                           className="text-xs text-brand-500 hover:text-brand-600 transition-colors"
@@ -373,6 +374,7 @@ export function UnitConverter() {
                 })}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       )}

@@ -94,7 +94,7 @@ export function stripConventionalPrefix(subject) {
   return subject.replace(CONVENTIONAL_PREFIX_REGEX, "");
 }
 
-export function createChangelogEntry(subject, _body = "") {
+export function createChangelogEntry(subject) {
   const category = getCategoryFromSubject(subject);
   const description = stripConventionalPrefix(subject);
   return { category, description };
@@ -154,7 +154,7 @@ export function computeRelease(currentVersion) {
   
   const types = commits.map(c => getReleaseTypeForCommit(c.subject, c._body));
   const releaseType = getMaxReleaseType(types);
-  const entries = commits.map(c => createChangelogEntry(c.subject, c._body));
+  const entries = commits.map(c => createChangelogEntry(c.subject));
   
   const current = parseSemVer(currentVersion);
   const next = incrementVersion(current, releaseType);

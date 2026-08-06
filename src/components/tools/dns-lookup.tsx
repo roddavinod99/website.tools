@@ -136,15 +136,15 @@ export function DNSLookup() {
 
       {data?.Answer && data.Answer.length > 0 && (
         <div>
-          <div data-testid="tool-output" className="overflow-x-auto rounded-lg border border-surface-200 dark:border-dark-border">
-            <table className="w-full text-xs font-mono">
+          <div data-testid="tool-output" className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+            <table className="table-base font-mono">
               <thead>
                 <tr className="bg-surface-50 dark:bg-dark-surface">
-                  <th className="px-3 py-2 text-left text-surface-600 dark:text-dark-muted font-medium">Name</th>
-                  <th className="px-3 py-2 text-left text-surface-600 dark:text-dark-muted font-medium">TTL</th>
-                  <th className="px-3 py-2 text-left text-surface-600 dark:text-dark-muted font-medium">Class</th>
-                  <th className="px-3 py-2 text-left text-surface-600 dark:text-dark-muted font-medium">Type</th>
-                  <th className="px-3 py-2 text-left text-surface-600 dark:text-dark-muted font-medium">Value</th>
+                  <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Name</th>
+                  <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">TTL</th>
+                  <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Class</th>
+                  <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Type</th>
+                  <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -152,11 +152,11 @@ export function DNSLookup() {
                   const typeName = typeMapReverse[record.type] || `TYPE${record.type}`;
                   return (
                     <tr key={i} className="border-t border-surface-200 dark:border-dark-border">
-                      <td className="px-3 py-2 text-surface-900 dark:text-dark-text">{record.name}</td>
-                      <td className="px-3 py-2 text-surface-500 dark:text-dark-muted">{record.TTL}s</td>
-                      <td className="px-3 py-2 text-surface-500 dark:text-dark-muted">IN</td>
-                      <td className="px-3 py-2"><span className="rounded bg-brand-100 px-1.5 py-0.5 text-brand-700 dark:bg-brand-800 dark:text-brand-200">{typeName}</span></td>
-                      <td className="px-3 py-2 text-surface-900 dark:text-dark-text break-all max-w-xs">{record.data}</td>
+                      <td className="table-cell text-surface-900 dark:text-dark-text">{record.name}</td>
+                      <td className="table-cell text-surface-500 dark:text-dark-muted">{record.TTL}s</td>
+                      <td className="table-cell text-surface-500 dark:text-dark-muted">IN</td>
+                      <td className="table-cell"><span className="rounded bg-brand-100 px-1.5 py-0.5 text-brand-700 dark:bg-brand-800 dark:text-brand-200">{typeName}</span></td>
+                      <td className="table-cell text-surface-900 dark:text-dark-text break-all max-w-xs">{record.data}</td>
                     </tr>
                   );
                 })}

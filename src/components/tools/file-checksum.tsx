@@ -282,30 +282,30 @@ export function FileChecksum() {
       )}
 
       {results.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+        <div className="table-responsive">
+          <table className="table-base">
             <thead>
               <tr className="border-b border-surface-200 dark:border-dark-border">
-                <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">File</th>
-                <th className="text-right py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Size</th>
-                <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Type</th>
-                <th className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Modified</th>
+                <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">File</th>
+                <th className="table-header text-right text-surface-500 dark:text-dark-muted font-medium">Size</th>
+                <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">Type</th>
+                <th className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">Modified</th>
                 {selectedAlgos.map((a) => (
-                  <th key={a} className="text-left py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">{a}</th>
+                  <th key={a} className="table-header text-left text-surface-500 dark:text-dark-muted font-medium">{a}</th>
                 ))}
-                <th className="text-right py-2 px-2 text-surface-500 dark:text-dark-muted font-medium">Time</th>
-                <th className="py-2 px-2" />
+                <th className="table-header text-right text-surface-500 dark:text-dark-muted font-medium">Time</th>
+                <th className="table-header" />
               </tr>
             </thead>
             <tbody>
               {results.map((r, fi) => (
                 <tr key={fi} className="border-b border-surface-100 dark:border-dark-border">
-                  <td className="py-2 px-2 text-surface-900 dark:text-dark-text font-medium">{r.name}</td>
-                  <td className="py-2 px-2 text-right text-surface-500 dark:text-dark-muted">{formatSize(r.size)}</td>
-                  <td className="py-2 px-2 text-surface-500 dark:text-dark-muted text-[10px]">{r.type}</td>
-                  <td className="py-2 px-2 text-surface-500 dark:text-dark-muted text-[10px]">{r.lastModified}</td>
+                  <td className="table-cell text-surface-900 dark:text-dark-text font-medium">{r.name}</td>
+                  <td className="table-cell text-right text-surface-500 dark:text-dark-muted">{formatSize(r.size)}</td>
+                  <td className="table-cell text-surface-500 dark:text-dark-muted text-[10px]">{r.type}</td>
+                  <td className="table-cell text-surface-500 dark:text-dark-muted text-[10px]">{r.lastModified}</td>
                   {selectedAlgos.map((a) => (
-                    <td key={a} className="py-2 px-2">
+                    <td key={a} className="table-cell">
                       <span className="font-mono text-surface-900 dark:text-dark-text break-all">{r.results[a]?.slice(0, 16)}...</span>
                       {compareMode && expectedHash && (
                         <span className={`ml-1 ${r.results[a] === expectedHash ? "text-green-500" : "text-red-500"}`}>
@@ -314,8 +314,8 @@ export function FileChecksum() {
                       )}
                     </td>
                   ))}
-                  <td className="py-2 px-2 text-right text-surface-500 dark:text-dark-muted">{r.time.toFixed(0)}ms</td>
-                  <td className="py-2 px-2">
+                  <td className="table-cell text-right text-surface-500 dark:text-dark-muted">{r.time.toFixed(0)}ms</td>
+                  <td className="table-cell">
                     <div className="flex gap-1">
                       {selectedAlgos.map((a) => (
                         <button key={a} onClick={() => copyResult(r.results[a], `${fi}-${a}`)} className="text-brand-500 hover:text-brand-600" title={`Copy ${a}`}>

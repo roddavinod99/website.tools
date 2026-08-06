@@ -256,12 +256,12 @@ X-Request-ID: abc-123-def-456`);
                   </span>
                 </button>
                 {!isCollapsed && (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
+                  <div className="table-responsive">
+                    <table className="table-base">
                       <thead><tr className="bg-surface-50 dark:bg-dark-surface">
-                        <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Name</th>
-                        <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
-                        <th className="w-16 px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Actions</th>
+                        <th className="table-header text-surface-500 dark:text-dark-muted font-medium">Name</th>
+                        <th className="table-header text-surface-500 dark:text-dark-muted font-medium">Value</th>
+                        <th className="w-16 table-header text-surface-500 dark:text-dark-muted font-medium">Actions</th>
                       </tr></thead>
                       <tbody>
                         {catHeaders.map(h => {
@@ -271,23 +271,23 @@ X-Request-ID: abc-123-def-456`);
                             <tr key={h.id} className={cn("border-t border-surface-200 dark:border-dark-border", susp && "bg-red-50 dark:bg-red-900/10")}>
                               {editingId === h.id ? (
                                 <>
-                                  <td className="px-3 py-1.5"><input type="text" value={editName}
+                                  <td className="table-cell"><input type="text" value={editName}
                                     className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                                     onChange={e => setEditName(e.target.value)}
                                   /></td>
-                                  <td className="px-3 py-1.5"><input type="text" value={editValue}
+                                  <td className="table-cell"><input type="text" value={editValue}
                                     className="w-full rounded border border-surface-300 bg-white px-2 py-1 text-xs font-mono dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                                     onChange={e => setEditValue(e.target.value)}
                                   /></td>
-                                  <td className="px-3 py-1.5">
+                                  <td className="table-cell">
                                     <button onClick={() => updateHeader(h.id, editName, editValue)} className="text-brand-500 hover:text-brand-600 text-[10px]">Save</button>
                                   </td>
                                 </>
                               ) : (
                                 <>
-                                  <td className={cn("px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text", susp && "text-red-600 dark:text-red-400")}>{h.name}</td>
-                                  <td className="px-3 py-1.5 font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
-                                  <td className="px-3 py-1.5">
+                                  <td className={cn("table-cell font-mono text-surface-900 dark:text-dark-text", susp && "text-red-600 dark:text-red-400")}>{h.name}</td>
+                                  <td className="table-cell font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
+                                  <td className="table-cell">
                                     {builderMode && (
                                       <div className="flex gap-1">
                                         <button onClick={() => startEdit(h)} className="text-brand-500 hover:text-brand-600 text-[10px]">Edit</button>
@@ -298,7 +298,7 @@ X-Request-ID: abc-123-def-456`);
                                 </>
                               )}
                               {validationErr && !editingId && (
-                                <td colSpan={3} className="px-3 py-0.5 text-[10px] text-red-500">{validationErr}</td>
+                                <td colSpan={3} className="table-cell text-[10px] text-red-500">{validationErr}</td>
                               )}
                             </tr>
                           );
@@ -321,19 +321,19 @@ X-Request-ID: abc-123-def-456`);
                 </span>
               </button>
               {!collapsedCats["Custom"] && (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
+                <div className="table-responsive">
+                  <table className="table-base">
                     <thead><tr className="bg-surface-50 dark:bg-dark-surface">
-                      <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Name</th>
-                      <th className="text-left px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Value</th>
-                      <th className="w-16 px-3 py-1.5 text-surface-500 dark:text-dark-muted font-medium">Actions</th>
+                      <th className="table-header text-surface-500 dark:text-dark-muted font-medium">Name</th>
+                      <th className="table-header text-surface-500 dark:text-dark-muted font-medium">Value</th>
+                      <th className="w-16 table-header text-surface-500 dark:text-dark-muted font-medium">Actions</th>
                     </tr></thead>
                     <tbody>
                       {groupedHeaders["Custom"].map(h => (
                         <tr key={h.id} className="border-t border-surface-200 dark:border-dark-border">
-                          <td className="px-3 py-1.5 font-mono text-surface-900 dark:text-dark-text">{h.name}</td>
-                          <td className="px-3 py-1.5 font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
-                          <td className="px-3 py-1.5">
+                          <td className="table-cell font-mono text-surface-900 dark:text-dark-text">{h.name}</td>
+                          <td className="table-cell font-mono text-surface-700 dark:text-dark-muted break-all max-w-[300px]">{h.value}</td>
+                          <td className="table-cell">
                             {builderMode && (
                               <div className="flex gap-1">
                                 <button onClick={() => startEdit(h)} className="text-brand-500 hover:text-brand-600 text-[10px]">Edit</button>

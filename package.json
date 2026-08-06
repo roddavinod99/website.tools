@@ -10,6 +10,7 @@
     "version": "node scripts/release.mjs",
     "version:auto": "node scripts/auto-release.mjs",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "sitemap:submit": "node scripts/sitemap-submitter.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",
     "seo:audit:submit": "node scripts/seo-audit.mjs --submit",

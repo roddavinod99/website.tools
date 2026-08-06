@@ -285,22 +285,24 @@ export function URLEncoder() {
             </div>
           </div>
           <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
-            <table className="w-full text-xs font-mono">
+            <div className="table-responsive">
+            <table className="table-base font-mono">
               <thead>
                 <tr className="bg-surface-50 text-surface-500 dark:bg-dark-surface dark:text-dark-muted">
-                  <th className="px-2 py-1 text-left">Parameter</th>
-                  <th className="px-2 py-1 text-left">Value</th>
+                  <th className="table-header text-left">Parameter</th>
+                  <th className="table-header text-left">Value</th>
                 </tr>
               </thead>
               <tbody>
                 {urlParts.params.map((p, i) => (
                   <tr key={i} className="border-t border-surface-100 text-surface-700 dark:border-dark-border dark:text-dark-text">
-                    <td className="px-2 py-1 text-brand-500">{p.key}</td>
-                    <td className="px-2 py-1 break-all">{p.value}</td>
+                    <td className="table-cell text-brand-500">{p.key}</td>
+                    <td className="table-cell break-all">{p.value}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       )}
