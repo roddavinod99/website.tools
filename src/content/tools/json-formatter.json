@@ -44,5 +44,23 @@
     "Line-level syntax errors with position hints",
     "Syntax highlighting and optional sorting",
     "Copy, download, and load from file"
+  ],
+  "references": [
+    {
+      "label": "RFC 8259 — JSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259"
+    },
+    {
+      "label": "MDN — JSON",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON"
+    },
+    {
+      "label": "Guide: Getting Started with JSON",
+      "url": "/guides/getting-started-json"
+    },
+    {
+      "label": "Blog: How to Format JSON Online",
+      "url": "/blog/how-to-format-json-online"
+    }
   ]
 }

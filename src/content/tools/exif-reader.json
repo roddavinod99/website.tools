@@ -46,5 +46,11 @@
     "Extract EXIF metadata from images",
     "Camera settings, GPS, and date info",
     "Upload files directly from disk"
+  ],
+  "references": [
+    {
+      "label": "EXIF — CIPA DC-008",
+      "url": "https://www.cipa.jp/std/std-sec-e.html"
+    }
   ]
 }

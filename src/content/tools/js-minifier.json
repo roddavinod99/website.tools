@@ -44,5 +44,11 @@
     "Beautify minified code for debugging",
     "Syntax validation before minification",
     "Size comparison with real savings numbers"
+  ],
+  "references": [
+    {
+      "label": "ECMAScript — tc39",
+      "url": "https://tc39.es/ecma262/"
+    }
   ]
 }

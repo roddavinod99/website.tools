@@ -42,5 +42,19 @@
     "Regex pattern reference with examples",
     "Searchable by purpose",
     "Copy any pattern"
+  ],
+  "references": [
+    {
+      "label": "MDN — RegExp",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp"
+    },
+    {
+      "label": "Guide: Regex Fundamentals",
+      "url": "/guides/regex-fundamentals"
+    },
+    {
+      "label": "Blog: Regex Tester with Capture Groups",
+      "url": "/blog/regex-tester-capture-groups"
+    }
   ]
 }

@@ -47,5 +47,15 @@
     "Configurable period, digits, and algorithm",
     "One-click copy of the current code",
     "Countdown to the next refresh"
+  ],
+  "references": [
+    {
+      "label": "RFC 6238 — TOTP",
+      "url": "https://www.rfc-editor.org/rfc/rfc6238"
+    },
+    {
+      "label": "RFC 4226 — HOTP",
+      "url": "https://www.rfc-editor.org/rfc/rfc4226"
+    }
   ]
 }

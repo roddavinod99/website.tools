@@ -47,5 +47,19 @@
     "Parse query parameters into a table",
     "Copy any URL component",
     "Real-time as you paste"
+  ],
+  "references": [
+    {
+      "label": "WHATWG URL Standard",
+      "url": "https://url.spec.whatwg.org/"
+    },
+    {
+      "label": "RFC 3986 — URI syntax",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986"
+    },
+    {
+      "label": "Blog: URL Parser & Analyzer",
+      "url": "/blog/url-parser-analyzer"
+    }
   ]
 }

@@ -44,5 +44,11 @@
     "Estimate arrival time from distance and speed",
     "Multiple distance and speed units",
     "Real-time calculation"
+  ],
+  "references": [
+    {
+      "label": "MDN — Date",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
+    }
   ]
 }

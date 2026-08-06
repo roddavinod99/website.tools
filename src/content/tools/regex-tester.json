@@ -47,5 +47,23 @@
     "Capture groups and detailed match info",
     "Configurable flags",
     "Flavor presets for common regex engines"
+  ],
+  "references": [
+    {
+      "label": "MDN — RegExp",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp"
+    },
+    {
+      "label": "regex101 syntax",
+      "url": "https://regex101.com/"
+    },
+    {
+      "label": "Guide: Regex Fundamentals",
+      "url": "/guides/regex-fundamentals"
+    },
+    {
+      "label": "Blog: Regex Tester with Capture Groups",
+      "url": "/blog/regex-tester-capture-groups"
+    }
   ]
 }

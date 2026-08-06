@@ -44,5 +44,11 @@
     "Highlight additions, removals, and changes",
     "Structural diff that ignores cosmetic formatting",
     "Copy the merged or changed sections"
+  ],
+  "references": [
+    {
+      "label": "RFC 8259 — JSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259"
+    }
   ]
 }

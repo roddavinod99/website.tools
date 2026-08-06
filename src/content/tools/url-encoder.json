@@ -47,5 +47,15 @@
     "Decode percent-encoded text back to readable form",
     "Choose which characters to encode or preserve",
     "Real-time conversion with copy support"
+  ],
+  "references": [
+    {
+      "label": "RFC 3986 — URI syntax",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986"
+    },
+    {
+      "label": "MDN — encodeURIComponent",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent"
+    }
   ]
 }

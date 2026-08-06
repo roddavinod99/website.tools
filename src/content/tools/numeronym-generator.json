@@ -42,5 +42,11 @@
     "Create Kubernetes-style abbreviations",
     "Preserves first and last characters",
     "Custom word input with live preview"
+  ],
+  "references": [
+    {
+      "label": "Numeronym — Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Numeronym"
+    }
   ]
 }

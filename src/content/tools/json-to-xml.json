@@ -47,5 +47,15 @@
     "Custom root element and attribute handling",
     "Pretty-printed or compact output",
     "Copy and download the XML"
+  ],
+  "references": [
+    {
+      "label": "XML 1.0 — W3C",
+      "url": "https://www.w3.org/TR/REC-xml/"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

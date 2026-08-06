@@ -44,5 +44,11 @@
     "Convert between Celsius, Fahrenheit, and Kelvin",
     "Real-time conversion while you type",
     "Quick presets for common temperatures"
+  ],
+  "references": [
+    {
+      "label": "BIPM — SI units",
+      "url": "https://www.bipm.org/en/si"
+    }
   ]
 }

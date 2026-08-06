@@ -47,5 +47,15 @@
     "Live preview of the selected color",
     "Generate complementary palettes",
     "Copy values in any format"
+  ],
+  "references": [
+    {
+      "label": "CSS Color — W3C",
+      "url": "https://www.w3.org/TR/css-color-4/"
+    },
+    {
+      "label": "Blog: Color Converter Online",
+      "url": "/blog/color-converter-online"
+    }
   ]
 }

@@ -39,5 +39,11 @@
     "Convert integers to Roman numerals and back",
     "Real-time conversion with validation",
     "Copy the converted result"
+  ],
+  "references": [
+    {
+      "label": "Roman numeral — Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Roman_numerals"
+    }
   ]
 }

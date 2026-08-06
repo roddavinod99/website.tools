@@ -47,5 +47,11 @@
     "Validate IBANs against country-specific rules",
     "Extract bank and account details",
     "Format IBANs with proper spacing"
+  ],
+  "references": [
+    {
+      "label": "ISO 13616 — IBAN",
+      "url": "https://www.iso.org/standard/41031.html"
+    }
   ]
 }

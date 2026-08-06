@@ -39,5 +39,11 @@
     "Generate HTTP Basic Authorization headers",
     "Username and password input",
     "Copy the ready-to-use header"
+  ],
+  "references": [
+    {
+      "label": "RFC 7617 — Basic auth",
+      "url": "https://www.rfc-editor.org/rfc/rfc7617"
+    }
   ]
 }

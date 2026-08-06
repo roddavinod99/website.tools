@@ -45,5 +45,11 @@
     "Report browser, OS, and screen info",
     "Hardware and network details",
     "Everything computed locally"
+  ],
+  "references": [
+    {
+      "label": "MDN — Navigator",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator"
+    }
   ]
 }

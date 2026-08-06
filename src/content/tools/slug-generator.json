@@ -47,5 +47,11 @@
     "Transliteration for non-Latin scripts",
     "Custom separator and case options",
     "Real-time generation"
+  ],
+  "references": [
+    {
+      "label": "RFC 3986 — slug-safe URLs",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986"
+    }
   ]
 }

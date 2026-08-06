@@ -38,5 +38,11 @@
     "Generate random IPv6 ULA addresses",
     "Custom global ID and subnet prefixes",
     "Copy generated addresses"
+  ],
+  "references": [
+    {
+      "label": "RFC 4193 — ULA",
+      "url": "https://www.rfc-editor.org/rfc/rfc4193"
+    }
   ]
 }

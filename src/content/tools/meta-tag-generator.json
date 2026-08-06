@@ -48,5 +48,11 @@
     "SEO title, description, and canonical URLs",
     "Live preview of search snippets",
     "One-click copy of all HTML tags"
+  ],
+  "references": [
+    {
+      "label": "Open Graph protocol",
+      "url": "https://ogp.me/"
+    }
   ]
 }

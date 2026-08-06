@@ -43,5 +43,11 @@
     "Generate JSON Schema drafts from sample data",
     "Infers types for nested structures",
     "Copy and download the schema"
+  ],
+  "references": [
+    {
+      "label": "JSON Schema specification",
+      "url": "https://json-schema.org/specification"
+    }
   ]
 }

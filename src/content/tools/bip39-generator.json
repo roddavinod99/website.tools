@@ -42,5 +42,11 @@
     "Generate 12- or 24-word BIP39 mnemonic phrases",
     "Validated against the official wordlist",
     "Copy the full phrase"
+  ],
+  "references": [
+    {
+      "label": "BIP-39 specification",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki"
+    }
   ]
 }

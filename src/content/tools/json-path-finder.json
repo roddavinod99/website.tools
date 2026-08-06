@@ -44,5 +44,11 @@
     "Extract matching values instantly",
     "Highlight matched locations",
     "Copy extracted results"
+  ],
+  "references": [
+    {
+      "label": "RFC 9535 — JSONPath",
+      "url": "https://www.rfc-editor.org/rfc/rfc9535"
+    }
   ]
 }

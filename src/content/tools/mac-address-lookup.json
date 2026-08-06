@@ -38,5 +38,15 @@
     "Look up vendor by MAC address prefix",
     "OUI database with format detection",
     "Supports common MAC address formats"
+  ],
+  "references": [
+    {
+      "label": "IEEE — OUI registry",
+      "url": "https://standards.ieee.org/products-programs/regauth/oui/"
+    },
+    {
+      "label": "IEEE 802",
+      "url": "https://www.ieee802.org/"
+    }
   ]
 }

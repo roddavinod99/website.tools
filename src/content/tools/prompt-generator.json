@@ -47,5 +47,11 @@
     "Context, role, tone, and format fields",
     "One-click copy of the finished prompt",
     "Save favorites for later reuse"
+  ],
+  "references": [
+    {
+      "label": "Prompt engineering — OpenAI",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    }
   ]
 }

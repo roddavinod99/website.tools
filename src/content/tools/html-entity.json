@@ -44,5 +44,19 @@
     "Decode entities back to plain text",
     "Prevents XSS when embedding user text in markup",
     "Real-time conversion with copy support"
+  ],
+  "references": [
+    {
+      "label": "HTML Living Standard — character references",
+      "url": "https://html.spec.whatwg.org/multipage/named-characters.html"
+    },
+    {
+      "label": "MDN — HTML entities",
+      "url": "https://developer.mozilla.org/en-US/docs/Glossary/Entity"
+    },
+    {
+      "label": "Guide: HTML Encoding & Special Characters",
+      "url": "/guides/html-encoding-guide"
+    }
   ]
 }

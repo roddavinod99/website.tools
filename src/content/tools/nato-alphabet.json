@@ -38,5 +38,11 @@
     "Convert text to the NATO phonetic alphabet",
     "Per-letter breakdown table",
     "Copy the phonetic spelling"
+  ],
+  "references": [
+    {
+      "label": "NATO phonetic alphabet",
+      "url": "https://en.wikipedia.org/wiki/NATO_phonetic_alphabet"
+    }
   ]
 }

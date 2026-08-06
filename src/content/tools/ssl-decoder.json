@@ -47,5 +47,11 @@
     "Show subject, issuer, and validity dates",
     "Expiry warnings for expiring certs",
     "Full extension breakdown"
+  ],
+  "references": [
+    {
+      "label": "RFC 8446 — TLS 1.3",
+      "url": "https://www.rfc-editor.org/rfc/rfc8446"
+    }
   ]
 }

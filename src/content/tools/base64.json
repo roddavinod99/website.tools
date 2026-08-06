@@ -47,5 +47,23 @@
     "URL-safe variant for use in URLs and filenames",
     "Real-time conversion with copy and download support",
     "Handles Unicode text and multi-line input"
+  ],
+  "references": [
+    {
+      "label": "RFC 4648 — Base64 encoding",
+      "url": "https://www.rfc-editor.org/rfc/rfc4648"
+    },
+    {
+      "label": "MDN — Base64",
+      "url": "https://developer.mozilla.org/en-US/docs/Glossary/Base64"
+    },
+    {
+      "label": "Guide: Understanding Base64",
+      "url": "/guides/understanding-base64"
+    },
+    {
+      "label": "Blog: Base64 Encode/Decode Online",
+      "url": "/blog/base64-encode-decode-online"
+    }
   ]
 }

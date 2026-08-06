@@ -43,5 +43,11 @@
     "Geolocate an IP address",
     "ISP, ASN, and country details",
     "Live results from public databases"
+  ],
+  "references": [
+    {
+      "label": "IANA — IP allocations",
+      "url": "https://www.iana.org/assignments/ip-numbers/ip-numbers.xhtml"
+    }
   ]
 }

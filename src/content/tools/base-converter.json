@@ -47,5 +47,11 @@
     "Support for arbitrary bases up to 36",
     "Precision handling for large numbers",
     "Real-time conversion across all bases"
+  ],
+  "references": [
+    {
+      "label": "MDN — base conversion",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toString"
+    }
   ]
 }

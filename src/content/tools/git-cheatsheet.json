@@ -42,5 +42,11 @@
     "Searchable Git command reference",
     "Categorized commands with examples",
     "Copy any command snippet"
+  ],
+  "references": [
+    {
+      "label": "Git — official docs",
+      "url": "https://git-scm.com/doc"
+    }
   ]
 }

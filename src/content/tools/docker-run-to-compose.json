@@ -47,5 +47,15 @@
     "Parses ports, volumes, env vars, and labels",
     "Detects docker CLI flags automatically",
     "Copy or download the generated Compose file"
+  ],
+  "references": [
+    {
+      "label": "Compose spec",
+      "url": "https://compose-spec.io/"
+    },
+    {
+      "label": "Docker run reference",
+      "url": "https://docs.docker.com/reference/cli/docker/container/run/"
+    }
   ]
 }

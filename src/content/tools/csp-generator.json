@@ -48,5 +48,15 @@
     "Directive presets and per-source controls",
     "Live policy preview",
     "Copy the finished header"
+  ],
+  "references": [
+    {
+      "label": "Content Security Policy — W3C",
+      "url": "https://www.w3.org/TR/CSP3/"
+    },
+    {
+      "label": "MDN — CSP",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy"
+    }
   ]
 }

@@ -47,5 +47,19 @@
     "Convert dates back to Unix time",
     "Multiple timezone and format options",
     "Live clock with the current timestamp"
+  ],
+  "references": [
+    {
+      "label": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/"
+    },
+    {
+      "label": "Guide: Unix Timestamps Explained",
+      "url": "/guides/unix-timestamps-explained"
+    },
+    {
+      "label": "Blog: Unix Timestamp Converter",
+      "url": "/blog/unix-timestamp-converter"
+    }
   ]
 }

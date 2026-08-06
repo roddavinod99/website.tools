@@ -44,5 +44,11 @@
     "Configurable collapse of attributes and text",
     "Original vs. minified size savings",
     "Copy and download the minified output"
+  ],
+  "references": [
+    {
+      "label": "HTML Living Standard",
+      "url": "https://html.spec.whatwg.org/"
+    }
   ]
 }

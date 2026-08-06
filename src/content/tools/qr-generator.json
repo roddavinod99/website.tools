@@ -47,5 +47,15 @@
     "Custom foreground, background, and logo",
     "SVG, PNG, and JPEG export",
     "Four error-correction levels"
+  ],
+  "references": [
+    {
+      "label": "ISO/IEC 18004 — QR Code",
+      "url": "https://www.iso.org/standard/62021.html"
+    },
+    {
+      "label": "Blog: Create QR Codes for Free",
+      "url": "/blog/create-qr-codes-for-free"
+    }
   ]
 }

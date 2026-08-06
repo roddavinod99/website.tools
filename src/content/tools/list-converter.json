@@ -40,5 +40,11 @@
     "Custom delimiter control",
     "Real-time conversion as you paste",
     "Copy and download the output"
+  ],
+  "references": [
+    {
+      "label": "RFC 4180 — CSV",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180"
+    }
   ]
 }

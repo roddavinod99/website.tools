@@ -47,5 +47,11 @@
     "Adjustable width and character density",
     "Copy to clipboard or download as text",
     "Live preview while you type"
+  ],
+  "references": [
+    {
+      "label": "ANSI escape sequences",
+      "url": "https://en.wikipedia.org/wiki/ANSI_escape_code"
+    }
   ]
 }

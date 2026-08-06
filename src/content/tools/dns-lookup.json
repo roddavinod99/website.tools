@@ -46,5 +46,19 @@
     "Resolve A, AAAA, MX, NS, TXT, and CNAME records",
     "Live results from real DNS servers",
     "Query against a chosen nameserver"
+  ],
+  "references": [
+    {
+      "label": "DNSSEC — RFC 4033",
+      "url": "https://www.rfc-editor.org/rfc/rfc4033"
+    },
+    {
+      "label": "IANA — DNS parameters",
+      "url": "https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml"
+    },
+    {
+      "label": "Blog: DNS Lookup Tool",
+      "url": "/blog/dns-lookup-tool"
+    }
   ]
 }

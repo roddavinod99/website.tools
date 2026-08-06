@@ -37,5 +37,11 @@
     "Expand CIDR blocks to individual IPs",
     "Supports large ranges with pagination",
     "Export the full IP list"
+  ],
+  "references": [
+    {
+      "label": "RFC 4632 — CIDR",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632"
+    }
   ]
 }

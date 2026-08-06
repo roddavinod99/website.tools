@@ -47,5 +47,15 @@
     "Presets and @-macro shortcuts",
     "Preview the next scheduled runs",
     "Timezone-aware scheduling"
+  ],
+  "references": [
+    {
+      "label": "cron(8) — man page",
+      "url": "https://man7.org/linux/man-pages/man5/crontab.5.html"
+    },
+    {
+      "label": "Blog: Cron Expression Generator",
+      "url": "/blog/cron-expression-generator"
+    }
   ]
 }

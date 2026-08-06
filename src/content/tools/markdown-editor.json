@@ -47,5 +47,11 @@
     "GitHub-flavored Markdown support",
     "Export the rendered HTML",
     "Focused, distraction-free editor"
+  ],
+  "references": [
+    {
+      "label": "Markdown spec",
+      "url": "https://spec.commonmark.org/0.30/"
+    }
   ]
 }

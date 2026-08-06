@@ -37,5 +37,11 @@
     "Convert IPv4 between decimal, hex, binary, and dotted",
     "Real-time conversion across all formats",
     "Copy any representation"
+  ],
+  "references": [
+    {
+      "label": "RFC 791 — IPv4",
+      "url": "https://www.rfc-editor.org/rfc/rfc791"
+    }
   ]
 }

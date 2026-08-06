@@ -47,5 +47,15 @@
     "Real-time error detection with line numbers",
     "Custom indentation and newline handling",
     "Copy and download the formatted XML"
+  ],
+  "references": [
+    {
+      "label": "XML 1.0 — W3C",
+      "url": "https://www.w3.org/TR/REC-xml/"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

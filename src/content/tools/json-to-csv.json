@@ -47,5 +47,19 @@
     "Custom delimiter and quote handling",
     "Flatten nested objects to columns",
     "Download the resulting CSV file"
+  ],
+  "references": [
+    {
+      "label": "RFC 4180 — CSV",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    },
+    {
+      "label": "Blog: Convert JSON to CSV for Excel",
+      "url": "/blog/convert-json-to-csv-for-excel"
+    }
   ]
 }

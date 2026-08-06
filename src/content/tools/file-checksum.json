@@ -45,5 +45,11 @@
     "Drag-and-drop files up to 10 MB",
     "Compare files against an expected hash",
     "Copy individual checksums"
+  ],
+  "references": [
+    {
+      "label": "FIPS 180-4 — SHA",
+      "url": "https://csrc.nist.gov/publications/detail/fips/180/4/final"
+    }
   ]
 }

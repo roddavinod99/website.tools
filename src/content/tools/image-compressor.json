@@ -44,5 +44,19 @@
     "Quality and preset controls",
     "Batch processing with download-all",
     "Before/after preview and size savings"
+  ],
+  "references": [
+    {
+      "label": "MDN — image formats",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types"
+    },
+    {
+      "label": "Guide: Image Optimization",
+      "url": "/guides/image-optimization-guide"
+    },
+    {
+      "label": "Blog: Image Compressor for Web",
+      "url": "/blog/image-compressor-for-web"
+    }
   ]
 }

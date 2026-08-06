@@ -46,5 +46,11 @@
     "Obfuscate text with hex, binary, ROT13, and Base64",
     "Multiple encoding methods at once",
     "Copy any encoded form"
+  ],
+  "references": [
+    {
+      "label": "crypto — MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Crypto"
+    }
   ]
 }

@@ -43,5 +43,15 @@
     "Normalize emails to canonical form",
     "Remove plus aliases and comments",
     "Lowercase domains for comparisons"
+  ],
+  "references": [
+    {
+      "label": "RFC 5322 — email format",
+      "url": "https://www.rfc-editor.org/rfc/rfc5322"
+    },
+    {
+      "label": "RFC 6531 — internationalized",
+      "url": "https://www.rfc-editor.org/rfc/rfc6531"
+    }
   ]
 }

@@ -44,5 +44,11 @@
     "Configurable spacing and letter case",
     "Real-time conversion as you type",
     "Copy or download output"
+  ],
+  "references": [
+    {
+      "label": "MDN — parseInt radix",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt"
+    }
   ]
 }

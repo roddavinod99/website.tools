@@ -46,5 +46,11 @@
     "Count characters, bytes, and code points",
     "Encoding-aware measurement",
     "Real-time results while typing"
+  ],
+  "references": [
+    {
+      "label": "MDN — String.length",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length"
+    }
   ]
 }

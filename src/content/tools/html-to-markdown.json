@@ -44,5 +44,11 @@
     "Preserves headings, lists, links, and images",
     "Configurable conversion options",
     "Copy the generated Markdown"
+  ],
+  "references": [
+    {
+      "label": "Markdown spec",
+      "url": "https://spec.commonmark.org/0.30/"
+    }
   ]
 }

@@ -43,5 +43,11 @@
     "Parse HTTP request and response headers",
     "Break down each header field",
     "Copy individual header values"
+  ],
+  "references": [
+    {
+      "label": "MDN — HTTP headers",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
+    }
   ]
 }

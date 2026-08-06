@@ -49,5 +49,11 @@
     "Evaluate math expressions in real time",
     "Functions, constants, and variables",
     "Full operator precedence"
+  ],
+  "references": [
+    {
+      "label": "MDN — Math",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math"
+    }
   ]
 }

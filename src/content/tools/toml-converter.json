@@ -47,5 +47,15 @@
     "Preserves tables, arrays, and primitives",
     "Real-time conversion with validation",
     "Copy and download the output"
+  ],
+  "references": [
+    {
+      "label": "TOML v1.0.0 spec",
+      "url": "https://toml.io/en/v1.0.0"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

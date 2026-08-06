@@ -47,5 +47,11 @@
     "Real-time conversion as you type",
     "Multiple case options at once",
     "Copy any variant instantly"
+  ],
+  "references": [
+    {
+      "label": "Unicode — case mapping",
+      "url": "https://unicode.org/charts/case/"
+    }
   ]
 }

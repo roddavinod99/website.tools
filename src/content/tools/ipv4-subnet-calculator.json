@@ -38,5 +38,15 @@
     "Usable host range and counts",
     "Wildcard mask calculation",
     "Copy any computed value"
+  ],
+  "references": [
+    {
+      "label": "RFC 4632 — CIDR",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632"
+    },
+    {
+      "label": "Blog: IP Subnet Calculator",
+      "url": "/blog/ip-subnet-calculator"
+    }
   ]
 }

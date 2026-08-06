@@ -47,5 +47,19 @@
     "Verify signatures when a secret is provided",
     "Expiry and claim analysis",
     "Copy any decoded value"
+  ],
+  "references": [
+    {
+      "label": "RFC 7519 — JWT",
+      "url": "https://www.rfc-editor.org/rfc/rfc7519"
+    },
+    {
+      "label": "Guide: Understanding JWT Tokens",
+      "url": "/guides/understanding-jwt"
+    },
+    {
+      "label": "Blog: Decode JWT Tokens Instantly",
+      "url": "/blog/decode-jwt-tokens-instantly"
+    }
   ]
 }

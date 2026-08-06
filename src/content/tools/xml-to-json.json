@@ -46,5 +46,15 @@
     "Preserve attributes and child elements",
     "Pretty-printed output for readability",
     "Copy and download the JSON"
+  ],
+  "references": [
+    {
+      "label": "XML 1.0 — W3C",
+      "url": "https://www.w3.org/TR/REC-xml/"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

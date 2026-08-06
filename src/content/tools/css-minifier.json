@@ -47,5 +47,15 @@
     "Preserve important structural characters",
     "Show size before and after minification",
     "Copy and download the minified CSS"
+  ],
+  "references": [
+    {
+      "label": "CSS — MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    },
+    {
+      "label": "Guide: CSS Minification",
+      "url": "/guides/css-minification-guide"
+    }
   ]
 }

@@ -46,5 +46,11 @@
     "Pick colors from anywhere on screen",
     "HEX, RGB, and HSL values at once",
     "Color history for quick reuse"
+  ],
+  "references": [
+    {
+      "label": "MDN — Color",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Color"
+    }
   ]
 }

@@ -42,5 +42,11 @@
     "Generate bcrypt hashes with configurable rounds",
     "Verify passwords against a stored hash",
     "Copy the generated hash"
+  ],
+  "references": [
+    {
+      "label": "OpenBSD — bcrypt",
+      "url": "https://www.openbsd.org/papers/bcrypt-paper.pdf"
+    }
   ]
 }

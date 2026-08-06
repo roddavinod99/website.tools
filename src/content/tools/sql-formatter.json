@@ -47,5 +47,15 @@
     "Control keyword case and comma placement",
     "Collapse or expand long statements",
     "Validation feedback on malformed queries"
+  ],
+  "references": [
+    {
+      "label": "ISO/IEC 9075 — SQL standard",
+      "url": "https://www.iso.org/standard/76583.html"
+    },
+    {
+      "label": "Blog: SQL Formatter Online",
+      "url": "/blog/sql-formatter-online"
+    }
   ]
 }

@@ -40,5 +40,11 @@
     "Multiple escape formats: hex, decimal, \\u escapes",
     "Decode Unicode escapes back to text",
     "Real-time conversion"
+  ],
+  "references": [
+    {
+      "label": "Unicode Consortium",
+      "url": "https://www.unicode.org/versions/latest/"
+    }
   ]
 }

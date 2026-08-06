@@ -47,5 +47,15 @@
     "Reading time estimate",
     "Flesch readability score",
     "Real-time as you type"
+  ],
+  "references": [
+    {
+      "label": "Flesch–Kincaid readability",
+      "url": "https://en.wikipedia.org/wiki/Flesch-Kincaid_reading_level"
+    },
+    {
+      "label": "Blog: Word Counter with Readability",
+      "url": "/blog/word-counter-readability"
+    }
   ]
 }

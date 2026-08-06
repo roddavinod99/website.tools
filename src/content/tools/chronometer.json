@@ -47,5 +47,11 @@
     "Precision stopwatch with lap times",
     "Start, pause, reset, and lap controls",
     "Export lap history"
+  ],
+  "references": [
+    {
+      "label": "MDN — performance.now",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Performance/now"
+    }
   ]
 }

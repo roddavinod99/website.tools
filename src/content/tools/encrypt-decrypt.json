@@ -45,5 +45,11 @@
     "Passphrase-based key derivation",
     "Copy ciphertext or plaintext instantly",
     "Detect and decrypt supported ciphertexts"
+  ],
+  "references": [
+    {
+      "label": "NIST AES — FIPS 197",
+      "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf"
+    }
   ]
 }

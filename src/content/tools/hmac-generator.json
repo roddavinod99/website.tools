@@ -42,5 +42,19 @@
     "Compute HMAC with SHA-256, SHA-512, and more",
     "Secret key input with live output",
     "Bulk mode for multiple messages"
+  ],
+  "references": [
+    {
+      "label": "RFC 2104 — HMAC",
+      "url": "https://www.rfc-editor.org/rfc/rfc2104"
+    },
+    {
+      "label": "RFC 4868 — HMAC-SHA",
+      "url": "https://www.rfc-editor.org/rfc/rfc4868"
+    },
+    {
+      "label": "Blog: Hash Generator Online",
+      "url": "/blog/hash-generator-online"
+    }
   ]
 }

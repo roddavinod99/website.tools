@@ -47,5 +47,11 @@
     "Choose how many items and starting text",
     "Copy to clipboard or download",
     "Bulk generation for mockups"
+  ],
+  "references": [
+    {
+      "label": "Lorem ipsum origin",
+      "url": "https://en.wikipedia.org/wiki/Lorem_ipsum"
+    }
   ]
 }

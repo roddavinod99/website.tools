@@ -47,5 +47,11 @@
     "Correct types and json struct tags",
     "Nested struct generation",
     "Copy or download the Go code"
+  ],
+  "references": [
+    {
+      "label": "Go — encoding/json",
+      "url": "https://pkg.go.dev/encoding/json"
+    }
   ]
 }

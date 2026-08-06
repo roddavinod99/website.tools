@@ -45,5 +45,11 @@
     "Generate random network ports",
     "Range control to stay in valid port space",
     "Bulk generation with copy support"
+  ],
+  "references": [
+    {
+      "label": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/"
+    }
   ]
 }

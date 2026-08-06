@@ -47,5 +47,11 @@
     "Audible playback of the encoded signal",
     "Customizable timing and separators",
     "Copy or share the encoded message"
+  ],
+  "references": [
+    {
+      "label": "ITU — Morse code",
+      "url": "https://www.itu.int/rec/R-REC-M.1677/en"
+    }
   ]
 }

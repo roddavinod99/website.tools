@@ -46,5 +46,11 @@
     "Extract browser, OS, and device from user agents",
     "Detailed breakdown with versions",
     "Real-time parsing as you paste"
+  ],
+  "references": [
+    {
+      "label": "MDN — User-Agent header",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent"
+    }
   ]
 }

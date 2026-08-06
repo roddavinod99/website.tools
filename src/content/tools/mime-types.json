@@ -39,5 +39,11 @@
     "Look up MIME types by file extension",
     "Reverse lookup by MIME type",
     "Searchable reference table"
+  ],
+  "references": [
+    {
+      "label": "IANA — MIME types",
+      "url": "https://www.iana.org/assignments/media-types/media-types.xhtml"
+    }
   ]
 }

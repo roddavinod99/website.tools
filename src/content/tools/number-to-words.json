@@ -46,5 +46,11 @@
     "Convert numbers to written words",
     "Handles large numbers and decimals",
     "Copy the word form of the number"
+  ],
+  "references": [
+    {
+      "label": "Unicode — number patterns",
+      "url": "https://www.unicode.org/reports/tr38/"
+    }
   ]
 }

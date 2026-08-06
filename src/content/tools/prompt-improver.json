@@ -47,5 +47,11 @@
     "Suggest concrete, actionable improvements",
     "Tone and detail adjustments",
     "Side-by-side diff of before and after"
+  ],
+  "references": [
+    {
+      "label": "Prompt engineering — OpenAI",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    }
   ]
 }

@@ -42,5 +42,11 @@
     "Generate RSA key pairs at 1024–4096 bits",
     "PEM export for public and private keys",
     "Copy keys to clipboard"
+  ],
+  "references": [
+    {
+      "label": "RFC 8017 — RSA",
+      "url": "https://www.rfc-editor.org/rfc/rfc8017"
+    }
   ]
 }

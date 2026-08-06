@@ -43,5 +43,11 @@
     "Convert between numeric and symbolic modes",
     "Visual checkbox grid for permissions",
     "Copy the chmod command"
+  ],
+  "references": [
+    {
+      "label": "chmod(1) — man page",
+      "url": "https://man7.org/linux/man-pages/man1/chmod.1.html"
+    }
   ]
 }

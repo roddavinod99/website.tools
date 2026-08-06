@@ -46,5 +46,11 @@
     "Copy EXIF metadata between images",
     "Preserve original image quality",
     "Batch transfer support"
+  ],
+  "references": [
+    {
+      "label": "EXIF — CIPA DC-008",
+      "url": "https://www.cipa.jp/std/std-sec-e.html"
+    }
   ]
 }

@@ -47,5 +47,15 @@
     "8-bit byte grouping with optional separators",
     "Handles ASCII and Unicode input",
     "Copy or download the converted output"
+  ],
+  "references": [
+    {
+      "label": "Rust — binary format",
+      "url": "https://doc.rust-lang.org/reference/expressions/literal-expr.html"
+    },
+    {
+      "label": "MDN — TextEncoder",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder"
+    }
   ]
 }

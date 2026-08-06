@@ -48,5 +48,11 @@
     "Batch conversion table for all units in a category",
     "Swap input and output with one click",
     "Save favorite conversions"
+  ],
+  "references": [
+    {
+      "label": "BIPM — SI units",
+      "url": "https://www.bipm.org/en/si"
+    }
   ]
 }

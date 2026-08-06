@@ -40,5 +40,11 @@
     "See live key, code, and location values",
     "Reference table for common keys",
     "Works without a mouse"
+  ],
+  "references": [
+    {
+      "label": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/"
+    }
   ]
 }

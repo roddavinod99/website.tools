@@ -47,5 +47,15 @@
     "Preserves nested structures and types",
     "Real-time conversion as you type",
     "Copy and download the output"
+  ],
+  "references": [
+    {
+      "label": "YAML 1.2 spec",
+      "url": "https://yaml.org/spec/1.2.2/"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

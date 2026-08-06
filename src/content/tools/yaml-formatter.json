@@ -44,5 +44,15 @@
     "Minify output for compact configuration",
     "Syntax error reporting with location hints",
     "Copy and download the formatted YAML"
+  ],
+  "references": [
+    {
+      "label": "YAML 1.2 spec",
+      "url": "https://yaml.org/spec/1.2.2/"
+    },
+    {
+      "label": "Guide: Data Serialization Formats",
+      "url": "/guides/data-serialization-formats"
+    }
   ]
 }

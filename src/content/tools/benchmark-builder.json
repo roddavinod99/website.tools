@@ -49,5 +49,11 @@
     "Compare multiple implementations side by side",
     "Configurable iterations and warm-up runs",
     "Results table with ops/sec and confidence"
+  ],
+  "references": [
+    {
+      "label": "MDN — performance.now()",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Performance/now"
+    }
   ]
 }

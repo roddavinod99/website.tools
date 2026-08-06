@@ -46,5 +46,11 @@
     "Percentages, change, and increase/decrease",
     "Quick presets for common math",
     "Real-time results"
+  ],
+  "references": [
+    {
+      "label": "MDN — arithmetic",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators"
+    }
   ]
 }

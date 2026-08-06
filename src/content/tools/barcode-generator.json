@@ -47,5 +47,15 @@
     "Custom dimensions and color",
     "SVG and PNG export",
     "Live validation of the barcode value"
+  ],
+  "references": [
+    {
+      "label": "ISO/IEC 15416 — barcode",
+      "url": "https://www.iso.org/standard/46149.html"
+    },
+    {
+      "label": "Blog: Create QR Codes for Free",
+      "url": "/blog/create-qr-codes-for-free"
+    }
   ]
 }

@@ -47,5 +47,15 @@
     "Compare text with a visual side-by-side diff",
     "Word- and line-level change detection",
     "Highlight additions and deletions"
+  ],
+  "references": [
+    {
+      "label": "diff (GNU)",
+      "url": "https://www.gnu.org/software/diffutils/"
+    },
+    {
+      "label": "Blog: Text Diff Checker Online",
+      "url": "/blog/text-diff-checker-online"
+    }
   ]
 }

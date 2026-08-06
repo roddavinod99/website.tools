@@ -47,5 +47,15 @@
     "Correctly types nested objects and arrays",
     "Optional, readonly, and export options",
     "Copy or download the generated code"
+  ],
+  "references": [
+    {
+      "label": "TypeScript — interfaces",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+    },
+    {
+      "label": "Guide: Getting Started with JSON",
+      "url": "/guides/getting-started-json"
+    }
   ]
 }

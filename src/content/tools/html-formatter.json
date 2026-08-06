@@ -44,5 +44,15 @@
     "Syntax error reporting with location hints",
     "Custom indentation and attribute wrapping",
     "Real-time output as you type"
+  ],
+  "references": [
+    {
+      "label": "HTML Living Standard",
+      "url": "https://html.spec.whatwg.org/"
+    },
+    {
+      "label": "Guide: HTML Encoding & Special Characters",
+      "url": "/guides/html-encoding-guide"
+    }
   ]
 }

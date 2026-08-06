@@ -47,5 +47,11 @@
     "Searchable emoji library",
     "Category filtering",
     "One-click copy to clipboard"
+  ],
+  "references": [
+    {
+      "label": "Unicode — emoji",
+      "url": "https://www.unicode.org/emoji/charts/emoji-list.html"
+    }
   ]
 }

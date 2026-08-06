@@ -42,5 +42,11 @@
     "Reference for all HTTP status codes",
     "Searchable by number or phrase",
     "Copy any status code"
+  ],
+  "references": [
+    {
+      "label": "IANA — HTTP status codes",
+      "url": "https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml"
+    }
   ]
 }

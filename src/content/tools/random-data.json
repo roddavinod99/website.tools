@@ -48,5 +48,11 @@
     "Locale-aware data for realistic results",
     "Seed-based reproducible generation",
     "JSON, CSV, and more export formats"
+  ],
+  "references": [
+    {
+      "label": "MDN — crypto.getRandomValues",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues"
+    }
   ]
 }

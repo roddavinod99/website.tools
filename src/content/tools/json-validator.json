@@ -47,5 +47,19 @@
     "Line and column reporting for quick fixes",
     "Handles deeply nested and large documents",
     "Copy or download validated output"
+  ],
+  "references": [
+    {
+      "label": "RFC 8259 — JSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259"
+    },
+    {
+      "label": "MDN — JSON.parse",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"
+    },
+    {
+      "label": "Guide: Getting Started with JSON",
+      "url": "/guides/getting-started-json"
+    }
   ]
 }

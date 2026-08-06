@@ -47,5 +47,11 @@
     "Multiple platform sizes in one export",
     "Download as ICO or PNG set",
     "Live preview of the result"
+  ],
+  "references": [
+    {
+      "label": "MDN — favicon",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link/rel/favicon"
+    }
   ]
 }

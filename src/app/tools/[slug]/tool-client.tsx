@@ -42,12 +42,14 @@ interface ToolContent {
   commonMistakes: string[];
   faq: string[];
   features?: string[];
+  references?: { label: string; url: string }[];
 }
 
 interface ToolClientProps {
   tool: ToolData;
   content: ToolContent;
   sameCategory: ToolData[];
+  related: ToolData[];
   popularTools: ToolData[];
   specificGuide: { slug: string; title: string; description: string; readTime: string } | null;
   tocItems: TocItem[];
@@ -78,6 +80,9 @@ function generateTocItems(content: ToolContent): TocItem[] {
   }
   if (content.faq.length > 0) {
     items.push({ id: "faq", label: "FAQ", level: 1 });
+  }
+  if (content.references && content.references.length > 0) {
+    items.push({ id: "references", label: "References", level: 1 });
   }
   items.push({ id: "learning-resources", label: "Learning Resources", level: 1 });
   items.push({ id: "related-tools", label: "Related Tools", level: 1 });
@@ -186,6 +191,7 @@ export function ToolClient({
   tool, 
   content, 
   sameCategory, 
+  related,
   popularTools, 
   specificGuide, 
   tocItems,
@@ -493,6 +499,34 @@ export function ToolClient({
                 </div>
               </>
             )}
+            {related.length > 0 && (
+              <>
+                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                  Related Tools
+                </h3>
+                <div className="mt-3 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+                  {related.slice(0, 6).map((rt) => (
+                    <ToolCard
+                      key={rt.id}
+                      tool={{
+                        id: rt.id,
+                        name: rt.name,
+                        description: rt.description,
+                        category: rt.category,
+                        slug: rt.slug,
+                        popularity: rt.popularity,
+                        featured: rt.featured,
+                        trending: rt.trending,
+                        new: rt.new,
+                        icon: rt.icon,
+                      }}
+                      variant="related"
+                      size="sm"
+                    />
+                  ))}
+                </div>
+              </>
+            )}
             {popularTools.length > 0 && (
               <>
                 <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
@@ -524,6 +558,51 @@ export function ToolClient({
           </div>
         </div>
       </CollapsibleSection>
+
+      {/* References */}
+      {content.references && content.references.length > 0 && (
+        <CollapsibleSection
+          title="References"
+          defaultOpen={true}
+          className="border-b border-surface-200 dark:border-dark-border"
+        >
+          <div className="container py-8 md:py-10">
+            <div className="mx-auto max-w-3xl prose">
+              <p className="mt-2 text-surface-500 dark:text-dark-muted">
+                Authoritative specifications, standards, and in-depth reading for {tool.name}.
+              </p>
+              <ul className="mt-4 space-y-2">
+                {content.references.map((ref) => {
+                  const isInternal = ref.url.startsWith("/");
+                  if (isInternal) {
+                    return (
+                      <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
+                        <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                        <Link href={ref.url} className="text-surface-600 hover:text-brand-600 dark:text-dark-muted dark:hover:text-brand-400 underline">
+                          {ref.label}
+                        </Link>
+                      </li>
+                    );
+                  }
+                  return (
+                    <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
+                      <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                      <a
+                        href={ref.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand-600 hover:text-brand-700 underline dark:text-brand-400"
+                      >
+                        {ref.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        </CollapsibleSection>
+      )}
 
       {/* Learning Resources */}
       <CollapsibleSection

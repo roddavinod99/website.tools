@@ -44,5 +44,11 @@
     "Entropy estimation for each token",
     "Bulk generation with copy support",
     "Cryptographically secure randomness"
+  ],
+  "references": [
+    {
+      "label": "OWASP — session management",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+    }
   ]
 }

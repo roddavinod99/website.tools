@@ -44,5 +44,15 @@
     "Batch resize multiple files at once",
     "Preset sizes and aspect-ratio lock",
     "Format conversion on export"
+  ],
+  "references": [
+    {
+      "label": "HTML — image dimensions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"
+    },
+    {
+      "label": "Guide: Image Optimization",
+      "url": "/guides/image-optimization-guide"
+    }
   ]
 }

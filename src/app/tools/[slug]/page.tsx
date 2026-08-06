@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { allTools, siteConfig, learningTopics, categories } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
 import { featuresBySlug } from "@/lib/data/tool-features";
+import { findRelatedTools } from "@/lib/related-tools";
 import { ToolClient } from "./tool-client";
 
 interface Props {
@@ -63,14 +64,10 @@ export default async function ToolPage({ params }: Props) {
   const content = await getToolContent(slug);
   if (!content) notFound();
 
-  const sameCategory = allTools
-    .filter((t) => t.category === tool.category && t.id !== tool.id)
-    .slice(0, 4);
-
-  const popularTools = allTools
-    .filter((t) => t.id !== tool.id && !sameCategory.find((st) => st.id === t.id))
-    .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
-    .slice(0, 3);
+  const relatedGroups = findRelatedTools(tool, allTools);
+  const sameCategory = relatedGroups.sameCategory;
+  const relatedTools = relatedGroups.related;
+  const popularTools = relatedGroups.popular;
 
   const toolGuideMap: Record<string, string> = {
     "json-formatter": "getting-started-json",
@@ -118,6 +115,7 @@ export default async function ToolPage({ params }: Props) {
     { id: "best-practices", label: "Best Practices", level: 1 },
     { id: "common-mistakes", label: "Common Mistakes", level: 1 },
     { id: "faq", label: "FAQ", level: 1 },
+    ...(content.references?.length ? [{ id: "references", label: "References", level: 1 }] : []),
     { id: "related-tools", label: "Related Tools", level: 1 },
     { id: "learning-resources", label: "Learning Resources", level: 1 },
   ];
@@ -244,6 +242,7 @@ export default async function ToolPage({ params }: Props) {
         tool={tool}
         content={content}
         sameCategory={sameCategory}
+        related={relatedTools}
         popularTools={popularTools}
         specificGuide={specificGuide ?? null}
         tocItems={tocItems}

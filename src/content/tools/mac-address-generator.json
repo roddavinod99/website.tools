@@ -39,5 +39,11 @@
     "Generate random MAC addresses",
     "Custom OUI prefix support",
     "Bulk generation with copy"
+  ],
+  "references": [
+    {
+      "label": "IEEE — MAC addresses",
+      "url": "https://standards.ieee.org/products-programs/regauth/roc/"
+    }
   ]
 }

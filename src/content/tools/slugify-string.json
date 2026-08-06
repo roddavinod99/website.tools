@@ -40,5 +40,11 @@
     "Turn any string into a URL slug",
     "Real-time output as you type",
     "Copy the generated slug"
+  ],
+  "references": [
+    {
+      "label": "RFC 3986 — URI syntax",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986"
+    }
   ]
 }

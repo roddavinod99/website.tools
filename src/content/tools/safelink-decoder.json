@@ -42,5 +42,11 @@
     "Decode safelink and URL-shortener wrappers",
     "Reveal the underlying redirect target",
     "Copy the decoded URL"
+  ],
+  "references": [
+    {
+      "label": "RFC 3986 — URL encoding",
+      "url": "https://www.rfc-editor.org/rfc/rfc3986"
+    }
   ]
 }

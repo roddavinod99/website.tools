@@ -47,5 +47,11 @@
     "Remove duplicates and empty lines",
     "Randomize line order",
     "Copy the sorted output"
+  ],
+  "references": [
+    {
+      "label": "MDN — Array.sort",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+    }
   ]
 }

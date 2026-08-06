@@ -47,5 +47,11 @@
     "Unescape escaped strings back to readable text",
     "Per-target escaping rules to match the context",
     "Real-time conversion with copy support"
+  ],
+  "references": [
+    {
+      "label": "MDN — escape sequences",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify"
+    }
   ]
 }

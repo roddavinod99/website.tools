@@ -47,5 +47,11 @@
     "Automatic delimiter detection",
     "Header row and type inference options",
     "Copy and download the JSON output"
+  ],
+  "references": [
+    {
+      "label": "RFC 4180 — CSV",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180"
+    }
   ]
 }

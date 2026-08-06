@@ -48,5 +48,15 @@
     "Syntax highlighting for selectors and properties",
     "Sort properties and remove empty rules",
     "Real-time formatting with copy support"
+  ],
+  "references": [
+    {
+      "label": "CSS — MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    },
+    {
+      "label": "Guide: CSS Minification",
+      "url": "/guides/css-minification-guide"
+    }
   ]
 }

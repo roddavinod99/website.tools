@@ -45,5 +45,19 @@
     "HMAC variants with a secret key",
     "Salt support and bulk per-line mode",
     "Hash files with drag-and-drop"
+  ],
+  "references": [
+    {
+      "label": "FIPS 180-4 — SHA",
+      "url": "https://csrc.nist.gov/publications/detail/fips/180/4/final"
+    },
+    {
+      "label": "RFC 1321 — MD5",
+      "url": "https://www.rfc-editor.org/rfc/rfc1321"
+    },
+    {
+      "label": "Blog: Hash Generator Online",
+      "url": "/blog/hash-generator-online"
+    }
   ]
 }

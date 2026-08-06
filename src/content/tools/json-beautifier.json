@@ -44,5 +44,15 @@
     "Colored syntax highlighting for readability",
     "Open files or paste directly",
     "Copy and download the formatted result"
+  ],
+  "references": [
+    {
+      "label": "RFC 8259 — JSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259"
+    },
+    {
+      "label": "Guide: Getting Started with JSON",
+      "url": "/guides/getting-started-json"
+    }
   ]
 }

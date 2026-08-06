@@ -47,5 +47,15 @@
     "Highlight additions, deletions, and changes",
     "Line numbers and match counts",
     "Copy the unified diff"
+  ],
+  "references": [
+    {
+      "label": "diff (GNU)",
+      "url": "https://www.gnu.org/software/diffutils/"
+    },
+    {
+      "label": "Blog: Text Diff Checker Online",
+      "url": "/blog/text-diff-checker-online"
+    }
   ]
 }

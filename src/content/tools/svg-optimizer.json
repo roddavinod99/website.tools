@@ -47,5 +47,11 @@
     "Strip metadata and unused definitions",
     "Report exact size savings",
     "Copy or download the optimized SVG"
+  ],
+  "references": [
+    {
+      "label": "SVG 2 — W3C",
+      "url": "https://www.w3.org/TR/SVG2/"
+    }
   ]
 }

@@ -60,6 +60,7 @@ export interface ToolContent {
   commonMistakes: string[];
   faq: string[];
   features?: string[];
+  references?: { label: string; url: string }[];
 }
 
 export interface FooterGroup {

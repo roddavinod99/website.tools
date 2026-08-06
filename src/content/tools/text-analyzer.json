@@ -47,5 +47,15 @@
     "Flesch reading ease and grade level scores",
     "Keyword density and character frequency",
     "Reading time estimate"
+  ],
+  "references": [
+    {
+      "label": "Flesch–Kincaid readability",
+      "url": "https://en.wikipedia.org/wiki/Flesch-Kincaid_reading_level"
+    },
+    {
+      "label": "Blog: Word Counter with Readability",
+      "url": "/blog/word-counter-readability"
+    }
   ]
 }

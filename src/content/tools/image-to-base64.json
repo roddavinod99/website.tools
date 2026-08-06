@@ -44,5 +44,23 @@
     "Drag-and-drop file upload up to 10 MB",
     "Ready-to-paste HTML, CSS, and JS snippets",
     "Optional image compression before encoding"
+  ],
+  "references": [
+    {
+      "label": "RFC 2397 — data: URLs",
+      "url": "https://www.rfc-editor.org/rfc/rfc2397"
+    },
+    {
+      "label": "MDN — data URLs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs"
+    },
+    {
+      "label": "Guide: Understanding Base64",
+      "url": "/guides/understanding-base64"
+    },
+    {
+      "label": "Blog: Base64 Encode/Decode Online",
+      "url": "/blog/base64-encode-decode-online"
+    }
   ]
 }

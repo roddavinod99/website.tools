@@ -47,5 +47,11 @@
     "GitHub-flavored Markdown support",
     "Live preview of the rendered result",
     "Copy the generated HTML"
+  ],
+  "references": [
+    {
+      "label": "Markdown spec",
+      "url": "https://spec.commonmark.org/0.30/"
+    }
   ]
 }

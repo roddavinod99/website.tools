@@ -47,5 +47,15 @@
     "Country-aware formatting and validation",
     "Break down country, area, and subscriber parts",
     "Copy the canonical E.164 form"
+  ],
+  "references": [
+    {
+      "label": "ITU-T E.164",
+      "url": "https://www.itu.int/rec/T-REC-E.164/en"
+    },
+    {
+      "label": "libphonenumber",
+      "url": "https://github.com/google/libphonenumber"
+    }
   ]
 }

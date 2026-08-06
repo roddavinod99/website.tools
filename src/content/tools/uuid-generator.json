@@ -47,5 +47,15 @@
     "Bulk generation up to 10,000 at once",
     "Uppercase, braces, and hyphen formatting",
     "JSON and CSV export of generated IDs"
+  ],
+  "references": [
+    {
+      "label": "RFC 9562 — UUID",
+      "url": "https://www.rfc-editor.org/rfc/rfc9562"
+    },
+    {
+      "label": "Blog: UUID v4 vs v7 Generator",
+      "url": "/blog/uuid-v4-vs-v7-generator"
+    }
   ]
 }

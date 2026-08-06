@@ -42,5 +42,11 @@
     "Generate sortable ULIDs",
     "Bulk generation with copy support",
     "Monotonic ordering for time-ordered IDs"
+  ],
+  "references": [
+    {
+      "label": "ULID spec",
+      "url": "https://github.com/ulid/spec"
+    }
   ]
 }

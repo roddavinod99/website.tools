@@ -44,5 +44,15 @@
     "Network, broadcast, and host ranges",
     "Wildcard masks and host counts",
     "Subnet table export"
+  ],
+  "references": [
+    {
+      "label": "RFC 4632 — CIDR",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632"
+    },
+    {
+      "label": "Blog: IP Subnet Calculator",
+      "url": "/blog/ip-subnet-calculator"
+    }
   ]
 }
