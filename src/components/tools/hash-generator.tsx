@@ -3,37 +3,16 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Copy, Download } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import {
+  md5Hex,
+  md5BytesHex,
+  ripemd160Hex,
+  sha224Hex,
+  hmacHex,
+  type HmacHashId,
+} from "@/lib/crypto-hash";
 
-// sha512-224/256 hand-rolled for unsupported WebCrypto envs
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CryptoJSApi = any;
-
-let cryptoJSPromise: Promise<CryptoJSApi> | null = null;
-function getCryptoJS(): Promise<CryptoJSApi> {
-  if (!cryptoJSPromise) cryptoJSPromise = import("crypto-js");
-  return cryptoJSPromise;
-}
-
-async function md5Hex(data: string): Promise<string> {
-  const C = await getCryptoJS();
-  return C.MD5(data).toString();
-}
-
-async function md5BytesHex(data: Uint8Array): Promise<string> {
-  const C = await getCryptoJS();
-  return C.MD5(C.lib.WordArray.create(data)).toString();
-}
-
-async function rmd160Hex(data: string): Promise<string> {
-  const C = await getCryptoJS();
-  return C.RIPEMD160(data).toString();
-}
-
-async function sha224(data: string): Promise<string> {
-  const C = await getCryptoJS();
-  return C.SHA224(data).toString();
-}
+// sha512-224/256 are hand-rolled for unsupported WebCrypto envs.
 
 const SHA512_K = [
   0x428a2f98d728ae22n, 0x7137449123ef65cdn, 0xb5c0fbcfec4d3b2fn, 0xe9b5dba58189dbbcn,
@@ -166,13 +145,13 @@ type HashAlgorithm = {
 const ALL_ALGORITHMS: HashAlgorithm[] = [
   { id: "MD5", label: "MD5", bits: 128, hash: async (d) => md5Hex(d) },
   { id: "SHA-1", label: "SHA-1", bits: 160, hash: async (d) => hexDigest("SHA-1", d) },
-  { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => sha224(d) },
+  { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => sha224Hex(d) },
   { id: "SHA-256", label: "SHA-256", bits: 256, hash: async (d) => hexDigest("SHA-256", d) },
   { id: "SHA-384", label: "SHA-384", bits: 384, hash: async (d) => hexDigest("SHA-384", d) },
   { id: "SHA-512", label: "SHA-512", bits: 512, hash: async (d) => hexDigest("SHA-512", d) },
   { id: "SHA-512/224", label: "SHA-512/224", bits: 224, hash: async (d) => sha512_224(d) },
   { id: "SHA-512/256", label: "SHA-512/256", bits: 256, hash: async (d) => sha512_256(d) },
-  { id: "RIPEMD-160", label: "RIPEMD-160", bits: 160, hash: async (d) => rmd160Hex(d) },
+  { id: "RIPEMD-160", label: "RIPEMD-160", bits: 160, hash: async (d) => ripemd160Hex(d) },
   { id: "CRC32", label: "CRC32", bits: 32, hash: async (d) => crc32(d) },
   { id: "CRC32C", label: "CRC32C", bits: 32, hash: async (d) => crc32c(d) },
 ];
@@ -184,29 +163,22 @@ async function hexDigest(algo: string, data: string): Promise<string> {
   return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-const CRYPTOJS_HMAC: Record<string, string> = {
-  MD5: "HmacMD5",
-  "SHA-1": "HmacSHA1",
-  "SHA-224": "HmacSHA224",
-  "SHA-256": "HmacSHA256",
-  "SHA-384": "HmacSHA384",
-  "SHA-512": "HmacSHA512",
-  "RIPEMD-160": "HmacRIPEMD160",
-};
+const HMAC_SUPPORTED: ReadonlySet<string> = new Set([
+  "MD5",
+  "SHA-1",
+  "SHA-224",
+  "SHA-256",
+  "SHA-384",
+  "SHA-512",
+  "RIPEMD-160",
+]);
 
 function canHmac(algoId: string): boolean {
-  return !!CRYPTOJS_HMAC[algoId];
+  return HMAC_SUPPORTED.has(algoId);
 }
 
 async function hmacDigest(algo: string, data: string, secret: string): Promise<string> {
-  const fn = CRYPTOJS_HMAC[algo];
-  if (fn) {
-    const C = await getCryptoJS();
-    return C[fn](data, secret).toString();
-  }
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: algo }, false, ["sign"]);
-  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(data));
-  return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hmacHex(algo as HmacHashId, data, secret);
 }
 
 function birthdayProb(bits: number): string {
