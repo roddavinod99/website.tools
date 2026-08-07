@@ -1247,6 +1247,136 @@ The registry should be the source of truth for:
 -   analytics
 -   feature discovery
 
+# Adding a New Tool
+
+Adding a tool touches several files. Missing any step silently degrades the
+page (a "coming soon" placeholder or a 404). Follow all of these steps.
+
+## 1. Registry entry — `src/lib/data/tools.ts`
+
+Add an object to the `allTools` array. Use a category-prefixed, sequential
+`id` (for example `u37`, `g16`, `c23`) and the **human** category name that
+already exists in `src/lib/data/categories.ts`.
+
+```ts
+{
+  id: "u37",
+  name: "String Comparator",
+  description: "Free online string comparison tool…",
+  category: "Utilities",
+  slug: "string-comparison",
+  popularity: 58,
+  icon: "Equal",
+  keywords: ["string", "compare", "comparison"],
+}
+```
+
+Optional fields: `featured`, `new`, `trending`, `worker`, `wasm`,
+`aliasSlugs`, `keywords`, `noindex`. The registry drives search indexing,
+sitemap generation, metadata, and the `/tools/[slug]` page.
+
+## 2. Component — `src/components/tools/<slug>.tsx`
+
+Create a `"use client"` component (or a plain component for simple tools)
+that exports a **named** function matching the name you register in step 3.
+
+```tsx
+export function StringComparator() { /* … */ }
+```
+
+## 3. Register the dynamic loader — `src/components/tools/dynamic-tool-loader.tsx`
+
+Every tool component MUST be added to the `toolLoaders` map in
+`src/components/tools/dynamic-tool-loader.tsx`. Without this the tool page
+renders the "coming soon" placeholder instead of your UI.
+
+```ts
+"string-comparison": () => import("./string-comparison").then((m) => ({ default: m.StringComparator })),
+```
+
+The exported component name in step 2 and the `.then((m) => m.X)` name here
+must match exactly.
+
+## 4. Content file — `src/content/tools/<slug>.json`
+
+Create a JSON file matching the `ToolContent` type (`src/types`). This file
+is **mandatory** — `src/app/tools/[slug]/page.tsx` calls `notFound()` if it
+is missing. Required keys are `whatItDoes`, `whyItExists`, `whoShouldUse`,
+`useCases`, `instructions`, `examples`, `bestPractices`, `commonMistakes`,
+`faq`; optional keys are `features` and `references`.
+
+Example shape:
+
+```json
+{
+  "whatItDoes": "…",
+  "whyItExists": "…",
+  "whoShouldUse": "…",
+  "useCases": ["…", "…"],
+  "instructions": ["…", "…"],
+  "examples": ["…", "…"],
+  "bestPractices": ["…", "…"],
+  "commonMistakes": ["…", "…"],
+  "faq": ["…"],
+  "features": ["…"],
+  "references": [{ "label": "…", "url": "…" }]
+}
+```
+
+## 5. Test fixture — `tests/fixtures/<category>.json`
+
+Add one entry to the fixture pack for your tool's category so the
+data-driven `tests/tools.spec.ts` covers it. `action` is an optional button
+label to press; `input`/`input2` fill the first/second textarea; `pattern`
+fills a regex box. Use an empty string when a field does not apply.
+
+```json
+{ "slug": "string-comparison", "category": "Utilities", "name": "String Comparator", "input": "a", "input2": "b", "action": "", "expect": "output" }
+```
+
+## E2E harness contract (`tests/tools.spec.ts`)
+
+The spec decides a tool "produced output" when it sees any of: an element
+with `data-testid="tool-output"`, an output textarea/pre/code with text, an
+`img`, an `svg`, or a table. Ensure your tool exposes one of these.
+
+-   Give the primary result `data-testid="tool-output"`.
+-   **The first textarea inside the tool section must be an editable input.**
+    If the first textarea is a read-only output, the spec's `.fill(...)` will
+    time out waiting for an editable element. Keep a read-only result element
+    that is NOT the first textarea, or omit the `input` for the fixture.
+
+## 6. Verify
+
+```bash
+npm run build          # generates .next/standalone for Playwright
+npm run test:tools     # runs data-driven fixtures against all tools
+```
+
+Visually confirm `/tools/<slug>` renders the tool (not the placeholder) and
+produces correct output before submitting.
+
+-----
+
+# Tool Component React Conventions
+
+Follow the repo's enforced lint rules when writing tool components:
+
+-   **Never call `setState` inside `useMemo`, a render, or an event - derive
+    values during render instead.** Calling a state setter from `useMemo` is
+    rejected by `react-hooks/set-state-in-render` and can loop infinitely.
+-   **Do not call impure functions (`Date.now`, `Math.random`, `crypto`…)
+    inside `useMemo` or during render.** Capture such values in event
+    handlers, `useEffect`, or `useState` initializers instead
+    (`react-hooks/purity`). For a tool that shows "now", set the timestamp
+    once via `useState(() => …)` and update it from a button click.
+-   Use `const` unless a value is reassigned (`prefer-const`), and remove
+    unused variables and imports (eslint will fail on them).
+-   Render output into an element carrying `data-testid="tool-output"` so the
+    e2e harness can detect it (see "Adding a New Tool").
+
+-----
+
 # Developer Tool Requirements
 
 Every new tool must include:
@@ -1350,18 +1480,36 @@ Avoid:
 
 Before submitting changes run:
 
-``` bash
+```bash
 npm run lint
 npm run typecheck
-npm run test
 npm run build
+npm run test:unit     # vitest; includes the bundle-size budget check
+npm run test:tools    # playwright data-driven fixture tests
 ```
 
-If available:
+Use the focused Playwright suites when working on one area:
 
-``` bash
-npm run test:e2e
+```bash
+npm run test:tools     # all tool fixtures (tests/tools.spec.ts)
+npm run test:a11y      # accessibility checks
+npm run test:api       # API routes
+npm run test:security  # security checks
+npm run test:snapshots # visual snapshots
 ```
+
+Important notes:
+
+-   **Build first.** Playwright auto-starts `node .next/standalone/server.js`
+    on port 3000 via `reuseExistingServer: true`, so a working
+    `npm run build` output must exist before running any Playwright suite.
+-   New tools are covered by the data-driven `tests/tools.spec.ts`, which
+    reads every `tests/fixtures/*.json`. Add a fixture entry for each new
+    tool (see "Adding a New Tool").
+-   `npm run test:unit` includes a bundle-size budget test that inspects
+    `.next/static/chunks`. A large shared/vendor chunk can cause this single
+    test to fail even when the new tool itself is small — treat a pre-existing
+    oversized chunk as separate from your change.
 
 Changes are not complete until all commands pass.
 

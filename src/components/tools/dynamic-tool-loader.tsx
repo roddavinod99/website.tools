@@ -136,6 +136,14 @@ const toolLoaders: Record<string, ToolLoader> = {
   "git-cheatsheet": () => import("./git-cheatsheet").then((m) => ({ default: m.GitCheatsheet })),
   "regex-memo": () => import("./regex-memo").then((m) => ({ default: m.RegexMemo })),
   "numeronym-generator": () => import("./numeronym-generator").then((m) => ({ default: m.NumeronymGenerator })),
+  "contrast-checker": () => import("./contrast-checker").then((m) => ({ default: m.ContrastChecker })),
+  "vcard-generator": () => import("./vcard-generator").then((m) => ({ default: m.VcardGenerator })),
+  "date-calculator": () => import("./date-calculator").then((m) => ({ default: m.DateCalculator })),
+  "date-formatter": () => import("./date-formatter").then((m) => ({ default: m.DateFormatter })),
+  "ipv6-calculator": () => import("./ipv6-calculator").then((m) => ({ default: m.Ipv6Calculator })),
+  "string-comparison": () => import("./string-comparison").then((m) => ({ default: m.StringComparison })),
+  "code-complexity": () => import("./code-complexity").then((m) => ({ default: m.CodeComplexity })),
+  "table-to-json": () => import("./table-to-json").then((m) => ({ default: m.TableToJson })),
 };
 
 // Pre-create dynamic components at module level (singletons)

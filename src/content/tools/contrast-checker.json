@@ -1,0 +1,62 @@
+{
+  "whatItDoes": "Checks the contrast ratio between a foreground text color and a background color, then reports whether the pair passes WCAG 2.2 AA or AAA requirements for normal text, large text, and UI components. Includes relative luminance calculation, a live preview panel, and a palette of common color pairs.",
+  "whyItExists": "Low-contrast text is one of the most common accessibility failures on the web and a leading cause of WCAG violations. Designers and developers need a fast, accurate way to verify that color choices meet the contrast thresholds required by WCAG 2.2 and other accessibility standards.",
+  "whoShouldUse": "UI and UX designers validating color systems, front-end developers building accessible interfaces, accessibility specialists auditing sites, and content teams ensuring readable text on any background.",
+  "useCases": [
+    "Verify text color contrast against a background before publishing a design",
+    "Audit an existing color palette to find AA or AAA compliant pairs",
+    "Check large-text and UI-component thresholds separately per WCAG 2.2",
+    "Pick a compliant text shade by previewing the ratio against your brand background"
+  ],
+  "instructions": [
+    "Pick a foreground text color using the color inputs or HEX text boxes",
+    "Pick a background color the same way",
+    "Read the computed contrast ratio and the AA/AAA pass status",
+    "Use the live preview to see how the colors look together",
+    "Toggle the preview for normal text, large text, and UI components",
+    "Use the palette list to check multiple common color pairs at once"
+  ],
+  "examples": [
+    "#ffffff on #000000 → ratio 21.00:1 → AAA Pass for all text sizes",
+    "#767676 on #ffffff → ratio 4.54:1 → AA Pass for normal text, AAA Fail",
+    "#ff6600 on #ffffff → ratio 2.85:1 → AA Fail for normal text, AA Pass for large text",
+    "#1a73e8 on #ffffff → ratio 4.56:1 → AA Pass for normal text"
+  ],
+  "bestPractices": [
+    "Design for AA as a minimum; use AAA only where there is no long-form text",
+    "Test at 4.5:1 for normal text and 3:1 for large text (18pt/14pt bold)",
+    "Check your palette in both light and dark modes, since ratios differ",
+    "Avoid relying on color alone — pair contrast with non-color cues"
+  ],
+  "commonMistakes": [
+    "Testing only one text size when the page uses many sizes",
+    "Assuming a brand color is accessible without measuring its ratio",
+    "Ignoring the background of hover and focus states",
+    "Using 4.5:1 for large text and wrongly rejecting accessible colors"
+  ],
+  "faq": [
+    "What contrast ratio does WCAG 2.2 require? — 4.5:1 for normal text, 3:1 for large text (18pt or 14pt bold), and 3:1 for UI components.",
+    "What is relative luminance? — A normalized measure of a color's brightness, defined by the WCAG formula using linearized RGB channels.",
+    "Does this tool store my colors? — No, all calculation happens locally in your browser. Nothing is uploaded.",
+    "Why does my colored text fail even though it looks readable? — Perceptual readability and the WCAG mathematical ratio are different; the ratio is the standard that auditors check.",
+    "What is the difference between AA and AAA? — AAA requires a higher ratio (7:1 for normal text, 4.5:1 for large text) than AA."
+  ],
+  "features": [
+    "WCAG 2.2 AA and AAA pass/fail checks",
+    "Normal text, large text, and UI component thresholds",
+    "Live color preview panel",
+    "HEX, RGB, and HSL color input",
+    "Quick-check palette of common color pairs",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "WCAG 2.2 Contrast (Minimum) — W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+    },
+    {
+      "label": "Understanding Relative Luminance — W3C",
+      "url": "https://www.w3.org/TR/WCAG22/#dfn-relative-luminance"
+    }
+  ]
+}

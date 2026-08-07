@@ -1,0 +1,59 @@
+{
+  "whatItDoes": "Performs date arithmetic and computes the exact duration between two dates. Add or subtract days, weeks, months, or years from a start date, and view the resulting date plus a day-of-week calendar preview. Also calculates the precise difference (years, months, days, hours, minutes) between any two dates.",
+  "whyItExists": "Date math is deceptively tricky — months and years have uneven lengths, and adding 'one month' can land on an invalid day. A dedicated calculator removes the ambiguity and produces correct calendar arithmetic every time.",
+  "whoShouldUse": "Project managers planning milestones, developers computing deadlines and durations, HR teams handling leave and tenure, and anyone tracking event or payment schedules.",
+  "useCases": [
+    "Add 90 days to a contract start date to find the expiry date",
+    "Compute the number of days between two project milestones",
+    "Subtract months from a delivery date to set a planning deadline",
+    "Show a countdown or time-remaining summary between two dates"
+  ],
+  "instructions": [
+    "Choose the start date using the date picker",
+    "Select Add or Subtract and enter an amount in days, weeks, months, or years",
+    "Read the resulting date and its day of the week",
+    "For a difference, pick two dates and view the span in years, months, days, and time",
+    "Copy the result for use in schedules or documentation"
+  ],
+  "examples": [
+    "Start 2026-08-07, add 90 days → 2026-11-05 (a Thursday)",
+    "Start 2026-01-31, add 1 month → 2026-03-03 (clamped to February's end)",
+    "Difference 2025-01-01 to 2026-08-07 → 1 year, 7 months, 6 days",
+    "Start 2026-08-07, subtract 6 weeks → 2026-06-26"
+  ],
+  "bestPractices": [
+    "Verify month-end clamping behavior before relying on recurring dates",
+    "Use the difference tool for spans that need an exact breakdown",
+    "Cross-check leap-year and month-end cases in your own calculations",
+    "Treat results as calendar dates, not wall-clock times"
+  ],
+  "commonMistakes": [
+    "Assuming adding one month always lands on the same day of the month",
+    "Forgetting that date arithmetic is calendar-based, not duration-based",
+    "Confusing week starts and including the start day twice",
+    "Ignoring daylight saving time when combining dates and times"
+  ],
+  "faq": [
+    "How does adding a month handle month-end? — Adding one month to January 31 lands on February 28 (or 29), since the target day is clamped to the last valid day.",
+    "Is this intentional-shift arithmetic? — Yes, it follows natural calendar addition rather than elapsed-time arithmetic.",
+    "Does it handle leap years? — Yes, February dates account for leap years automatically.",
+    "Is anything sent to a server? — No, all computations run locally in your browser."
+  ],
+  "features": [
+    "Add or subtract days, weeks, months, and years",
+    "Exact date difference with full breakdown",
+    "Day-of-the-week for every result",
+    "Correct month-end and leap-year handling",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "ISO 8601 — Date and Time Format",
+      "url": "https://www.iso.org/iso-8601-date-and-time-format.html"
+    },
+    {
+      "label": "MDN — Date Reference",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
+    }
+  ]
+}

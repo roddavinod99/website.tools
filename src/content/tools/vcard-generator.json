@@ -1,0 +1,53 @@
+{
+  "whatItDoes": "Builds standard vCard (.vcf) contact cards in your browser. Fill in name, organization, phone, email, website, address, and a photo, and the tool generates a standards-compliant VCard 3.0 file ready to download or copy.",
+  "whyItExists": "Sharing contact information as a structured VCard lets people save your details to their address book in one tap. Manually writing .vcf files is error-prone, so a generator guarantees valid formatting for every field.",
+  "whoShouldUse": "Professionals sharing digital business cards, event organizers distributing attendee contacts, website owners adding contact-save links, and anyone who needs a shareable .vcf file.",
+  "useCases": [
+    "Generate a personal business card to share on email signatures and social profiles",
+    "Create a QR-coded VCard so visitors can save your details by scanning",
+    "Build contact files for team directories and event badge systems",
+    "Export a clean vCard from scattered contact details"
+  ],
+  "instructions": [
+    "Enter the contact name and optional organization and title",
+    "Add phone, email, website, and address fields as needed",
+    "Optionally attach a photo for the vCard",
+    "Click Generate VCard to render the .vcf output",
+    "Copy the output or download it as a .vcf file",
+    "Import the file into Contacts, Outlook, or Gmail to verify it"
+  ],
+  "examples": [
+    "BEGIN:VCARD\nVERSION:3.0\nN:Doe;John;;;\nFN:John Doe\nTEL;TYPE=WORK,VOICE:+1 555 0100\nEMAIL:john.doe@example.com\nORG:DevStackIO\nEND:VCARD"
+  ],
+  "bestPractices": [
+    "Use the FN (formatted name) field so the card displays the exact name you want",
+    "Include a photo at a small size to keep the .vcf file lightweight",
+    "Test the generated file in your address book before publishing it",
+    "Combine with a QR code for quick mobile saving"
+  ],
+  "commonMistakes": [
+    "Forgetting the FN field, which many contact apps use as the primary display name",
+    "Using non-standard field names that importers ignore",
+    "Embedding a very large photo that makes the vCard slow to open",
+    "Adding line breaks inside field values, which break the VCard format"
+  ],
+  "faq": [
+    "Which VCard version does this generate? — VCard 3.0 (RFC 2426), which is compatible with Gmail, Outlook, Apple Contacts, and most address books.",
+    "Can I add custom fields? — The generator covers the most common fields; for niche properties you can edit the raw output before saving.",
+    "Is my data uploaded anywhere? — No. Everything is built locally in your browser.",
+    "Can I use this in a QR code? — Yes, paste the generated VCard into a QR generator or use our QR Code Generator with the contact payload."
+  ],
+  "features": [
+    "Standard VCard 3.0 output",
+    "Name, organization, phone, email, website, and address fields",
+    "Optional photo attachment",
+    "Copy output or download as .vcf",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "RFC 2426 — vCard MIME Directory Profile",
+      "url": "https://www.rfc-editor.org/rfc/rfc2426"
+    }
+  ]
+}

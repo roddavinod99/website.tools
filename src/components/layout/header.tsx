@@ -263,6 +263,13 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
                 {item.title}
               </Link>
             ))}
+            <Link
+              href="/categories"
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-3 text-sm text-surface-600 rounded-md hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
+            >
+              Categories
+            </Link>
             <div className="pt-2 space-y-1">
               <button
                 onClick={() => { setIsOpen(false); setSearchOpen(true); }}

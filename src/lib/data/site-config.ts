@@ -24,7 +24,6 @@ export const siteConfig: SiteConfig = {
 
 export const mainNav: NavItem[] = [
   { title: "Tools", href: "/tools" },
-  { title: "Categories", href: "/categories" },
   { title: "Guides", href: "/guides" },
   { title: "Blog", href: "/blog" },
   { title: "Learning", href: "/learning" },

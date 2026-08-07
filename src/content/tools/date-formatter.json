@@ -1,0 +1,60 @@
+{
+  "whatItDoes": "Formats a date and time into more than 20 common patterns, including ISO 8601, RFC 2822, Unix timestamps (seconds and milliseconds), US locale strings, and ordered year-month-day variants. You pick a timezone and a pattern, and the output updates instantly.",
+  "whyItExists": "Dates appear in many different formats across APIs, logs, databases, and UI — and mishandled formats cause subtle bugs. A formatter that shows exactly what a given timestamp looks like in different notations and timezones saves time when debugging data pipelines.",
+  "whoShouldUse": "Back-end and API developers working with timestamps, data engineers transforming records, QA engineers verifying date handling, and anyone adapting dates between systems.",
+  "useCases": [
+    "See how a Unix timestamp renders as an ISO 8601 or RFC 2822 string",
+    "Verify the correct format to send to a third-party API",
+    "Convert between local time and UTC for log correlation",
+    "Produce a consistent date string for a database or report"
+  ],
+  "instructions": [
+    "Pick an input date, either from the picker or by entering a Unix timestamp",
+    "Select the timezone to interpret the value in",
+    "Since the pattern list updates automatically, choose your preferred output format",
+    "Copy the formatted result for use in your code or document",
+    "Switch between milliseconds and seconds for Unix-style timestamps"
+  ],
+  "examples": [
+    "Input 1783800000000 ms → ISO 8601: 2026-07-11T06:40:00.000Z (UTC)",
+    "Input 2026-08-07 14:00 → RFC 2822: Fri, 07 Aug 2026 14:00:00 +0000",
+    "Input 1750000000 s → Locale (US): July 1, 2025 at 12:00 AM",
+    "Input 2026-01-15 08:30 → YMD: 20260115 0830"
+  ],
+  "bestPractices": [
+    "Always confirm whether a timestamp is seconds or milliseconds (10 vs 13 digits)",
+    "Serialize dates in ISO 8601 UTC when storing or exchanging them",
+    "Specify a timezone explicitly instead of relying on server default",
+    "Use RFC 2822 for email and legacy HTTP headers"
+  ],
+  "commonMistakes": [
+    "Treating a millisecond timestamp as seconds and dividing incorrectly",
+    "Assuming the server and browser timezones are the same",
+    "Using year-first vs day-first formats inconsistently across systems",
+    "Ignoring the offset marker when parsing ISO strings that lack 'Z'"
+  ],
+  "faq": [
+    "Does this tool support timezones? — Yes, you can choose UTC, local, or several common zones, and the output adjusts accordingly.",
+    "How do I tell seconds from milliseconds? — 10-digit timestamps are seconds; 13-digit are milliseconds.",
+    "Is my value sent anywhere? — No, all formatting happens locally in your browser.",
+    "Can I convert a formatted date back to a timestamp? — Yes, paste a full ISO or RFC string and the tool derives its timestamp."
+  ],
+  "features": [
+    "20+ date and time output patterns",
+    "ISO 8601, RFC 2822, Unix, and locale formats",
+    "Seconds and milliseconds timestamp support",
+    "Timezone selection",
+    "One-click copy of results",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "ISO 8601 — Date and Time Format",
+      "url": "https://www.iso.org/iso-8601-date-and-time-format.html"
+    },
+    {
+      "label": "RFC 3339 — Date and Time on the Internet",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339"
+    }
+  ]
+}

@@ -3,13 +3,13 @@
 
 export const RELEASE_VERSION = "0.3.0";
 export const RELEASE_BUILD_NUMBER = 16;
-export const RELEASE_GIT_COMMIT = "63ea1256a602eee6661c45479f43f5a8d8c4c8a7";
-export const RELEASE_GIT_SHORT_HASH = "63ea125";
+export const RELEASE_GIT_COMMIT = "c26a774ccbf7be5ac801d8411311f6a8d4d0d817";
+export const RELEASE_GIT_SHORT_HASH = "c26a774";
 export const RELEASE_GIT_BRANCH = "main";
-export const RELEASE_GIT_COMMIT_COUNT = 77;
+export const RELEASE_GIT_COMMIT_COUNT = 81;
 export const RELEASE_GIT_IS_DIRTY = true;
-export const RELEASE_BUILD_TIME = 1786056996149;
-export const RELEASE_BUILD_DATE = "2026-08-06T22:56:36.149Z";
-export const RELEASE_NODE_VERSION = "v24.18.0";
-export const RELEASE_NEXT_VERSION = "unknown";
+export const RELEASE_BUILD_TIME = 1786122033196;
+export const RELEASE_BUILD_DATE = "2026-08-07T17:00:33.196Z";
+export const RELEASE_NODE_VERSION = "v25.7.0";
+export const RELEASE_NEXT_VERSION = "16.2.12";
 export const RELEASE_ENVIRONMENT = "development";

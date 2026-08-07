@@ -1,0 +1,60 @@
+{
+  "whatItDoes": "Performs IPv6 address calculations in the browser. Expand, compress, sort, and summarize IPv6 addresses, compute the network prefix, and enumerate the range of hosts covered by a CIDR block. Applies the RFC 4291 rules for leading-zero removal, case mapping, and the double-colon compression.",
+  "whyItExists": "IPv6 addresses are long and easy to mistype, and IPv6 subnets follow different rules than IPv4. Network engineers need a reliable tool to expand compressed addresses, derive the network and interface IDs, and understand how many addresses a prefix covers.",
+  "whoShouldUse": "Network engineers planning IPv6 deployments, DevOps engineers writing firewall and routing configs, security analysts auditing address ranges, and students learning IPv6 addressing.",
+  "useCases": [
+    "Expand a compressed IPv6 address like 2001:db8::1 to its full form",
+    "Compress a long hexadecimal address to its shortest representation",
+    "Find the network prefix and host range for a CIDR block like /48",
+    "Confirm whether an address is link-local, unique-local, or global"
+  ],
+  "instructions": [
+    "Paste an IPv6 address in the input field",
+    "View the expanded and compressed forms side by side",
+    "Optionally add a /prefix to compute the network and available hosts",
+    "Read the scope classification (global, unique-local, link-local)",
+    "Copy any result you need for your configuration"
+  ],
+  "examples": [
+    "2001:0db8:0000:0000:0000:ff00:0042:8329 → compressed: 2001:db8::ff00:42:8329",
+    "fe80::1 → link-local scope",
+    "2001:db8::/48 → 2^80 available addresses",
+    "fc00::/7 → unique-local (ULA) scope"
+  ],
+  "bestPractices": [
+    "Always validate the neighbor ID with NDP rather than assuming reachability",
+    "Use the compressed form for configuration but the expanded form when comparing bit-by-bit",
+    "Treat /64 as the standard subnet size for most networks",
+    "Remember that IPv6 subnets are dramatically larger than IPv4 for several orders of magnitude"
+  ],
+  "commonMistakes": [
+    "Writing a single-digit group as 0x rather than 0000 when expanding",
+    "Applying IPv4-style subnet-host math to an IPv6 prefix",
+    "Confusing the double-colon with an ellipsis and dropping parts",
+    "Assuming link-local addresses are globally routable"
+  ],
+  "faq": [
+    "What is the double colon in IPv6? — It represents the longest run of trailing zero hextets and can appear only once in an address.",
+    "How many addresses are in a /48? — 2^(128-48) = 2^80 addresses.",
+    "Does this tool validate addresses? — Yes, it rejects malformed addresses and unwanted cases with a clear error.",
+    "Is calculation local? — All processing happens in your browser; nothing is uploaded."
+  ],
+  "features": [
+    "Expand and compress IPv6 addresses",
+    "CIDR prefix network + host calculation",
+    "Address scope classification",
+    "Largest-hex-group validation",
+    "One-click copy of results",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "RFC 4291 — IPv6 Addressing Architecture",
+      "url": "https://www.rfc-editor.org/rfc/rfc4291"
+    },
+    {
+      "label": "RFC 5952 — IPv6 Text Representation",
+      "url": "https://www.rfc-editor.org/rfc/rfc5952"
+    }
+  ]
+}

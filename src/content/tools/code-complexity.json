@@ -1,0 +1,56 @@
+{
+  "whatItDoes": "Analyzes JavaScript and TypeScript code in the browser to estimate cyclomatic complexity, lines of code (total, code, comment, and blank), and a simple maintainability indicator. Highlights which functions are the most complex so you know where to refactor.",
+  "whyItExists": "Complex code is harder to test and maintain, and it correlates with bugs, but it's hard to judge by eye. A quick complexity metric lets developers flag the riskiest functions and protect code quality before complexity becomes unmanageable.",
+  "whoShouldUse": "Developers and tech leads performing code reviews, maintainers measuring technical and cognitive debt, and engineers deciding where to split or refactor functions.",
+  "useCases": [
+    "Measure cyclomatic complexity of a module before a review",
+    "Find the functions with the highest complexity to target refactoring",
+    "Track complexity changes between refactors of a file",
+    "Get an at-a-glance maintainability score for a code snippet"
+  ],
+  "instructions": [
+    "Paste your JavaScript or TypeScript code into the editor",
+    "The analyzer reads LOC counts and complexity automatically",
+    "Review the overall score for the snippet",
+    "Read the function-level breakdown to find the highest-complexity functions",
+    "Use the recommendations to plan your refactoring"
+  ],
+  "examples": [
+    "A function with 5 if/else branches and 2 loops → cyclomatic complexity ~8",
+    "A 20-line pure function with no branches → cyclomatic complexity 1",
+    "A module with many >10-complexity functions → the module is likely hard to maintain",
+    "LOC breakdown: 120 total, 95 code, 12 comments, 13 blank"
+  ],
+  "bestPractices": [
+    "Keep per-function complexity under roughly 10 to make each function easy to test",
+    "Use the metric as a signal for refactoring, not a hard law",
+    "Re-check complexity after each refactor to confirm it lowered",
+    "Combine complexity with readability and test coverage for a full picture"
+  ],
+  "commonMistakes": [
+    "Treating high complexity as the only indicator of poor quality",
+    "Gaming the metric by splitting functions artificially",
+    "Ignoring nested conditionals that inflate perceived readability",
+    "Comparing complexity across unrelated languages or paradigms"
+  ],
+  "faq": [
+    "What is cyclomatic complexity? — A count of independent paths through a function, based on decision points like if, else, case, and loop.",
+    "What is a good complexity score? — Value 10 per function is a common guideline; lower is easier to test and maintain.",
+    "Can it analyze TypeScript? — Yes, it understands TypeScript syntax as well as JavaScript.",
+    "Is my code sent anywhere? — No, all analysis runs locally in your browser."
+  ],
+  "features": [
+    "Cyclomatic complexity per function",
+    "Total LOC, code, comment, and blank counts",
+    "Maintainability indicator",
+    "Highest-complexity function highlight",
+    "Works with JavaScript and TypeScript",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Cyclomatic Complexity — McCabe (IEEE)",
+      "url": "https://en.wikipedia.org/wiki/Cyclomatic_complexity"
+    }
+  ]
+}

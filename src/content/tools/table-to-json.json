@@ -1,0 +1,57 @@
+{
+  "whatItDoes": "Parses HTML table markup into structured JSON in the browser. Paste a <table> snippet, choose whether the first row is a header, and the tool converts rows and cells into an array of objects keyed by header text. Supports multiple tables in one document.",
+  "whyItExists": "HTML tables on the web are convenient to read but awkward to consume as data. Converting them to JSON makes them usable in spreadsheets, scripts, and data pipelines without manual transcription or fragile scraping.",
+  "whoShouldUse": "Data analysts harvesting data from the web, developers building scrapers or migrations, and anyone who wants table data as JSON for further processing.",
+  "useCases": [
+    "Extract a pricing or comparison table from a page as JSON",
+    "Migrate legacy HTML tables into a modern data pipeline",
+    "Convert a document's tables into spreadsheet-ready objects",
+    "Verify how a scraper would interpret the rows and columns"
+  ],
+  "instructions": [
+    "Paste the HTML table markup (a <table>…</table> snippet) into the input",
+    "Toggle 'First row is header' depending on your table",
+    "The JSON output updates automatically",
+    "Choose compact or pretty-printed output",
+    "Copy or download the resulting JSON"
+  ],
+  "examples": [
+    "<table><tr><th>Name</th><th>Age</th></tr><tr><td>Alice</td><td>30</td></tr></table>\n→ [{\"Name\":\"Alice\",\"Age\":\"30\"}]",
+    "A table with no header row → array of row arrays",
+    "Multiple <table> elements → one JSON object per table",
+    "Cells with numbers stay as strings by default; toggle numeric coercion to convert them"
+  ],
+  "bestPractices": [
+    "Mark the first row as header when it contains column titles",
+    "Use numeric coercion only when your data is consistently numeric",
+    "Test on a single table before processing a full page",
+    "Sanitize source HTML — never paste it into a live DOM unless you control it"
+  ],
+  "commonMistakes": [
+    "Mixing tables with different header structures in one document",
+    "Assuming all cells are numeric when some contain units or text",
+    "Forgetting that rowspan/colspan cells repeat in the output",
+    "Relying on HTML that has malformed or unclosed tags"
+  ],
+  "faq": [
+    "Does this handle rowspan and colspan? — Yes, spanning cells are expanded to fill their covered columns.",
+    "Can I parse multiple tables at once? — Yes, each top-level table becomes a separate JSON object.",
+    "Is the HTML executed? — No, it is parsed as data only, never rendered or executed.",
+    "Is anything uploaded? — No, all parsing happens locally in your browser."
+  ],
+  "features": [
+    "HTML table → JSON conversion",
+    "Optional first-row-as-header mode",
+    "Multiple table support",
+    "Compact and pretty output",
+    "Numeric coercion option",
+    "Copy and download results",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "MDN — HTMLTableElement",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement"
+    }
+  ]
+}

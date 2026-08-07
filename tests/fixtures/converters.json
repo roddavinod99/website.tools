@@ -7,5 +7,6 @@
   { "slug": "unit-converter", "category": "Converters", "name": "Unit Converter", "input": "100", "action": "Convert", "expect": "output" },
   { "slug": "case-converter", "category": "Converters", "name": "Case Converter", "input": "hello world", "action": "Convert", "expect": "output" },
   { "slug": "base-converter", "category": "Converters", "name": "Base Converter", "input": "255", "action": "Convert", "expect": "output" },
-  { "slug": "number-to-words", "category": "Converters", "name": "Number to Words", "input": "1234", "action": "Convert", "expect": "output" }
+  { "slug": "number-to-words", "category": "Converters", "name": "Number to Words", "input": "1234", "action": "Convert", "expect": "output" },
+  { "slug": "table-to-json", "category": "Converters", "name": "HTML Table to JSON", "input": "<table><tr><th>Name</th><th>Age</th></tr><tr><td>Alice</td><td>30</td></tr></table>", "action": "", "expect": "output" }
 ]

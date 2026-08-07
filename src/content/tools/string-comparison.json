@@ -1,0 +1,56 @@
+{
+  "whatItDoes": "Compares two strings and reports whether they are identical, shows the first point of difference, and calculates a similarity score using a Jaccard-style token overlap. Options cover case sensitivity, whitespace trimming, and line-by-line diff output.",
+  "whyItExists": "Manually comparing strings — especially long generated values, config keys, or hash outputs — is tedious and error-prone. A comparator that pinpoints the exact difference and gives a numeric similarity makes quick work of the task.",
+  "whoShouldUse": "Developers diffing config values or generated outputs, QA engineers verifying API responses, writers comparing document versions, and anyone validating that two values match.",
+  "useCases": [
+    "Verify two API responses or configuration values are equal",
+    "Find the first differing character in two long strings",
+    "Quantify how similar two generated outputs are with a score",
+    "Diff two blocks of text line by line"
+  ],
+  "instructions": [
+    "Paste the first string into the left input",
+    "Paste the second string into the right input",
+    "Toggle case sensitivity and whitespace trimming as needed",
+    "Read the equality result, first-difference location, and similarity score",
+    "Switch to line-diff view to see added and removed lines"
+  ],
+  "examples": [
+    "'hello' vs 'hello' → Equal, similarity 100%",
+    "'hello' vs 'hello!' → Different at index 5, similarity ~91%",
+    "'ABC123' vs 'abc123' (case-insensitive) → Equal",
+    "Line diff: line 2 removed, line 3 added"
+  ],
+  "bestPractices": [
+    "Normalize whitespace before comparing when formatting may differ",
+    "Use case-insensitive comparison for identifiers that are case-insensitive",
+    "Prefer line-diff for comparing documents and files",
+    "Understand that similarity is a heuristic, not a semantic guarantee"
+  ],
+  "commonMistakes": [
+    "Comparing strings with different trailing whitespace and reporting a false mismatch",
+    "Expecting case-insensitive behavior when case sensitivity is enabled",
+    "Using similarity scores to decide functional equality",
+    "Ignoring Unicode normalization differences (é vs e + combining accent)"
+  ],
+  "faq": [
+    "Is the comparison case-sensitive by default? — Yes, you can toggle it off for case-insensitive comparisons.",
+    "What does the similarity score mean? — It reflects token overlap on a 0-100 scale; higher means more shared content.",
+    "Does it handle Unicode? — Yes, it compares strings as text and highlights the differing position.",
+    "Is anything uploaded? — No, all comparison happens locally in your browser."
+  ],
+  "features": [
+    "Equality check with first-difference position",
+    "Jaccard-style similarity score",
+    "Case-sensitive and insensitive modes",
+    "Whitespace trimming option",
+    "Line-by-line diff view",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "MDN — String Comparison",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
+    }
+  ]
+}
