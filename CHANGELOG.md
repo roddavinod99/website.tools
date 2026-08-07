@@ -204,6 +204,15 @@
 ### Fixed
 
 - restore typecheck, remove dead tool-actions UI, make copy functional
+## [0.3.1] - 2026-08-07
+
+### Infrastructure
+
+- ignore crawl directory and remove audit export
+### Changed
+
+- Merge origin/main: v0.3.0 release
+- new chang
 ## Template
 
 For future releases:

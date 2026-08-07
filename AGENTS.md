@@ -1532,6 +1532,32 @@ After changes:
 4.  Verify performance implications.
 5.  Verify SEO impact.
 
+## Version Bump Before Commit (Mandatory)
+
+Versioning is done **locally by the AI before the commit is pushed** — never by the
+deploy pipeline. The deploy workflow (`deploy.yml`) no longer bumps versions, so
+the version files have exactly one writer (the local session).
+
+At the end of every working session, before the user commits/pushes, the AI MUST:
+
+1.  Run the auto-release: `npm run version:auto -- --dry-run --verbose` first to
+    review, then `npm run version:auto` to apply. This computes the next version
+    from conventional commits since the last `v*` tag and updates
+    `package.json`, `CHANGELOG.md`, `data/build-number.json`, `data/release.json`,
+    `data/releases/`, and regenerates the prebuild data.
+2.  Stage and commit the release artifacts with a message like
+    `release: vX.Y.Z`.
+3.  Do NOT push on the user's behalf unless asked — the commit must exist locally
+    before the user pushes.
+
+Notes:
+
+-   `src/lib/version/__generated__/release-data.ts` is gitignored and generated
+    at build/dev time — never commit or resolve conflicts in it.
+-   `public/sw.template.js` must keep the literal `__SW_VERSION__` placeholder;
+    the version is injected at request time by `src/app/sw.js/route.ts`. Do not
+    hand-edit that placeholder.
+
 ------------------------------------------------------------------------
 
 # AI Agent Prohibitions

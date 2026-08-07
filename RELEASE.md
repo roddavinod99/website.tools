@@ -60,16 +60,24 @@ npm run version -- patch --entry "[Fixed] Login timeout"
 npm run version -- minor --file changes.txt
 ```
 
-### Automated CI Mode
+### Local Version Bump (before commit)
 
-The deploy workflow (`.github/workflows/deploy.yml`) includes an **Auto Version Bump** job that runs on every push to `main`:
+Version bumping is done **locally on your laptop** before committing, not during deployment. Run the auto-release at the end of each working session so the version + changelog are updated and committed **before** you push:
 
-1. Computes the next version from conventional commits since the last git tag `v*`
-2. Bumps `package.json`, `data/build-number.json`, `data/release.json`, `data/releases/`, `CHANGELOG.md`, and release notes
-3. Syncs `package-lock.json`
-4. Commits with `release: vX.Y.Z [skip ci]`, tags `vX.Y.Z`, and pushes to `main`
-5. The `[skip ci]` suffix prevents the bump commit from re-triggering the workflow
-6. The deploy job pulls the bumped commit and builds with the new version
+```bash
+# Dry run (shows what would happen; requires git history)
+npm run version:auto -- --dry-run --verbose
+
+# Actual auto-release (bumps version, changelog, data/, and prebuild data)
+npm run version:auto
+
+# Commit the release artifacts locally, then push
+git add -A
+git commit -m "release: vX.Y.Z"
+git push origin main
+```
+
+The deploy workflow (`.github/workflows/deploy.yml`) **does not** bump or commit versions. It only pulls `main` and builds/deploys whichever version is already committed — so there is never a second writer to the version files and no version merge conflicts.
 
 **Conventional commit mapping:**
 
@@ -93,25 +101,26 @@ npm run version:auto
 ## Release Workflow
 
 ```bash
-# 1. Create a release (manual)
+# 1. Create a release locally (before commit)
 npm run version minor
 
-# 2. Commit the release artifacts
+# 2. Commit the release artifacts, then push
 git add -A
 git commit -m "release: v1.1.0"
 git push
 
-# 3. CI/CD automatically deploys (via GitHub Actions)
+# 3. CI/CD automatically deploys the committed version (via GitHub Actions)
 ```
 
-**Automatic workflow (push to main):**
+**Local workflow (recommended):**
 
 ```bash
-# Push changes with conventional commits
-git commit -m "feat: add new feature"
-git commit -m "fix: resolve login bug"
-git push origin main
-# → CI auto-bumps version, commits, tags, and deploys
+# Do work, then at end of session bump + commit before pushing
+git add -A
+npm run version:auto        # bumps version, changelog, data/, prebuild data
+git add -A
+git commit -m "release: vX.Y.Z"
+git push origin main        # CI builds/deploys this exact version — no version conflict
 ```
 
 ## Version Schema

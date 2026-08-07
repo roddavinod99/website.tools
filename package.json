@@ -1,9 +1,10 @@
 {
   "name": "tools",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "node scripts/prebuild.mjs",
     "prebuild": "node scripts/prebuild.mjs",
     "build": "next build",
     "start": "next start",
