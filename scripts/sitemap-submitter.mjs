@@ -15,17 +15,24 @@ const SUBMISSION_INTERVAL_DAYS = 5;
 // Google does not support IndexNow or automated sitemap ping APIs.
 // Register manually at https://search.google.com/search-console
 // The deprecated google.com/ping?sitemap= endpoint has been intentionally removed.
+// Bing and Yandex deprecated their direct sitemap ping endpoints (HTTP 410 Gone /
+// connection failures). IndexNow (the PRIMARY mechanism below) notifies Bing,
+// Yandex, Seznam, and Naver once INDEXNOW_KEY is configured.
 const SEARCH_ENGINES = [
   {
     name: "Bing",
     url: `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
-    active: true,
+    active: false,
+    deprecated: true,
+    setup:
+      "Deprecated endpoint (HTTP 410 Gone). Use IndexNow or Bing Webmaster to notify Bing.",
     coverage: "Worldwide (also powers Yahoo, DuckDuckGo, AOL)",
   },
   {
     name: "Yandex",
     url: `https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
-    active: true,
+    active: false,
+    deprecated: true,
     coverage: "Russia & Eastern Europe",
   },
   {
@@ -330,8 +337,12 @@ async function main() {
     log(` SUMMARY`);
     log(bar);
     log(`  IndexNow notified: ${indexNowResult.status === "skipped" ? "skipped" : indexNowResult.successCount + "/" + (indexNowResult.successCount + indexNowResult.failCount) + " endpoints"}`);
-    log(`  Pings notified: ${success}/${activeEngines.length}`);
-    if (fail > 0) log(`  Ping failures: ${fail}`);
+    if (activeEngines.length > 0) {
+      log(`  Pings notified: ${success}/${activeEngines.length}`);
+      if (fail > 0) log(`  Ping failures: ${fail}`);
+    } else {
+      log(`  Pings notified: none (Bing/Yandex direct pings deprecated; use IndexNow)`);
+    }
     if (indexNowResult?.failCount > 0) log(`  IndexNow failures: ${indexNowResult.failCount}`);
     log(`  Inactive engines: ${SEARCH_ENGINES.filter((e) => !e.active).map((e) => e.name).join(", ")}`);
     log(`  Google: register manually at https://search.google.com/search-console`);

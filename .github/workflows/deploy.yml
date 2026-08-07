@@ -182,6 +182,7 @@ jobs:
             echo "Verified $CSS_COUNT CSS chunk(s) in standalone output"
 
             # Restart application (ecosystem app is named "devstackio"; "tools" is stale)
+            pm2 delete tools 2>/dev/null || true
             pm2 restart devstackio || pm2 start ecosystem.config.js
             pm2 save
 

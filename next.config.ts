@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ["lucide-react", "highlight.js"],
-    cssChunking: "strict",
   },
 
   async redirects() {
