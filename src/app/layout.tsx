@@ -136,10 +136,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: {
     canonical: siteConfig.url,
-    languages: {
-      "x-default": siteConfig.url,
-      en: siteConfig.url,
-    },
     types: {
       "application/rss+xml": `${siteConfig.url}/feed.xml`,
     },
@@ -179,7 +175,6 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-        <link rel="alternate" hrefLang="en" href={siteConfig.url} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

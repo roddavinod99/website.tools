@@ -36,6 +36,14 @@ export default function NewToolsPage() {
           <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
             Recently added tools and updates
           </p>
+          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            The newest additions to our collection of free, browser-based developer utilities. We ship
+            tools frequently &mdash; from data generators and encoders to security helpers and formatters.
+            Every tool processes data locally on your device, keeping your information private by design.
+            Check back regularly to see what&apos;s new, or browse the{" "}
+            <a href="/popular" className="text-brand-500 underline hover:text-brand-600">most popular tools</a>{" "}
+            our community uses daily.
+          </p>
 
           {newTools.length > 0 && (
             <div className="mt-8">

@@ -25,6 +25,15 @@ export default function ContactPage() {
             Have questions, suggestions, or feedback? We&apos;d love to hear from you.
             We typically respond within 24&ndash;48 hours.
           </p>
+          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            Whether you need help with a specific tool, want to report an issue, discuss a partnership, or
+            share ideas for the future of DevStackIO, this is the place. For a focused report, you can also
+            use our{" "}
+            <a href="/report-bug" className="text-brand-500 underline hover:text-brand-600">bug report</a>{" "}
+            or{" "}
+            <a href="/feature-request" className="text-brand-500 underline hover:text-brand-600">feature request</a>{" "}
+            forms. We welcome questions from developers and visitors alike.
+          </p>
         </div>
 
         <div className="mb-8 rounded-lg border border-surface-200 bg-surface-50 p-4 text-sm text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">

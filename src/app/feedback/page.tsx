@@ -33,6 +33,11 @@ export default function FeedbackPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           We&apos;d love to hear your thoughts.
         </p>
+        <p className="mt-4 text-sm text-surface-600 dark:text-dark-muted">
+          Your feedback directly shapes the platform &mdash; from tool accuracy and interface design to
+          performance and accessibility. If something felt slow, confusing, or broken, let us know. If you
+          can share which tool and page you were using, it helps us reproduce and fix issues faster.
+        </p>
 
         {status === "success" ? (
           <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">

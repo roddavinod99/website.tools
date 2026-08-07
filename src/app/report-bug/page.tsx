@@ -33,6 +33,11 @@ export default function ReportBugPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           Found something broken? Let us fix it.
         </p>
+        <p className="mt-4 text-sm text-surface-600 dark:text-dark-muted">
+          Help us keep DevStackIO reliable by reporting bugs. Include which tool or page you were using,
+          what you did, and what you expected to happen instead of the broken behavior. The more detail you
+          provide, the quicker we can diagnose and resolve the problem.
+        </p>
 
         {status === "success" ? (
           <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">

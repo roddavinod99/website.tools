@@ -40,6 +40,13 @@ export default function BestPracticesPage() {
           <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
             Development guidelines and industry best practices
           </p>
+          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            Essential guidelines for shipping cleaner, safer, faster web products. These best practices
+            distill the conventions respected across the industry &mdash; from structuring JSON payloads and
+            securing JWTs to optimizing images and strengthening password security. Each topic links to a
+            matching DevStackIO tutorial and a free tool you can use right in your browser to apply the
+            guidance.
+          </p>
 
           <div className="mt-8 grid gap-4">
             {practices.map((p) => (

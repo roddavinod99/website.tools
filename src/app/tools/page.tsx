@@ -77,6 +77,13 @@ export default function ToolsPage() {
             <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
               {allTools.length} free tools. No login required.
             </p>
+            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+              DevStackIO offers a growing library of free online developer tools that run entirely in your
+              browser. Format and validate JSON, decode JWT tokens, generate UUIDs, encode and decode
+              Base64, compress images, and much more &mdash; all without uploading your data or creating an
+              account. Every utility processes locally on your device to keep your information private. Use
+              the search box or category filters below to find the right tool for the task.
+            </p>
             <form action="/search" method="GET" className="mt-6 relative">
               <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-surface-400" />
               <input

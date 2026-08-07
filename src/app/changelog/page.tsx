@@ -46,6 +46,12 @@ export default function ChangelogPage() {
           <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
             Latest updates and improvements
           </p>
+          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            A running record of what&apos;s changed on DevStackIO. This changelog tracks new tools,
+            performance improvements, accessibility fixes, and platform updates in reverse chronological
+            order. We move fast but transparently &mdash; every notable change is documented here so you always
+            know what&apos;s available and what recent updates brought to each tool.
+          </p>
 
           <div className="mt-8 space-y-4">
             {changes.map((change, i) => (

@@ -35,6 +35,13 @@ export default function PopularPage() {
           <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
             The most used tools by our community
           </p>
+          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            The developer tools our community reaches for most. These utilities cover the everyday
+            workflow &mdash; formatting JSON, decoding JWTs, generating UUIDs, encoding with Base64, and
+            more. Each tool runs entirely in your browser, which means your data never leaves your device.
+            Rankings reflect real usage across the platform, so this list shows you what other developers
+            actually rely on.
+          </p>
           <div className="mt-8 grid gap-4">
             {tools.map((tool) => (
               <Link

@@ -41,6 +41,15 @@ export default function RoadmapPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           What we&apos;re building next
         </p>
+        <p className="mt-4 text-surface-600 dark:text-dark-muted">
+          Our public roadmap shows the features and improvements planned for DevStackIO. Priorities are
+          driven by community feedback, developer needs, and our commitment to privacy-first, browser-based
+          tooling. Want to influence what ships next? Submit a{" "}
+          <a href="/feature-request" className="text-brand-500 underline hover:text-brand-600">feature request</a>{" "}
+          or{" "}
+          <a href="/suggest" className="text-brand-500 underline hover:text-brand-600">suggest a new tool</a>{" "}
+          and it will be considered for a future quarter.
+        </p>
 
         <div className="mt-8 space-y-8">
           {roadmapItems.map((quarter) => (

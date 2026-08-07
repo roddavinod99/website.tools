@@ -34,6 +34,11 @@ export default function SuggestPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           Have an idea for a tool? Let us know.
         </p>
+        <p className="mt-4 text-sm text-surface-600 dark:text-dark-muted">
+          Propose a new online utility you&apos;d like to see on DevStackIO. The best suggestions are specific
+          about inputs, outputs, and the use case. We prioritize tools that run entirely in the browser,
+          respect user privacy, and help developers complete common tasks more quickly.
+        </p>
 
         {status === "success" ? (
           <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">

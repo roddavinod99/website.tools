@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { categories, siteConfig } from "@/lib/constants";
 import { CategoryCard } from "@/components/ui/category-card";
 
@@ -65,6 +66,15 @@ export default function CategoriesPage() {
             </h1>
             <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
               Browse our tools by category
+            </p>
+            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+              DevStackIO organizes every free developer tool into focused categories so you can find the
+              right utility fast. From encoders and formatters to generators, converters, and security
+              tools, each category groups related helpers into a single place. All tools run entirely in
+              your browser &mdash; nothing is uploaded to our servers, so your data stays private. Explore
+              the sections below or head straight to the{" "}
+              <Link href="/tools" className="text-brand-500 underline hover:text-brand-600">full tool list</Link>{" "}
+              to see everything available.
             </p>
           </div>
         </div>

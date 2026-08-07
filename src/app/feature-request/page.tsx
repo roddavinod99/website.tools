@@ -33,6 +33,12 @@ export default function FeatureRequestPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           Help shape the future of DevStackIO.
         </p>
+        <p className="mt-4 text-sm text-surface-600 dark:text-dark-muted">
+          Tell us which developer tool or improvement would make your workflow easier. Every request is
+          reviewed against our roadmap and community demand &mdash; ideas that help many developers are
+          prioritized. Please be specific about the problem you&apos;re trying to solve so we can evaluate it
+          accurately.
+        </p>
 
         {status === "success" ? (
           <div className="mt-8 rounded-xl border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">

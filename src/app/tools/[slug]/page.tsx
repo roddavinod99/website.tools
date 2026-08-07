@@ -106,6 +106,16 @@ export default async function ToolPage({ params }: Props) {
   const specificGuide = toolGuideSlug ? learningTopics.find((t) => t.slug === toolGuideSlug) : null;
 
   const categorySlug = categories.find((c) => c.name === tool.category)?.slug ?? "";
+  const category = categories.find((c) => c.name === tool.category);
+
+  const featureList = (() => {
+    const own = featuresBySlug[tool.slug];
+    if (own && own.length) return own;
+    if (category?.seoFeatures && category.seoFeatures.length) return category.seoFeatures;
+    return [];
+  })();
+
+  const toolUrl = `${siteConfig.url}/tools/${tool.slug}`;
 
   const tocItems = [
     { id: "about", label: "About", level: 1 },
@@ -120,6 +130,106 @@ export default async function ToolPage({ params }: Props) {
     { id: "learning-resources", label: "Learning Resources", level: 1 },
   ];
 
+  const faqJsonLd = content.faq.length > 0
+    ? {
+        "@type": "FAQPage",
+        mainEntity: content.faq.map((item) => {
+          const parts = item.split(/ — | \| A: |\? /);
+          const q = parts[0];
+          const a = parts.length > 1 ? parts.slice(1).join(" ").trim() : item;
+          return {
+            "@type": "Question",
+            name: q.endsWith("?") ? q : `${q}?`,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          };
+        }),
+      }
+    : null;
+
+  const howToJsonLd = content.instructions.length > 0
+    ? {
+        "@type": "HowTo",
+        name: `How to use ${tool.name}`,
+        description: `Step-by-step guide to using ${tool.name} for ${tool.description.split(" ").slice(0, 8).join(" ").toLowerCase()}.`,
+        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        totalTime: "PT5M",
+        estimatedCost: {
+          "@type": "MonetaryAmount",
+          currency: "USD",
+          value: "0",
+        },
+        supply: [
+          { "@type": "HowToSupply", name: "Web browser" },
+          { "@type": "HowToSupply", name: "Internet connection" },
+        ],
+        tool: [
+          { "@type": "HowToTool", name: tool.name, url: toolUrl },
+        ],
+        step: content.instructions.map((instruction, index) => ({
+          "@type": "HowToStep",
+          position: index + 1,
+          name: instruction.split(".")[0] || `Step ${index + 1}`,
+          text: instruction,
+        })),
+      }
+    : null;
+
+  const softwareAppJsonLd: Record<string, unknown> = {
+    "@type": "SoftwareApplication",
+    "@id": toolUrl,
+    name: tool.name,
+    url: toolUrl,
+    description: tool.description,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Cloud",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+    author: {
+      "@type": "Organization",
+      name: "DevStackIO",
+      url: siteConfig.mainSiteUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "DevStackIO",
+      url: siteConfig.mainSiteUrl,
+    },
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
+  };
+  if (featureList.length) {
+    softwareAppJsonLd.featureList = featureList;
+  }
+
+  const sourceCodeJsonLd = {
+    "@type": "SoftwareSourceCode",
+    name: tool.name,
+    description: tool.description,
+    url: toolUrl,
+    codeRepository: siteConfig.links.github,
+    programmingLanguage: "TypeScript",
+    runtimePlatform: "Web Browser",
+    license: "https://opensource.org/licenses/MIT",
+  };
+
+  const graphItems: Record<string, unknown>[] = [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+        { "@type": "ListItem", position: 2, name: "Tools", item: `${siteConfig.url}/tools` },
+        { "@type": "ListItem", position: 3, name: tool.name, item: toolUrl },
+      ],
+    },
+    softwareAppJsonLd,
+    sourceCodeJsonLd,
+    ...(faqJsonLd ? [faqJsonLd] : []),
+    ...(howToJsonLd ? [howToJsonLd] : []),
+  ];
+
   return (
     <>
       <script
@@ -127,115 +237,8 @@ export default async function ToolPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: tool.name,
-            url: `${siteConfig.url}/tools/${tool.slug}`,
-            description: tool.description,
-            applicationCategory: "DeveloperApplication",
-            operatingSystem: "Cloud",
-            offers: {
-              "@type": "Offer",
-              price: "0",
-              priceCurrency: "USD",
-              availability: "https://schema.org/InStock",
-            },
-            featureList: featuresBySlug[tool.slug] ?? [],
-            author: {
-              "@type": "Organization",
-              name: "DevStackIO",
-              url: siteConfig.mainSiteUrl,
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "DevStackIO",
-              url: siteConfig.mainSiteUrl,
-            },
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-              { "@type": "ListItem", position: 2, name: "Tools", item: `${siteConfig.url}/tools` },
-              { "@type": "ListItem", position: 3, name: tool.name },
-            ],
-          }),
-        }}
-      />
-      {content.faq.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: content.faq.map((item) => {
-                // Try to split on common patterns, fallback to using full string as question
-                const parts = item.split(/ — | \| A: /);
-                const q = parts[0];
-                const a = parts.length > 1 ? parts.slice(1).join(" ") : item;
-                return {
-                  "@type": "Question",
-                  name: q,
-                  acceptedAnswer: { "@type": "Answer", text: a },
-                };
-              }),
-            }),
-          }}
-        />
-      )}
-      {content.instructions.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "HowTo",
-              name: `How to use ${tool.name}`,
-              description: `Step-by-step guide to using ${tool.name} for ${tool.description.split(" ").slice(0, 8).join(" ").toLowerCase()}.`,
-              image: `${siteConfig.url}${siteConfig.ogImage}`,
-              totalTime: "PT5M",
-              estimatedCost: {
-                "@type": "MonetaryAmount",
-                currency: "USD",
-                value: "0",
-              },
-              supply: [
-                { "@type": "HowToSupply", name: "Web browser" },
-                { "@type": "HowToSupply", name: "Internet connection" },
-              ],
-              tool: [
-                { "@type": "HowToTool", name: tool.name, url: `${siteConfig.url}/tools/${tool.slug}` },
-              ],
-              step: content.instructions.map((instruction, index) => ({
-                "@type": "HowToStep",
-                position: index + 1,
-                name: instruction.split(".")[0] || `Step ${index + 1}`,
-                text: instruction,
-              })),
-            }),
-          }}
-        />
-      )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareSourceCode",
-            name: tool.name,
-            description: tool.description,
-            url: `${siteConfig.url}/tools/${tool.slug}`,
-            codeRepository: siteConfig.links.github,
-            programmingLanguage: "TypeScript",
-            runtimePlatform: "Web Browser",
-            license: "https://opensource.org/licenses/MIT",
-          }),
+            "@graph": graphItems,
+          }).replace(/</g, "\\u003c"),
         }}
       />
       <ToolClient

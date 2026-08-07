@@ -19,6 +19,13 @@ export default function TutorialsPage() {
         <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
           Step-by-step tutorials for developers
         </p>
+        <p className="mt-4 text-surface-600 dark:text-dark-muted">
+          Practical, beginner-friendly tutorials that pair every concept with a usable DevStackIO tool.
+          Learn how to format and validate JSON, understand JWT authentication, optimize images for the
+          web, and harden your password security &mdash; all explained step by step. Each guide includes
+          copy-paste examples and links to the matching online tool so you can apply what you learn
+          immediately in your browser.
+        </p>
 
         <div className="mt-8 grid gap-4">
           {learningTopics.map((topic) => (
