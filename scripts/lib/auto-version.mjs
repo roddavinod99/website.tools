@@ -116,9 +116,14 @@ export function getCommitsSince(baseRef) {
 }
 
 export function findLastVersionTag() {
-  const tags = exec("git tag -l 'v[0-9]*' --sort=-v:refname");
+  // No shell glob: "git tag -l 'v[0-9]*'" breaks under cmd.exe on Windows.
+  const tags = exec("git tag --list --sort=-v:refname");
   if (!tags) return null;
-  return tags.split("\n")[0] || null;
+  const versionTag = tags
+    .split("\n")
+    .map((t) => t.trim())
+    .filter((t) => /^v[0-9]/.test(t))[0];
+  return versionTag || null;
 }
 
 export function findVersionCommit(version) {

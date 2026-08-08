@@ -213,6 +213,22 @@
 
 - Merge origin/main: v0.3.0 release
 - new chang
+## [0.3.2] - 2026-08-08
+
+### Performance
+
+- replace mathjs with native chunk-free evaluator
+### Fixed
+
+- serve .well-known/security.txt, fix favicon and meta descriptions
+### Infrastructure
+
+- align sitemap with Google guidelines
+### Changed
+
+- deploy issues
+- Merge branch 'main' of https://github.com/roddavinod99/website.tools
+- new updates 0.3.1
 ## Template
 
 For future releases:
