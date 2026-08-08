@@ -1,6 +1,6 @@
 # AGENTS.md
 
-# Website.Tools -- AI Agent Instructions
+# DevStackIO (Website.Tools) -- AI Agent Instructions
 
 This document defines the architecture, standards, constraints, and
 rules that all AI coding agents (Claude Code, Cursor, Copilot, Gemini
@@ -10,7 +10,7 @@ CLI, OpenAI Codex, etc.) must follow when modifying this repository.
 
 # Project Mission
 
-Website.Tools is a privacy-first developer tools platform providing free
+Website.Tools (brand: **DevStackIO**, https://tools.devstackio.com) is a privacy-first developer tools platform providing free
 browser-based tools, learning resources, APIs, and developer utilities.
 
 Primary goals:
@@ -433,14 +433,12 @@ Sitemap requirements:
 -   Auto-generated from tool registry at build time
 -   Include all tool pages, category pages, static pages
 -   lastmod from git commit date or content hash
--   changefreq: weekly (tools), monthly (static)
--   priority: 1.0 (home), 0.8 (tools), 0.6 (categories), 0.5 (static)
 -   Submit to Google Search Console + Bing Webmaster + IndexNow
 
 Robots.txt requirements:
 
 -   Allow all tool pages, category pages, learning resources
--   Disallow: /api/*, /admin/*, /_next/*, /private/*
+-   Disallow: /api/*, /private/*, /admin/*, /contact/success
 -   Reference sitemap.xml location
 -   Crawl-delay: 10 (if needed)
 
@@ -455,7 +453,17 @@ Core Web Vitals targets (enforced in CI):
 
 ## Structured Data Templates (JSON-LD)
 
-Every page must include appropriate JSON-LD structured data. Use the templates below with Next.js App Router's `metadata` export or a dedicated `JsonLd` component.
+Every page must include appropriate JSON-LD structured data. Use the templates below with Next.js App Router's `metadata` export or a dedicated helper.
+
+> **Note on the current implementation:** This repo does **not** have a shared
+> `@/components/JsonLd` component or `generate*JsonLd` helpers. Structured data
+> is built **inline in each page file** (Server Components) and emitted in a
+> single `<script type="application/ld+json">` via `@graph` and
+> `dangerouslySetInnerHTML` (see `src/app/tools/[slug]/page.tsx`). The templates
+> and helpers below are the **reference schema pattern to follow** — keep the
+> `@graph` shape, escape `<` as `\u003c`, and use absolute URLs from `siteConfig`.
+> When working on an existing page, extend the page's existing inline `@graph`
+> array rather than introducing a shared component.
 
 ### Validation
 
@@ -469,7 +477,7 @@ Use these placeholders across all templates. Replace with actual values at rende
 | Placeholder | Description | Example |
 |-------------|-------------|---------|
 | `{{SITE_URL}}` | Base site URL | `https://tools.devstackio.com` |
-| `{{SITE_NAME}}` | Site brand name | `Website.Tools` |
+| `{{SITE_NAME}}` | Site brand name | `DevStackIO` |
 | `{{TOOL_SLUG}}` | Tool URL slug | `json-formatter` |
 | `{{TOOL_NAME}}` | Tool display name | `JSON Formatter` |
 | `{{TOOL_DESCRIPTION}}` | Tool description (≤160 chars) | `Format, validate, and beautify JSON...` |
@@ -520,7 +528,7 @@ Includes `SearchAction` for site-wide search box in SERPs.
 /**
  * Generates WebSite structured data with SearchAction.
  * @param siteUrl - Base URL of the site (e.g., "https://tools.devstackio.com")
- * @param siteName - Brand name (e.g., "Website.Tools")
+ * @param siteName - Brand name (e.g., "DevStackIO")
  * @returns WebSite schema object
  */
 const generateWebSiteJsonLd = (siteUrl: string, siteName: string) => ({
@@ -532,7 +540,7 @@ const generateWebSiteJsonLd = (siteUrl: string, siteName: string) => ({
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": `${siteUrl}/tools?q={search_term_string}`,
+      "urlTemplate": `${siteUrl}/search?q={search_term_string}`,
     },
     "query-input": "required name=search_term_string",
   },
@@ -544,13 +552,13 @@ const generateWebSiteJsonLd = (siteUrl: string, siteName: string) => ({
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Website.Tools",
+  "name": "DevStackIO",
   "url": "https://tools.devstackio.com",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://tools.devstackio.com/tools?q={search_term_string}"
+      "urlTemplate": "https://tools.devstackio.com/search?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }
@@ -592,11 +600,11 @@ const generateOrganizationJsonLd = (
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Website.Tools",
+  "name": "DevStackIO",
   "url": "https://tools.devstackio.com",
-  "logo": "https://tools.devstackio.com/logo.png",
+  "logo": "https://tools.devstackio.com/logo-light.png",
   "sameAs": [
-    "https://github.com/website-tools",
+    "https://github.com/roddavinod99",
     "https://twitter.com/website_tools",
     "https://linkedin.com/company/website-tools"
   ]
@@ -673,7 +681,7 @@ const generateSoftwareApplicationJsonLd = (tool: {
   "url": "https://tools.devstackio.com/tools/json-formatter",
   "publisher": {
     "@type": "Organization",
-    "name": "Website.Tools",
+    "name": "DevStackIO",
     "url": "https://tools.devstackio.com"
   }
 }
@@ -722,7 +730,7 @@ const generateTechArticleJsonLd = (article: {
     "url": article.siteUrl,
     "logo": {
       "@type": "ImageObject",
-      "url": `${article.siteUrl}/logo.png`,
+      "url": `${article.siteUrl}/logo-light.png`,
     },
   },
   ...(article.imageUrl && { "image": article.imageUrl }),
@@ -736,7 +744,7 @@ const generateTechArticleJsonLd = (article: {
   "@type": "TechArticle",
   "headline": "How to Format JSON for APIs",
   "description": "Learn best practices for formatting JSON payloads in REST APIs.",
-  "url": "https://tools.devstackio.com/learn/json-formatting-api",
+  "url": "https://tools.devstackio.com/guides/json-formatting-api",
   "author": {
     "@type": "Person",
     "name": "Jane Developer"
@@ -745,11 +753,11 @@ const generateTechArticleJsonLd = (article: {
   "dateModified": "2025-06-20T14:30:00Z",
   "publisher": {
     "@type": "Organization",
-    "name": "Website.Tools",
+    "name": "DevStackIO",
     "url": "https://tools.devstackio.com",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://tools.devstackio.com/logo.png"
+      "url": "https://tools.devstackio.com/logo-light.png"
     }
   }
 }
@@ -813,10 +821,10 @@ const generateCollectionPageJsonLd = (page: {
   "@type": "CollectionPage",
   "name": "Formatter Tools",
   "description": "Online formatters for JSON, XML, YAML, CSV, and more.",
-  "url": "https://tools.devstackio.com/tools/category/formatters",
+  "url": "https://tools.devstackio.com/categories/formatters",
   "publisher": {
     "@type": "Organization",
-    "name": "Website.Tools",
+    "name": "DevStackIO",
     "url": "https://tools.devstackio.com"
   },
   "mainEntity": {
@@ -887,7 +895,7 @@ const generateBreadcrumbListJsonLd = (breadcrumbs: Array<{ name: string; url: st
       "@type": "ListItem",
       "position": 2,
       "name": "Formatters",
-      "item": "https://tools.devstackio.com/tools/category/formatters"
+      "item": "https://tools.devstackio.com/categories/formatters"
     },
     {
       "@type": "ListItem",
@@ -1037,12 +1045,25 @@ const generateHowToJsonLd = (howto: {
 
 ### Complete Tool Page Example (Combined @graph)
 
+> **Referenced imports are illustrative.** `@/components/JsonLd`,
+> `@/lib/tools` (`getTool`), and the `generate*JsonLd` helpers do **not**
+> exist in this repo. Structure the JSON-LD the way `src/app/tools/[slug]/page.tsx`
+> already does: build a local `graphItems` array (Organization, SoftwareApplication,
+> BreadcrumbList, FAQPage, HowTo) and render it in a single
+> `<script type="application/ld+json" dangerouslySetInnerHTML={...} />`
+> with `@graph`. See the actual page file for the working pattern.
+
 This shows how to combine multiple schemas in a single `<script type="application/ld+json">` tag using `@graph`. This is the recommended pattern for tool pages.
 
 ```tsx
-// app/tools/[slug]/page.tsx (Server Component)
-import { JsonLd } from "@/components/JsonLd";
-import { getTool } from "@/lib/tools";
+// app/tools/[slug]/page.tsx (Server Component), adapt from the existing inline implementation
+const graphItems = [
+  generateOrganizationJsonLd(...),
+  generateSoftwareApplicationJsonLd(tool),
+  generateBreadcrumbListJsonLd(breadcrumbs),
+  tool.faq && generateFAQPageJsonLd(tool.faq),
+  tool.howto && generateHowToJsonLd(tool.howto),
+].filter(Boolean);
 
 export default async function ToolPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -1053,7 +1074,7 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
   const breadcrumbs = [
     { name: "Home", url: "{{SITE_URL}}" },
     { name: "Tools", url: "{{SITE_URL}}/tools" },
-    { name: tool.categoryName, url: `{{SITE_URL}}/tools/category/${tool.categorySlug}` },
+    { name: tool.categoryName, url: `{{SITE_URL}}/categories/${tool.categorySlug}` },
     { name: tool.name, url: `{{SITE_URL}}/tools/${tool.slug}` },
   ];
 
@@ -1062,9 +1083,9 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
     generateOrganizationJsonLd(
       "{{SITE_URL}}",
       "{{SITE_NAME}}",
-      "{{SITE_URL}}/logo.png",
+      "{{SITE_URL}}/logo-light.png",
       [
-        "https://github.com/website-tools",
+        "https://github.com/roddavinod99",
         "https://twitter.com/website_tools",
       ]
     ),
@@ -1110,10 +1131,10 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
   "@graph": [
     {
       "@type": "Organization",
-      "name": "Website.Tools",
+      "name": "DevStackIO",
       "url": "https://tools.devstackio.com",
-      "logo": "https://tools.devstackio.com/logo.png",
-      "sameAs": ["https://github.com/website-tools", "https://twitter.com/website_tools"]
+      "logo": "https://tools.devstackio.com/logo-light.png",
+      "sameAs": ["https://github.com/roddavinod99", "https://twitter.com/website_tools"]
     },
     {
       "@type": "SoftwareApplication",
@@ -1124,14 +1145,14 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
       "description": "Format, validate, and beautify JSON...",
       "featureList": ["Syntax highlighting", "Error detection", "..."],
       "url": "https://tools.devstackio.com/tools/json-formatter",
-      "publisher": { "@type": "Organization", "name": "Website.Tools", "url": "https://tools.devstackio.com" }
+      "publisher": { "@type": "Organization", "name": "DevStackIO", "url": "https://tools.devstackio.com" }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tools.devstackio.com" },
         { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://tools.devstackio.com/tools" },
-        { "@type": "ListItem", "position": 3, "name": "Formatters", "item": "https://tools.devstackio.com/tools/category/formatters" },
+        { "@type": "ListItem", "position": 3, "name": "Formatters", "item": "https://tools.devstackio.com/categories/formatters" },
         { "@type": "ListItem", "position": 4, "name": "JSON Formatter", "item": "https://tools.devstackio.com/tools/json-formatter" }
       ]
     },
@@ -1169,15 +1190,17 @@ This project uses Google AdSense for sustainable free access. All AI agents must
 ## Ad Architecture
 
 ### Components (src/components/ads/)
-- **AdSenseScript** — Loads AdSense JS with Auto Ads enabled (`enable_page_level_ads: true`)
+- **AdSenseScript** (`adsense-script.tsx`) — lazy-loads the AdSense client script (`strategy="lazyOnload"`, uses the CSP nonce). Does not push auto-ads.
+- **AdContainer** — base responsive container used by the wrappers below (renders labeled placeholders in dev)
 - **AdBanner** — Horizontal responsive banner (format: "horizontal", slot: "1234567890")
 - **InContentAd** — Rectangle in-content ad (format: "rectangle", slot: "3456789012")
 - **SidebarAd** — Vertical sidebar ad for desktop (format: "vertical", slot: "2345678901")
 - **ResponsiveAd** — Auto-sizing ad unit (format: "auto", slot: "4567890123")
+- **FluidAd** — Fluid ad unit (format: "fluid", slot: "5678901234")
 
 ### Implementation Rules
 
-1. **Auto Ads Enabled** — AdSenseScript includes `(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-...", enable_page_level_ads: true })` — do not remove.
+1. **AdSense Script** — `AdSenseScript` lazy-loads the AdSense client JS (`strategy="lazyOnload"`) with the CSP nonce. Auto ads are controlled by the AdSense account; the client script config is `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` (empty in dev disables ads) — do not remove.
 
 2. **Development Mode** — Ads are disabled in development (`NODE_ENV === "development"`). Components render labeled placeholders for layout testing.
 
@@ -1219,7 +1242,7 @@ This project uses Google AdSense for sustainable free access. All AI agents must
 - ❌ Ads that cover content on scroll
 - ❌ More than 3 in-content ads per tool page
 - ❌ Reusing slot IDs
-- ❌ Removing Auto Ads configuration
+- ❌ Removing the AdSense script configuration (AdSenseScript or `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID`)
 - ❌ Adding ads to API routes or non-content pages
 
 ------------------------------------------------------------------------
@@ -1260,7 +1283,7 @@ already exists in `src/lib/data/categories.ts`.
 
 ```ts
 {
-  id: "u37",
+  id: "u40",
   name: "String Comparator",
   description: "Free online string comparison tool…",
   category: "Utilities",
@@ -1281,7 +1304,7 @@ Create a `"use client"` component (or a plain component for simple tools)
 that exports a **named** function matching the name you register in step 3.
 
 ```tsx
-export function StringComparator() { /* … */ }
+export function StringComparison() { /* … */ }
 ```
 
 ## 3. Register the dynamic loader — `src/components/tools/dynamic-tool-loader.tsx`
@@ -1291,7 +1314,7 @@ Every tool component MUST be added to the `toolLoaders` map in
 renders the "coming soon" placeholder instead of your UI.
 
 ```ts
-"string-comparison": () => import("./string-comparison").then((m) => ({ default: m.StringComparator })),
+"string-comparison": () => import("./string-comparison").then((m) => ({ default: m.StringComparison })),
 ```
 
 The exported component name in step 2 and the `.then((m) => m.X)` name here
@@ -1870,7 +1893,7 @@ considered finished.
 - Overview: https://developers.google.com/search/docs/appearance/structured-data
 - Search Gallery: https://developers.google.com/search/docs/appearance/structured-data/search-gallery
 - Organization: https://developers.google.com/search/docs/appearance/structured-data/organization
-- SoftwareApplication: https://developers.google.com/search/docs/appearance/structured-data/software-application
+- SoftwareApplication: https://developers.google.com/search/docs/appearance/structured-data/software-app
 - Breadcrumb: https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
 - FAQPage: https://developers.google.com/search/docs/appearance/structured-data/faqpage
 - HowTo: https://developers.google.com/search/docs/appearance/structured-data/how-to

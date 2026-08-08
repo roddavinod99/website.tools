@@ -8,22 +8,15 @@ export const revalidate = 86400;
 const BASE = siteConfig.url.replace(/\/+$/, "");
 const LEGAL = siteConfig.legal?.lastUpdated ?? {};
 
+// Google ignores <priority> and <changefreq>; only <loc> and <lastmod> are used.
 function dateFrom(str: string | undefined): Date | undefined {
   if (!str) return;
   const d = new Date(str);
   return Number.isNaN(d.getTime()) ? undefined : d;
 }
 
-function entry(url: string, opts?: {
-  lastModified?: Date;
-  changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"];
-  priority?: number;
-}): MetadataRoute.Sitemap[number] {
-  const e: MetadataRoute.Sitemap[number] = { url };
-  if (opts?.lastModified) e.lastModified = opts.lastModified;
-  if (opts?.changeFrequency) e.changeFrequency = opts.changeFrequency;
-  if (opts?.priority !== undefined) e.priority = opts.priority;
-  return e;
+function entry(url: string, lastModified?: Date): MetadataRoute.Sitemap[number] {
+  return lastModified ? { url, lastModified } : { url };
 }
 
 const latestBlogDate = dateFrom(blogData[0]?.dateISO);
@@ -32,150 +25,52 @@ const legalTerms = dateFrom(LEGAL.terms);
 const legalCookie = dateFrom(LEGAL.cookie);
 const legalDisclaimer = dateFrom(LEGAL.disclaimer);
 
-// Per AGENTS.md: Home=1.0 weekly, Tools=0.8 weekly, Tool pages=0.8 monthly, 
-// Categories=0.6 weekly, Category pages=0.7 monthly, Static=0.5 monthly
 const staticPages: MetadataRoute.Sitemap = [
-  entry(`${BASE}/`, {
-    lastModified: latestBlogDate,
-    changeFrequency: "weekly",
-    priority: 1.0,
-  }),
-  entry(`${BASE}/tools`, {
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }),
-  entry(`${BASE}/categories`, {
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }),
-  entry(`${BASE}/guides`, {
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }),
-  entry(`${BASE}/blog`, {
-    lastModified: latestBlogDate,
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }),
-  entry(`${BASE}/learning`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/popular`, {
-    changeFrequency: "weekly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/new`, {
-    changeFrequency: "weekly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/changelog`, {
-    changeFrequency: "weekly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/about`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/best-practices`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/contact`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/cookie-policy`, {
-    lastModified: legalCookie,
-    changeFrequency: "yearly",
-    priority: 0.3,
-  }),
-  entry(`${BASE}/disclaimer`, {
-    lastModified: legalDisclaimer,
-    changeFrequency: "yearly",
-    priority: 0.3,
-  }),
-  entry(`${BASE}/feature-request`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/feedback`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/privacy`, {
-    lastModified: legalPrivacy,
-    changeFrequency: "yearly",
-    priority: 0.3,
-  }),
-  entry(`${BASE}/report-bug`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/roadmap`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
-  entry(`${BASE}/status`, {
-    changeFrequency: "weekly",
-    priority: 0.3,
-  }),
-  entry(`${BASE}/suggest`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/support`, {
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }),
-  entry(`${BASE}/terms`, {
-    lastModified: legalTerms,
-    changeFrequency: "yearly",
-    priority: 0.3,
-  }),
-  entry(`${BASE}/tutorials`, {
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }),
+  entry(`${BASE}/`, latestBlogDate),
+  entry(`${BASE}/tools`),
+  entry(`${BASE}/categories`),
+  entry(`${BASE}/guides`),
+  entry(`${BASE}/blog`, latestBlogDate),
+  entry(`${BASE}/learning`),
+  entry(`${BASE}/popular`),
+  entry(`${BASE}/new`),
+  entry(`${BASE}/changelog`),
+  entry(`${BASE}/about`),
+  entry(`${BASE}/best-practices`),
+  entry(`${BASE}/contact`),
+  entry(`${BASE}/cookie-policy`, legalCookie),
+  entry(`${BASE}/disclaimer`, legalDisclaimer),
+  entry(`${BASE}/feature-request`),
+  entry(`${BASE}/feedback`),
+  entry(`${BASE}/privacy`, legalPrivacy),
+  entry(`${BASE}/report-bug`),
+  entry(`${BASE}/roadmap`),
+  entry(`${BASE}/status`),
+  entry(`${BASE}/suggest`),
+  entry(`${BASE}/support`),
+  entry(`${BASE}/terms`, legalTerms),
+  entry(`${BASE}/tutorials`),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const categoriesPages: MetadataRoute.Sitemap = categories.map((cat) =>
-    entry(`${BASE}/categories/${cat.slug}`, {
-      changeFrequency: "monthly",
-      priority: 0.7,
-    })
+    entry(`${BASE}/categories/${cat.slug}`)
   );
 
   const toolPages: MetadataRoute.Sitemap = allTools
     .filter((tool) => !tool.noindex)
-    .map((tool) =>
-      entry(`${BASE}/tools/${tool.slug}`, {
-        changeFrequency: "monthly",
-        priority: tool.featured ? 0.9 : tool.new ? 0.85 : 0.8,
-      })
-    );
+    .map((tool) => entry(`${BASE}/tools/${tool.slug}`));
 
   const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) =>
-    entry(`${BASE}/guides/${topic.slug}`, {
-      changeFrequency: "monthly",
-      priority: 0.6,
-    })
+    entry(`${BASE}/guides/${topic.slug}`)
   );
 
   const blogPages: MetadataRoute.Sitemap = blogData.map((post) =>
-    entry(`${BASE}/blog/${post.slug}`, {
-      lastModified: new Date(post.dateISO),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    })
+    entry(`${BASE}/blog/${post.slug}`, new Date(post.dateISO))
   );
 
   const toolkitPages: MetadataRoute.Sitemap = Object.keys(toolkits).map((slug) =>
-    entry(`${BASE}/toolkits/${slug}`, {
-      changeFrequency: "monthly",
-      priority: 0.6,
-    })
+    entry(`${BASE}/toolkits/${slug}`)
   );
 
   return [
