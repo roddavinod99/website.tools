@@ -1,0 +1,12 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "JWT example/teaching tokens in docs, content, fixtures, and legacy tool-content.ts -- not secrets"
+paths = [
+  '''src/content/blog/base64-encode-decode-online\.md$''',
+  '''src/content/tools/jwt-generator\.json$''',
+  '''src/content/tools/jwt-decoder\.json$''',
+  '''tests/fixtures/jwt\.json$''',
+  '''src/lib/tool-content\.ts$''',
+]
