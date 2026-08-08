@@ -59,7 +59,7 @@
     "@modelcontextprotocol/server-sequential-thinking": "2026.7.4",
     "@next/bundle-analyzer": "^16.2.10",
     "@playwright/mcp": "0.0.78",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsbarcode": "^3.11.4",
