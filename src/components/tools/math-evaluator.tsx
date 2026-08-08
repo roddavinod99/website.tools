@@ -109,7 +109,7 @@ export function MathEvaluator() {
       {result !== null && (
         <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Result</p>
-          <p className="text-2xl font-mono font-bold text-brand-600 dark:text-brand-400">{result}</p>
+          <p data-testid="tool-output" className="text-2xl font-mono font-bold text-brand-600 dark:text-brand-400">{result}</p>
         </div>
       )}
 

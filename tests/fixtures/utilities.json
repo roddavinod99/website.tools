@@ -14,5 +14,6 @@
   { "slug": "date-formatter", "category": "Utilities", "name": "Date & Time Formatter", "input": "", "action": "", "expect": "output" },
   { "slug": "ipv6-calculator", "category": "Utilities", "name": "IPv6 Calculator", "input": "2001:db8::1", "action": "", "expect": "output" },
   { "slug": "string-comparison", "category": "Utilities", "name": "String Comparator", "input": "hello", "input2": "hello", "action": "", "expect": "output" },
-  { "slug": "code-complexity", "category": "Utilities", "name": "Code Complexity Analyzer", "input": "function foo() { if (a) { b(); } }", "action": "", "expect": "output" }
+  { "slug": "code-complexity", "category": "Utilities", "name": "Code Complexity Analyzer", "input": "function foo() { if (a) { b(); } }", "action": "", "expect": "output" },
+  { "slug": "math-evaluator", "category": "Utilities", "name": "Math Evaluator", "input": "sqrt(144) + 3^2", "action": "Evaluate", "expect": "output" }
 ]
