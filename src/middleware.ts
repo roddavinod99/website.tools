@@ -15,6 +15,8 @@ const ATTACK_PATHS = [
   "/server-status",
 ];
 
+const ALLOWED_WELL_KNOWN_PATHS = ["/.well-known/security.txt", "/.well-known/ai-plugin.json"];
+
 const TRAVERSAL_PATTERNS = [
   /\.\.\//,
   /\.\.\\/,
@@ -142,7 +144,9 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
   response.headers.set("x-middleware-nonce", nonce);
 
-  if (isAttackPath(path)) {
+  const isAllowedWellKnown = ALLOWED_WELL_KNOWN_PATHS.some((p) => path === p);
+
+  if (!isAllowedWellKnown && isAttackPath(path)) {
     logSecurityEvent("path_traversal_attempt", ip, path, "Attack path blocked");
     return new NextResponse("Not Found", { status: 404 });
   }

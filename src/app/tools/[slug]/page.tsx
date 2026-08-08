@@ -191,12 +191,12 @@ export default async function ToolPage({ params }: Props) {
     author: {
       "@type": "Organization",
       name: "DevStackIO",
-      url: siteConfig.mainSiteUrl,
+      url: siteConfig.url,
     },
     publisher: {
       "@type": "Organization",
       name: "DevStackIO",
-      url: siteConfig.mainSiteUrl,
+      url: siteConfig.url,
     },
     image: `${siteConfig.url}${siteConfig.ogImage}`,
   };

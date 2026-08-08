@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         destination: "/guides/:slug",
         permanent: true,
       },
+      {
+        source: "/security.txt",
+        destination: "/.well-known/security.txt",
+        permanent: true,
+      },
     ];
   },
 
@@ -105,6 +110,20 @@ const nextConfig: NextConfig = {
       source: "/security.txt",
       headers: [
         { key: "Content-Type", value: "text/plain" },
+        { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
+      ],
+    },
+    {
+      source: "/.well-known/security.txt",
+      headers: [
+        { key: "Content-Type", value: "text/plain" },
+        { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
+      ],
+    },
+    {
+      source: "/.well-known/ai-plugin.json",
+      headers: [
+        { key: "Content-Type", value: "application/json" },
         { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
       ],
     },

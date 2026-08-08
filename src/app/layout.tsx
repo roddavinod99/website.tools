@@ -57,7 +57,7 @@ const jsonLd = {
     {
       "@type": "Organization",
       name: "DevStackIO",
-      url: siteConfig.mainSiteUrl,
+      url: siteConfig.url,
       logo: {
         "@type": "ImageObject",
         url: `${siteConfig.url}/logo-light.png`,
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
     default: "DevStackIO Tools — Free Online Developer Tools",
     template: `%s | DevStackIO Tools`,
   },
-  description: "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, compress images, and more — all processing in your browser with zero server uploads.",
+  description: "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, compress images, and more — all in your browser, no uploads.",
   keywords: [
     "developer tools",
     "online tools",
