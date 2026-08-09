@@ -89,6 +89,43 @@ Avoid unnecessary dependencies.
 
 ------------------------------------------------------------------------
 
+# MCP Server Usage
+
+Agents MUST use all available MCP servers whenever a task requires them.
+This rule covers every MCP server currently configured AND any server added
+to `opencode.json` (project or global `~/.config/opencode/opencode.json`)
+in the future.
+
+1.  **Discover before deciding.** At session start — or whenever a task
+    could benefit from one — review the configured MCP servers in
+    `opencode.json`. Do not assume only servers you have already used exist;
+    check for newly added ones.
+2.  **Use, don't ignore.** If an available MCP server exposes a tool,
+    resource, or context relevant to the current task, prefer it over
+    reimplementing, guessing, or skipping. Guidance for the currently
+    configured servers:
+    -   **playwright** — browser automation, E2E verification, edge-case
+        testing of rendered tool pages.
+    -   **chrome-devtools** — inspecting and debugging the rendered page
+        (console, network, performance, accessibility).
+    -   **filesystem** — read/write access to the workspace and configured
+        paths when built-in tools are insufficient.
+    -   **web-search** — fresh, real-time information; prefer live search
+        over stale training knowledge.
+    -   **sequential-thinking** — multi-step reasoning, planning, and
+        problem decomposition for complex tasks.
+    -   **context7** — up-to-date library/framework/SDK documentation
+        (see the global AGENTS.md for detailed usage steps).
+3.  **Future-proofing.** When a new MCP server is added, use it as required
+    by the task. Do not wait for these instructions to be rewritten —
+    inspect the new server's tool and resource names and follow its
+    documented usage.
+4.  **Proportionality.** Use MCP servers when they genuinely help the task.
+    Do not call them pointlessly or when native browser/Node.js APIs are a
+    better, smaller, or more privacy-preserving fit (see Core Principles).
+
+------------------------------------------------------------------------
+
 # Repository Architecture
 
 This repository contains:
@@ -1279,7 +1316,9 @@ page (a "coming soon" placeholder or a 404). Follow all of these steps.
 
 Add an object to the `allTools` array. Use a category-prefixed, sequential
 `id` (for example `u37`, `g16`, `c23`) and the **human** category name that
-already exists in `src/lib/data/categories.ts`.
+already exists in `src/lib/data/categories.ts`. Finance uses a two-letter
+prefix (`fi1`, `fi2`, …) because `f` alone is taken by Formatters; the next
+Finance tool id is `fi9`.
 
 ```ts
 {
@@ -1378,6 +1417,29 @@ npm run test:tools     # runs data-driven fixtures against all tools
 
 Visually confirm `/tools/<slug>` renders the tool (not the placeholder) and
 produces correct output before submitting.
+
+## Finance category conventions
+
+Finance tools (`category: "Finance"`, ids `fi1`, `fi2`, …) must reuse the
+shared finance layer instead of re-implementing money math or inputs:
+
+-   **Math and formatting split** — keep all money calculations in pure,
+    deterministic functions under `src/lib/finance/calculations.ts` with full
+    precision. Format for display only at render time with
+    `src/lib/finance/format.ts` (`formatMoney`, `formatPercent`, …), never in
+    the math layer.
+-   **Shared inputs** — use `MoneyInput`, `NumberInput`, `PercentInput`,
+    `Field`, and `SelectField` from `src/components/finance/inputs.tsx` /
+    `money-input.tsx`. They render `type="text"` inputs so the e2e harness
+    contract holds (editable first input, `data-testid="tool-output"`).
+-   **Contribution timing** — SIP / compound-interest style tools with
+    monthly contributions must expose a "Contribution timing" toggle
+    (`annuity` = end of month, `annuityDue` = start of month). Default to
+    `annuityDue`, which matches industry SIP calculators. Pass a
+    `ContributionTiming` arg through `sipFutureValue` /
+    `compoundFutureValue` / `recurringFutureValue`.
+-   **Unit tests** — add closed-form reference-vector tests for any new
+    finance math to `tests/finance.test.ts` (run via `npm run test:unit`).
 
 -----
 
