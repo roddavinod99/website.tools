@@ -103,6 +103,13 @@ pub fn sha224_hash(input: &str) -> String {
 }
 
 #[wasm_bindgen]
+pub fn sha224_bytes(input: &[u8]) -> String {
+    let mut hasher = Sha224::new();
+    hasher.update(input);
+    hex::encode(hasher.finalize())
+}
+
+#[wasm_bindgen]
 pub fn sha384_hash(input: &str) -> String {
     let mut hasher = Sha384::new();
     hasher.update(input.as_bytes());

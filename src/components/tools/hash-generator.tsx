@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Copy, Download } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { tryWasm } from "@/lib/wasm/with-fallback";
+import { md5HashWasm, sha224HashWasm } from "@/lib/wasm/wasm-wrapper";
 import {
   md5Hex,
   md5BytesHex,
@@ -143,9 +145,9 @@ type HashAlgorithm = {
 };
 
 const ALL_ALGORITHMS: HashAlgorithm[] = [
-  { id: "MD5", label: "MD5", bits: 128, hash: async (d) => md5Hex(d) },
+  { id: "MD5", label: "MD5", bits: 128, hash: async (d) => tryWasm(() => md5HashWasm(d), () => md5Hex(d)) },
   { id: "SHA-1", label: "SHA-1", bits: 160, hash: async (d) => hexDigest("SHA-1", d) },
-  { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => sha224Hex(d) },
+  { id: "SHA-224", label: "SHA-224", bits: 224, hash: async (d) => tryWasm(() => sha224HashWasm(d), () => sha224Hex(d)) },
   { id: "SHA-256", label: "SHA-256", bits: 256, hash: async (d) => hexDigest("SHA-256", d) },
   { id: "SHA-384", label: "SHA-384", bits: 384, hash: async (d) => hexDigest("SHA-384", d) },
   { id: "SHA-512", label: "SHA-512", bits: 512, hash: async (d) => hexDigest("SHA-512", d) },
@@ -236,6 +238,14 @@ export function HashGenerator() {
     debounceRef.current = setTimeout(() => { computeAll(input); }, 300);
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [input, computeAll]);
+
+  useEffect(() => {
+    // Warm the WASM module in the background so the first MD5/SHA-224 call
+    // doesn't pay module fetch/init latency. Failures are ignored — the
+    // tryWasm fallback handles them at call time.
+    md5HashWasm("").catch(() => {});
+    sha224HashWasm("").catch(() => {});
+  }, []);
 
   useEffect(() => {
     const run = async () => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { jsonFormatWasm as jsonFormat, jsonMinifyWasm as jsonMinify, jsonValidateWasm as jsonValidate } from "@/lib/wasm/wasm-wrapper";
 
 interface TokenSpan {
   text: string;
@@ -100,11 +99,6 @@ export function JSONFormatter() {
   const [searchIndex, setSearchIndex] = useState(0);
   const outputRef = useRef<HTMLPreElement>(null);
   const pasteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const wasmReadyRef = useRef(false);
-
-  useEffect(() => {
-    jsonFormat("{}", 2).then(() => { wasmReadyRef.current = true; }).catch(() => {});
-  }, []);
 
   const handleChange = useCallback((val: string) => {
     setInput(val);
@@ -115,41 +109,15 @@ export function JSONFormatter() {
   }, [indent]);
 
   const format = useCallback(async () => {
-    const runFormat = async () => {
-      if (!wasmReadyRef.current) {
-        try {
-          let parsed = JSON.parse(input);
-          if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
-          const indentStr = indent === "tab" ? "\t" : Number(indent);
-          let formatted = JSON.stringify(parsed, null, indentStr);
-          if (stripQuotes) formatted = stripQuotesFromKeys(formatted);
-          if (compactArrays) formatted = formatCompactArray(formatted);
-          setOutput(formatted);
-          setError("");
-          setErrorLine(null);
-          setErrorCol(null);
-        } catch (e) {
-          const msg = (e as Error).message;
-          setError(msg);
-          const lc = getErrorLineCol(input, msg);
-          if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-          setOutput("");
-        }
-        return;
-      }
+    const runFormat = () => {
       try {
-        const indentNum = indent === "tab" ? 2 : Number(indent);
-        const formatted = await jsonFormat(input, indentNum);
-        let parsed = JSON.parse(formatted);
+        let parsed = JSON.parse(input);
         if (sortKeysEnabled) parsed = sortKeys(parsed as Record<string, unknown>);
-        if (compactArrays || stripQuotes) {
-          let result = JSON.stringify(parsed, null, indentNum);
-          if (stripQuotes) result = stripQuotesFromKeys(result);
-          if (compactArrays) result = formatCompactArray(result);
-          setOutput(result);
-        } else {
-          setOutput(JSON.stringify(parsed, null, indentNum));
-        }
+        const indentStr = indent === "tab" ? "\t" : Number(indent);
+        let formatted = JSON.stringify(parsed, null, indentStr);
+        if (stripQuotes) formatted = stripQuotesFromKeys(formatted);
+        if (compactArrays) formatted = formatCompactArray(formatted);
+        setOutput(formatted);
         setError("");
         setErrorLine(null);
         setErrorCol(null);
@@ -165,72 +133,33 @@ export function JSONFormatter() {
   }, [input, indent, sortKeysEnabled, stripQuotes, compactArrays]);
 
   const minify = useCallback(async () => {
-    if (wasmReadyRef.current) {
-      try {
-        const result = await jsonMinify(input);
-        setOutput(result);
-        setError("");
-        setErrorLine(null);
-        setErrorCol(null);
-      } catch (e) {
-        const msg = (e as Error).message;
-        setError(msg);
-        const lc = getErrorLineCol(input, msg);
-        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-        setOutput("");
-      }
-    } else {
-      try {
-        setOutput(JSON.stringify(JSON.parse(input)));
-        setError("");
-        setErrorLine(null);
-        setErrorCol(null);
-      } catch (e) {
-        const msg = (e as Error).message;
-        setError(msg);
-        const lc = getErrorLineCol(input, msg);
-        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-        setOutput("");
-      }
+    try {
+      setOutput(JSON.stringify(JSON.parse(input)));
+      setError("");
+      setErrorLine(null);
+      setErrorCol(null);
+    } catch (e) {
+      const msg = (e as Error).message;
+      setError(msg);
+      const lc = getErrorLineCol(input, msg);
+      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+      setOutput("");
     }
   }, [input]);
 
   const validate = useCallback(async () => {
-    if (wasmReadyRef.current) {
-      try {
-        const result = await jsonValidate(input);
-        if (result) {
-          setError("");
-          setErrorLine(null);
-          setErrorCol(null);
-          setOutput("JSON is valid.");
-        } else {
-          setError("Invalid JSON");
-          setErrorLine(null);
-          setErrorCol(null);
-          setOutput("");
-        }
-      } catch (e) {
-        const msg = (e as Error).message;
-        setError(msg);
-        const lc = getErrorLineCol(input, msg);
-        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-        setOutput("");
-      }
-    } else {
-      try {
-        JSON.parse(input);
-        setError("");
-        setErrorLine(null);
-        setErrorCol(null);
-        setOutput("JSON is valid.");
-      } catch (e) {
-        const msg = (e as Error).message;
-        setError(msg);
-        const lc = getErrorLineCol(input, msg);
-        if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
-        setOutput("");
-      }
+    try {
+      JSON.parse(input);
+      setError("");
+      setErrorLine(null);
+      setErrorCol(null);
+      setOutput("JSON is valid.");
+    } catch (e) {
+      const msg = (e as Error).message;
+      setError(msg);
+      const lc = getErrorLineCol(input, msg);
+      if (lc) { setErrorLine(lc.line); setErrorCol(lc.col); }
+      setOutput("");
     }
   }, [input]);
 

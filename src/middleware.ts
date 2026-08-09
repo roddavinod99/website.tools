@@ -113,14 +113,17 @@ function checkRateLimit(ip: string, path: string): { allowed: boolean; retryAfte
   return { allowed: true };
 }
 
-function addSecurityHeaders(response: NextResponse, nonce: string): void {
+function addSecurityHeaders(response: NextResponse, nonce: string, path = ""): void {
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
     response.headers.set(key, value);
   }
 
+  const allowsWasm = path.startsWith("/tools/");
+  const wasmDirective = allowsWasm ? " 'wasm-unsafe-eval'" : "";
+
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com https://ep1.adtrafficquality.google https://tpc.googlesyndication.com`,
+    `script-src 'self' 'nonce-${nonce}'${wasmDirective} https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com https://ep1.adtrafficquality.google https://tpc.googlesyndication.com`,
     `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
     "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com",
     "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com https://ep1.adtrafficquality.google https://dns.google https://ip-api.com",
@@ -171,11 +174,11 @@ export async function middleware(request: NextRequest) {
     if (rateLimit.retryAfter) {
       retryResponse.headers.set("Retry-After", String(rateLimit.retryAfter));
     }
-    addSecurityHeaders(retryResponse, nonce);
+    addSecurityHeaders(retryResponse, nonce, path);
     return retryResponse;
   }
 
-  addSecurityHeaders(response, nonce);
+  addSecurityHeaders(response, nonce, path);
 
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
@@ -190,7 +193,7 @@ export async function middleware(request: NextRequest) {
           status: 403,
           headers: { "Content-Type": "application/json" },
         });
-        addSecurityHeaders(crossOriginResponse, nonce);
+        addSecurityHeaders(crossOriginResponse, nonce, path);
         return crossOriginResponse;
       }
     } catch {

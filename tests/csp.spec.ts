@@ -41,6 +41,11 @@ test.describe("CSP inline-style audit", () => {
       expect(cspHeader).toBeTruthy();
       expect(cspHeader).not.toContain("'unsafe-inline'");
 
+      // 'wasm-unsafe-eval' must be scoped to tool pages only: present under
+      // /tools/ (WebAssembly instantiation needs it), absent everywhere else.
+      const isToolPage = pagePath.startsWith("/tools/");
+      expect(cspHeader?.includes("'wasm-unsafe-eval'")).toBe(isToolPage);
+
       // No SSR'd inline style attributes may remain on app-owned elements:
       // ad containers, ad <ins> units, and table-of-contents items.
       const offenders = await page.evaluate(() => {

@@ -3,6 +3,9 @@
 import { useState, useRef, useCallback } from "react";
 import { Copy, Check, Download, Upload, X } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { tryWasm } from "@/lib/wasm/with-fallback";
+import { sha224BytesWasm, sha224HashWasm } from "@/lib/wasm/wasm-wrapper";
+import { sha224Hex } from "@/lib/crypto-hash";
 
 interface FileResult {
   name: string;
@@ -22,6 +25,16 @@ const algos = [
 ];
 
 async function hexDigest(algorithm: string, data: ArrayBuffer): Promise<string> {
+  // WebCrypto does not implement SHA-224, so route it through WASM (which
+  // hashes the raw bytes) with a pure-JS fallback. Other algorithms stay on
+  // the native crypto.subtle path, which browsers implement faster.
+  if (algorithm === "SHA-224") {
+    const bytes = new Uint8Array(data);
+    return tryWasm(
+      () => sha224BytesWasm(bytes),
+      () => sha224Hex(new TextDecoder().decode(bytes)),
+    );
+  }
   const hashBuffer = await crypto.subtle.digest(algorithm, data);
   return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -124,12 +137,12 @@ export function FileChecksum() {
 
   const calculateText = useCallback(async () => {
     if (!textInput.trim()) return;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(textInput).buffer;
     const res: Record<string, string> = {};
     for (const algo of selectedAlgos) {
       try {
-        const hash = await hexDigest(algo, data);
+        const hash = algo === "SHA-224"
+          ? await tryWasm(() => sha224HashWasm(textInput), () => sha224Hex(textInput))
+          : await hexDigest(algo, new TextEncoder().encode(textInput).buffer);
         res[algo] = hash;
       } catch {
         res[algo] = "Error";

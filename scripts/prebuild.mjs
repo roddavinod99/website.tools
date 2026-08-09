@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -90,3 +91,11 @@ if (!existsSync(OUTPUT_DIR)) {
 writeFileSync(OUTPUT_FILE, content, "utf-8");
 console.log(`[prebuild] Generated ${OUTPUT_FILE}`);
 console.log(`[prebuild] Version: ${version}, Build: ${buildNumber}`);
+
+console.log("[prebuild] Building WASM modules...");
+const wasmRes = spawnSync(process.execPath, [join(__dirname, "build-wasm.mjs")], {
+  stdio: "inherit",
+});
+if (wasmRes.status !== 0) {
+  process.exit(wasmRes.status ?? 1);
+}
