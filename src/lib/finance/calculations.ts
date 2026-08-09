@@ -1,7 +1,9 @@
 // Pure financial calculation functions used by the Finance tool category.
 // All functions are deterministic and dependency-free so they can be unit-tested.
-// Values are kept as plain numbers with full precision; formatting happens in format.ts
-// only at presentation time.
+// Values are kept as plain numbers with full precision; formatting and cent-rounding
+// happen only at presentation time (format.ts / precision.ts).
+
+import { roundToCents } from "@/lib/finance/precision";
 
 export function safePositive(v: number): boolean {
   return typeof v === "number" && Number.isFinite(v) && v > 0;
@@ -81,7 +83,8 @@ export function growthSchedule(
   principal: number,
   monthlyContribution: number,
   annualRatePct: number,
-  years: number
+  years: number,
+  timing: ContributionTiming = "annuityDue"
 ): RatePoint[] {
   if (years <= 0) return [];
   const points: RatePoint[] = [];
@@ -90,7 +93,13 @@ export function growthSchedule(
   let contributions = principal;
   for (let y = 1; y <= years; y++) {
     for (let m = 1; m <= 12; m++) {
-      balance = balance * (1 + rMonthly) + monthlyContribution;
+      if (timing === "annuityDue") {
+        // Contribution at the START of the month earns interest all month.
+        balance = (balance + monthlyContribution) * (1 + rMonthly);
+      } else {
+        // Ordinary annuity: contribution lands at the END of the month.
+        balance = balance * (1 + rMonthly) + monthlyContribution;
+      }
       contributions += monthlyContribution;
     }
     points.push({ years: y, balance, contributions, interest: balance - contributions });
@@ -98,13 +107,141 @@ export function growthSchedule(
   return points;
 }
 
-/** Standard EMI (equal monthly installments) for a fixed-rate loan. */
-export function loanEmi(principal: number, annualRatePct: number, months: number): number {
+/** Standard EMI (equal monthly installments) for a fixed-rate loan.
+ *  Pass `roundToCents = true` to get the payment a lender quotes (rounded up to
+ *  the cent); the amortization schedule must then use the rounded payment and
+ *  adjust the final installment so the loan still hits exactly $0. */
+export function loanEmi(
+  principal: number,
+  annualRatePct: number,
+  months: number,
+  rounding = false
+): number {
   if (principal <= 0 || months <= 0) return 0;
   const r = nominalMonthlyRate(annualRatePct);
-  if (r === 0) return principal / months;
-  const factor = Math.pow(1 + r, months);
-  return (principal * r * factor) / (factor - 1);
+  const emi = r === 0 ? principal / months : (principal * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+  return rounding ? roundToCents(emi) : emi;
+}
+
+/** Reverse loan math: the principal you can borrow for a target monthly payment. */
+export function loanAmountForPayment(payment: number, annualRatePct: number, months: number): number {
+  if (payment <= 0 || months <= 0) return 0;
+  const r = nominalMonthlyRate(annualRatePct);
+  if (r === 0) return payment * months;
+  return (payment * (Math.pow(1 + r, months) - 1)) / (r * Math.pow(1 + r, months));
+}
+
+export interface TipResult {
+  tipAmount: number;
+  total: number;
+  tipPerPerson: number;
+  perPerson: number;
+}
+
+/** Tip total and split for a given number of people. */
+export function tipCalculator(bill: number, tipPercent: number, people: number): TipResult | null {
+  if (!safePositive(bill) || people < 1) return null;
+  const tip = bill * (tipPercent / 100);
+  const total = bill + tip;
+  return {
+    tipAmount: tip,
+    total,
+    tipPerPerson: tip / people,
+    perPerson: total / people,
+  };
+}
+
+export interface RentVsBuyParams {
+  homePrice: number;
+  downPaymentPct: number;
+  mortgageRatePct: number;
+  mortgageYears: number;
+  propertyTaxPct: number;
+  maintenancePct: number;
+  homeAppreciationPct: number;
+  monthlyRent: number;
+  rentGrowthPct: number;
+  investmentReturnPct: number;
+  horizonYears: number;
+}
+
+export interface RentVsBuyResult {
+  mortgageMonthly: number;
+  netBuyCost: number;
+  netRentCost: number;
+  buyBetter: boolean;
+  tie: boolean;
+  savings: number;
+  homeValueAtEnd: number;
+  totalRentPaid: number;
+}
+
+/**
+ * Simple buy-vs-rent comparison over a fixed horizon. The buy side pays the
+ * down payment, closing-free mortgage, and annual property tax + maintenance;
+ * any remaining principal is netted out and the (depreciated/appreciated) home
+ * value is credited back. The rent side pays a growing rent and also gains the
+ * future value of the money it avoided tying up in a down payment, invested at
+ * the stated return.
+ */
+export function rentVsBuy(p: RentVsBuyParams): RentVsBuyResult | null {
+  const {
+    homePrice, downPaymentPct, mortgageRatePct, mortgageYears, propertyTaxPct,
+    maintenancePct, homeAppreciationPct, monthlyRent, rentGrowthPct,
+    investmentReturnPct, horizonYears,
+  } = p;
+  if (!safePositive(homePrice) || horizonYears <= 0) return null;
+
+  const downPayment = homePrice * (downPaymentPct / 100);
+  const loanPrincipal = homePrice - downPayment;
+  const mortgageMonths = Math.max(1, mortgageYears * 12);
+  const mortgageSchedule = amortizationSchedule(loanPrincipal, mortgageRatePct, mortgageMonths);
+  const mortgageMonthly = mortgageSchedule[0].payment;
+
+  const annualTax = (homePrice * propertyTaxPct) / 100;
+  const annualMaintenance = (homePrice * maintenancePct) / 100;
+
+  // Buyer cash flows: down payment + monthly mortgage + annual tax/maintenance.
+  // Mortgage payments only apply while the loan is outstanding, so once the
+  // horizon exceeds the mortgage term no further mortgage is charged. Property
+  // tax and maintenance continue for the whole horizon.
+  let buySpent = downPayment;
+  const horizonMonths = horizonYears * 12;
+  for (let m = 0; m < horizonMonths; m++) {
+    const row = mortgageSchedule[m];
+    if (!row || (row.balance <= 0 && m > 0)) break;
+    buySpent += row.payment;
+  }
+  buySpent += horizonYears * (annualTax + annualMaintenance);
+
+  // Remaining principal owed after the horizon (zero once the term is up).
+  const remainingPrincipal =
+    horizonMonths >= 1 && horizonMonths <= mortgageSchedule.length
+      ? mortgageSchedule[horizonMonths - 1].balance
+      : 0;
+
+  const homeValueAtEnd = homePrice * Math.pow(1 + homeAppreciationPct / 100, horizonYears);
+  const netBuyCost = buySpent - Math.max(0, homeValueAtEnd - remainingPrincipal);
+
+  // Renter: growing monthly rent + future value of money not tied up in the down payment
+  let totalRent = 0;
+  for (let y = 0; y < horizonYears; y++) {
+    totalRent += monthlyRent * 12 * Math.pow(1 + rentGrowthPct / 100, y);
+  }
+  const investedDownPayment = downPayment * Math.pow(1 + investmentReturnPct / 100, horizonYears);
+  const netRentCost = totalRent - investedDownPayment;
+
+  const diff = netRentCost - netBuyCost;
+  return {
+    mortgageMonthly,
+    netBuyCost,
+    netRentCost,
+    buyBetter: diff > 0,
+    tie: Math.abs(diff) < 1,
+    savings: Math.abs(diff),
+    homeValueAtEnd,
+    totalRentPaid: totalRent,
+  };
 }
 
 export interface AmortizationRow {
@@ -115,8 +252,12 @@ export interface AmortizationRow {
   balance: number;
 }
 
-/** Full amortization schedule for a fixed-rate loan. The final payment is
- *  adjusted so principal sums exactly to the loan amount (final balance 0). */
+/** Full amortization schedule for a fixed-rate loan. The monthly payment is the
+ *  standard EMI rounded to the cent (what a lender quotes); every installment is
+ *  that rounded payment except the final one, which is the exact remnant needed
+ *  to bring the loan to $0. Interest is computed at full precision, so the
+ *  schedule reconciles exactly: the sum of principal portions equals the loan
+ *  amount and the sum of payments equals principal + total interest. */
 export function amortizationSchedule(
   principal: number,
   annualRatePct: number,
@@ -125,7 +266,26 @@ export function amortizationSchedule(
   const schedule: AmortizationRow[] = [];
   if (principal <= 0 || months <= 0) return schedule;
   const r = nominalMonthlyRate(annualRatePct);
-  const payment = loanEmi(principal, annualRatePct, months);
+  if (r === 0) {
+    const payment = roundToCents(principal / months);
+    let remaining = principal;
+    for (let i = 1; i <= months; i++) {
+      const isLast = i === months;
+      const principalPortion = isLast ? remaining : Math.min(payment, remaining);
+      remaining -= principalPortion;
+      schedule.push({
+        period: i,
+        payment: principalPortion,
+        interest: 0,
+        principal: principalPortion,
+        balance: Math.max(0, remaining),
+      });
+    }
+    return schedule;
+  }
+
+  // Cent-rounded EMI paid every month; the last month pays whatever is left.
+  const payment = roundToCents((principal * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1));
   let balance = principal;
   for (let i = 1; i <= months; i++) {
     const interest = balance * r;
@@ -135,13 +295,38 @@ export function amortizationSchedule(
     balance -= principalPortion;
     schedule.push({
       period: i,
-      payment: pay,
+      payment: isLast ? pay : payment,
       interest,
       principal: principalPortion,
-      balance: balance < 0 ? 0 : balance,
+      balance: Math.max(0, balance),
     });
   }
   return schedule;
+}
+
+/** One aggregate result of a fully-reconciled loan schedule.
+ *  `totalInterest` and `totalPaid` both come from the schedule, so they match
+ *  the component's amortization table instead of a naive emi * months. */
+export interface LoanScheduleTotals {
+  emi: number;
+  totalPaid: number;
+  totalInterest: number;
+  months: number;
+  schedule: AmortizationRow[];
+}
+
+/** Compute a loan's payments with the fully-reconciled totals. */
+export function loanScheduleTotals(
+  principal: number,
+  annualRatePct: number,
+  months: number
+): LoanScheduleTotals | null {
+  if (principal <= 0 || months <= 0) return null;
+  const schedule = amortizationSchedule(principal, annualRatePct, months);
+  const emi = schedule[0].payment;
+  const totalPaid = schedule.reduce((sum, row) => sum + row.payment, 0);
+  const totalInterest = schedule.reduce((sum, row) => sum + row.interest, 0);
+  return { emi, totalPaid, totalInterest, months, schedule };
 }
 
 export function cagr(beginValue: number, endValue: number, years: number): number {
@@ -164,7 +349,8 @@ export function roi(
   const totalOutlay = initialInvestment + Math.max(additionalCosts, 0);
   const gain = finalValue - totalOutlay;
   const roiPct = totalOutlay > 0 ? (gain / totalOutlay) * 100 : NaN;
-  const annualizedPct = totalOutlay > 0 && years > 0
+  const canAnnualize = totalOutlay > 0 && years > 0 && finalValue >= 0;
+  const annualizedPct = canAnnualize
     ? (Math.pow(finalValue / totalOutlay, 1 / years) - 1) * 100
     : null;
   return { gain, roiPct, annualizedPct };
@@ -273,7 +459,9 @@ export interface DebtPayoffResult {
 /**
  * Debt payoff plan. "snowball" knocks out the smallest balance first; "avalanche"
  * targets the highest APR first. Minimum payments are always applied; the excess
- * above the sum of minimums goes to the target debt each month.
+ * above the sum of this month's actual minimums goes to the target debt. When a
+ * debt is paid off, its freed minimum rolls into the target for the next month,
+ * so the full monthly budget is spent every month (standard snowball/avalanche).
  */
 export function debtPayoff(
   debts: DebtEntry[],
@@ -283,8 +471,8 @@ export function debtPayoff(
   const active = debts.map((d) => ({ ...d })).filter((d) => d.balance > 0);
   if (active.length === 0) return null;
 
-  const minPayments = active.reduce((sum, d) => sum + d.minPayment, 0);
-  if (minPayments > monthlyBudget) return null;
+  const totalMin = active.reduce((sum, d) => sum + d.minPayment, 0);
+  if (totalMin > monthlyBudget) return null;
 
   const order = sortDebts(active, strategy).map((d) => d.name);
   const schedule: DebtPayoffMonth[] = [];
@@ -295,6 +483,7 @@ export function debtPayoff(
     months++;
     const mapPay = new Map<string, number>();
     let interestThisMonth = 0;
+    let minPaidThisMonth = 0;
 
     for (const debt of active) {
       if (debt.balance <= 0.005) continue;
@@ -303,10 +492,13 @@ export function debtPayoff(
       debt.balance += interest;
       const minP = Math.min(debt.minPayment, debt.balance);
       debt.balance -= minP;
+      minPaidThisMonth += minP;
       mapPay.set(debt.name, (mapPay.get(debt.name) ?? 0) + minP);
     }
 
-    let extra = monthlyBudget - minPayments;
+    // Extra is the budget minus THIS month's actual minimums, so freed minimums
+    // from debts paid off earlier naturally roll into the target payment.
+    let extra = monthlyBudget - minPaidThisMonth;
     while (extra > 0.005) {
       const target = sortDebts(active, strategy).find((d) => d.balance > 0.005);
       if (!target) break;
@@ -383,6 +575,20 @@ export const US_2025_STATUSES: Record<string, TaxStatusDef> = {
       { min: 394600, max: 501050, rate: 0.32 },
       { min: 501050, max: 751600, rate: 0.35 },
       { min: 751600, max: Infinity, rate: 0.37 },
+    ],
+  },
+  mfs: {
+    id: "mfs",
+    label: "Married Filing Separately",
+    standardDeduction: 15750,
+    brackets: [
+      { min: 0, max: 11925, rate: 0.1 },
+      { min: 11925, max: 48475, rate: 0.12 },
+      { min: 48475, max: 103350, rate: 0.22 },
+      { min: 103350, max: 197300, rate: 0.24 },
+      { min: 197300, max: 250525, rate: 0.32 },
+      { min: 250525, max: 375800, rate: 0.35 },
+      { min: 375800, max: Infinity, rate: 0.37 },
     ],
   },
   hoh: {
@@ -486,6 +692,51 @@ export interface SavingsGoalResult {
 
 const AVG_DAYS_PER_MONTH = 30.44;
 
+/** Balance after `months` end-of-month contributions, compounding month by month. */
+function simulateSavings(
+  start: number,
+  monthly: number,
+  rMonthly: number,
+  months: number
+): number {
+  let balance = start;
+  for (let m = 0; m < months; m++) {
+    balance = balance * (1 + rMonthly) + monthly;
+  }
+  return balance;
+}
+
+/**
+ * Find the smallest monthly contribution that reaches `targetAmount` after
+ * exactly `months` end-of-month contributions (binary search on the simulation,
+ * so the answer agrees exactly with the integer-month loop used elsewhere).
+ */
+function binarySearchRequiredMonthly(
+  currentSavings: number,
+  targetAmount: number,
+  rMonthly: number,
+  months: number
+): number {
+  if (months <= 0) return Math.max(0, targetAmount - currentSavings);
+  if (rMonthly === 0) return Math.max(0, (targetAmount - currentSavings) / months);
+
+  let lo = 0;
+  let hi = Math.max(0, targetAmount - currentSavings);
+  // Widen the search range until the goal is reachable within `months`.
+  while (simulateSavings(currentSavings, hi, rMonthly, months) < targetAmount - 0.005 && hi < targetAmount * 4) {
+    hi *= 2;
+  }
+  for (let i = 0; i < 100 && hi - lo > 1e-9; i++) {
+    const mid = (lo + hi) / 2;
+    if (simulateSavings(currentSavings, mid, rMonthly, months) >= targetAmount - 0.005) {
+      hi = mid;
+    } else {
+      lo = mid;
+    }
+  }
+  return Math.max(0, hi);
+}
+
 export function savingsGoal(
   targetAmount: number,
   currentSavings: number,
@@ -494,27 +745,19 @@ export function savingsGoal(
   targetDate: Date | null,
   now: Date = new Date()
 ): SavingsGoalResult {
-  const rMonthly = nominalMonthlyRate(annualRatePct);
   const remaining = Math.max(0, targetAmount - currentSavings);
   const monthsLeft = targetDate
     ? Math.max(0, (targetDate.getTime() - now.getTime()) / (AVG_DAYS_PER_MONTH * 86400000))
     : null;
 
+  // Use an integer number of months so requiredMonthly reconciles with the
+  // integer-month simulation below (the 30.44-day month is an approximation).
+  const nMonths = monthsLeft == null ? null : Math.max(1, Math.round(monthsLeft));
+  const rMonthly = nominalMonthlyRate(annualRatePct);
+
   let requiredMonthly = 0;
-  if (remaining > 0) {
-    const n = Math.max(monthsLeft ?? 1, 1);
-    if (rMonthly === 0) {
-      requiredMonthly = remaining / n;
-    } else {
-      // Correct closed form: the current balance compounds too, so the monthly
-      // deposit only needs to cover the discounted gap between target and the
-      // current balance's own future value.
-      requiredMonthly = Math.max(
-        0,
-        ((targetAmount - currentSavings * Math.pow(1 + rMonthly, n)) * rMonthly) /
-          (Math.pow(1 + rMonthly, n) - 1)
-      );
-    }
+  if (remaining > 0 && nMonths != null) {
+    requiredMonthly = binarySearchRequiredMonthly(currentSavings, remaining + currentSavings, rMonthly, nMonths);
   }
 
   const effMonthly = monthlyContribution > 0 ? monthlyContribution : requiredMonthly;
@@ -531,7 +774,7 @@ export function savingsGoal(
   const interestEarned = reached ? Math.max(0, balance - totalContributions) : NaN;
 
   const usableTargetDate = targetDate && targetDate.getTime() > now.getTime() ? targetDate : null;
-  const onTrack = usableTargetDate ? monthsToGoal <= (monthsLeft ?? Infinity) : true;
+  const onTrack = usableTargetDate ? monthsLeft != null && monthsToGoal <= monthsLeft + 0.5 : true;
 
   return {
     requiredMonthly,
@@ -541,5 +784,83 @@ export function savingsGoal(
     finalBalance,
     targetDate: usableTargetDate ? usableTargetDate.toISOString() : null,
     onTrack,
+  };
+}
+
+export interface SalesTaxResult {
+  taxAmount: number;
+  totalWithTax: number;
+}
+
+/** Sales tax: price before tax multiplied by the tax rate in percent. */
+export function salesTax(amount: number, taxRatePct: number): SalesTaxResult {
+  const tax = amount * (taxRatePct / 100);
+  return { taxAmount: tax, totalWithTax: amount + tax };
+}
+
+export interface SimpleInterestResult {
+  interest: number;
+  total: number;
+}
+
+/** Simple interest (no compounding): principle * rate * time. */
+export function simpleInterest(principal: number, annualRatePct: number, years: number): SimpleInterestResult {
+  const interest = principal * (annualRatePct / 100) * years;
+  return { interest, total: principal + interest };
+}
+
+export interface InflationResult {
+  futureValue: number;
+  todayValue: number;
+  lossPct: number;
+}
+
+/** Converts an amount across years using a constant annual inflation rate. */
+export function inflation(amount: number, annualRatePct: number, years: number): InflationResult {
+  const factor = Math.pow(1 + annualRatePct / 100, years);
+  const futureValue = amount * factor;
+  return {
+    futureValue,
+    todayValue: amount / factor,
+    lossPct: (1 - 1 / factor) * 100,
+  };
+}
+
+export interface NetWorthResult {
+  totalAssets: number;
+  totalLiabilities: number;
+  netWorth: number;
+}
+
+/** Net worth from a total of assets and liabilities. */
+export function netWorth(assets: number, liabilities: number): NetWorthResult {
+  return {
+    totalAssets: Math.max(0, assets),
+    totalLiabilities: Math.max(0, liabilities),
+    netWorth: assets - liabilities,
+  };
+}
+
+export interface EmergencyFundResult {
+  monthsCovered: number;
+  targetAmount: number;
+  onTrack: boolean;
+  monthsGoal: number;
+}
+
+/** How many months a current balance covers; accepts a target months goal. */
+export function emergencyFund(
+  monthlyExpenses: number,
+  currentSavings: number,
+  monthsGoal: number
+): EmergencyFundResult | null {
+  if (!safePositive(monthlyExpenses)) return null;
+  const monthsCovered = currentSavings / monthlyExpenses;
+  const targetAmount = monthlyExpenses * monthsGoal;
+  return {
+    monthsCovered,
+    targetAmount,
+    onTrack: monthsCovered >= monthsGoal,
+    monthsGoal,
   };
 }

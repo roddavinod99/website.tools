@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
-import { loanEmi } from "@/lib/finance/calculations";
+import { loanScheduleTotals } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
 
 function parseInput(raw: string): number {
@@ -22,13 +22,13 @@ export function LoanEmiCalculator() {
     const y = parseInput(years);
     if (isNaN(p) || isNaN(y) || p <= 0 || y <= 0) return null;
     const months = Math.round(y * 12);
-    const emi = loanEmi(p, isNaN(r) ? 0 : r, months);
-    const totalPaid = emi * months;
+    const totals = loanScheduleTotals(p, isNaN(r) ? 0 : r, months);
+    if (!totals) return null;
     return {
-      emi,
-      totalPaid,
-      totalInterest: Math.max(0, totalPaid - p),
-      months,
+      emi: totals.emi,
+      totalPaid: totals.totalPaid,
+      totalInterest: totals.totalInterest,
+      months: totals.months,
     };
   }, [principal, rate, years]);
 

@@ -1318,7 +1318,7 @@ Add an object to the `allTools` array. Use a category-prefixed, sequential
 `id` (for example `u37`, `g16`, `c23`) and the **human** category name that
 already exists in `src/lib/data/categories.ts`. Finance uses a two-letter
 prefix (`fi1`, `fi2`, …) because `f` alone is taken by Formatters; the next
-Finance tool id is `fi9`.
+Finance tool id is `fi30`.
 
 ```ts
 {
@@ -1437,9 +1437,35 @@ shared finance layer instead of re-implementing money math or inputs:
     (`annuity` = end of month, `annuityDue` = start of month). Default to
     `annuityDue`, which matches industry SIP calculators. Pass a
     `ContributionTiming` arg through `sipFutureValue` /
-    `compoundFutureValue` / `recurringFutureValue`.
+    `compoundFutureValue` / `recurringFutureValue`. `growthSchedule` defaults
+    to `annuityDue` for the same reason.
+-   **Loan precision & reconciliation** — `amortizationSchedule` and
+    `loanScheduleTotals` build the schedule from the cent-rounded EMI (what a
+    lender quotes) and adjust only the final installment so the loan ends at
+    exactly $0. Always derive `totalPaid` / `totalInterest` from the schedule
+    via `loanScheduleTotals` — never `emi * months` — so the amortization
+    table, monthly payment, and totals always reconcile. Round user-facing
+    money with the `src/lib/finance/precision.ts` helpers (`roundToCents`,
+    `roundMoney`).
+-   **Debt payoff** — `debtPayoff` (snowball/avalanche) applies minimums, then
+    feeds the full remaining monthly budget to the target debt; when a debt is
+    paid off its freed minimum rolls into the target, so the whole budget is
+    spent every month.
 -   **Unit tests** — add closed-form reference-vector tests for any new
-    finance math to `tests/finance.test.ts` (run via `npm run test:unit`).
+    finance math to `tests/finance.test.ts` (run via `npm run test:unit`), plus
+    reconciliation properties for schedules/totals (principal sums to the loan,
+    payments = principal + interest).
+-   **Live-rate tools (Currency Converter)** — the Currency Converter is the
+    one approved exception to user-data-never-leaves-the-browser: it fetches
+    a shared, public exchange-rate table server-side at
+    `src/app/api/currency-rates/route.ts` (fixed provider URLs only — no
+    user-supplied URL, so no SSRF surface; 10-minute in-memory cache bounded
+    by `evictStale()`; errors return 502, never crash). The client component
+    (`src/components/tools/currency-converter.tsx`) only calls our own
+    `/api/currency-rates` endpoint — it never sends user input anywhere.
+    Rates are global, anonymous, and constantly changing, so a shared cached
+    fetch on our server is proportionate and privacy-safe. All other tools
+    must stay browser-only.
 
 -----
 
