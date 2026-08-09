@@ -1,0 +1,40 @@
+{
+  "whatItDoes": "Estimates 2025 US federal income tax based on your annual gross income and filing status. It applies the standard deduction, walks the marginal tax brackets, and reports the estimated total tax, marginal rate, effective rate, and a per-bracket breakdown.",
+  "whyItExists": "Most people only see the tax withheld from their paycheck and have no idea what it actually costs or which tax bracket their income lands in. A quick estimator makes take-home pay, raises, and side income much easier to plan around.",
+  "whoShouldUse": "Employees estimating their federal tax, freelancers planning quarterly payments, and anyone comparing a raise, bonus, or additional income against its tax impact.",
+  "useCases": [
+    "Estimate federal tax on a job offer or annual salary",
+    "Plan quarterly estimated payments as a freelancer",
+    "See how the standard deduction reduces taxable income",
+    "Find out which marginal bracket your next dollar is in"
+  ],
+  "instructions": [
+    "Enter your annual gross income",
+    "Choose your filing status (Single, Married Filing Jointly, or Head of Household)",
+    "Expand the bracket table to see how each tax rate applies",
+    "Use the effective and marginal rates to budget your take-home pay"
+  ],
+  "examples": [
+    "$75,000 single -> federal tax approx $8,897 (taxable income $59,250)",
+    "$150,000 married filing jointly -> federal tax approx $21,116",
+    "$50,000 head of household -> federal tax approx $3,757"
+  ],
+  "bestPractices": [
+    "Use your gross income (before 401k deferrals, insurance, and other pre-tax deductions)",
+    "Remember this covers federal income tax only, not state, FICA, or local taxes",
+    "Re-check the brackets if tax rules change; rates update over time",
+    "Use the marginal rate for the additional cost of a raise or side income"
+  ],
+  "commonMistakes": [
+    "Using net (after-tax) income instead of gross",
+    "Thinking only the top-rate applies to the entire income",
+    "Forgetting the standard deduction is subtracted first",
+    "Expecting the number to include state and local taxes"
+  ],
+  "faq": [
+    "Does this calculator include state taxes? — No, it models 2025 US federal income tax only.",
+    "What is the marginal vs effective rate? — The marginal rate applies to your next dollar; the effective rate is your average tax across all taxable income.",
+    "Do I itemize or take the standard deduction? — The standard deduction for your status is applied; itemized deductions and credits are not modeled.",
+    "Is my financial data shared? — No, everything runs locally in your browser."
+  ]
+}

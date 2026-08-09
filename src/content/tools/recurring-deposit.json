@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Calculates the maturity value of a recurring deposit: a fixed amount deposited every month that compounds at the stated annual rate over the tenure.",
+  "whyItExists": "Recurring deposits turn a habit of small, regular deposits into a meaningful sum, but it's hard to intuit how much interest those deposits accumulate. Simulating it shows the payoff of consistency.",
+  "whoShouldUse": "Budget-conscious savers building a regular savings habit, and anyone planning a medium-term savings goal like a vacation or emergency fund.",
+  "useCases": [
+    "Project the maturity value of monthly deposits",
+    "Compare different monthly amounts and tenures",
+    "Plan a specific savings goal over time",
+    "See the split between deposits and interest"
+  ],
+  "instructions": [
+    "Enter the fixed monthly deposit amount",
+    "Enter the annual interest rate as a percent",
+    "Choose the tenure in years",
+    "Read the maturity value, total deposited, and interest earned"
+  ],
+  "examples": [
+    "$5,000/month at 6.5% for 5 years -> approx $352,000",
+    "$1,000/month at 5% for 3 years -> approx $38,800"
+  ],
+  "bestPractices": [
+    "Set a deposit amount you can sustain every month",
+    "Compare terms to see how tenure grows the total",
+    "Re-run when interest rates change",
+    "Keep deposits regular — missed months change the math"
+  ],
+  "commonMistakes": [
+    "Using a lump-sum calculation for a recurring plan",
+    "Missing the compounding on each monthly deposit",
+    "Choosing a deposit amount that's not sustainable",
+    "Forgetting tax on interest in some jurisdictions"
+  ],
+  "faq": [
+    "How is this different from a fixed deposit? — A fixed deposit is a lump sum; here you add monthly.",
+    "Is the interest compounded monthly? — Yes, it compounds at the stated rate over the term.",
+    "Is this tax advice? — No, interest may be taxable depending on where you live.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Compound Interest Calculator",
+      "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
+import { FinanceDisclaimer } from "@/components/tools/finance-disclaimer";
 import { InContentAd } from "@/components/ads";
 import { TableOfContents, CollapsibleSection, type TocItem } from "@/components/layout/table-of-contents";
 import { ToolCard } from "@/components/ui/tool-card";
@@ -298,6 +299,9 @@ export function ToolClient({
           </div>
         </div>
       </section>
+
+      {/* Finance Disclaimer - only on financial tool pages */}
+      {tool.category === "Finance" && <FinanceDisclaimer />}
 
       {/* Key Features */}
       {content.features && content.features.length > 0 && (

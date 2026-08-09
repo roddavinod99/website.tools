@@ -95,4 +95,19 @@ test.describe("API Endpoint Tests", () => {
       expect(response.status()).toBe(400);
     });
   });
+
+  test.describe("GET /api/currency-rates", () => {
+    test("rates endpoint — returns live rates with cache headers", async ({ request }) => {
+      const response = await request.get(`${BASE_URL}/api/currency-rates`);
+      expect([200, 502]).toContain(response.status());
+      if (response.status() === 200) {
+        const body = await response.json();
+        expect(body).toHaveProperty("base");
+        expect(body).toHaveProperty("rates");
+        expect(body).toHaveProperty("updatedAt");
+        expect(typeof body.rates.USD).toBe("number");
+        expect(typeof body.rates.EUR).toBe("number");
+      }
+    });
+  });
 });

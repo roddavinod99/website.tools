@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Estimates the capital gain or loss from selling an asset. It subtracts purchase price and any buying/selling costs, then applies the tax rate you enter to the taxable gain to show the estimated tax owed.",
+  "whyItExists": "Selling an asset — stock, property, or crypto — creates a gain that is often taxed, but the taxable profit depends on the exact costs of buying and selling. A quick calculator makes the real, net gain and its tax easy to see.",
+  "whoShouldUse": "Investors selling stocks or funds, property owners, and anyone planning a sale where a capital gain tax applies.",
+  "useCases": [
+    "Estimate tax on a stock or mutual fund sale",
+    "Budget for a property sale with closing costs",
+    "Compare scenarios of different cost assumption",
+    "See whether a sale is actually with gain or loss"],
+  "instructions": [
+    "Enter the purchase price of the asset",
+    "Enter the sale price",
+    "Add any purchase costs (commissions, fees)",
+    "Add any selling costs (agent fees, closing costs)",
+    "Enter the tax rate and read the estimated gain and tax"],
+  "examples": [
+    "Purchased $50,000 + $500 fees, sold $75,000 - $1,000 fees, 15% rate -> gain $23,500, tax approx $3,525",
+    "Purchased $20,000, sold $15,000 -> a $5,000 loss, no taxable gain, no tax"],
+  "bestPractices": [
+    "Include all fees — commissions, closing, legal, transfer taxes",
+    "Use the correct rate for your holding period (long-term vs short-term)",
+    "Check the current tax authority rates before relying on the figure",
+    "Treat the number as an estimate, not tax advice"],
+  "commonMistakes": [
+    "Forgetting purchase or selling costs that reduce the gain",
+    "Applying the tax rate to the full sale price instead of the gain",
+    "Ignoring that losses usually mean no tax is owed",
+    "Assuming one flat rate applies to every situation"
+  ],
+  "faq": [
+    "Is this tax advice? — No, it is an informational estimate based on the inputs.",
+    "What if I sold at a loss? — The loss is shown and the taxable gain is zero.",
+    "Which rate should I use? — Use the account of the rate applicable to your asset: long-term, short-term, or local rules.",
+    "Are my numbers shared? — No, the calculation is done entirely in your browser."],
+  "references": [
+    {
+      "label": "IRS Capital Gains and Losses (Topic 409)",
+      "url": "https://www.irs.gov/taxtopics/tc409"
+    }
+  ]
+}

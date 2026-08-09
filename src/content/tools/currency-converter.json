@@ -1,0 +1,47 @@
+{
+  "whatItDoes": "Converts an amount from one currency to another using live exchange rates for 160+ world currencies. Rates are fetched from a public exchange-rate API and cached for 10 minutes.",
+  "whyItExists": "Exchange rates move constantly and using a stale or wrong rate can misprice an invoice, budget, or travel plan. This tool gives a current, clearly dated rate in one click.",
+  "whoShouldUse": "Freelancers and contractors invoicing across currencies, travelers budgeting abroad, online shoppers price-comparing, and anyone handling foreign currency transactions.",
+  "useCases": [
+    "Convert an invoice amount into your home currency",
+    "Check what a foreign price equals before paying",
+    "Estimate travel spending before a trip",
+    "Compare international prices when shopping online"
+  ],
+  "instructions": [
+    "Enter the amount you want to convert",
+    "Choose the source currency (From)",
+    "Choose the target currency (To)",
+    "Read the converted amount and the exchange rate used",
+    "Press Refresh rates to load a fresh rate after 10 minutes"
+  ],
+  "examples": [
+    "100 USD to EUR at 1.0834 -> €92.30",
+    "10,000 INR to USD -> about $120",
+    "500 GBP to USD -> about $640"
+  ],
+  "bestPractices": [
+    "Use a recent rate for accurate quotes, since rates change constantly",
+    "Keep in mind banks and card networks add a margin over the mid-market rate",
+    "Refresh the rates once more right before a real transaction",
+    "Confirm the target currency code for the country you need"
+  ],
+  "commonMistakes": [
+    "Using a stale rate from memory or an old page",
+    "Confusing the From and To direction",
+    "Assuming the rate shown is the final rate after bank fees",
+    "Mixing currency codes (USD vs US dollar abbreviations)"
+  ],
+  "faq": [
+    "Where do the rates come from? — A public exchange-rate API refreshed every 10 minutes.",
+    "Why are rates cached for 10 minutes? — To keep the tool fast and avoid hammering the free API; a 10-minute window is fine for planning.",
+    "Are these the rates my bank gives? — No. Banks and cards add fees or margins on top of the mid-market rate.",
+    "Is my data shared? — No. Only the shared rate table is fetched; no personal data leaves your browser."
+  ],
+  "references": [
+    {
+      "label": "open.er-api.com — Live Exchange Rates",
+      "url": "https://open.er-api.com/v6/latest/USD"
+    }
+  ]
+}

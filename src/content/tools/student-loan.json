@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Estimates the monthly payment, total cost, and total interest for repaying a student loan on a standard repayment schedule.",
+  "whyItExists": "Student loans affect budgets for years, and the interplay of balance, rate, and term can add tens of thousands in interest. An estimate makes the real cost of repayment visible before you commit to a plan.",
+  "whoShouldUse": "Graduates planning repayment, borrowers comparing terms, and anyone weighing extra payments against standard amortization.",
+  "useCases": [
+    "Estimate monthly payments for a total loan balance",
+    "Compare repayment term lengths and their interest cost",
+    "See how extra monthly payments shorten the term",
+    "Plan consolidation and refinancing scenarios"
+  ],
+  "instructions": [
+    "Enter your total outstanding loan balance",
+    "Enter a weighted average interest rate as a percent",
+    "Choose a repayment term in years",
+    "Read the monthly payment, total paid, and total interest"
+  ],
+  "examples": [
+    "$30,000 at 5.05% for 10 years -> payment approx $318, interest approx $8,140",
+    "$50,000 at 6% for 10 years -> payment approx $555, interest approx $16,610"
+  ],
+  "bestPractices": [
+    "Use your weighted average rate when consolidating federal and private loans",
+    "Compare the total-interest cost of a 10-year vs. 20-year term",
+    "Check income-driven options separately — they differ from standard repayment",
+    "Pay extra toward the highest-rate loan first"
+  ],
+  "commonMistakes": [
+    "Using an average of rates instead of a weighted average",
+    "Ignoring fees on private loans",
+    "Assuming forgiveness programs apply to every loan type",
+    "Forgetting to re-run the math after refinancing"
+  ],
+  "faq": [
+    "Does this include income-driven repayment? — No, it models standard amortization only.",
+    "What rate should I use? — The weighted average across all your loans is a good estimate.",
+    "Are forgiveness programs included? — No, they change payments and totals significantly.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "Federal Student Aid — Repayment Plans",
+      "url": "https://studentaid.gov/manage-loans/repayment/plans"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Calculates your debt-to-income (DTI) ratio: your total monthly debt payments divided by your gross monthly income, expressed as a percentage.",
+  "whyItExists": "Lenders use DTI to judge whether a borrower can afford new payments, and households use it to check how much of their income is already committed to debt. A simple ratio makes both easy to see.",
+  "whoShouldUse": "Borrowers applying for a mortgage or loan, renters checking affordability, and anyone tracking how much of their income goes to debt.",
+  "useCases": [
+    "Check your current DTI before applying for a loan",
+    "See how a new car or home payment would affect the ratio",
+    "Estimate how much income is committed to debt each month",
+    "Track a goal of lowering the ratio over time"],
+  "instructions": [
+    "Add up your total monthly debt payments",
+    "Enter your gross monthly income",
+    "Read the DTI percentage and where it falls",
+    "Compare against lender thresholds (typically 36% and 43%)"],
+  "examples": [
+    "$1,500 debt, $5,000 income -> DTI 30%",
+    "$2,000 debt, $4,000 income -> DTI 50% (high)"],
+  "bestPractices": [
+    "Include mortgage, rent, cards, auto, student, and personal loans",
+    "Use gross income, before taxes, as lenders do",
+    "Keep the ratio below 36% for comfortable headroom",
+    "Re-check after any change to income or debt"],
+  "commonMistakes": [
+    "Using net income instead of gross",
+    "Forgetting smaller recurring payments like card minimums",
+    "Confusing front-end and back-end ratios",
+    "Ignoring that lenders add the new payment before deciding"],
+  "faq": [
+    "Is this financial advice? — No, it is an informational metric.",
+    "What is a good DTI? — Below 36% is generally healthy; above 43% limits most mortgage options.",
+    "Front-end vs back-end? — Back-end (total debt) is what this calculator shows and what most lenders emphasize.",
+    "Is my data shared? — No, the ratio is computed locally in your browser."],
+  "references": [
+    {
+      "label": "CFPB — What is a Debt-to-Income Ratio?",
+      "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/"
+    }
+  ]
+}

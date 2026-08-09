@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Calculates the maturity value and interest earned on a lump-sum fixed deposit. It compounds your deposit at the stated annual rate over the tenure, with monthly, quarterly, or annual compounding.",
+  "whyItExists": "Fixed deposits are a safe, predictable savings vehicle, but the maturity amount depends heavily on the rate and how often interest is compounded. This calculator makes the final value easy to see before you lock in.",
+  "whoShouldUse": "Savers comparing deposit options, investors laddering fixed deposits, and anyone planning a lump-sum savings goal.",
+  "useCases": [
+    "Estimate the maturity value of a deposit",
+    "Compare monthly vs. annual compounding",
+    "Plan a lump-sum savings toward a goal",
+    "See how the rate changes the final amount"
+  ],
+  "instructions": [
+    "Enter the deposit (principal) amount",
+    "Enter the annual interest rate as a percent",
+    "Choose the tenure in years",
+    "Pick the compounding frequency",
+    "Read the maturity value and interest earned"
+  ],
+  "examples": [
+    "$100,000 at 6.5% for 5 years, monthly -> approx $138,240",
+    "$50,000 at 5% for 3 years, quarterly -> approx $58,060"
+  ],
+  "bestPractices": [
+    "Compare rates across banks, not just one offer",
+    "Consider how early-withdrawal penalties affect liquidity",
+    "Check if the rate is fixed for the full tenure",
+    "Re-run with quarterly vs. monthly to see the difference"
+  ],
+  "commonMistakes": [
+    "Using a nominal rate instead of a compounding rate",
+    "Choosing a longer tenure without checking the interest",
+    "Forgetting tax on interest in some jurisdictions",
+    "Assuming penalties don't exist for early withdrawal"
+  ],
+  "faq": [
+    "What is compounding frequency? — How often interest is added to the principal (monthly, quarterly, or annually).",
+    "Is this tax advice? — No, interest may be taxable depending on your jurisdiction.",
+    "Can I withdraw early? — Usually with penalties that this tool does not model.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Compound Interest Calculator",
+      "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
+    }
+  ]
+}

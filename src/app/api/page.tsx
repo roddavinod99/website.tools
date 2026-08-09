@@ -24,6 +24,12 @@ const endpoints = [
   },
   {
     method: "GET",
+    path: "/api/currency-rates",
+    description: "Return live exchange rates for 160+ currencies with a 10-minute server-side cache.",
+    query: "?from=EUR&amount=100",
+  },
+  {
+    method: "GET",
     path: "/api/version",
     description: "Return the current deployed version and latest release metadata.",
     query: "",

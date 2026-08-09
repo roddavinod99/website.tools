@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Compares the net cost of buying a home versus renting a comparable property over a time horizon. It models the down payment, mortgage payments, property tax, maintenance, home appreciation, and the return the down payment could earn if invested instead.",
+  "whyItExists": "Whether buying or renting is cheaper depends on how long you stay, prices, rates, and growth projections. A side-by-side net cost shows the real difference instead of the emotional one.",
+  "whoShouldUse": "Renters considering a first purchase, movers deciding whether to sell and rent, and anyone comparing housing options over a known time horizon.",
+  "useCases": [
+    "Compare buying vs. renting for a 5-year stay",
+    "See how long you must stay for buying to win",
+    "Test the impact of mortgage rate and appreciation assumptions",
+    "Understand the opportunity cost of the down payment"
+  ],
+  "instructions": [
+    "Enter the home price and the rent of a comparable place",
+    "Enter your planned down payment percent and mortgage rate",
+    "Set the number of years you plan to stay",
+    "Adjust appreciation and investment-return assumptions",
+    "Read the verdict and the net cost of each path"
+  ],
+  "examples": [
+    "$400,000 home vs. $2,000 rent, 20% down, 6.5% rate, 5 years",
+    "$300,000 home vs. $1,500 rent, 10% down, 7% rate, 3 years"
+  ],
+  "bestPractices": [
+    "Use a rent for a home comparable in size and area",
+    "Pick a horizon you'll realistically honor",
+    "Adjust appreciation and the alternative investment return honestly",
+    "Re-run the comparison when rates or prices move"
+  ],
+  "commonMistakes": [
+    "Comparing rent to mortgage alone and ignoring taxes and maintenance",
+    "Using an unrealistically short horizon",
+    "Forgetting the down payment could have been invested",
+    "Assuming appreciation continues at the current pace forever"
+  ],
+  "faq": [
+    "Why does renting invest the down payment? — Money not tied up in a home is assumed to earn the investment return instead.",
+    "Are closing and moving costs included? — No, this simplified version omits them.",
+    "What if my horizon is very short? — Short horizons usually favor renting because buying costs are spread thinly.",
+    "Is this financial advice? — No, it is a comparison estimate with stated assumptions."
+  ],
+  "references": [
+    {
+      "label": "Realtor.com — Rent vs Buy Calculator",
+      "url": "https://www.realtor.com/mortgage/tools/rent-vs-buy-calculator"
+    }
+  ]
+}

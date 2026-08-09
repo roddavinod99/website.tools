@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Plans how long it takes to save a home down payment based on your goal, current savings, monthly contribution, and the interest your savings earn.",
+  "whyItExists": "A down payment is often the biggest savings goal a household sets, and the timeline depends on far more than the goal itself. Knowing the time to goal — and the monthly amount required — turns an abstract target into a concrete plan.",
+  "whoShouldUse": "First-time homebuyers, renters building a deposit, and anyone setting a specific savings goal with a target amount.",
+  "useCases": [
+    "Estimate how long it takes to reach a down payment goal",
+    "Check if your current monthly savings is enough",
+    "See how interest on savings speeds things up",
+    "Plan how much more to save to hit a target date"
+  ],
+  "instructions": [
+    "Enter your down payment goal",
+    "Enter your current savings balance",
+    "Enter your planned monthly contribution",
+    "Enter the annual interest rate on your savings account",
+    "Read the time to goal, final balance, and interest earned"
+  ],
+  "examples": [
+    "$40,000 goal, $10,000 saved, $500/month at 4% -> about 4.5 years",
+    "$20,000 goal, $0 saved, $500/month at 4% -> about 3.6 years"
+  ],
+  "bestPractices": [
+    "Use the actual interest rate your savings account pays",
+    "Re-run the plan as your balance grows or needs change",
+    "Consider automating the monthly contribution",
+    "Keep a buffer above the exact down payment for closing costs"
+  ],
+  "commonMistakes": [
+    "Ignoring interest your current balance already earns",
+    "Choosing a monthly amount you can't sustain",
+    "Forgetting closing costs on top of the down payment",
+    "Assuming no income change over the savings period"
+  ],
+  "faq": [
+    "Does this include closing costs? — No, it targets the down payment amount you enter.",
+    "What rate should I use? — The rate your savings actually earns, often 3-5%.",
+    "Can I plan for a future savings amount? — Yes, change monthly savings and re-run to see the schedule.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "CFPB — Saving for a Down Payment",
+      "url": "https://www.consumerfinance.gov/owning-a-home/prepare/save-money-for-down-payment/"
+    }
+  ]
+}

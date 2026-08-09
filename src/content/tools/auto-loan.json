@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Estimates the monthly payment, total cost, and total interest for a fixed-rate auto loan using standard amortization math.",
+  "whyItExists": "A car is one of the biggest purchases most people make, yet the monthly payment is often set by a dealer. Knowing the true payment and the total interest help you negotiate a price and term that fit your budget.",
+  "whoShouldUse": "Car buyers and refinancers comparing loan offers, and anyone checking how a longer term or higher rate changes the total cost.",
+  "useCases": [
+    "Estimate the monthly payment for a target vehicle price",
+    "Compare 3-year vs. 5-year loan terms",
+    "See how much interest a longer term adds",
+    "Check whether a new car loan fits your monthly budget"
+  ],
+  "instructions": [
+    "Enter the amount you plan to finance (price minus trade-in and down payment)",
+    "Enter the annual interest rate as a percent",
+    "Choose the term in years",
+    "Read the monthly payment, total paid, and total interest"
+  ],
+  "examples": [
+    "$25,000 at 6.5% for 5 years -> payment approx $489, interest approx $4,340",
+    "$35,000 at 7% for 6 years -> payment approx $594, interest approx $7,770"
+  ],
+  "bestPractices": [
+    "Finance only what you need, not the full sticker price",
+    "Compare the total-interest column, not just the monthly payment",
+    "Add taxes, registration, and dealer fees on top of the payment",
+    "Re-run the numbers if your rate or term changes"
+  ],
+  "commonMistakes": [
+    "Financing up to the maximum monthly payment you qualified for",
+    "Ignoring taxes and fees in the total cost",
+    "Choosing the longest term without checking total interest",
+    "Including a trade-in value twice"
+  ],
+  "faq": [
+    "Does this include taxes and fees? — No, it covers the financed amount only.",
+    "What is a good auto loan term? — Shorter terms cost less in interest but have higher payments.",
+    "Can I include a down payment? — Yes, enter the financed amount after deducting it.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ]
+}

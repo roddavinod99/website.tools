@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Builds a debt payoff plan from your debts, minimum payments, and a monthly budget. You can choose the snowball or avalanche strategy to see the payoff order, total months, and total interest paid.",
+  "whyItExists": "Carrying multiple debts is overwhelming, and paying minimums across every card can extend payoff for years. A simple plan that directs every extra dollar at one clear target debt shortens the timeline and shows real progress with the snowball or avalanche order.",
+  "whoShouldUse": "Anyone with multiple credit cards, personal loans, student loans, or auto loans who wants a clear payoff sequence and knows what they can pay monthly.",
+  "useCases": [
+    "Order debts by smallest balance (snowball) for quick wins",
+    "Order by highest APR (avalanche) to minimize interest",
+    "See how an extra monthly budget shortens the plan",
+    "Plan which card receives the surplus each month"
+  ],
+  "instructions": [
+    "Add each debt with its name, balance, APR, and minimum payment",
+    "Set your total monthly budget for debt repayment",
+    "Choose a strategy: snowball or avalanche",
+    "Read the payoff months, total interest, and the payoff order"
+  ],
+  "examples": [
+    "Debt A $4,000 at 18.99% and Debt B $8,000 at 7.5%, $500/month",
+    "Three small debts with $600/month using snowball"
+  ],
+  "bestPractices": [
+    "Set the budget at least equal to the sum of the minimum payments",
+    "Keep paying minimums on every debt so nothing falls behind",
+    "Understand snowball is motivational, avalanche is interest-optimal",
+    "Re-run the plan if balances or minimums change"
+  ],
+  "commonMistakes": [
+    "Setting a budget below the total minimums (no plan is possible)",
+    "Entering an APR instead of a monthly rate by mistake",
+    "Forgetting zero-APR promotional balances still count",
+    "Assuming the payoff ignores interest charged during the plan"
+  ],
+  "faq": [
+    "Is this financial advice? — No, it is a planning estimate.",
+    "Which is better, snowball or avalanche? — Avalanche saves the most interest; snowball gives faster first wins to stay motivated.",
+    "Why is there no plan? — The monthly budget must be at least the sum of the minimums.",
+    "Are my numbers sent anywhere? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "CFPB — What is the Snowball Method of Paying Off Debt?",
+      "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-the-snowball-method-of-paying-off-my-debts-en-1041/"
+    }
+  ]
+}

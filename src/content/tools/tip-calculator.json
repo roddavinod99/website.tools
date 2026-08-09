@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Calculates the tip for a restaurant bill or service, and splits the total among any number of people — showing the tip amount, total with tip, and per-person shares.",
+  "whyItExists": "Figuring a tip and splitting a bill by hand is error-prone and awkward. A quick calculator settles both instantly and fairly, whether it's an 18% dinner or a large group.",
+  "whoShouldUse": "Diners, groups sharing a bill, and anyone leaving a gratuity for a service and wanting exact per-person totals.",
+  "useCases": [
+    "Compute the tip on a restaurant bill",
+    "Split the total evenly among a group",
+    "Compare tipping at different percentages",
+    "Calculate a per-person share for a shared service"
+  ],
+  "instructions": [
+    "Enter the bill amount",
+    "Enter the tip percentage you want to leave",
+    "Enter the number of people splitting the bill",
+    "Read the tip amount, total, and per-person share"
+  ],
+  "examples": [
+    "$100 bill, 18% tip, split 4 ways -> tip $18, $29.50 each",
+    "$240 bill, 20% tip, split 3 ways -> tip $48, $96 each"
+  ],
+  "bestPractices": [
+    "Use a tip rate that matches local norms",
+    "Round per-person amounts up if you prefer clean numbers",
+    "Include tax separately if that's your local practice",
+    "Ask how the bill is split if the group isn't equal"
+  ],
+  "commonMistakes": [
+    "Tipping on the post-tax total when the norm is pre-tax",
+    "Forgetting to split the tip evenly across people",
+    "Entering the number of people as 0",
+    "Applying the tip rate twice"
+  ],
+  "faq": [
+    "What tip percentage should I use? — Common ranges are 15-20%, depending on service and location.",
+    "Is the split always even? — This calculator splits evenly; adjust people if the group is unequal.",
+    "Does this include tax? — Only if you include tax in the bill amount.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ]
+}

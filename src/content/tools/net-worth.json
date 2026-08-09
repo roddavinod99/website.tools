@@ -1,0 +1,44 @@
+{
+  "whatItDoes": "Calculates net worth by subtracting total liabilities (mortgage, loans, cards) from total assets (cash, home, investments, retirement).",
+  "whyItExists": "Net worth is the single clearest snapshot of financial position — everything you own minus everything you owe. A quick total makes progress measurable from year to year.",
+  "whoShouldUse": "Individuals tracking wealth, couples planning finances, and anyone taking stock before a major financial decision.",
+  "useCases": [
+    "Measure total wealth at a single point in time",
+    "Review a baseline and track progress over years",
+    "See whether a large planned purchase fits the balance sheet",
+    "Understand how liabilities compare to assets"
+  ],
+  "instructions": [
+    "Enter your total assets",
+    "Enter your total liabilities",
+    "Read the net worth and the breakdown"
+  ],
+  "examples": [
+    "Assets $500,000 and liabilities $200,000 -> net worth $300,000",
+    "Assets $150,000 and liabilities $180,000 -> net worth -$30,000 (negative)"
+  ],
+  "bestPractices": [
+    "Use fair current market values, not purchase prices",
+    "Include all major assets and every liability",
+    "Calculate at a fixed date each year for comparability",
+    "Include retirement accounts as assets"
+  ],
+  "commonMistakes": [
+    "Valuing your home at purchase price instead of market value",
+    "Forgetting credit card, auto, or student loans",
+    "Leaving out retirement and brokerage accounts from assets",
+    "Treating net worth as the only measure of financial health"
+  ],
+  "faq": [
+    "What counts as an asset? — Cash, savings, the market value of your home, and investments.",
+    "What counts as a liability? — Mortgages, auto and student loans, and card balances.",
+    "Is a negative net worth bad? — Not always; many people start with students, for example.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Net Worth",
+      "url": "https://www.investor.gov/additional-resources/general-resources/glossary/net-worth"
+    }
+  ]
+}

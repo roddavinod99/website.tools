@@ -1,0 +1,39 @@
+{
+  "whatItDoes": "Finds the break-even point for a product or business: the number of units you must sell so that revenue exactly covers fixed costs plus variable costs. It also shows break-even revenue and the contribution margin per unit.",
+  "whyItExists": "Launching a product or running a business without knowing the break-even point risks pricing that can never cover costs. The calculation separates what must be sold before profit exists, which anchors pricing, marketing, and budget decisions.",
+  "whoShouldUse": "Founders pricing a product, small-business owners planning costs, and anyone evaluating a new offering's viability.",
+  "useCases": [
+    "Decide if a selling price covers fixed and variable costs",
+    "Set a sales target before a product becomes profitable",
+    "See how a price change shifts the break-even point",
+    "Estimate how fixed-cost cuts reduce required volume"],
+  "instructions": [
+    "Enter total fixed costs for the period",
+    "Enter variable cost per unit",
+    "Enter the selling price per unit",
+    "Read the units and revenue needed to break even"],
+  "examples": [
+    "$50,000 fixed, $15 variable, $40 price -> 2,000 units, $80,000 revenue",
+    "$20,000 fixed, $8 variable, $20 price -> 1,667 units, $33,333 revenue"],
+  "bestPractices": [
+    "Be honest about all fixed costs, from rent to software",
+    "Update variable costs whenever suppliers or labor change",
+    "Use break-even as a floor, not a target — profit needs more",
+    "Re-run the math if the price changes"],
+  "commonMistakes": [
+    "Excluding fixed costs like rent, salaries, and tools",
+    "Understating variable cost per unit",
+    "Pricing below variable cost, making break-even impossible",
+    "Treating break-even units as if profit comes automatically"],
+  "faq": [
+    "Is this financial advice? — No, it is a planning estimate.",
+    "What if price is below variable cost? — Every sale loses money and there is no break-even point.",
+    "What is contribution margin? — Selling price minus variable cost; the amount each unit contributes to fixed costs and profit.",
+    "Is my data shared? — No, the calculation runs locally in your browser."],
+  "references": [
+    {
+      "label": "SBA — Break-Even Analysis",
+      "url": "https://www.sba.gov/business-guides/plan-your-business/calculate-your-startup-costs"
+    }
+  ]
+}

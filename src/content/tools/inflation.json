@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Shows how inflation changes the purchasing power of money over time. Enter an amount, an annual inflation rate, and a number of years to see both the future numeric value and today's purchasing power.",
+  "whyItExists": "Inflation erodes what money can buy, so a fixed amount loses value over time. Seeing that shift is essential for long-term savings, retirement planning, and setting realistic financial goals.",
+  "whoShouldUse": "Anyone planning long-term savings or retirement, comparing prices over time, or budgeting for future costs.",
+  "useCases": [
+    "Estimate how much today's money is worth in the future",
+    "Plan retirement income in terms of purchasing power",
+    "See how a fixed amount loses spending power over decades",
+    "Model the 'future cost' of today's prices"
+  ],
+  "instructions": [
+    "Enter the current amount",
+    "Enter the annual inflation rate as a percent",
+    "Enter the number of years",
+    "Read the loss in purchasing power and the future equivalent"
+  ],
+  "examples": [
+    "$1,000 at 3% for 10 years -> future value +34%, buying power falls about 26%",
+    "$50,000 at 3% for 30 years -> future value $121,363, buying power today $20,600"
+  ],
+  "bestPractices": [
+    "Use a long-run average rate for planning, usually around 3%",
+    "Remember inflation varies over time and by region",
+    "Apply the real return (after inflation) when comparing investments",
+    "Re-run the calculation when rates or time horizons change"
+  ],
+  "commonMistakes": [
+    "Confusing the future numeric value with purchasing power",
+    "Using a short-term spike in inflation for a long projection",
+    "Forgetting that salaries and prices usually both rise with inflation",
+    "Ignoring that some costs (healthcare, housing) outpace the average"
+  ],
+  "faq": [
+    "Why does the same amount buy less? — Inflation raises prices each year, so money goes less far.",
+    "What does future value mean? — The projected numeric amount after applying the rate.",
+    "What is today's value? — The amount today that purchases the same as the future value then.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "BLS — Consumer Price Index (Inflation)",
+      "url": "https://www.bls.gov/cpi/"
+    }
+  ]
+}

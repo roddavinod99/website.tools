@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Projects your retirement balance by compounding current savings together with monthly contributions over your chosen number of years to retirement.",
+  "whyItExists": "The biggest influence on retirement readiness is time in the market plus consistent saving. Showing the projected balance and the contribution-growth split makes it easy to see how much your money does for you.",
+  "whoShouldUse": "Anyone building a retirement nest egg who wants a realistic projection and a view of how monthly contributions and returns interact.",
+  "useCases": [
+    "Project a 401(k) or IRA balance at retirement",
+    "See the impact of raising monthly contributions",
+    "Test different expected annual returns",
+    "Estimate the total you'll actually contribute"
+  ],
+  "instructions": [
+    "Enter your current retirement savings balance",
+    "Enter your monthly contribution amount",
+    "Enter an expected annual return as a percent",
+    "Set the years to retirement",
+    "Read the projected balance, contributions, and growth"
+  ],
+  "examples": [
+    "$50,000 saved, $500/month, 7% for 30 years -> approx $771,000",
+    "$0 saved, $700/month, 6% for 40 years -> approx $1,395,000"
+  ],
+  "bestPractices": [
+    "Use a conservative return you're comfortable assuming",
+    "Re-run as your income and contributions grow",
+    "Include employer matching if you have it",
+    "Check the growth vs. contributions split to see compounding's effect"
+  ],
+  "commonMistakes": [
+    "Using unrealistic double-digit returns",
+    "Forgetting to include employer contributions",
+    "Starting contributions at the top of your budget with no buffer",
+    "Ignoring taxes and inflation in the real value"
+  ],
+  "faq": [
+    "Does this include taxes and inflation? — No, it is a nominal pre-tax projection.",
+    "What return should I use? — A common assumption is 6-8%, but use your own planning number.",
+    "Is employer matching included? — Only if you add it to the monthly contribution.",
+    "Is my data shared? — No, everything runs locally in your browser."
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Saving and Investing",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest"
+    }
+  ]
+}
