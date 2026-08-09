@@ -1,0 +1,53 @@
+{
+  "whatItDoes": "Plans a path to a savings goal. Enter the target amount, current savings, the monthly contribution, and an expected return rate, and see the required monthly saving, the estimated time to goal, and whether you are on track.",
+  "whyItExists": "Goals without a number tend to slip by. The math behind reaching a target by a set date is non-trivial, and knowing both the required monthly amount and the projected finish date turns a fuzzy wish into a concrete, trackable plan.",
+  "whoShouldUse": "Households budgeting for a deposit, emergency-fund builders, big-ticket savers, and financial planners setting milestones.",
+  "useCases": [
+    "Decide how much to save monthly to reach a deposit goal",
+    "Set an emergency fund target and the timeline to it",
+    "Plan a large upcoming spending like a down payment or wedding",
+    "Check whether the current contribution rate is on target"
+  ],
+  "instructions": [
+    "Enter the goal amount you want to reach",
+    "Enter what you already have saved",
+    "Enter the monthly amount you can contribute",
+    "Set the expected annual return rate",
+    "Read the required monthly amount and the projected time to goal"
+  ],
+  "examples": [
+    "Goal $50,000, savings $5,000, $1,000/month, no return -> done in about 45 months",
+    "Goal $100,000, savings $10,000, 6% return -> under $1,300/month will needed for 5 years",
+    "Goal $20,000 in 2 years with current $2,000 -> about $750/month at 0% return"
+  ],
+  "bestPractices": [
+    "Break large goals into yearly and monthly targets",
+    "Automate your contribution the same day you get paid",
+    "Adjust the plan whenever your income or goal changes",
+    "Keep an emergency cushion in a separately liquid account"
+  ],
+  "commonMistakes": [
+    "Assuming returns guaranteed and ignoring inflation",
+    "Setting a single month of contribution and then never adjusting",
+    "Underestimating how long compound growth needs to work",
+    "Planning to rely on the goal amount before it's actually earned"
+  ],
+  "faq": [
+    "What if I can't reach the required monthly amount? — Lengthen the horizon or shrink the goal; the tool lets you see what each choice does.",
+    "Does the projection account for inflation —? No, adjust the goal for inflation to model real purchase power.",
+    "Can I use a rate of zero? — Yes, that models a no-return cash account.",
+    "Is my data private? — Yes, everything runs locally in the browser."
+  ],
+  "features": [
+    "Required monthly sum and finish date",
+    "On-track status vs. target",
+    "Works with or without an assumed return",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Consumer Financial Protection Bureau — Savings",
+      "url": "https://www.consumerfinance.gov/consumer-tools/savings/"
+    }
+  ]
+}

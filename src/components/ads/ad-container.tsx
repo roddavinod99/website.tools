@@ -22,6 +22,27 @@ const formatDefaults: Record<AdFormat, { width?: number; height?: number; label:
   fluid: { label: "Fluid Ad", slot: "5678901234" },
 };
 
+// Static classes (CSP-safe, no inline style attributes).
+const SIZE_CLASS_LOOKUP: Record<string, string> = {
+  "728x90": "w-[728px] h-[90px]",
+  "300x600": "w-[300px] h-[600px]",
+  "336x280": "w-[336px] h-[280px]",
+  "0x90": "min-h-[90px]",
+  "0x280": "min-h-[280px]",
+  "0x600": "min-h-[600px]",
+};
+
+function getSizingClasses(width?: number, height?: number): string {
+  if (width && height) {
+    return SIZE_CLASS_LOOKUP[`${width}x${height}`] ?? "block";
+  }
+  return "block";
+}
+
+function getMinHeightClass(height?: number): string {
+  return SIZE_CLASS_LOOKUP[`0x${height}`] ?? "min-h-[90px]";
+}
+
 export function AdContainer({ 
   className = "", 
   slot, 
@@ -173,11 +194,13 @@ export function AdContainer({
 
   // Dev mode placeholder
   if (IS_DEV) {
+    const devSizing = finalWidth && finalHeight
+      ? getSizingClasses(finalWidth, finalHeight)
+      : getMinHeightClass(finalHeight);
     return (
       <div
         ref={adRef}
-        className={`flex items-center justify-center rounded-lg border-2 border-dashed border-surface-300 bg-surface-50 dark:border-dark-border dark:bg-dark-surface ${className}`}
-        style={finalWidth && finalHeight ? { width: finalWidth, height: finalHeight } : { minHeight: finalHeight || 90 }}
+        className={`flex items-center justify-center rounded-lg border-2 border-dashed border-surface-300 bg-surface-50 dark:border-dark-border dark:bg-dark-surface ${devSizing} ${className}`}
         role="img"
         aria-label="Advertisement placeholder"
       >
@@ -194,49 +217,27 @@ export function AdContainer({
     return null;
   }
 
-  // Dynamic container styles based on ad state
-  const containerStyle: React.CSSProperties = (() => {
-    if (adLoaded) {
-      return { 
-        height: 'auto', 
-        minHeight: 0,
-        overflow: 'hidden',
-        transition: 'height 0.3s ease-out'
-      };
-    }
-    if (!isLoading) {
-      // Ad failed to load - fully collapse
-      return { 
-        height: 0, 
-        minHeight: 0, 
-        overflow: 'hidden',
-        margin: 0,
-        padding: 0,
-        transition: 'height 0.3s ease-out'
-      };
-    }
+  // CSS classes based on ad state (no inline styles, CSP-safe)
+  let containerClass: string;
+  if (adLoaded) {
+    containerClass = "overflow-hidden transition-[height] duration-300 ease-out";
+  } else if (isLoading) {
     // Loading state - show skeleton
-    return { 
-      minHeight: finalHeight || 90,
-      transition: 'height 0.3s ease-out'
-    };
-  })();
-
-  const insStyle: React.CSSProperties = finalWidth && finalHeight
-    ? { display: "block", width: finalWidth, height: finalHeight }
-    : { display: "block" };
+    containerClass = `overflow-hidden transition-[height] duration-300 ease-out ${getMinHeightClass(finalHeight)}`;
+  } else {
+    // Ad failed to load - fully collapse
+    containerClass = "m-0 h-0 min-h-0 overflow-hidden p-0 transition-[height] duration-300 ease-out";
+  }
 
   return (
     <div 
       ref={adRef} 
-      className={className} 
-      style={containerStyle} 
+      className={`${containerClass} ${className}`.trim()}
       role="complementary" 
       aria-label="Advertisement"
     >
       <ins
-        className="adsbygoogle"
-        style={insStyle}
+        className={`adsbygoogle block ${getSizingClasses(finalWidth, finalHeight)}`}
         data-ad-client={ADSENSE_PUBLISHER_ID}
         data-ad-slot={finalSlot}
         data-ad-format={format}

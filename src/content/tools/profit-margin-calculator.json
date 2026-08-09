@@ -1,0 +1,51 @@
+{
+  "whatItDoes": "Calculates the profit margin on a product or service. Enter revenue and cost to see gross profit, profit margin as a percentage, and markup — while clearly flagging loss-making scenarios.",
+  "whyItExists": "Pricing decisions hinge on the margin, not just on the price. Seeing the margin as a percentage of revenue, plus the markup on cost, tells a seller whether a business is actually making money after expenses.",
+  "whoShouldUse": "Store owners, freelancers and agencies managing pricing, product managers, and anyone setting a sell price for a product.",
+  "useCases": [
+    "Set sell prices for B2B or B2C products",
+    "Check the profitability of a project before committing",
+    "Compare margins across the product catalog",
+    "See the markup implied by your chosen selling price"
+  ],
+  "instructions": [
+    "Enter the total revenue or selling price",
+    "Enter the total cost of the product or service",
+    "Read gross profit, profit margin, markup, and whether it is a loss or gain"
+  ],
+  "examples": [
+    "Revenue $1,200, cost $850 -> $350 gross profit, 29.2% margin",
+    "Revenue $50, cost $50 -> $0 profit, 0% margin",
+    "Revenue $50, cost $60 -> -$10 profit, -20% margin (a loss)"
+  ],
+  "bestPractices": [
+    "Include all operating costs—materials, labor, shipping, fees—in the cost field",
+    "Re-check margin whenever prices or raw costs change",
+    "Use margin for pricing; use markup for cost-based pricing math",
+    "Distinguish gross margin from net margin by layering in operating expenses"
+  ],
+  "commonMistakes": [
+    "Confusing margin (profit as % of revenue) with markup (profit as % of cost)",
+    "Overlooking fees and overhead that belong in cost",
+    "Basing feel on selling price alone without the margin check",
+    "Not updating costs as suppliers change prices"
+  ],
+  "faq": [
+    "What is the difference between margin and markup? — Margin is profit divided by revenue; markup is profit divided by cost.",
+    "Can the tool handle losses? — Yes, it flags a negative profit or loss clearly.",
+    "Is this good for a freelancer's rate? — Yes, enter the rate as revenue and time as cost.",
+    "Are the computations local? — Yes, nothing is transmitted."
+  ],
+  "features": [
+    "Gross profit, margin %, and markup %",
+    "Clear loss indication",
+    "Simple revenue and cost inputs",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Investopedia — Profit Margin",
+      "url": "https://www.investopedia.com/terms/p/profitmargin.asp"
+    }
+  ]
+}

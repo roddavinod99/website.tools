@@ -144,6 +144,14 @@ const toolLoaders: Record<string, ToolLoader> = {
   "string-comparison": () => import("./string-comparison").then((m) => ({ default: m.StringComparison })),
   "code-complexity": () => import("./code-complexity").then((m) => ({ default: m.CodeComplexity })),
   "table-to-json": () => import("./table-to-json").then((m) => ({ default: m.TableToJson })),
+  "compound-interest-calculator": () => import("./compound-interest-calculator").then((m) => ({ default: m.CompoundInterestCalculator })),
+  "sip-calculator": () => import("./sip-calculator").then((m) => ({ default: m.SipCalculator })),
+  "loan-emi-calculator": () => import("./loan-emi-calculator").then((m) => ({ default: m.LoanEmiCalculator })),
+  "mortgage-payoff": () => import("./mortgage-payoff").then((m) => ({ default: m.MortgagePayoff })),
+  "cagr-calculator": () => import("./cagr-calculator").then((m) => ({ default: m.CagrCalculator })),
+  "roi-calculator": () => import("./roi-calculator").then((m) => ({ default: m.RoiCalculator })),
+  "profit-margin-calculator": () => import("./profit-margin-calculator").then((m) => ({ default: m.ProfitMarginCalculator })),
+  "savings-goal-calculator": () => import("./savings-goal-calculator").then((m) => ({ default: m.SavingsGoalCalculator })),
 };
 
 // Pre-create dynamic components at module level (singletons)

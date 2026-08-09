@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { 
   ArrowRight, Code, Brain, Image, FileText, Type, Shield, Network, Search,
   Cloud, Terminal, Wallet, Zap, ArrowLeftRight, Wand, CircleCheck,
-  FileCode, PanelRightOpen, Calculator, GraduationCap, Wrench, 
+  FileCode, PanelRightOpen, Calculator, GraduationCap, Wrench, CircleDollarSign,
   type LucideIcon 
 } from "lucide-react";
 
@@ -32,12 +32,13 @@ const colorDefaults: Record<string, string> = {
   "Security Tools": "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
   "Image Tools": "bg-pink-50 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400",
   "Utilities": "bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-400",
+  "Finance": "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400",
 };
 
 const iconMap: Record<string, LucideIcon> = {
   Code, Brain, Image, FileText, Type, Shield, Network, Search,
   Cloud, Terminal, Wallet, Zap, ArrowLeftRight, Wand, CircleCheck,
-  FileCode, PanelRightOpen, Calculator, GraduationCap, Wrench,
+  FileCode, PanelRightOpen, Calculator, GraduationCap, Wrench, CircleDollarSign,
 };
 
 export function CategoryCard({ 

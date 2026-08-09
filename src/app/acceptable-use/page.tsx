@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+﻿/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -50,16 +50,16 @@ export default function AcceptableUsePage() {
         <nav className="mb-8 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-sm font-semibold text-surface-900 dark:text-dark-text mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="#1-general-principles" className="text-brand-500 hover:underline">1. General Principles</a></li>
-            <li><a href="#2-prohibited-activities" className="text-brand-500 hover:underline">2. Prohibited Activities</a></li>
-            <li><a href="#3-tool-specific-restrictions" className="text-brand-500 hover:underline">3. Tool-Specific Restrictions</a></li>
-            <li><a href="#4-api-usage" className="text-brand-500 hover:underline">4. API Usage (Current and Future)</a></li>
-            <li><a href="#5-security-and-integrity" className="text-brand-500 hover:underline">5. Security and Integrity</a></li>
-            <li><a href="#6-intellectual-property" className="text-brand-500 hover:underline">6. Intellectual Property</a></li>
-            <li><a href="#7-user-conduct" className="text-brand-500 hover:underline">7. User Conduct</a></li>
-            <li><a href="#8-enforcement" className="text-brand-500 hover:underline">8. Enforcement and Consequences</a></li>
-            <li><a href="#9-reporting-violations" className="text-brand-500 hover:underline">9. Reporting Violations</a></li>
-            <li><a href="#10-changes" className="text-brand-500 hover:underline">10. Changes to This Policy</a></li>
+            <li><a href="#1-general-principles" className="text-brand-500 underline hover:text-brand-600">1. General Principles</a></li>
+            <li><a href="#2-prohibited-activities" className="text-brand-500 underline hover:text-brand-600">2. Prohibited Activities</a></li>
+            <li><a href="#3-tool-specific-restrictions" className="text-brand-500 underline hover:text-brand-600">3. Tool-Specific Restrictions</a></li>
+            <li><a href="#4-api-usage" className="text-brand-500 underline hover:text-brand-600">4. API Usage (Current and Future)</a></li>
+            <li><a href="#5-security-and-integrity" className="text-brand-500 underline hover:text-brand-600">5. Security and Integrity</a></li>
+            <li><a href="#6-intellectual-property" className="text-brand-500 underline hover:text-brand-600">6. Intellectual Property</a></li>
+            <li><a href="#7-user-conduct" className="text-brand-500 underline hover:text-brand-600">7. User Conduct</a></li>
+            <li><a href="#8-enforcement" className="text-brand-500 underline hover:text-brand-600">8. Enforcement and Consequences</a></li>
+            <li><a href="#9-reporting-violations" className="text-brand-500 underline hover:text-brand-600">9. Reporting Violations</a></li>
+            <li><a href="#10-changes" className="text-brand-500 underline hover:text-brand-600">10. Changes to This Policy</a></li>
           </ol>
         </nav>
 
@@ -249,7 +249,7 @@ export default function AcceptableUsePage() {
                   We encourage responsible security research. If you discover a vulnerability, please report it via:
                 </p>
                 <div className="mt-2 p-3 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                  <p><strong>Email:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 hover:underline">security@devstackio.com</a></p>
+                  <p><strong>Email:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a></p>
                   <p><strong>PGP:</strong> Available on request</p>
                 </div>
                 <p className="mt-2 text-sm">
@@ -372,7 +372,7 @@ export default function AcceptableUsePage() {
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Appeals</h3>
                 <p className="mt-2 text-sm">
-                  To appeal a restriction, contact <a href="mailto:appeals@devstackio.com" className="text-brand-500 hover:underline">appeals@devstackio.com</a>
+                  To appeal a restriction, contact <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a>
                   with your IP, the restriction details, and explanation. We review appeals within 5 business days.
                 </p>
               </div>
@@ -386,10 +386,10 @@ export default function AcceptableUsePage() {
                 Help us keep DevStackIO safe. Report violations to:
               </p>
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-                <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 hover:underline">abuse@devstackio.com</a></p>
-                <p><strong>Copyright/DMCA:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 hover:underline">copyright@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
-                <p><strong>General Policy:</strong> <a href="mailto:policy@devstackio.com" className="text-brand-500 hover:underline">policy@devstackio.com</a></p>
-                <p><strong>Security Issues:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 hover:underline">security@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
+                <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
+                <p><strong>Copyright/DMCA:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
+                <p><strong>General Policy:</strong> <a href="mailto:policy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">policy@devstackio.com</a></p>
+                <p><strong>Security Issues:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
               </div>
               <p className="text-sm text-surface-500 dark:text-dark-muted">
                 Include: Description of violation, URL/tool involved, screenshots if applicable, and your contact info.
@@ -419,12 +419,12 @@ export default function AcceptableUsePage() {
         <div className="mt-12 p-6 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="/terms" className="text-brand-500 hover:underline">Terms of Service</a></li>
-            <li><a href="/privacy" className="text-brand-500 hover:underline">Privacy Policy</a></li>
-            <li><a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Policy</a></li>
-            <li><a href="/dmca" className="text-brand-500 hover:underline">DMCA / Copyright Policy</a></li>
-            <li><a href="/dpa" className="text-brand-500 hover:underline">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/security" className="text-brand-500 hover:underline">Security Policy</a></li>
+            <li><a href="/terms" className="text-brand-500 underline hover:text-brand-600">Terms of Service</a></li>
+            <li><a href="/privacy" className="text-brand-500 underline hover:text-brand-600">Privacy Policy</a></li>
+            <li><a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a></li>
+            <li><a href="/dmca" className="text-brand-500 underline hover:text-brand-600">DMCA / Copyright Policy</a></li>
+            <li><a href="/dpa" className="text-brand-500 underline hover:text-brand-600">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/security" className="text-brand-500 underline hover:text-brand-600">Security Policy</a></li>
           </ul>
         </div>
 
@@ -432,8 +432,8 @@ export default function AcceptableUsePage() {
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
           <p className="mt-2 text-surface-600 dark:text-dark-muted">
             Questions about this Acceptable Use Policy? Contact us at
-            <a href="mailto:policy@devstackio.com" className="text-brand-500 hover:underline">policy@devstackio.com</a>
-            or use our <a href="/contact" className="text-brand-500 hover:underline">contact form</a>.
+            <a href="mailto:policy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">policy@devstackio.com</a>
+            or use our <a href="/contact" className="text-brand-500 underline hover:text-brand-600">contact form</a>.
           </p>
         </div>
       </article>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useFuseSearch } from "@/lib/search-fuse";
+import { useFocusTrap } from "@/lib/use-focus-trap";
 import { Search, X } from "lucide-react";
 import type { Tool } from "@/types";
 
@@ -15,6 +16,7 @@ interface Props {
 export function SearchOverlay({ isOpen, onClose, allTools }: Props) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const { search, results, query, ready } = useFuseSearch(allTools);
   const [localQuery, setLocalQuery] = useState("");
 
@@ -81,15 +83,20 @@ export function SearchOverlay({ isOpen, onClose, allTools }: Props) {
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
 
+  useFocusTrap(isOpen, panelRef, inputRef);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]" role="dialog" aria-modal="true" aria-label="Search tools">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative w-full max-w-xl mx-4 rounded-xl border border-surface-200 bg-white shadow-2xl dark:border-dark-border dark:bg-dark-surface">
+      <div ref={panelRef} className="relative w-full max-w-xl mx-4 rounded-xl border border-surface-200 bg-white shadow-2xl dark:border-dark-border dark:bg-dark-surface">
         <form onSubmit={handleSubmit} className="flex items-center border-b border-surface-200 px-4 dark:border-dark-border">
           <Search className="h-5 w-5 shrink-0 text-surface-400" />
+          <label htmlFor="search-overlay-input" className="sr-only">Search tools</label>
           <input
+            id="search-overlay-input"
+            name="q"
             ref={inputRef}
             value={localQuery}
             onChange={(e) => handleSearch(e.target.value)}

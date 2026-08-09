@@ -11,6 +11,17 @@ export interface TocItem {
   icon?: LucideIcon;
 }
 
+const LEVEL_PADDING: Record<number, string> = {
+  1: "pl-3",
+  2: "pl-6",
+  3: "pl-9",
+  4: "pl-12",
+};
+
+function getLevelPadding(level: number): string {
+  return LEVEL_PADDING[level] ?? "pl-3";
+}
+
 interface TableOfContentsProps {
   items: TocItem[];
   activeId: string;
@@ -59,11 +70,11 @@ export function TableOfContents({ items, activeId }: TableOfContentsProps) {
               href={`#${item.id}`}
               className={cn(
                 "block px-2 py-1 text-sm transition-colors rounded",
+                getLevelPadding(item.level),
                 activeId === item.id
                   ? "text-brand-500 font-medium dark:text-brand-400"
                   : "text-surface-600 hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
               )}
-              style={{ paddingLeft: item.level * 12 }}
               onClick={(e) => {
                 e.preventDefault();
                 const target = document.getElementById(item.id);

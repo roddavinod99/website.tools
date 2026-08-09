@@ -1,0 +1,53 @@
+{
+  "whatItDoes": "Computes the equated monthly installment (EMI) for a fixed-rate loan, plus the total payment and the total interest you will pay over the full term. Uses a standard reducing-balance EMI formula.",
+  "whyItExists": "Understanding a loan's full cost is the difference between an affordable purchase and a debt trap. An EMI calculator reveals not just the monthly payment but how much interest compounds over the whole loan life.",
+  "whoShouldUse": "Home buyers, car buyers, personal-loan borrowers, and financial planners estimating loan affordability.",
+  "useCases": [
+    "Estimate the monthly payment of a home, car, or personal loan",
+    "Compare loan terms of different durations and rates",
+    "See the total interest paid over the life of a loan",
+    "Budget a repayment plan that fits your cash flow"
+  ],
+  "instructions": [
+    "Enter the loan amount",
+    "Enter the annual interest rate in percent",
+    "Enter the tenure in years",
+    "Read the monthly EMI, total payment, and total interest",
+    "Experiment with shorter terms to see how interest shrinks"
+  ],
+  "examples": [
+    "$200,000 at 8.5% for 20 years → EMI ≈ $1,735, interest ≈ $216,500",
+    "$30,000 at 7% for 5 years → EMI ≈ $594, interest ≈ $5,650",
+    "$400,000 at 6.5% for 30 years → EMI ≈ $2,528, interest ≈ $510,000"
+  ],
+  "bestPractices": [
+    "Compare the total interest, not just the monthly EMIs",
+    "Try shorter tenures to reduce total interest when you can afford it",
+    "Include points, fees, and insurance burden separately",
+    "Re-check the rate with the lender, since rates change all the time"
+  ],
+  "commonMistakes": [
+    "Comparing loans only on their interest rates, ignoring tenure",
+    "Entering the rate as 0.085 instead of 8.5",
+    "Forgetting that processing fees and insurance are not in the EMI",
+    "Assuming the EMI amount stays constant forever on a variable-rate loan"
+  ],
+  "faq": [
+    "What is the EMI formula? — It is the standard reducing-balance annuity: principal × monthly rate × (1+rate)^n / ((1+rate)^n − 1).",
+    "Does it include processing fees or insurance? — No, only principal and interest.",
+    "Can I use it for any loan type? — Yes, the math is identical for home, auto, and personal loans.",
+    "Is my data sent anywhere? — No, the calculation happens entirely in your browser."
+  ],
+  "features": [
+    "Reducing-balance EMI calculation",
+    "Total principal and interest breakdown",
+    "Adjustable loan amount, rate, and tenure",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Investopedia — EMI Calculator",
+      "url": "https://www.investopedia.com/terms/e/eminstallment.asp"
+    }
+  ]
+}

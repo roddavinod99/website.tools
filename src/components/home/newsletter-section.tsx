@@ -49,9 +49,13 @@ export function NewsletterSection() {
             <p className="mt-8 text-white font-medium">Thanks for subscribing!</p>
           ) : (
             <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
+                id="newsletter-email"
+                name="email"
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
                 placeholder="Enter your email"
+                autoComplete="email"
                 className="h-11 sm:w-80 rounded-lg border border-white/20 bg-black/20 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:bg-black/30 focus:ring-2 focus:ring-white/30"
               />
               <button type="submit" disabled={status === "loading"}

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+﻿/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -48,16 +48,16 @@ export default function DMCAPage() {
         <nav className="mb-8 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-sm font-semibold text-surface-900 dark:text-dark-text mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="#1-dmca-designated-agent" className="text-brand-500 hover:underline">1. DMCA Designated Agent</a></li>
-            <li><a href="#2-submitting-a-dmca-notice" className="text-brand-500 hover:underline">2. Submitting a DMCA Take-Down Notice</a></li>
-            <li><a href="#3-required-notice-elements" className="text-brand-500 hover:underline">3. Required Notice Elements (17 U.S.C. § 512(c)(3))</a></li>
-            <li><a href="#4-our-response-process" className="text-brand-500 hover:underline">4. Our Response Process</a></li>
-            <li><a href="#5-counter-notification-procedure" className="text-brand-500 hover:underline">5. Counter-Notification Procedure (17 U.S.C. § 512(g))</a></li>
-            <li><a href="#6-repeat-infringers" className="text-brand-500 hover:underline">6. Repeat Infringers</a></li>
-            <li><a href="#7-fair-use-consideration" className="text-brand-500 hover:underline">7. Fair Use Consideration</a></li>
-            <li><a href="#8-international-copyright" className="text-brand-500 hover:underline">8. International Copyright Compliance</a></li>
-            <li><a href="#9-misrepresentation-liability" className="text-brand-500 hover:underline">9. Misrepresentation Liability (17 U.S.C. § 512(f))</a></li>
-            <li><a href="#10-changes" className="text-brand-500 hover:underline">10. Changes to This Policy</a></li>
+            <li><a href="#1-dmca-designated-agent" className="text-brand-500 underline hover:text-brand-600">1. DMCA Designated Agent</a></li>
+            <li><a href="#2-submitting-a-dmca-notice" className="text-brand-500 underline hover:text-brand-600">2. Submitting a DMCA Take-Down Notice</a></li>
+            <li><a href="#3-required-notice-elements" className="text-brand-500 underline hover:text-brand-600">3. Required Notice Elements (17 U.S.C. § 512(c)(3))</a></li>
+            <li><a href="#4-our-response-process" className="text-brand-500 underline hover:text-brand-600">4. Our Response Process</a></li>
+            <li><a href="#5-counter-notification-procedure" className="text-brand-500 underline hover:text-brand-600">5. Counter-Notification Procedure (17 U.S.C. § 512(g))</a></li>
+            <li><a href="#6-repeat-infringers" className="text-brand-500 underline hover:text-brand-600">6. Repeat Infringers</a></li>
+            <li><a href="#7-fair-use-consideration" className="text-brand-500 underline hover:text-brand-600">7. Fair Use Consideration</a></li>
+            <li><a href="#8-international-copyright" className="text-brand-500 underline hover:text-brand-600">8. International Copyright Compliance</a></li>
+            <li><a href="#9-misrepresentation-liability" className="text-brand-500 underline hover:text-brand-600">9. Misrepresentation Liability (17 U.S.C. § 512(f))</a></li>
+            <li><a href="#10-changes" className="text-brand-500 underline hover:text-brand-600">10. Changes to This Policy</a></li>
           </ol>
         </nav>
 
@@ -70,9 +70,9 @@ export default function DMCAPage() {
             </p>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-1">
               <p><strong>Name:</strong> DevStackIO Copyright Agent</p>
-              <p><strong>Email:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 hover:underline">copyright@devstackio.com</a></p>
+              <p><strong>Email:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a></p>
               <p><strong>Mailing Address:</strong> DevStackIO Copyright Agent, 123 Developer Way, San Francisco, CA 94102, USA</p>
-              <p><strong>Abuse Email:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 hover:underline">abuse@devstackio.com</a></p>
+              <p><strong>Abuse Email:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
               Include "DMCA Notice" in the subject line for fastest processing. We do not accept notices via phone, fax,
@@ -84,12 +84,12 @@ export default function DMCAPage() {
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">2. Submitting a DMCA Take-Down Notice</h2>
             <p className="mt-2">
               If you believe that content on DevStackIO infringes your copyright, submit a written notification to our
-              Designated Agent. The notice must comply with 17 U.S.C. § 512(c)(3) (see <a href="#3-required-notice-elements" className="text-brand-500 hover:underline">Section 3</a>).
+              Designated Agent. The notice must comply with 17 U.S.C. § 512(c)(3) (see <a href="#3-required-notice-elements" className="text-brand-500 underline hover:text-brand-600">Section 3</a>).
             </p>
             <div className="mt-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
               <h3 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">Before Submitting, Consider:</h3>
               <ul className="list-disc pl-6 space-y-1 text-sm">
-                <li>Is the use potentially fair use? (See <a href="#7-fair-use-consideration" className="text-brand-500 hover:underline">Section 7</a>)</li>
+                <li>Is the use potentially fair use? (See <a href="#7-fair-use-consideration" className="text-brand-500 underline hover:text-brand-600">Section 7</a>)</li>
                 <li>Are you the copyright owner or authorized agent?</li>
                 <li>Is the material actually on DevStackIO? (Our tools process data client-side; we don't host user content)</li>
                 <li>Have you tried contacting the user directly?</li>
@@ -189,7 +189,7 @@ Date: [Date]</code></pre>
                 <li>Remove documentation, examples, or blog content containing infringing material</li>
                 <li>Disable tool features that facilitate the infringement</li>
                 <li>Notify the user who posted/used the material</li>
-                <li>Terminate repeat infringer accounts (see <a href="#6-repeat-infringers" className="text-brand-500 hover:underline">Section 6</a>)</li>
+                <li>Terminate repeat infringer accounts (see <a href="#6-repeat-infringers" className="text-brand-500 underline hover:text-brand-600">Section 6</a>)</li>
               </ul>
             </div>
           </section>
@@ -270,14 +270,14 @@ Date: [Date]</code></pre>
                   <li>Three (3) valid, uncontested DMCA notices within 24 months = presumptive repeat infringer.</li>
                   <li>Account may be suspended or terminated at our discretion.</li>
                   <li>We consider context: fair use, good faith, volume, and severity.</li>
-                  <li>Users may appeal termination by contacting <a href="mailto:appeals@devstackio.com" className="text-brand-500 hover:underline">appeals@devstackio.com</a>.</li>
+                  <li>Users may appeal termination by contacting <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a>.</li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Appeal Process</h3>
                 <ol className="list-decimal pl-6 space-y-2">
-                  <li>Submit written appeal to <a href="mailto:appeals@devstackio.com" className="text-brand-500 hover:underline">appeals@devstackio.com</a> within 30 days.</li>
+                  <li>Submit written appeal to <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a> within 30 days.</li>
                   <li>Include: account details, notice references, explanation of why termination is unwarranted.</li>
                   <li>We review within 10 business days and respond in writing.</li>
                   <li>Decision is final unless new evidence emerges.</li>
@@ -343,7 +343,7 @@ Date: [Date]</code></pre>
             </ul>
             <p className="mt-4">
               For non-U.S. notices, we apply the same procedural standards. Contact
-              <a href="mailto:copyright@devstackio.com" className="text-brand-500 hover:underline">copyright@devstackio.com</a>
+              <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a>
               for jurisdiction-specific guidance.
             </p>
           </section>
@@ -381,10 +381,10 @@ Date: [Date]</code></pre>
           <section>
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-              <p><strong>Copyright Agent:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 hover:underline">copyright@devstackio.com</a></p>
-              <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 hover:underline">abuse@devstackio.com</a></p>
-              <p><strong>Legal:</strong> <a href="mailto:legal@devstackio.com" className="text-brand-500 hover:underline">legal@devstackio.com</a></p>
-              <p><strong>Appeals:</strong> <a href="mailto:appeals@devstackio.com" className="text-brand-500 hover:underline">appeals@devstackio.com</a></p>
+              <p><strong>Copyright Agent:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a></p>
+              <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
+              <p><strong>Legal:</strong> <a href="mailto:legal@devstackio.com" className="text-brand-500 underline hover:text-brand-600">legal@devstackio.com</a></p>
+              <p><strong>Appeals:</strong> <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a></p>
               <p className="pt-2"><strong>Mail:</strong> DevStackIO Copyright Agent, 123 Developer Way, San Francisco, CA 94102, USA</p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
@@ -397,12 +397,12 @@ Date: [Date]</code></pre>
         <div className="mt-12 p-6 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="/terms" className="text-brand-500 hover:underline">Terms of Service</a></li>
-            <li><a href="/privacy" className="text-brand-500 hover:underline">Privacy Policy</a></li>
-            <li><a href="/acceptable-use" className="text-brand-500 hover:underline">Acceptable Use Policy</a></li>
-            <li><a href="/dpa" className="text-brand-500 hover:underline">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Policy</a></li>
-            <li><a href="/disclaimer" className="text-brand-500 hover:underline">Disclaimer</a></li>
+            <li><a href="/terms" className="text-brand-500 underline hover:text-brand-600">Terms of Service</a></li>
+            <li><a href="/privacy" className="text-brand-500 underline hover:text-brand-600">Privacy Policy</a></li>
+            <li><a href="/acceptable-use" className="text-brand-500 underline hover:text-brand-600">Acceptable Use Policy</a></li>
+            <li><a href="/dpa" className="text-brand-500 underline hover:text-brand-600">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a></li>
+            <li><a href="/disclaimer" className="text-brand-500 underline hover:text-brand-600">Disclaimer</a></li>
           </ul>
         </div>
       </article>

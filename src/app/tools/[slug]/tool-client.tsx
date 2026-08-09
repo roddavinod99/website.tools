@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
 import { InContentAd } from "@/components/ads";
@@ -131,7 +131,7 @@ async function copyToolOutput(slug: string): Promise<boolean> {
 interface QuickLink {
   href: string;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   external?: boolean;
 }
 

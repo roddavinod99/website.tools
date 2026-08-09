@@ -23,9 +23,9 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { label: "Free Tools", value: "128+", icon: <CheckCircle className="h-5 w-5" />, color: "bg-brand-100 text-brand-600", darkColor: "bg-brand-900/30 text-brand-400" },
-  { label: "Zero Uploads", value: "0", icon: <ShieldCheck className="h-5 w-5" />, color: "bg-green-100 text-green-600", darkColor: "bg-green-900/30 text-green-400" },
-  { label: "Client-Side", value: "100%", icon: <Zap className="h-5 w-5" />, color: "bg-amber-100 text-amber-600", darkColor: "bg-amber-900/30 text-amber-400" },
+  { label: "Free Tools", value: "128+", icon: <CheckCircle className="h-5 w-5" />, color: "bg-brand-100 text-brand-600", darkColor: "dark:bg-brand-900/30 dark:text-brand-400" },
+  { label: "Zero Uploads", value: "0", icon: <ShieldCheck className="h-5 w-5" />, color: "bg-green-100 text-green-600", darkColor: "dark:bg-green-900/30 dark:text-green-400" },
+  { label: "Client-Side", value: "100%", icon: <Zap className="h-5 w-5" />, color: "bg-amber-100 text-amber-600", darkColor: "dark:bg-amber-900/30 dark:text-amber-400" },
 ];
 
 export function Hero({ badgeText, searchPlaceholder, toolCount }: { badgeText: string; searchPlaceholder: string; toolCount: number }) {
@@ -114,6 +114,8 @@ export function Hero({ badgeText, searchPlaceholder, toolCount }: { badgeText: s
             <div className="relative">
               <Search className="absolute left-4 top-1/2 h-6 w-6 -translate-y-1/2 text-surface-400 dark:text-dark-muted" aria-hidden="true" />
               <input
+                id="hero-search"
+                name="q"
                 type="text"
                 placeholder={searchPlaceholder}
                 onKeyDown={handleKeyDown}
@@ -157,12 +159,12 @@ export function Hero({ badgeText, searchPlaceholder, toolCount }: { badgeText: s
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-8 animate-fade-in-up delay-6">
             {stats.map((stat, i) => (
               <div key={stat.label} className="flex items-center gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-full ${stat.color} dark:${stat.darkColor}`}>
+                <div className={`flex h-10 w-10 items-center justify-center rounded-full ${stat.color} ${stat.darkColor}`}>
                   {stat.icon}
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-extrabold text-surface-900 dark:text-dark-text">
-                    <span ref={i === 0 ? counterRef : undefined} id={`stat-${stat.label}`}>{i === 0 ? "0+" : stat.value}</span>
+                    <span ref={i === 0 ? counterRef : undefined} id="stat-free-tools">{i === 0 ? "0+" : stat.value}</span>
                   </div>
                   <div className="text-xs text-surface-600 dark:text-dark-muted">{stat.label}</div>
                 </div>

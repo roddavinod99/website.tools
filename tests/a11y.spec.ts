@@ -19,13 +19,39 @@ const PAGES_TO_TEST = [
   "/categories/encoders",
   "/blog",
   "/blog/how-to-format-json-online",
+  "/guides",
+  "/guides/getting-started-json",
+  "/learning",
+  "/tutorials",
+  "/best-practices",
+  "/search?q=json",
+  "/about",
+  "/privacy",
+  "/terms",
+  "/contact",
+  "/changelog",
+  "/roadmap",
+  "/status",
+  "/popular",
+  "/new",
+  "/toolkits/json-toolkit",
+  "/sitemap",
 ];
 
 test.describe("Accessibility audit (@axe-core/playwright)", () => {
   for (const pagePath of PAGES_TO_TEST) {
     test(`${pagePath} — no critical or serious violations`, async ({ page }) => {
-      await page.goto(`${BASE_URL}${pagePath}`);
-      await page.waitForLoadState("networkidle");
+      // Keep audits deterministic: block third-party ad/analytics requests so
+      // long-lived sockets (ads, GA/GTM pixels) don't stall networkidle.
+      await page.route(/googlesyndication\.com|doubleclick\.net|gstatic|cloudflareinsights|google-analytics|googletagmanager|recaptcha|gravatar/, (route) =>
+        route.abort().catch(() => {})
+      );
+
+      await page.goto(`${BASE_URL}${pagePath}`, { waitUntil: "domcontentloaded" });
+      await page
+        .waitForLoadState("networkidle", { timeout: 5000 })
+        .catch(() => {});
+      await page.waitForTimeout(300);
 
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"])

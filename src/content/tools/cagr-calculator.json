@@ -1,0 +1,52 @@
+{
+  "whatItDoes": "Calculates the Compound Annual Growth Rate of an investment. Given a beginning value, an ending value, and the number of years, it returns the constant annual growth rate that would produce the final value.",
+  "whyItExists": "Simple return figures don't capture how long an investment grew. CAGR smooths that fluctuation into one annual rate, so different investments and holding periods can be compared apples-to-apples.",
+  "whoShouldUse": "Investors, portfolio managers, and analysts measuring fund or stock performance across multi-year periods.",
+  "useCases": [
+    "Normalize returns of investments held for different durations",
+    "Compare mutual funds and stocks that have been held different lengths of time",
+    "Report one growth rate for a whole holding period",
+    "Decide between assets by their annualized growth rather than total gain"
+  ],
+  "instructions": [
+    "Enter the value you started with (beginning value)",
+    "Enter the current or final value",
+    "Enter the number of years of the holding period",
+    "Read the CAGR as an annual percentage"
+  ],
+  "examples": [
+    "$1,000 grows to $2,100 in 5 years -> CAGR approx 16.0%",
+    "$25,000 grows to $48,000 in 4 years -> CAGR approx 17.7%",
+    "$100 to $161 in 3 years -> CAGR approx 17.2%"
+  ],
+  "bestPractices": [
+    "Use CAGR for comparisons, not as a prediction of the future",
+    "Include all fees exactly as they affect the value",
+    "Compare only investments with the same timeframes",
+    "Use the net-of-cost end value for accuracy"
+  ],
+  "commonMistakes": [
+    "Treating a single year's gain as a multi-year rate",
+    "Forgetting to include brokerage fees and dividends in beginning/end values",
+    "Comparing CAGRs of periods of very different length",
+    "Entering the rate as a fraction of a whole year"
+  ],
+  "faq": [
+    "What does CAGR mean? — The Compound Annual Growth Rate: the constant annual rate that grows the beginning value to the end value.",
+    "Is it the same as an average return? — No, it accounts for compounding and flattens volatility.",
+    "Can CAGR be negative? — Yes, if the ending value is below the beginning value.",
+    "Is my data stored? — No, everything runs in your browser."
+  ],
+  "features": [
+    "Annualized growth rate",
+    "Begin and end value inputs",
+    "Multi-year, compounding-aware math",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Compound Annual Growth Rate",
+      "url": "https://www.calculatorsoup.com/calculators/financial/cagr-calculator.php"
+    }
+  ]
+}

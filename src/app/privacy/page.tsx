@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+﻿/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -46,20 +46,20 @@ export default function PrivacyPage() {
         <nav className="mb-8 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-sm font-semibold text-surface-900 dark:text-dark-text mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="#1-controller" className="text-brand-500 hover:underline">1. Controller & Contact</a></li>
-            <li><a href="#2-lawful-basis" className="text-brand-500 hover:underline">2. Lawful Basis for Processing (GDPR Art. 6)</a></li>
-            <li><a href="#3-data-categories" className="text-brand-500 hover:underline">3. Categories of Personal Data Processed</a></li>
-            <li><a href="#4-purpose" className="text-brand-500 hover:underline">4. Purposes of Processing</a></li>
-            <li><a href="#5-recipients" className="text-brand-500 hover:underline">5. Recipients & Subprocessors</a></li>
-            <li><a href="#6-international-transfers" className="text-brand-500 hover:underline">6. International Data Transfers</a></li>
-            <li><a href="#7-retention" className="text-brand-500 hover:underline">7. Data Retention Periods</a></li>
-            <li><a href="#8-your-rights" className="text-brand-500 hover:underline">8. Your Rights (GDPR Arts. 15-22, CCPA)</a></li>
-            <li><a href="#9-security" className="text-brand-500 hover:underline">9. Data Security Measures</a></li>
-            <li><a href="#10-automated-decision" className="text-brand-500 hover:underline">10. Automated Decision-Making & Profiling</a></li>
-            <li><a href="#11-cookies" className="text-brand-500 hover:underline">11. Cookies & Similar Technologies</a></li>
-            <li><a href="#12-children" className="text-brand-500 hover:underline">12. Children's Privacy</a></li>
-            <li><a href="#13-changes" className="text-brand-500 hover:underline">13. Changes to This Policy</a></li>
-            <li><a href="#14-contact" className="text-brand-500 hover:underline">14. Contact & DPO</a></li>
+            <li><a href="#1-controller" className="text-brand-500 underline hover:text-brand-600">1. Controller & Contact</a></li>
+            <li><a href="#2-lawful-basis" className="text-brand-500 underline hover:text-brand-600">2. Lawful Basis for Processing (GDPR Art. 6)</a></li>
+            <li><a href="#3-data-categories" className="text-brand-500 underline hover:text-brand-600">3. Categories of Personal Data Processed</a></li>
+            <li><a href="#4-purpose" className="text-brand-500 underline hover:text-brand-600">4. Purposes of Processing</a></li>
+            <li><a href="#5-recipients" className="text-brand-500 underline hover:text-brand-600">5. Recipients & Subprocessors</a></li>
+            <li><a href="#6-international-transfers" className="text-brand-500 underline hover:text-brand-600">6. International Data Transfers</a></li>
+            <li><a href="#7-retention" className="text-brand-500 underline hover:text-brand-600">7. Data Retention Periods</a></li>
+            <li><a href="#8-your-rights" className="text-brand-500 underline hover:text-brand-600">8. Your Rights (GDPR Arts. 15-22, CCPA)</a></li>
+            <li><a href="#9-security" className="text-brand-500 underline hover:text-brand-600">9. Data Security Measures</a></li>
+            <li><a href="#10-automated-decision" className="text-brand-500 underline hover:text-brand-600">10. Automated Decision-Making & Profiling</a></li>
+            <li><a href="#11-cookies" className="text-brand-500 underline hover:text-brand-600">11. Cookies & Similar Technologies</a></li>
+            <li><a href="#12-children" className="text-brand-500 underline hover:text-brand-600">12. Children's Privacy</a></li>
+            <li><a href="#13-changes" className="text-brand-500 underline hover:text-brand-600">13. Changes to This Policy</a></li>
+            <li><a href="#14-contact" className="text-brand-500 underline hover:text-brand-600">14. Contact & DPO</a></li>
           </ol>
         </nav>
 
@@ -71,11 +71,11 @@ export default function PrivacyPage() {
             </p>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-1">
               <p><strong>DevStackIO</strong></p>
-              <p>Email: <a href="mailto:contact@devstackio.com" className="text-brand-500 hover:underline">contact@devstackio.com</a></p>
-              <p>Privacy Inquiries: <a href="mailto:privacy@devstackio.com" className="text-brand-500 hover:underline">privacy@devstackio.com</a></p>
-              <p>Data Protection Officer: <a href="mailto:dpo@devstackio.com" className="text-brand-500 hover:underline">dpo@devstackio.com</a></p>
+              <p>Email: <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p>Privacy Inquiries: <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
+              <p>Data Protection Officer: <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>
               <p>Postal: DevStackIO, 123 Developer Way, San Francisco, CA 94102, USA</p>
-              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 hover:underline">eu-rep@devstackio.com</a></p>
+              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 underline hover:text-brand-600">eu-rep@devstackio.com</a></p>
             </div>
           </section>
 
@@ -296,7 +296,7 @@ export default function PrivacyPage() {
               </table>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
-              Full Subprocessor List with details: <a href="/subprocessors" className="text-brand-500 hover:underline">/subprocessors</a>.
+              Full Subprocessor List with details: <a href="/subprocessors" className="text-brand-500 underline hover:text-brand-600">/subprocessors</a>.
               All subprocessors execute Data Processing Agreements with SCCs and adhere to EU-US Data Privacy Framework where applicable.
             </p>
           </section>
@@ -407,7 +407,7 @@ export default function PrivacyPage() {
               </div>
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Right to Withdraw Consent (Art. 7(3) GDPR)</h3>
-                <p className="mt-1 text-sm">Withdraw cookie/analytics consent anytime via <a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Preferences</a> in footer.</p>
+                <p className="mt-1 text-sm">Withdraw cookie/analytics consent anytime via <a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Preferences</a> in footer.</p>
               </div>
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">CCPA Rights (§1798.100-1798.199)</h3>
@@ -417,8 +417,8 @@ export default function PrivacyPage() {
             <div className="mt-4 p-4 rounded-lg bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800">
               <h3 className="font-semibold text-brand-800 dark:text-brand-200">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
-                Email <a href="mailto:privacy@devstackio.com" className="text-brand-500 hover:underline">privacy@devstackio.com</a>
-                or use our <a href="/privacy/request" className="text-brand-500 hover:underline">Data Subject Request Form</a>.
+                Email <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a>
+                or use our <a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Data Subject Request Form</a>.
                 We verify identity and respond within 30 days (extendable to 60 days for complex requests).
                 No fee for standard requests.
               </p>
@@ -429,9 +429,9 @@ export default function PrivacyPage() {
                 You have the right to lodge a complaint with a supervisory authority, e.g.:
               </p>
               <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
-                <li><strong>EU:</strong> <a href="https://edpb.europa.eu/about-edpb/board/members_en" target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:underline">Your national DPA</a></li>
-                <li><strong>UK:</strong> <a href="https://ico.org.uk/" target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:underline">ICO</a></li>
-                <li><strong>CA:</strong> <a href="https://www.priv.gc.ca/" target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:underline">OPC</a></li>
+                <li><strong>EU:</strong> <a href="https://edpb.europa.eu/about-edpb/board/members_en" target="_blank" rel="noopener noreferrer" className="text-brand-500 underline hover:text-brand-600">Your national DPA</a></li>
+                <li><strong>UK:</strong> <a href="https://ico.org.uk/" target="_blank" rel="noopener noreferrer" className="text-brand-500 underline hover:text-brand-600">ICO</a></li>
+                <li><strong>CA:</strong> <a href="https://www.priv.gc.ca/" target="_blank" rel="noopener noreferrer" className="text-brand-500 underline hover:text-brand-600">OPC</a></li>
               </ul>
             </div>
           </section>
@@ -521,7 +521,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">11. Cookies & Similar Technologies</h2>
             <p className="mt-2">
               We use cookies and localStorage for essential functionality and optional analytics/advertising.
-              See our <a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Policy</a> for full details.
+              See our <a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a> for full details.
             </p>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -543,7 +543,7 @@ export default function PrivacyPage() {
               </table>
             </div>
             <p className="mt-4 text-sm">
-              Manage preferences anytime: <a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Preferences</a> (footer link).
+              Manage preferences anytime: <a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Preferences</a> (footer link).
               You can also delete cookies via browser settings.
             </p>
           </section>
@@ -560,7 +560,7 @@ export default function PrivacyPage() {
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">If You Are a Parent/Guardian</h3>
                 <p className="mt-1 text-sm">
                   If you believe your child has provided personal data, contact us at
-                  <a href="mailto:privacy@devstackio.com" className="text-brand-500 hover:underline">privacy@devstackio.com</a>.
+                  <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a>.
                   We will verify and delete promptly.
                 </p>
               </div>
@@ -603,11 +603,11 @@ export default function PrivacyPage() {
           <section id="14-contact">
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">14. Contact & Data Protection Officer</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 hover:underline">privacy@devstackio.com</a></p>
-              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:dpo@devstackio.com" className="text-brand-500 hover:underline">dpo@devstackio.com</a></p>
-              <p><strong>Data Subject Requests:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 hover:underline">privacy@devstackio.com</a> or <a href="/privacy/request" className="text-brand-500 hover:underline">Online Form</a></p>
-              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 hover:underline">security@devstackio.com</a> (PGP available)</p>
-              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 hover:underline">eu-rep@devstackio.com</a></p>
+              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
+              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>
+              <p><strong>Data Subject Requests:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a> or <a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Online Form</a></p>
+              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a> (PGP available)</p>
+              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 underline hover:text-brand-600">eu-rep@devstackio.com</a></p>
               <p><strong>Postal:</strong> DevStackIO, Privacy Team, 123 Developer Way, San Francisco, CA 94102, USA</p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
@@ -620,16 +620,16 @@ export default function PrivacyPage() {
         <div className="mt-12 p-6 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="/terms" className="text-brand-500 hover:underline">Terms of Service</a></li>
-            <li><a href="/cookie-policy" className="text-brand-500 hover:underline">Cookie Policy</a></li>
-            <li><a href="/dpa" className="text-brand-500 hover:underline">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/acceptable-use" className="text-brand-500 hover:underline">Acceptable Use Policy</a></li>
-            <li><a href="/dmca" className="text-brand-500 hover:underline">DMCA / Copyright Policy</a></li>
-            <li><a href="/subprocessors" className="text-brand-500 hover:underline">Subprocessor List</a></li>
-            <li><a href="/security" className="text-brand-500 hover:underline">Security Policy</a></li>
-            <li><a href="/data-retention" className="text-brand-500 hover:underline">Data Retention Policy</a></li>
-            <li><a href="/childrens-privacy" className="text-brand-500 hover:underline">Children's Privacy Policy</a></li>
-            <li><a href="/privacy/request" className="text-brand-500 hover:underline">Data Subject Request Form</a></li>
+            <li><a href="/terms" className="text-brand-500 underline hover:text-brand-600">Terms of Service</a></li>
+            <li><a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a></li>
+            <li><a href="/dpa" className="text-brand-500 underline hover:text-brand-600">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/acceptable-use" className="text-brand-500 underline hover:text-brand-600">Acceptable Use Policy</a></li>
+            <li><a href="/dmca" className="text-brand-500 underline hover:text-brand-600">DMCA / Copyright Policy</a></li>
+            <li><a href="/subprocessors" className="text-brand-500 underline hover:text-brand-600">Subprocessor List</a></li>
+            <li><a href="/security" className="text-brand-500 underline hover:text-brand-600">Security Policy</a></li>
+            <li><a href="/data-retention" className="text-brand-500 underline hover:text-brand-600">Data Retention Policy</a></li>
+            <li><a href="/childrens-privacy" className="text-brand-500 underline hover:text-brand-600">Children's Privacy Policy</a></li>
+            <li><a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Data Subject Request Form</a></li>
           </ul>
         </div>
       </article>

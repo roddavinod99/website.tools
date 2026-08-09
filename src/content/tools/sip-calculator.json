@@ -1,0 +1,52 @@
+{
+  "whatItDoes": "Estimates the future value of a Systematic Investment Plan (SIP) — equal monthly amounts invested at a projected annual return. Breaks the result into the amount invested versus the estimated returns earned.",
+  "whyItExists": "SIPs are the standard way most people invest in mutual funds. The growth curve from fixed monthly contributions is unintuitive, so a calculator turns the recurring-investment formula into an easy-to-read maturity value.",
+  "whoShouldUse": "Mutual fund investors, first-time investors planning monthly deposits, and anyone comparing SIP amounts or durations.",
+  "useCases": [
+    "Estimate the maturity value of a monthly SIP",
+    "Compare different monthly contributions and durations",
+    "Understand how much of the final value is returns vs. invested capital",
+    "Model retirement accumulation from monthly investing"
+  ],
+  "instructions": [
+    "Enter your monthly investment amount",
+    "Set the expected annual return rate",
+    "Choose how many years you will keep investing",
+    "Read the matured value, total invested, and estimated returns"
+  ],
+  "examples": [
+    "$5,000/month at 12% for 10 years → ~$1.14M matured",
+    "$2,000/month at 10% for 15 years → ~$829,000 matured",
+    "$1,000/month at 8% for 20 years → ~$589,000 matured"
+  ],
+  "bestPractices": [
+    "Treat the return rate as an expected long-run average, not a guarantee",
+    "Keep investing through market downs and ups to capture the full cycle",
+    "Review your SIP amount as your income grows",
+    "Use the total-invested figure to check how much comes from your own money"
+  ],
+  "commonMistakes": [
+    "Using short-term past returns as the long-term expectation",
+    "Stopping the SIP during market dips",
+    "Forgetting inflation shrinks the purchase power of the final amount",
+    "Entering a monthly amount when you actually contribute quarterly"
+  ],
+  "faq": [
+    "Is the SIP projection guaranteed? — No, returns are assumed and can be lower or higher.",
+    "Can I use this for non-mutual-fund investing? — Yes, the math is the same for any monthly-return plan.",
+    "Does it account for fund charges? — No, expense ratios and taxes are not included.",
+    "Is my data sent anywhere? — No, everything runs locally in your browser."
+  ],
+  "features": [
+    "Monthly contribution planning",
+    "Invested vs. returns breakdown",
+    "Adjustable return rate and duration",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "SEBI — Mutual Funds",
+      "url": "https://www.sebi.gov.in/"
+    }
+  ]
+}

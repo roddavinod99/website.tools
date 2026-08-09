@@ -1,0 +1,53 @@
+{
+  "whatItDoes": "Projects how a lump sum plus regular monthly contributions grows over time with compound interest. Shows the matured value, the total amount contributed, and the interest earned on top.",
+  "whyItExists": "Compound interest is the engine behind long-term saving, but the numbers are easy to underestimate. A calculator turns the compound growth formula into an instant projection so investors can see what small monthly amounts become over decades.",
+  "whoShouldUse": "Savings and investment plan, financial advisors, and anyone comparing lump-sum deposits against systematic monthly investing.",
+  "useCases": [
+    "Project how much a fixed deposit or index fund grows with monthly additions",
+    "Compare lump-sum investing vs. equal monthly contributions",
+    "Estimate the future value of a retirement fund",
+    "See how interest earned exceeds contributions over long horizons"
+  ],
+  "instructions": [
+    "Enter your starting amount in Initial amount",
+    "Add a monthly contribution to model ongoing savings",
+    "Set the expected annual interest rate",
+    "Choose the number of years",
+    "Read the matured value, total contributed, and interest earned"
+  ],
+  "examples": [
+    "$10,000 initial, $500/month at 7% for 10 years → ~$107,000 matured",
+    "$0 initial, $200/month at 8% for 30 years → ~$298,000 matured",
+    "$50,000 initial, $0/month at 5% for 20 years → ~$135,600 matured"
+  ],
+  "bestPractices": [
+    "Use a conservative rate estimate and review it periodically",
+    "Recall that the projection is pre-tax and pre-inflation",
+    "Increase your contribution when income grows; small raises compound a lot",
+    "Treat the total interest figure as the bonus earned over your own contributions"
+  ],
+  "commonMistakes": [
+    "Ignoring fees and taxes that reduce actual returns",
+    "Assuming a single high rate will hold for the entire period",
+    "Comparing nominal values without adjusting for inflation",
+    "Entering interest as a decimal (0.07 instead of 7)"
+  ],
+  "faq": [
+    "Does this assume the rate compounds monthly? — Yes, interest is compounded monthly by default.",
+    "Is this financial advice? — No, it is a projection purely for planning; always consult a qualified advisor.",
+    "Do I have to enter a monthly contribution? — No, set it to 0 to model a single lump sum.",
+    "Is my data sent anywhere? — No, all calculations run in your browser."
+  ],
+  "features": [
+    "Monthly compounding projection",
+    "Initial deposit and recurring contribution support",
+    "Total invested and interest earned breakdown",
+    "100% browser-based and private"
+  ],
+  "references": [
+    {
+      "label": "Investor.gov — Compound Interest",
+      "url": "https://www.investor.gov/introduction-investing/general-resources/compound-interest"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+﻿/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -47,24 +47,24 @@ export default function DPAPage() {
         <nav className="mb-8 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
           <h2 className="text-sm font-semibold text-surface-900 dark:text-dark-text mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="#1-definitions" className="text-brand-500 hover:underline">1. Definitions and Interpretation</a></li>
-            <li><a href="#2-scope" className="text-brand-500 hover:underline">2. Scope and Applicability</a></li>
-            <li><a href="#3-processing-details" className="text-brand-500 hover:underline">3. Processing Details</a></li>
-            <li><a href="#4-controller-obligations" className="text-brand-500 hover:underline">4. Controller Obligations</a></li>
-            <li><a href="#5-processor-obligations" className="text-brand-500 hover:underline">5. Processor Obligations</a></li>
-            <li><a href="#6-security-measures" className="text-brand-500 hover:underline">6. Technical and Organizational Measures</a></li>
-            <li><a href="#7-subprocessors" className="text-brand-500 hover:underline">7. Subprocessors</a></li>
-            <li><a href="#8-data-subject-rights" className="text-brand-500 hover:underline">8. Data Subject Rights</a></li>
-            <li><a href="#9-international-transfers" className="text-brand-500 hover:underline">9. International Transfers</a></li>
-            <li><a href="#10-data-breach" className="text-brand-500 hover:underline">10. Personal Data Breach Notification</a></li>
-            <li><a href="#11-deletion-return" className="text-brand-500 hover:underline">11. Deletion or Return of Personal Data</a></li>
-            <li><a href="#12-audit" className="text-brand-500 hover:underline">12. Audit and Inspection</a></li>
-            <li><a href="#13-liability" className="text-brand-500 hover:underline">13. Liability</a></li>
-            <li><a href="#14-term-termination" className="text-brand-500 hover:underline">14. Term and Termination</a></li>
-            <li><a href="#15-general" className="text-brand-500 hover:underline">15. General Provisions</a></li>
-            <li><a href="#annex-1" className="text-brand-500 hover:underline">Annex 1: Processing Details</a></li>
-            <li><a href="#annex-2" className="text-brand-500 hover:underline">Annex 2: Technical and Organizational Measures</a></li>
-            <li><a href="#annex-3" className="text-brand-500 hover:underline">Annex 3: Approved Subprocessors</a></li>
+            <li><a href="#1-definitions" className="text-brand-500 underline hover:text-brand-600">1. Definitions and Interpretation</a></li>
+            <li><a href="#2-scope" className="text-brand-500 underline hover:text-brand-600">2. Scope and Applicability</a></li>
+            <li><a href="#3-processing-details" className="text-brand-500 underline hover:text-brand-600">3. Processing Details</a></li>
+            <li><a href="#4-controller-obligations" className="text-brand-500 underline hover:text-brand-600">4. Controller Obligations</a></li>
+            <li><a href="#5-processor-obligations" className="text-brand-500 underline hover:text-brand-600">5. Processor Obligations</a></li>
+            <li><a href="#6-security-measures" className="text-brand-500 underline hover:text-brand-600">6. Technical and Organizational Measures</a></li>
+            <li><a href="#7-subprocessors" className="text-brand-500 underline hover:text-brand-600">7. Subprocessors</a></li>
+            <li><a href="#8-data-subject-rights" className="text-brand-500 underline hover:text-brand-600">8. Data Subject Rights</a></li>
+            <li><a href="#9-international-transfers" className="text-brand-500 underline hover:text-brand-600">9. International Transfers</a></li>
+            <li><a href="#10-data-breach" className="text-brand-500 underline hover:text-brand-600">10. Personal Data Breach Notification</a></li>
+            <li><a href="#11-deletion-return" className="text-brand-500 underline hover:text-brand-600">11. Deletion or Return of Personal Data</a></li>
+            <li><a href="#12-audit" className="text-brand-500 underline hover:text-brand-600">12. Audit and Inspection</a></li>
+            <li><a href="#13-liability" className="text-brand-500 underline hover:text-brand-600">13. Liability</a></li>
+            <li><a href="#14-term-termination" className="text-brand-500 underline hover:text-brand-600">14. Term and Termination</a></li>
+            <li><a href="#15-general" className="text-brand-500 underline hover:text-brand-600">15. General Provisions</a></li>
+            <li><a href="#annex-1" className="text-brand-500 underline hover:text-brand-600">Annex 1: Processing Details</a></li>
+            <li><a href="#annex-2" className="text-brand-500 underline hover:text-brand-600">Annex 2: Technical and Organizational Measures</a></li>
+            <li><a href="#annex-3" className="text-brand-500 underline hover:text-brand-600">Annex 3: Approved Subprocessors</a></li>
           </ol>
         </nav>
 
@@ -129,7 +129,7 @@ export default function DPAPage() {
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">3. Processing Details</h2>
             <p className="mt-2">
               The subject matter, nature, purpose, duration, categories of Personal Data, and categories of Data Subjects
-              are set out in <a href="#annex-1" className="text-brand-500 hover:underline">Annex 1</a>.
+              are set out in <a href="#annex-1" className="text-brand-500 underline hover:text-brand-600">Annex 1</a>.
             </p>
             <p className="mt-2">
               Processor shall only Process Personal Data in accordance with Controller's documented instructions, unless
@@ -155,12 +155,12 @@ export default function DPAPage() {
             <ul className="mt-2 list-disc pl-6 space-y-2">
               <li>Process Personal Data only on Controller's documented instructions;</li>
               <li>Ensure all personnel authorized to Process Personal Data are subject to confidentiality obligations;</li>
-              <li>Implement and maintain the technical and organizational measures set out in <a href="#annex-2" className="text-brand-500 hover:underline">Annex 2</a>;</li>
-              <li>Not engage Subprocessors without prior specific or general written authorization (see <a href="#7-subprocessors" className="text-brand-500 hover:underline">Section 7</a>);</li>
+              <li>Implement and maintain the technical and organizational measures set out in <a href="#annex-2" className="text-brand-500 underline hover:text-brand-600">Annex 2</a>;</li>
+              <li>Not engage Subprocessors without prior specific or general written authorization (see <a href="#7-subprocessors" className="text-brand-500 underline hover:text-brand-600">Section 7</a>);</li>
               <li>Assist Controller in fulfilling its obligations under Articles 32-36 GDPR;</li>
               <li>Notify Controller promptly if it becomes aware of any instruction that violates GDPR or other data protection laws;</li>
               <li>Ensure that Subprocessors are bound by written agreements with substantially the same data protection obligations;</li>
-              <li>Delete or return all Personal Data at Controller's choice upon termination (see <a href="#11-deletion-return" className="text-brand-500 hover:underline">Section 11</a>).</li>
+              <li>Delete or return all Personal Data at Controller's choice upon termination (see <a href="#11-deletion-return" className="text-brand-500 underline hover:text-brand-600">Section 11</a>).</li>
             </ul>
           </section>
 
@@ -168,7 +168,7 @@ export default function DPAPage() {
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">6. Technical and Organizational Measures</h2>
             <p className="mt-2">
               Processor shall implement and maintain appropriate technical and organizational measures to ensure a level of
-              security appropriate to the risk, as detailed in <a href="#annex-2" className="text-brand-500 hover:underline">Annex 2</a>.
+              security appropriate to the risk, as detailed in <a href="#annex-2" className="text-brand-500 underline hover:text-brand-600">Annex 2</a>.
               These measures shall ensure the ongoing confidentiality, integrity, availability, and resilience of Processing
               systems and services.
             </p>
@@ -182,7 +182,7 @@ export default function DPAPage() {
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">7. Subprocessors</h2>
             <p className="mt-2">
               Controller provides general written authorization for Processor to engage the Subprocessors listed in
-              <a href="#annex-3" className="text-brand-500 hover:underline">Annex 3</a>.
+              <a href="#annex-3" className="text-brand-500 underline hover:text-brand-600">Annex 3</a>.
             </p>
             <p className="mt-2">
               Processor shall notify Controller of any intended changes concerning the addition or replacement of Subprocessors
@@ -234,7 +234,7 @@ export default function DPAPage() {
             <p className="mt-2">
               Processor shall inform Controller of the legal basis for any international transfer and provide a copy of
               the applicable safeguards upon request. Current Subprocessors and their transfer mechanisms are listed in
-              <a href="#annex-3" className="text-brand-500 hover:underline">Annex 3</a>.
+              <a href="#annex-3" className="text-brand-500 underline hover:text-brand-600">Annex 3</a>.
             </p>
           </section>
 
@@ -310,7 +310,7 @@ export default function DPAPage() {
             <p className="mt-2">
               This Addendum takes effect on the Effective Date and continues for the duration of the Agreement.
               Upon termination or expiration of the Agreement, this Addendum remains in effect until all Personal Data
-              has been deleted or returned per <a href="#11-deletion-return" className="text-brand-500 hover:underline">Section 11</a>.
+              has been deleted or returned per <a href="#11-deletion-return" className="text-brand-500 underline hover:text-brand-600">Section 11</a>.
             </p>
             <p className="mt-2">
               Either party may terminate this Addendum immediately if the other party commits a material breach of its
@@ -335,7 +335,7 @@ export default function DPAPage() {
 
           <section id="annex-1">
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 1: Processing Details</h2>
-            <p className="mt-2">Pursuant to <a href="#3-processing-details" className="text-brand-500 hover:underline">Section 3</a>.</p>
+            <p className="mt-2">Pursuant to <a href="#3-processing-details" className="text-brand-500 underline hover:text-brand-600">Section 3</a>.</p>
             <div className="mt-4 space-y-4 text-sm">
               <div>
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Subject Matter of Processing</h3>
@@ -384,7 +384,7 @@ export default function DPAPage() {
 
           <section id="annex-2">
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 2: Technical and Organizational Measures</h2>
-            <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-brand-500 hover:underline">Section 6</a> and Article 32 GDPR.</p>
+            <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-brand-500 underline hover:text-brand-600">Section 6</a> and Article 32 GDPR.</p>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">1. Pseudonymization and Encryption</h3>
@@ -438,7 +438,7 @@ export default function DPAPage() {
 
           <section id="annex-3">
             <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 3: Approved Subprocessors</h2>
-            <p className="mt-2">Pursuant to <a href="#7-subprocessors" className="text-brand-500 hover:underline">Section 7</a>. Last updated: {lastUpdated}.</p>
+            <p className="mt-2">Pursuant to <a href="#7-subprocessors" className="text-brand-500 underline hover:text-brand-600">Section 7</a>. Last updated: {lastUpdated}.</p>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
@@ -483,7 +483,7 @@ export default function DPAPage() {
               </table>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
-              Processor shall notify Controller of any changes to this list per <a href="#7-subprocessors" className="text-brand-500 hover:underline">Section 7</a>.
+              Processor shall notify Controller of any changes to this list per <a href="#7-subprocessors" className="text-brand-500 underline hover:text-brand-600">Section 7</a>.
               Subprocessors are engaged under written agreements containing data protection obligations no less
               protective than this Addendum.
             </p>
@@ -499,7 +499,7 @@ export default function DPAPage() {
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <p className="font-semibold text-surface-900 dark:text-dark-text">DevStackIO (Processor)</p>
-              <p className="mt-4 text-surface-600 dark:text-dark-muted">Contact: <a href="mailto:contact@devstackio.com" className="text-brand-500 hover:underline">contact@devstackio.com</a></p>
+              <p className="mt-4 text-surface-600 dark:text-dark-muted">Contact: <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
               <p className="mt-2 text-surface-600 dark:text-dark-muted">Date: {effectiveDate}</p>
             </div>
             <div>

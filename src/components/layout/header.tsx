@@ -193,7 +193,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
+                className="flex h-10 items-center px-3 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
               >
                 {item.title}
               </Link>

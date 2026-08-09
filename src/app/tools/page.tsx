@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/constants";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";
@@ -119,14 +120,13 @@ export default function ToolsPage() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {allTools.map((tool, index) => (
-            <>
+            <Fragment key={tool.id}>
               {index === Math.floor(allTools.length / 2) && (
                 <div className="col-span-full">
                   <AdBanner className="my-8" slot="5678901234" />
                 </div>
               )}
               <ToolCard
-                key={tool.id}
                 tool={{
                   id: tool.id,
                   name: tool.name,
@@ -143,7 +143,7 @@ export default function ToolsPage() {
                 variant="default"
                 size="md"
               />
-            </>
+            </Fragment>
           ))}
         </div>
       </section>

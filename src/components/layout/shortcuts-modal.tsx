@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useFocusTrap } from "@/lib/use-focus-trap";
 import { X, Command } from "lucide-react";
 
 interface ShortcutItem {
@@ -78,6 +79,8 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
       contentRef.current?.focus();
     }
   }, [isOpen]);
+
+  useFocusTrap(isOpen, contentRef);
 
   if (!isOpen) return null;
 

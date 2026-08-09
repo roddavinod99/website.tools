@@ -35,8 +35,8 @@ export default function StatusPage() {
               <span className="font-medium text-surface-900 dark:text-dark-text">{service.name}</span>
               <span className={`flex items-center gap-1.5 text-sm ${
                 service.status === "operational"
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-amber-600 dark:text-amber-400"
+                  ? "text-green-700 dark:text-green-400"
+                  : "text-amber-700 dark:text-amber-400"
               }`}>
                 <CircleCheck className="h-4 w-4" />
                 {service.status === "operational" ? "Operational" : "Under Development"}

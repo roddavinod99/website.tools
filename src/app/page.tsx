@@ -14,15 +14,15 @@ import { AdBanner } from "@/components/ads";
 
 export const metadata: Metadata = {
   description:
-    "Free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, convert data, compress images, and more — all in your browser, no uploads.",
+    `${TOOL_COUNT} free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, convert data, compress images, and more — all in your browser, no uploads.`,
   alternates: {
     canonical: siteConfig.url,
     languages: { en: siteConfig.url, "x-default": siteConfig.url },
   },
   openGraph: {
-    title: "DevStackIO — 128 Free Online Developer Tools",
+    title: `DevStackIO — ${TOOL_COUNT} Free Online Developer Tools`,
     description:
-      "128 free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data — all client-side, zero uploads.",
+      `${TOOL_COUNT} free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data — all client-side, zero uploads.`,
     url: siteConfig.url,
     siteName: "DevStackIO Tools",
     type: "website",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevStackIO — 128 Free Online Developer Tools",
+    title: `DevStackIO — ${TOOL_COUNT} Free Online Developer Tools`,
     description:
-      "128 free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data — all client-side, zero uploads.",
+      `${TOOL_COUNT} free online developer tools for coding, debugging, and productivity. Format JSON, decode JWT, generate UUIDs, convert data — all client-side, zero uploads.`,
     images: [siteConfig.ogImage],
   },
 };

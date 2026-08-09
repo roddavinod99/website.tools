@@ -1,0 +1,10 @@
+[
+  { "slug": "compound-interest-calculator", "category": "Finance", "name": "Compound Interest Calculator", "input": "40000", "action": "", "expect": "output" },
+  { "slug": "sip-calculator", "category": "Finance", "name": "SIP Calculator", "input": "10000", "action": "", "expect": "output" },
+  { "slug": "loan-emi-calculator", "category": "Finance", "name": "Loan EMI Calculator", "input": "1000000", "action": "", "expect": "output" },
+  { "slug": "mortgage-payoff", "category": "Finance", "name": "Mortgage Calculator", "input": "500000", "action": "", "expect": "output" },
+  { "slug": "cagr-calculator", "category": "Finance", "name": "CAGR Calculator", "input": "2500", "action": "", "expect": "output" },
+  { "slug": "roi-calculator", "category": "Finance", "name": "ROI Calculator", "input": "20000", "action": "", "expect": "output" },
+  { "slug": "profit-margin-calculator", "category": "Finance", "name": "Profit Margin Calculator", "input": "1500", "action": "", "expect": "output" },
+  { "slug": "savings-goal-calculator", "category": "Finance", "name": "Savings Goal Calculator", "input": "200000", "action": "", "expect": "output" }
+]
