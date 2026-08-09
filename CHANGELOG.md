@@ -229,6 +229,22 @@
 - deploy issues
 - Merge branch 'main' of https://github.com/roddavinod99/website.tools
 - new updates 0.3.1
+## [0.4.0] - 2026-08-09
+
+### Fixed
+
+- precise loan schedules, debt payoff, ROI, savings, and tax math
+- allowlist example JWTs in gitleaks, bump action majors
+### Added
+
+- add finance tools suite and currency converter API
+### Changed
+
+- load
+- new category: finance tools
+### Documentation
+
+- instruct agents to use all available MCP servers
 ## Template
 
 For future releases:
