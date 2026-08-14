@@ -28,32 +28,38 @@ export default function NewToolsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <div className="container py-12 md:py-16">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-            New Tools
-          </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
-            Recently added tools and updates
-          </p>
-          <p className="mt-4 text-surface-600 dark:text-dark-muted">
-            The newest additions to our collection of free, browser-based developer utilities. We ship
-            tools frequently &mdash; from data generators and encoders to security helpers and formatters.
-            Every tool processes data locally on your device, keeping your information private by design.
-            Check back regularly to see what&apos;s new, or browse the{" "}
-            <a href="/popular" className="text-brand-500 underline hover:text-brand-600">most popular tools</a>{" "}
-            our community uses daily.
-          </p>
+      <div className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
+          <div className="mx-auto max-w-2xl">
+            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+              New Tools
+            </h1>
+            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+              Recently added tools and updates
+            </p>
+            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+              The newest additions to our collection of free, browser-based developer utilities. We ship
+              tools frequently &mdash; from data generators and encoders to security helpers and formatters.
+              Every tool processes data locally on your device, keeping your information private by design.
+              Check back regularly to see what&apos;s new, or browse the{" "}
+              <a href="/popular" className="text-brand-500 underline hover:text-brand-600">most popular tools</a>{" "}
+              our community uses daily.
+            </p>
+          </div>
+        </div>
+      </div>
 
-          {newTools.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Latest Additions</h2>
-              <div className="mt-4 grid gap-4">
+      {newTools.length > 0 && (
+        <section>
+          <div className="container py-16 md:py-24">
+            <div className="mx-auto max-w-2xl">
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Latest Additions</h2>
+              <div className="mt-6 grid gap-4">
                 {newTools.map((tool) => (
                   <Link
                     key={tool.id}
                     href={`/tools/${tool.slug}`}
-                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
                   >
                     <div className="flex items-start justify-between">
                       <Badge variant="new">New</Badge>
@@ -69,16 +75,20 @@ export default function NewToolsPage() {
                 ))}
               </div>
             </div>
-          )}
+          </div>
+        </section>
+      )}
 
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">All Tools</h2>
-            <div className="mt-4 grid gap-4">
+      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">All Tools</h2>
+            <div className="mt-6 grid gap-4">
               {others.map((tool) => (
                 <Link
                   key={tool.id}
                   href={`/tools/${tool.slug}`}
-                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
                 >
                   <Badge variant="default">{tool.category}</Badge>
                   <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
@@ -92,7 +102,7 @@ export default function NewToolsPage() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

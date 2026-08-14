@@ -38,10 +38,10 @@ const sizeClasses: Record<ToolCardSize, { padding: string; title: string; desc: 
 };
 
 const variantClasses: Record<ToolCardVariant, string> = {
-  default: "group rounded-xl border border-surface-200 bg-white shadow-sm transition-all duration-150 hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  default: "group rounded-xl border border-surface-200 bg-white shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
   compact: "group rounded-lg border border-surface-200 bg-white transition-all duration-150 hover:border-brand-300 dark:border-dark-border dark:bg-dark-surface",
   featured: "group relative rounded-2xl border border-surface-200 bg-white p-5 shadow-lg transition-all duration-150 hover:shadow-xl dark:border-dark-border dark:bg-dark-surface",
-  related: "group rounded-xl border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  related: "group rounded-xl border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
   home: "group relative rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
 };
 
@@ -107,9 +107,9 @@ export function ToolCard({
             )}
           </div>
         </div>
-        {showPopularity && (
-          <span className="shrink-0 text-xs text-surface-400 dark:text-dark-muted font-mono">
-            {tool.popularity}%
+        {showPopularity && tool.popularity >= 90 && (
+          <span className="shrink-0 rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+            Most used
           </span>
         )}
       </div>

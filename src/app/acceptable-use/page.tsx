@@ -65,7 +65,7 @@ export default function AcceptableUsePage() {
 
         <div className="space-y-8 text-surface-600 dark:text-dark-muted">
           <section id="1-general-principles">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">1. General Principles</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">1. General Principles</h2>
             <div className="mt-4 space-y-4">
               <p>
                 DevStackIO provides free, browser-based developer tools for formatting, converting, generating, and
@@ -90,7 +90,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="2-prohibited-activities">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">2. Prohibited Activities</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">2. Prohibited Activities</h2>
             <p className="mt-2">The following activities are strictly prohibited:</p>
             <div className="mt-4 space-y-6">
               <div>
@@ -160,7 +160,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="3-tool-specific-restrictions">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">3. Tool-Specific Restrictions</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">3. Tool-Specific Restrictions</h2>
             <p className="mt-2">Certain tool categories have additional restrictions:</p>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
@@ -212,7 +212,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="4-api-usage">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">4. API Usage (Current and Future)</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">4. API Usage (Current and Future)</h2>
             <p className="mt-2">
               DevStackIO currently provides a web interface. If/when a public API is released, the following
               will apply in addition to this policy:
@@ -241,7 +241,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="5-security-and-integrity">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">5. Security and Integrity</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">5. Security and Integrity</h2>
             <div className="mt-4 space-y-4">
               <div>
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">5.1 Vulnerability Disclosure</h3>
@@ -283,7 +283,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="6-intellectual-property">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">6. Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">6. Intellectual Property</h2>
             <div className="mt-4 space-y-4">
               <p>
                 DevStackIO name, logo, brand, website design, and tool implementations are our intellectual property.
@@ -314,7 +314,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="7-user-conduct">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">7. User Conduct</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">7. User Conduct</h2>
             <div className="mt-4 space-y-4">
               <div>
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">7.1 Account-Free Usage</h3>
@@ -354,7 +354,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="8-enforcement">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">8. Enforcement and Consequences</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">8. Enforcement and Consequences</h2>
             <div className="mt-4 space-y-4">
               <p>
                 We enforce this policy through technical measures and, where necessary, legal action:
@@ -380,7 +380,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="9-reporting-violations">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">9. Reporting Violations</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">9. Reporting Violations</h2>
             <div className="mt-4 space-y-4">
               <p>
                 Help us keep DevStackIO safe. Report violations to:
@@ -399,7 +399,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="10-changes">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">10. Changes to This Policy</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">10. Changes to This Policy</h2>
             <p className="mt-2">
               We may update this Acceptable Use Policy from time to time. Changes will be posted on this page with
               an updated "Last updated" date. Material changes will be announced via:

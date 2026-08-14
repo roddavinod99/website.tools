@@ -5,7 +5,7 @@ import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance-disclaimer";
 import { InContentAd } from "@/components/ads";
-import { TableOfContents, CollapsibleSection, type TocItem } from "@/components/layout/table-of-contents";
+import { TableOfContents, type TocItem } from "@/components/layout/table-of-contents";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -306,9 +306,9 @@ export function ToolClient({
       {/* Key Features */}
       {content.features && content.features.length > 0 && (
         <section id="features" className="border-b border-surface-200 dark:border-dark-border">
-          <div className="container py-8 md:py-10">
+          <div className="container py-12 md:py-16">
             <div className="mx-auto max-w-3xl prose">
-              <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">Key Features</h2>
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Key Features</h2>
               <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                 {content.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-white p-2.5 dark:border-dark-border dark:bg-dark-surface">
@@ -324,9 +324,9 @@ export function ToolClient({
 
       {/* About */}
       <section id="about" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">About</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">About</h2>
             <div className="mt-4 space-y-4 text-surface-600 dark:text-dark-muted">
               <p>{content.whatItDoes}</p>
               <p>{content.whyItExists}</p>
@@ -363,9 +363,9 @@ export function ToolClient({
 
       {/* How to Use */}
       <section id="how-to-use" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">How to Use</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">How to Use</h2>
             <div className="mt-4 space-y-3">
               {content.instructions.map((inst, i) => (
                 <div key={i} className="flex gap-3">
@@ -386,9 +386,9 @@ export function ToolClient({
 
       {/* Examples */}
       <section id="examples" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
             <div className="mt-4 space-y-3">
               {content.examples.map((ex, i) => (
                 <Card key={i} variant="outlined" padding="sm">
@@ -404,9 +404,9 @@ export function ToolClient({
 
       {/* Best Practices */}
       <section id="best-practices" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">Best Practices</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Best Practices</h2>
             <ul className="mt-4 space-y-2">
               {content.bestPractices.map((bp, i) => (
                 <li key={i} className="flex items-start gap-2.5">
@@ -420,14 +420,13 @@ export function ToolClient({
       </section>
 
       {/* Common Mistakes */}
-      <CollapsibleSection
-        title="Common Mistakes"
-        icon={CircleAlert}
-        defaultOpen={true}
-        className="border-b border-surface-200 dark:border-dark-border"
-      >
-        <div className="container py-8 md:py-10">
+      <section id="common-mistakes" className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text flex items-center gap-2">
+              <CircleAlert className="h-5 w-5 text-red-500" aria-hidden="true" />
+              Common Mistakes
+            </h2>
             <ul className="mt-4 space-y-2">
               {content.commonMistakes.map((cm, i) => (
                 <li key={i} className="flex items-start gap-2.5">
@@ -438,13 +437,13 @@ export function ToolClient({
             </ul>
           </div>
         </div>
-      </CollapsibleSection>
+      </section>
 
       {/* FAQ */}
       <section id="faq" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">FAQ</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">FAQ</h2>
             <div className="mt-4 space-y-2">
               {content.faq.map((item, i) => (
                 <details
@@ -468,19 +467,16 @@ export function ToolClient({
       <InContentAd className="my-4" slot="7890123456" />
 
       {/* Related Tools */}
-      <CollapsibleSection
-        title="Related Tools"
-        defaultOpen={true}
-        className="border-b border-surface-200 dark:border-dark-border"
-      >
-        <div className="container py-8 md:py-10">
+      <section id="related-tools" className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Related Tools</h2>
             {sameCategory.length > 0 && (
               <>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
                   Same Category — {tool.category}
                 </h3>
-                <div className="mt-3 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {sameCategory.slice(0, 6).map((rt) => (
                     <ToolCard
                       key={rt.id}
@@ -497,7 +493,7 @@ export function ToolClient({
                         icon: rt.icon,
                       }}
                       variant="related"
-                      size="sm"
+                      size="md"
                     />
                   ))}
                 </div>
@@ -508,7 +504,7 @@ export function ToolClient({
                 <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
                   Related Tools
                 </h3>
-                <div className="mt-3 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {related.slice(0, 6).map((rt) => (
                     <ToolCard
                       key={rt.id}
@@ -525,7 +521,7 @@ export function ToolClient({
                         icon: rt.icon,
                       }}
                       variant="related"
-                      size="sm"
+                      size="md"
                     />
                   ))}
                 </div>
@@ -536,7 +532,7 @@ export function ToolClient({
                 <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
                   Popular Tools
                 </h3>
-                <div className="mt-3 grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {popularTools.slice(0, 6).map((rt) => (
                     <ToolCard
                       key={rt.id}
@@ -553,7 +549,7 @@ export function ToolClient({
                         icon: rt.icon,
                       }}
                       variant="related"
-                      size="sm"
+                      size="md"
                     />
                   ))}
                 </div>
@@ -561,17 +557,14 @@ export function ToolClient({
             )}
           </div>
         </div>
-      </CollapsibleSection>
+      </section>
 
       {/* References */}
       {content.references && content.references.length > 0 && (
-        <CollapsibleSection
-          title="References"
-          defaultOpen={true}
-          className="border-b border-surface-200 dark:border-dark-border"
-        >
-          <div className="container py-8 md:py-10">
+        <section id="references" className="border-b border-surface-200 dark:border-dark-border">
+          <div className="container py-12 md:py-16">
             <div className="mx-auto max-w-3xl prose">
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">References</h2>
               <p className="mt-2 text-surface-500 dark:text-dark-muted">
                 Authoritative specifications, standards, and in-depth reading for {tool.name}.
               </p>
@@ -605,18 +598,17 @@ export function ToolClient({
               </ul>
             </div>
           </div>
-        </CollapsibleSection>
+        </section>
       )}
 
       {/* Learning Resources */}
-      <CollapsibleSection
-        title="Learning Resources"
-        icon={BookOpen}
-        defaultOpen={true}
-        className="border-b border-surface-200 dark:border-dark-border"
-      >
-        <div className="container py-8 md:py-10">
+      <section id="learning-resources" className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl prose">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-brand-500" aria-hidden="true" />
+              Learning Resources
+            </h2>
             <p className="mt-2 text-surface-500 dark:text-dark-muted">
               Dive deeper with our comprehensive guides and tutorials.
             </p>
@@ -688,12 +680,12 @@ export function ToolClient({
             </div>
           </div>
         </div>
-      </CollapsibleSection>
+      </section>
 
       {/* Share */}
       <section className="container py-8 md:py-10">
         <div className="mx-auto max-w-3xl prose">
-          <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
+          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
           <ShareButtons />
         </div>
       </section>

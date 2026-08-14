@@ -66,7 +66,7 @@ export default function AboutPage() {
 
         <div className="mt-8 space-y-8 text-surface-600 dark:text-dark-muted">
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">The DevStackIO Platform</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">The DevStackIO Platform</h2>
             <p className="mt-2">
               DevStackIO is the parent platform behind{" "}
               <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">tools.devstackio.com</a>
@@ -90,7 +90,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Our Mission</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Mission</h2>
             <p className="mt-2">
               DevStackIO is building the internet&apos;s best collection of free online tools for
               developers. We believe that high-quality developer tools should be accessible to
@@ -103,7 +103,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Our Vision</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Vision</h2>
             <p className="mt-2">
               We envision a world where every developer, regardless of location or resources, has
               access to professional-grade tools. By combining utilities, educational content, and
@@ -113,7 +113,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Why DevStackIO Exists</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Why DevStackIO Exists</h2>
             <p className="mt-2">
               Developers frequently need quick, reliable tools for tasks like JSON formatting, JWT
               decoding, image optimization, and more. Existing solutions often require uploads to
@@ -123,7 +123,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Our Principles</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Principles</h2>
             <ul className="mt-2 space-y-3">
               <li className="flex gap-3">
                 <span className="text-brand-500 font-bold">01</span>
@@ -149,7 +149,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Our Roadmap</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Roadmap</h2>
             <p className="mt-2">
               We are continuously expanding our tool collection and platform capabilities. Upcoming
               developments include:
@@ -166,7 +166,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Open Source</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Open Source</h2>
             <p className="mt-2">
               We believe in the power of open source. Our tools are built with transparency and
               community input. We welcome contributions, bug reports, and feature suggestions from
@@ -179,7 +179,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Contact Us</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact Us</h2>
             <p className="mt-2">
               Have questions, suggestions, or feedback? We&apos;d love to hear from you.{" "}
               <a href="/contact" className="text-brand-500 hover:text-brand-600 underline">Get in touch</a>.

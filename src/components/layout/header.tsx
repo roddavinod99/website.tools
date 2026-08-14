@@ -142,6 +142,11 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
         document.activeElement?.tagName === "INPUT" ||
         document.activeElement?.tagName === "TEXTAREA" ||
         document.activeElement?.getAttribute("contenteditable") === "true";
+      if (e.key === "/" && !isTyping && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        setSearchOpen(true);
+        return;
+      }
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && NAV_SHORTCUTS[e.key] && !isTyping) {
         e.preventDefault();
         router.push(NAV_SHORTCUTS[e.key]);
@@ -222,6 +227,9 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
             <kbd className="ml-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg">
               <Command className="h-3 w-3" aria-hidden="true" />
               K
+            </kbd>
+            <kbd className="ml-1 hidden lg:inline-flex h-5 items-center rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg" aria-hidden="true">
+              /
             </kbd>
           </button>
           <button

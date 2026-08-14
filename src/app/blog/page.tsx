@@ -58,38 +58,46 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <div className="container py-12 md:py-16">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-            Blog
-          </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
-            Tutorials, tips, and industry insights
-          </p>
-
-        <div className="mt-8 space-y-6">
-          {blogPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group block rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-            >
-              <div className="flex items-center gap-3 text-xs text-surface-400 dark:text-dark-muted">
-                <span>{post.date}</span>
-                <span>&middot;</span>
-                <span>{post.readTime} read</span>
-              </div>
-              <h2 className="mt-2 text-xl font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                {post.title}
-              </h2>
-              <p className="mt-2 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                {post.excerpt}
-              </p>
-            </Link>
-          ))}
+      <div className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
+          <div className="mx-auto max-w-2xl">
+            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+              Blog
+            </h1>
+            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+              Tutorials, tips, and industry insights
+            </p>
           </div>
         </div>
       </div>
+
+      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
+          <div className="mx-auto max-w-2xl">
+            <div className="space-y-6">
+              {blogPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group block rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                >
+                  <div className="flex items-center gap-3 text-xs text-surface-400 dark:text-dark-muted">
+                    <span>{post.date}</span>
+                    <span>&middot;</span>
+                    <span>{post.readTime} read</span>
+                  </div>
+                  <h2 className="mt-2 text-xl font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                    {post.title}
+                  </h2>
+                  <p className="mt-2 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

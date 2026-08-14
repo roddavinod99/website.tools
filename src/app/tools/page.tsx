@@ -69,7 +69,7 @@ export default function ToolsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section>
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
             <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
@@ -99,7 +99,8 @@ export default function ToolsPage() {
 
       <AdBanner className="my-12" slot="4567890123" />
 
-      <section className="container py-12">
+      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
         <div className="flex flex-wrap gap-2 mb-8">
           <Link
             href="/tools"
@@ -145,6 +146,7 @@ export default function ToolsPage() {
               />
             </Fragment>
           ))}
+        </div>
         </div>
       </section>
     </>

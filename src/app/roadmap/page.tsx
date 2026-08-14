@@ -54,7 +54,7 @@ export default function RoadmapPage() {
         <div className="mt-8 space-y-8">
           {roadmapItems.map((quarter) => (
             <div key={quarter.quarter}>
-              <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
                 {quarter.quarter}
               </h2>
               <div className="mt-4 space-y-3">

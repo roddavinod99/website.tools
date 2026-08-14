@@ -70,7 +70,7 @@ export default function DPAPage() {
 
         <div className="space-y-8 text-surface-600 dark:text-dark-muted">
           <section id="1-definitions">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">1. Definitions and Interpretation</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">1. Definitions and Interpretation</h2>
             <p className="mt-2">
               In this Addendum, the following terms have the meanings set out below. Capitalized terms not defined herein
               have the meanings given in the GDPR or the Agreement.
@@ -112,7 +112,7 @@ export default function DPAPage() {
           </section>
 
           <section id="2-scope">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">2. Scope and Applicability</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">2. Scope and Applicability</h2>
             <p className="mt-2">
               This Addendum applies to all Processing of Personal Data by Processor on behalf of Controller in connection with
               the Services provided under the Agreement. It is designed to comply with Article 28(3) GDPR and forms a legally
@@ -126,7 +126,7 @@ export default function DPAPage() {
           </section>
 
           <section id="3-processing-details">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">3. Processing Details</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">3. Processing Details</h2>
             <p className="mt-2">
               The subject matter, nature, purpose, duration, categories of Personal Data, and categories of Data Subjects
               are set out in <a href="#annex-1" className="text-brand-500 underline hover:text-brand-600">Annex 1</a>.
@@ -139,7 +139,7 @@ export default function DPAPage() {
           </section>
 
           <section id="4-controller-obligations">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">4. Controller Obligations</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">4. Controller Obligations</h2>
             <p className="mt-2">Controller represents and warrants that:</p>
             <ul className="mt-2 list-disc pl-6 space-y-2">
               <li>It has obtained all necessary consents and legal bases for Processing;</li>
@@ -150,7 +150,7 @@ export default function DPAPage() {
           </section>
 
           <section id="5-processor-obligations">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">5. Processor Obligations</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">5. Processor Obligations</h2>
             <p className="mt-2">Processor shall:</p>
             <ul className="mt-2 list-disc pl-6 space-y-2">
               <li>Process Personal Data only on Controller's documented instructions;</li>
@@ -165,7 +165,7 @@ export default function DPAPage() {
           </section>
 
           <section id="6-security-measures">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">6. Technical and Organizational Measures</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">6. Technical and Organizational Measures</h2>
             <p className="mt-2">
               Processor shall implement and maintain appropriate technical and organizational measures to ensure a level of
               security appropriate to the risk, as detailed in <a href="#annex-2" className="text-brand-500 underline hover:text-brand-600">Annex 2</a>.
@@ -179,7 +179,7 @@ export default function DPAPage() {
           </section>
 
           <section id="7-subprocessors">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">7. Subprocessors</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">7. Subprocessors</h2>
             <p className="mt-2">
               Controller provides general written authorization for Processor to engage the Subprocessors listed in
               <a href="#annex-3" className="text-brand-500 underline hover:text-brand-600">Annex 3</a>.
@@ -198,7 +198,7 @@ export default function DPAPage() {
           </section>
 
           <section id="8-data-subject-rights">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">8. Data Subject Rights</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">8. Data Subject Rights</h2>
             <p className="mt-2">
               Taking into account the nature of Processing, Processor shall assist Controller by appropriate technical and
               organizational measures, insofar as this is possible, for the fulfillment of Controller's obligation to respond
@@ -221,7 +221,7 @@ export default function DPAPage() {
           </section>
 
           <section id="9-international-transfers">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">9. International Transfers</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">9. International Transfers</h2>
             <p className="mt-2">
               Processor shall not transfer Personal Data outside the European Economic Area (EEA), the UK, or Switzerland
               unless adequate safeguards are in place pursuant to Chapter V GDPR. Any such transfers shall be governed by:
@@ -239,7 +239,7 @@ export default function DPAPage() {
           </section>
 
           <section id="10-data-breach">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">10. Personal Data Breach Notification</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">10. Personal Data Breach Notification</h2>
             <p className="mt-2">
               Processor shall notify Controller without undue delay, and in any event within 24 hours, after becoming
               aware of a Personal Data Breach. The notification shall include:
@@ -258,7 +258,7 @@ export default function DPAPage() {
           </section>
 
           <section id="11-deletion-return">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">11. Deletion or Return of Personal Data</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">11. Deletion or Return of Personal Data</h2>
             <p className="mt-2">
               Upon termination of the Agreement or at Controller's written request, Processor shall, at Controller's choice:
             </p>
@@ -274,7 +274,7 @@ export default function DPAPage() {
           </section>
 
           <section id="12-audit">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">12. Audit and Inspection</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">12. Audit and Inspection</h2>
             <p className="mt-2">
               Processor shall make available to Controller all information necessary to demonstrate compliance with this
               Addendum and allow for and contribute to audits, including inspections, conducted by Controller or its
@@ -292,7 +292,7 @@ export default function DPAPage() {
           </section>
 
           <section id="13-liability">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">13. Liability</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">13. Liability</h2>
             <p className="mt-2">
               Each party's liability for breaches of this Addendum shall be governed by the liability provisions of the
               Agreement, subject to the following:
@@ -306,7 +306,7 @@ export default function DPAPage() {
           </section>
 
           <section id="14-term-termination">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">14. Term and Termination</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">14. Term and Termination</h2>
             <p className="mt-2">
               This Addendum takes effect on the Effective Date and continues for the duration of the Agreement.
               Upon termination or expiration of the Agreement, this Addendum remains in effect until all Personal Data
@@ -319,7 +319,7 @@ export default function DPAPage() {
           </section>
 
           <section id="15-general">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">15. General Provisions</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">15. General Provisions</h2>
             <ul className="mt-2 list-disc pl-6 space-y-2">
               <li><strong>Amendments:</strong> This Addendum may be amended only in writing signed by both parties, or by
                   Processor providing 30 days' written notice of changes that do not materially reduce data protection
@@ -334,7 +334,7 @@ export default function DPAPage() {
           </section>
 
           <section id="annex-1">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 1: Processing Details</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Annex 1: Processing Details</h2>
             <p className="mt-2">Pursuant to <a href="#3-processing-details" className="text-brand-500 underline hover:text-brand-600">Section 3</a>.</p>
             <div className="mt-4 space-y-4 text-sm">
               <div>
@@ -383,7 +383,7 @@ export default function DPAPage() {
           </section>
 
           <section id="annex-2">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 2: Technical and Organizational Measures</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Annex 2: Technical and Organizational Measures</h2>
             <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-brand-500 underline hover:text-brand-600">Section 6</a> and Article 32 GDPR.</p>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
@@ -437,7 +437,7 @@ export default function DPAPage() {
           </section>
 
           <section id="annex-3">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Annex 3: Approved Subprocessors</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Annex 3: Approved Subprocessors</h2>
             <p className="mt-2">Pursuant to <a href="#7-subprocessors" className="text-brand-500 underline hover:text-brand-600">Section 7</a>. Last updated: {lastUpdated}.</p>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border-collapse">

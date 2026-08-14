@@ -80,19 +80,21 @@ export default function CategoriesPage() {
         </div>
       </section>
 
-      <section className="container py-12">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat) => (
-            <CategoryCard
-              key={cat.id}
-              name={cat.name}
-              description={cat.description}
-              slug={cat.slug}
-              toolCount={cat.toolCount}
-              icon={cat.icon}
-              variant="default"
-            />
-          ))}
+      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((cat) => (
+              <CategoryCard
+                key={cat.id}
+                name={cat.name}
+                description={cat.description}
+                slug={cat.slug}
+                toolCount={cat.toolCount}
+                icon={cat.icon}
+                variant="default"
+              />
+            ))}
+          </div>
         </div>
       </section>
     </>

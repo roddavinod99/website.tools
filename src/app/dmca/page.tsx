@@ -63,7 +63,7 @@ export default function DMCAPage() {
 
         <div className="space-y-8 text-surface-600 dark:text-dark-muted">
           <section id="1-dmca-designated-agent">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">1. DMCA Designated Agent</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">1. DMCA Designated Agent</h2>
             <p className="mt-2">
               In compliance with 17 U.S.C. § 512(c)(2), DevStackIO has designated the following agent to receive
               notifications of claimed copyright infringement:
@@ -81,7 +81,7 @@ export default function DMCAPage() {
           </section>
 
           <section id="2-submitting-a-dmca-notice">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">2. Submitting a DMCA Take-Down Notice</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">2. Submitting a DMCA Take-Down Notice</h2>
             <p className="mt-2">
               If you believe that content on DevStackIO infringes your copyright, submit a written notification to our
               Designated Agent. The notice must comply with 17 U.S.C. § 512(c)(3) (see <a href="#3-required-notice-elements" className="text-brand-500 underline hover:text-brand-600">Section 3</a>).
@@ -98,7 +98,7 @@ export default function DMCAPage() {
           </section>
 
           <section id="3-required-notice-elements">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">3. Required Notice Elements (17 U.S.C. § 512(c)(3))</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">3. Required Notice Elements (17 U.S.C. § 512(c)(3))</h2>
             <p className="mt-2">
               Your written notification must include substantially the following:
             </p>
@@ -150,7 +150,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="4-our-response-process">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">4. Our Response Process</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">4. Our Response Process</h2>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Timeline</h3>
@@ -195,7 +195,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="5-counter-notification-procedure">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">5. Counter-Notification Procedure (17 U.S.C. § 512(g))</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">5. Counter-Notification Procedure (17 U.S.C. § 512(g))</h2>
             <p className="mt-2">
               If you believe material was removed or disabled by mistake or misidentification, you may submit a
               counter-notification under 17 U.S.C. § 512(g).
@@ -257,7 +257,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="6-repeat-infringers">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">6. Repeat Infringers</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">6. Repeat Infringers</h2>
             <p className="mt-2">
               In accordance with 17 U.S.C. § 512(i), DevStackIO maintains a policy for terminating accounts of
               repeat infringers in appropriate circumstances.
@@ -287,7 +287,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="7-fair-use-consideration">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">7. Fair Use Consideration</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">7. Fair Use Consideration</h2>
             <p className="mt-2">
               We recognize the importance of fair use (17 U.S.C. § 107) and similar exceptions in international law.
               Before acting on a DMCA notice, we consider whether the use may qualify as fair use, including:
@@ -327,7 +327,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="8-international-copyright">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">8. International Copyright Compliance</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">8. International Copyright Compliance</h2>
             <p className="mt-2">
               DevStackIO operates globally and complies with applicable international copyright laws and treaties:
             </p>
@@ -349,7 +349,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="9-misrepresentation-liability">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">9. Misrepresentation Liability (17 U.S.C. § 512(f))</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">9. Misrepresentation Liability (17 U.S.C. § 512(f))</h2>
             <p className="mt-2">
               Under 17 U.S.C. § 512(f), any person who knowingly materially misrepresents that material or activity
               is infringing, or was removed by mistake, may be liable for:
@@ -367,7 +367,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section id="10-changes">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">10. Changes to This Policy</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">10. Changes to This Policy</h2>
             <p className="mt-2">
               We may update this Copyright Policy from time to time to reflect legal developments, platform changes,
               or operational improvements. Changes will be posted on this page with an updated "Last updated" date.
@@ -379,7 +379,7 @@ Date: [Date]</code></pre>
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
               <p><strong>Copyright Agent:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a></p>
               <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>

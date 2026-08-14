@@ -82,7 +82,7 @@ export default async function ToolkitPage({ params }: Props) {
       <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text sm:text-2xl">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
               All {tk.name} Tools
             </h2>
             <p className="mt-1 text-surface-600 dark:text-dark-muted">
@@ -112,7 +112,7 @@ export default async function ToolkitPage({ params }: Props) {
       <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text sm:text-2xl">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
               Explore More Toolkits
             </h2>
             <p className="mt-1 text-surface-600 dark:text-dark-muted">

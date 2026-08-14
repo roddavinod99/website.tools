@@ -18,7 +18,7 @@
 
 # playwright snapshots
 tests/*-snapshots/
-
+/homepage.md
 # turbo
 .turbo/
 

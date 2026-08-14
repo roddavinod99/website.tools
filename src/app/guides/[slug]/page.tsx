@@ -225,7 +225,7 @@ export default async function GuidePage({ params }: Props) {
             <div className="mt-8 space-y-8">
               {content.sections.map((section, i) => (
                 <div key={i}>
-                  <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">
+                  <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
                     {section.title}
                   </h2>
                   <p className="mt-2 text-surface-600 dark:text-dark-muted leading-relaxed">

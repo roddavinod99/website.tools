@@ -68,7 +68,7 @@ export default async function SearchPage({ searchParams }: Props) {
                   <Link
                     key={tool.id}
                     href={`/tools/${tool.slug}`}
-                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
                   >
                     <div className="flex items-start justify-between">
                       <Badge variant="default">{tool.category}</Badge>

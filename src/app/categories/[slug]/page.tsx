@@ -130,9 +130,12 @@ export default async function CategoryPage({ params }: Props) {
             );
           })()}
         </div>
+      </section>
 
+      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
         {tools.length > 0 ? (
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool, index) => (
               <>
                 {index === Math.floor(tools.length / 2) && (
@@ -162,12 +165,13 @@ export default async function CategoryPage({ params }: Props) {
             ))}
           </div>
         ) : (
-          <div className="mt-12 text-center">
+          <div className="text-center">
             <p className="text-surface-500 dark:text-dark-muted">
               No tools in this category yet. Check back soon.
             </p>
           </div>
         )}
+        </div>
       </section>
     </>
   );

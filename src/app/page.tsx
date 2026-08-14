@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
-import { TOOL_COUNT, siteConfig, featuredTools, faqItems } from "@/lib/constants";
-import { featuresBySlug } from "@/lib/data/tool-features";
+import { TOOL_COUNT, siteConfig, allTools, featuredTools, categories, faqItems } from "@/lib/constants";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
-import { ToolkitSection } from "@/components/home/toolkit-section";
-import { BenefitsSection } from "@/components/home/benefits-section";
+import { TaskSection } from "@/components/home/task-section";
+import { PrivacySection } from "@/components/home/privacy-section";
 import { LearningSection } from "@/components/home/learning-section";
+import { RecentlyAdded } from "@/components/home/recently-added";
+import { ToolsCta } from "@/components/home/tools-cta";
+import { PlatformSection } from "@/components/home/platform-section";
 import { CommunitySection } from "@/components/home/community-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { FAQSection } from "@/components/home/faq-section";
 import { AdBanner } from "@/components/ads";
 
 export const metadata: Metadata = {
+  title: "Free Developer Tools for Everyday Work",
   description:
     `${TOOL_COUNT} free online developer tools from DevStackIO. Format JSON, decode JWT, generate UUIDs, convert data, compress images, and more — all in your browser, no uploads.`,
   alternates: {
@@ -44,22 +47,79 @@ export const metadata: Metadata = {
   },
 };
 
+const homepageJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ItemList",
+      name: "Featured developer tools",
+      description: "A selection of free, browser-based developer tools from DevStackIO.",
+      url: siteConfig.url,
+      numberOfItems: featuredTools.length,
+      itemListElement: featuredTools.slice(0, 8).map((tool, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          name: tool.name,
+          description: tool.description,
+          url: `${siteConfig.url}/tools/${tool.slug}`,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Cloud",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+          },
+        },
+      })),
+    },
+    {
+      "@type": "CollectionPage",
+      name: "DevStackIO — Free Developer Tools",
+      description: `${TOOL_COUNT} free online developer tools across ${categories.length} categories. Format, encode, generate, convert, and analyze data in your browser.`,
+      url: siteConfig.url,
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: categories.map((cat, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "SoftwareApplication",
+            name: `${cat.name} tools`,
+            description: cat.description,
+            url: `${siteConfig.url}/categories/${cat.slug}`,
+          },
+        })),
+      },
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd).replace(/</g, "\\u003c") }}
+      />
       <Hero
         badgeText={`${TOOL_COUNT} free tools. No login required.`}
-        searchPlaceholder={`Search ${TOOL_COUNT} tools...`}
         toolCount={TOOL_COUNT}
+        allTools={allTools}
       />
       <AdBanner className="my-12" slot="1234567890" />
       <CategoriesSection />
-      <FeaturedTools featuredTools={featuredTools} featuresBySlug={featuresBySlug} />
-      <ToolkitSection />
+      <FeaturedTools featuredTools={featuredTools} />
+      <TaskSection allTools={allTools} />
       <AdBanner className="my-12" slot="2345678901" />
-      <BenefitsSection />
+      <PrivacySection allTools={allTools} />
       <LearningSection />
+      <RecentlyAdded allTools={allTools} />
       <AdBanner className="my-12" slot="3456789012" />
+      <ToolsCta />
+      <PlatformSection />
       <CommunitySection />
       <NewsletterSection />
       <FAQSection faqItems={faqItems} />

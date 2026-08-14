@@ -8,21 +8,21 @@ export function LearningSection() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
-            Learning Center
+            Learn While You Build
           </h2>
           <p className="mt-1 text-surface-600 dark:text-dark-muted">
-            Tutorials, guides, and best practices
+            Understand the technologies behind the tools
           </p>
         </div>
         <Link
           href="/guides"
           className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
         >
-          View all <ArrowRight className="h-3 w-3" aria-hidden="true" />
+          View all guides <ArrowRight className="h-3 w-3" aria-hidden="true" />
         </Link>
       </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {learningTopics.map((topic) => (
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {learningTopics.slice(0, 6).map((topic) => (
           <Link
             key={topic.slug}
             href={`/guides/${topic.slug}`}

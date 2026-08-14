@@ -27,45 +27,55 @@ export default function PopularPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <div className="container py-12 md:py-16">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-            Popular Tools
-          </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
-            The most used tools by our community
-          </p>
-          <p className="mt-4 text-surface-600 dark:text-dark-muted">
-            The developer tools our community reaches for most. These utilities cover the everyday
-            workflow &mdash; formatting JSON, decoding JWTs, generating UUIDs, encoding with Base64, and
-            more. Each tool runs entirely in your browser, which means your data never leaves your device.
-            Rankings reflect real usage across the platform, so this list shows you what other developers
-            actually rely on.
-          </p>
-          <div className="mt-8 grid gap-4">
-            {tools.map((tool) => (
-              <Link
-                key={tool.id}
-                href={`/tools/${tool.slug}`}
-                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-              >
-                <div className="flex items-start justify-between">
-                  <Badge variant="default">{tool.category}</Badge>
-                  <span className="text-xs text-surface-400 dark:text-dark-muted">
-                    Popularity {tool.popularity}%
-                  </span>
-                </div>
-                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                  {tool.name}
-                </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                  {tool.description}
-                </p>
-              </Link>
-            ))}
+      <div className="border-b border-surface-200 dark:border-dark-border">
+        <div className="container py-12 md:py-16">
+          <div className="mx-auto max-w-2xl">
+            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+              Popular Tools
+            </h1>
+            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+              The most used tools by our community
+            </p>
+            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+              The developer tools our community reaches for most. These utilities cover the everyday
+              workflow &mdash; formatting JSON, decoding JWTs, generating UUIDs, encoding with Base64, and
+              more. Each tool runs entirely in your browser, which means your data never leaves your device.
+              Rankings reflect real usage across the platform, so this list shows you what other developers
+              actually rely on.
+            </p>
           </div>
         </div>
       </div>
+      <section className="bg-surface-50 dark:bg-dark-surface">
+        <div className="container py-16 md:py-24">
+          <div className="mx-auto max-w-2xl">
+            <div className="grid gap-4">
+              {tools.map((tool) => (
+                <Link
+                  key={tool.id}
+                  href={`/tools/${tool.slug}`}
+                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                >
+                  <div className="flex items-start justify-between">
+                    <Badge variant="default">{tool.category}</Badge>
+                    {tool.popularity >= 90 && (
+                      <span className="rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                        Most used
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                    {tool.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    {tool.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

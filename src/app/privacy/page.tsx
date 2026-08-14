@@ -65,7 +65,7 @@ export default function PrivacyPage() {
 
         <div className="space-y-8 text-surface-600 dark:text-dark-muted">
           <section id="1-controller">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">1. Controller & Contact</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">1. Controller & Contact</h2>
             <p className="mt-2">
               Pursuant to Article 4(7) GDPR, the data controller is:
             </p>
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="2-lawful-basis">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">2. Lawful Basis for Processing (GDPR Art. 6)</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">2. Lawful Basis for Processing (GDPR Art. 6)</h2>
             <p className="mt-2">
               We process personal data only where we have a valid lawful basis under Article 6 GDPR:
             </p>
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="3-data-categories">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">3. Categories of Personal Data Processed</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">3. Categories of Personal Data Processed</h2>
             <p className="mt-2">We minimize data collection. The following categories may be processed:</p>
             <div className="mt-4 space-y-3">
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
@@ -191,7 +191,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="4-purpose">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">4. Purposes of Processing</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">4. Purposes of Processing</h2>
             <p className="mt-2">We process personal data only for the following specific, explicit, and legitimate purposes:</p>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
@@ -240,7 +240,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="5-recipients">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">5. Recipients & Subprocessors</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">5. Recipients & Subprocessors</h2>
             <p className="mt-2">
               We share personal data only with the following categories of recipients, each bound by contractual
               data protection obligations (Art. 28 GDPR):
@@ -302,7 +302,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="6-international-transfers">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">6. International Data Transfers</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">6. International Data Transfers</h2>
             <p className="mt-2">
               Some subprocessors are located outside the EEA/UK. We ensure adequate safeguards under Chapter V GDPR:
             </p>
@@ -339,7 +339,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="7-retention">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">7. Data Retention Periods</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">7. Data Retention Periods</h2>
             <p className="mt-2">
               We retain personal data only as long as necessary for the purposes outlined above, or as required by law:
             </p>
@@ -372,7 +372,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="8-your-rights">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">8. Your Rights (GDPR Arts. 15-22, CCPA)</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">8. Your Rights (GDPR Arts. 15-22, CCPA)</h2>
             <p className="mt-2">
               You have the following rights regarding your personal data. We honor all applicable rights:
             </p>
@@ -437,7 +437,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="9-security">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">9. Data Security Measures (Art. 32 GDPR)</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">9. Data Security Measures (Art. 32 GDPR)</h2>
             <p className="mt-2">
               We implement appropriate technical and organizational measures to ensure a level of security appropriate
               to the risk, including:
@@ -494,7 +494,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="10-automated-decision">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">10. Automated Decision-Making & Profiling</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">10. Automated Decision-Making & Profiling</h2>
             <p className="mt-2">
               We do <strong>not</strong> engage in automated decision-making or profiling that produces legal effects
               or similarly significantly affects you (Art. 22 GDPR).
@@ -518,7 +518,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="11-cookies">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">11. Cookies & Similar Technologies</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">11. Cookies & Similar Technologies</h2>
             <p className="mt-2">
               We use cookies and localStorage for essential functionality and optional analytics/advertising.
               See our <a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a> for full details.
@@ -549,7 +549,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="12-children">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">12. Children's Privacy (COPPA, GDPR Art. 8)</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">12. Children's Privacy (COPPA, GDPR Art. 8)</h2>
             <p className="mt-2">
               DevStackIO is a developer tools platform intended for professionals, students, and hobbyists.
               We do not knowingly collect personal data from children under 13 (US) or under the age of
@@ -575,7 +575,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="13-changes">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">13. Changes to This Policy</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">13. Changes to This Policy</h2>
             <p className="mt-2">
               We may update this Privacy Policy to reflect legal changes, new features, or operational improvements.
             </p>
@@ -601,7 +601,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="14-contact">
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">14. Contact & Data Protection Officer</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">14. Contact & Data Protection Officer</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
               <p><strong>General Privacy Inquiries:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
               <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>

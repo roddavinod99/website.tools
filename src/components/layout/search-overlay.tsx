@@ -149,9 +149,11 @@ export function SearchOverlay({ isOpen, onClose, allTools }: Props) {
                   <span className="flex-1 font-medium text-surface-900 dark:text-dark-text truncate">
                     {tool.name}
                   </span>
-                  <span className="shrink-0 text-xs text-surface-400 dark:text-dark-muted">
-                    {tool.popularity}%
-                  </span>
+                  {tool.popularity >= 90 && (
+                    <span className="shrink-0 rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                      Most used
+                    </span>
+                  )}
                 </button>
               ))}
               {results.length > 10 && (

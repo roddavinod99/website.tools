@@ -14,6 +14,7 @@ export interface Tool {
   aliasSlugs?: string[];
   keywords?: string[];
   noindex?: boolean;
+  processing?: "client" | "server" | "hybrid";
 }
 
 export interface Category {

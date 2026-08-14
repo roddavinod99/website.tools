@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   Braces, Key, Database, FingerprintPattern, QrCode, Lock, Sparkles,
   Wand, Hash, ImageMinus, Clock, Crop, FileCode, Globe, Link as LinkIcon, Monitor,
-  Network, Search, SearchCode, Shield, Table, type LucideIcon,
+  Network, Search, SearchCode, Shield, Table, ArrowRight, type LucideIcon,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolLink } from "@/components/ui/tool-link";
@@ -18,7 +18,6 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function FeaturedTools({
   featuredTools,
-  featuresBySlug,
 }: {
   featuredTools: Tool[];
   featuresBySlug?: Record<string, string[]>;
@@ -32,7 +31,7 @@ export function FeaturedTools({
               Featured Tools
             </h2>
             <p className="mt-1 text-surface-600 dark:text-dark-muted">
-              Our most popular and frequently used tools
+              Start with the tools developers reach for most
             </p>
           </div>
           <Link
@@ -42,51 +41,32 @@ export function FeaturedTools({
             View all tools →
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredTools.map((tool) => {
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredTools.slice(0, 8).map((tool) => {
             const Icon = iconMap[tool.icon] || Braces;
             return (
               <ToolLink
                 key={tool.id}
                 slug={tool.slug}
-                className="group relative rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                className="group relative flex flex-col rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    {tool.new && <Badge variant="new">New</Badge>}
-                    {tool.trending && (
-                      <Badge variant="warning">Trending</Badge>
-                    )}
-                  </div>
+                  <ArrowRight className="h-4 w-4 text-surface-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-dark-muted" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 font-semibold text-surface-900 dark:text-dark-text group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                   {tool.name}
                 </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                <p className="mt-1 flex-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
                   {tool.description}
                 </p>
-                {featuresBySlug?.[tool.slug] && (
-                  <ul className="mt-3 flex flex-wrap gap-1.5">
-                    {featuresBySlug[tool.slug].slice(0, 2).map((feature) => (
-                      <li
-                        key={feature}
-                        className="rounded-full border border-surface-200 bg-surface-50 px-2 py-0.5 text-[10px] font-medium text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
-                      >
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                )}
                 <div className="mt-4 flex items-center justify-between">
                   <span className="text-xs text-surface-600 dark:text-dark-muted">
                     {tool.category}
                   </span>
-                  <span className="text-xs text-surface-600 dark:text-dark-muted font-mono">
-                    Popularity {tool.popularity}%
-                  </span>
+                  {tool.new && <Badge variant="new">New</Badge>}
                 </div>
               </ToolLink>
             );

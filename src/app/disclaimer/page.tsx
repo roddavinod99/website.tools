@@ -27,7 +27,7 @@ export default function DisclaimerPage() {
 
         <div className="space-y-6 text-surface-600 dark:text-dark-muted">
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">No Warranties</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">No Warranties</h2>
             <p className="mt-2">
               All tools and content on DevStackIO are provided &quot;as is&quot; and &quot;as available&quot;
               without any warranty of any kind, either express or implied. We do not guarantee that
@@ -36,7 +36,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Educational Purposes</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Educational Purposes</h2>
             <p className="mt-2">
               The tools and content on this website are offered for educational and informational
               purposes only. They are not intended to be a substitute for professional advice,
@@ -46,7 +46,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Tool Accuracy Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Tool Accuracy Disclaimer</h2>
             <p className="mt-2">
               While we strive to ensure the accuracy of our tools, they may produce incorrect results
               due to bugs, edge cases, or limitations in implementation. You are responsible for
@@ -57,7 +57,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">AI-Generated Content Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">AI-Generated Content Disclaimer</h2>
             <p className="mt-2">
               Some tools may utilize AI or machine learning models to generate content, suggestions,
               or analyses. AI-generated outputs may contain errors, inaccuracies, or biases. You
@@ -67,7 +67,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">External Links Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">External Links Disclaimer</h2>
             <p className="mt-2">
               DevStackIO may contain links to external websites or services that are not owned or
               controlled by us. We have no control over, and assume no responsibility for, the
@@ -78,7 +78,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Limitation of Liability</h2>
             <p className="mt-2">
               In no event shall DevStackIO, its owners, contributors, or affiliates be liable for
               any indirect, incidental, special, consequential, or punitive damages, including
@@ -88,7 +88,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Changes to This Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Changes to This Disclaimer</h2>
             <p className="mt-2">
               We reserve the right to update or change this disclaimer at any time. Changes will
               be posted on this page with an updated &quot;Last updated&quot; date.
@@ -96,7 +96,7 @@ export default function DisclaimerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact</h2>
             <p className="mt-2">
               If you have questions about this disclaimer, please{" "}
               <a href="/contact" className="text-brand-500 hover:text-brand-600 underline">contact us</a>.
