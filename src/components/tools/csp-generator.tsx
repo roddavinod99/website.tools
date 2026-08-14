@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from "react";
 import { Copy, Plus, Trash2, Download, AlertTriangle, Shield } from "lucide-react";
+import { randomUUID } from "@/lib/web-crypto";
 
 interface Source {
   value: string;
@@ -133,7 +134,7 @@ export function CspGenerator() {
   };
 
   const addSource = (dirId: string, value: string) => {
-    setDirectives((prev) => prev.map((d) => d.id === dirId ? { ...d, sources: [...d.sources, { value, id: crypto.randomUUID() }] } : d));
+    setDirectives((prev) => prev.map((d) => d.id === dirId ? { ...d, sources: [...d.sources, { value, id: randomUUID() }] } : d));
   };
 
   const removeSource = (dirId: string, srcId: string) => {
@@ -294,13 +295,13 @@ export function CspGenerator() {
                 <button onClick={() => setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: cd.sources.filter((cs) => cs.id !== s.id) } : cd))} className="text-red-400 hover:text-red-600"><Trash2 size={10} /></button>
               </span>
             ))}
-            <select onChange={(e) => { if (e.target.value) { setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: [...cd.sources, { value: e.target.value, id: crypto.randomUUID() }] } : cd)); e.target.value = ""; } }}
+            <select onChange={(e) => { if (e.target.value) { setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: [...cd.sources, { value: e.target.value, id: randomUUID() }] } : cd)); e.target.value = ""; } }}
               className="text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               <option value="">+ source</option>
               {sourceOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
             </select>
             <input type="text" placeholder="Custom domain..."
-              onKeyDown={(e) => { if (e.key === "Enter" && e.currentTarget.value.trim()) { setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: [...cd.sources, { value: e.currentTarget.value.trim(), id: crypto.randomUUID() }] } : cd)); e.currentTarget.value = ""; } }}
+              onKeyDown={(e) => { if (e.key === "Enter" && e.currentTarget.value.trim()) { setCustomDirs((prev) => prev.map((cd, ci) => ci === i ? { ...cd, sources: [...cd.sources, { value: e.currentTarget.value.trim(), id: randomUUID() }] } : cd)); e.currentTarget.value = ""; } }}
               className="w-28 text-[10px] rounded border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface dark:text-dark-text px-1.5 py-0.5 font-mono outline-none focus:ring-1 focus:ring-brand-400" />
           </div>
           <button onClick={() => removeCustomDir(i)} className="text-red-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>

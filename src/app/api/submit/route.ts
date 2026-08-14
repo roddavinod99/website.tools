@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { logSecurityEvent } from "@/lib/security-logger";
 import { persistSubmission } from "@/lib/submissions";
+import { isSameOrigin } from "@/lib/api-security";
 
 const TYPES = ["suggest", "feature-request", "feedback", "report-bug", "newsletter"] as const;
 type FormType = typeof TYPES[number];
@@ -55,14 +56,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing origin or referer header" }, { status: 403 });
   }
 
-  try {
-    const sourceHost = new URL(source).hostname;
-    const expectedHost = new URL(request.url).hostname;
-    if (sourceHost !== expectedHost) {
-      return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
-    }
-  } catch {
-    return NextResponse.json({ error: "Invalid origin header" }, { status: 400 });
+  if (!isSameOrigin(request)) {
+    return NextResponse.json({ error: "Cross-origin requests not accepted" }, { status: 403 });
   }
 
   const contentType = request.headers.get("content-type") || "";

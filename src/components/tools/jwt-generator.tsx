@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { Copy, Eye, EyeOff, Save, Plus, Trash2, Key } from "lucide-react";
+import { randomUUID } from "@/lib/web-crypto";
 
 function base64UrlEncode(data: string): string {
   return btoa(data).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
@@ -48,7 +49,7 @@ const expPresets = [
 const templates: Record<string, Template> = {
   auth: {
     label: "Auth",
-    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: crypto.randomUUID() },
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: randomUUID() },
     expSecs: 3600,
   },
   api: {
@@ -58,12 +59,12 @@ const templates: Record<string, Template> = {
   },
   refresh: {
     label: "Refresh",
-    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: crypto.randomUUID() },
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "api.example.com", jti: randomUUID() },
     expSecs: 2592000,
   },
   email: {
     label: "Email Verification",
-    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "verify.example.com", jti: crypto.randomUUID() },
+    claims: { iss: "https://auth.example.com", sub: "user@example.com", aud: "verify.example.com", jti: randomUUID() },
     expSecs: 86400,
   },
 };

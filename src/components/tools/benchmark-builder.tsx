@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { randomUUID } from "@/lib/web-crypto";
 
 interface BenchmarkResult {
   totalTime: number;
@@ -56,7 +57,7 @@ export function BenchmarkBuilder() {
       workerRef.current = null;
     };
 
-    worker.postMessage({ id: crypto.randomUUID(), type: "run", data: { code, iterations } });
+    worker.postMessage({ id: randomUUID(), type: "run", data: { code, iterations } });
   }, [code, iterations]);
 
   return (

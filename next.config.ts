@@ -1,13 +1,35 @@
 import type { NextConfig } from "next";
+import { networkInterfaces } from "node:os";
 import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
+/**
+ * Collects the machine's current non-internal IPv4 addresses so the Next.js
+ * dev server accepts connections from them without hardcoding a specific IP.
+ * The LAN address is DHCP-assigned and can change, so it is discovered at
+ * config load time (i.e. each `next dev` start) instead of being pinned.
+ */
+function getLanIpv4Addresses(): string[] {
+  const addresses: string[] = [];
+  const interfaces = networkInterfaces();
+  for (const nets of Object.values(interfaces)) {
+    for (const net of nets ?? []) {
+      const family = String(net.family);
+      if (family === "IPv4" && !net.internal) {
+        addresses.push(net.address);
+      }
+    }
+  }
+  return addresses;
+}
+
 const nextConfig: NextConfig = {
   output: "standalone",
   productionBrowserSourceMaps: true,
+  allowedDevOrigins: ["localhost", "127.0.0.1", ...getLanIpv4Addresses()],
 
   images: {
     formats: ["image/avif", "image/webp"],

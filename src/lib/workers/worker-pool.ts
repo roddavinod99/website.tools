@@ -1,3 +1,5 @@
+import { randomUUID } from "@/lib/web-crypto";
+
 type WorkerTask = {
   id: string;
   type: string;
@@ -30,7 +32,7 @@ export class WorkerPool {
 
   async execute(type: string, data: unknown): Promise<WorkerResult> {
     return new Promise((resolve, reject) => {
-      const task: WorkerTask = { id: crypto.randomUUID(), type, data };
+      const task: WorkerTask = { id: randomUUID(), type, data };
       this.queue.push({ task, resolve, reject });
       this.dispatch();
     });

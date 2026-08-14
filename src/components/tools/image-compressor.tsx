@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { detectDpiFromBuffer, setJpegDpi, buildZip } from "@/lib/image-utils";
+import { randomUUID } from "@/lib/web-crypto";
 
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
@@ -148,7 +149,7 @@ export function ImageCompressor() {
       }
       const info = await readImageFile(file);
       newEntries.push({
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         file,
         originalUrl: info.url,
         originalSize: file.size,

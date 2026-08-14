@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { randomUUID } from "@/lib/web-crypto";
 
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
@@ -244,7 +245,7 @@ export function ImageResizer() {
       }
       const info = await readImageFile(file);
       newEntries.push({
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         file,
         originalUrl: info.url,
         originalWidth: info.width,

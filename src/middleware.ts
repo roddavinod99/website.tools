@@ -125,10 +125,10 @@ function addSecurityHeaders(response: NextResponse, nonce: string, path = ""): v
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}'${wasmDirective} https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com https://ep1.adtrafficquality.google https://tpc.googlesyndication.com`,
     `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
-    "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com",
+    "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google",
     "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com https://ep1.adtrafficquality.google https://dns.google https://ip-api.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com",
+    "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google",
     "frame-ancestors 'none'",
     "form-action 'self'",
     "base-uri 'self'",
@@ -186,7 +186,18 @@ export async function middleware(request: NextRequest) {
   if (source) {
     try {
       const sourceHost = new URL(source).hostname;
-      const expectedHost = new URL(request.url).hostname;
+      const hostHeader = request.headers.get("x-forwarded-host") || request.headers.get("host");
+      let expectedHost = "";
+      if (hostHeader) {
+        try {
+          expectedHost = new URL(`http://${hostHeader}`).hostname;
+        } catch {
+          // fall through to request.url
+        }
+      }
+      if (!expectedHost) {
+        expectedHost = new URL(request.url).hostname;
+      }
       if (sourceHost !== expectedHost && path.startsWith("/api/")) {
         await logSecurityEvent("invalid_origin", ip, path, `Cross-origin: ${sourceHost}`);
         const crossOriginResponse = new NextResponse(JSON.stringify({ error: "Request not allowed." }), {

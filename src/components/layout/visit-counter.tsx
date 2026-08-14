@@ -48,7 +48,10 @@ export function VisitCounter() {
   if (count === null) return null;
 
   return (
-    <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
+    <p
+      className="mt-4 text-sm text-surface-500 dark:text-dark-muted"
+      data-testid="visit-counter"
+    >
       Total Number of Visitors till date:{" "}
       <span className="font-medium text-surface-700 dark:text-dark-text">
         {numberFormatter.format(count)}

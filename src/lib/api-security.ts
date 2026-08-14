@@ -9,6 +9,32 @@ function getClientIp(request: Request): string {
   );
 }
 
+export function getRequestHostname(request: Request): string {
+  const hostHeader = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  if (hostHeader) {
+    try {
+      return new URL(`http://${hostHeader}`).hostname;
+    } catch {
+      // fall through to request.url
+    }
+  }
+  try {
+    return new URL(request.url).hostname;
+  } catch {
+    return "";
+  }
+}
+
+export function isSameOrigin(request: Request): boolean {
+  const source = request.headers.get("origin") || request.headers.get("referer") || "";
+  if (!source) return false;
+  try {
+    return new URL(source).hostname === getRequestHostname(request);
+  } catch {
+    return false;
+  }
+}
+
 function getPath(request: Request): string {
   try {
     return new URL(request.url).pathname;
@@ -55,7 +81,7 @@ export function rejectInvalidOrigin(request: Request): NextResponse | null {
 
   try {
     const originHost = new URL(origin).hostname;
-    const expectedHost = new URL(request.url).hostname;
+    const expectedHost = getRequestHostname(request);
     if (originHost !== expectedHost) {
       const ip = getClientIp(request);
       const path = getPath(request);

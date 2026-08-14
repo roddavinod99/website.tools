@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useCallback, useState } from "react";
 import type { Tool } from "@/types";
+import { randomUUID } from "@/lib/web-crypto";
 
 export function useFuseSearch(tools: Tool[]) {
   const workerRef = useRef<Worker | null>(null);
@@ -30,7 +31,7 @@ export function useFuseSearch(tools: Tool[]) {
     workerRef.current = worker;
 
     // Initialize with tools data
-    const id = crypto.randomUUID();
+    const id = randomUUID();
     worker.postMessage({ id, type: "init", data: { tools } });
 
     return () => {
@@ -46,7 +47,7 @@ export function useFuseSearch(tools: Tool[]) {
       setResults([]);
       return;
     }
-    const id = crypto.randomUUID();
+    const id = randomUUID();
     pendingRef.current.set(id, (items) => setResults(items));
     workerRef.current.postMessage({ id, type: "search", data: { query: q, limit: 20 } });
   }, [ready]);

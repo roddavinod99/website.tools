@@ -155,13 +155,22 @@ test.describe("Footer visit counter", () => {
     await expect(counterAfterNav).toBeVisible();
     expect(await counterAfterNav.innerText()).toContain(NUMBER_FORMATTER.format(firstCount));
 
-    // A brand-new browser session counts one more visit.
+    // A brand-new browser session counts one more visit. The global count may
+    // also advance from other parallel workers, so assert against the server's
+    // authoritative value captured at this moment (must never regress).
+    const beforeFresh = (await (await request.get(`${BASE_URL}/api/visits`)).json()).count as number;
     const contextB = await browser.newContext({ userAgent: HUMAN_UA });
     const pageB = await contextB.newPage();
     await pageB.goto(`${BASE_URL}/`);
     const counterB = pageB.locator("footer").getByText(/Total Number of Visitors till date:/);
     await expect(counterB).toBeVisible();
-    expect(await counterB.innerText()).toContain(NUMBER_FORMATTER.format(firstCount + 1));
+    const freshMatch = (await counterB.innerText()).match(/:\s*([\d,]+)\s*$/);
+    expect(freshMatch).not.toBeNull();
+    const freshCount = Number(freshMatch![1].replace(/,/g, ""));
+    const afterFresh = (await (await request.get(`${BASE_URL}/api/visits`)).json()).count as number;
+    expect(freshCount).toBeGreaterThanOrEqual(beforeFresh + 1);
+    expect(freshCount).toBeLessThanOrEqual(afterFresh);
+    expect(await counterB.innerText()).toContain(NUMBER_FORMATTER.format(freshCount));
 
     await contextA.close();
     await contextB.close();

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Copy, Plus, Trash2, RefreshCw, QrCode, Download } from "lucide-react";
+import { randomUUID } from "@/lib/web-crypto";
 
 function base32ToBytes(base32: string): Uint8Array {
   const cleaned = base32.replace(/[^A-Za-z2-7]/g, "").toUpperCase();
@@ -151,7 +152,7 @@ export function TotpGenerator() {
 
   const addAccount = () => {
     const newAcc: Account = {
-      id: crypto.randomUUID(), label: `Account ${accounts.length + 1}`,
+      id: randomUUID(), label: `Account ${accounts.length + 1}`,
       secret: generateRandomSecret(), algorithm: "SHA-1", digits: 6, step: 30, steam: false,
     };
     setAccounts((prev) => [...prev, newAcc]);

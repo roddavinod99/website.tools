@@ -183,7 +183,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
-        <ConsentManager />
+        <ConsentManager nonce={nonce || undefined} />
         <ThemeProvider>
           <ServiceWorkerRegister />
           <FileCleanupProvider>

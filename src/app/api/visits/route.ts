@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
+import { isSameOrigin } from "@/lib/api-security";
 import {
   VISIT_COOKIE,
   getSessionMinutes,
@@ -19,18 +20,6 @@ function getClientIp(request: Request): string {
     request.headers.get("x-real-ip") ||
     "unknown"
   );
-}
-
-function isSameOrigin(request: Request): boolean {
-  const source = request.headers.get("origin") || request.headers.get("referer") || "";
-  if (!source) return false;
-  try {
-    const sourceHost = new URL(source).hostname;
-    const expectedHost = new URL(request.url).hostname;
-    return sourceHost === expectedHost;
-  } catch {
-    return false;
-  }
 }
 
 function getVisitCookieValue(cookieHeader: string): string | null {

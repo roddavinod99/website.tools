@@ -7,13 +7,14 @@ const HAS_GOOGLE_TAGS = !!(
   process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
 );
 
-export function ConsentManager() {
+export function ConsentManager({ nonce }: { nonce?: string }) {
   if (!HAS_GOOGLE_TAGS) return null;
 
   return (
     <Script
       id="consent-defaults"
       strategy="beforeInteractive"
+      nonce={nonce || undefined}
       dangerouslySetInnerHTML={{
         __html: `
           window.dataLayer = window.dataLayer || [];
