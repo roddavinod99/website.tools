@@ -20,14 +20,15 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "node .next/standalone/server.js",
+    command: "node scripts/prepare-standalone.mjs && node .next/standalone/server.js",
     port: 3000,
     reuseExistingServer: true,
     timeout: 120000,
-    env: {
+env: {
       PORT: "3000",
       HOSTNAME: "localhost",
       IP_HASH_SALT: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      VISIT_BURST_MS: "0",
     },
   },
 });

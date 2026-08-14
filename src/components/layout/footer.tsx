@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
+import { VisitCounter } from "@/components/layout/visit-counter";
 
 function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const sizes = {
@@ -108,6 +109,7 @@ export function Footer() {
                 </svg>
               </a>
             </div>
+            <VisitCounter />
           </div>
           {footerLinks.map((group) => (
             <div key={group.title}>

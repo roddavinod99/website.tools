@@ -73,6 +73,12 @@ const nextConfig: NextConfig = {
       ],
     },
     {
+      source: "/api/visits",
+      headers: [
+        { key: "Cache-Control", value: "no-store, max-age=0" },
+      ],
+    },
+    {
       source: "/api/(.*)",
       headers: [
         { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },

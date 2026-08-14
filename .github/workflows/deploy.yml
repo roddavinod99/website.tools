@@ -157,7 +157,8 @@ jobs:
               "NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=${{ secrets.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID }}" \
               "IP_HASH_SALT=${{ secrets.IP_HASH_SALT }}" \
               'PORT=3000' \
-              'NODE_ENV=production' > .env
+              'NODE_ENV=production' \
+              'VISIT_COUNTER_PATH=/var/www/tools/data/visit-counter/visits.jsonl' > .env
 
             # Install dependencies and build
             npm ci
