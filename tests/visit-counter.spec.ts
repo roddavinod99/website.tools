@@ -126,6 +126,7 @@ test.describe("POST /api/visits", () => {
   });
 });
 
+test.describe.configure({ mode: 'serial' });
 test.describe("Footer visit counter", () => {
   test("displays a formatted count and only counts a fresh session", async ({ browser, request }) => {
     const contextA = await browser.newContext({ userAgent: HUMAN_UA });

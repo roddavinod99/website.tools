@@ -264,6 +264,27 @@
 ### Documentation
 
 - instruct agents to use all available MCP servers
+## [0.6.0] - 2026-08-14
+
+### Changed
+
+- vistor counter
+- v0.5.0
+- v0.4.0
+- load
+- new category: finance tools
+### Added
+
+- add privacy-first public visit counter to the footer
+- redesign homepage, static pages, and shared layout
+- add finance tools suite and currency converter API
+### Fixed
+
+- precise loan schedules, debt payoff, ROI, savings, and tax math
+- allowlist example JWTs in gitleaks, bump action majors
+### Documentation
+
+- instruct agents to use all available MCP servers
 ## Template
 
 For future releases:
