@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://tools.devstackio.com",
   mainSiteUrl: "https://www.devstackio.com",
   mainSiteName: "DevStackIO",
-  ogImage: "/og.svg",
+  ogImage: "/tools-devstackio--preview-card.png",
   links: {
     github: "https://github.com/roddavinod99",
   },
