@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance-disclaimer";
-import { InContentAd } from "@/components/ads";
+import { InContentAd, SidebarAd } from "@/components/ads";
 import { TableOfContents, type TocItem } from "@/components/layout/table-of-contents";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Badge } from "@/components/ui/badge";
@@ -15,9 +15,11 @@ import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
   Copy, FileText, ExternalLink, FolderOpen,
+  type LucideIcon,
 } from "lucide-react";
 import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
 import { copyText } from "@/lib/clipboard";
+import { parseFaqItem } from "@/lib/faq";
 
 interface ToolData {
   id: string;
@@ -60,7 +62,7 @@ interface ToolClientProps {
 
 function generateTocItems(content: ToolContent): TocItem[] {
   const items: TocItem[] = [];
-  
+
   if (content.whatItDoes || content.whyItExists || content.whoShouldUse || content.useCases.length > 0) {
     items.push({ id: "about", label: "About", level: 1 });
   }
@@ -87,13 +89,13 @@ function generateTocItems(content: ToolContent): TocItem[] {
   }
   items.push({ id: "learning-resources", label: "Learning Resources", level: 1 });
   items.push({ id: "related-tools", label: "Related Tools", level: 1 });
-  
+
   return items;
 }
 
 function ToolActions({ copied, onCopy }: { copied: boolean; onCopy: () => void }) {
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" role="group" aria-label="Tool actions">
+    <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" role="group" aria-label="Tool actions">
       <Button variant="ghost" size="sm" onClick={onCopy} aria-label="Copy output (Ctrl+Shift+C)">
         <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         <span className="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
@@ -136,9 +138,9 @@ interface QuickLink {
   external?: boolean;
 }
 
-function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: { 
-  tool: ToolData; 
-  specificGuide: ToolClientProps["specificGuide"]; 
+function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: {
+  tool: ToolData;
+  specificGuide: ToolClientProps["specificGuide"];
   categorySlug?: string;
   mainSiteUrl: string;
 }) {
@@ -171,7 +173,7 @@ function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: {
   });
 
   return (
-    <nav className="mt-4 flex flex-wrap items-center gap-2 text-sm" aria-label="Quick links">
+    <nav className="mt-3 flex flex-wrap items-center gap-2 text-sm" aria-label="Quick links">
       {links.map((link) => (
         <a
           key={link.href}
@@ -188,13 +190,50 @@ function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: {
   );
 }
 
-export function ToolClient({ 
-  tool, 
-  content, 
-  sameCategory, 
+function SectionHeading({ children, icon: Icon }: { children: ReactNode; icon?: LucideIcon }) {
+  return (
+    <h2 className="flex items-center gap-2 text-xl font-bold text-surface-900 dark:text-dark-text">
+      {Icon && <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />}
+      {children}
+    </h2>
+  );
+}
+
+function CollapsibleSection({
+  id,
+  title,
+  icon: Icon,
+  children,
+}: {
+  id: string;
+  title: string;
+  icon?: LucideIcon;
+  children: ReactNode;
+}) {
+  return (
+    <details
+      id={id}
+      className="group rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 [&::-webkit-details-marker]:hidden">
+        <h2 className="flex items-center gap-2 text-xl font-bold text-surface-900 dark:text-dark-text">
+          {Icon && <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />}
+          {title}
+        </h2>
+        <ChevronRight className="h-4 w-4 flex-shrink-0 text-surface-400 transition-transform group-open:rotate-90" aria-hidden="true" />
+      </summary>
+      <div className="px-4 pb-4">{children}</div>
+    </details>
+  );
+}
+
+export function ToolClient({
+  tool,
+  content,
+  sameCategory,
   related,
-  popularTools, 
-  specificGuide, 
+  popularTools,
+  specificGuide,
   tocItems,
   mainSiteUrl,
   categorySlug,
@@ -251,444 +290,343 @@ export function ToolClient({
     return () => observer.disconnect();
   }, [content]);
 
+  const relatedList = [...sameCategory, ...related, ...popularTools].slice(0, 8);
+
   return (
     <>
       <TableOfContents items={tocItems} activeId={activeTocId} />
 
-      {/* Breadcrumb */}
-      <section className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-4">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Home</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-            <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Tools</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-            <span className="text-surface-900 dark:text-dark-text font-medium">{tool.name}</span>
-          </nav>
-        </div>
-      </section>
+      <div className="container py-6 md:py-8">
+        {/* Breadcrumb */}
+        <nav className="mb-6 flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" aria-label="Breadcrumb">
+          <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Home</Link>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+          <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Tools</Link>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+          <span className="text-surface-900 dark:text-dark-text font-medium">{tool.name}</span>
+        </nav>
 
-      {/* Hero with Tool Interface */}
-      <section id="hero" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-8 md:py-10">
-          <div className="mx-auto max-w-3xl">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="default">{tool.category}</Badge>
-              {tool.trending && <Badge variant="warning">Trending</Badge>}
-              {tool.new && <Badge variant="new">New</Badge>}
-            </div>
-            <h1 className="mt-3 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
-              {tool.name}
-            </h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted max-w-prose">
-              {tool.description}
-            </p>
-
-            {/* Tool Interface Card */}
-            <div id={`tool-interface-${tool.slug}`} className="mt-6 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
-              <ToolInterface slug={tool.slug} name={tool.name} />
-            </div>
-
-            {/* Tool Actions - immediately accessible */}
-            <ToolActions copied={copied} onCopy={() => handleCopy()} />
-
-            {/* Quick Links */}
-            <QuickLinks tool={tool} specificGuide={specificGuide} categorySlug={categorySlug} mainSiteUrl={mainSiteUrl} />
-
-            <InContentAd className="my-6" slot="3456789012" />
-          </div>
-        </div>
-      </section>
-
-      {/* Finance Disclaimer - only on financial tool pages */}
-      {tool.category === "Finance" && <FinanceDisclaimer />}
-
-      {/* Key Features */}
-      {content.features && content.features.length > 0 && (
-        <section id="features" className="border-b border-surface-200 dark:border-dark-border">
-          <div className="container py-12 md:py-16">
-            <div className="mx-auto max-w-3xl prose">
-              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Key Features</h2>
-              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                {content.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-white p-2.5 dark:border-dark-border dark:bg-dark-surface">
-                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                    <span className="text-sm text-surface-600 dark:text-dark-muted">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* About */}
-      <section id="about" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">About</h2>
-            <div className="mt-4 space-y-4 text-surface-600 dark:text-dark-muted">
-              <p>{content.whatItDoes}</p>
-              <p>{content.whyItExists}</p>
-              <p className="text-sm text-surface-400 dark:text-dark-muted">
-                This tool is part of the{" "}
-                <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
-                  DevStackIO
-                </a>{" "}
-                platform — a collection of free online developer tools from DevStackIO.
-                Browse more free developer resources on{" "}
-                <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
-                  DevStackIO
-                </a>.
-              </p>
-              <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Who should use this tool?</h3>
-                <p className="mt-1">{content.whoShouldUse}</p>
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+          {/* Main column */}
+          <div className="max-w-3xl space-y-8">
+            {/* Hero with Tool Interface */}
+            <section id="hero">
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant="default">{tool.category}</Badge>
+                {tool.trending && <Badge variant="warning">Trending</Badge>}
+                {tool.new && <Badge variant="new">New</Badge>}
               </div>
-              <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Common use cases</h3>
-                <ul className="mt-2 space-y-1">
-                  {content.useCases.map((uc, i) => (
-                    <li key={i} className="flex items-start gap-2">
+              <h1 className="mt-2 text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
+                {tool.name}
+              </h1>
+              <p className="mt-1.5 text-base text-surface-500 dark:text-dark-muted max-w-prose">
+                {tool.description}
+              </p>
+
+              {/* Tool Interface Card */}
+              <div id={`tool-interface-${tool.slug}`} className="mt-5 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
+                <ToolInterface slug={tool.slug} name={tool.name} />
+              </div>
+
+              {/* Tool Actions - immediately accessible */}
+              <ToolActions copied={copied} onCopy={() => handleCopy()} />
+
+              {/* Quick Links */}
+              <QuickLinks tool={tool} specificGuide={specificGuide} categorySlug={categorySlug} mainSiteUrl={mainSiteUrl} />
+            </section>
+
+            <InContentAd className="my-2" slot="3456789012" />
+
+            {/* Finance Disclaimer - only on financial tool pages */}
+            {tool.category === "Finance" && <FinanceDisclaimer />}
+
+            {/* About */}
+            {content.whatItDoes || content.whyItExists || content.whoShouldUse ? (
+              <section id="about" className="space-y-3">
+                <SectionHeading>About</SectionHeading>
+                <div className="space-y-3 text-surface-600 dark:text-dark-muted">
+                  <p>{content.whatItDoes}</p>
+                  <p>{content.whyItExists}</p>
+                  <p className="text-sm text-surface-400 dark:text-dark-muted">
+                    This tool is part of the{" "}
+                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
+                      DevStackIO
+                    </a>{" "}
+                    platform — a collection of free online developer tools from DevStackIO.
+                    Browse more free developer resources on{" "}
+                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
+                      DevStackIO
+                    </a>.
+                  </p>
+                  <div>
+                    <h3 className="font-semibold text-surface-900 dark:text-dark-text">Who should use this tool?</h3>
+                    <p className="mt-1">{content.whoShouldUse}</p>
+                  </div>
+                  {content.useCases.length > 0 && (
+                    <div>
+                      <h3 className="font-semibold text-surface-900 dark:text-dark-text">Common use cases</h3>
+                      <ul className="mt-2 space-y-1">
+                        {content.useCases.map((uc, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                            <span>{uc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            ) : null}
+
+            {/* Key Features */}
+            {content.features && content.features.length > 0 && (
+              <section id="features" className="space-y-3">
+                <SectionHeading>Key Features</SectionHeading>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {content.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-white p-2.5 dark:border-dark-border dark:bg-dark-surface">
                       <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                      <span>{uc}</span>
+                      <span className="text-sm text-surface-600 dark:text-dark-muted">{feature}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </section>
+            )}
 
-      {/* How to Use */}
-      <section id="how-to-use" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">How to Use</h2>
-            <div className="mt-4 space-y-3">
-              {content.instructions.map((inst, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 text-sm font-semibold dark:bg-brand-900/30 dark:text-brand-400">
-                    {i + 1}
-                  </div>
-                  <div>
-                    <p className="text-surface-600 dark:text-dark-muted">{inst}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <InContentAd className="my-4" slot="5678901234" />
-
-      {/* Examples */}
-      <section id="examples" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Examples</h2>
-            <div className="mt-4 space-y-3">
-              {content.examples.map((ex, i) => (
-                <Card key={i} variant="outlined" padding="sm">
-                  <pre tabIndex={0} className="overflow-x-auto whitespace-pre-wrap rounded-md bg-surface-50 p-2.5 text-xs dark:bg-dark-bg">
-                    <code>{ex}</code>
-                  </pre>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Best Practices */}
-      <section id="best-practices" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Best Practices</h2>
-            <ul className="mt-4 space-y-2">
-              {content.bestPractices.map((bp, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" aria-hidden="true" />
-                  <span className="text-surface-600 dark:text-dark-muted">{bp}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Common Mistakes */}
-      <section id="common-mistakes" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text flex items-center gap-2">
-              <CircleAlert className="h-5 w-5 text-red-500" aria-hidden="true" />
-              Common Mistakes
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {content.commonMistakes.map((cm, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <CircleAlert className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500" aria-hidden="true" />
-                  <span className="text-surface-600 dark:text-dark-muted">{cm}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">FAQ</h2>
-            <div className="mt-4 space-y-2">
-              {content.faq.map((item, i) => (
-                <details
-                  key={i}
-                  className="group rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
-                >
-                  <summary className="flex cursor-pointer items-center justify-between px-4 py-3 font-medium text-surface-900 dark:text-dark-text">
-                    {item.includes(" — ") ? item.split(" — ")[0] : item.split(" | A:")[0]}
-                    <ChevronRight className="h-4 w-4 text-surface-400 transition-transform group-open:rotate-90" aria-hidden="true" />
-                  </summary>
-                  <div className="px-4 pb-3">
-                    <p className="text-sm text-surface-500 dark:text-dark-muted">{item.includes(" — ") ? item.split(" — ").slice(1).join(" — ") : item.split(" | A:")[1] || ""}</p>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <InContentAd className="my-4" slot="7890123456" />
-
-      {/* Related Tools */}
-      <section id="related-tools" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Related Tools</h2>
-            {sameCategory.length > 0 && (
-              <>
-                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
-                  Same Category — {tool.category}
-                </h3>
-                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {sameCategory.slice(0, 6).map((rt) => (
-                    <ToolCard
-                      key={rt.id}
-                      tool={{
-                        id: rt.id,
-                        name: rt.name,
-                        description: rt.description,
-                        category: rt.category,
-                        slug: rt.slug,
-                        popularity: rt.popularity,
-                        featured: rt.featured,
-                        trending: rt.trending,
-                        new: rt.new,
-                        icon: rt.icon,
-                      }}
-                      variant="related"
-                      size="md"
-                    />
+            {/* How to Use */}
+            {content.instructions.length > 0 && (
+              <section id="how-to-use" className="space-y-3">
+                <SectionHeading>How to Use</SectionHeading>
+                <div className="space-y-2.5">
+                  {content.instructions.map((inst, i) => (
+                    <div key={i} className="flex gap-3">
+                      <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 text-sm font-semibold dark:bg-brand-900/30 dark:text-brand-400">
+                        {i + 1}
+                      </div>
+                      <p className="text-surface-600 dark:text-dark-muted">{inst}</p>
+                    </div>
                   ))}
                 </div>
-              </>
+              </section>
             )}
-            {related.length > 0 && (
-              <>
-                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
-                  Related Tools
-                </h3>
-                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {related.slice(0, 6).map((rt) => (
-                    <ToolCard
-                      key={rt.id}
-                      tool={{
-                        id: rt.id,
-                        name: rt.name,
-                        description: rt.description,
-                        category: rt.category,
-                        slug: rt.slug,
-                        popularity: rt.popularity,
-                        featured: rt.featured,
-                        trending: rt.trending,
-                        new: rt.new,
-                        icon: rt.icon,
-                      }}
-                      variant="related"
-                      size="md"
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-            {popularTools.length > 0 && (
-              <>
-                <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
-                  Popular Tools
-                </h3>
-                <div className="mt-3 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {popularTools.slice(0, 6).map((rt) => (
-                    <ToolCard
-                      key={rt.id}
-                      tool={{
-                        id: rt.id,
-                        name: rt.name,
-                        description: rt.description,
-                        category: rt.category,
-                        slug: rt.slug,
-                        popularity: rt.popularity,
-                        featured: rt.featured,
-                        trending: rt.trending,
-                        new: rt.new,
-                        icon: rt.icon,
-                      }}
-                      variant="related"
-                      size="md"
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
 
-      {/* References */}
-      {content.references && content.references.length > 0 && (
-        <section id="references" className="border-b border-surface-200 dark:border-dark-border">
-          <div className="container py-12 md:py-16">
-            <div className="mx-auto max-w-3xl prose">
-              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">References</h2>
-              <p className="mt-2 text-surface-500 dark:text-dark-muted">
-                Authoritative specifications, standards, and in-depth reading for {tool.name}.
-              </p>
-              <ul className="mt-4 space-y-2">
-                {content.references.map((ref) => {
-                  const isInternal = ref.url.startsWith("/");
-                  if (isInternal) {
+            {/* Examples */}
+            {content.examples.length > 0 && (
+              <section id="examples" className="space-y-3">
+                <SectionHeading>Examples</SectionHeading>
+                <div className="space-y-2.5">
+                  {content.examples.map((ex, i) => (
+                    <Card key={i} variant="outlined" padding="sm">
+                      <pre tabIndex={0} className="overflow-x-auto whitespace-pre-wrap rounded-md bg-surface-50 p-2.5 text-xs dark:bg-dark-bg">
+                        <code>{ex}</code>
+                      </pre>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Best Practices */}
+            {content.bestPractices.length > 0 && (
+              <CollapsibleSection id="best-practices" title="Best Practices" icon={Lightbulb}>
+                <ul className="space-y-2">
+                  {content.bestPractices.map((bp, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" aria-hidden="true" />
+                      <span className="text-sm text-surface-600 dark:text-dark-muted">{bp}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CollapsibleSection>
+            )}
+
+            {/* Common Mistakes */}
+            {content.commonMistakes.length > 0 && (
+              <CollapsibleSection id="common-mistakes" title="Common Mistakes" icon={CircleAlert}>
+                <ul className="space-y-2">
+                  {content.commonMistakes.map((cm, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <CircleAlert className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500" aria-hidden="true" />
+                      <span className="text-sm text-surface-600 dark:text-dark-muted">{cm}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CollapsibleSection>
+            )}
+
+            {/* FAQ */}
+            {content.faq.length > 0 && (
+              <section id="faq" className="space-y-3">
+                <SectionHeading>FAQ</SectionHeading>
+                <div className="space-y-2">
+                  {content.faq.map((item, i) => {
+                    const { question, answer } = parseFaqItem(item);
+                    return (
+                      <div key={i} className="rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+                        <p className="px-4 pt-3 font-medium text-surface-900 dark:text-dark-text">
+                          {question}
+                        </p>
+                        <p className="px-4 pb-3 text-sm text-surface-500 dark:text-dark-muted">
+                          {answer}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
+            {/* References */}
+            {content.references && content.references.length > 0 && (
+              <CollapsibleSection id="references" title="References" icon={BookOpen}>
+                <p className="mb-3 text-sm text-surface-500 dark:text-dark-muted">
+                  Authoritative specifications, standards, and in-depth reading for {tool.name}.
+                </p>
+                <ul className="space-y-2">
+                  {content.references.map((ref) => {
+                    const isInternal = ref.url.startsWith("/");
+                    if (isInternal) {
+                      return (
+                        <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
+                          <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                          <Link href={ref.url} className="text-sm text-surface-600 hover:text-brand-600 dark:text-dark-muted dark:hover:text-brand-400 underline">
+                            {ref.label}
+                          </Link>
+                        </li>
+                      );
+                    }
                     return (
                       <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
-                        <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                        <Link href={ref.url} className="text-surface-600 hover:text-brand-600 dark:text-dark-muted dark:hover:text-brand-400 underline">
+                        <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                        <a
+                          href={ref.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-brand-600 hover:text-brand-700 underline dark:text-brand-400"
+                        >
                           {ref.label}
-                        </Link>
+                        </a>
                       </li>
                     );
-                  }
-                  return (
-                    <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
-                      <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                      <a
-                        href={ref.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-brand-600 hover:text-brand-700 underline dark:text-brand-400"
-                      >
-                        {ref.label}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </section>
-      )}
+                  })}
+                </ul>
+              </CollapsibleSection>
+            )}
 
-      {/* Learning Resources */}
-      <section id="learning-resources" className="border-b border-surface-200 dark:border-dark-border">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl prose">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-brand-500" aria-hidden="true" />
-              Learning Resources
-            </h2>
-            <p className="mt-2 text-surface-500 dark:text-dark-muted">
-              Dive deeper with our comprehensive guides and tutorials.
-            </p>
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
-              {specificGuide && (
+            <InContentAd className="my-2" slot="5678901234" />
+
+            {/* Share */}
+            <section className="space-y-3">
+              <SectionHeading>Share</SectionHeading>
+              <ShareButtons />
+            </section>
+          </div>
+
+          {/* Sidebar */}
+          <aside className="mt-8 space-y-6 lg:mt-0 lg:sticky lg:top-24 lg:self-start">
+            {/* Related Tools */}
+            <section id="related-tools" className="space-y-3">
+              <SectionHeading>Related Tools</SectionHeading>
+              <div className="space-y-2">
+                {relatedList.map((rt) => (
+                  <ToolCard
+                    key={rt.id}
+                    tool={{
+                      id: rt.id,
+                      name: rt.name,
+                      description: rt.description,
+                      category: rt.category,
+                      slug: rt.slug,
+                      popularity: rt.popularity,
+                      featured: rt.featured,
+                      trending: rt.trending,
+                      new: rt.new,
+                      icon: rt.icon,
+                    }}
+                    variant="compact"
+                    size="sm"
+                    showPopularity={false}
+                  />
+                ))}
+              </div>
+            </section>
+
+            {/* Learning Resources */}
+            <section id="learning-resources" className="space-y-3">
+              <SectionHeading icon={BookOpen}>Learning Resources</SectionHeading>
+              <div className="space-y-2">
+                {specificGuide && (
+                  <Link
+                    href={`/guides/${specificGuide.slug}`}
+                    className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  >
+                    <div className="flex items-start gap-2">
+                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                      <div>
+                        <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                          {specificGuide.title}
+                        </p>
+                        <p className="text-xs text-surface-400 dark:text-dark-muted">{specificGuide.readTime} read</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                  </Link>
+                )}
+                {categorySlug && (
+                  <Link
+                    href={`/categories/${categorySlug}`}
+                    className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  >
+                    <div className="flex items-start gap-2">
+                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                      <div>
+                        <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                          More {tool.category} Tools
+                        </p>
+                        <p className="text-xs text-surface-400 dark:text-dark-muted">Browse the full category</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                  </Link>
+                )}
                 <Link
-                  href={`/guides/${specificGuide.slug}`}
-                  className="group flex items-center justify-between rounded-lg border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  href="/guides"
+                  className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
-                  <div className="flex items-start gap-2.5">
+                  <div className="flex items-start gap-2">
                     <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
                     <div>
-                      <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 text-sm">
-                        {specificGuide.title}
+                      <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                        Developer Guides
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">{specificGuide.readTime} read</p>
+                      <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth tutorials and best practices</p>
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
                 </Link>
-              )}
-              {categorySlug && (
                 <Link
-                  href={`/categories/${categorySlug}`}
-                  className="group flex items-center justify-between rounded-lg border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  href="/learning"
+                  className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
-                  <div className="flex items-start gap-2.5">
+                  <div className="flex items-start gap-2">
                     <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
                     <div>
-                      <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 text-sm">
-                        More {tool.category} Tools
+                      <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                        Learning Center
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">Browse the full category</p>
+                      <p className="text-xs text-surface-400 dark:text-dark-muted">Core concepts and fundamentals</p>
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
                 </Link>
-              )}
-              <Link
-                href="/guides"
-                className="group flex items-center justify-between rounded-lg border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-              >
-                <div className="flex items-start gap-2.5">
-                  <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 text-sm">
-                      Developer Guides
-                    </p>
-                    <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth tutorials and best practices</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/learning"
-                className="group flex items-center justify-between rounded-lg border border-surface-200 bg-white p-3 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
-              >
-                <div className="flex items-start gap-2.5">
-                  <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                  <div>
-                    <p className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 text-sm">
-                      Learning Center
-                    </p>
-                    <p className="text-xs text-surface-400 dark:text-dark-muted">Core concepts and fundamentals</p>
-                  </div>
-                </div>
-                <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+              </div>
+            </section>
 
-      {/* Share */}
-      <section className="container py-8 md:py-10">
-        <div className="mx-auto max-w-3xl prose">
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Share</h2>
-          <ShareButtons />
+            <SidebarAd slot="2345678901" />
+          </aside>
         </div>
-      </section>
+      </div>
     </>
   );
 }

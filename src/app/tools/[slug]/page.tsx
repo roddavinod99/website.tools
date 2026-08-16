@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { allTools, siteConfig, learningTopics, categories } from "@/lib/constants";
 import { getToolContent } from "@/lib/tool-content";
+import { parseFaqItem } from "@/lib/faq";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { findRelatedTools } from "@/lib/related-tools";
 import { ToolClient } from "./tool-client";
@@ -134,13 +135,11 @@ export default async function ToolPage({ params }: Props) {
     ? {
         "@type": "FAQPage",
         mainEntity: content.faq.map((item) => {
-          const parts = item.split(/ — | \| A: |\? /);
-          const q = parts[0];
-          const a = parts.length > 1 ? parts.slice(1).join(" ").trim() : item;
+          const { question, answer } = parseFaqItem(item);
           return {
             "@type": "Question",
-            name: q.endsWith("?") ? q : `${q}?`,
-            acceptedAnswer: { "@type": "Answer", text: a },
+            name: question.endsWith("?") ? question : `${question}?`,
+            acceptedAnswer: { "@type": "Answer", text: answer },
           };
         }),
       }
