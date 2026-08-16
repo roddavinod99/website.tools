@@ -1,0 +1,27 @@
+{"timestamp":"2026-08-16T12:03:49.957Z","event":"missing_content_type","ip":"46b29f3beab33087","path":"/api/contact","details":"Content-Type: text/plain"}
+{"timestamp":"2026-08-16T12:29:01.117Z","event":"missing_content_type","ip":"46b29f3beab33087","path":"/api/contact","details":"Content-Type: text/plain"}
+{"timestamp":"2026-08-16T12:29:01.219Z","event":"body_too_large","ip":"46b29f3beab33087","path":"/api/contact","details":"Body size: 20072"}
+{"timestamp":"2026-08-16T12:29:01.273Z","event":"malicious_request","ip":"46b29f3beab33087","path":"/api/contact","details":"Honeypot triggered"}
+{"timestamp":"2026-08-16T12:29:01.369Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:01.511Z","event":"invalid_origin","ip":"46b29f3beab33087","path":"/api/submit","details":"Cross-origin: evil.com"}
+{"timestamp":"2026-08-16T12:29:02.510Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/%2e%2e%2f%2e%2e%2f","details":"Path traversal attempt"}
+{"timestamp":"2026-08-16T12:29:02.542Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/..%2f..%2f","details":"Path traversal attempt"}
+{"timestamp":"2026-08-16T12:29:02.578Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/wp-admin","details":"Attack path blocked"}
+{"timestamp":"2026-08-16T12:29:02.612Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/wp-login.php","details":"Attack path blocked"}
+{"timestamp":"2026-08-16T12:29:02.639Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/.env","details":"Attack path blocked"}
+{"timestamp":"2026-08-16T12:29:02.683Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/.git/config","details":"Attack path blocked"}
+{"timestamp":"2026-08-16T12:29:02.711Z","event":"path_traversal_attempt","ip":"46b29f3beab33087","path":"/.htaccess","details":"Attack path blocked"}
+{"timestamp":"2026-08-16T12:29:03.066Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.069Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.071Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.073Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.080Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.081Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.089Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/submit","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.136Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.138Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.139Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.140Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.142Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:29:03.143Z","event":"rate_limit_violation","ip":"46b29f3beab33087","path":"/api/contact","details":"Rate limit exceeded"}
+{"timestamp":"2026-08-16T12:30:36.306Z","event":"invalid_origin","ip":"46b29f3beab33087","path":"/api/submit","details":"Cross-origin: evil.com"}
