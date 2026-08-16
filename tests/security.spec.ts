@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 
 const BASE_URL = "http://localhost:3000";
 
+test.describe.configure({ mode: "serial" });
+
 test.describe("Security Tests", () => {
   test.describe("Health Endpoint - No Information Disclosure", () => {
     test("health endpoint returns only safe fields", async ({ request }) => {
