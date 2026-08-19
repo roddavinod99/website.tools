@@ -14,12 +14,12 @@ interface AdContainerProps extends AdPlaceholderProps {
   children?: React.ReactNode;
 }
 
-const formatDefaults: Record<AdFormat, { width?: number; height?: number; label: string; slot: string }> = {
-  horizontal: { width: 728, height: 90, label: "Ad Banner", slot: "1234567890" },
-  vertical: { width: 300, height: 600, label: "Sidebar Ad", slot: "2345678901" },
-  rectangle: { width: 336, height: 280, label: "In-Content Ad", slot: "3456789012" },
-  auto: { label: "Responsive Ad", slot: "4567890123" },
-  fluid: { label: "Fluid Ad", slot: "5678901234" },
+const formatDefaults: Record<AdFormat, { width?: number; height?: number; label: string }> = {
+  horizontal: { width: 728, height: 90, label: "Ad Banner" },
+  vertical: { width: 300, height: 600, label: "Sidebar Ad" },
+  rectangle: { width: 336, height: 280, label: "In-Content Ad" },
+  auto: { label: "Responsive Ad" },
+  fluid: { label: "Fluid Ad" },
 };
 
 // Static classes (CSP-safe, no inline style attributes).
@@ -64,7 +64,7 @@ export function AdContainer({
   const finalWidth = width ?? defaults.width;
   const finalHeight = height ?? defaults.height;
   const displayLabel = customLabel || defaults.label;
-  const finalSlot = slot || defaults.slot;
+  const finalSlot = slot || "";
 
   const checkAdFill = () => {
     if (!adRef.current) return false;
@@ -214,6 +214,11 @@ export function AdContainer({
   }
 
   if (!ADSENSE_PUBLISHER_ID) {
+    return null;
+  }
+
+  // No real slot configured for this placement — don't emit an invalid ad unit.
+  if (!finalSlot) {
     return null;
   }
 

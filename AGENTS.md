@@ -1228,12 +1228,19 @@ This project uses Google AdSense for sustainable free access. All AI agents must
 
 ### Components (src/components/ads/)
 - **AdSenseScript** (`adsense-script.tsx`) — lazy-loads the AdSense client script (`strategy="lazyOnload"`, uses the CSP nonce). Does not push auto-ads.
-- **AdContainer** — base responsive container used by the wrappers below (renders labeled placeholders in dev)
-- **AdBanner** — Horizontal responsive banner (format: "horizontal", slot: "1234567890")
-- **InContentAd** — Rectangle in-content ad (format: "rectangle", slot: "3456789012")
-- **SidebarAd** — Vertical sidebar ad for desktop (format: "vertical", slot: "2345678901")
-- **ResponsiveAd** — Auto-sizing ad unit (format: "auto", slot: "4567890123")
-- **FluidAd** — Fluid ad unit (format: "fluid", slot: "5678901234")
+- **AdContainer** — base responsive container used by the wrappers below (renders labeled placeholders in dev; returns `null` in production when no real slot ID is configured for the placement)
+- **AdBanner** — Horizontal responsive banner (format: "horizontal")
+- **InContentAd** — Rectangle in-content ad (format: "rectangle")
+- **SidebarAd** — Vertical sidebar ad for desktop (format: "vertical")
+- **ResponsiveAd** — Auto-sizing ad unit (format: "auto")
+- **FluidAd** — Fluid ad unit (format: "fluid")
+
+### Slot Configuration (src/lib/data/ads.ts)
+Slot IDs are **env-driven**, never hardcoded. `src/lib/data/ads.ts` exports an
+`adSlots` map that reads `NEXT_PUBLIC_ADSENSE_SLOT_*` variables (see
+`.env.example`). Placements render nothing (no broken `data-ad-slot=""`
+request) until a real slot ID from the AdSense account is set in
+`.env.local` / `.env.production`.
 
 ### Implementation Rules
 
@@ -1268,8 +1275,8 @@ This project uses Google AdSense for sustainable free access. All AI agents must
 ### Adding New Ad Placements
 
 1. Import from `@/components/ads`: `import { AdBanner, InContentAd } from "@/components/ads"`
-2. Use appropriate component: `<AdBanner slot="YOUR_SLOT_ID" />` or `<InContentAd slot="YOUR_SLOT_ID" />`
-3. Add unique slot ID from AdSense account
+2. Use the appropriate component with a named slot from the `adSlots` map in `src/lib/data/ads.ts`: `<AdBanner slot={adSlots.homeTop} />` or `<InContentAd slot={adSlots.toolInContent1} />`
+3. Add a `NEXT_PUBLIC_ADSENSE_SLOT_*` entry for the new placement in `src/lib/data/ads.ts`, `.env.example`, and set the real slot ID in `.env.local` / `.env.production`
 4. Place between content sections with `my-12` spacing
 5. Test in development (shows placeholder) and production
 

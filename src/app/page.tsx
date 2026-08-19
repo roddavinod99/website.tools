@@ -13,6 +13,7 @@ import { CommunitySection } from "@/components/home/community-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { FAQSection } from "@/components/home/faq-section";
 import { AdBanner } from "@/components/ads";
+import { adSlots } from "@/lib/data/ads";
 
 export const metadata: Metadata = {
   title: "Free Developer Tools for Everyday Work",
@@ -109,15 +110,15 @@ export default function Home() {
         toolCount={TOOL_COUNT}
         allTools={allTools}
       />
-      <AdBanner className="my-12" slot="1234567890" />
+      <AdBanner className="my-12" slot={adSlots.homeTop} />
       <CategoriesSection />
       <FeaturedTools featuredTools={featuredTools} />
       <TaskSection allTools={allTools} />
-      <AdBanner className="my-12" slot="2345678901" />
+      <AdBanner className="my-12" slot={adSlots.homeMid} />
       <PrivacySection allTools={allTools} />
       <LearningSection />
       <RecentlyAdded allTools={allTools} />
-      <AdBanner className="my-12" slot="3456789012" />
+      <AdBanner className="my-12" slot={adSlots.homeBottom} />
       <ToolsCta />
       <PlatformSection />
       <CommunitySection />

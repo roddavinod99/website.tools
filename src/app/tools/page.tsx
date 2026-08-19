@@ -6,6 +6,7 @@ import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Search } from "lucide-react";
 import { AdBanner } from "@/components/ads";
+import { adSlots } from "@/lib/data/ads";
 
 const toolCountText = `${TOOL_COUNT} free online developer tools`;
 
@@ -97,7 +98,7 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      <AdBanner className="my-12" slot="4567890123" />
+      <AdBanner className="my-12" slot={adSlots.toolsTop} />
 
       <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
@@ -124,7 +125,7 @@ export default function ToolsPage() {
             <Fragment key={tool.id}>
               {index === Math.floor(allTools.length / 2) && (
                 <div className="col-span-full">
-                  <AdBanner className="my-8" slot="5678901234" />
+                  <AdBanner className="my-8" slot={adSlots.toolsMid} />
                 </div>
               )}
               <ToolCard

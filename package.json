@@ -1,12 +1,12 @@
 {
   "name": "tools",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "predev": "node scripts/prebuild.mjs",
     "prebuild": "node scripts/prebuild.mjs",
-    "build": "next build",
+    "build": "next build && node scripts/postbuild-csp.mjs",
     "start": "next start",
     "build:wasm": "node scripts/build-wasm.mjs",
     "version": "node scripts/release.mjs",

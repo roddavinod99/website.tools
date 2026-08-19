@@ -7,6 +7,7 @@ import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";
 import { ChevronRight, CircleCheck } from "lucide-react";
 import { AdBanner } from "@/components/ads";
+import { adSlots } from "@/lib/data/ads";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -102,7 +103,7 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
-      <AdBanner className="my-12" slot="4567890123" />
+      <AdBanner className="my-12" slot={adSlots.categoryTop} />
 
       <section className="container py-12 md:py-16">
         <div className="max-w-2xl">
@@ -140,7 +141,7 @@ export default async function CategoryPage({ params }: Props) {
               <>
                 {index === Math.floor(tools.length / 2) && (
                   <div className="col-span-full">
-                    <AdBanner className="my-8" slot="5678901234" />
+                    <AdBanner className="my-8" slot={adSlots.categoryMid} />
                   </div>
                 )}
                 <ToolCard

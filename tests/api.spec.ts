@@ -60,6 +60,30 @@ test.describe("API Endpoint Tests", () => {
     });
   });
 
+  test.describe("GET /api/whois", () => {
+    test("valid domain — returns RDAP summary", async ({ request }) => {
+      const response = await request.get(`${BASE_URL}/api/whois?domain=example.com`);
+      expect([200, 500, 502]).toContain(response.status());
+      if (response.status() === 200) {
+        const body = await response.json();
+        expect(body).toHaveProperty("found");
+        expect(body.found).toBe(true);
+        expect(body).toHaveProperty("registrar");
+        expect(body).toHaveProperty("created");
+      }
+    });
+
+    test("invalid domain — returns 400", async ({ request }) => {
+      const response = await request.get(`${BASE_URL}/api/whois?domain=not_a_valid_domain!!!`);
+      expect(response.status()).toBe(400);
+    });
+
+    test("missing domain — returns 400", async ({ request }) => {
+      const response = await request.get(`${BASE_URL}/api/whois`);
+      expect(response.status()).toBe(400);
+    });
+  });
+
   test.describe("GET /api/version", () => {
     test("returns version information", async ({ request }) => {
       const response = await request.get(`${BASE_URL}/api/version`);

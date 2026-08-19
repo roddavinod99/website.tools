@@ -25,6 +25,17 @@ const SURNAMES_FR = ["Martin","Bernard","Dubois","Thomas","Robert","Richard","Pe
 const SURNAMES_ES = ["García","Rodríguez","Martínez","López","González","Hernández","Pérez","Sánchez","Ramírez","Cruz"];
 const SURNAMES_JP = ["Sato","Suzuki","Takahashi","Tanaka","Watanabe","Ito","Yamamoto","Nakamura","Kobayashi","Kato"];
 const DOMAINS = ["gmail.com","outlook.com","yahoo.com","proton.me","example.com","mail.com","icloud.com"];
+const USER_AGENTS = [
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:127.0) Gecko/20100101 Firefox/127.0",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:127.0) Gecko/20100101 Firefox/127.0",
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+  "Mozilla/5.0 (iPad; CPU OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+  "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+];
 const CITIES_EN = ["New York","Los Angeles","Chicago","Houston","Phoenix","Seattle","Boston","Denver","Miami","Portland"];
 const CITIES_EN_GB = ["London","Manchester","Birmingham","Leeds","Glasgow","Liverpool","Newcastle","Bristol","Sheffield","Cardiff"];
 const CITIES_IN = ["Mumbai","Delhi","Bengaluru","Hyderabad","Chennai","Kolkata","Pune","Ahmedabad","Jaipur","Lucknow"];
@@ -128,7 +139,7 @@ const ALL_FIELDS: FieldDef[] = [
   { id: "currency", label: "Currency", category: "finance", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return CURRENCIES[Math.floor(r.next() * CURRENCIES.length)]; } },
   { id: "ip", label: "IP Address", category: "internet", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `${Math.floor(r.next() * 256)}.${Math.floor(r.next() * 256)}.${Math.floor(r.next() * 256)}.${Math.floor(r.next() * 256)}`; } },
   { id: "url", label: "URL", category: "internet", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `https://www.${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]}.com/${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]}`; } },
-  { id: "userAgent", label: "User Agent", category: "internet", enabled: false, generate: () => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" },
+  { id: "userAgent", label: "User Agent", category: "internet", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return USER_AGENTS[Math.floor(r.next() * USER_AGENTS.length)]; } },
   { id: "hashtag", label: "Hashtag", category: "internet", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); return `#${BS_WORDS[Math.floor(r.next() * BS_WORDS.length)]}${CATCHPHRASES[Math.floor(r.next() * CATCHPHRASES.length)]}`; } },
   { id: "uuid", label: "UUIDv4", category: "ids", enabled: false, generate: (s) => { const r = makeSeed(s || Date.now()); const h = () => Math.floor(r.next() * 16).toString(16); return `${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}-${h()}${h()}${h()}${h()}-4${h()}${h()}${h()}-${(8 + Math.floor(r.next() * 4)).toString(16)}${h()}${h()}${h()}-${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}${h()}`; } },
   { id: "nanoid", label: "NanoID", category: "ids", enabled: false, generate: (s) => { const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"; let id = ""; const b = new Uint32Array(21); if (s !== undefined) { const r = makeSeed(s); for (let i = 0; i < 21; i++) id += a[Math.floor(r.next() * a.length)]; } else { crypto.getRandomValues(b); for (let i = 0; i < 21; i++) id += a[b[i] % a.length]; } return id; } },

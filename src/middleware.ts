@@ -67,12 +67,6 @@ function isSuspiciousUserAgent(ua: string): boolean {
   return BOT_UA_PATTERNS.some((p) => p.test(ua));
 }
 
-function generateNonce(): string {
-  const array = new Uint8Array(16);
-  crypto.getRandomValues(array);
-  return Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "SAMEORIGIN",
@@ -113,39 +107,18 @@ function checkRateLimit(ip: string, path: string): { allowed: boolean; retryAfte
   return { allowed: true };
 }
 
-function addSecurityHeaders(response: NextResponse, nonce: string, path = ""): void {
+function addSecurityHeaders(response: NextResponse): void {
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
     response.headers.set(key, value);
   }
-
-  const allowsWasm = path.startsWith("/tools/");
-  const wasmDirective = allowsWasm ? " 'wasm-unsafe-eval'" : "";
-
-  const csp = [
-    "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${wasmDirective} https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://static.cloudflareinsights.com https://ep1.adtrafficquality.google https://tpc.googlesyndication.com`,
-    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
-    "img-src 'self' data: blob: https://www.google-analytics.com https://www.google.com https://www.google.co.in https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.gstatic.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google",
-    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.gstatic.com https://ep1.adtrafficquality.google https://dns.google https://ip-api.com",
-    "font-src 'self' https://fonts.gstatic.com",
-    "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google",
-    "frame-ancestors 'none'",
-    "form-action 'self'",
-    "base-uri 'self'",
-    "object-src 'none'",
-  ].join("; ");
-
-  response.headers.set("Content-Security-Policy", csp);
 }
 
 export async function middleware(request: NextRequest) {
   const ip = getClientIp(request);
   const path = getPath(request);
   const ua = request.headers.get("user-agent") || "";
-  const nonce = generateNonce();
 
   const response = NextResponse.next();
-  response.headers.set("x-middleware-nonce", nonce);
 
   const isAllowedWellKnown = ALLOWED_WELL_KNOWN_PATHS.some((p) => path === p);
 
@@ -174,11 +147,11 @@ export async function middleware(request: NextRequest) {
     if (rateLimit.retryAfter) {
       retryResponse.headers.set("Retry-After", String(rateLimit.retryAfter));
     }
-    addSecurityHeaders(retryResponse, nonce, path);
+    addSecurityHeaders(retryResponse);
     return retryResponse;
   }
 
-  addSecurityHeaders(response, nonce, path);
+  addSecurityHeaders(response);
 
   const origin = request.headers.get("origin");
   const referer = request.headers.get("referer");
@@ -204,7 +177,7 @@ export async function middleware(request: NextRequest) {
           status: 403,
           headers: { "Content-Type": "application/json" },
         });
-        addSecurityHeaders(crossOriginResponse, nonce, path);
+        addSecurityHeaders(crossOriginResponse);
         return crossOriginResponse;
       }
     } catch {

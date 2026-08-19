@@ -136,8 +136,10 @@ If a paid/freemium tier is introduced (per the monetization roadmap):
 ## Compliance & Internationalization
 
 - The site ships GDPR/CCPA-oriented legal pages: Privacy, Cookies, DPA, Terms,
-  DMCA, Acceptable-Use, Disclaimer. The consent manager (`ConsentManager`) and
-  cookie banner supply a consent management layer for AdSense and analytics.
+  DMCA, Acceptable-Use, Disclaimer. Consent defaults are set by the same-origin
+  `/consent-init.js` script (loaded before interactive scripts in the root
+  layout), and the cookie banner supplies a consent management layer for
+  AdSense and analytics.
 - **i18n:** content is English-only. The root layout sets `lang="en"` and an
   `x-default` + `en` hreflang. Metadata uses absolute canonical URLs. If
   additional locales are added, add per-locale routes and `languages` entries

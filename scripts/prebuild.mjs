@@ -9,6 +9,35 @@ const ROOT = join(__dirname, "..");
 const OUTPUT_DIR = join(ROOT, "src", "lib", "version", "__generated__");
 const OUTPUT_FILE = join(OUTPUT_DIR, "release-data.ts");
 
+function parseEnvFile(path) {
+  try {
+    const raw = readFileSync(path, "utf-8");
+    const out = {};
+    for (const line of raw.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eq = trimmed.indexOf("=");
+      if (eq <= 0) continue;
+      const key = trimmed.slice(0, eq).trim();
+      const value = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      if (key) out[key] = value;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+function loadNextEnv() {
+  const nodeEnv = process.env.NODE_ENV || "production";
+  const merged = {};
+  const files = [".env", `.env.${nodeEnv}`, ".env.local", `.env.${nodeEnv}.local`];
+  for (const file of files) {
+    Object.assign(merged, parseEnvFile(join(ROOT, file)));
+  }
+  return merged;
+}
+
 function exec(command) {
   try {
     return execSync(command, { encoding: "utf-8", timeout: 5000 }).trim();
@@ -91,6 +120,18 @@ if (!existsSync(OUTPUT_DIR)) {
 writeFileSync(OUTPUT_FILE, content, "utf-8");
 console.log(`[prebuild] Generated ${OUTPUT_FILE}`);
 console.log(`[prebuild] Version: ${version}, Build: ${buildNumber}`);
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || loadNextEnv().NEXT_PUBLIC_GA_ID || "";
+const analyticsInitFile = join(ROOT, "public", "analytics-init.js");
+const analyticsInitContent = GA_ID
+  ? `(function(){window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${GA_ID}',{anonymize_ip:true,allow_google_signals:false,allow_ad_personalization_signals:false});})();
+`
+  : `(function(){window.dataLayer=window.dataLayer||[];})();
+`;
+writeFileSync(analyticsInitFile, analyticsInitContent, "utf-8");
+console.log(
+  `[prebuild] Generated ${analyticsInitFile} (GA_ID ${GA_ID ? "set" : "empty"})`
+);
 
 console.log("[prebuild] Building WASM modules...");
 const wasmRes = spawnSync(process.execPath, [join(__dirname, "build-wasm.mjs")], {

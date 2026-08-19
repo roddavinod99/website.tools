@@ -296,7 +296,7 @@ export default function PrivacyPage() {
               </table>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
-              Full Subprocessor List with details: <a href="/subprocessors" className="text-brand-500 underline hover:text-brand-600">/subprocessors</a>.
+              A full subprocessor list is available on request.
               All subprocessors execute Data Processing Agreements with SCCs and adhere to EU-US Data Privacy Framework where applicable.
             </p>
           </section>
@@ -418,7 +418,7 @@ export default function PrivacyPage() {
               <h3 className="font-semibold text-brand-800 dark:text-brand-200">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
                 Email <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a>
-                or use our <a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Data Subject Request Form</a>.
+                or use our <a href="/contact" className="text-brand-500 underline hover:text-brand-600">contact form</a>.
                 We verify identity and respond within 30 days (extendable to 60 days for complex requests).
                 No fee for standard requests.
               </p>
@@ -605,7 +605,7 @@ export default function PrivacyPage() {
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
               <p><strong>General Privacy Inquiries:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
               <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>
-              <p><strong>Data Subject Requests:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a> or <a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Online Form</a></p>
+              <p><strong>Data Subject Requests:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
               <p><strong>Security Vulnerabilities:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a> (PGP available)</p>
               <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 underline hover:text-brand-600">eu-rep@devstackio.com</a></p>
               <p><strong>Postal:</strong> DevStackIO, Privacy Team, 123 Developer Way, San Francisco, CA 94102, USA</p>
@@ -625,11 +625,7 @@ export default function PrivacyPage() {
             <li><a href="/dpa" className="text-brand-500 underline hover:text-brand-600">Data Processing Addendum (DPA)</a></li>
             <li><a href="/acceptable-use" className="text-brand-500 underline hover:text-brand-600">Acceptable Use Policy</a></li>
             <li><a href="/dmca" className="text-brand-500 underline hover:text-brand-600">DMCA / Copyright Policy</a></li>
-            <li><a href="/subprocessors" className="text-brand-500 underline hover:text-brand-600">Subprocessor List</a></li>
             <li><a href="/security" className="text-brand-500 underline hover:text-brand-600">Security Policy</a></li>
-            <li><a href="/data-retention" className="text-brand-500 underline hover:text-brand-600">Data Retention Policy</a></li>
-            <li><a href="/childrens-privacy" className="text-brand-500 underline hover:text-brand-600">Children's Privacy Policy</a></li>
-            <li><a href="/privacy/request" className="text-brand-500 underline hover:text-brand-600">Data Subject Request Form</a></li>
           </ul>
         </div>
       </article>

@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Suspense } from "react";
 import { allTools, siteConfig, TOOL_COUNT } from "@/lib/constants";
-import { searchTools } from "@/lib/search";
 import { featuresBySlug } from "@/lib/data/tool-features";
-import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
+import { SearchResults } from "./search-results";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -16,16 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-interface Props {
-  searchParams: Promise<{ q?: string }>;
-}
-
-export default async function SearchPage({ searchParams }: Props) {
-  const { q } = await searchParams;
-  const query = (q || "").trim().toLowerCase();
-
-  const results = searchTools(allTools, query, featuresBySlug);
-
+export default function SearchPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="mx-auto max-w-2xl">
@@ -44,65 +34,15 @@ export default async function SearchPage({ searchParams }: Props) {
           <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-surface-400" />
           <input
             name="q"
-            defaultValue={q || ""}
             placeholder={`Search ${TOOL_COUNT} tools...`}
             className="flex h-12 w-full rounded-lg border border-surface-200 bg-white pl-10 pr-4 text-base text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </form>
 
         <div className="mt-8">
-          {query && results.length === 0 && (
-            <div className="text-center text-surface-500 dark:text-dark-muted">
-              <p>No tools found for &ldquo;{q}&rdquo;</p>
-              <p className="mt-1 text-sm">Try a different search term</p>
-            </div>
-          )}
-
-          {query && results.length > 0 && (
-            <>
-              <p className="text-sm text-surface-500 dark:text-dark-muted mb-4">
-                {results.length} tool{results.length !== 1 ? "s" : ""} found for &ldquo;{q}&rdquo;
-              </p>
-              <div className="grid gap-4">
-                {results.map((tool) => (
-                  <Link
-                    key={tool.id}
-                    href={`/tools/${tool.slug}`}
-                    className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-                  >
-                    <div className="flex items-start justify-between">
-                      <Badge variant="default">{tool.category}</Badge>
-                      {tool.trending && <Badge variant="warning">Hot</Badge>}
-                    </div>
-                    <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                      {tool.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                      {tool.description}
-                    </p>
-                    {featuresBySlug[tool.slug] && (
-                      <ul className="mt-3 flex flex-wrap gap-1.5">
-                        {featuresBySlug[tool.slug].slice(0, 3).map((feature) => (
-                          <li
-                            key={feature}
-                            className="rounded-full border border-surface-200 bg-surface-50 px-2 py-0.5 text-[10px] font-medium text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
-                          >
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </Link>
-                ))}
-              </div>
-            </>
-          )}
-
-          {!query && (
-            <div className="text-center text-surface-500 dark:text-dark-muted">
-              <p>Type to search across all tools.</p>
-            </div>
-          )}
+          <Suspense fallback={<p className="text-center text-surface-500 dark:text-dark-muted">Searching…</p>}>
+            <SearchResults tools={allTools} featuresBySlug={featuresBySlug} />
+          </Suspense>
         </div>
       </div>
     </div>

@@ -6,19 +6,21 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig, allTools, featuredTools } from "@/lib/constants";
-import { headers } from "next/headers";
 import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
-import { ConsentManager } from "@/components/legal/consent-manager";
 import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
 import { ServiceWorkerRegister } from "@/components/layout/service-worker-register";
 import { PreloadPopularTools } from "@/components/layout/tool-preloader";
 import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 import { AdSenseScript } from "@/components/ads/adsense-script";
 import { AdBanner } from "@/components/ads";
-import { NonceMeta } from "@/components/layout/nonce-meta";
-import { NonceProvider } from "@/components/layout/nonce-provider";
+import { adSlots } from "@/lib/data/ads";
+
+export const revalidate = 3600;
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
+const HAS_GOOGLE_TAGS = !!(process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID);
 
 const notoSansArabic = Noto_Sans_Arabic({
   variable: "--font-noto-sans-arabic",
@@ -142,14 +144,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = await headers();
-  const nonce = headersList.get("x-middleware-nonce");
-
   return (
     <html
       lang="en"
@@ -157,14 +156,25 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <NonceMeta />
         <Script
           id="theme-init"
+          src="/theme-init.js"
           strategy="beforeInteractive"
-          nonce={nonce || undefined}
-        >
-          {`(function(){try{var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark")}else if(t==="dark"){document.documentElement.classList.add("dark")}else{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches){document.documentElement.classList.remove("dark")}else{document.documentElement.classList.add("dark")}}}catch(e){document.documentElement.classList.add("dark")}})();`}
-        </Script>
+        />
+        {HAS_GOOGLE_TAGS && (
+          <Script
+            id="consent-init"
+            src="/consent-init.js"
+            strategy="beforeInteractive"
+          />
+        )}
+        {GA_ID && (
+          <Script
+            id="analytics-init"
+            src="/analytics-init.js"
+            strategy="beforeInteractive"
+          />
+        )}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
@@ -183,11 +193,9 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
-        <ConsentManager nonce={nonce || undefined} />
         <ThemeProvider>
           <ServiceWorkerRegister />
           <FileCleanupProvider>
-            <NonceProvider>
               <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
                 Skip to content
               </a>
@@ -199,10 +207,9 @@ export default async function RootLayout({
               <AdSenseScript />
               <Header allTools={allTools} />
               <main id="main-content" className="flex-1">{children}</main>
-              <AdBanner slot="4654925834" />
+              <AdBanner slot={adSlots.footer} />
               <Footer />
               <CookieConsent />
-            </NonceProvider>
           </FileCleanupProvider>
         </ThemeProvider>
       </body>

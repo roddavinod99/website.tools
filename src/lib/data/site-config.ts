@@ -18,6 +18,7 @@ export const siteConfig: SiteConfig = {
       terms: "2026-06-15",
       cookie: "2026-06-15",
       disclaimer: "2026-06-15",
+      security: "2026-07-20",
     },
   },
 };

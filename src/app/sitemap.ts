@@ -24,6 +24,7 @@ const legalPrivacy = dateFrom(LEGAL.privacy);
 const legalTerms = dateFrom(LEGAL.terms);
 const legalCookie = dateFrom(LEGAL.cookie);
 const legalDisclaimer = dateFrom(LEGAL.disclaimer);
+const legalSecurity = dateFrom(LEGAL.security);
 
 const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/`, latestBlogDate),
@@ -36,15 +37,19 @@ const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/new`),
   entry(`${BASE}/changelog`),
   entry(`${BASE}/about`),
+  entry(`${BASE}/acceptable-use`),
   entry(`${BASE}/best-practices`),
   entry(`${BASE}/contact`),
   entry(`${BASE}/cookie-policy`, legalCookie),
   entry(`${BASE}/disclaimer`, legalDisclaimer),
+  entry(`${BASE}/dmca`),
+  entry(`${BASE}/dpa`),
   entry(`${BASE}/feature-request`),
   entry(`${BASE}/feedback`),
   entry(`${BASE}/privacy`, legalPrivacy),
   entry(`${BASE}/report-bug`),
   entry(`${BASE}/roadmap`),
+  entry(`${BASE}/security`, legalSecurity),
   entry(`${BASE}/status`),
   entry(`${BASE}/suggest`),
   entry(`${BASE}/support`),

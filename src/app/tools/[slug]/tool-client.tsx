@@ -5,6 +5,7 @@ import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance-disclaimer";
 import { InContentAd, SidebarAd } from "@/components/ads";
+import { adSlots } from "@/lib/data/ads";
 import { TableOfContents, type TocItem } from "@/components/layout/table-of-contents";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Badge } from "@/components/ui/badge";
@@ -335,7 +336,7 @@ export function ToolClient({
               <QuickLinks tool={tool} specificGuide={specificGuide} categorySlug={categorySlug} mainSiteUrl={mainSiteUrl} />
             </section>
 
-            <InContentAd className="my-2" slot="3456789012" />
+            <InContentAd className="my-2" slot={adSlots.toolInContent1} />
 
             {/* Finance Disclaimer - only on financial tool pages */}
             {tool.category === "Finance" && <FinanceDisclaimer />}
@@ -514,7 +515,7 @@ export function ToolClient({
               </CollapsibleSection>
             )}
 
-            <InContentAd className="my-2" slot="5678901234" />
+            <InContentAd className="my-2" slot={adSlots.toolInContent2} />
 
             {/* Share */}
             <section className="space-y-3">
@@ -623,7 +624,7 @@ export function ToolClient({
               </div>
             </section>
 
-            <SidebarAd slot="2345678901" />
+            <SidebarAd slot={adSlots.toolSidebar} />
           </aside>
         </div>
       </div>

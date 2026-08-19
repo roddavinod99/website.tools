@@ -33,21 +33,15 @@ interface HistoryEntry {
   timestamp: number;
 }
 
-
-
-
-function simulateWhois(domain: string) {
-  const registrar = ["Namecheap", "GoDaddy", "Cloudflare", "Google Domains", "AWS Route53"][Math.abs(hash(domain)) % 5];
-  const year = new Date().getFullYear();
-  const createYear = year - (Math.abs(hash(domain + "created")) % 10 + 1);
-  const expiryYear = createYear + (Math.abs(hash(domain + "expiry")) % 5 + 1);
-  return { registrar, created: `${createYear}-${String(Math.abs(hash(domain)) % 12 + 1).padStart(2, "0")}-${String(Math.abs(hash(domain + "day")) % 28 + 1).padStart(2, "0")}`, expires: `${expiryYear}-${String(Math.abs(hash(domain + "exp")) % 12 + 1).padStart(2, "0")}-${String(Math.abs(hash(domain + "day2")) % 28 + 1).padStart(2, "0")}` };
-}
-
-function hash(str: string): number {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) { h = ((h << 5) - h) + str.charCodeAt(i); h |= 0; }
-  return Math.abs(h);
+interface WhoisResponse {
+  found: boolean;
+  registrar?: string;
+  created?: string;
+  updated?: string;
+  expires?: string;
+  status?: string[];
+  nameservers?: string[];
+  dnssec?: boolean;
 }
 
 const TYPE_NUMBERS: Record<string, number> = {
@@ -62,6 +56,32 @@ export function DNSLookup() {
   const [loading, setLoading] = useState(false);
   const [showRaw, setShowRaw] = useState(false);
   const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("dns-lookup-history") || []);
+  const [whois, setWhois] = useState<WhoisResponse | null>(null);
+  const [whoisLoading, setWhoisLoading] = useState(false);
+  const [whoisError, setWhoisError] = useState("");
+
+  const lookupWhois = useCallback(async (d: string) => {
+    setWhoisLoading(true);
+    setWhoisError("");
+    try {
+      const res = await fetch(`/api/whois?domain=${encodeURIComponent(d.trim())}`);
+      const json: WhoisResponse & { error?: string } = await res.json();
+      if (json.error) {
+        setWhoisError(json.error);
+        setWhois(null);
+      } else if (json.found === false) {
+        setWhoisError("WHOIS data is not available for this domain.");
+        setWhois(null);
+      } else {
+        setWhois(json);
+      }
+    } catch {
+      setWhoisError("Failed to load WHOIS data.");
+      setWhois(null);
+    } finally {
+      setWhoisLoading(false);
+    }
+  }, []);
 
   const lookup = useCallback(async (d: string, t: RecordType) => {
     if (!d.trim()) return;
@@ -84,13 +104,14 @@ export function DNSLookup() {
           setStorageJSON("dns-lookup-history", next);
           return next;
         });
+        void lookupWhois(d);
       }
     } catch {
       setError("Failed to lookup DNS. Check your connection.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [lookupWhois]);
 
   const typeMapReverse = Object.fromEntries(Object.entries(TYPE_NUMBERS).map(([k, v]) => [v, k]));
 
@@ -100,8 +121,6 @@ export function DNSLookup() {
     const text = data.Answer.map((r) => `${r.name} ${r.TTL} ${typeMapReverse[r.type] || r.type} ${r.data}`).join("\n");
     await navigator.clipboard.writeText(text);
   };
-
-  const whois = domain ? simulateWhois(domain.trim() || "example.com") : null;
 
   const isTypo = (d: string) => {
     const known = [".com", ".org", ".net", ".io", ".dev", ".app", ".gov", ".edu"];
@@ -175,15 +194,27 @@ export function DNSLookup() {
               {JSON.stringify(data, null, 2)}
             </pre>
           )}
-          {whois && (
+          {whoisLoading && (
+            <div className="mt-3 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+              Loading WHOIS/RDAP data…
+            </div>
+          )}
+          {!whoisLoading && whoisError && (
+            <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
+              {whoisError}
+            </div>
+          )}
+          {!whoisLoading && whois && !whoisError && (
             <div className="mt-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">WHOIS Summary (simulated)</p>
-              <div className="text-xs text-surface-700 dark:text-dark-text">
-                <span>Registrar: {whois.registrar}</span>
-                <span className="mx-2">|</span>
-                <span>Created: {whois.created}</span>
-                <span className="mx-2">|</span>
-                <span>Expires: {whois.expires}</span>
+              <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">WHOIS / RDAP Summary</p>
+              <div className="text-xs text-surface-700 dark:text-dark-text space-y-1">
+                {whois.registrar && <p>Registrar: {whois.registrar}</p>}
+                {whois.created && <p>Created: {new Date(whois.created).toLocaleDateString()}</p>}
+                {whois.updated && <p>Updated: {new Date(whois.updated).toLocaleDateString()}</p>}
+                {whois.expires && <p>Expires: {new Date(whois.expires).toLocaleDateString()}</p>}
+                {whois.status && whois.status.length > 0 && <p>Status: {whois.status.join(", ")}</p>}
+                {whois.nameservers && whois.nameservers.length > 0 && <p>Nameservers: {whois.nameservers.join(", ")}</p>}
+                <p>DNSSEC: {whois.dnssec ? "Enabled" : "Not detected"}</p>
               </div>
             </div>
           )}
