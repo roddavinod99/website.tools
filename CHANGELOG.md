@@ -231,147 +231,55 @@
 - new updates 0.3.1
 ## [0.4.0] - 2026-08-09
 
-### Fixed
-
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
 ### Added
 
-- add finance tools suite and currency converter API
-### Changed
+- Finance tools suite (loan EMI, SIP, mortgage, savings, tax, and more) with currency converter API
 
-- load
-- new category: finance tools
+### Fixed
+
+- Precise loan schedules, debt payoff, ROI, savings, and tax math
+- Allowlist example JWTs in gitleaks, bump action majors
+
 ### Documentation
 
-- instruct agents to use all available MCP servers
+- Instruct agents to use all available MCP servers
+
 ## [0.5.0] - 2026-08-14
 
 ### Added
 
-- add privacy-first public visit counter to the footer
-- redesign homepage, static pages, and shared layout
-- add finance tools suite and currency converter API
-### Changed
+- Privacy-first public visit counter to the footer
+- Redesigned homepage, static pages, and shared layout
 
-- v0.4.0
-- load
-- new category: finance tools
-### Fixed
-
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
-### Documentation
-
-- instruct agents to use all available MCP servers
 ## [0.6.0] - 2026-08-14
 
 ### Changed
 
-- vistor counter
-- v0.5.0
-- v0.4.0
-- load
-- new category: finance tools
-### Added
+- Visitor counter update
 
-- add privacy-first public visit counter to the footer
-- redesign homepage, static pages, and shared layout
-- add finance tools suite and currency converter API
-### Fixed
-
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
-### Documentation
-
-- instruct agents to use all available MCP servers
 ## [0.7.0] - 2026-08-16
 
 ### Fixed
 
 - FAQ rendering - always expanded, parser handles all formats
-- move og preview card into public/ so og:image resolves
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
-### Changed
+- Move OG preview card into public/ so og:image resolves
 
-- opengraph update
-- just testing
-- vistor counter
-- v0.5.0
-- v0.4.0
-- load
-- new category: finance tools
-### Added
-
-- add privacy-first public visit counter to the footer
-- redesign homepage, static pages, and shared layout
-- add finance tools suite and currency converter API
-### Documentation
-
-- instruct agents to use all available MCP servers
 ## [0.8.0] - 2026-08-19
 
-### Changed
-
-- are
-- v0.7.0
-- fix: FAQ rendering - always expanded, parser handles all formats
-- opengraph update
-- just testing
-- vistor counter
-- v0.5.0
-- v0.4.0
-- load
-- new category: finance tools
 ### Fixed
 
-- run security tests serially + add .env.production for standalone server
-- move og preview card into public/ so og:image resolves
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
-### Added
+- Run security tests serially and add .env.production for standalone server
 
-- add privacy-first public visit counter to the footer
-- redesign homepage, static pages, and shared layout
-- add finance tools suite and currency converter API
-### Documentation
-
-- instruct agents to use all available MCP servers
-## [0.9.0] - 2026-08-20
-
-### Changed
-
-- v0.8.0
-- are
-- v0.7.0
-- fix: FAQ rendering - always expanded, parser handles all formats
-- opengraph update
-- just testing
-- vistor counter
-- v0.5.0
-- v0.4.0
-- load
-- new category: finance tools
-### Fixed
-
-- run security tests serially + add .env.production for standalone server
-- move og preview card into public/ so og:image resolves
-- precise loan schedules, debt payoff, ROI, savings, and tax math
-- allowlist example JWTs in gitleaks, bump action majors
-### Added
-
-- add privacy-first public visit counter to the footer
-- redesign homepage, static pages, and shared layout
-- add finance tools suite and currency converter API
-### Documentation
-
-- instruct agents to use all available MCP servers
 ## [1.0.0] - 2026-08-20
+
+### Fixed
+
+- Keep action buttons visible and disabled in empty state across 34 tool components
 
 ### Changed
 
 - Mark stable 1.0.0 release
+
 ## Template
 
 For future releases:
