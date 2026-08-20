@@ -68,7 +68,7 @@ Layer 4: Client-Side
 | Header | Value | Purpose |
 |--------|-------|---------|
 | Strict-Transport-Security | max-age=63072000; includeSubDomains; preload | Enforce HTTPS |
-| Content-Security-Policy | Multi-directive | XSS prevention |
+| Content-Security-Policy | Per-route hash-based (build-time) | XSS prevention |
 | X-Content-Type-Options | nosniff | MIME sniffing prevention |
 | X-Frame-Options | DENY | Clickjacking prevention |
 | Referrer-Policy | strict-origin-when-cross-origin | Referrer leakage prevention |
@@ -90,7 +90,7 @@ Layer 4: Client-Side
 - [ ] `.env` files are NOT in git tracking
 - [ ] SSL certificates are valid and auto-renewing
 - [ ] Rate limiting is enabled (unless behind Cloudflare)
-- [ ] CSP does not use `unsafe-inline` where avoidable
+- [ ] CSP uses build-time SHA-256 hashes; zero `unsafe-inline`
 - [ ] All API inputs are validated and size-limited
 - [ ] File upload limits are enforced at all layers
 - [ ] Error messages don't leak internal details

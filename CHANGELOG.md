@@ -338,6 +338,35 @@
 ### Documentation
 
 - instruct agents to use all available MCP servers
+## [0.9.0] - 2026-08-20
+
+### Changed
+
+- v0.8.0
+- are
+- v0.7.0
+- fix: FAQ rendering - always expanded, parser handles all formats
+- opengraph update
+- just testing
+- vistor counter
+- v0.5.0
+- v0.4.0
+- load
+- new category: finance tools
+### Fixed
+
+- run security tests serially + add .env.production for standalone server
+- move og preview card into public/ so og:image resolves
+- precise loan schedules, debt payoff, ROI, savings, and tax math
+- allowlist example JWTs in gitleaks, bump action majors
+### Added
+
+- add privacy-first public visit counter to the footer
+- redesign homepage, static pages, and shared layout
+- add finance tools suite and currency converter API
+### Documentation
+
+- instruct agents to use all available MCP servers
 ## Template
 
 For future releases:

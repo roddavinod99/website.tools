@@ -206,31 +206,30 @@ export function URLEncoder() {
         </div>
       )}
 
+      <button onClick={() => copy()} disabled={!output} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600 disabled:opacity-40" aria-label={`${mode === "encode" ? "Encoded" : "Decoded"} output to clipboard`}>Copy</button>
+
       {output && (
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text">
-              {mode === "encode" ? "Encoded" : "Decoded"}
-            </label>
-            <button onClick={() => copy()} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600" aria-label={`${mode === "encode" ? "Encoded" : "Decoded"} output to clipboard`}>Copy</button>
-          </div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+            {mode === "encode" ? "Encoded" : "Decoded"}
+          </label>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 break-all select-all">{output}</pre>
         </div>
       )}
 
-      {mode === "encode" && input && (
+      {mode === "encode" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Component Encoded</p>
-              <button onClick={() => copy(outputComponentEncoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy component encoded URL">Copy</button>
+              <button onClick={() => copy(outputComponentEncoded())} disabled={!input} className="text-xs text-brand-500 hover:text-brand-600 disabled:opacity-40" aria-label="Copy component encoded URL">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputComponentEncoded() || "-"}</p>
           </div>
           <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Full URL Encoded</p>
-              <button onClick={() => copy(outputFullEncoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy full URL encoded">Copy</button>
+              <button onClick={() => copy(outputFullEncoded())} disabled={!input} className="text-xs text-brand-500 hover:text-brand-600 disabled:opacity-40" aria-label="Copy full URL encoded">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputFullEncoded() || "-"}</p>
           </div>

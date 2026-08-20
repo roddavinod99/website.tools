@@ -14,11 +14,11 @@ DevStackIO is a privacy-first developer tools platform built with Next.js 16. Th
 │  - SSL termination (TLS 1.2/1.3)                            │
 │  - Rate limiting (3 zones)                                  │
 │  - Static asset caching                                     │
-│  - Security headers                                         │
+│  - Security headers (including per-route hash-based CSP)    │
 │  - Attack path blocking                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                  Next.js (PM2 Cluster x2)                    │
-│  ├── Static Pages (SSG) ── 123 tool pages, categories       │
+│  ├── Static Pages (SSG) ── 260+ tool pages, categories      │
 │  ├── ISR ── sitemap.xml (24h revalidation)                  │
 │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
 │  └── Middleware ── Rate limiter (proxy.ts)                  │
@@ -58,10 +58,10 @@ The API is minimal and focused on functionality that cannot run client-side:
 
 ### 5. Security Layers
 Security is implemented at multiple layers:
-1. **Nginx** — SSL, rate limiting, attack blocking, security headers
+1. **Nginx** — SSL, rate limiting, attack blocking, **per-route hash-based CSP**
 2. **Next.js Middleware** (proxy.ts) — Application-level rate limiting
 3. **API Routes** — Input validation, sanitization, origin checking
-4. **Client-side** — DOMPurify sanitization, CSP enforcement
+4. **Client-side** — DOMPurify sanitization
 
 ### 6. Monetization (AdSense)
 The platform uses **Google AdSense** for sustainable free access:

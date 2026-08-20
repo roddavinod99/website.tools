@@ -150,16 +150,15 @@ export function Base64Decoder() {
         </div>
       )}
 
+      <div className="flex flex-wrap gap-1">
+        <button onClick={copy} disabled={!output} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600 disabled:opacity-40">Copy</button>
+        <button onClick={downloadText} disabled={!output} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">.txt</button>
+        {isBin && <button onClick={downloadBinary} disabled={!output} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Save Binary</button>}
+      </div>
+
       {output && (
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Decoded Output</label>
-            <div className="flex gap-1">
-              <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
-              <button onClick={downloadText} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">.txt</button>
-              {isBin && <button onClick={downloadBinary} className="rounded border border-surface-200 px-2 py-0.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Save Binary</button>}
-            </div>
-          </div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Decoded Output</label>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}

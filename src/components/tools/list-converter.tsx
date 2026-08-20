@@ -117,12 +117,11 @@ export function ListConverter() {
         />
       </div>
 
+      <button onClick={copy} disabled={!output} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40">Copy</button>
+
       {output && (
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Output</label>
-            <button onClick={copy} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600">Copy</button>
-          </div>
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1 block">Output</label>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 select-all whitespace-pre-wrap">{output}</pre>
         </div>
       )}

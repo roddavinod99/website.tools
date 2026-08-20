@@ -210,15 +210,14 @@ export function PromptImprover() {
         </div>
       )}
 
+      <div className="flex flex-wrap gap-1">
+        <button onClick={() => setShowDiff(v => !v)} disabled={!output} className={`rounded border px-2 py-0.5 text-xs transition-colors disabled:opacity-40 ${showDiff ? "bg-brand-500 border-brand-500 text-white" : "border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Diff</button>
+        <button onClick={copy} disabled={!output} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600 disabled:opacity-40">Copy</button>
+      </div>
+
       {output && (
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Improved Prompt</label>
-            <div className="flex gap-1">
-              <button onClick={() => setShowDiff(v => !v)} className={`rounded border px-2 py-0.5 text-xs transition-colors ${showDiff ? "bg-brand-500 border-brand-500 text-white" : "border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Diff</button>
-              <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
-            </div>
-          </div>
+          <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1 block">Improved Prompt</label>
           <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
           {showDiff && diff.length > 0 && (
             <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">

@@ -409,14 +409,10 @@ export function AsciiArt() {
 
       <div className="flex flex-wrap gap-2">
         <span className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white opacity-80">Live</span>
-        {output && (
-          <>
-            <button onClick={copy} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
-              {copied ? "Copied!" : "Copy"}
-            </button>
-            <button onClick={download} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
-          </>
-        )}
+        <button onClick={copy} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+          {copied ? "Copied!" : "Copy"}
+        </button>
+        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
       </div>
 
       {output && (

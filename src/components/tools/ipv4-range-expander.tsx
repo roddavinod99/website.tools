@@ -111,51 +111,50 @@ export function Ipv4RangeExpander() {
         <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>
       )}
 
-      {result && (
-        <>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
-              <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Network</span>
-              <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.network}/{result.cidr}</span>
-            </div>
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
-              <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Total IPs</span>
-              <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.total.toLocaleString()}</span>
-            </div>
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
-              <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Usable Hosts</span>
-              <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.cidr >= 31 ? result.total : Math.max(0, result.total - 2)}</span>
-            </div>
-          </div>
-
-          {result.total > 1024 && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
-              Warning: This range contains {result.total.toLocaleString()} addresses. Only the first 64 are shown by default.
-            </div>
-          )}
-
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">IP Addresses ({visibleIps.length} of {result.total.toLocaleString()})</span>
-              <button onClick={copyAll} className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+      <button onClick={copyAll} disabled={!result} className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
                 Copy All
               </button>
-            </div>
-            <div className="max-h-80 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-surface-200 dark:bg-dark-border">
-                {visibleIps.map((ip, i) => (
-                  <button
-                    key={i}
-                    onClick={() => copyOne(ip)}
-                    className="bg-white px-3 py-1.5 text-xs font-mono text-surface-700 hover:bg-brand-50 dark:bg-dark-bg dark:text-dark-text dark:hover:bg-dark-surface text-left transition-colors"
-                  >
-                    <span className="text-surface-400 dark:text-dark-muted mr-1">{i + 1}.</span>
-                    {ip}
-                  </button>
-                ))}
+
+          {result && (
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                  <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Network</span>
+                  <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.network}/{result.cidr}</span>
+                </div>
+                <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                  <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Total IPs</span>
+                  <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.total.toLocaleString()}</span>
+                </div>
+                <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                  <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Usable Hosts</span>
+                  <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.cidr >= 31 ? result.total : Math.max(0, result.total - 2)}</span>
+                </div>
               </div>
-            </div>
-          </div>
+
+              {result.total > 1024 && (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                  Warning: This range contains {result.total.toLocaleString()} addresses. Only the first 64 are shown by default.
+                </div>
+              )}
+
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">IP Addresses ({visibleIps.length} of {result.total.toLocaleString()})</span>
+              </div>
+              <div className="max-h-80 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-surface-200 dark:bg-dark-border">
+                  {visibleIps.map((ip, i) => (
+                    <button
+                      key={i}
+                      onClick={() => copyOne(ip)}
+                      className="bg-white px-3 py-1.5 text-xs font-mono text-surface-700 hover:bg-brand-50 dark:bg-dark-bg dark:text-dark-text dark:hover:bg-dark-surface text-left transition-colors"
+                    >
+                      <span className="text-surface-400 dark:text-dark-muted mr-1">{i + 1}.</span>
+                      {ip}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
           {result.total > 64 && !showAll && (
             <button onClick={() => setShowAll(true)} className="w-full rounded-lg border border-surface-200 px-3 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">

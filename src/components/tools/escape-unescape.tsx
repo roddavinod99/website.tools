@@ -292,14 +292,13 @@ export function EscapeUnescape() {
         </div>
       )}
 
+      <button onClick={copy} disabled={!output} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600 disabled:opacity-40">Copy</button>
+
       {output && (
         <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text">
-              {mode === "escape" ? "Escaped Output" : "Unescaped Output"}
-            </label>
-            <button onClick={copy} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600">Copy</button>
-          </div>
+          <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+            {mode === "escape" ? "Escaped Output" : "Unescaped Output"}
+          </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
               <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">Original</p>

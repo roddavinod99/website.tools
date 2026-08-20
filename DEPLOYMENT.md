@@ -16,7 +16,7 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
               ↓                       ↓
          SSL/TLS 1.2/1.3        Next.js Standalone
               ↓                       ↓
-         Rate Limiting          123 SSG Pages
+         Rate Limiting          260+ SSG Pages
               ↓                       ↓
          Attack Blocking        API Routes
 ```
@@ -191,6 +191,8 @@ sudo ln -s /etc/nginx/sites-available/tools /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
+
+> **Note**: The CI/CD workflow automatically copies the generated `nginx/csp.generated.conf` to `/etc/nginx/csp.generated.conf` on each deploy. Your production nginx config must `include /etc/nginx/csp.generated.conf;` and use `add_header Content-Security-Policy $csp always;` (see `nginx/nginx.prod.conf.example` for the expected pattern).
 
 ## SSL Certificate
 

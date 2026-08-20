@@ -322,12 +322,13 @@ export function UnitConverter() {
         {favorites.length > 0 && <div className="text-xs text-surface-400 dark:text-dark-muted">{favorites.length} favorite{favorites.length !== 1 ? "s" : ""}</div>}
       </div>
 
+      <button onClick={() => copy(result + " " + toUnit)} disabled={!result} className="text-xs text-brand-500 hover:text-brand-600 transition-colors disabled:opacity-40" aria-label="Copy result">Copy</button>
+
       {result && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Result</label>
           <div className="flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 p-3 dark:border-brand-700 dark:bg-brand-900/20">
             <code className="flex-1 text-lg font-bold font-mono text-surface-900 dark:text-dark-text select-all">{result} {toUnit}</code>
-            <button onClick={() => copy(result + " " + toUnit)} className="text-xs text-brand-500 hover:text-brand-600 transition-colors" aria-label="Copy result">Copy</button>
           </div>
           <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">{value} {fromUnit} = {resultNum.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "")} {toUnit}</p>
           <p className="mt-0.5 text-xs text-surface-400 dark:text-dark-muted italic">{formulaText}</p>

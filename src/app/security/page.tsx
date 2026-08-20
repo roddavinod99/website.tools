@@ -195,7 +195,7 @@ export default function SecurityPage() {
                 ".env files are NOT in git tracking",
                 "SSL certificates are valid and auto-renewing",
                 "Rate limiting is enabled (unless behind Cloudflare)",
-                "CSP does not use unsafe-inline where avoidable",
+                "CSP uses build-time SHA-256 hashes; zero unsafe-inline",
                 "All API inputs are validated and size-limited",
                 "File upload limits are enforced at all layers",
                 "Error messages don't leak internal details",

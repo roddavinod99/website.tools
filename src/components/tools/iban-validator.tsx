@@ -122,6 +122,14 @@ export function IBANValidator() {
         />
       </div>
 
+      <button
+        onClick={() => copy(input.replace(/\s/g, "").toUpperCase())}
+        disabled={!result || !result.valid}
+        className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+      >
+        {copied ? "Copied!" : "Copy IBAN"}
+      </button>
+
       {result && (
         <div className="space-y-3">
           <div className={`rounded-lg border p-3 ${result.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
@@ -129,14 +137,6 @@ export function IBANValidator() {
               <p className={`text-sm font-medium ${result.valid ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}`}>
                 {result.valid ? "Valid IBAN" : "Invalid IBAN"}
               </p>
-              {result.valid && (
-                <button
-                  onClick={() => copy(input.replace(/\s/g, "").toUpperCase())}
-                  className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
-                >
-                  {copied ? "Copied!" : "Copy IBAN"}
-                </button>
-              )}
             </div>
             {!result.valid && result.length > 0 && result.expectedLength > 0 && (
               <p className="text-xs text-red-500 dark:text-red-400 mt-1">

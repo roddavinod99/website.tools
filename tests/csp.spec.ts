@@ -1,6 +1,11 @@
 import { test, expect, type Page, type Route } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
+interface ExtendedWindow extends Window {
+  __next_f?: unknown;
+  gtag?: (...args: unknown[]) => void;
+}
+
 const cspData = JSON.parse(readFileSync("data/csp-hashes.json", "utf-8"));
 const cspHome = cspData.perRoute["/"].csp;
 const cspTools = cspData.perRoute["/tools/json-formatter"].csp;
@@ -51,12 +56,15 @@ test("homepage hydrates with hash-based CSP and no violations", async ({ page })
   await applyCsp(page, cspHome);
   await page.goto("/", { waitUntil: "networkidle" });
   await page.waitForTimeout(1000);
-  const state = await page.evaluate(() => ({
-    hasFlightData: typeof (window as any).__next_f !== "undefined",
-    bodyText: document.body.innerText.slice(0, 120),
-    headerVisible: document.querySelector("header") !== null,
-    gtagAvailable: typeof (window as any).gtag === "function",
-  }));
+  const state = await page.evaluate(() => {
+    const w = window as ExtendedWindow;
+    return {
+      hasFlightData: typeof w.__next_f !== "undefined",
+      bodyText: document.body.innerText.slice(0, 120),
+      headerVisible: document.querySelector("header") !== null,
+      gtagAvailable: typeof w.gtag === "function",
+    };
+  });
   expect(ourViolations(violations)).toEqual([]);
   expect(state.hasFlightData).toBe(true);
   expect(state.headerVisible).toBe(true);
@@ -105,7 +113,10 @@ test("malicious inline script is blocked by the hash-based CSP", async ({ page }
     document.head.appendChild(s);
   });
   await page.waitForTimeout(500);
-  const pwned = await page.evaluate(() => (window as any).__pwned === true);
+  const pwned = await page.evaluate(() => {
+    const w = window as { __pwned?: boolean };
+    return w.__pwned === true;
+  });
   expect(refused).toBeGreaterThan(0);
   expect(pwned).toBe(false);
 });

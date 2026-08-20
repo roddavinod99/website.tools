@@ -108,7 +108,7 @@ Security is a core design principle. See [SECURITY.md](SECURITY.md) for the full
 
 ### Key Security Features
 
-- **Content Security Policy** — 10-directive CSP configured at both Next.js and Nginx levels
+- **Content Security Policy** — Build-time per-route SHA-256 hash CSP served by Nginx (no middleware CSP; no nonces; no `unsafe-inline`)
 - **HTTP Security Headers** — HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP, CORP
 - **Rate Limiting** — Three-tier in-memory rate limiter + Nginx rate limiting zones
 - **Input Validation** — All API inputs validated, sanitized, and size-limited

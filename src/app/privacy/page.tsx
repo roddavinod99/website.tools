@@ -454,7 +454,7 @@ export default function PrivacyPage() {
               <div className="p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Application Security</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
-                  <li>Strict CSP with nonce-based script execution</li>
+                  <li>Strict per-route hash-based CSP served at edge; no nonces</li>
                   <li>Subresource Integrity (SRI) for all third-party resources</li>
                   <li>Permissions-Policy restricting browser features</li>
                   <li>Referrer-Policy: strict-origin-when-cross-origin</li>

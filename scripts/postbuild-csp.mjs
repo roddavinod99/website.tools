@@ -95,9 +95,10 @@ for (const match of html.matchAll(INLINE_SCRIPT_RE)) {
   return { scripts: [...scripts].sort(), styles: [...styles].sort() };
 }
 
-function buildCsp(scriptHashes, styleHashes, includeWasm) {
+function buildCsp(scriptHashes, styleHashes, includeWasm, isToolsRoute) {
   const scriptSources = ["'self'", ...scriptHashes];
   if (includeWasm) scriptSources.push("'wasm-unsafe-eval'");
+  if (isToolsRoute) scriptSources.push("'unsafe-eval'");
   scriptSources.push(...EXTERNAL_SCRIPT_SOURCES);
 
   const styleSources = ["'self'", ...styleHashes, "https://fonts.googleapis.com"];
@@ -143,7 +144,7 @@ for (const file of htmlFiles) {
   const html = readFileSync(file, "utf-8");
   const { scripts, styles } = extractHashes(html);
   const key = toRouteKey(file);
-  const csp = buildCsp(scripts, styles, key.startsWith("/tools/"));
+  const csp = buildCsp(scripts, styles, key.startsWith("/tools/"), key.startsWith("/tools/"));
   perRoute[key] = { scripts, styles, csp };
   for (const s of scripts) allScripts.add(s);
   for (const s of styles) allStyles.add(s);
@@ -160,7 +161,7 @@ for (const k of errorKeys) {
   for (const s of perRoute[k].scripts) errorScripts.add(s);
   for (const s of perRoute[k].styles) errorStyles.add(s);
 }
-const defaultCsp = buildCsp([...errorScripts].sort(), [...errorStyles].sort(), false);
+const defaultCsp = buildCsp([...errorScripts].sort(), [...errorStyles].sort(), false, false);
 
 const sortedScripts = [...allScripts].sort();
 const sortedStyles = [...allStyles].sort();

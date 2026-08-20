@@ -531,6 +531,48 @@ export function SvgOptimizer() {
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
+      <div className="flex items-center gap-2">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={handleCopyOutput}
+                disabled={!result}
+                className="rounded-lg bg-brand-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
+              >
+                Copy Optimized
+              </button>
+              <button
+                onClick={handleCopyJSX}
+                disabled={!result}
+                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              >
+                Copy as React Component
+              </button>
+              <button
+                onClick={handleCopyDataURI}
+                disabled={!result}
+                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              >
+                Copy as Data URI
+              </button>
+              <button
+                onClick={handleDownload}
+                disabled={!result}
+                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              >
+                Download SVG
+              </button>
+            </div>
+            <label className="ml-auto flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
+              <input
+                type="checkbox"
+                checked={showReadable}
+                onChange={(e) => setShowReadable(e.target.checked)}
+                className="accent-brand-500"
+              />
+              Readable Output
+            </label>
+          </div>
+
       {result && (
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
@@ -556,32 +598,6 @@ export function SvgOptimizer() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={handleCopyOutput}
-                className="rounded-lg bg-brand-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-600 transition-colors"
-              >
-                Copy Optimized
-              </button>
-              <button
-                onClick={handleCopyJSX}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
-              >
-                Copy as React Component
-              </button>
-              <button
-                onClick={handleCopyDataURI}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
-              >
-                Copy as Data URI
-              </button>
-              <button
-                onClick={handleDownload}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
-              >
-                Download SVG
-              </button>
-            </div>
             <label className="ml-auto flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
               <input
                 type="checkbox"

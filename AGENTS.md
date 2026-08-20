@@ -1227,7 +1227,7 @@ This project uses Google AdSense for sustainable free access. All AI agents must
 ## Ad Architecture
 
 ### Components (src/components/ads/)
-- **AdSenseScript** (`adsense-script.tsx`) — lazy-loads the AdSense client script (`strategy="lazyOnload"`, uses the CSP nonce). Does not push auto-ads.
+- **AdSenseScript** (`adsense-script.tsx`) — lazy-loads the AdSense client script (`strategy="lazyOnload"`). Does not push auto-ads.
 - **AdContainer** — base responsive container used by the wrappers below (renders labeled placeholders in dev; returns `null` in production when no real slot ID is configured for the placement)
 - **AdBanner** — Horizontal responsive banner (format: "horizontal")
 - **InContentAd** — Rectangle in-content ad (format: "rectangle")
@@ -1244,7 +1244,7 @@ request) until a real slot ID from the AdSense account is set in
 
 ### Implementation Rules
 
-1. **AdSense Script** — `AdSenseScript` lazy-loads the AdSense client JS (`strategy="lazyOnload"`) with the CSP nonce. Auto ads are controlled by the AdSense account; the client script config is `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` (empty in dev disables ads) — do not remove.
+1. **AdSense Script** — `AdSenseScript` lazy-loads the AdSense client JS (`strategy="lazyOnload"`). Auto ads are controlled by the AdSense account; the client script config is `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` (empty in dev disables ads) — do not remove.
 
 2. **Development Mode** — Ads are disabled in development (`NODE_ENV === "development"`). Components render labeled placeholders for layout testing.
 

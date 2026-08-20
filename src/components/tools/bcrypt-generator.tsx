@@ -88,19 +88,19 @@ export function BcryptGenerator() {
               </div>
             </div>
 
-            <button onClick={handleGenerate} disabled={!password}
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
-              Generate Hash
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button onClick={handleGenerate} disabled={!password}
+                className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
+                Generate Hash
+              </button>
+              <button onClick={copyResult} disabled={!result} className="rounded-lg border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+                <Copy size={14} className="inline mr-1" /> {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
 
             {result && (
               <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Bcrypt Hash</span>
-                  <button onClick={copyResult} className="text-xs text-brand-500 hover:text-brand-600 flex items-center gap-0.5">
-                    <Copy size={12} /> {copied ? "Copied!" : "Copy"}
-                  </button>
-                </div>
+                <span className="text-xs font-medium text-surface-500 dark:text-dark-muted block mb-1">Bcrypt Hash</span>
                 <code className="block text-sm font-mono text-surface-900 dark:text-dark-text break-all select-all">{result}</code>
               </div>
             )}

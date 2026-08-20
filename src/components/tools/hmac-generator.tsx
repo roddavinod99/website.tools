@@ -126,16 +126,17 @@ export function HmacGenerator() {
         </div>
       </div>
 
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">
+          {output ? `HMAC-${algoInfo.label} (${algoInfo.bits} bits, ${encoding})` : "HMAC output"}
+        </span>
+        <button onClick={copyResult} disabled={!output} className="text-xs text-brand-500 hover:text-brand-600 flex items-center gap-0.5 disabled:opacity-40">
+          <Copy size={12} /> {copied ? "Copied!" : "Copy"}
+        </button>
+      </div>
+
       {output && (
         <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">
-              HMAC-{algoInfo.label} ({algoInfo.bits} bits, {encoding})
-            </span>
-            <button onClick={copyResult} className="text-xs text-brand-500 hover:text-brand-600 flex items-center gap-0.5">
-              <Copy size={12} /> {copied ? "Copied!" : "Copy"}
-            </button>
-          </div>
           <pre className="text-sm font-mono text-surface-900 dark:text-dark-text break-all select-all whitespace-pre-wrap">{output}</pre>
         </div>
       )}

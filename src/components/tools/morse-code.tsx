@@ -179,21 +179,20 @@ export function MorseCode() {
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
+      <div className="flex flex-wrap gap-1">
+        <button onClick={handleCopy} disabled={!output} className="rounded bg-brand-500 px-2 py-1 text-xs text-white hover:bg-brand-600 disabled:opacity-40" aria-label="Copy output">{copied ? "Copied!" : "Copy"}</button>
+        <button onClick={download} disabled={!output} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Download output">Download</button>
+        {mode === "encode" && (
+          <button onClick={playMorse} disabled={isPlaying} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Play morse code">{isPlaying ? "Playing..." : "Play"}</button>
+        )}
+      </div>
+
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
             {mode === "encode" ? "Morse Code" : "Decoded Text"}
           </label>
-          <div className="relative">
-            <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text whitespace-pre-wrap break-all">{output}</pre>
-            <div className="absolute top-2 right-2 flex gap-1">
-              <button onClick={handleCopy} className="rounded bg-brand-500 px-2 py-1 text-xs text-white hover:bg-brand-600" aria-label="Copy output">{copied ? "Copied!" : "Copy"}</button>
-              <button onClick={download} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Download output">Download</button>
-              {mode === "encode" && (
-                <button onClick={playMorse} disabled={isPlaying} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Play morse code">{isPlaying ? "Playing..." : "Play"}</button>
-              )}
-            </div>
-          </div>
+          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text whitespace-pre-wrap break-all">{output}</pre>
 
           {stats && (
             <div className="mt-2 flex flex-wrap gap-3 text-xs text-surface-500 dark:text-dark-muted">

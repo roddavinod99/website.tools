@@ -177,7 +177,15 @@ The `prebuild` script (`scripts/prebuild.mjs`) runs automatically before `next b
 2. Reads build number from `data/build-number.json`
 3. Reads git info (commit hash, branch, dirty state)
 4. Generates `src/lib/version/__generated__/release-data.ts` with all metadata
-5. This file is compiled into the JS bundle and available to all components
+5. Generates `public/analytics-init.js` from `NEXT_PUBLIC_GA_ID` (baking GA ID at build time)
+6. This file is compiled into the JS bundle and available to all components
+
+The `postbuild-csp` script (`scripts/postbuild-csp.mjs`) runs automatically after `next build` (see package.json build script). It:
+
+- Computes SHA-256 hashes of every inline `<script>` and `<style>` in statically rendered HTML
+- Emits per-route CSP map to `data/csp-hashes.json` and Nginx map to `nginx/csp.generated.conf`
+- Each route gets only its needed hashes, keeping headers under browser/Nginx limits
+- `/tools/*` routes additionally allow `'wasm-unsafe-eval'` and `'unsafe-eval'` (for BenchmarkBuilder)
 
 ## UI Components
 

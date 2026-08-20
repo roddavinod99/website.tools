@@ -109,6 +109,8 @@ export function IPLookup() {
         </div>
       )}
 
+      <button onClick={copyResult} disabled={!data} className="text-xs text-brand-500 hover:text-brand-600 disabled:opacity-40">Copy results as JSON</button>
+
       {data && (
         <div className="space-y-2">
           {data.lat !== undefined && data.lon !== undefined && (
@@ -129,7 +131,6 @@ export function IPLookup() {
               </div>
             ))}
           </div>
-          <button onClick={copyResult} className="text-xs text-brand-500 hover:text-brand-600">Copy results as JSON</button>
         </div>
       )}
 
