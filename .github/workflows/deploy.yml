@@ -183,8 +183,8 @@ jobs:
             echo "Verified $CSS_COUNT CSS chunk(s) in standalone output"
 
             # Deploy generated CSP hash map to Nginx (produced by postbuild-csp)
-            cp nginx/csp.generated.conf /etc/nginx/csp.generated.conf
-            nginx -t && systemctl reload nginx || { echo "ERROR: nginx config test failed" >&2; nginx -t; exit 1; }
+            sudo cp nginx/csp.generated.conf /etc/nginx/csp.generated.conf
+            sudo nginx -t && sudo systemctl reload nginx || { echo "ERROR: nginx config test failed" >&2; sudo nginx -t; exit 1; }
 
             # Restart application (ecosystem app is named "devstackio"; "tools" is stale)
             pm2 delete tools 2>/dev/null || true
