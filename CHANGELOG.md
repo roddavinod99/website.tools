@@ -367,6 +367,11 @@
 ### Documentation
 
 - instruct agents to use all available MCP servers
+## [1.0.0] - 2026-08-20
+
+### Changed
+
+- Mark stable 1.0.0 release
 ## Template
 
 For future releases:
