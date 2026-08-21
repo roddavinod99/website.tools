@@ -291,6 +291,11 @@
 ### Documentation
 
 - clean polluted CHANGELOG and drop erroneous 0.9.0 release
+## [1.1.1] - 2026-08-21
+
+### Fixed
+
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
 ## Template
 
 For future releases:

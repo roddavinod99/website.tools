@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 
 const numberFormatter = new Intl.NumberFormat("en-US");
 
+// The counter is only displayed once it is a meaningful trust signal.
+// Visit tracking itself continues regardless of this threshold.
+const VISIBILITY_THRESHOLD = 10_000;
+
 export function VisitCounter() {
   const [count, setCount] = useState<number | null>(null);
 
@@ -45,7 +49,7 @@ export function VisitCounter() {
     };
   }, []);
 
-  if (count === null) return null;
+  if (count === null || count < VISIBILITY_THRESHOLD) return null;
 
   return (
     <p

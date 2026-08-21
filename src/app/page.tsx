@@ -65,10 +65,10 @@ const homepageJsonLd = {
         "query-input": "required name=search_term_string",
       },
       publisher: {
-        "@type": "Organization",
+        // Reference to the canonical Organization node emitted in layout.tsx
+        // (avoids a duplicate Organization entity on the page).
         "@id": `${siteConfig.url}/#organization`,
         name: "DevStackIO",
-        url: siteConfig.mainSiteUrl,
       },
       isPartOf: {
         "@type": "WebSite",
@@ -98,6 +98,17 @@ const homepageJsonLd = {
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
           },
+        },
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
         },
       })),
     },

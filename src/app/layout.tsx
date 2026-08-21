@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Suspense } from "react";
 import { Noto_Sans_Arabic } from "next/font/google";
@@ -115,6 +115,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      "max-image-preview": "large",
+    },
   },
   metadataBase: new URL(siteConfig.url),
   alternates: {
@@ -123,6 +126,12 @@ export const metadata: Metadata = {
       "application/rss+xml": `${siteConfig.url}/feed.xml`,
     },
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0070f3",
 };
 
 export default function RootLayout({
@@ -159,9 +168,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#0070f3" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="max-image-preview:large" />
         {VERIFICATION_GOOGLE && (
           <meta name="google-site-verification" content={VERIFICATION_GOOGLE} />
         )}

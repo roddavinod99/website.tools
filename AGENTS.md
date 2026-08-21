@@ -183,6 +183,18 @@ Do not depend on:
 
 ------------------------------------------------------------------------
 
+## Layout & Metadata Conventions
+
+- **Viewport, theme-color, robots** belong in Next metadata exports (`export const viewport`, `metadata.robots`), never as hand-written `<meta>` tags in `<head>`. Duplicate meta tags cause hydration mismatches (React error #418).
+- The global `layout.tsx` emits the canonical **Organization JSON-LD** with `@id: ".../#organization"`. Page-level JSON-LD must **reference** it (`{ "@id": ".../#organization", "name": "..." }`), never re-declare a second Organization node.
+
+## Accessibility Conventions
+
+- **Accessible name must contain visible text** (WCAG 2.5.3). `aria-label` on links/buttons should include the exact visible label as a substring.
+- Decorative visual hints (e.g., `<kbd>` shortcut indicators) must have `aria-hidden="true"` so they don't pollute the accessible name.
+
+------------------------------------------------------------------------
+
 # File Upload Rules
 
 Maximum upload size:
@@ -233,6 +245,11 @@ Prefer:
 
 Files should be deleted immediately after processing or when the user
 leaves the page.
+
+## Trust Badge & Counter Conventions
+
+- **Tracking claim**: Footer badges must reflect actual behavior. Use "Your Data Stays Local" (tools process data client-side) rather than absolute "No Tracking" when consent-gated analytics/ads exist.
+- **Visitor counter**: Hide public display until a meaningful threshold (e.g., 10,000 visits) to avoid credibility backfire from low numbers. The counter API continues running for internal analytics.
 
 ------------------------------------------------------------------------
 
@@ -459,11 +476,11 @@ Every page must include:
 
 Structured data requirements by page type:
 
--   Homepage: WebSite + Organization + SearchAction
+-   Homepage: WebSite + Organization + SearchAction + FAQPage (if FAQ exists)
 -   Tool pages: SoftwareApplication + BreadcrumbList + FAQPage (if FAQ exists) + HowTo (if guide exists)
 -   Category/Listing pages: CollectionPage + BreadcrumbList + ItemList
 -   Learning/Article pages: TechArticle/BlogPosting + BreadcrumbList + Organization
--   All pages: Organization (in footer or global)
+-   All pages: Organization (in footer or global) — **emit once globally in `layout.tsx` with `@id: ".../#organization"`; pages must reference it by `@id`, never re-declare**
 
 Sitemap requirements:
 
@@ -1288,6 +1305,14 @@ request) until a real slot ID from the AdSense account is set in
 - ❌ Reusing slot IDs
 - ❌ Removing the AdSense script configuration (AdSenseScript or `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID`)
 - ❌ Adding ads to API routes or non-content pages
+
+### CLS Prevention (Critical)
+
+**Ad containers must reserve stable height from server render.** The `AdContainer` component applies a fixed `min-height` per format (horizontal: 90px, rectangle: 280px, vertical: 600px, auto/fluid: 250px) on **every render**, including the initial server HTML. It never toggles container height based on load state (`adLoaded` / `isLoading` / collapse). Unfilled slots simply stay empty inside the reserved box — this eliminates all ad-driven Cumulative Layout Shift.
+
+### AdSense Loader Convention
+
+Use **manual DOM injection** (`useEffect` + `document.createElement('script')`) in `AdSenseScript` instead of `next/script`. The `next/script` `data-nscript` attribute triggers an AdSense console warning ("head tag doesn't support data-nscript attribute"). Manual injection avoids this while preserving lazy-load behavior.
 
 ------------------------------------------------------------------------
 

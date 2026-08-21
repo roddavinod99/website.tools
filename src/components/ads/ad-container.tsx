@@ -18,8 +18,8 @@ const formatDefaults: Record<AdFormat, { width?: number; height?: number; label:
   horizontal: { width: 728, height: 90, label: "Ad Banner" },
   vertical: { width: 300, height: 600, label: "Sidebar Ad" },
   rectangle: { width: 336, height: 280, label: "In-Content Ad" },
-  auto: { label: "Responsive Ad" },
-  fluid: { label: "Fluid Ad" },
+  auto: { height: 250, label: "Responsive Ad" },
+  fluid: { height: 250, label: "Fluid Ad" },
 };
 
 // Static classes (CSP-safe, no inline style attributes).
@@ -28,6 +28,7 @@ const SIZE_CLASS_LOOKUP: Record<string, string> = {
   "300x600": "w-[300px] h-[600px]",
   "336x280": "w-[336px] h-[280px]",
   "0x90": "min-h-[90px]",
+  "0x250": "min-h-[250px]",
   "0x280": "min-h-[280px]",
   "0x600": "min-h-[600px]",
 };
@@ -39,7 +40,9 @@ function getSizingClasses(width?: number, height?: number): string {
   return "block";
 }
 
-function getMinHeightClass(height?: number): string {
+// Stable reserved space for the slot. Applied on every render regardless of
+// load state so late-loading or unfilled ads never cause layout shift (CLS).
+function getReservedClass(height?: number): string {
   return SIZE_CLASS_LOOKUP[`0x${height}`] ?? "min-h-[90px]";
 }
 
@@ -196,7 +199,7 @@ export function AdContainer({
   if (IS_DEV) {
     const devSizing = finalWidth && finalHeight
       ? getSizingClasses(finalWidth, finalHeight)
-      : getMinHeightClass(finalHeight);
+      : getReservedClass(finalHeight);
     return (
       <div
         ref={adRef}
@@ -222,17 +225,10 @@ export function AdContainer({
     return null;
   }
 
-  // CSS classes based on ad state (no inline styles, CSP-safe)
-  let containerClass: string;
-  if (adLoaded) {
-    containerClass = "overflow-hidden transition-[height] duration-300 ease-out";
-  } else if (isLoading) {
-    // Loading state - show skeleton
-    containerClass = `overflow-hidden transition-[height] duration-300 ease-out ${getMinHeightClass(finalHeight)}`;
-  } else {
-    // Ad failed to load - fully collapse
-    containerClass = "m-0 h-0 min-h-0 overflow-hidden p-0 transition-[height] duration-300 ease-out";
-  }
+  // Reserved space is constant across all load states (server render included)
+  // so late-loading or unfilled ads never shift layout. Unfilled slots simply
+  // stay empty inside the reserved box.
+  const containerClass = `overflow-hidden ${getReservedClass(finalHeight)}`;
 
   return (
     <div 

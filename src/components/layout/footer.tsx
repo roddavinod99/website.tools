@@ -136,7 +136,7 @@ export function Footer() {
           <div className="mb-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             {[
               { icon: ShieldCheck, label: "100% Client-Side", href: "/security" },
-              { icon: EyeOff, label: "No Tracking", href: "/privacy" },
+              { icon: EyeOff, label: "Your Data Stays Local", href: "/privacy" },
               { icon: Lock, label: "No Account Required", href: "/" },
             ].map(({ icon: Icon, label, href }) => (
               <Link

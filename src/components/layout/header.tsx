@@ -189,7 +189,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
           <Link
             href="/"
             className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text shrink-0"
-            aria-label="DevStackIO Tools - Home"
+            aria-label="DevStack IO Tools — Home"
           >
             <Logo size="md" />
           </Link>
@@ -219,12 +219,12 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleSearchClick}
-            aria-label="Search tools (⌘K)"
+            aria-label="Search tools..."
             className="hidden sm:flex items-center gap-2 h-10 flex-1 max-w-md sm:max-w-lg rounded-lg border border-surface-200 bg-surface-50 px-3 text-sm text-surface-400 transition-colors hover:border-surface-300 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
           >
             <Search className="h-4 w-4" aria-hidden="true" />
             <span>Search tools...</span>
-            <kbd className="ml-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg">
+            <kbd className="ml-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border border-surface-200 bg-white px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg" aria-hidden="true">
               <Command className="h-3 w-3" aria-hidden="true" />
               K
             </kbd>
