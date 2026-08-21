@@ -12,7 +12,8 @@
     "Enter a MAC address in any common format (colon-separated, dash-separated, or dot-separated)",
     "Press Lookup to search the built-in OUI database",
     "View the vendor/manufacturer associated with the MAC prefix",
-    "Click the result to copy the vendor name to your clipboard"
+    "Click the result to copy the vendor name to your clipboard",
+    "For a partial match, review the closest prefixes shown to narrow down the vendor"
   ],
   "examples": [
     "Input: '00:50:56:AA:BB:CC' — Output: Vendor: VMware",

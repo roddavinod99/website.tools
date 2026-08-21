@@ -1,35 +1,52 @@
 {
-  "whatItDoes": "Calculates your debt-to-income (DTI) ratio: your total monthly debt payments divided by your gross monthly income, expressed as a percentage.",
+  "whatItDoes": "Calculates your debt-to-income (DTI) ratio: your total monthly debt payments divided by your gross monthly income, expressed as a percentage. Shows where your ratio falls relative to common lender thresholds.",
   "whyItExists": "Lenders use DTI to judge whether a borrower can afford new payments, and households use it to check how much of their income is already committed to debt. A simple ratio makes both easy to see.",
   "whoShouldUse": "Borrowers applying for a mortgage or loan, renters checking affordability, and anyone tracking how much of their income goes to debt.",
   "useCases": [
     "Check your current DTI before applying for a loan",
     "See how a new car or home payment would affect the ratio",
     "Estimate how much income is committed to debt each month",
-    "Track a goal of lowering the ratio over time"],
+    "Track a goal of lowering the ratio over time",
+    "Compare your ratio against the 36% and 43% lender benchmarks",
+    "Decide whether to pay down debt before applying for a mortgage"
+  ],
   "instructions": [
     "Add up your total monthly debt payments",
     "Enter your gross monthly income",
     "Read the DTI percentage and where it falls",
-    "Compare against lender thresholds (typically 36% and 43%)"],
+    "Compare against lender thresholds (typically 36% and 43%)",
+    "Add a prospective new payment to model a future application",
+    "Re-run as you pay down debt or your income changes"
+  ],
   "examples": [
-    "$1,500 debt, $5,000 income -> DTI 30%",
-    "$2,000 debt, $4,000 income -> DTI 50% (high)"],
+    "$1,500 debt, $5,000 income → DTI 30%",
+    "$2,000 debt, $4,000 income → DTI 50% (high)",
+    "$1,900 debt, $5,500 income → DTI 34.5% — comfortably under the 36% benchmark",
+    "$2,600 debt, $6,000 income → DTI 43.3% — right at the mortgage ceiling"
+  ],
   "bestPractices": [
     "Include mortgage, rent, cards, auto, student, and personal loans",
     "Use gross income, before taxes, as lenders do",
     "Keep the ratio below 36% for comfortable headroom",
-    "Re-check after any change to income or debt"],
+    "Re-check after any change to income or debt",
+    "Factor in the new loan payment when planning an application"
+  ],
   "commonMistakes": [
     "Using net income instead of gross",
     "Forgetting smaller recurring payments like card minimums",
     "Confusing front-end and back-end ratios",
-    "Ignoring that lenders add the new payment before deciding"],
+    "Ignoring that lenders add the new payment before deciding",
+    "Leaving out rent, which is a major monthly obligation",
+    "Checking DTI only once instead of tracking it over time"
+  ],
   "faq": [
     "Is this financial advice? — No, it is an informational metric.",
     "What is a good DTI? — Below 36% is generally healthy; above 43% limits most mortgage options.",
     "Front-end vs back-end? — Back-end (total debt) is what this calculator shows and what most lenders emphasize.",
-    "Is my data shared? — No, the ratio is computed locally in your browser."],
+    "Is my data shared? — No, the ratio is computed locally in your browser.",
+    "What counts as debt for DTI? — Monthly obligations like mortgage/rent, cards, auto, student, personal loans, and other recurring payments.",
+    "Can I improve my DTI? — Yes — pay down balances, avoid new debt, or increase income before you apply."
+  ],
   "references": [
     {
       "label": "CFPB — What is a Debt-to-Income Ratio?",

@@ -1,38 +1,51 @@
 {
-  "whatItDoes": "Shows how many months of expenses your current savings cover and how far you are from a target emergency fund (commonly 3-6 months of expenses).",
+  "whatItDoes": "Shows how many months of expenses your current savings cover and how far you are from a target emergency fund (commonly 3-6 months of expenses). Also shows the target amount you need to reach your chosen coverage.",
   "whyItExists": "Emergency savings is the shock absorber between you and debt. Knowing your coverage in months makes the goal concrete and the gap clear, so you can plan how much to save.",
   "whoShouldUse": "Anyone building an emergency fund, budgeting households, and people recovering a depleted buffer after an expense.",
   "useCases": [
     "See how many months current savings cover",
     "Find the target amount for your goal months",
     "Track progress as the fund grows",
-    "Plan a monthly savings goal if you're short"
+    "Plan a monthly savings goal if you're short",
+    "Decide between a 3-month and 6-month buffer based on income stability",
+    "Rebuild the fund with a regular contribution after using it"
   ],
   "instructions": [
     "Enter your average monthly expenses",
     "Enter your current emergency fund balance",
     "Enter your target coverage (usually 3-6 months)",
-    "Read the months covered and target amount"
+    "Read the months covered and target amount",
+    "Compare your balance against the 3- and 6-month targets",
+    "Set a monthly contribution to close the gap"
   ],
   "examples": [
-    "$4,000/month expenses and $20,000 saved -> about 5 months covered",
-    "$4,000/month expenses and $12,000 saved -> 3 months covered"
+    "$4,000/month expenses and $20,000 saved → about 5 months covered",
+    "$4,000/month expenses and $12,000 saved → 3 months covered",
+    "$3,500/month expenses and $14,000 saved → exactly 4 months covered — right at the lower end of a healthy range",
+    "$5,000/month expenses needing 6 months of coverage → a $30,000 target fund"
   ],
   "bestPractices": [
     "Use a realistic average of essential monthly expenses",
     "Keep the fund accessible, in a liquid low-risk account",
     "Choose 3-6 months based on income stability",
-    "Rebuild the fund after using it via a regular contribution"],
+    "Rebuild the fund after using it via a regular contribution",
+    "Revisit the coverage number as expenses change"
+  ],
   "commonMistakes": [
     "Using net-of-discretionary expenses that drift with lifestyle",
     "Keeping the fund in illiquid or volatile investments",
     "Setting a target that doesn't match income stability",
-    "Emptying the fund for non-emergencies"
+    "Emptying the fund for non-emergencies",
+    "Counting investments or retirement accounts that can't be accessed quickly",
+    "Basing the fund on aspirational expenses instead of your actual essential outgoings"
   ],
   "faq": [
     "What is a good emergency fund? — Usually 3-6 months of essential expenses.",
     "Should I also plan other savings? — This covers emergencies only; other goals need separate planning.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "Where should I keep my emergency fund? — A liquid, low-risk account like a high-yield savings account, not volatile investments.",
+    "How many months do I need? — 3 months for stable income, closer to 6 months if your income is variable or your expenses are high.",
+    "What counts as essential expenses? — Housing, food, utilities, transport, insurance, and minimum debt payments — not discretionary spending."
   ],
   "references": [
     {

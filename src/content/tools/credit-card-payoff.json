@@ -1,35 +1,51 @@
 {
-  "whatItDoes": "Simulates paying off a credit card balance with a fixed monthly payment. It applies the card's monthly interest and shows the payoff time, total interest, and total paid.",
+  "whatItDoes": "Simulates paying off a credit card balance with a fixed monthly payment. It applies the card's monthly interest and shows the payoff time, total interest, and total paid, so you can compare how different monthly payments change the finish line.",
   "whyItExists": "A card balance grows because monthly interest can outpace the minimum payment. Seeing exactly how many months a fixed payment will take — and how much interest accumulates — helps people choose a realistic payment that actually reduces the balance.",
   "whoShouldUse": "Anyone carrying a credit card balance who wants to know how long it takes to clear at their current payment, or how much faster extra payments finish the job.",
   "useCases": [
     "See how long the balance takes at the current payment",
     "Compare payments to find an affordable acceleration",
     "Understand how much interest the balance will cost",
-    "Set a payoff milestone for a specific card"],
+    "Set a payoff milestone for a specific card",
+    "Decide whether a balance-transfer offer is worth the fee",
+    "Check whether a modest extra payment meaningfully shortens the payoff"
+  ],
   "instructions": [
     "Enter the current card balance",
     "Enter the card's annual APR",
     "Enter your fixed monthly payment",
-    "Read the payoff months, total interest, and total paid"],
+    "Read the payoff months, total interest, and total paid",
+    "Raise the monthly payment to see how much sooner you finish",
+    "Compare two payment amounts side by side to pick a plan"
+  ],
   "examples": [
-    "$5,000 at 19.99% APR, $200/month -> about 31 months, ~$1,196 interest",
-    "$2,000 at 24% APR, $100/month -> about 25 months, ~$455 interest"],
+    "$5,000 at 19.99% APR, $200/month → about 31 months, ~$1,196 interest",
+    "$2,000 at 24% APR, $100/month → about 25 months, ~$455 interest",
+    "$5,000 at 19.99% APR, $250/month → about 24 months and ~$900 interest — an extra $50/month saves ~$300",
+    "$3,000 at 22% APR, $85/month → interest alone exceeds the payment, so the balance never falls"
+  ],
   "bestPractices": [
     "Pay more than the monthly interest so the balance actually falls",
     "Stop adding new purchases while paying down",
     "Consider balance-transfer offers with care about fees",
-    "Round the payment up to shave both months and interest"],
+    "Round the payment up to shave both months and interest",
+    "Automate the payment so the plan actually happens"
+  ],
   "commonMistakes": [
     "Paying only the minimum — the payoff can stretch for decades",
     "Using a payment at or below the monthly interest (never finishes)",
     "Ignoring that new purchases add to the balance",
-    "Assuming the APR applies once a year instead of monthly"],
+    "Assuming the APR applies once a year instead of monthly",
+    "Choosing a huge payment that's not sustainable, then stopping"
+  ],
   "faq": [
     "Is this financial advice? — No, it is a planning estimate.",
     "What if my payment only covers the interest? — The balance never decreases and the payoff plan cannot finish.",
     "Does it include new purchases? — No, it assumes the balance is fixed.",
-    "Are my numbers shared? — No, the simulation runs locally in your browser."],
+    "Are my numbers shared? — No, the simulation runs locally in your browser.",
+    "Why does the interest add up so fast? — Credit card APRs are high and compound monthly on the remaining balance.",
+    "Should I use savings to pay off the card? — Only if you keep an emergency cushion; otherwise a surprise expense may push you back into debt."
+  ],
   "references": [
     {
       "label": "CFPB — Credit Card Repayment",

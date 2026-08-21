@@ -26,7 +26,8 @@
   "commonMistakes": [
     "Entering a prefix like /16 which produces 65,536 addresses — use a larger CIDR for manageable lists",
     "Forgetting that the network and broadcast addresses may not be assignable to hosts",
-    "Not checking the warning for large ranges before expanding"
+    "Not checking the warning for large ranges before expanding",
+    "Expanding a /0 range and assuming the tool will render it instantly instead of reading the size warning"
   ],
   "faq": [
     "What is the maximum range size? — The tool supports up to /16 (65,536 addresses) but will warn for ranges over 1,024 IPs.",

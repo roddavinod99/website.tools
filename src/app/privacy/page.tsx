@@ -1,4 +1,4 @@
-﻿/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -72,10 +72,10 @@ export default function PrivacyPage() {
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-1">
               <p><strong>DevStackIO</strong></p>
               <p>Email: <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
-              <p>Privacy Inquiries: <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
-              <p>Data Protection Officer: <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>
+              <p>Privacy Inquiries: <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p>Data Protection Officer: <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
               <p>Postal: DevStackIO, 123 Developer Way, San Francisco, CA 94102, USA</p>
-              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 underline hover:text-brand-600">eu-rep@devstackio.com</a></p>
+              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
             </div>
           </section>
 
@@ -417,7 +417,7 @@ export default function PrivacyPage() {
             <div className="mt-4 p-4 rounded-lg bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800">
               <h3 className="font-semibold text-brand-800 dark:text-brand-200">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
-                Email <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a>
+                Email <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
                 or use our <a href="/contact" className="text-brand-500 underline hover:text-brand-600">contact form</a>.
                 We verify identity and respond within 30 days (extendable to 60 days for complex requests).
                 No fee for standard requests.
@@ -560,7 +560,7 @@ export default function PrivacyPage() {
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">If You Are a Parent/Guardian</h3>
                 <p className="mt-1 text-sm">
                   If you believe your child has provided personal data, contact us at
-                  <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a>.
+                  <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>.
                   We will verify and delete promptly.
                 </p>
               </div>
@@ -603,11 +603,11 @@ export default function PrivacyPage() {
           <section id="14-contact">
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">14. Contact & Data Protection Officer</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
-              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:dpo@devstackio.com" className="text-brand-500 underline hover:text-brand-600">dpo@devstackio.com</a></p>
-              <p><strong>Data Subject Requests:</strong> <a href="mailto:privacy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">privacy@devstackio.com</a></p>
-              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a> (PGP available)</p>
-              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:eu-rep@devstackio.com" className="text-brand-500 underline hover:text-brand-600">eu-rep@devstackio.com</a></p>
+              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Data Subject Requests:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
               <p><strong>Postal:</strong> DevStackIO, Privacy Team, 123 Developer Way, San Francisco, CA 94102, USA</p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">

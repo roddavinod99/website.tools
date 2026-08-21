@@ -6,34 +6,40 @@
     "Find the Unicode code point for special characters or emoji to use in source code",
     "Decode a sequence of Unicode escape sequences into readable text",
     "Inspect hidden Unicode characters in suspicious text",
-    "Generate Unicode escape sequences for use in JSON or JavaScript strings"
+    "Generate Unicode escape sequences for use in JSON or JavaScript strings",
+    "Confirm whether a character is a code point above U+FFFF (a supplementary character)"
   ],
   "instructions": [
     "Select the conversion direction: Text to Unicode or Unicode to Text",
     "Enter text or code points in the input field",
     "The converted result appears instantly",
-    "Click Copy to copy the result to your clipboard"
+    "Click Copy to copy the result to your clipboard",
+    "Try several escape formats (hex, decimal, \\u) and pick the one your target system needs"
   ],
   "examples": [
     "Hello → U+0048 U+0065 U+006C U+006C U+006F",
     "U+00A9 → ©",
     "😀 → U+1F600",
-    "U+00E9 → é"
+    "U+00E9 → é",
+    "a → U+0061 (or \\u0061 as a JavaScript escape)"
   ],
   "bestPractices": [
     "Use space-separated U+XXXX format for clean, readable output",
     "Non-BMP characters (like emoji) use surrogate pairs in some systems but full code points here",
-    "Copy the output directly into JavaScript or JSON escape sequences"
+    "Copy the output directly into JavaScript or JSON escape sequences",
+    "Pick the format that matches the consumer — some parsers only accept \\u escapes"
   ],
   "commonMistakes": [
     "Forgetting that emoji and non-Latin characters have code points above U+FFFF",
     "Using decimal instead of hexadecimal when entering code points manually",
-    "Confusing UTF-16 surrogate pairs with Unicode code points"
+    "Confusing UTF-16 surrogate pairs with Unicode code points",
+    "Assuming a code point output is valid for every system without checking its escape syntax"
   ],
   "faq": [
     "Does this handle emoji code points? — Yes, including multi-byte code points like U+1F600.",
     "What input formats are accepted for Unicode to Text? — U+XXXX, 0xXXXX, #XXXX, or plain hex values, space or comma separated.",
-    "Is the output safe for use in JSON strings? — Yes, the U+XXXX format can be directly used in JSON and JavaScript Unicode escapes."
+    "Is the output safe for use in JSON strings? — Yes, the U+XXXX format can be directly used in JSON and JavaScript Unicode escapes.",
+    "Is my text sent anywhere? — No, the conversion runs entirely in your browser."
   ],
   "features": [
     "Encode text as Unicode code points",

@@ -6,14 +6,16 @@
     "Verify two API responses or configuration values are equal",
     "Find the first differing character in two long strings",
     "Quantify how similar two generated outputs are with a score",
-    "Diff two blocks of text line by line"
+    "Diff two blocks of text line by line",
+    "Spot-check that two environments return identical config values"
   ],
   "instructions": [
     "Paste the first string into the left input",
     "Paste the second string into the right input",
     "Toggle case sensitivity and whitespace trimming as needed",
     "Read the equality result, first-difference location, and similarity score",
-    "Switch to line-diff view to see added and removed lines"
+    "Switch to line-diff view to see added and removed lines",
+    "Re-run after normalizing whitespace if a false mismatch appears"
   ],
   "examples": [
     "'hello' vs 'hello' → Equal, similarity 100%",
@@ -25,13 +27,15 @@
     "Normalize whitespace before comparing when formatting may differ",
     "Use case-insensitive comparison for identifiers that are case-insensitive",
     "Prefer line-diff for comparing documents and files",
-    "Understand that similarity is a heuristic, not a semantic guarantee"
+    "Understand that similarity is a heuristic, not a semantic guarantee",
+    "Normalize Unicode (NFC) before comparing strings that may differ in combining characters"
   ],
   "commonMistakes": [
     "Comparing strings with different trailing whitespace and reporting a false mismatch",
     "Expecting case-insensitive behavior when case sensitivity is enabled",
     "Using similarity scores to decide functional equality",
-    "Ignoring Unicode normalization differences (é vs e + combining accent)"
+    "Ignoring Unicode normalization differences (é vs e + combining accent)",
+    "Assuming the first-difference index counts characters rather than UTF-16 code units"
   ],
   "faq": [
     "Is the comparison case-sensitive by default? — Yes, you can toggle it off for case-insensitive comparisons.",

@@ -20,7 +20,9 @@
   ],
   "examples": [
     "Settings: alg=HS256, secret=mysecret, claims: {sub:\"123\",name:\"Alice\",exp:2025-01-01T00:00Z} -> Output: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJuYW1lIjoiQWxpY2UiLCJleHAiOjE3Mzc2MDAwMDB9.signature",
-    "Settings: alg=none, claims: {role:\"admin\"} -> Output: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJyb2xlIjoiYWRtaW4ifQ."
+    "Settings: alg=none, claims: {role:\"admin\"} -> Output: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJyb2xlIjoiYWRtaW4ifQ.",
+    "Settings: alg=HS384, secret=my-32-char-secret-key-here, claims: {iss:\"auth-service\",sub:\"user-42\",aud:\"api\",exp:<now+30m>} -> Output: three-part token with a 384-bit HMAC signature",
+    "Settings: alg=HS256, claims: {sub:\"anon\",jti:\"a1b2c3\"} with no exp -> Output: a token that never expires (useful for testing, dangerous in production)"
   ],
   "bestPractices": [
     "Use strong secrets (32+ characters) for HS256 to prevent brute-force attacks on JWT signatures",

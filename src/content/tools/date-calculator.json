@@ -25,13 +25,15 @@
     "Verify month-end clamping behavior before relying on recurring dates",
     "Use the difference tool for spans that need an exact breakdown",
     "Cross-check leap-year and month-end cases in your own calculations",
-    "Treat results as calendar dates, not wall-clock times"
+    "Treat results as calendar dates, not wall-clock times",
+    "Always specify whether '1 month' means calendar months or 30 days"
   ],
   "commonMistakes": [
     "Assuming adding one month always lands on the same day of the month",
     "Forgetting that date arithmetic is calendar-based, not duration-based",
     "Confusing week starts and including the start day twice",
-    "Ignoring daylight saving time when combining dates and times"
+    "Ignoring daylight saving time when combining dates and times",
+    "Using duration math (30 days) when you mean calendar arithmetic (1 month)"
   ],
   "faq": [
     "How does adding a month handle month-end? — Adding one month to January 31 lands on February 28 (or 29), since the target day is clamped to the last valid day.",

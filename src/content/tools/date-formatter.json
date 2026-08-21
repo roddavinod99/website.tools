@@ -31,7 +31,8 @@
     "Treating a millisecond timestamp as seconds and dividing incorrectly",
     "Assuming the server and browser timezones are the same",
     "Using year-first vs day-first formats inconsistently across systems",
-    "Ignoring the offset marker when parsing ISO strings that lack 'Z'"
+    "Ignoring the offset marker when parsing ISO strings that lack 'Z'",
+    "Copying a formatted string without recording the timezone it was produced in"
   ],
   "faq": [
     "Does this tool support timezones? — Yes, you can choose UTC, local, or several common zones, and the output adjusts accordingly.",

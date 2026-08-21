@@ -12,12 +12,14 @@
     "Press any key on your keyboard",
     "The large display shows which key was pressed",
     "All keyboard event properties are listed in the table below",
-    "Modifier key states (shift, ctrl, alt, meta) update in real-time"
+    "Modifier key states (shift, ctrl, alt, meta) update in real-time",
+    "Press a modifier plus another key to see how both properties report"
   ],
   "examples": [
     "Pressing 'A' → key: a, keyCode: 65, code: KeyA",
     "Pressing Shift → key: Shift, keyCode: 16, code: ShiftLeft",
-    "Pressing Space → key: (space), keyCode: 32, code: Space"
+    "Pressing Space → key: (space), keyCode: 32, code: Space",
+    "Pressing Enter → key: Enter, keyCode: 13, code: Enter"
   ],
   "bestPractices": [
     "Use event.code for layout-independent key identification (e.g. KeyA is always the same physical key)",
@@ -34,7 +36,8 @@
   "faq": [
     "Why are some keyCode values showing 0? — keyCode is deprecated and some events may not provide it reliably.",
     "Does this capture key events on mobile? — No, this tool works with physical keyboard events only.",
-    "What's the difference between key and code? — key is the character produced (layout-dependent), code is the physical key position (layout-independent)."
+    "What's the difference between key and code? — key is the character produced (layout-dependent), code is the physical key position (layout-independent).",
+    "Is anything sent to a server? — No, key events are read locally in your browser."
   ],
   "features": [
     "See live key, code, and location values",

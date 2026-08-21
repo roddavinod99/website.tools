@@ -18,25 +18,29 @@
   ],
   "examples": [
     "Input: https://example.com/go?url=https%3A%2F%2Fdestination.com -> Output: https://destination.com",
-    "Input: https://safelink.example.com/?u=aHR0cHM6Ly9... -> Output: the decoded base64 URL"
+    "Input: https://safelink.example.com/?u=aHR0cHM6Ly9... -> Output: the decoded base64 URL",
+    "Input: https://short.example.com/abc -> Output: no embedded destination (server-side redirect, cannot be resolved client-side)"
   ],
   "bestPractices": [
     "Always decode suspicious links before sharing them with others",
     "Decode links received in unsolicited emails or messages before visiting",
     "Use batch mode to check multiple links from a spreadsheet or document at once",
     "Be aware that some redirects may chain through multiple URLs",
-    "Combine with other safety tools like URL reputation checkers for maximum security"
+    "Combine with other safety tools like URL reputation checkers for maximum security",
+    "Treat decoded results as a hint — always confirm the final domain before clicking"
   ],
   "commonMistakes": [
     "Assuming a decoded URL is safe just because it looks legitimate",
     "Not decoding URLs before sharing them, potentially spreading malicious links",
     "Expecting all shortened URLs to decode successfully — some use server-side redirects that cannot be decoded client-side",
-    "Pasting multiple URLs on the same line instead of one per line"
+    "Pasting multiple URLs on the same line instead of one per line",
+    "Clicking a decoded link without checking that the domain matches the sender's identity"
   ],
   "faq": [
     "Can this tool decode all URL shorteners? No — server-side redirects (like bit.ly) do not embed the destination in the URL and require an HTTP request to resolve.",
     "Is it safe to paste URLs here? Yes, the tool processes everything locally in your browser. No data is sent to any server.",
-    "What if the output looks like gibberish? The destination may be double-encoded or use a format not yet supported. Try URL-decoding the output once more."
+    "What if the output looks like gibberish? The destination may be double-encoded or use a format not yet supported. Try URL-decoding the output once more.",
+    "Does this tool follow redirects for me? No, it only inspects the URL itself; it never makes network requests on your behalf."
   ],
   "features": [
     "Decode safelink and URL-shortener wrappers",

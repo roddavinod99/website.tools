@@ -62,9 +62,9 @@ export default function SecurityPage() {
               We take security seriously. If you discover a security vulnerability, please report it privately:
             </p>
             <div className="mt-4 p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-              <p><strong>Email:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a></p>
-              <p><strong>GitHub Security Advisories:</strong>{" "}
-                <a href="https://github.com/roddavinod99/tools/security/advisories/new" className="text-brand-500 underline hover:text-brand-600">Report a security advisory</a>
+              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>GitHub Profile:</strong>{" "}
+                <a href="https://github.com/roddavinod99" target="_blank" rel="noopener noreferrer" className="text-brand-500 underline hover:text-brand-600">github.com/roddavinod99</a>
               </p>
             </div>
             <p className="mt-4">
@@ -188,6 +188,50 @@ export default function SecurityPage() {
           </section>
 
           <section>
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Security Standards & Compliance</h2>
+            <p className="mt-2">
+              DevStackIO aligns with established web security standards and best practices. The following are
+              publicly verifiable:
+            </p>
+            <div className="mt-4 overflow-x-auto rounded-lg border border-surface-200 dark:border-dark-border">
+              <table className="table-base">
+                <thead>
+                  <tr className="bg-surface-50 dark:bg-dark-surface">
+                    <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Standard</th>
+                    <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Status</th>
+                    <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Verify</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["RFC 9116 security.txt", "Published at /.well-known/security.txt", "https://tools.devstackio.com/.well-known/security.txt"],
+                    ["HTTP Strict Transport Security (HSTS)", "HTTPS-only with preload directive", "https://hstspreload.org"],
+                    ["Transport Layer Security (TLS)", "Let's Encrypt certificate, auto-renewing", "https://www.ssllabs.com/ssltest"],
+                    ["OWASP Secure Headers", "CSP, XFO, COOP, CORP, Referrer-Policy, Permissions-Policy", "https://owasp.org/www-project-secure-headers"],
+                    ["OWASP Top Ten", "Input validation, rate limiting, sanitization", "https://owasp.org/www-project-top-ten"],
+                    ["WCAG 2.2 Level AA", "Accessibility conformance target", "https://www.w3.org/TR/WCAG22"],
+                  ].map(([standard, status, verify]) => (
+                    <tr key={standard} className="border-t border-surface-200 dark:border-dark-border">
+                      <td className="table-cell text-surface-900 dark:text-dark-text">{standard}</td>
+                      <td className="table-cell text-surface-900 dark:text-dark-text">{status}</td>
+                      <td className="table-cell">
+                        <a
+                          href={verify}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-brand-500 underline hover:text-brand-600"
+                        >
+                          Verify
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Security Checklist</h2>
             <ul className="mt-4 space-y-2">
               {[
@@ -228,7 +272,7 @@ export default function SecurityPage() {
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
           <p className="mt-2 text-surface-600 dark:text-dark-muted">
             Questions about this Security Policy? Contact us at
-            <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a>.
+            <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>.
           </p>
         </div>
       </article>

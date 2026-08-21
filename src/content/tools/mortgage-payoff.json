@@ -1,45 +1,55 @@
 {
-  "whatItDoes": "Estimates the monthly payment, total interest, and full payoff term for a fixed-rate mortgage. Uses standard amortization math to model what a home loan really costs.",
+  "whatItDoes": "Estimates the monthly payment, total interest, and full payoff term for a fixed-rate mortgage. Uses standard amortization math to model what a home loan really costs, including how extra payments can shorten the term and cut total interest.",
   "whyItExists": "A mortgage is the largest debt most households take on, and the gap between interest rates and terms can shift the total cost by hundreds of thousands. An amortization calculator makes the real price of a loan visible before you commit.",
-  "whoShouldUse": "Homebuyers, real-estate agents, financial planners, and anyone comparing mortgage offers or payoff paths.",
+  "whoShouldUse": "Homebuyers, real-estate agents, financial planners, and anyone comparing mortgage offers or payoff paths before signing.",
   "useCases": [
     "Estimate a mortgage monthly payment for a target home price",
     "Compare the total interest of a shorter vs. longer term",
-    "Model additional payments that shorten the payoff term",
-    "Check how a rate change shifts the total mortgage cost"
+    "Model additional payments that shorten the payoff term and save interest",
+    "Check how a rate change shifts the total mortgage cost",
+    "Decide between a 15-year and 30-year mortgage for your budget",
+    "See how much interest a biweekly payment schedule could save"
   ],
   "instructions": [
     "Enter the home price you plan to finance",
     "Enter the annual mortgage interest rate as a percent",
     "Choose the term in years (15 and 30 are common)",
-    "Read the monthly payment, total interest, and payoff term"
+    "Read the monthly payment, total interest, and payoff term",
+    "Add a monthly extra payment to see how much sooner the loan pays off",
+    "Compare term lengths side by side before choosing"
   ],
   "examples": [
-    "$350,000 at 6.5% for 30 years -> payment approx $2,212, total interest approx $446,000",
-    "$350,000 at 6.5% for 15 years -> payment approx $3,050, total interest approx $199,000",
-    "$750,000 at 5.75% for 30 years -> payment approx $4,376, total interest approx $825,000"
+    "$350,000 at 6.5% for 30 years → payment ≈ $2,212, total interest ≈ $446,000",
+    "$350,000 at 6.5% for 15 years → payment ≈ $3,050, total interest ≈ $199,000",
+    "$750,000 at 5.75% for 30 years → payment ≈ $4,376, total interest ≈ $825,000",
+    "$350,000 at 6.5% for 30 years with an extra $200/month → payoff cut by several years and interest saved by tens of thousands"
   ],
   "bestPractices": [
     "Compare the total-interest rows, not only the payment",
     "Only choose the shorter term if the higher payment is definitely affordable",
-    "Add property tax, insurance, and HOA fees on top of the payment",
-    "Re-run the numbers if rates move by a quarter point"
+    "Add property tax, insurance, and HOA fees on top of the payment for the true monthly cost",
+    "Re-run the numbers if rates move by a quarter point",
+    "Treat extra payments as a way to shorten the term while keeping the option to pause them"
   ],
   "commonMistakes": [
     "Leaving out property tax, insurance, and HOA in the budget",
     "Financing up to the top of an approval range without a rate buffer",
     "Basing a decision on a teaser rate that expires before closing",
-    "Assuming an adjustable term behaves like a fixed 30-year loan"
+    "Assuming an adjustable term behaves like a fixed 30-year loan",
+    "Ignoring how private mortgage insurance (PMI) adds cost when the down payment is under 20%"
   ],
   "faq": [
     "Does this include escrow for taxes and insurance? — No, it covers principal and interest only.",
     "What does total interest mean? — The portion of all your payments that goes to the lender as interest.",
     "Can I model a shorter term? — Yes, set the term to 15 or 20 years to compare payoffs.",
-    "Is my data shared? — No, every calculation runs locally in your browser."
+    "Is my data shared? — No, every calculation runs locally in your browser.",
+    "How do extra payments help? — They go straight to principal, so less interest accrues and the loan is paid off sooner.",
+    "Should I refinance if rates drop? — Compare your current remaining term against a new loan's total interest and closing costs before deciding."
   ],
   "features": [
     "Fixed-rate amortization modeling",
     "Monthly payment, total interest, and payoff term",
+    "Extra-payment payoff projection",
     "Adjustable home price, rate, and term",
     "100% browser-based and private"
   ],

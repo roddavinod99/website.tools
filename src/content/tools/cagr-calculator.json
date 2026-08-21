@@ -6,41 +6,51 @@
     "Normalize returns of investments held for different durations",
     "Compare mutual funds and stocks that have been held different lengths of time",
     "Report one growth rate for a whole holding period",
-    "Decide between assets by their annualized growth rather than total gain"
+    "Decide between assets by their annualized growth rather than total gain",
+    "Measure business revenue or profit growth over several years",
+    "Benchmark a fund's return against an index like the S&P 500"
   ],
   "instructions": [
     "Enter the value you started with (beginning value)",
     "Enter the current or final value",
     "Enter the number of years of the holding period",
-    "Read the CAGR as an annual percentage"
+    "Read the CAGR as an annual percentage",
+    "Compare several investments using their CAGR figures",
+    "Re-run with fees included for a net-of-cost rate"
   ],
   "examples": [
-    "$1,000 grows to $2,100 in 5 years -> CAGR approx 16.0%",
-    "$25,000 grows to $48,000 in 4 years -> CAGR approx 17.7%",
-    "$100 to $161 in 3 years -> CAGR approx 17.2%"
+    "$1,000 grows to $2,100 in 5 years → CAGR ≈ 16.0%",
+    "$25,000 grows to $48,000 in 4 years → CAGR ≈ 17.7%",
+    "$100 to $161 in 3 years → CAGR ≈ 17.2%",
+    "$10,000 to $13,000 in 4 years → CAGR ≈ 6.8%, even though the total gain was 30%"
   ],
   "bestPractices": [
     "Use CAGR for comparisons, not as a prediction of the future",
     "Include all fees exactly as they affect the value",
     "Compare only investments with the same timeframes",
-    "Use the net-of-cost end value for accuracy"
+    "Use the net-of-cost end value for accuracy",
+    "Remember CAGR flattens volatility — two funds with the same CAGR can have very different risk"
   ],
   "commonMistakes": [
     "Treating a single year's gain as a multi-year rate",
     "Forgetting to include brokerage fees and dividends in beginning/end values",
     "Comparing CAGRs of periods of very different length",
-    "Entering the rate as a fraction of a whole year"
+    "Entering the rate as a fraction of a whole year",
+    "Using CAGR to forecast — it describes past growth, not future returns"
   ],
   "faq": [
     "What does CAGR mean? — The Compound Annual Growth Rate: the constant annual rate that grows the beginning value to the end value.",
     "Is it the same as an average return? — No, it accounts for compounding and flattens volatility.",
     "Can CAGR be negative? — Yes, if the ending value is below the beginning value.",
-    "Is my data stored? — No, everything runs in your browser."
+    "Is my data stored? — No, everything runs in your browser.",
+    "Does CAGR account for risk? — No, it is a single growth rate; two investments with the same CAGR can have very different risk profiles.",
+    "Should I use CAGR or total return? — Use total return to see the headline gain, and CAGR to compare across different holding periods."
   ],
   "features": [
     "Annualized growth rate",
     "Begin and end value inputs",
     "Multi-year, compounding-aware math",
+    "Simple cross-investment comparisons",
     "100% browser-based and private"
   ],
   "references": [

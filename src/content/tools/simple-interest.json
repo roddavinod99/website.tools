@@ -1,41 +1,50 @@
 {
-  "whatItDoes": "Calculates simple interest on a principal amount over a period of years. Unlike compound interest, interest is only ever calculated on the original principal.",
+  "whatItDoes": "Calculates simple interest on a principal amount over a period of years. Unlike compound interest, interest is only ever calculated on the original principal, so you can see the total interest and final amount clearly.",
   "whyItExists": "Simple interest is used for many personal loans, promissory notes, and short-term lending. Seeing the total interest and final amount makes the true cost of borrowing — or the return on lending — transparent.",
   "whoShouldUse": "Borrowers of simple-interest personal loans, savers with simple-interest deposits, and finance students checking their math.",
   "useCases": [
     "Estimate the total cost of a simple-interest loan",
     "Work out the interest due on a promissory note",
     "Compare between simple and compound options",
-    "Check a quoted payoff figure quickly"
+    "Check a quoted payoff figure quickly",
+    "Calculate the return on a short-term fixed-interest note",
+    "Verify a lender's interest calculation on a personal loan"
   ],
   "instructions": [
     "Enter the principal amount",
     "Enter the annual interest rate as a percent",
     "Enter the time period in years",
-    "Read the interest and the total"
+    "Read the interest and the total",
+    "Convert months to years (divide by 12) for partial terms",
+    "Compare against a compound-interest tool to see the difference"
   ],
   "examples": [
-    "$10,000 at 5% for 3 years -> interest $1,500, total $11,500",
-    "$1,000 at 8% for 2 years -> interest $160, total $1,160",
-    "$50,000 at 4% for 5 years -> interest $10,000, total $60,000"
+    "$10,000 at 5% for 3 years → interest $1,500, total $11,500",
+    "$1,000 at 8% for 2 years → interest $160, total $1,160",
+    "$50,000 at 4% for 5 years → interest $10,000, total $60,000",
+    "$2,500 at 6% for 9 months → interest $112.50, total $2,612.50"
   ],
   "bestPractices": [
     "Use simple interest only when interest is not compounding",
     "Enter the exact time in years (use fractions for partial years if needed)",
     "Check the agreement wording to confirm the calculation method",
-    "For mortgages or long-term savings, switch to a compound tool instead"
+    "For mortgages or long-term savings, switch to a compound tool instead",
+    "Confirm whether fees or penalties are added on top of the interest"
   ],
   "commonMistakes": [
     "Using a compound-interest formula for a simple-interest loan",
     "Entering months instead of years without converting",
     "Applying the rate to the growing balance",
-    "Forgetting that late fees can change the total"
+    "Forgetting that late fees can change the total",
+    "Assuming all personal loans use simple interest when some compound"
   ],
   "faq": [
     "What's different from compound interest? — Interest is only charged on the original principal, never on accumulated interest.",
     "What uses simple interest? — Many personal loans, auto notes, and short-term instruments.",
     "How do I convert months? — Enter months/12 as the time in years.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "Why is simple interest lower than compound? — Because it never earns interest on interest, so the total grows only from the original principal.",
+    "Can a loan be simple interest but still have fees? — Yes, fees are usually separate from the interest calculation."
   ],
   "references": [
     {

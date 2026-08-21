@@ -18,30 +18,37 @@
   ],
   "examples": [
     "Password: 'mySecret123', Cost: 10. Output: '$2b$10$Kx...'",
-    "Verify: password 'hello' against hash '$2b$10$...' → Result: Match / No Match"
+    "Verify: password 'hello' against hash '$2b$10$...' → Result: Match / No Match",
+    "Password: 'P@ssw0rd!' at cost 12 → output begins '$2b$12$' and takes noticeably longer than cost 10",
+    "The same password at cost 10 generates a different hash every run because of the random salt"
   ],
   "bestPractices": [
     "Use cost rounds of at least 10 for production password hashing",
     "Never store plaintext passwords; always use bcrypt or a similar adaptive hash",
     "Bcrypt hashes are 60 characters long and self-contain the cost and salt",
-    "Higher cost rounds increase security but also increase computation time"
+    "Higher cost rounds increase security but also increase computation time",
+    "Store the hash exactly as generated — truncation invalidates it"
   ],
   "commonMistakes": [
     "Using a cost factor that is too low (below 8) making hashes easy to brute-force",
     "Confusing bcrypt with plain SHA-256 hashing, which is not suitable for passwords",
     "Truncating the bcrypt hash, which invalidates the entire hash",
-    "Using different prefixes ($2a$ vs $2b$) when comparing hashes from different libraries"
+    "Using different prefixes ($2a$ vs $2b$) when comparing hashes from different libraries",
+    "Re-hashing a password and expecting the identical output (bcrypt salts differ per run)"
   ],
   "faq": [
     "What is the cost rounds parameter? It determines how many times the hashing algorithm iterates, exponentially increasing computation time (2^cost iterations).",
     "Why does the output always look different for the same password? Bcrypt includes a random salt, so each hash is unique even for identical inputs.",
     "Is bcrypt still secure? Yes, bcrypt is an adaptive hash function designed to remain secure as computing power increases.",
-    "What is the difference between $2a$, $2b$, and $2y$? They are minor format variations from different implementations; $2b$ is the current standard."
+    "What is the difference between $2a$, $2b$, and $2y$? They are minor format variations from different implementations; $2b$ is the current standard.",
+    "Is my data shared? No, hashing and verification run entirely in your browser.",
+    "Why can't I hash with SHA-256 for passwords? Fast hashes let attackers brute-force millions of guesses per second; bcrypt's adaptive cost slows that down dramatically."
   ],
   "features": [
     "Generate bcrypt hashes with configurable rounds",
     "Verify passwords against a stored hash",
-    "Copy the generated hash"
+    "Copy the generated hash",
+    "100% browser-based and private"
   ],
   "references": [
     {

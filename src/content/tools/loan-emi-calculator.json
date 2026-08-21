@@ -1,47 +1,56 @@
 {
-  "whatItDoes": "Computes the equated monthly installment (EMI) for a fixed-rate loan, plus the total payment and the total interest you will pay over the full term. Uses a standard reducing-balance EMI formula.",
-  "whyItExists": "Understanding a loan's full cost is the difference between an affordable purchase and a debt trap. An EMI calculator reveals not just the monthly payment but how much interest compounds over the whole loan life.",
-  "whoShouldUse": "Home buyers, car buyers, personal-loan borrowers, and financial planners estimating loan affordability.",
+  "whatItDoes": "Computes the equated monthly installment (EMI) for a fixed-rate loan using the standard reducing-balance formula, and breaks down the full cost of the loan into the monthly EMI, the total amount paid over the term, and the total interest paid. You can adjust the loan amount, annual interest rate, and tenure in years and instantly see how each change affects your payment.",
+  "whyItExists": "Understanding a loan's full cost is the difference between an affordable purchase and a debt trap. An EMI calculator reveals not just the monthly payment but how much interest compounds over the whole loan life, so borrowers can compare offers on total cost rather than just the headline rate.",
+  "whoShouldUse": "Home buyers, car buyers, personal-loan borrowers, students comparing education loans, and financial planners estimating loan affordability before committing to a lender.",
   "useCases": [
-    "Estimate the monthly payment of a home, car, or personal loan",
-    "Compare loan terms of different durations and rates",
-    "See the total interest paid over the life of a loan",
-    "Budget a repayment plan that fits your cash flow"
+    "Estimate the monthly payment of a home, car, or personal loan before applying",
+    "Compare loan offers with different durations and interest rates on total cost",
+    "See the total interest paid over the life of a loan to judge whether a shorter term is worth it",
+    "Budget a repayment plan that fits your monthly cash flow",
+    "Test how a slightly lower rate or shorter tenure changes your monthly burden",
+    "Decide between a fixed and floating rate by comparing payments under different rate assumptions"
   ],
   "instructions": [
-    "Enter the loan amount",
-    "Enter the annual interest rate in percent",
+    "Enter the total loan amount you plan to borrow",
+    "Enter the annual interest rate in percent (e.g., 8.5 for 8.5%)",
     "Enter the tenure in years",
     "Read the monthly EMI, total payment, and total interest",
-    "Experiment with shorter terms to see how interest shrinks"
+    "Experiment with shorter terms to see how interest shrinks and the EMI rises",
+    "Try different rates to compare lenders before you sign"
   ],
   "examples": [
-    "$200,000 at 8.5% for 20 years → EMI ≈ $1,735, interest ≈ $216,500",
-    "$30,000 at 7% for 5 years → EMI ≈ $594, interest ≈ $5,650",
-    "$400,000 at 6.5% for 30 years → EMI ≈ $2,528, interest ≈ $510,000"
+    "$200,000 at 8.5% for 20 years → EMI ≈ $1,735, interest ≈ $216,500, total ≈ $416,500",
+    "$30,000 at 7% for 5 years → EMI ≈ $594, interest ≈ $5,650, total ≈ $35,650",
+    "$400,000 at 6.5% for 30 years → EMI ≈ $2,528, interest ≈ $510,000, total ≈ $910,000",
+    "Same $200,000 loan at 8.5% for 15 years → EMI ≈ $1,969, but interest drops to ≈ $154,500 — a saving of ≈ $62,000 in interest"
   ],
   "bestPractices": [
-    "Compare the total interest, not just the monthly EMIs",
-    "Try shorter tenures to reduce total interest when you can afford it",
-    "Include points, fees, and insurance burden separately",
-    "Re-check the rate with the lender, since rates change all the time"
+    "Compare the total interest cost, not just the monthly EMIs, when choosing a term",
+    "Try shorter tenures to reduce total interest when you can afford a higher EMI",
+    "Include processing fees, documentation charges, and insurance separately in your total-cost estimate",
+    "Re-check the rate with the lender, since advertised rates change and often differ from the final offer",
+    "Keep a small buffer in your budget — EMIs above ~40% of net income strain most households"
   ],
   "commonMistakes": [
-    "Comparing loans only on their interest rates, ignoring tenure",
-    "Entering the rate as 0.085 instead of 8.5",
-    "Forgetting that processing fees and insurance are not in the EMI",
-    "Assuming the EMI amount stays constant forever on a variable-rate loan"
+    "Comparing loans only on their interest rates while ignoring tenure and total cost",
+    "Entering the rate as 0.085 instead of 8.5, which produces a wildly wrong EMI",
+    "Forgetting that processing fees and insurance premiums are not included in the EMI",
+    "Assuming the EMI amount stays constant forever on a variable-rate loan",
+    "Extending tenure just to lower the EMI without noticing the extra lakhs of interest it adds"
   ],
   "faq": [
     "What is the EMI formula? — It is the standard reducing-balance annuity: principal × monthly rate × (1+rate)^n / ((1+rate)^n − 1).",
-    "Does it include processing fees or insurance? — No, only principal and interest.",
-    "Can I use it for any loan type? — Yes, the math is identical for home, auto, and personal loans.",
-    "Is my data sent anywhere? — No, the calculation happens entirely in your browser."
+    "Does it include processing fees or insurance? — No, only principal and interest. Add fees separately for a true total cost.",
+    "Can I use it for any loan type? — Yes, the math is identical for home, auto, and personal loans; only the rates differ.",
+    "Is my data sent anywhere? — No, the calculation happens entirely in your browser.",
+    "How is the reducing balance different from simple interest? — With a reducing balance you pay interest only on the remaining principal, so the interest share of each EMI shrinks over time.",
+    "Should I pick a longer or shorter tenure? — Shorter tenures mean higher EMIs but much less total interest; longer tenures lower the EMI but multiply total interest."
   ],
   "features": [
     "Reducing-balance EMI calculation",
     "Total principal and interest breakdown",
     "Adjustable loan amount, rate, and tenure",
+    "Instant comparisons across terms and rates",
     "100% browser-based and private"
   ],
   "references": [

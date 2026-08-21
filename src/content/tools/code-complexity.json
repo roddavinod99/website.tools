@@ -6,14 +6,16 @@
     "Measure cyclomatic complexity of a module before a review",
     "Find the functions with the highest complexity to target refactoring",
     "Track complexity changes between refactors of a file",
-    "Get an at-a-glance maintainability score for a code snippet"
+    "Get an at-a-glance maintainability score for a code snippet",
+    "Benchmark a legacy file before deciding whether to refactor or rewrite it"
   ],
   "instructions": [
     "Paste your JavaScript or TypeScript code into the editor",
     "The analyzer reads LOC counts and complexity automatically",
     "Review the overall score for the snippet",
     "Read the function-level breakdown to find the highest-complexity functions",
-    "Use the recommendations to plan your refactoring"
+    "Use the recommendations to plan your refactoring",
+    "Run it again after refactoring to confirm complexity dropped"
   ],
   "examples": [
     "A function with 5 if/else branches and 2 loops → cyclomatic complexity ~8",
@@ -25,13 +27,15 @@
     "Keep per-function complexity under roughly 10 to make each function easy to test",
     "Use the metric as a signal for refactoring, not a hard law",
     "Re-check complexity after each refactor to confirm it lowered",
-    "Combine complexity with readability and test coverage for a full picture"
+    "Combine complexity with readability and test coverage for a full picture",
+    "Investigate complexity outliers in code review before merging"
   ],
   "commonMistakes": [
     "Treating high complexity as the only indicator of poor quality",
     "Gaming the metric by splitting functions artificially",
     "Ignoring nested conditionals that inflate perceived readability",
-    "Comparing complexity across unrelated languages or paradigms"
+    "Comparing complexity across unrelated languages or paradigms",
+    "Measuring a single file while ignoring how it couples with the rest of the module"
   ],
   "faq": [
     "What is cyclomatic complexity? — A count of independent paths through a function, based on decision points like if, else, case, and loop.",

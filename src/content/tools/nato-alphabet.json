@@ -6,38 +6,52 @@
     "Spell out a customer's verification code over the phone without confusion",
     "Convert a password or API key to phonetic words for verbal sharing",
     "Teach or learn the NATO phonetic alphabet interactively",
-    "Prepare phonetic spellings for aviation or military communications"
+    "Prepare phonetic spellings for aviation or military communications",
+    "Read a long order or tracking number aloud accurately",
+    "Create pronunciation guides for radio call signs"
   ],
   "instructions": [
     "Type or paste any text into the input field",
     "Each letter is instantly converted to its NATO phonetic word",
     "Spaces between letters are shown as dashes for clarity",
-    "Click Copy to copy the phonetic output to your clipboard"
+    "Click Copy to copy the phonetic output to your clipboard",
+    "Keep one word per line for easy reading aloud",
+    "Check the per-letter breakdown table to learn the mapping"
   ],
   "examples": [
     "HELLO → Hotel, Echo, Lima, Lima, Oscar",
     "ABC123 → Alpha, Bravo, Charlie, One, Two, Three",
-    "SOS → Sierra, Oscar, Sierra"
+    "SOS → Sierra, Oscar, Sierra",
+    "API-KEY-42 → Alpha, Papa, India, ... , Four, Two"
   ],
   "bestPractices": [
     "Use one word per line for easy reading aloud",
     "Digits are converted using NATO standard pronunciation (Niner for 9)",
-    "Non-alphanumeric characters are passed through unchanged"
+    "Non-alphanumeric characters are passed through unchanged",
+    "Pause briefly between words when reading aloud for clarity",
+    "Use the table to memorize the most common letters first"
   ],
   "commonMistakes": [
     "Confusing NATO phonetic words with other phonetic alphabets like the old US military one",
     "Expecting lowercase output — NATO phonetic words are always capitalized",
-    "Forgetting that spaces become dashes in the output"
+    "Forgetting that spaces become dashes in the output",
+    "Pronouncing 'Niner' as 'nine' in radio communication",
+    "Using the wrong word for letters like J (Juliett) or W (Whiskey)"
   ],
   "faq": [
     "Does this use the current NATO standard alphabet? — Yes, it uses the ICAO/NATO standard phonetic alphabet.",
     "What happens to numbers? — They use standard pronunciation: Zero, One, Two, ..., Niner.",
-    "Can I use this for aviation or military comms? — Yes, the words match the official standard."
+    "Can I use this for aviation or military comms? — Yes, the words match the official standard.",
+    "Is my data shared? — No, the conversion happens locally in your browser.",
+    "Why is the phonetic alphabet used? — It makes letters unambiguous over noisy voice channels where 'B' and 'D' sound alike.",
+    "What does 'Niner' mean? — It's the NATO standard pronunciation for 9, chosen to avoid confusion with the German 'nein'."
   ],
   "features": [
     "Convert text to the NATO phonetic alphabet",
     "Per-letter breakdown table",
-    "Copy the phonetic spelling"
+    "Copy the phonetic spelling",
+    "Handles digits with NATO pronunciation",
+    "100% browser-based and private"
   ],
   "references": [
     {

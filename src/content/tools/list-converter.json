@@ -6,34 +6,42 @@
     "Convert a newline-separated list from a spreadsheet into a JSON array for code",
     "Turn a numbered markdown list into a simple one-per-line format",
     "Transform comma-separated values into a bulleted markdown list",
-    "Convert a JSON array into CSV format for import into a spreadsheet"
+    "Convert a JSON array into CSV format for import into a spreadsheet",
+    "Reformat an email recipient list between comma-separated and one-per-line"
   ],
   "instructions": [
     "Select the source format of your input list using the From dropdown",
     "Select the desired output format using the To dropdown",
     "Paste or type your list into the input area",
     "The converted list appears instantly in the output area",
-    "Click Copy to copy the result to your clipboard"
+    "Click Copy to copy the result to your clipboard",
+    "Double-check the delimiter if your items contain commas or quotes"
   ],
   "examples": [
     "One-per-line (apple, banana, cherry) → JSON array: [\"apple\", \"banana\", \"cherry\"]",
     "CSV (apple, banana, cherry) → Numbered: 1. apple\\n2. banana\\n3. cherry",
-    "JSON array [\"a\", \"b\", \"c\"] → Bulleted: - a\\n- b\\n- c"
+    "JSON array [\"a\", \"b\", \"c\"] → Bulleted: - a\\n- b\\n- c",
+    "One-per-line with quotes: '\"red\", \"green\"' → CSV: \"red\",\"green\""
   ],
   "bestPractices": [
     "Make sure the From format matches your actual input format for correct parsing",
     "For JSON array input, each element should be a simple string",
-    "Trailing commas in CSV input are handled automatically"
+    "Trailing commas in CSV input are handled automatically",
+    "Use a custom delimiter when your items themselves contain the default one",
+    "Preview the first few rows before trusting a large conversion"
   ],
   "commonMistakes": [
     "Selecting the wrong source format, which causes items to be parsed incorrectly",
     "Expecting nested JSON arrays to be flattened — only simple arrays are supported",
-    "Forgetting to trim extra whitespace around items in CSV input"
+    "Forgetting to trim extra whitespace around items in CSV input",
+    "Using a delimiter character that also appears inside item values",
+    "Assuming the output preserves original item order — it does, but verify for edge cases"
   ],
   "faq": [
     "Can I convert from JSON to CSV? — Yes, select JSON Array as From and CSV as To.",
     "Does it handle nested lists? — No, only flat lists of simple strings are supported.",
-    "What happens with empty lines? — Empty lines are automatically filtered out from the output."
+    "What happens with empty lines? — Empty lines are automatically filtered out from the output.",
+    "Is my list sent anywhere? — No, conversion happens entirely in your browser."
   ],
   "features": [
     "Convert between CSV, JSON, and one-per-line lists",

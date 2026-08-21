@@ -19,6 +19,7 @@ export const siteConfig: SiteConfig = {
       cookie: "2026-06-15",
       disclaimer: "2026-06-15",
       security: "2026-07-20",
+      accessibility: "2026-08-20",
     },
   },
 };

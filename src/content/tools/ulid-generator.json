@@ -18,30 +18,38 @@
   ],
   "examples": [
     "Single ULID: 01ARZ3NDEKTSV4RRFFQ69G5FAV (26 chars, Crockford Base32)",
-    "Timestamp portion: 01ARZ3NDEK (first 10 chars, sortable by time)"
+    "Timestamp portion: 01ARZ3NDEK (first 10 chars, sortable by time)",
+    "Batch of 3 generated at the same millisecond: 01H7F2XQ1A..., 01H7F2XQ1A..., 01H7F2XQ1A... — same timestamp prefix, unique random suffix",
+    "Sorted lexicographically, ULIDs always appear in creation order, unlike random UUIDs"
   ],
   "bestPractices": [
     "Use ULIDs when you need both uniqueness and chronological sorting in your identifiers",
     "ULIDs are 128 bits — they provide the same collision resistance as UUIDv4",
     "The Crockford Base32 encoding is case-insensitive and excludes ambiguous characters (I, L, O, U)",
-    "Sort ULIDs as strings — they maintain chronological order lexicographically"
+    "Sort ULIDs as strings — they maintain chronological order lexicographically",
+    "Generate IDs server-side or with a monotonic factory to guarantee ordering under high concurrency"
   ],
   "commonMistakes": [
     "Expecting ULIDs to be exactly 32 characters — they are 26 characters long",
     "Confusing ULIDs with UUIDs — ULIDs are not formatted with hyphens",
     "Using ULIDs in a field that expects UUID format — they are not compatible",
-    "Assuming the random portion provides additional time information — only the first 10 chars are timestamp"
+    "Assuming the random portion provides additional time information — only the first 10 chars are timestamp",
+    "Generating ULIDs client-side in parallel processes and assuming strict global order"
   ],
   "faq": [
     "What is a ULID? A Universally Unique Lexicographically Sortable Identifier — a 128-bit value encoded as 26 Crockford Base32 characters.",
     "How does ULID sorting work? ULIDs sort lexicographically in time order because the timestamp occupies the most significant bits.",
     "Are ULIDs collision-resistant? Yes, the 80-bit random component provides collision resistance comparable to UUIDv4.",
-    "Can I extract the timestamp from a ULID? Yes, the first 10 characters encode the millisecond-precision Unix timestamp."
+    "Can I extract the timestamp from a ULID? Yes, the first 10 characters encode the millisecond-precision Unix timestamp.",
+    "Is my data shared? No, ULIDs are generated locally in your browser using the Web Crypto API.",
+    "When should I choose ULID over UUID? Choose ULID when records need to be orderable by creation time, such as database keys or event IDs."
   ],
   "features": [
     "Generate sortable ULIDs",
     "Bulk generation with copy support",
-    "Monotonic ordering for time-ordered IDs"
+    "Monotonic ordering for time-ordered IDs",
+    "Timestamp extraction",
+    "100% browser-based and private"
   ],
   "references": [
     {

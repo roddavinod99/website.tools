@@ -21,6 +21,8 @@ export const revalidate = 3600;
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 const HAS_GOOGLE_TAGS = !!(process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID);
+const VERIFICATION_GOOGLE = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "";
+const VERIFICATION_BING = process.env.NEXT_PUBLIC_BING_VERIFICATION || "";
 
 const notoSansArabic = Noto_Sans_Arabic({
   variable: "--font-noto-sans-arabic",
@@ -33,36 +35,15 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "WebSite",
-      name: "DevStackIO Tools",
-      url: siteConfig.url,
-      description: "Free online developer tools from DevStackIO. Format, encode, generate, convert, and analyze data entirely in your browser with no server uploads.",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
-        },
-        "query-input": "required name=search_term_string",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "DevStackIO",
-        url: siteConfig.mainSiteUrl,
-      },
-      isPartOf: {
-        "@type": "WebSite",
-        name: siteConfig.mainSiteName,
-        url: siteConfig.mainSiteUrl,
-      },
-    },
-    {
       "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
       name: "DevStackIO",
       url: siteConfig.url,
       logo: {
         "@type": "ImageObject",
         url: `${siteConfig.url}/logo-light.png`,
+        width: 512,
+        height: 512,
       },
       description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
       email: siteConfig.contactEmail,
@@ -181,6 +162,12 @@ export default function RootLayout({
         <meta name="theme-color" content="#0070f3" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="max-image-preview:large" />
+        {VERIFICATION_GOOGLE && (
+          <meta name="google-site-verification" content={VERIFICATION_GOOGLE} />
+        )}
+        {VERIFICATION_BING && (
+          <meta name="msvalidate.01" content={VERIFICATION_BING} />
+        )}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { allTools, categories, siteConfig, learningTopics } from "@/lib/constants";
 import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
+import { comparisons } from "@/lib/data/comparisons";
 
 export const revalidate = 86400;
 
@@ -25,6 +26,7 @@ const legalTerms = dateFrom(LEGAL.terms);
 const legalCookie = dateFrom(LEGAL.cookie);
 const legalDisclaimer = dateFrom(LEGAL.disclaimer);
 const legalSecurity = dateFrom(LEGAL.security);
+const legalAccessibility = dateFrom(LEGAL.accessibility);
 
 const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/`, latestBlogDate),
@@ -32,12 +34,14 @@ const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/categories`),
   entry(`${BASE}/guides`),
   entry(`${BASE}/blog`, latestBlogDate),
+  entry(`${BASE}/compare`),
   entry(`${BASE}/learning`),
   entry(`${BASE}/popular`),
   entry(`${BASE}/new`),
   entry(`${BASE}/changelog`),
   entry(`${BASE}/about`),
   entry(`${BASE}/acceptable-use`),
+  entry(`${BASE}/accessibility`, legalAccessibility),
   entry(`${BASE}/best-practices`),
   entry(`${BASE}/contact`),
   entry(`${BASE}/cookie-policy`, legalCookie),
@@ -67,11 +71,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((tool) => entry(`${BASE}/tools/${tool.slug}`));
 
   const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) =>
-    entry(`${BASE}/guides/${topic.slug}`)
+    entry(`${BASE}/guides/${topic.slug}`, new Date(topic.modified))
   );
 
   const blogPages: MetadataRoute.Sitemap = blogData.map((post) =>
     entry(`${BASE}/blog/${post.slug}`, new Date(post.dateISO))
+  );
+
+  const comparisonPages: MetadataRoute.Sitemap = comparisons.map((comparison) =>
+    entry(`${BASE}/compare/${comparison.slug}`, new Date(comparison.modified))
   );
 
   const toolkitPages: MetadataRoute.Sitemap = Object.keys(toolkits).map((slug) =>
@@ -84,6 +92,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...toolPages,
     ...guidePages,
     ...blogPages,
+    ...comparisonPages,
     ...toolkitPages,
   ];
 }

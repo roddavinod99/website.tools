@@ -1,45 +1,55 @@
 {
-  "whatItDoes": "Calculates the profit margin on a product or service. Enter revenue and cost to see gross profit, profit margin as a percentage, and markup — while clearly flagging loss-making scenarios.",
+  "whatItDoes": "Calculates the profit margin on a product or service. Enter revenue and cost to see gross profit, profit margin as a percentage, and markup — while clearly flagging loss-making scenarios. Handles negative margins and lets you see the relationship between price, cost, and profitability instantly.",
   "whyItExists": "Pricing decisions hinge on the margin, not just on the price. Seeing the margin as a percentage of revenue, plus the markup on cost, tells a seller whether a business is actually making money after expenses.",
-  "whoShouldUse": "Store owners, freelancers and agencies managing pricing, product managers, and anyone setting a sell price for a product.",
+  "whoShouldUse": "Store owners, freelancers and agencies managing pricing, product managers, e-commerce sellers, and anyone setting a sell price for a product or service.",
   "useCases": [
     "Set sell prices for B2B or B2C products",
-    "Check the profitability of a project before committing",
-    "Compare margins across the product catalog",
-    "See the markup implied by your chosen selling price"
+    "Check the profitability of a project before committing to it",
+    "Compare margins across the product catalog to find weak sellers",
+    "See the markup implied by your chosen selling price",
+    "Determine the minimum price that keeps a product profitable",
+    "Re-price a catalog when supplier costs change"
   ],
   "instructions": [
     "Enter the total revenue or selling price",
     "Enter the total cost of the product or service",
-    "Read gross profit, profit margin, markup, and whether it is a loss or gain"
+    "Read gross profit, profit margin, markup, and whether it is a loss or gain",
+    "Adjust the price or cost to hit a target margin",
+    "Use the margin percentage for revenue-based pricing decisions"
   ],
   "examples": [
-    "Revenue $1,200, cost $850 -> $350 gross profit, 29.2% margin",
-    "Revenue $50, cost $50 -> $0 profit, 0% margin",
-    "Revenue $50, cost $60 -> -$10 profit, -20% margin (a loss)"
+    "Revenue $1,200, cost $850 → $350 gross profit, 29.2% margin, 41.2% markup",
+    "Revenue $50, cost $50 → $0 profit, 0% margin (break-even)",
+    "Revenue $50, cost $60 → -$10 profit, -20% margin (a loss)",
+    "Revenue $100, cost $40 → $60 profit, 60% margin and 150% markup — the same profit expressed two ways"
   ],
   "bestPractices": [
     "Include all operating costs—materials, labor, shipping, fees—in the cost field",
     "Re-check margin whenever prices or raw costs change",
     "Use margin for pricing; use markup for cost-based pricing math",
-    "Distinguish gross margin from net margin by layering in operating expenses"
+    "Distinguish gross margin from net margin by layering in operating expenses",
+    "Aim for a margin that covers overhead, not just product cost"
   ],
   "commonMistakes": [
     "Confusing margin (profit as % of revenue) with markup (profit as % of cost)",
     "Overlooking fees and overhead that belong in cost",
-    "Basing feel on selling price alone without the margin check",
-    "Not updating costs as suppliers change prices"
+    "Basing decisions on selling price alone without the margin check",
+    "Not updating costs as suppliers change prices",
+    "Treating a positive revenue as a profit without checking the margin"
   ],
   "faq": [
     "What is the difference between margin and markup? — Margin is profit divided by revenue; markup is profit divided by cost.",
     "Can the tool handle losses? — Yes, it flags a negative profit or loss clearly.",
-    "Is this good for a freelancer's rate? — Yes, enter the rate as revenue and time as cost.",
-    "Are the computations local? — Yes, nothing is transmitted."
+    "Is this good for a freelancer's rate? — Yes, enter the rate as revenue and your time cost as the cost.",
+    "Are the computations local? — Yes, nothing is transmitted.",
+    "What is a healthy profit margin? — It varies by industry; retail often runs 5-10% while SaaS and agencies target far higher.",
+    "Should I price on margin or markup? — Use margin to evaluate profitability relative to price, and markup when building a price from cost."
   ],
   "features": [
     "Gross profit, margin %, and markup %",
     "Clear loss indication",
     "Simple revenue and cost inputs",
+    "Instant re-pricing by adjusting inputs",
     "100% browser-based and private"
   ],
   "references": [

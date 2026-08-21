@@ -6,34 +6,42 @@
     "Find the correct Content-Type header value for a file extension in an API response",
     "Discover all file extensions associated with a specific MIME type",
     "Configure a web server to serve files with correct content types",
-    "Debug file upload issues by checking supported MIME types"
+    "Debug file upload issues by checking supported MIME types",
+    "Confirm the right MIME type when generating download links for generated files"
   ],
   "instructions": [
     "Select the lookup direction: Extension to MIME or MIME to Extension",
     "Type a file extension (e.g. pdf) or MIME type (e.g. application/json) in the input field",
     "Results appear instantly as you type",
-    "Click Copy to copy the results to your clipboard"
+    "Click Copy to copy the results to your clipboard",
+    "Browse the full reference table when you are unsure of the exact extension"
   ],
   "examples": [
     ".json → application/json",
     "application/javascript → .js",
     ".jpg → image/jpeg",
-    "video/mp4 → .mp4, .mp4v, .mpg4"
+    "video/mp4 → .mp4, .mp4v, .mpg4",
+    ".svg → image/svg+xml",
+    "application/zip → .zip"
   ],
   "bestPractices": [
     "Use the dot prefix (e.g. .json) or plain extension (json) — both work",
     "For MIME types with charset parameters, the charset is stripped for matching",
-    "Some MIME types map to multiple extensions — all are shown in results"
+    "Some MIME types map to multiple extensions — all are shown in results",
+    "Set the correct MIME type on responses so browsers render instead of downloading files"
   ],
   "commonMistakes": [
     "Entering a full file path instead of just the extension",
     "Confusing application/json with text/json — they differ",
-    "Expecting vendor-specific MIME types that aren't in the common lookup table"
+    "Expecting vendor-specific MIME types that aren't in the common lookup table",
+    "Using a generic type like application/octet-stream when a specific type exists",
+    "Serving .js files without the correct JavaScript MIME type, which blocks execution in modern browsers"
   ],
   "faq": [
     "How many MIME types are in the database? — Over 100 common types covering web, document, media, and font formats.",
     "Does it handle charset parameters in MIME types? — Yes, charset suffixes are stripped before matching.",
-    "Can I look up custom or vendor-specific MIME types? — Only if they're in the built-in database; no external API is used."
+    "Can I look up custom or vendor-specific MIME types? — Only if they're in the built-in database; no external API is used.",
+    "Is my lookup sent anywhere? — No, the database is bundled with the page and lookup happens locally in your browser."
   ],
   "features": [
     "Look up MIME types by file extension",

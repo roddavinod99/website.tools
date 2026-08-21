@@ -1,41 +1,51 @@
 {
-  "whatItDoes": "Estimates the home price you can afford based on your annual income, other monthly debts, available down payment, mortgage rate, and the maximum debt-to-income ratio you choose to allow.",
+  "whatItDoes": "Estimates the home price you can afford based on your annual income, other monthly debts, available down payment, mortgage rate, and the maximum debt-to-income ratio you choose to allow. Back-calculates a realistic price range from your own affordability rule.",
   "whyItExists": "Lenders approve based on the debt-to-income ratio, but approvals don't tell you what keeps your budget comfortable. This calculator back-calculates a realistic price from your own affordability rule.",
   "whoShouldUse": "First-time buyers setting a price range, families checking budget limits, and anyone comparing how a larger down payment changes affordability.",
   "useCases": [
     "Set a realistic home price range before shopping",
     "See how other debts shrink your budget",
     "Test how a higher down payment expands your range",
-    "Check if your dream price fits your DTI cap"
+    "Check if your dream price fits your DTI cap",
+    "Compare buying power at different mortgage rates",
+    "Decide how much debt to clear before applying for a mortgage"
   ],
   "instructions": [
     "Enter your annual household gross income",
     "Enter other monthly debt payments (cards, auto, student loans)",
     "Enter the down payment you have available",
     "Set a mortgage rate, term, and the max DTI you want",
-    "Read the affordable home price and monthly housing budget"
+    "Read the affordable home price and monthly housing budget",
+    "Adjust the DTI or down payment to see how your range changes"
   ],
   "examples": [
-    "$90,000 income, $40,000 down, 6.5% for 30 years at 36% DTI -> affordable approx $290,000",
-    "$120,000 income, $60,000 down, 6% for 30 years at 36% DTI -> affordable approx $430,000"
+    "$90,000 income, $40,000 down, 6.5% for 30 years at 36% DTI → affordable ≈ $290,000",
+    "$120,000 income, $60,000 down, 6% for 30 years at 36% DTI → affordable ≈ $430,000",
+    "$90,000 income, $80,000 down, 6.5% for 30 years at 36% DTI → the larger down payment adds roughly $40,000 of buying power",
+    "$150,000 income with $1,200/month in other debts → the debts shrink affordable price by tens of thousands"
   ],
   "bestPractices": [
     "Keep a buffer — use 36% DTI even if a lender allows 43%",
     "Include a realistic mortgage rate, not a teaser",
     "Remember property tax, insurance, and HOA are not in the number",
-    "Re-run after any income, rate, or down payment change"
+    "Re-run after any income, rate, or down payment change",
+    "Pre-qualify with a lender to confirm your budget before house hunting"
   ],
   "commonMistakes": [
     "Entering net instead of gross income",
     "Forgetting other debts like car and student loans",
     "Using the maximum approval without a comfort buffer",
-    "Ignoring taxes, insurance, and HOA in the real payment"
+    "Ignoring taxes, insurance, and HOA in the real payment",
+    "Assuming the rate won't change before you lock",
+    "Ignoring closing costs and moving expenses when sizing your budget"
   ],
   "faq": [
     "What is a good DTI to use? — 36% is a common comfortable cap; lenders may stretch to 43%.",
     "Does this include property taxes? — No, those are added on top of the mortgage.",
     "Can I lower the payment by increasing down payment? — Yes, try a larger down payment and re-run.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "What is DTI? — The debt-to-income ratio: your total monthly debt payments divided by your gross monthly income.",
+    "Why should I use 36% instead of the lender's max? — A buffer protects you when rates rise or income dips."
   ],
   "references": [
     {

@@ -19,31 +19,38 @@
   ],
   "examples": [
     "Input: '<h1>Title</h1><p>Hello <strong>world</strong></p>'. Output: '# Title\\n\\nHello **world**'",
-    "Input: '<a href=\"https://example.com\">click here</a>' with reference links. Output: '[click here][0]\\n\\n[0]: https://example.com'"
+    "Input: '<a href=\"https://example.com\">click here</a>' with reference links. Output: '[click here][0]\\n\\n[0]: https://example.com'",
+    "Input: '<ul><li>One</li><li>Two</li></ul>' with * bullets. Output: '* One\\n* Two'",
+    "Input: '<img src=\"/logo.png\" alt=\"Logo\">'. Output: '![Logo](/logo.png)'"
   ],
   "bestPractices": [
     "Use ATX headings (#) for Markdown that will be processed by most static site generators",
     "Use reference-style links when the Markdown will be manually edited to keep URLs out of the text flow",
     "Strip inline styles before conversion to avoid bloated output with style attribute residue",
-    "Review the output for complex tables, as some HTML tables may not convert perfectly"
+    "Review the output for complex tables, as some HTML tables may not convert perfectly",
+    "Test the converted output in your target Markdown parser before mass migration"
   ],
   "commonMistakes": [
     "Converting HTML that contains complex tables or nested lists and expecting pixel-perfect results",
     "Using fenced code style but the target Markdown parser only supports indented code blocks",
     "Forgetting to check heading style compatibility with the target platform",
-    "Converting content with inline event handlers that are irrelevant in Markdown"
+    "Converting content with inline event handlers that are irrelevant in Markdown",
+    "Expecting whitespace-heavy HTML to collapse the same way in Markdown"
   ],
   "faq": [
     "Does it handle images? Yes, <img> tags are converted to Markdown image syntax ![alt](src).",
     "Can I convert HTML tables? Basic tables are converted, but complex rowspan/colspan may not work perfectly.",
     "What happens to <style> and <script> blocks? They are stripped from the output.",
-    "Does it support nested lists? Yes, nested <ul>/<ol> elements are preserved as nested Markdown lists."
+    "Does it support nested lists? Yes, nested <ul>/<ol> elements are preserved as nested Markdown lists.",
+    "Is my HTML sent anywhere? No, the conversion runs entirely in your browser.",
+    "Which heading style should I choose? ATX (#) is the most widely supported by static site generators and editors."
   ],
   "features": [
     "Convert HTML to clean Markdown",
     "Preserves headings, lists, links, and images",
     "Configurable conversion options",
-    "Copy the generated Markdown"
+    "Copy the generated Markdown",
+    "100% browser-based and private"
   ],
   "references": [
     {

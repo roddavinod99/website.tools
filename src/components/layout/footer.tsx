@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ShieldCheck, EyeOff, Lock } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 import { VisitCounter } from "@/components/layout/visit-counter";
 
@@ -36,6 +36,7 @@ const footerLinks = [
     title: "Learn",
     links: [
       { label: "Guides", href: "/guides" },
+      { label: "Compare", href: "/compare" },
       { label: "Tutorials", href: "/tutorials" },
       { label: "Blog", href: "/blog" },
       { label: "Best Practices", href: "/best-practices" },
@@ -132,6 +133,29 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-12 border-t border-surface-200 pt-8 dark:border-dark-border">
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+            {[
+              { icon: ShieldCheck, label: "100% Client-Side", href: "/security" },
+              { icon: EyeOff, label: "No Tracking", href: "/privacy" },
+              { icon: Lock, label: "No Account Required", href: "/" },
+            ].map(({ icon: Icon, label, href }) => (
+              <Link
+                key={label}
+                href={href}
+                className="flex items-center gap-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
+              >
+                <Icon className="h-4 w-4 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+                {label}
+              </Link>
+            ))}
+            <span className="hidden h-4 w-px bg-surface-300 dark:bg-dark-border sm:block" aria-hidden="true" />
+            <Link href="/security" className="text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text">
+              Security
+            </Link>
+            <Link href="/accessibility" className="text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text">
+              Accessibility
+            </Link>
+          </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-surface-500 dark:text-dark-muted">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.

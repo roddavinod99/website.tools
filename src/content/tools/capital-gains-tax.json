@@ -5,33 +5,47 @@
   "useCases": [
     "Estimate tax on a stock or mutual fund sale",
     "Budget for a property sale with closing costs",
-    "Compare scenarios of different cost assumption",
-    "See whether a sale is actually with gain or loss"],
+    "Compare scenarios of different cost assumptions",
+    "See whether a sale is actually with gain or loss",
+    "Plan the timing of a sale across tax years",
+    "Check how higher purchase costs change the taxable gain"
+  ],
   "instructions": [
     "Enter the purchase price of the asset",
     "Enter the sale price",
     "Add any purchase costs (commissions, fees)",
     "Add any selling costs (agent fees, closing costs)",
-    "Enter the tax rate and read the estimated gain and tax"],
+    "Enter the tax rate and read the estimated gain and tax",
+    "Adjust the rate to model long-term vs. short-term holdings"
+  ],
   "examples": [
-    "Purchased $50,000 + $500 fees, sold $75,000 - $1,000 fees, 15% rate -> gain $23,500, tax approx $3,525",
-    "Purchased $20,000, sold $15,000 -> a $5,000 loss, no taxable gain, no tax"],
+    "Purchased $50,000 + $500 fees, sold $75,000 − $1,000 fees, 15% rate → gain $23,500, tax ≈ $3,525",
+    "Purchased $20,000, sold $15,000 → a $5,000 loss, no taxable gain, no tax",
+    "Purchased $10,000 + $200 fees, sold $18,000 − $300 fees, 20% rate → gain $7,500, tax ≈ $1,500",
+    "Same gain held short-term at 32% → tax rises to ≈ $2,400, showing why holding period matters"
+  ],
   "bestPractices": [
     "Include all fees — commissions, closing, legal, transfer taxes",
     "Use the correct rate for your holding period (long-term vs short-term)",
     "Check the current tax authority rates before relying on the figure",
-    "Treat the number as an estimate, not tax advice"],
+    "Treat the number as an estimate, not tax advice",
+    "Track your basis documents so purchase costs are accurate"
+  ],
   "commonMistakes": [
     "Forgetting purchase or selling costs that reduce the gain",
     "Applying the tax rate to the full sale price instead of the gain",
     "Ignoring that losses usually mean no tax is owed",
-    "Assuming one flat rate applies to every situation"
+    "Assuming one flat rate applies to every situation",
+    "Mixing up long-term and short-term holding periods"
   ],
   "faq": [
     "Is this tax advice? — No, it is an informational estimate based on the inputs.",
     "What if I sold at a loss? — The loss is shown and the taxable gain is zero.",
-    "Which rate should I use? — Use the account of the rate applicable to your asset: long-term, short-term, or local rules.",
-    "Are my numbers shared? — No, the calculation is done entirely in your browser."],
+    "Which rate should I use? — Use the rate applicable to your asset: long-term, short-term, or local rules.",
+    "Are my numbers shared? — No, the calculation is done entirely in your browser.",
+    "What is the difference between long-term and short-term? — Most tax systems tax assets held over one year at a lower rate than those sold within a year.",
+    "Can I offset gains with losses? — Yes, in many systems capital losses reduce taxable gains; enter a net figure to model it."
+  ],
   "references": [
     {
       "label": "IRS Capital Gains and Losses (Topic 409)",

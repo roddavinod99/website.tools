@@ -19,19 +19,22 @@
     "2001:0db8:0000:0000:0000:ff00:0042:8329 → compressed: 2001:db8::ff00:42:8329",
     "fe80::1 → link-local scope",
     "2001:db8::/48 → 2^80 available addresses",
-    "fc00::/7 → unique-local (ULA) scope"
+    "fc00::/7 → unique-local (ULA) scope",
+    "2001:db8:1:2::/64 → the network is 2001:db8:1:2:: and hosts span 2001:db8:1:2:0:0:0:0 through 2001:db8:1:2:ffff:ffff:ffff:ffff"
   ],
   "bestPractices": [
     "Always validate the neighbor ID with NDP rather than assuming reachability",
     "Use the compressed form for configuration but the expanded form when comparing bit-by-bit",
     "Treat /64 as the standard subnet size for most networks",
-    "Remember that IPv6 subnets are dramatically larger than IPv4 for several orders of magnitude"
+    "Remember that IPv6 subnets are dramatically larger than IPv4 for several orders of magnitude",
+    "Use lowercase hexadecimal consistently per RFC 5952"
   ],
   "commonMistakes": [
     "Writing a single-digit group as 0x rather than 0000 when expanding",
     "Applying IPv4-style subnet-host math to an IPv6 prefix",
     "Confusing the double-colon with an ellipsis and dropping parts",
-    "Assuming link-local addresses are globally routable"
+    "Assuming link-local addresses are globally routable",
+    "Using uppercase and mixed-case hex, which RFC 5952 says should be lowercase"
   ],
   "faq": [
     "What is the double colon in IPv6? — It represents the longest run of trailing zero hextets and can appear only once in an address.",

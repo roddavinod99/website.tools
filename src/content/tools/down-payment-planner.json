@@ -1,41 +1,50 @@
 {
-  "whatItDoes": "Plans how long it takes to save a home down payment based on your goal, current savings, monthly contribution, and the interest your savings earn.",
+  "whatItDoes": "Plans how long it takes to save a home down payment based on your goal, current savings, monthly contribution, and the interest your savings earn. Shows the time to goal, the final balance, and the interest earned along the way.",
   "whyItExists": "A down payment is often the biggest savings goal a household sets, and the timeline depends on far more than the goal itself. Knowing the time to goal — and the monthly amount required — turns an abstract target into a concrete plan.",
   "whoShouldUse": "First-time homebuyers, renters building a deposit, and anyone setting a specific savings goal with a target amount.",
   "useCases": [
     "Estimate how long it takes to reach a down payment goal",
     "Check if your current monthly savings is enough",
     "See how interest on savings speeds things up",
-    "Plan how much more to save to hit a target date"
+    "Plan how much more to save to hit a target date",
+    "Compare down payment options (10% vs. 20%) and their timelines",
+    "Set a sustainable monthly contribution for a target closing date"
   ],
   "instructions": [
     "Enter your down payment goal",
     "Enter your current savings balance",
     "Enter your planned monthly contribution",
     "Enter the annual interest rate on your savings account",
-    "Read the time to goal, final balance, and interest earned"
+    "Read the time to goal, final balance, and interest earned",
+    "Adjust the monthly amount to hit a target date"
   ],
   "examples": [
-    "$40,000 goal, $10,000 saved, $500/month at 4% -> about 4.5 years",
-    "$20,000 goal, $0 saved, $500/month at 4% -> about 3.6 years"
+    "$40,000 goal, $10,000 saved, $500/month at 4% → about 4.5 years",
+    "$20,000 goal, $0 saved, $500/month at 4% → about 3.6 years",
+    "$50,000 goal, $25,000 saved, $750/month at 4% → about 2.8 years",
+    "Saving $400/month instead of $300 toward a $30,000 goal can cut years off the timeline"
   ],
   "bestPractices": [
     "Use the actual interest rate your savings account pays",
     "Re-run the plan as your balance grows or needs change",
     "Consider automating the monthly contribution",
-    "Keep a buffer above the exact down payment for closing costs"
+    "Keep a buffer above the exact down payment for closing costs",
+    "Review the plan when interest rates or home prices shift"
   ],
   "commonMistakes": [
     "Ignoring interest your current balance already earns",
     "Choosing a monthly amount you can't sustain",
     "Forgetting closing costs on top of the down payment",
-    "Assuming no income change over the savings period"
+    "Assuming no income change over the savings period",
+    "Not adjusting the plan as the goal or timeline changes"
   ],
   "faq": [
     "Does this include closing costs? — No, it targets the down payment amount you enter.",
     "What rate should I use? — The rate your savings actually earns, often 3-5%.",
     "Can I plan for a future savings amount? — Yes, change monthly savings and re-run to see the schedule.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "What is a typical down payment? — Many conventional loans want at least 20%, but 10% or less is possible with mortgage insurance.",
+    "Should I invest my down payment savings? — Generally no — a down payment is a near-term goal best kept in low-risk, liquid savings."
   ],
   "references": [
     {

@@ -52,6 +52,31 @@ const homepageJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      name: "DevStackIO Tools",
+      url: siteConfig.url,
+      description: "Free online developer tools from DevStackIO. Format, encode, generate, convert, and analyze data entirely in your browser with no server uploads.",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": `${siteConfig.url}/#organization`,
+        name: "DevStackIO",
+        url: siteConfig.mainSiteUrl,
+      },
+      isPartOf: {
+        "@type": "WebSite",
+        name: siteConfig.mainSiteName,
+        url: siteConfig.mainSiteUrl,
+      },
+    },
+    {
       "@type": "ItemList",
       name: "Featured developer tools",
       description: "A selection of free, browser-based developer tools from DevStackIO.",

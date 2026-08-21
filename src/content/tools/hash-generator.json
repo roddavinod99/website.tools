@@ -20,31 +20,39 @@
   ],
   "examples": [
     "Input: 'hello' with SHA-256. Output: '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'",
-    "Input: HMAC-SHA1 with key='secret' and message='test'. Output: '6c3b4d50f9a0c3f5b8c9e1d2a3b4c5d6e7f8a9b0'"
+    "Input: HMAC-SHA1 with key='secret' and message='test'. Output: '6c3b4d50f9a0c3f5b8c9e1d2a3b4c5d6e7f8a9b0'",
+    "Input: 'hello' with MD5. Output: '5d41402abc4b2a76b9719d911017c592'",
+    "Input: 'hello' with CRC32. Output: '3610a686' (8 hex chars, checksum only)",
+    "Bulk mode: two lines 'foo' and 'bar' with SHA-256 → one hash per line, independently computed"
   ],
   "bestPractices": [
     "Use HMAC-SHA256 for API authentication rather than plain hashing of secrets",
     "Use salted hashes for password storage, never plain hashes without a unique salt per user",
     "CRC32 is for error-checking only, not cryptographic security; use SHA-256 for security",
-    "In bulk mode, prefix each input line with a label for easier identification in results"
+    "In bulk mode, prefix each input line with a label for easier identification in results",
+    "Verify file hashes with a documented algorithm — don't mix SHA-256 and SHA-512 checksums"
   ],
   "commonMistakes": [
     "Using CRC32 for cryptographic purposes when it is only suitable for checksums",
     "Forgetting to apply a salt before hashing passwords, making them vulnerable to rainbow table attacks",
     "Using HMAC mode but leaving the secret key empty, which produces a different result than expected",
-    "Copying the hash output with extra whitespace, causing compare mode to show a mismatch"
+    "Copying the hash output with extra whitespace, causing compare mode to show a mismatch",
+    "Assuming MD5 is secure — it is broken for cryptographic use and should only be used for checksums"
   ],
   "faq": [
     "What is HMAC and when should I use it? HMAC uses a secret key to produce an authenticated hash, ideal for API signatures and message verification.",
     "Does the tool support Unicode characters? Yes, it handles UTF-8 input strings correctly.",
     "How does bulk per-line mode work? Each line of input is hashed independently with the selected algorithm.",
-    "Can I hash a file by dragging it in? Yes, drag-and-drop a file and its content will be hashed."
+    "Can I hash a file by dragging it in? Yes, drag-and-drop a file and its content will be hashed.",
+    "Is my data shared? No, all hashing happens locally in your browser.",
+    "Why are MD5 and SHA-1 still listed if they're broken? They remain useful for checksums and legacy compatibility; use SHA-256 or higher for security."
   ],
   "features": [
     "Generate MD5, SHA-1/224/256/384/512, RIPEMD-160, and CRC32 hashes",
     "HMAC variants with a secret key",
     "Salt support and bulk per-line mode",
-    "Hash files with drag-and-drop"
+    "Hash files with drag-and-drop",
+    "100% browser-based and private"
   ],
   "references": [
     {

@@ -6,35 +6,45 @@
     "Estimate how much today's money is worth in the future",
     "Plan retirement income in terms of purchasing power",
     "See how a fixed amount loses spending power over decades",
-    "Model the 'future cost' of today's prices"
+    "Model the 'future cost' of today's prices",
+    "Adjust a savings goal for expected inflation",
+    "Compare nominal vs. real investment returns"
   ],
   "instructions": [
     "Enter the current amount",
     "Enter the annual inflation rate as a percent",
     "Enter the number of years",
-    "Read the loss in purchasing power and the future equivalent"
+    "Read the loss in purchasing power and the future equivalent",
+    "Compare different rates or horizons to see the sensitivity",
+    "Use the real (after-inflation) figure when planning goals"
   ],
   "examples": [
-    "$1,000 at 3% for 10 years -> future value +34%, buying power falls about 26%",
-    "$50,000 at 3% for 30 years -> future value $121,363, buying power today $20,600"
+    "$1,000 at 3% for 10 years → future value +34%, buying power falls about 26%",
+    "$50,000 at 3% for 30 years → future value $121,363, buying power today $20,600",
+    "$100,000 at 2% for 20 years → needs about $148,594 in 20 years to keep today's purchasing power",
+    "A $1,000,000 retirement goal at 3% inflation for 25 years must really be ≈ $2,094,000 in nominal terms"
   ],
   "bestPractices": [
     "Use a long-run average rate for planning, usually around 3%",
     "Remember inflation varies over time and by region",
     "Apply the real return (after inflation) when comparing investments",
-    "Re-run the calculation when rates or time horizons change"
+    "Re-run the calculation when rates or time horizons change",
+    "Use a higher rate for costs like healthcare that outpace the average"
   ],
   "commonMistakes": [
     "Confusing the future numeric value with purchasing power",
     "Using a short-term spike in inflation for a long projection",
     "Forgetting that salaries and prices usually both rise with inflation",
-    "Ignoring that some costs (healthcare, housing) outpace the average"
+    "Ignoring that some costs (healthcare, housing) outpace the average",
+    "Planning a retirement goal in nominal dollars without adjusting for inflation"
   ],
   "faq": [
     "Why does the same amount buy less? — Inflation raises prices each year, so money goes less far.",
     "What does future value mean? — The projected numeric amount after applying the rate.",
     "What is today's value? — The amount today that purchases the same as the future value then.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "What is the average inflation rate? — Historically around 2-3% in many developed economies, but it varies by period and region.",
+    "Why should I adjust retirement goals for inflation? — Because a fixed nominal goal buys less every year; real purchasing power is what matters."
   ],
   "references": [
     {

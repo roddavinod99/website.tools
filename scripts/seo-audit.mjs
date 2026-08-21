@@ -43,6 +43,51 @@ function log(...args) { auditLog(...args); }
 
 // ── Helpers ──
 
+/**
+ * Parse `slug: "..."` values from a named array declaration in a data source
+ * file (tool registry / categories / learning topics), matching the pattern
+ * `export const NAME ... = [ ... ];`. Used because src/lib/constants.ts is a
+ * barrel re-export that no longer contains the actual declarations.
+ */
+function readDataSlugs(filePath, arrayName) {
+  let raw;
+  try {
+    raw = readFileSync(filePath, "utf-8");
+  } catch {
+    return [];
+  }
+  const match = raw.match(new RegExp(`const ${arrayName}[\\s\\S]*?=\\s*\\[([\\s\\S]*?)\\];`));
+  if (!match) return [];
+  return [...match[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
+}
+
+/**
+ * Parse tool slugs from the tools registry, excluding entries marked
+ * `noindex: true` (those are intentionally omitted from the sitemap and
+ * therefore must not count as orphan pages).
+ */
+function readIndexedToolSlugs() {
+  const filePath = join(ROOT, "src", "lib", "data", "tools.ts");
+  let raw;
+  try {
+    raw = readFileSync(filePath, "utf-8");
+  } catch {
+    return [];
+  }
+  const match = raw.match(/const allTools[\s\S]*?=\s*\[([\s\S]*?)\];/);
+  if (!match) return [];
+  const body = match[1];
+  const slugs = [];
+  for (const m of body.matchAll(/slug:\s*"([^"]+)"/g)) {
+    // Find the enclosing object `{ ... }` and check for a noindex flag.
+    const start = body.lastIndexOf("{", m.index);
+    const end = body.indexOf("}", m.index);
+    const obj = end > start ? body.slice(start, end) : "";
+    if (!/\bnoindex\s*:\s*true/.test(obj)) slugs.push(m[1]);
+  }
+  return slugs;
+}
+
 function fetchWithTimeout(url, ms = 15000) {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), ms);
@@ -115,26 +160,14 @@ async function parseSitemap() {
 // ── 2. Orphan Detection ──
 
 async function detectOrphans(sitemapUrls) {
-  const constantsPath = join(ROOT, "src", "lib", "constants.ts");
-  const constantsRaw = readFileSync(constantsPath, "utf-8");
+  // Parse category slugs from categoryMetas (now in src/lib/data/categories.ts)
+  const catSlugs = readDataSlugs(join(ROOT, "src", "lib", "data", "categories.ts"), "categoryMetas");
 
-  // Parse category slugs from categoryMetas
-  const categoryMetasMatch = constantsRaw.match(/const categoryMetas\s*=\s*\[([\s\S]*?)\];/);
-  const catSlugs = categoryMetasMatch
-    ? [...categoryMetasMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
-    : [];
+  // Parse tool slugs from allTools array (now in src/lib/data/tools.ts), excluding noindex tools
+  const toolSlugs = readIndexedToolSlugs();
 
-  // Parse tool slugs from allTools array
-  const allToolsMatch = constantsRaw.match(/export const allTools\s*=\s*\[([\s\S]*?)\];/);
-  const toolSlugs = allToolsMatch
-    ? [...allToolsMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
-    : [];
-
-  // Parse guide slugs from learningTopics array (only these should have guide pages)
-  const learningTopicsMatch = constantsRaw.match(/export const learningTopics\s*=\s*\[([\s\S]*?)\];/);
-  const topicSlugs = learningTopicsMatch
-    ? [...learningTopicsMatch[1].matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
-    : [];
+  // Parse guide slugs from learningTopics array (now in src/lib/data/learning.ts)
+  const topicSlugs = readDataSlugs(join(ROOT, "src", "lib", "data", "learning.ts"), "learningTopics");
 
   const expected = new Set();
 
@@ -328,7 +361,7 @@ async function checkStructuredData() {
     }
   };
 
-  checkPage(join(appDir, "tools", "[slug]"), ["WebApplication", "BreadcrumbList"]);
+  checkPage(join(appDir, "tools", "[slug]"), ["SoftwareApplication", "BreadcrumbList"]);
   checkPage(join(appDir, "blog", "[slug]"), ["Article", "BreadcrumbList"]);
   checkPage(join(appDir, "guides", "[slug]"), ["TechArticle", "BreadcrumbList"]);
   checkPage(join(appDir, "categories", "[slug]"), ["BreadcrumbList"]);
@@ -449,10 +482,16 @@ function checkCrawlDepth() {
 
 function checkSecurityHeaders() {
   const configPath = join(ROOT, "next.config.ts");
-  let content;
-  try { content = readFileSync(configPath, "utf-8"); } catch {
-    return { issueCount: 1, issues: ["next.config.ts not found"] };
+  const middlewarePath = join(ROOT, "src", "middleware.ts");
+  const nginxPaths = [join(ROOT, "src", "nginx", "nginx.prod.conf"), join(ROOT, "nginx", "nginx.prod.conf")];
+  const sources = [];
+  for (const p of [configPath, middlewarePath, ...nginxPaths]) {
+    try { sources.push(readFileSync(p, "utf-8")); } catch { /* missing */ }
   }
+  if (sources.length === 0) {
+    return { issueCount: 1, issues: ["No header config sources found (next.config.ts / middleware.ts / nginx)"], totalChecked: 8, present: 0 };
+  }
+  const content = sources.join("\n");
 
   const requiredHeaders = [
     { name: "Content-Security-Policy", pattern: "Content-Security-Policy" },
@@ -605,12 +644,7 @@ async function checkStatusCodes(sitemapUrls) {
     }
   } else {
     // Static mode: verify every tool slug has a corresponding content JSON file
-    const constantsRaw = readFileSync(join(ROOT, "src", "lib", "constants.ts"), "utf-8");
-    const allSlugs = [...constantsRaw.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1]);
-    // Tool slugs come after category slugs and before learning topic slugs
-    const catCount = 7;
-    const toolCount = allSlugs.length - catCount - 10; // 10 learning topics
-    const toolOnly = allSlugs.slice(catCount, catCount + toolCount);
+    const toolOnly = readDataSlugs(join(ROOT, "src", "lib", "data", "tools.ts"), "allTools");
     for (const slug of toolOnly) {
       const contentPath = join(ROOT, "src", "content", "tools", `${slug}.json`);
       if (!existsSync(contentPath)) {
@@ -624,7 +658,7 @@ async function checkStatusCodes(sitemapUrls) {
       for (const f of contentFiles) {
         const slug = f.replace(".json", "");
         if (!toolOnly.includes(slug)) {
-          issues.push(`Content file ${f} has no matching tool in constants.ts`);
+          issues.push(`Content file ${f} has no matching tool in the tools registry`);
         }
       }
     }

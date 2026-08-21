@@ -6,34 +6,45 @@
     "Measure total wealth at a single point in time",
     "Review a baseline and track progress over years",
     "See whether a large planned purchase fits the balance sheet",
-    "Understand how liabilities compare to assets"
+    "Understand how liabilities compare to assets",
+    "Set a yearly net-worth goal and monitor the trend",
+    "Evaluate the impact of paying down debt on overall wealth"
   ],
   "instructions": [
     "Enter your total assets",
     "Enter your total liabilities",
-    "Read the net worth and the breakdown"
+    "Read the net worth and the breakdown",
+    "Use current market values, not purchase prices",
+    "Re-calculate at the same date each year to track the trend",
+    "Add or remove asset/liability lines to model a planned purchase"
   ],
   "examples": [
-    "Assets $500,000 and liabilities $200,000 -> net worth $300,000",
-    "Assets $150,000 and liabilities $180,000 -> net worth -$30,000 (negative)"
+    "Assets $500,000 and liabilities $200,000 → net worth $300,000",
+    "Assets $150,000 and liabilities $180,000 → net worth -$30,000 (negative)",
+    "Assets $800,000 and liabilities $150,000 → net worth $650,000",
+    "Paying $20,000 off a card lifts net worth by $20,000 even without any new savings"
   ],
   "bestPractices": [
     "Use fair current market values, not purchase prices",
     "Include all major assets and every liability",
     "Calculate at a fixed date each year for comparability",
-    "Include retirement accounts as assets"
+    "Include retirement accounts as assets",
+    "Recompute after major events like a home purchase, refinance, or big payoff"
   ],
   "commonMistakes": [
     "Valuing your home at purchase price instead of market value",
     "Forgetting credit card, auto, or student loans",
     "Leaving out retirement and brokerage accounts from assets",
-    "Treating net worth as the only measure of financial health"
+    "Treating net worth as the only measure of financial health",
+    "Ignoring taxes on retirement accounts, which reduce their real value"
   ],
   "faq": [
     "What counts as an asset? — Cash, savings, the market value of your home, and investments.",
     "What counts as a liability? — Mortgages, auto and student loans, and card balances.",
-    "Is a negative net worth bad? — Not always; many people start with students, for example.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is a negative net worth bad? — Not always; many people start with student debt, for example.",
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "Should I count my primary home? — Yes, at fair market value minus the outstanding mortgage.",
+    "How often should I track it? — Once a year is enough to see the trend; more often creates noise from market swings."
   ],
   "references": [
     {

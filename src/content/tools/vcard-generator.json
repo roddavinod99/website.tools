@@ -17,7 +17,10 @@
     "Import the file into Contacts, Outlook, or Gmail to verify it"
   ],
   "examples": [
-    "BEGIN:VCARD\nVERSION:3.0\nN:Doe;John;;;\nFN:John Doe\nTEL;TYPE=WORK,VOICE:+1 555 0100\nEMAIL:john.doe@example.com\nORG:DevStackIO\nEND:VCARD"
+    "BEGIN:VCARD\nVERSION:3.0\nN:Doe;John;;;\nFN:John Doe\nTEL;TYPE=WORK,VOICE:+1 555 0100\nEMAIL:john.doe@example.com\nORG:DevStackIO\nEND:VCARD",
+    "A card with an address adds: ADR;TYPE=WORK:;;100 Main St;Springfield;IL;62701;US",
+    "A card with a website adds: URL;TYPE=WORK:https://example.com",
+    "A card with a photo adds: PHOTO;ENCODING=b;TYPE=JPEG:<base64 data>"
   ],
   "bestPractices": [
     "Use the FN (formatted name) field so the card displays the exact name you want",

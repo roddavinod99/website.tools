@@ -19,33 +19,41 @@
     "Download the result as a .csv file or copy to clipboard; adjust settings and reconvert if needed"
   ],
   "examples": [
-    "Input: [{\"user\":{\"name\":\"Alice\",\"age\":30},\"tags\":[\"admin\",\"editor\"]}] -> Output: user.name,user.age,tags.0,tags.1\\nAlice,30,admin,editor",
-    "Input: [{\"id\":1,\"value\":null},{\"id\":2,\"value\":\"ok\"}] with nullMode=skip -> Output: id,value\\n2,ok"
+    "Input: [{\"user\":{\"name\":\"Alice\",\"age\":30},\"tags\":[\"admin\",\"editor\"]}] → Output: user.name,user.age,tags.0,tags.1\\nAlice,30,admin,editor",
+    "Input: [{\"id\":1,\"value\":null},{\"id\":2,\"value\":\"ok\"}] with nullMode=skip → Output: id,value\\n2,ok",
+    "Input: [{\"name\":\"Bob\",\"role\":\"dev\"},{\"name\":\"Carol\",\"role\":\"ops\"}] → Output: name,role\\nBob,dev\\nCarol,ops",
+    "Input: [{\"meta\":{\"version\":\"1.0\"},\"items\":[1,2]}] → Output: meta.version,items.0,items.1\\n1.0,1,2"
   ],
   "bestPractices": [
     "Ensure JSON is an array of objects for proper CSV output; single objects produce only headers",
     "Enable BOM when the CSV will be opened in any version of Microsoft Excel to prevent encoding issues",
     "Use \"Quote All Fields\" if any values contain the delimiter character to avoid broken columns",
     "Preview the output before downloading to catch incorrect nested flattening early",
-    "For very large datasets (10K+ rows), consider splitting into smaller batches to avoid browser performance issues"
+    "For very large datasets (10K+ rows), consider splitting into smaller batches to avoid browser performance issues",
+    "Keep field names consistent across objects so the header row stays clean"
   ],
   "commonMistakes": [
     "Feeding a single JSON object instead of an array expecting multiple rows of output",
     "Forgetting to enable BOM and wondering why Excel shows garbled characters",
     "Not accounting for commas or newlines within cell values, causing column misalignment",
     "Assuming nested arrays will be intelligently unrolled rather than flattened with index keys",
-    "Setting null handling to \"Skip Row\" which removes the entire row instead of just the null field"
+    "Setting null handling to \"Skip Row\" which removes the entire row instead of just the null field",
+    "Using a delimiter that also appears in the data without enabling quote-all"
   ],
   "faq": [
     "Can I convert deeply nested JSON with 5+ levels? Yes, the tool flattens recursively using dot notation regardless of depth level.",
     "What happens if my JSON has inconsistent field names across objects? Missing fields are rendered as empty cells based on the null handling mode selected.",
     "Does this work with JSON arrays of primitives like [1,2,3]? Yes, but the output will be a single column with a default header name; best results come from arrays of objects.",
-    "Can I import the CSV back into JSON? No, this is a one-way conversion; consider a separate CSV-to-JSON tool for reverse conversion."
+    "Can I import the CSV back into JSON? No, this is a one-way conversion; consider a separate CSV-to-JSON tool for reverse conversion.",
+    "What is BOM and when do I need it? BOM is a byte-order mark that helps Excel detect UTF-8 encoding; enable it when the file will be opened in Excel.",
+    "How are null values handled? Depending on the selected mode they become empty strings, the literal null, or the whole row is skipped.",
+    "What delimiter should I use? Comma is the default, but semicolon is common in locales where comma is the decimal separator."
   ],
   "features": [
     "Convert JSON arrays to CSV",
     "Custom delimiter and quote handling",
     "Flatten nested objects to columns",
+    "Null-value handling modes",
     "Download the resulting CSV file"
   ],
   "references": [

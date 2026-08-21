@@ -6,36 +6,45 @@
     "Compare buying vs. renting for a 5-year stay",
     "See how long you must stay for buying to win",
     "Test the impact of mortgage rate and appreciation assumptions",
-    "Understand the opportunity cost of the down payment"
+    "Understand the opportunity cost of the down payment",
+    "Compare a 15-year vs. 30-year mortgage inside the buy scenario",
+    "Decide whether a move of a few years justifies buying"
   ],
   "instructions": [
     "Enter the home price and the rent of a comparable place",
     "Enter your planned down payment percent and mortgage rate",
     "Set the number of years you plan to stay",
     "Adjust appreciation and investment-return assumptions",
-    "Read the verdict and the net cost of each path"
+    "Read the verdict and the net cost of each path",
+    "Vary the horizon to find how long you must stay for buying to win"
   ],
   "examples": [
     "$400,000 home vs. $2,000 rent, 20% down, 6.5% rate, 5 years",
-    "$300,000 home vs. $1,500 rent, 10% down, 7% rate, 3 years"
+    "$300,000 home vs. $1,500 rent, 10% down, 7% rate, 3 years",
+    "A longer horizon usually flips the verdict — buying typically needs 5+ years to beat renting",
+    "Higher appreciation assumptions strongly favor buying; conservative ones favor renting"
   ],
   "bestPractices": [
     "Use a rent for a home comparable in size and area",
     "Pick a horizon you'll realistically honor",
     "Adjust appreciation and the alternative investment return honestly",
-    "Re-run the comparison when rates or prices move"
+    "Re-run the comparison when rates or prices move",
+    "Include expected maintenance and property tax in the buy scenario"
   ],
   "commonMistakes": [
     "Comparing rent to mortgage alone and ignoring taxes and maintenance",
     "Using an unrealistically short horizon",
     "Forgetting the down payment could have been invested",
-    "Assuming appreciation continues at the current pace forever"
+    "Assuming appreciation continues at the current pace forever",
+    "Ignoring that rent also tends to rise over time"
   ],
   "faq": [
     "Why does renting invest the down payment? — Money not tied up in a home is assumed to earn the investment return instead.",
     "Are closing and moving costs included? — No, this simplified version omits them.",
     "What if my horizon is very short? — Short horizons usually favor renting because buying costs are spread thinly.",
-    "Is this financial advice? — No, it is a comparison estimate with stated assumptions."
+    "Is this financial advice? — No, it is a comparison estimate with stated assumptions.",
+    "How long should I stay before buying pays off? — Roughly 5+ years for most markets, but the exact number depends on prices, rates, and appreciation.",
+    "Does buying always build more wealth? — Not necessarily — the math depends on how long you stay and how prices and rents grow."
   ],
   "references": [
     {

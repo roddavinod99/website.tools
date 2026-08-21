@@ -18,7 +18,8 @@
   ],
   "examples": [
     "Input: John.Doe+Work@Gmail.com, j.o.h.n.d.o.e@gmail.com -> Both normalize to: johndoe@gmail.com",
-    "Input: alice@EXAMPLE.COM, alice@example.com -> With lowercase: alice@example.com (deduplicated)"
+    "Input: alice@EXAMPLE.COM, alice@example.com -> With lowercase: alice@example.com (deduplicated)",
+    "Input: ' bob+tag@outlook.com ' (with spaces) -> Trimmed and lowercased: bob+tag@outlook.com"
   ],
   "bestPractices": [
     "Always lowercase email addresses — email addresses are case-insensitive per RFC 5321",

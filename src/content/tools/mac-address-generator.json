@@ -23,17 +23,20 @@
   "bestPractices": [
     "Use locally administered addresses (L bit set) for testing to avoid conflicts with real hardware",
     "Generate unicast addresses (M bit clear) for most standard networking use cases",
-    "Use dashes or colons consistently to match your target platform's expected format"
+    "Use dashes or colons consistently to match your target platform's expected format",
+    "Set a recognizable OUI prefix when you need addresses that look like a specific vendor"
   ],
   "commonMistakes": [
     "Forgetting that the first two bits of the first octet control multicast and local/universal flags",
     "Using globally unique addresses in test environments where MAC spoofing is needed",
-    "Generating more addresses than needed — large batches are harder to review and manage"
+    "Generating more addresses than needed — large batches are harder to review and manage",
+    "Expecting a stable, deterministic output between runs — MACs are random by design"
   ],
   "faq": [
     "What is the difference between local and universal MAC addresses? — Universal (U/L bit = 0) addresses are assigned by the manufacturer; local (U/L bit = 1) addresses are manually configured or software-generated.",
     "Why would I need random MAC addresses? — Common uses include VM provisioning, network testing, MAC authentication bypass research, and lab environments.",
-    "Can these MACs conflict with real hardware? — Globally unique (non-local) generated MACs may theoretically conflict. Use the Local bit for testing to avoid this."
+    "Can these MACs conflict with real hardware? — Globally unique (non-local) generated MACs may theoretically conflict. Use the Local bit for testing to avoid this.",
+    "Is anything generated sent to a server? — No, addresses are produced locally in your browser using the Web Crypto API."
   ],
   "features": [
     "Generate random MAC addresses",

@@ -25,6 +25,7 @@
     "test:bench": "vitest run tests/performance/wasm-bench.test.ts",
     "test:snapshots": "playwright test tests/snapshots.spec.ts",
     "test:security": "playwright test tests/security.spec.ts",
+    "test:seo": "playwright test tests/seo-structured-data.spec.ts",
     "analyze": "cross-env ANALYZE=true next build",
     "clean": "node scripts/cleanup.mjs"
   },

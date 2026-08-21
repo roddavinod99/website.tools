@@ -6,42 +6,51 @@
     "Decide how much to save monthly to reach a deposit goal",
     "Set an emergency fund target and the timeline to it",
     "Plan a large upcoming spending like a down payment or wedding",
-    "Check whether the current contribution rate is on target"
+    "Check whether the current contribution rate is on target",
+    "Reverse-engineer a monthly amount from a target date",
+    "Model how a return rate accelerates reaching the goal"
   ],
   "instructions": [
     "Enter the goal amount you want to reach",
     "Enter what you already have saved",
     "Enter the monthly amount you can contribute",
     "Set the expected annual return rate",
-    "Read the required monthly amount and the projected time to goal"
+    "Read the required monthly amount and the projected time to goal",
+    "Adjust any input to see how it changes the plan"
   ],
   "examples": [
-    "Goal $50,000, savings $5,000, $1,000/month, no return -> done in about 45 months",
-    "Goal $100,000, savings $10,000, 6% return -> under $1,300/month will needed for 5 years",
-    "Goal $20,000 in 2 years with current $2,000 -> about $750/month at 0% return"
+    "Goal $50,000, savings $5,000, $1,000/month, no return → done in about 45 months",
+    "Goal $100,000, savings $10,000, 6% return → under $1,300/month needed for 5 years",
+    "Goal $20,000 in 2 years with current $2,000 → about $750/month at 0% return",
+    "Goal $30,000 in 3 years with $0 saved and 5% return → roughly $765/month required"
   ],
   "bestPractices": [
     "Break large goals into yearly and monthly targets",
     "Automate your contribution the same day you get paid",
     "Adjust the plan whenever your income or goal changes",
-    "Keep an emergency cushion in a separately liquid account"
+    "Keep an emergency cushion in a separately liquid account",
+    "Revisit the plan quarterly to stay honest about progress"
   ],
   "commonMistakes": [
     "Assuming returns guaranteed and ignoring inflation",
     "Setting a single month of contribution and then never adjusting",
     "Underestimating how long compound growth needs to work",
-    "Planning to rely on the goal amount before it's actually earned"
+    "Planning to rely on the goal amount before it's actually earned",
+    "Forgetting that a 0% return goal needs every dollar saved manually"
   ],
   "faq": [
     "What if I can't reach the required monthly amount? — Lengthen the horizon or shrink the goal; the tool lets you see what each choice does.",
-    "Does the projection account for inflation —? No, adjust the goal for inflation to model real purchase power.",
+    "Does the projection account for inflation? — No, adjust the goal for inflation to model real purchase power.",
     "Can I use a rate of zero? — Yes, that models a no-return cash account.",
-    "Is my data private? — Yes, everything runs locally in the browser."
+    "Is my data private? — Yes, everything runs locally in the browser.",
+    "Should I include returns in my plan? — For long goals yes, but use a conservative rate so you're not disappointed.",
+    "What is a good emergency fund size? — A common rule of thumb is 3-6 months of essential expenses, saved in a liquid account."
   ],
   "features": [
     "Required monthly sum and finish date",
     "On-track status vs. target",
     "Works with or without an assumed return",
+    "Goal timeline planning in one view",
     "100% browser-based and private"
   ],
   "references": [

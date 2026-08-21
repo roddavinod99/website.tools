@@ -1,4 +1,4 @@
-﻿/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -40,7 +40,7 @@ export default function DMCAPage() {
           <p className="text-sm text-brand-700 dark:text-brand-300">
             <strong>Summary:</strong> DevStackIO respects intellectual property rights. If you believe your copyrighted
             work has been infringed on our platform, submit a DMCA notice to{" "}
-            <a href="mailto:copyright@devstackio.com" className="underline hover:text-brand-600">copyright@devstackio.com</a>.
+            <a href="mailto:contact@devstackio.com" className="underline hover:text-brand-600">contact@devstackio.com</a>.
             We process valid notices promptly and provide a counter-notification procedure.
           </p>
         </div>
@@ -70,9 +70,9 @@ export default function DMCAPage() {
             </p>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-1">
               <p><strong>Name:</strong> DevStackIO Copyright Agent</p>
-              <p><strong>Email:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a></p>
+              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
               <p><strong>Mailing Address:</strong> DevStackIO Copyright Agent, 123 Developer Way, San Francisco, CA 94102, USA</p>
-              <p><strong>Abuse Email:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
+              <p><strong>Abuse Email:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
               Include "DMCA Notice" in the subject line for fastest processing. We do not accept notices via phone, fax,
@@ -118,7 +118,7 @@ export default function DMCAPage() {
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Template</h3>
                 <pre className="bg-surface-50 dark:bg-dark-bg p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-surface-600 dark:text-dark-muted"><code>To: DevStackIO Copyright Agent
-Email: copyright@devstackio.com
+Email: contact@devstackio.com
 Subject: DMCA Notice - [Your Name/Company]
 
 1. Signature: [Your electronic or physical signature]
@@ -217,7 +217,7 @@ Date: [Date]</code></pre>
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Counter-Notification Template</h3>
                 <pre className="bg-surface-50 dark:bg-dark-bg p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-surface-600 dark:text-dark-muted"><code>To: DevStackIO Copyright Agent
-Email: copyright@devstackio.com
+Email: contact@devstackio.com
 Subject: Counter-Notification - [Case Reference if known]
 
 1. Signature: [Your electronic or physical signature]
@@ -270,14 +270,14 @@ Date: [Date]</code></pre>
                   <li>Three (3) valid, uncontested DMCA notices within 24 months = presumptive repeat infringer.</li>
                   <li>Account may be suspended or terminated at our discretion.</li>
                   <li>We consider context: fair use, good faith, volume, and severity.</li>
-                  <li>Users may appeal termination by contacting <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a>.</li>
+                  <li>Users may appeal termination by contacting <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>.</li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Appeal Process</h3>
                 <ol className="list-decimal pl-6 space-y-2">
-                  <li>Submit written appeal to <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a> within 30 days.</li>
+                  <li>Submit written appeal to <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a> within 30 days.</li>
                   <li>Include: account details, notice references, explanation of why termination is unwarranted.</li>
                   <li>We review within 10 business days and respond in writing.</li>
                   <li>Decision is final unless new evidence emerges.</li>
@@ -343,7 +343,7 @@ Date: [Date]</code></pre>
             </ul>
             <p className="mt-4">
               For non-U.S. notices, we apply the same procedural standards. Contact
-              <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a>
+              <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
               for jurisdiction-specific guidance.
             </p>
           </section>
@@ -381,10 +381,10 @@ Date: [Date]</code></pre>
           <section>
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact</h2>
             <div className="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-              <p><strong>Copyright Agent:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a></p>
-              <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
-              <p><strong>Legal:</strong> <a href="mailto:legal@devstackio.com" className="text-brand-500 underline hover:text-brand-600">legal@devstackio.com</a></p>
-              <p><strong>Appeals:</strong> <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a></p>
+              <p><strong>Copyright Agent:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Legal:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+              <p><strong>Appeals:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
               <p className="pt-2"><strong>Mail:</strong> DevStackIO Copyright Agent, 123 Developer Way, San Francisco, CA 94102, USA</p>
             </div>
             <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">

@@ -1,4 +1,4 @@
-﻿/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/constants";
 
@@ -249,7 +249,7 @@ export default function AcceptableUsePage() {
                   We encourage responsible security research. If you discover a vulnerability, please report it via:
                 </p>
                 <div className="mt-2 p-3 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                  <p><strong>Email:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a></p>
+                  <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
                   <p><strong>PGP:</strong> Available on request</p>
                 </div>
                 <p className="mt-2 text-sm">
@@ -372,7 +372,7 @@ export default function AcceptableUsePage() {
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
                 <h3 className="font-semibold text-surface-900 dark:text-dark-text">Appeals</h3>
                 <p className="mt-2 text-sm">
-                  To appeal a restriction, contact <a href="mailto:appeals@devstackio.com" className="text-brand-500 underline hover:text-brand-600">appeals@devstackio.com</a>
+                  To appeal a restriction, contact <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
                   with your IP, the restriction details, and explanation. We review appeals within 5 business days.
                 </p>
               </div>
@@ -386,10 +386,10 @@ export default function AcceptableUsePage() {
                 Help us keep DevStackIO safe. Report violations to:
               </p>
               <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-                <p><strong>Abuse/Security:</strong> <a href="mailto:abuse@devstackio.com" className="text-brand-500 underline hover:text-brand-600">abuse@devstackio.com</a></p>
-                <p><strong>Copyright/DMCA:</strong> <a href="mailto:copyright@devstackio.com" className="text-brand-500 underline hover:text-brand-600">copyright@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
-                <p><strong>General Policy:</strong> <a href="mailto:policy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">policy@devstackio.com</a></p>
-                <p><strong>Security Issues:</strong> <a href="mailto:security@devstackio.com" className="text-brand-500 underline hover:text-brand-600">security@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
+                <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+                <p><strong>Copyright/DMCA:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
+                <p><strong>General Policy:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+                <p><strong>Security Issues:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
               </div>
               <p className="text-sm text-surface-500 dark:text-dark-muted">
                 Include: Description of violation, URL/tool involved, screenshots if applicable, and your contact info.
@@ -432,7 +432,7 @@ export default function AcceptableUsePage() {
           <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
           <p className="mt-2 text-surface-600 dark:text-dark-muted">
             Questions about this Acceptable Use Policy? Contact us at
-            <a href="mailto:policy@devstackio.com" className="text-brand-500 underline hover:text-brand-600">policy@devstackio.com</a>
+            <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
             or use our <a href="/contact" className="text-brand-500 underline hover:text-brand-600">contact form</a>.
           </p>
         </div>

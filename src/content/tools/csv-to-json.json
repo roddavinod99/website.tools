@@ -20,7 +20,9 @@
   ],
   "examples": [
     "Input CSV: 'name,age,city\\nAlice,30,NYC\\nBob,25,LA' | Array of Objects => '[{\"name\":\"Alice\",\"age\":\"30\",\"city\":\"NYC\"},{\"name\":\"Bob\",\"age\":\"25\",\"city\":\"LA\"}]'",
-    "Input: 'product\\tprice\\tstock\\nWidget\\t9.99\\t42' | Tab delimiter | Column-Oriented => '{\"product\":[\"Widget\"],\"price\":[\"9.99\"],\"stock\":[\"42\"]}'"
+    "Input: 'product\\tprice\\tstock\\nWidget\\t9.99\\t42' | Tab delimiter | Column-Oriented => '{\"product\":[\"Widget\"],\"price\":[\"9.99\"],\"stock\":[\"42\"]}'",
+    "Input CSV with quoted commas: 'name,note\\nAlice,\"likes cats, dogs\"' => '[{\"name\":\"Alice\",\"note\":\"likes cats, dogs\"}]'",
+    "Input without headers: '1,apple\\n2,banana' with headers off => '[{\"key0\":\"1\",\"key1\":\"apple\"},{\"key0\":\"2\",\"key1\":\"banana\"}]'"
   ],
   "bestPractices": [
     "Always check preview before converting — catches delimiter detection errors",

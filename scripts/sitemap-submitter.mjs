@@ -251,12 +251,14 @@ async function cleanCachedSitemap() {
     const files = readdirSync(segDir);
     for (const f of files) {
       const fp = join(segDir, f);
+      const isDir = statSync(fp).isDirectory();
       const { size: fileSize } = statSync(fp);
-      rmSync(fp);
+      rmSync(fp, { recursive: true, force: true });
       removed++;
       size += fileSize;
+      void isDir;
     }
-    rmSync(segDir);
+    rmSync(segDir, { recursive: true, force: true });
   }
 
   if (removed > 0) {

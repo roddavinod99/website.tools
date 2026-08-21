@@ -1,41 +1,51 @@
 {
-  "whatItDoes": "Projects your retirement balance by compounding current savings together with monthly contributions over your chosen number of years to retirement.",
-  "whyItExists": "The biggest influence on retirement readiness is time in the market plus consistent saving. Showing the projected balance and the contribution-growth split makes it easy to see how much your money does for you.",
-  "whoShouldUse": "Anyone building a retirement nest egg who wants a realistic projection and a view of how monthly contributions and returns interact.",
+  "whatItDoes": "Projects your retirement balance by compounding current savings together with monthly contributions over your chosen number of years to retirement. Shows the projected balance, your total contributions, and the growth earned so you can see the contribution-vs-return split clearly.",
+  "whyItExists": "The biggest influence on retirement readiness is time in the market plus consistent saving. Showing the projected balance and the contribution-growth split makes it easy to see how much your money does for you over decades.",
+  "whoShouldUse": "Anyone building a retirement nest egg — salaried employees with 401(k)s or IRAs, self-employed savers, and early-career workers — who wants a realistic projection of how monthly contributions and returns interact.",
   "useCases": [
     "Project a 401(k) or IRA balance at retirement",
     "See the impact of raising monthly contributions",
     "Test different expected annual returns",
-    "Estimate the total you'll actually contribute"
+    "Estimate the total you'll actually contribute",
+    "Compare starting now vs. delaying by a few years",
+    "Check whether employer matching materially changes the projection"
   ],
   "instructions": [
     "Enter your current retirement savings balance",
-    "Enter your monthly contribution amount",
+    "Enter your monthly contribution amount (include employer match)",
     "Enter an expected annual return as a percent",
     "Set the years to retirement",
-    "Read the projected balance, contributions, and growth"
+    "Read the projected balance, total contributions, and growth",
+    "Adjust inputs to test scenarios like higher contributions or later retirement"
   ],
   "examples": [
-    "$50,000 saved, $500/month, 7% for 30 years -> approx $771,000",
-    "$0 saved, $700/month, 6% for 40 years -> approx $1,395,000"
+    "$50,000 saved, $500/month, 7% for 30 years → ≈ $771,000",
+    "$0 saved, $700/month, 6% for 40 years → ≈ $1,395,000",
+    "$50,000 saved, $1,000/month, 7% for 20 years → ≈ $708,000",
+    "$0 saved, $500/month, 7% for 40 years → ≈ $1.31M, of which only $240,000 is your own money"
   ],
   "bestPractices": [
-    "Use a conservative return you're comfortable assuming",
+    "Use a conservative return you're comfortable assuming (6-8% is common)",
     "Re-run as your income and contributions grow",
-    "Include employer matching if you have it",
-    "Check the growth vs. contributions split to see compounding's effect"
+    "Include employer matching if you have it — it's free money",
+    "Check the growth vs. contributions split to see compounding's effect",
+    "Start now — delaying even 5 years significantly cuts the end balance"
   ],
   "commonMistakes": [
     "Using unrealistic double-digit returns",
     "Forgetting to include employer contributions",
     "Starting contributions at the top of your budget with no buffer",
-    "Ignoring taxes and inflation in the real value"
+    "Ignoring taxes and inflation in the real value",
+    "Assuming the same contribution rate will last the whole working life",
+    "Forgetting to re-check the projection after a job change or income raise"
   ],
   "faq": [
     "Does this include taxes and inflation? — No, it is a nominal pre-tax projection.",
     "What return should I use? — A common assumption is 6-8%, but use your own planning number.",
     "Is employer matching included? — Only if you add it to the monthly contribution.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "How much should I save for retirement? — A common rule of thumb is 15% of gross income, but the right number depends on your goals and timeline.",
+    "Is it better to save more or start earlier? — Both matter, but time is the strongest lever because of compounding."
   ],
   "references": [
     {

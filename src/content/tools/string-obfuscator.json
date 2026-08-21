@@ -20,7 +20,8 @@
   "examples": [
     "Input: \"Hello, World!\" → Base64: SGVsbG8sIFdvcmxkIQ==",
     "Input: \"<script>\" → HTML Entities: &lt;script&gt;",
-    "Input: \"password\" → ROT13: cebjqrf"
+    "Input: \"password\" → ROT13: cebjqrf",
+    "Input: \"hello\" → Hex: 68656c6c6f"
   ],
   "bestPractices": [
     "Use Base64 for data URIs and API authentication headers",

@@ -6,14 +6,16 @@
     "Extract a pricing or comparison table from a page as JSON",
     "Migrate legacy HTML tables into a modern data pipeline",
     "Convert a document's tables into spreadsheet-ready objects",
-    "Verify how a scraper would interpret the rows and columns"
+    "Verify how a scraper would interpret the rows and columns",
+    "Transform an HTML table from a CMS export into an API response body"
   ],
   "instructions": [
     "Paste the HTML table markup (a <table>…</table> snippet) into the input",
     "Toggle 'First row is header' depending on your table",
     "The JSON output updates automatically",
     "Choose compact or pretty-printed output",
-    "Copy or download the resulting JSON"
+    "Copy or download the resulting JSON",
+    "Review the keys once to confirm headers were detected as expected"
   ],
   "examples": [
     "<table><tr><th>Name</th><th>Age</th></tr><tr><td>Alice</td><td>30</td></tr></table>\n→ [{\"Name\":\"Alice\",\"Age\":\"30\"}]",
@@ -31,7 +33,8 @@
     "Mixing tables with different header structures in one document",
     "Assuming all cells are numeric when some contain units or text",
     "Forgetting that rowspan/colspan cells repeat in the output",
-    "Relying on HTML that has malformed or unclosed tags"
+    "Relying on HTML that has malformed or unclosed tags",
+    "Trusting header text with whitespace or special characters as keys"
   ],
   "faq": [
     "Does this handle rowspan and colspan? — Yes, spanning cells are expanded to fill their covered columns.",

@@ -24,12 +24,15 @@
     "Keep lowercase enabled for consistent, URL-friendly slugs",
     "Use truncation for titles that may be very long to keep URLs manageable",
     "Test with special characters, accented letters, and numbers to ensure expected output",
-    "Consider keeping hyphens in the output for readability in URLs"
+    "Consider keeping hyphens in the output for readability in URLs",
+    "Verify the slug against your routing rules before publishing"
   ],
   "commonMistakes": [
     "Setting max length too short, cutting off meaningful words",
     "Forgetting to remove special characters that cause issues in URLs",
-    "Using the slug for file names without considering OS-specific character restrictions"
+    "Using the slug for file names without considering OS-specific character restrictions",
+    "Leaving uppercase letters in slugs that should be normalized for consistency",
+    "Assuming every CMS applies the exact same slug rules as this tool"
   ],
   "faq": [
     "Does this handle Unicode or accented characters? — Accented characters are preserved unless Remove Special Chars is enabled, which may strip them.",

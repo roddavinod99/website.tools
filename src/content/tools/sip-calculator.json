@@ -1,46 +1,56 @@
 {
-  "whatItDoes": "Estimates the future value of a Systematic Investment Plan (SIP) — equal monthly amounts invested at a projected annual return. Breaks the result into the amount invested versus the estimated returns earned.",
-  "whyItExists": "SIPs are the standard way most people invest in mutual funds. The growth curve from fixed monthly contributions is unintuitive, so a calculator turns the recurring-investment formula into an easy-to-read maturity value.",
-  "whoShouldUse": "Mutual fund investors, first-time investors planning monthly deposits, and anyone comparing SIP amounts or durations.",
+  "whatItDoes": "Estimates the future value of a Systematic Investment Plan (SIP) — equal monthly amounts invested at a projected annual return. Breaks the result into the amount invested versus the estimated returns earned, and lets you adjust the contribution, rate, and duration to compare scenarios.",
+  "whyItExists": "SIPs are the standard way most people invest in mutual funds. The growth curve from fixed monthly contributions is unintuitive, so a calculator turns the recurring-investment formula into an easy-to-read maturity value and shows how much of it is your own money.",
+  "whoShouldUse": "Mutual fund investors, first-time investors planning monthly deposits, salary earners automating savings, and anyone comparing SIP amounts or durations for a financial goal.",
   "useCases": [
-    "Estimate the maturity value of a monthly SIP",
-    "Compare different monthly contributions and durations",
+    "Estimate the maturity value of a monthly SIP before committing to a fund",
+    "Compare different monthly contributions and durations side by side",
     "Understand how much of the final value is returns vs. invested capital",
-    "Model retirement accumulation from monthly investing"
+    "Model retirement accumulation from monthly investing",
+    "Set a target and reverse-engineer the monthly amount needed to reach it",
+    "Decide how long to keep a SIP running before a large expense"
   ],
   "instructions": [
     "Enter your monthly investment amount",
-    "Set the expected annual return rate",
+    "Set the expected annual return rate in percent",
     "Choose how many years you will keep investing",
-    "Read the matured value, total invested, and estimated returns"
+    "Read the matured value, total invested, and estimated returns",
+    "Adjust the monthly amount to find a contribution that reaches your goal",
+    "Optionally switch contribution timing to match when your SIP is debited"
   ],
   "examples": [
-    "$5,000/month at 12% for 10 years → ~$1.14M matured",
-    "$2,000/month at 10% for 15 years → ~$829,000 matured",
-    "$1,000/month at 8% for 20 years → ~$589,000 matured"
+    "$5,000/month at 12% for 10 years → ~$1.14M matured, of which ~$600,000 is invested",
+    "$2,000/month at 10% for 15 years → ~$829,000 matured, of which ~$360,000 is invested",
+    "$1,000/month at 8% for 20 years → ~$589,000 matured, of which ~$240,000 is invested",
+    "$5,000/month at 12% for 20 years → ~$4.95M matured vs. ~$1.2M invested — returns dwarf contributions"
   ],
   "bestPractices": [
     "Treat the return rate as an expected long-run average, not a guarantee",
     "Keep investing through market downs and ups to capture the full cycle",
-    "Review your SIP amount as your income grows",
-    "Use the total-invested figure to check how much comes from your own money"
+    "Review your SIP amount as your income grows and step it up",
+    "Use the total-invested figure to check how much of the final value comes from your own money",
+    "Start early — the same monthly amount compounds to far more over 20 years than 10"
   ],
   "commonMistakes": [
     "Using short-term past returns as the long-term expectation",
-    "Stopping the SIP during market dips",
+    "Stopping the SIP during market dips, which locks in losses and skips cheap units",
     "Forgetting inflation shrinks the purchase power of the final amount",
-    "Entering a monthly amount when you actually contribute quarterly"
+    "Entering a monthly amount when you actually contribute quarterly",
+    "Ignoring expense ratios and exit loads, which reduce net returns"
   ],
   "faq": [
     "Is the SIP projection guaranteed? — No, returns are assumed and can be lower or higher.",
     "Can I use this for non-mutual-fund investing? — Yes, the math is the same for any monthly-return plan.",
     "Does it account for fund charges? — No, expense ratios and taxes are not included.",
-    "Is my data sent anywhere? — No, everything runs locally in your browser."
+    "Is my data sent anywhere? — No, everything runs locally in your browser.",
+    "What is contribution timing? — It controls whether each contribution is invested at the start or end of the month; start-of-month matches how most SIPs are debited.",
+    "Should I stop my SIP when markets fall? — Historically, staying invested through downturns has been key to capturing long-term equity returns."
   ],
   "features": [
     "Monthly contribution planning",
     "Invested vs. returns breakdown",
     "Adjustable return rate and duration",
+    "Contribution timing toggle",
     "100% browser-based and private"
   ],
   "references": [

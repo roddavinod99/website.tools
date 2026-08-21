@@ -1,40 +1,50 @@
 {
-  "whatItDoes": "Adds sales tax to a pre-tax amount at the rate you enter, showing the tax amount and the total with tax.",
+  "whatItDoes": "Adds sales tax to a pre-tax amount at the rate you enter, showing the tax amount and the total with tax. Works for any flat-rate tax, whether it's called sales tax, VAT, or GST.",
   "whyItExists": "Calculating sales tax by hand is easy to get wrong, especially for large purchases or unfamiliar rate brackets. An instant calculator gives an exact checkout total and makes budgeting precise.",
   "whoShouldUse": "Shoppers comparing prices after tax, freelance sellers adding tax to invoices, and anyone estimating the total cost of a purchase.",
   "useCases": [
     "Estimate the final cost of a large purchase",
     "Add the correct tax amount to an invoice",
     "Compare prices after tax between states or products",
-    "Check how much of a total is actually tax"
+    "Check how much of a total is actually tax",
+    "Budget for tax-inclusive online orders across regions",
+    "Verify a store's tax calculation on a receipt"
   ],
   "instructions": [
     "Enter the pre-tax purchase amount",
     "Enter the applicable sales tax rate as a percent",
-    "Read the tax amount and total with tax"
+    "Read the tax amount and total with tax",
+    "Adjust the rate to compare different jurisdictions",
+    "Use the total figure when budgeting the purchase",
+    "Re-check the rate if the seller lists a combined state-and-local rate"
   ],
   "examples": [
-    "$100 at 8% -> tax $8, total $108",
-    "$250 at 6.25% -> tax $15.63, total $265.63",
-    "$1,200 at 10% -> tax $120, total $1,320"
+    "$100 at 8% → tax $8, total $108",
+    "$250 at 6.25% → tax $15.63, total $265.63",
+    "$1,200 at 10% → tax $120, total $1,320",
+    "$45 at 5% → tax $2.25, total $47.25"
   ],
   "bestPractices": [
     "Use the exact rate for the state and city where you're buying",
     "Remember online orders are taxed by the delivery location in many regions",
     "Keep receipts with clearly separated tax for returns",
-    "Re-check the rate if you're estimating across jurisdictions"
+    "Re-check the rate if you're estimating across jurisdictions",
+    "For large purchases, confirm whether the quoted price already includes tax"
   ],
   "commonMistakes": [
     "Adding the post-tax total again instead of pre-tax",
     "Using the wrong local rate (county and city rates vary)",
     "Tipping on the taxed total when some places tip pre-tax",
-    "Entering the rate without converting percent correctly"
+    "Entering the rate without converting percent correctly",
+    "Applying the tax twice by accident"
   ],
   "faq": [
     "Does this include other taxes? — No, it applies a single sales-tax rate to the pre-tax amount.",
     "What is a typical rate? — Rates vary widely, commonly 0-12% depending on region.",
     "Is it VAT or sales tax? — It works the same regardless of naming for a flat-rate tax.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "How is sales tax different from VAT? — Both are flat-rate taxes on a purchase; the mechanics differ across regions but the math is the same.",
+    "Is tax charged on shipping? — Some jurisdictions tax shipping and others don't; add shipping to the amount only if it's taxable where you buy."
   ],
   "references": [
     {

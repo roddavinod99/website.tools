@@ -6,39 +6,55 @@
     "Convert a year like 2024 to Roman numerals for a copyright notice",
     "Decode Roman numeral chapter headings in a book or document",
     "Validate whether a string is a correctly formatted Roman numeral",
-    "Convert Super Bowl or Olympic game numbers to their year equivalents"
+    "Convert Super Bowl or Olympic game numbers to their year equivalents",
+    "Convert a clock-face or legal document numeral back to a number",
+    "Check a handwritten Roman numeral against the correct expansion"
   ],
   "instructions": [
     "Select the conversion direction: Number to Roman or Roman to Number",
     "Enter your value in the input field",
     "The converted result appears instantly in the output area",
-    "Click Copy to copy the result to your clipboard"
+    "Click Copy to copy the result to your clipboard",
+    "Use uppercase letters for Roman numeral input (I, V, X, L, C, D, M)",
+    "Switch direction to double-check the result"
   ],
   "examples": [
     "1984 → MCMLXXXIV",
     "MMXXIV → 2024",
     "XLII → 42",
-    "4 → IV"
+    "4 → IV",
+    "1776 → MDCCLXXVI",
+    "MCMXCIX → 1999",
+    "2025 → MMXXV"
   ],
   "bestPractices": [
     "Roman numerals only support values from 1 to 3999",
     "Use subtractive notation for cleaner results (IV instead of IIII)",
-    "Double-check Roman numeral input for valid characters: I, V, X, L, C, D, M"
+    "Double-check Roman numeral input for valid characters: I, V, X, L, C, D, M",
+    "Use uppercase for input — lowercase letters are not standard",
+    "Remember that no zero or negative number has a Roman representation"
   ],
   "commonMistakes": [
     "Entering zero or negative numbers, which have no Roman numeral representation",
     "Using lowercase Roman numerals — always use uppercase for valid input",
-    "Entering non-Roman characters and expecting a numeric result"
+    "Entering non-Roman characters and expecting a numeric result",
+    "Repeating a symbol too many times (e.g., writing 'IIII' instead of 'IV')",
+    "Using a symbol like 'V' or 'L' more than once in a numeral"
   ],
   "faq": [
     "What is the range of supported numbers? — 1 to 3999, the standard range for Roman numerals.",
     "Does it handle subtractive notation like IV and IX? — Yes, both output and input use standard subtractive notation.",
-    "Can I convert numbers larger than 3999? — Not in standard Roman numerals; the tool enforces the traditional limit."
+    "Can I convert numbers larger than 3999? — Not in standard Roman numerals; the tool enforces the traditional limit.",
+    "Is my data shared? — No, the conversion runs locally in your browser.",
+    "Why is 4 written IV instead of IIII? — Subtractive notation places a smaller numeral before a larger one to indicate subtraction, which is the modern standard.",
+    "How do I write the current year in Roman numerals? — 2025 is MMXXV (M=1000, M=1000, XX=20, V=5)."
   ],
   "features": [
     "Convert integers to Roman numerals and back",
     "Real-time conversion with validation",
-    "Copy the converted result"
+    "Copy the converted result",
+    "Standard subtractive notation support",
+    "100% browser-based and private"
   ],
   "references": [
     {

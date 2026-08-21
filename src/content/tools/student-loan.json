@@ -1,40 +1,50 @@
 {
-  "whatItDoes": "Estimates the monthly payment, total cost, and total interest for repaying a student loan on a standard repayment schedule.",
+  "whatItDoes": "Estimates the monthly payment, total cost, and total interest for repaying a student loan on a standard repayment schedule. You can adjust the balance, rate, and term to compare plans and see how extra payments shorten the payoff.",
   "whyItExists": "Student loans affect budgets for years, and the interplay of balance, rate, and term can add tens of thousands in interest. An estimate makes the real cost of repayment visible before you commit to a plan.",
   "whoShouldUse": "Graduates planning repayment, borrowers comparing terms, and anyone weighing extra payments against standard amortization.",
   "useCases": [
     "Estimate monthly payments for a total loan balance",
     "Compare repayment term lengths and their interest cost",
     "See how extra monthly payments shorten the term",
-    "Plan consolidation and refinancing scenarios"
+    "Plan consolidation and refinancing scenarios",
+    "Decide between a 10-year and longer repayment plan",
+    "Model a payoff target for multiple combined loans"
   ],
   "instructions": [
     "Enter your total outstanding loan balance",
     "Enter a weighted average interest rate as a percent",
     "Choose a repayment term in years",
-    "Read the monthly payment, total paid, and total interest"
+    "Read the monthly payment, total paid, and total interest",
+    "Add an extra monthly payment to see the term shorten",
+    "Compare a 10-year vs. longer term on total interest"
   ],
   "examples": [
-    "$30,000 at 5.05% for 10 years -> payment approx $318, interest approx $8,140",
-    "$50,000 at 6% for 10 years -> payment approx $555, interest approx $16,610"
+    "$30,000 at 5.05% for 10 years → payment ≈ $318, interest ≈ $8,140",
+    "$50,000 at 6% for 10 years → payment ≈ $555, interest ≈ $16,610",
+    "$30,000 at 5.05% for 20 years → payment ≈ $199, but interest nearly doubles to ≈ $17,700",
+    "$50,000 at 6% for 10 years with an extra $100/month → payoff cut by over a year and interest reduced"
   ],
   "bestPractices": [
     "Use your weighted average rate when consolidating federal and private loans",
     "Compare the total-interest cost of a 10-year vs. 20-year term",
     "Check income-driven options separately — they differ from standard repayment",
-    "Pay extra toward the highest-rate loan first"
+    "Pay extra toward the highest-rate loan first",
+    "Re-run the numbers whenever you refinance or consolidate"
   ],
   "commonMistakes": [
     "Using an average of rates instead of a weighted average",
     "Ignoring fees on private loans",
     "Assuming forgiveness programs apply to every loan type",
-    "Forgetting to re-run the math after refinancing"
+    "Forgetting to re-run the math after refinancing",
+    "Choosing a longer term to lower the payment without noticing the added interest"
   ],
   "faq": [
     "Does this include income-driven repayment? — No, it models standard amortization only.",
     "What rate should I use? — The weighted average across all your loans is a good estimate.",
     "Are forgiveness programs included? — No, they change payments and totals significantly.",
-    "Is my data shared? — No, everything runs locally in your browser."
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "Should I refinance my student loans? — It can lower your rate, but federal loans lose protections; weigh both before deciding.",
+    "What is a weighted average rate? — Each loan's rate weighted by its balance, giving a single blended rate for your total debt."
   ],
   "references": [
     {

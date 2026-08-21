@@ -71,6 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
             wordCount: content.split(/\s+/).length,
             author: {
               "@type": "Organization",
+              "@id": `${siteConfig.url}/#organization`,
               name: siteConfig.name,
               url: `${siteConfig.url}/about`,
               logo: {
@@ -80,6 +81,7 @@ export default async function BlogPostPage({ params }: Props) {
             },
             publisher: {
               "@type": "Organization",
+              "@id": `${siteConfig.url}/#organization`,
               name: siteConfig.name,
               url: siteConfig.url,
               logo: {

@@ -1,45 +1,58 @@
 {
-  "whatItDoes": "Builds a debt payoff plan from your debts, minimum payments, and a monthly budget. You can choose the snowball or avalanche strategy to see the payoff order, total months, and total interest paid.",
+  "whatItDoes": "Builds a debt payoff plan from your debts, minimum payments, and a monthly budget. You can choose the snowball or avalanche strategy to see the payoff order, total months, and total interest paid, and compare which strategy finishes faster.",
   "whyItExists": "Carrying multiple debts is overwhelming, and paying minimums across every card can extend payoff for years. A simple plan that directs every extra dollar at one clear target debt shortens the timeline and shows real progress with the snowball or avalanche order.",
   "whoShouldUse": "Anyone with multiple credit cards, personal loans, student loans, or auto loans who wants a clear payoff sequence and knows what they can pay monthly.",
   "useCases": [
     "Order debts by smallest balance (snowball) for quick wins",
     "Order by highest APR (avalanche) to minimize interest",
     "See how an extra monthly budget shortens the plan",
-    "Plan which card receives the surplus each month"
+    "Plan which card receives the surplus each month",
+    "Compare snowball vs. avalanche to choose the strategy that fits your motivation",
+    "Forecast when you will be debt-free and the total interest you'll pay"
   ],
   "instructions": [
     "Add each debt with its name, balance, APR, and minimum payment",
     "Set your total monthly budget for debt repayment",
     "Choose a strategy: snowball or avalanche",
-    "Read the payoff months, total interest, and the payoff order"
+    "Read the payoff months, total interest, and the payoff order",
+    "Switch strategies to compare timelines and interest",
+    "Increase the budget to see how much faster you finish"
   ],
   "examples": [
-    "Debt A $4,000 at 18.99% and Debt B $8,000 at 7.5%, $500/month",
-    "Three small debts with $600/month using snowball"
+    "Debt A $4,000 at 18.99% and Debt B $8,000 at 7.5%, $500/month → avalanche targets A first and saves the most interest",
+    "Three small debts with $600/month using snowball → smallest balance cleared in the first months for momentum",
+    "Two cards at 24% and 12% with a $300 budget → putting the extra $200 on the 24% card finishes faster and cheaper"
   ],
   "bestPractices": [
     "Set the budget at least equal to the sum of the minimum payments",
     "Keep paying minimums on every debt so nothing falls behind",
     "Understand snowball is motivational, avalanche is interest-optimal",
-    "Re-run the plan if balances or minimums change"
+    "Re-run the plan if balances or minimums change",
+    "Automate the payment to the target debt so the plan actually happens"
   ],
   "commonMistakes": [
     "Setting a budget below the total minimums (no plan is possible)",
     "Entering an APR instead of a monthly rate by mistake",
     "Forgetting zero-APR promotional balances still count",
-    "Assuming the payoff ignores interest charged during the plan"
+    "Assuming the payoff ignores interest charged during the plan",
+    "Switching strategies mid-plan and losing the momentum of early wins"
   ],
   "faq": [
     "Is this financial advice? — No, it is a planning estimate.",
     "Which is better, snowball or avalanche? — Avalanche saves the most interest; snowball gives faster first wins to stay motivated.",
     "Why is there no plan? — The monthly budget must be at least the sum of the minimums.",
-    "Are my numbers sent anywhere? — No, everything runs locally in your browser."
+    "Are my numbers sent anywhere? — No, everything runs locally in your browser.",
+    "Can I pay off debt faster than the plan? — Yes, any additional payment shortens the timeline and reduces interest further.",
+    "Should I keep saving while paying off debt? — A small emergency fund prevents new debt when surprises happen; pay minimums first, then attack the target debt."
   ],
   "references": [
     {
       "label": "CFPB — What is the Snowball Method of Paying Off Debt?",
       "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-the-snowball-method-of-paying-off-my-debts-en-1041/"
+    },
+    {
+      "label": "CFPB — Avalanche Method",
+      "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-the-avalanche-method-of-paying-off-my-debts-en-1042/"
     }
   ]
 }
