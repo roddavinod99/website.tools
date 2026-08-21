@@ -280,6 +280,17 @@
 
 - Mark stable 1.0.0 release
 
+## [1.1.0] - 2026-08-21
+
+### Added
+
+- add comparison pages, guides, accessibility page, and structured data audit/tests
+### Fixed
+
+- use sudo for nginx CSP config deploy
+### Documentation
+
+- clean polluted CHANGELOG and drop erroneous 0.9.0 release
 ## Template
 
 For future releases:
