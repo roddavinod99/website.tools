@@ -1,4 +1,4 @@
-﻿name: Lighthouse CI
+name: Lighthouse CI
 on:
   push:
     branches: [main]
@@ -23,7 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@72f881228236981b625ed765b928efb1786a1f55 # v11
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12.6.2
         with:
           urls: |
             https://tools.devstackio.com
