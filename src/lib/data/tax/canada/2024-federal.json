@@ -1,0 +1,21 @@
+{
+  "year": "2024",
+  "label": "Tax Year 2024",
+  "regimes": [
+    {
+      "id": "standard",
+      "label": "Standard",
+      "description": "Federal tax regime",
+      "standardDeduction": 15705,
+      "slabs": [
+        { "min": 0, "max": 55867, "rate": 0.15 },
+        { "min": 55867, "max": 111733, "rate": 0.205 },
+        { "min": 111733, "max": 173205, "rate": 0.26 },
+        { "min": 173205, "max": 246752, "rate": 0.29 },
+        { "min": 246752, "max": 999999999, "rate": 0.33 }
+      ],
+      "deductions": []
+    }
+  ],
+  "defaultRegime": "standard"
+}

@@ -1,6 +1,41 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { logSecurityEvent } from "@/lib/security-logger";
+import { readFileSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// Force Node.js runtime to access fs for CSP hash map
+export const runtime = "nodejs";
+
+// CSP hash map (generated at build time by postbuild-csp.mjs)
+// Lazy-loaded and cached per process; skipped gracefully if missing (e.g., dev before first build)
+let cspMap: { defaultCsp: string; perRoute: Record<string, { csp: string }> } | null = null;
+
+function loadCspMap(): { defaultCsp: string; perRoute: Record<string, { csp: string }> } | null {
+  if (cspMap) return cspMap;
+  try {
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    const root = join(__dirname, "..", ".."); // from src/middleware.ts to repo root
+    const cspPath = join(root, "data", "csp-hashes.json");
+    if (!existsSync(cspPath)) return null;
+    const content = readFileSync(cspPath, "utf-8");
+    cspMap = JSON.parse(content);
+    return cspMap;
+  } catch {
+    return null;
+  }
+}
+
+function getCspForPath(pathname: string): string | null {
+  const map = loadCspMap();
+  if (!map) return null;
+  // Skip CSP for API routes (they return JSON, not HTML)
+  if (pathname.startsWith("/api/")) return null;
+  // Normalize: strip query, strip trailing slash (except root)
+  const normalized = pathname.split("?")[0].replace(/\/$/, "") || "/";
+  return map.perRoute[normalized]?.csp ?? map.defaultCsp ?? null;
+}
 
 const ATTACK_PATHS = [
   "/.env",
@@ -183,6 +218,12 @@ export async function middleware(request: NextRequest) {
     } catch {
       await logSecurityEvent("invalid_origin", ip, path, "Malformed origin header");
     }
+  }
+
+  // Add CSP header from generated hash map (skips API routes and static assets via matcher)
+  const csp = getCspForPath(path);
+  if (csp) {
+    response.headers.set("Content-Security-Policy", csp);
   }
 
   return response;

@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { inflation } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function InflationCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [amount, setAmount] = useState("1000");
   const [rate, setRate] = useState("3");
   const [years, setYears] = useState("10");
@@ -27,7 +30,8 @@ export function InflationCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Amount" value={amount} onChange={setAmount} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Amount" value={amount} onChange={setAmount} currency={currency} />
         <Field label="Annual inflation rate">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Annual inflation rate" />
         </Field>
@@ -48,15 +52,15 @@ export function InflationCalculator() {
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Equivalent to today</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.todayValue)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.todayValue, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Would cost in the future</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.futureValue)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.futureValue, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">
-            In {years || "10"} years at {rate || "0"}% inflation, {formatMoney(amount ? parseFloat(amount) : 0)} today buys as much as {formatMoney(result.todayValue)} buys today.
+            In {years || "10"} years at {rate || "0"}% inflation, {formatMoney(parseFloat(amount) || 0, currency)} today buys as much as {formatMoney(result.todayValue, currency)} buys today.
           </p>
         </div>
       ) : (

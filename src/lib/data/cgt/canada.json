@@ -1,0 +1,32 @@
+{
+  "countryCode": "CA",
+  "countryName": "Canada",
+  "currencyCode": "CAD",
+  "taxYears": [
+    {
+      "id": "2024",
+      "label": "Tax Year 2024",
+      "lastUpdated": "2026-08-21",
+      "usesHoldingPeriod": false,
+      "inclusionRate": 0.5,
+      "mainResidenceFullyExempt": true,
+      "federalBrackets": [
+        { "min": 0, "max": 55867, "rate": 0.15 },
+        { "min": 55867, "max": 111733, "rate": 0.205 },
+        { "min": 111733, "max": 173205, "rate": 0.26 },
+        { "min": 173205, "max": 246752, "rate": 0.29 },
+        { "min": 246752, "max": 999999999, "rate": 0.33 }
+      ],
+      "sources": [
+        { "label": "Canada Revenue Agency — Capital gains", "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains.html" }
+      ],
+      "notes": [
+        "Canada has no short-term/long-term distinction — 50% of any capital gain is taxable income regardless of holding period.",
+        "The proposed two-thirds inclusion rate for large gains was deferred and is not in effect; 50% applies.",
+        "Estimate combines federal and provincial marginal brackets; provincial surtaxes (e.g., Ontario) are not modelled.",
+        "Enter your taxable income from other sources to locate your combined marginal rate."
+      ]
+    }
+  ],
+  "defaultTaxYearId": "2024"
+}

@@ -1,0 +1,73 @@
+{
+  "year": "2024-25",
+  "label": "Tax Year 2024–25",
+  "regimes": [
+    {
+      "id": "standard",
+      "label": "Standard",
+      "description": "Standard UK tax regime",
+      "standardDeduction": 12570,
+      "slabs": [
+        { "min": 0, "max": 12570, "rate": 0 },
+        { "min": 12570, "max": 50270, "rate": 0.2 },
+        { "min": 50270, "max": 125140, "rate": 0.4 },
+        { "min": 125140, "max": 999999999, "rate": 0.45 }
+      ],
+      "deductions": []
+    }
+  ],
+  "defaultRegime": "standard",
+  "regions": [
+    {
+      "code": "ewni",
+      "label": "England, Wales & Northern Ireland",
+      "taxYearOverrides": [
+        {
+          "year": "2024-25",
+          "regimes": [
+            {
+              "id": "standard",
+              "label": "Standard",
+              "description": "Standard UK tax regime for England, Wales & Northern Ireland",
+              "standardDeduction": 12570,
+              "slabs": [
+                { "min": 0, "max": 12570, "rate": 0 },
+                { "min": 12570, "max": 50270, "rate": 0.2 },
+                { "min": 50270, "max": 125140, "rate": 0.4 },
+{ "min": 125140, "max": 999999999, "rate": 0.45 }
+              ],
+              "deductions": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "scotland",
+      "label": "Scotland",
+      "taxYearOverrides": [
+        {
+          "year": "2024-25",
+          "regimes": [
+            {
+              "id": "standard",
+              "label": "Standard",
+              "description": "Scottish tax regime",
+              "standardDeduction": 12570,
+              "slabs": [
+                { "min": 0, "max": 12570, "rate": 0 },
+                { "min": 12570, "max": 14876, "rate": 0.19 },
+                { "min": 14876, "max": 26561, "rate": 0.2 },
+                { "min": 26561, "max": 43662, "rate": 0.21 },
+                { "min": 43662, "max": 75000, "rate": 0.42 },
+                { "min": 75000, "max": 125140, "rate": 0.45 },
+                { "min": 125140, "max": 999999999, "rate": 0.48 }
+              ],
+              "deductions": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,40 +1,68 @@
 // Presentation-only formatting helpers. Financial math should stay in
 // calculations.ts with full precision; these functions format at render time.
 
+import { getCurrency, getCurrencyLocale, getCurrencySymbol } from "@/lib/data/currencies";
+
+export interface FormatMoneyOptions {
+  locale?: string;
+  decimals?: number;
+  showSymbol?: boolean;
+}
+
 export function formatMoney(
   value: number,
-  currency = "USD",
-  decimals = 2
+  currencyCode = "USD",
+  options: FormatMoneyOptions = {}
 ): string {
   if (!Number.isFinite(value)) return "—";
-  const sign = value < 0 ? "-" : "";
+  const currency = getCurrency(currencyCode);
+  const locale = options.locale ?? getCurrencyLocale(currencyCode);
+  const decimals = options.decimals ?? currency.decimals;
+  const showSymbol = options.showSymbol ?? true;
+
   try {
-    return (
-      sign +
-      new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency,
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      }).format(Math.abs(value))
-    );
+    const formatted = new Intl.NumberFormat(locale, {
+      style: showSymbol ? "currency" : "decimal",
+      currency: showSymbol ? currencyCode : undefined,
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(value);
+
+    // For negative values, Intl.NumberFormat handles the sign correctly in most locales
+    // But some locales put the symbol in different positions, so we trust Intl
+    return formatted;
   } catch {
-    return `${sign}$${Math.abs(value).toFixed(decimals)}`;
+    const sign = value < 0 ? "-" : "";
+    const symbol = showSymbol ? getCurrencySymbol(currencyCode) : "";
+    return `${sign}${symbol}${Math.abs(value).toFixed(decimals)}`;
   }
 }
 
-export function formatNumber(value: number, decimals = 2): string {
+export function formatNumber(
+  value: number,
+  locale = "en-US",
+  decimals = 2
+): string {
   if (!Number.isFinite(value)) return "—";
-  return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  }).format(value);
+  try {
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(value);
+  } catch {
+    return value.toFixed(decimals);
+  }
 }
 
-export function formatCompact(value: number): string {
+export function formatCompact(
+  value: number,
+  currencyCode = "USD"
+): string {
   if (!Number.isFinite(value)) return "—";
+  const currency = getCurrency(currencyCode);
   const abs = Math.abs(value);
   const sign = value < 0 ? "-" : "";
+  const symbol = currency.symbolNative;
   const units: [number, string][] = [
     [1e12, "T"],
     [1e9, "B"],
@@ -44,10 +72,10 @@ export function formatCompact(value: number): string {
   for (const [div, suffix] of units) {
     if (abs >= div) {
       const num = abs / div;
-      return `${sign}$${num.toFixed(num >= 100 ? 0 : 1)}${suffix}`;
+      return `${sign}${symbol}${num.toFixed(num >= 100 ? 0 : 1)}${suffix}`;
     }
   }
-  return `${sign}$${abs.toFixed(0)}`;
+  return `${sign}${symbol}${abs.toFixed(0)}`;
 }
 
 export function formatPercent(value: number, decimals = 2): string {
@@ -55,9 +83,9 @@ export function formatPercent(value: number, decimals = 2): string {
   return `${value.toFixed(decimals)}%`;
 }
 
-export function formatDate(iso: string): string {
+export function formatDate(iso: string, locale = "en-US"): string {
   try {
-    return new Date(iso).toLocaleString("en-US", {
+    return new Date(iso).toLocaleString(locale, {
       dateStyle: "medium",
       timeStyle: "short",
     });

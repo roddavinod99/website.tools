@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, PercentInput } from "@/components/finance/inputs";
 import { creditCardPayoff } from "@/lib/finance/calculations";
 import { formatMoney, formatDurationMonths } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function CreditCardPayoff() {
+  const { currency, setCurrency } = useCurrency();
   const [balance, setBalance] = useState("5000");
   const [apr, setApr] = useState("19.99");
   const [payment, setPayment] = useState("200");
@@ -36,7 +39,8 @@ export function CreditCardPayoff() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Current balance" value={balance} onChange={setBalance} prefix="$" placeholder="5,000" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Current balance" value={balance} onChange={setBalance} currency={currency} placeholder="5,000" />
         <Field label="Annual APR">
           <PercentInput value={apr} onChange={setApr} ariaLabel="Annual APR" />
         </Field>
@@ -44,8 +48,8 @@ export function CreditCardPayoff() {
           label="Monthly payment"
           value={payment}
           onChange={setPayment}
-          prefix="$"
-          hint={`Monthly interest alone is about ${formatMoney(interestOnly)}`}
+          currency={currency}
+          hint={`Monthly interest alone is about ${formatMoney(interestOnly, currency)}`}
         />
       </div>
 
@@ -61,11 +65,11 @@ export function CreditCardPayoff() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total interest</p>
-              <p className="mt-1 text-xl font-semibold text-amber-600 dark:text-amber-400">{formatMoney(result.totalInterest)}</p>
+              <p className="mt-1 text-xl font-semibold text-amber-600 dark:text-amber-400">{formatMoney(result.totalInterest, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total paid</p>
-              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.totalPaid)}</p>
+              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.totalPaid, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">

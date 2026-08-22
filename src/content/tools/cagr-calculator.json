@@ -39,6 +39,7 @@
     "Using CAGR to forecast — it describes past growth, not future returns"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What does CAGR mean? — The Compound Annual Growth Rate: the constant annual rate that grows the beginning value to the end value.",
     "Is it the same as an average return? — No, it accounts for compounding and flattens volatility.",
     "Can CAGR be negative? — Yes, if the ending value is below the beginning value.",
@@ -58,5 +59,8 @@
       "label": "Investor.gov — Compound Annual Growth Rate",
       "url": "https://www.calculatorsoup.com/calculators/financial/cagr-calculator.php"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic CAGR calculation; no country-specific assumptions."
 }

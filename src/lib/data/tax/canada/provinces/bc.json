@@ -1,0 +1,13 @@
+{
+  "provinceCode": "bc",
+  "provinceName": "British Columbia",
+  "slabs": [
+    { "min": 0, "max": 12834, "rate": 0.0506 },
+    { "min": 12834, "max": 25668, "rate": 0.077 },
+    { "min": 25668, "max": 38502, "rate": 0.105 },
+    { "min": 38502, "max": 51336, "rate": 0.1229 },
+    { "min": 51336, "max": 64170, "rate": 0.147 },
+    { "min": 64170, "max": 76978, "rate": 0.168 },
+    { "min": 76978, "max": 999999999, "rate": 0.205 }
+  ]
+}

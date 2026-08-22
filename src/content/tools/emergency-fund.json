@@ -40,6 +40,7 @@
     "Basing the fund on aspirational expenses instead of your actual essential outgoings"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What is a good emergency fund? — Usually 3-6 months of essential expenses.",
     "Should I also plan other savings? — This covers emergencies only; other goals need separate planning.",
     "Is my data shared? — No, everything runs locally in your browser.",
@@ -52,5 +53,15 @@
       "label": "Consumer Financial Protection Bureau — Emergency Savings",
       "url": "https://www.consumerfinance.gov/start-small-save-up/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic emergency fund calculation (months of expenses); 3-6 month guideline is US-centric but the math applies globally.",
+  "features": [
+    "Months of expenses covered and target fund calculation",
+    "Monthly expenses, current savings, and target months inputs",
+    "Months covered, target amount, and on-track status",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

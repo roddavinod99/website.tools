@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { dtiRatio } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -18,6 +20,7 @@ function dtiCategory(pct: number): { label: string; tone: string } {
 }
 
 export function DebtToIncome() {
+  const { currency, setCurrency } = useCurrency();
   const [debts, setDebts] = useState("1500");
   const [income, setIncome] = useState("5000");
 
@@ -34,8 +37,9 @@ export function DebtToIncome() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Total monthly debt payments" value={debts} onChange={setDebts} prefix="$" hint="Mortgage, car, cards, student loans, etc." />
-        <MoneyInput label="Gross monthly income" value={income} onChange={setIncome} prefix="$" hint="Income before taxes and deductions" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Total monthly debt payments" value={debts} onChange={setDebts} currency={currency} hint="Mortgage, car, cards, student loans, etc." />
+        <MoneyInput label="Gross monthly income" value={income} onChange={setIncome} currency={currency} hint="Income before taxes and deductions" />
       </div>
 
       {result ? (
@@ -51,11 +55,11 @@ export function DebtToIncome() {
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly debt</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.debt)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.debt, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly income</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.income)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.income, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">

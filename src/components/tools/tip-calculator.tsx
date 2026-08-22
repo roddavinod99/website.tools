@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { tipCalculator } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function TipCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [bill, setBill] = useState("100");
   const [tipPct, setTipPct] = useState("18");
   const [people, setPeople] = useState("1");
@@ -27,7 +30,8 @@ export function TipCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Bill amount" value={bill} onChange={setBill} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Bill amount" value={bill} onChange={setBill} currency={currency} />
         <Field label="Tip percentage">
           <PercentInput value={tipPct} onChange={setTipPct} ariaLabel="Tip percentage" />
         </Field>
@@ -43,15 +47,15 @@ export function TipCalculator() {
         >
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Tip amount</p>
-            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.tipAmount)}</p>
+            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.tipAmount, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total with tip</p>
-            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.total)}</p>
+            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.total, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Per person</p>
-            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.perPerson)}</p>
+            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.perPerson, currency)}</p>
           </div>
         </div>
       ) : (

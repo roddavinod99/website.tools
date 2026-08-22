@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput } from "@/components/finance/inputs";
 import { emergencyFund } from "@/lib/finance/calculations";
 import { formatMoney, formatNumber } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function EmergencyFundCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [expenses, setExpenses] = useState("4000");
   const [savings, setSavings] = useState("20000");
   const [targetMonths, setTargetMonths] = useState("6");
@@ -27,8 +30,9 @@ export function EmergencyFundCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Monthly expenses" value={expenses} onChange={setExpenses} prefix="$" hint="Rent, food, utilities, insurance, minimum payments" />
-        <MoneyInput label="Emergency fund balance" value={savings} onChange={setSavings} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Monthly expenses" value={expenses} onChange={setExpenses} currency={currency} hint="Rent, food, utilities, insurance, minimum payments" />
+        <MoneyInput label="Emergency fund balance" value={savings} onChange={setSavings} currency={currency} />
         <Field label="Target emergency fund">
           <NumberInput ariaLabel="Target months of expenses" value={targetMonths} onChange={setTargetMonths} suffix="months" placeholder="6" />
         </Field>
@@ -42,7 +46,7 @@ export function EmergencyFundCalculator() {
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Covered by current savings</p>
             <p className={`mt-1 text-3xl font-bold ${result.onTrack ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400"}`}>
-              {formatNumber(result.monthsCovered, 1)} months
+              {formatNumber(result.monthsCovered, "en-US", 1)} months
             </p>
             <p className="mt-1 text-sm text-surface-600 dark:text-dark-muted">
               {result.onTrack ? "Your fund meets the target" : "Keep building toward your target"}
@@ -51,11 +55,11 @@ export function EmergencyFundCalculator() {
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly expenses</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(parseFloat(expenses) || 0)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(parseFloat(expenses) || 0, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Target amount ({result.monthsGoal} months)</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.targetAmount)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.targetAmount, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">

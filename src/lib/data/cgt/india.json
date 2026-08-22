@@ -1,0 +1,83 @@
+{
+  "countryCode": "IN",
+  "countryName": "India",
+  "currencyCode": "INR",
+  "taxYears": [
+    {
+      "id": "fy-2025-26",
+      "label": "FY 2025–26 (AY 2026–27)",
+      "lastUpdated": "2026-08-21",
+      "assumesTransfersOnOrAfter": "2024-07-23",
+      "holdingPeriodMonths": {
+        "listed-shares": 12,
+        "unlisted-shares": 24,
+        "property": 24,
+        "other": 24
+      },
+      "stcgFlatRates": {
+        "listed-shares": 0.20
+      },
+      "ltcgFlatRates": {
+        "listed-shares": 0.125,
+        "unlisted-shares": 0.125,
+        "property": 0.125,
+        "other": 0.125
+      },
+      "slabRateAssets": ["unlisted-shares", "property", "other"],
+      "cryptoFlatRate": 0.30,
+      "indexationAllowed": false,
+      "ltcgExemption": {
+        "amount": 125000,
+        "appliesTo": ["listed-shares"],
+        "description": "LTCG on listed equity up to ₹1.25 lakh per year is exempt (Section 112A)"
+      },
+      "sources": [
+        { "label": "Income Tax Department — Capital Gains", "url": "https://www.incometax.gov.in/iec/foportal/help/how-to-compute-capital-gains" }
+      ],
+      "notes": [
+        "Rates apply to transfers on or after 23 July 2024 (Finance (No. 2) Act 2024).",
+        "Indexation benefit has been removed for transfers on or after 23 July 2024.",
+        "Crypto/VDA gains are taxed at a flat 30% regardless of holding period; losses cannot be offset against other income.",
+        "Short-term gains on non-equity assets are taxed at your applicable slab rate."
+      ]
+    },
+    {
+      "id": "fy-2024-25",
+      "label": "FY 2024–25 (AY 2025–26)",
+      "lastUpdated": "2026-08-21",
+      "assumesTransfersOnOrAfter": "2024-07-23",
+      "holdingPeriodMonths": {
+        "listed-shares": 12,
+        "unlisted-shares": 24,
+        "property": 24,
+        "other": 24
+      },
+      "stcgFlatRates": {
+        "listed-shares": 0.20
+      },
+      "ltcgFlatRates": {
+        "listed-shares": 0.125,
+        "unlisted-shares": 0.125,
+        "property": 0.125,
+        "other": 0.125
+      },
+      "slabRateAssets": ["unlisted-shares", "property", "other"],
+      "cryptoFlatRate": 0.30,
+      "indexationAllowed": false,
+      "ltcgExemption": {
+        "amount": 125000,
+        "appliesTo": ["listed-shares"],
+        "description": "LTCG on listed equity up to ₹1.25 lakh per year is exempt (Section 112A)"
+      },
+      "sources": [
+        { "label": "Income Tax Department — Capital Gains", "url": "https://www.incometax.gov.in/iec/foportal/help/how-to-compute-capital-gains" }
+      ],
+      "notes": [
+        "Rates apply to transfers on or after 23 July 2024 (Finance (No. 2) Act 2024). Transfers before that date used 10% LTCG / 15% STCG with a ₹1 lakh exemption and are not modelled here.",
+        "Crypto/VDA gains are taxed at a flat 30% regardless of holding period.",
+        "Short-term gains on non-equity assets are taxed at your applicable slab rate."
+      ]
+    }
+  ],
+  "defaultTaxYearId": "fy-2025-26"
+}

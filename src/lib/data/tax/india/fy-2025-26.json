@@ -1,0 +1,45 @@
+{
+  "year": "fy-2025-26",
+  "label": "FY 2025–26 (AY 2026–27)",
+  "regimes": [
+    {
+      "id": "old",
+      "label": "Old Regime",
+      "description": "Traditional tax regime with deductions and exemptions",
+      "standardDeduction": 50000,
+      "slabs": [
+        { "min": 0, "max": 250000, "rate": 0 },
+        { "min": 250000, "max": 500000, "rate": 0.05 },
+        { "min": 500000, "max": 1000000, "rate": 0.2 },
+        { "min": 1000000, "max": 999999999, "rate": 0.3 }
+      ],
+      "deductions": [
+        { "name": "80C", "maxAmount": 150000, "description": "Investments in PPF, EPF, life insurance, ELSS, etc." },
+        { "name": "80CCD(1B)", "maxAmount": 50000, "description": "Additional NPS contribution" },
+        { "name": "80D", "maxAmount": 25000, "description": "Health insurance premium (self/family)" },
+        { "name": "80D_senior", "maxAmount": 50000, "description": "Health insurance premium (senior citizen parents)" },
+        { "name": "HRA", "maxAmount": 0, "description": "House Rent Allowance exemption (calculated separately)" },
+        { "name": "24b", "maxAmount": 200000, "description": "Home loan interest (self-occupied property)" }
+      ]
+    },
+    {
+      "id": "new",
+      "label": "New Regime (Section 115BAC)",
+      "description": "Lower tax rates without most deductions and exemptions",
+      "standardDeduction": 75000,
+      "slabs": [
+        { "min": 0, "max": 300000, "rate": 0 },
+        { "min": 300000, "max": 600000, "rate": 0.05 },
+        { "min": 600000, "max": 900000, "rate": 0.1 },
+        { "min": 900000, "max": 1200000, "rate": 0.15 },
+        { "min": 1200000, "max": 1500000, "rate": 0.2 },
+        { "min": 1500000, "max": 999999999, "rate": 0.3 }
+      ],
+      "deductions": [
+        { "name": "standardDeduction", "maxAmount": 75000, "description": "Standard deduction (only deduction allowed)" },
+        { "name": "80CCD(2)", "maxAmount": 0, "description": "Employer NPS contribution (only deduction allowed)" }
+      ]
+    }
+  ],
+  "defaultRegime": "new"
+}

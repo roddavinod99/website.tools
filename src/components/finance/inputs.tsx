@@ -34,6 +34,7 @@ interface NumberInputProps {
   step?: number;
   suffix?: string;
   ariaLabel?: string;
+  allowDecimal?: boolean;
 }
 
 export function NumberInput({
@@ -41,18 +42,29 @@ export function NumberInput({
   onChange,
   placeholder = "0",
   min,
+  max,
   suffix,
   ariaLabel,
+  allowDecimal = true,
 }: NumberInputProps) {
   const handle = (raw: string) => {
-    let next = raw.replace(/[^0-9.]/g, "");
-    const firstDot = next.indexOf(".");
-    if (firstDot !== -1) {
-      next = next.slice(0, firstDot + 1) + next.slice(firstDot + 1).replace(/\./g, "");
+    let next = raw;
+    if (allowDecimal) {
+      next = raw.replace(/[^0-9.]/g, "");
+      const firstDot = next.indexOf(".");
+      if (firstDot !== -1) {
+        next = next.slice(0, firstDot + 1) + next.slice(firstDot + 1).replace(/\./g, "");
+      }
+    } else {
+      next = raw.replace(/[^0-9]/g, "");
     }
     if (min !== undefined) {
       const num = parseFloat(next);
       if (!isNaN(num) && num < min) next = String(min);
+    }
+    if (max !== undefined) {
+      const num = parseFloat(next);
+      if (!isNaN(num) && num > max) next = String(max);
     }
     onChange(next);
   };
@@ -60,7 +72,7 @@ export function NumberInput({
     <div className="relative">
       <input
         type="text"
-        inputMode="decimal"
+        inputMode={allowDecimal ? "decimal" : "numeric"}
         autoComplete="off"
         aria-label={ariaLabel}
         value={value}

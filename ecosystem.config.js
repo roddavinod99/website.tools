@@ -9,6 +9,7 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 3000,
+        HOSTNAME: "127.0.0.1",
       },
       // Environment variables should come from the shell environment, not hardcoded
       // Set them in .env or in the shell before starting PM2

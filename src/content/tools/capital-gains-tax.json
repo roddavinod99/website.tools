@@ -1,55 +1,84 @@
 {
-  "whatItDoes": "Estimates the capital gain or loss from selling an asset. It subtracts purchase price and any buying/selling costs, then applies the tax rate you enter to the taxable gain to show the estimated tax owed.",
-  "whyItExists": "Selling an asset — stock, property, or crypto — creates a gain that is often taxed, but the taxable profit depends on the exact costs of buying and selling. A quick calculator makes the real, net gain and its tax easy to see.",
-  "whoShouldUse": "Investors selling stocks or funds, property owners, and anyone planning a sale where a capital gain tax applies.",
+  "whatItDoes": "Estimates capital gains tax for India, the US, the UK, Canada, and Australia. It computes your gain (sale price − purchase price − expenses), applies each country's holding-period rules, exemptions, and rates — including short-term vs long-term treatment, the Indian LTCG exemption, UK Annual Exempt Amount, Canadian 50% inclusion, and the Australian CGT discount.",
+  "whyItExists": "Capital gains tax works completely differently across countries: some distinguish short- vs long-term, some apply flat rates, some use discounts or inclusion rates. A country-aware calculator applies the correct rules automatically instead of guessing a single rate.",
+  "whoShouldUse": "Investors selling shares or crypto, homeowners selling property abroad or at home, expats planning cross-border sales, and anyone comparing how different countries would tax the same disposal.",
   "useCases": [
-    "Estimate tax on a stock or mutual fund sale",
-    "Budget for a property sale with closing costs",
-    "Compare scenarios of different cost assumptions",
-    "See whether a sale is actually with gain or loss",
-    "Plan the timing of a sale across tax years",
-    "Check how higher purchase costs change the taxable gain"
+    "Estimate tax before selling listed shares held long-term in India (₹1.25L exemption check)",
+    "Compare short-term vs long-term tax on a US stock sale, including NIIT",
+    "Work out UK CGT after the £3,000 annual exempt amount at basic or higher rates",
+    "See how Canada's 50% inclusion rate combines with your province's marginal rate",
+    "Check whether the Australian 50% discount applies after 12 months of holding",
+    "Plan whether to sell this year or next based on exemption resets and holding thresholds"
   ],
   "instructions": [
-    "Enter the purchase price of the asset",
-    "Enter the sale price",
-    "Add any purchase costs (commissions, fees)",
-    "Add any selling costs (agent fees, closing costs)",
-    "Enter the tax rate and read the estimated gain and tax",
-    "Adjust the rate to model long-term vs. short-term holdings"
+    "Select your country — currency switches automatically but can be overridden",
+    "Choose the asset type: listed shares, unlisted shares, property, crypto, or other",
+    "Enter how long you held the asset where the country uses holding periods",
+    "Enter the purchase price, sale price, and eligible expenses",
+    "Add country-specific inputs when shown (filing status, taxable income, province, residency)",
+    "Read the gain, taxable amount, estimated tax, and per-item breakdown"
   ],
   "examples": [
-    "Purchased $50,000 + $500 fees, sold $75,000 − $1,000 fees, 15% rate → gain $23,500, tax ≈ $3,525",
-    "Purchased $20,000, sold $15,000 → a $5,000 loss, no taxable gain, no tax",
-    "Purchased $10,000 + $200 fees, sold $18,000 − $300 fees, 20% rate → gain $7,500, tax ≈ $1,500",
-    "Same gain held short-term at 32% → tax rises to ≈ $2,400, showing why holding period matters"
+    "India: listed shares bought ₹100,000, sold ₹300,000 after 18 months → gain ₹200,000; ₹1.25L exempt; 12.5% on ₹75,000 → ₹9,375",
+    "US: $10,000 long-term gain with $40,000 taxable income → part taxed at 0%, remainder at 15%",
+    "UK: £20,000 gain with £30,000 income → £3,000 AEA applied; £7,700 at 18% + rest at 24%",
+    "Canada: $40,000 gain in Ontario → 50% inclusion adds $20,000 to income at combined marginal rates",
+    "Australia: $40,000 gain held 24 months by a resident → 50% discount halves the taxable gain"
   ],
   "bestPractices": [
-    "Include all fees — commissions, closing, legal, transfer taxes",
-    "Use the correct rate for your holding period (long-term vs short-term)",
-    "Check the current tax authority rates before relying on the figure",
-    "Treat the number as an estimate, not tax advice",
-    "Track your basis documents so purchase costs are accurate"
+    "Include every eligible cost — brokerage, stamp duty, legal fees — they reduce the taxable gain",
+    "Check the exact acquisition date against the holding threshold before selling",
+    "For income-dependent systems (US, UK, CA, AU), enter realistic other income for an accurate marginal rate",
+    "Use the correct asset type — India taxes crypto at a flat 30% regardless of holding period",
+    "Treat results as estimates; confirm with a qualified tax professional"
   ],
   "commonMistakes": [
-    "Forgetting purchase or selling costs that reduce the gain",
-    "Applying the tax rate to the full sale price instead of the gain",
-    "Ignoring that losses usually mean no tax is owed",
-    "Assuming one flat rate applies to every situation",
-    "Mixing up long-term and short-term holding periods"
+    "Applying one universal 12-month rule everywhere — India uses 12/24 months by asset type and the UK/Canada use none at all",
+    "Forgetting that India's indexation benefit ended for transfers on or after 23 July 2024",
+    "Assuming crypto is treated like shares in India — VDAs are taxed at a flat 30% and losses cannot be offset",
+    "Ignoring NIIT (US) or Medicare levy (Australia) which add to the headline rate",
+    "Entering gross income instead of taxable income in systems that need your marginal band"
   ],
   "faq": [
-    "Is this tax advice? — No, it is an informational estimate based on the inputs.",
-    "What if I sold at a loss? — The loss is shown and the taxable gain is zero.",
-    "Which rate should I use? — Use the rate applicable to your asset: long-term, short-term, or local rules.",
-    "Are my numbers shared? — No, the calculation is done entirely in your browser.",
-    "What is the difference between long-term and short-term? — Most tax systems tax assets held over one year at a lower rate than those sold within a year.",
-    "Can I offset gains with losses? — Yes, in many systems capital losses reduce taxable gains; enter a net figure to model it."
+    "Is this tax advice? — No. It is an informational estimate for the selected tax year.",
+    "Which countries are supported? — India, United States, United Kingdom, Canada, and Australia.",
+    "Why does the UK not ask how long I held the asset? — The UK has no short/long-term distinction; the same rates apply however long you held it.",
+    "How is Canada different? — Half of any gain is added to your income and taxed at combined federal + provincial marginal rates.",
+    "What if I sold at a loss? — The calculator shows zero tax and notes the carry-forward rules for that country.",
+    "Are my numbers shared? — No, everything runs locally in your browser."
   ],
   "references": [
     {
-      "label": "IRS Capital Gains and Losses (Topic 409)",
+      "label": "Income Tax India — Capital Gains",
+      "url": "https://www.incometax.gov.in/iec/foportal/help/how-to-compute-capital-gains"
+    },
+    {
+      "label": "IRS — Topic 409: Capital Gains and Losses",
       "url": "https://www.irs.gov/taxtopics/tc409"
+    },
+    {
+      "label": "GOV.UK — Capital Gains Tax rates and allowances",
+      "url": "https://www.gov.uk/guidance/capital-gains-tax-rates-and-allowances"
+    },
+    {
+      "label": "Canada Revenue Agency — Capital gains",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/personal-income/line-12700-capital-gains.html"
+    },
+    {
+      "label": "ATO — Capital gains tax",
+      "url": "https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": true,
+  "assumptions": "Country-specific capital gains tax rules for India, US, UK, Canada, and Australia. Includes holding period rules, exemptions, and rates per jurisdiction.",
+  "features": [
+    "Multi-country support (India, US, UK, Canada, Australia)",
+    "Multi-currency support with auto-switching",
+    "Asset type selection (shares, property, crypto, other)",
+    "Holding period rules per country",
+    "Country-specific inputs (filing status, province, residency)",
+    "Per-item tax breakdown",
+    "100% browser-based and private"
   ]
 }

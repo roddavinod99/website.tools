@@ -1,0 +1,28 @@
+{
+  "countryCode": "GB",
+  "countryName": "United Kingdom",
+  "currencyCode": "GBP",
+  "taxYears": [
+    {
+      "id": "2024-25",
+      "label": "Tax Year 2024–25",
+      "lastUpdated": "2026-08-21",
+      "usesHoldingPeriod": false,
+      "annualExemptAmount": 3000,
+      "basicBandUpperLimit": 37700,
+      "basicRate": 0.18,
+      "higherRate": 0.24,
+      "mainResidenceFullyExempt": true,
+      "sources": [
+        { "label": "GOV.UK — Capital Gains Tax rates and allowances", "url": "https://www.gov.uk/guidance/capital-gains-tax-rates-and-allowances" }
+      ],
+      "notes": [
+        "The UK has no short-term/long-term distinction — the same rates apply however long you held the asset.",
+        "Rates shown (18%/24%) apply to disposals on or after 30 October 2024. Earlier 2024–25 disposals used 10%/20% for most assets.",
+        "Enter your taxable income from other sources to determine how much of the basic-rate band remains.",
+        "Business Asset Disposal Relief is not modelled in this version."
+      ]
+    }
+  ],
+  "defaultTaxYearId": "2024-25"
+}

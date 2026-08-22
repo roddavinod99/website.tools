@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, PercentInput } from "@/components/finance/inputs";
 import { savingsGoal } from "@/lib/finance/calculations";
 import { formatMoney, formatDurationMonths, formatDate } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function DownPaymentPlanner() {
+  const { currency, setCurrency } = useCurrency();
   const [target, setTarget] = useState("40000");
   const [current, setCurrent] = useState("10000");
   const [monthly, setMonthly] = useState("500");
@@ -36,9 +39,10 @@ export function DownPaymentPlanner() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Down payment goal" value={target} onChange={setTarget} prefix="$" />
-        <MoneyInput label="Current savings" value={current} onChange={setCurrent} prefix="$" />
-        <MoneyInput label="Monthly savings" value={monthly} onChange={setMonthly} prefix="$" hint="What you plan to save each month" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Down payment goal" value={target} onChange={setTarget} currency={currency} />
+        <MoneyInput label="Current savings" value={current} onChange={setCurrent} currency={currency} />
+        <MoneyInput label="Monthly savings" value={monthly} onChange={setMonthly} currency={currency} hint="What you plan to save each month" />
         <Field label="Annual interest on savings">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Annual interest on savings" />
         </Field>
@@ -59,16 +63,16 @@ export function DownPaymentPlanner() {
               <div className="grid gap-4 sm:grid-cols-3 text-sm">
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Final balance</p>
-                  <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.finalBalance)}</p>
+                  <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.finalBalance, currency)}</p>
                 </div>
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Interest earned</p>
-                  <p className="mt-1 font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interestEarned)}</p>
+                  <p className="mt-1 font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interestEarned, currency)}</p>
                 </div>
                 {result.targetDate && (
                   <div>
                     <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly needed if slower</p>
-                    <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.requiredMonthly)}</p>
+                    <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.requiredMonthly, currency)}</p>
                   </div>
                 )}
               </div>

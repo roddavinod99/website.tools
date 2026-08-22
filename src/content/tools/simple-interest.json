@@ -39,6 +39,7 @@
     "Assuming all personal loans use simple interest when some compound"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What's different from compound interest? — Interest is only charged on the original principal, never on accumulated interest.",
     "What uses simple interest? — Many personal loans, auto notes, and short-term instruments.",
     "How do I convert months? — Enter months/12 as the time in years.",
@@ -51,5 +52,15 @@
       "label": "CFPB — Understanding Mortgage Interest on Loans",
       "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-the-difference-between-a-fixed-rate-and-adjustable-rate-mortgage-en-100/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic simple interest calculation; no country-specific assumptions.",
+  "features": [
+    "Simple interest and total amount calculation",
+    "Principal, annual rate, and time period inputs",
+    "Interest earned and final total breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

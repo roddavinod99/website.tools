@@ -296,6 +296,14 @@
 ### Fixed
 
 - rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
+## [1.1.2] - 2026-08-22
+
+### Changed
+
+- v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Fixed
+
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
 ## Template
 
 For future releases:

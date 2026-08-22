@@ -42,6 +42,7 @@
     "Renewing automatically without re-comparing the new rate"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What is compounding frequency? — How often interest is added to the principal (monthly, quarterly, or annually).",
     "Is this tax advice? — No, interest may be taxable depending on your jurisdiction.",
     "Can I withdraw early? — Usually with penalties that this tool does not model.",
@@ -54,5 +55,15 @@
       "label": "Investor.gov — Compound Interest Calculator",
       "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic lump-sum compound interest; 'Fixed Deposit' terminology common in India/UK, 'Term Deposit' or 'CD' in US. Math is globally applicable.",
+  "features": [
+    "Maturity value and interest calculation",
+    "Principal, rate, tenure, and compounding frequency inputs",
+    "Monthly, quarterly, and annual compounding options",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

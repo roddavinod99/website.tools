@@ -1,0 +1,10 @@
+{
+  "provinceCode": "nt",
+  "provinceName": "Northwest Territories",
+  "slabs": [
+    { "min": 0, "max": 15591, "rate": 0.059 },
+    { "min": 15591, "max": 31182, "rate": 0.086 },
+    { "min": 31182, "max": 46773, "rate": 0.122 },
+    { "min": 46773, "max": 999999999, "rate": 0.1405 }
+  ]
+}

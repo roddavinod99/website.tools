@@ -39,6 +39,7 @@
     "Focusing only on the monthly payment while stretching the term to 7+ years"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this include taxes and fees? — No, it covers the financed amount only.",
     "What is a good auto loan term? — Shorter terms cost less in interest but have higher payments.",
     "Can I include a down payment? — Yes, enter the financed amount after deducting it.",
@@ -51,5 +52,8 @@
     "Adjustable amount, rate, and term",
     "Term comparisons in one view",
     "100% browser-based and private"
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Standard auto loan amortization; taxes/fees excluded. Generic math applicable globally."
 }

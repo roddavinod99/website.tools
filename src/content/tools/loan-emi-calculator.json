@@ -39,6 +39,7 @@
     "Extending tenure just to lower the EMI without noticing the extra lakhs of interest it adds"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What is the EMI formula? — It is the standard reducing-balance annuity: principal × monthly rate × (1+rate)^n / ((1+rate)^n − 1).",
     "Does it include processing fees or insurance? — No, only principal and interest. Add fees separately for a true total cost.",
     "Can I use it for any loan type? — Yes, the math is identical for home, auto, and personal loans; only the rates differ.",
@@ -58,5 +59,8 @@
       "label": "Investopedia — EMI Calculator",
       "url": "https://www.investopedia.com/terms/e/eminstallment.asp"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Standard reducing-balance EMI; applicable globally with any currency."
 }

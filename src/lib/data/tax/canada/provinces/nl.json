@@ -1,0 +1,12 @@
+{
+  "provinceCode": "nl",
+  "provinceName": "Newfoundland and Labrador",
+  "slabs": [
+    { "min": 0, "max": 8344, "rate": 0.087 },
+    { "min": 8344, "max": 16688, "rate": 0.145 },
+    { "min": 16688, "max": 25032, "rate": 0.158 },
+    { "min": 25032, "max": 33376, "rate": 0.173 },
+    { "min": 33376, "max": 50064, "rate": 0.183 },
+    { "min": 50064, "max": 999999999, "rate": 0.183 }
+  ]
+}

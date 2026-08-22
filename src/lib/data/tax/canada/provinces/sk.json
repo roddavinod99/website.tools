@@ -1,0 +1,10 @@
+{
+  "provinceCode": "sk",
+  "provinceName": "Saskatchewan",
+  "slabs": [
+    { "min": 0, "max": 17661, "rate": 0.105 },
+    { "min": 17661, "max": 52058, "rate": 0.125 },
+    { "min": 52058, "max": 139153, "rate": 0.145 },
+    { "min": 139153, "max": 999999999, "rate": 0.145 }
+  ]
+}

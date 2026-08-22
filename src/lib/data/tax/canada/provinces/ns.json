@@ -1,0 +1,12 @@
+{
+  "provinceCode": "ns",
+  "provinceName": "Nova Scotia",
+  "slabs": [
+    { "min": 0, "max": 8481, "rate": 0.0879 },
+    { "min": 8481, "max": 16962, "rate": 0.1495 },
+    { "min": 16962, "max": 25443, "rate": 0.1667 },
+    { "min": 25443, "max": 75000, "rate": 0.175 },
+    { "min": 75000, "max": 150000, "rate": 0.21 },
+    { "min": 150000, "max": 999999999, "rate": 0.21 }
+  ]
+}

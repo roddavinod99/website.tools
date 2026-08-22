@@ -40,6 +40,7 @@
     "Forgetting to re-check the projection after a job change or income raise"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this include taxes and inflation? — No, it is a nominal pre-tax projection.",
     "What return should I use? — A common assumption is 6-8%, but use your own planning number.",
     "Is employer matching included? — Only if you add it to the monthly contribution.",
@@ -52,5 +53,16 @@
       "label": "Investor.gov — Saving and Investing",
       "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic compound interest with monthly contributions; US terminology (401k, IRA) used but math is globally applicable.",
+  "features": [
+    "Retirement balance projection with monthly contributions",
+    "Current savings, monthly contribution, return rate, and years to retirement inputs",
+    "Total contributions vs. growth breakdown",
+    "Contribution timing toggle (start/end of month)",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

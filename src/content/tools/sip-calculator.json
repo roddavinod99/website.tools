@@ -58,5 +58,17 @@
       "label": "SEBI — Mutual Funds",
       "url": "https://www.sebi.gov.in/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic SIP/recurring investment calculation; no country-specific assumptions.",
+  "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
+    "Is the SIP projection guaranteed? — No, returns are assumed and can be lower or higher.",
+    "Can I use this for non-mutual-fund investing? — Yes, the math is the same for any monthly-return plan.",
+    "Does it account for fund charges? — No, expense ratios and taxes are not included.",
+    "Is my data sent anywhere? — No, everything runs locally in your browser.",
+    "What is contribution timing? — It controls whether each contribution is invested at the start or end of the month; start-of-month matches how most SIPs are debited.",
+    "Should I stop my SIP when markets fall? — Historically, staying invested through downturns has been key to capturing long-term equity returns."
   ]
 }

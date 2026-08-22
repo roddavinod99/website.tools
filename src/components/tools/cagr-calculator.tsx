@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput } from "@/components/finance/inputs";
 import { cagr } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function CagrCalculator() {
+  const { currency, setCurrency } = useCurrency("cagr-calculator");
   const [begin, setBegin] = useState("1000");
   const [end, setEnd] = useState("2100");
   const [years, setYears] = useState("5");
@@ -34,8 +37,9 @@ export function CagrCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Beginning value" value={begin} onChange={setBegin} prefix="$" />
-        <MoneyInput label="Ending value" value={end} onChange={setEnd} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Beginning value" value={begin} onChange={setBegin} currency={currency} />
+        <MoneyInput label="Ending value" value={end} onChange={setEnd} currency={currency} />
         <Field label="Holding period">
           <NumberInput
             ariaLabel="Holding period in years"
@@ -59,7 +63,7 @@ export function CagrCalculator() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Net gain</p>
-              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.gain)}</p>
+              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.gain, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Period</p>

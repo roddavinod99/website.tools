@@ -39,6 +39,7 @@
     "Ignoring how private mortgage insurance (PMI) adds cost when the down payment is under 20%"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this include escrow for taxes and insurance? — No, it covers principal and interest only.",
     "What does total interest mean? — The portion of all your payments that goes to the lender as interest.",
     "Can I model a shorter term? — Yes, set the term to 15 or 20 years to compare payoffs.",
@@ -58,5 +59,8 @@
       "label": "Consumer Finance — Mortgage Loan Basics",
       "url": "https://www.consumerfinance.gov/owning-a-home/"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Fixed-rate mortgage amortization; property tax/insurance excluded. US-centric defaults (30-year term) but math is generic."
 }

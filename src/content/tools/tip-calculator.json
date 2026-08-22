@@ -39,6 +39,7 @@
     "Assuming the bill is split equally when someone had significantly more"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What tip percentage should I use? — Common ranges are 15-20%, depending on service and location.",
     "Is the split always even? — This calculator splits evenly; adjust people if the group is unequal.",
     "Does this include tax? — Only if you include tax in the bill amount.",
@@ -51,5 +52,8 @@
     "Even split across any group size",
     "Adjustable percentage",
     "100% browser-based and private"
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Tip calculation is generic; tip percentage norms vary by country (US 15-20%, UK 10-15%, Japan 0%). User chooses appropriate rate."
 }

@@ -38,6 +38,7 @@
     "Switching strategies mid-plan and losing the momentum of early wins"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Is this financial advice? — No, it is a planning estimate.",
     "Which is better, snowball or avalanche? — Avalanche saves the most interest; snowball gives faster first wins to stay motivated.",
     "Why is there no plan? — The monthly budget must be at least the sum of the minimums.",
@@ -54,5 +55,8 @@
       "label": "CFPB — Avalanche Method",
       "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-the-avalanche-method-of-paying-off-my-debts-en-1042/"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic debt payoff (snowball/avalanche) math; single currency per session; no country-specific assumptions."
 }

@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput } from "@/components/finance/inputs";
 import { roi } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function RoiCalculator() {
+  const { currency, setCurrency } = useCurrency("roi-calculator");
   const [invested, setInvested] = useState("10000");
   const [value, setValue] = useState("13500");
   const [years, setYears] = useState("3");
@@ -32,8 +35,9 @@ export function RoiCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Amount invested" value={invested} onChange={setInvested} prefix="$" />
-        <MoneyInput label="Final value" value={value} onChange={setValue} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Amount invested" value={invested} onChange={setInvested} currency={currency} />
+        <MoneyInput label="Final value" value={value} onChange={setValue} currency={currency} />
         <Field label="Holding period">
           <NumberInput
             ariaLabel="Holding period in years"
@@ -53,7 +57,7 @@ export function RoiCalculator() {
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Net profit</p>
-              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.gain)}</p>
+              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.gain, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">ROI</p>

@@ -1,0 +1,79 @@
+{
+  "whatItDoes": "Calculates VAT, GST, or Sales Tax for 35+ countries. Supports exclusive (tax added on top) and inclusive (tax included) modes, standard, reduced, and zero rates, and provincial/state breakdowns (e.g., Canada HST/GST+PST).",
+  "whyItExists": "Tax rules vary worldwide—some regions quote prices inclusive of tax, others exclusive. Rates differ by country, province, and product type. A single calculator that knows each jurisdiction's rates and inclusive/exclusive conventions removes guesswork and manual errors.",
+  "whoShouldUse": "International shoppers, cross‑border sellers, travelers, accountants, and anyone preparing invoices or estimating checkout totals across borders.",
+  "useCases": [
+    "Estimate the final price of a product in another country",
+    "Extract the tax portion from a tax‑inclusive price (common in UK, EU, India)",
+    "Add the correct tax to an invoice for a foreign client",
+    "Break down Canadian HST into federal GST and provincial portions",
+    "Compare tax‑inclusive vs exclusive totals for budgeting",
+    "Verify a receipt's tax breakdown against local rates"
+  ],
+  "instructions": [
+    "Select the country (and province/state for Canada)",
+    "Choose the tax regime: exclusive (tax added) or inclusive (tax already in price) — the default follows local convention",
+    "Pick the applicable rate: standard, reduced, zero, or enter a custom rate",
+    "Enter the amount (pre‑tax for exclusive, total for inclusive)",
+    "Read the tax amount, base amount, and total",
+    "For Canada, optionally select a province to see federal vs provincial split"
+  ],
+  "examples": [
+    "US (exclusive): $100 at 8% → tax $8, total $108",
+    "UK (inclusive): £120 at 20% VAT → base £100, tax £20",
+    "India GST (inclusive): ₹11,800 at 18% → base ₹10,000, tax ₹1,800",
+    "Canada Ontario (exclusive): $100 at 13% HST → federal $5, provincial $8, total $113",
+    "Germany (inclusive): €119 at 19% VAT → base €100, tax €19"
+  ],
+  "bestPractices": [
+    "Use the inclusive mode when the price you have already includes tax (common in EU, UK, India, Australia)",
+    "Select the correct reduced rate for the product category (e.g., food, books, medical)",
+    "For Canada, choose the province to automatically split HST/GST+PST",
+    "Verify the rate matches the product category and jurisdiction",
+    "Re‑check rates periodically; they change annually in many countries"
+  ],
+  "commonMistakes": [
+    "Using exclusive mode when the displayed price already includes tax",
+    "Applying the standard rate where a reduced or zero rate applies",
+    "Forgetting to split Canadian HST into federal and provincial portions",
+    "Entering the rate as a whole number (8) instead of percent (8%)",
+    "Applying tax twice by calculating on an already‑taxed amount"
+  ],
+  "faq": [
+    "Does this handle compound taxes? — Yes, for Canada it splits HST/GST+PST automatically; other countries use a single flat rate.",
+    "What is a reduced rate? — Many countries apply lower rates to essentials (food, books, medicine). Select the appropriate one from the dropdown.",
+    "Is the calculator up to date? — Rates reflect the latest published rates as of 2025; verify with local authority if critical.",
+    "Is my data shared? — No, everything runs locally in your browser.",
+    "How is VAT different from Sales Tax? — Both are consumption taxes; VAT is collected at each stage of production, Sales Tax only at final sale. The math for the end consumer is the same flat‑rate application."
+  ],
+  "references": [
+    {
+      "label": "EU VAT rates",
+      "url": "https://ec.europa.eu/taxation_customs/business/vat/eu-vat-rates_en"
+    },
+    {
+      "label": "Canada GST/HST rates",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html"
+    },
+    {
+      "label": "India GST rates",
+      "url": "https://www.gst.gov.in/"
+    },
+    {
+      "label": "Australia GST",
+      "url": "https://www.ato.gov.au/Business/GST/"
+    }
+  ],
+  "currencySupport": true,
+  "countrySpecific": true,
+  "assumptions": "Country-specific VAT/GST/Sales Tax rates for 35+ countries. Includes standard, reduced, and zero rates with inclusive/exclusive modes. Canada province breakdown.",
+  "features": [
+    "Multi-country support (35+ countries)",
+    "Multi-currency support with auto-switching",
+    "Inclusive and exclusive tax modes",
+    "Standard, reduced, and zero rate selection",
+    "Canada federal/provincial tax breakdown",
+    "Custom rate override",
+    "100% browser-based and private"
+  ]
+}

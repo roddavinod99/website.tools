@@ -1,0 +1,11 @@
+{
+  "provinceCode": "ab",
+  "provinceName": "Alberta",
+  "slabs": [
+    { "min": 0, "max": 148189, "rate": 0.10 },
+    { "min": 148189, "max": 177827, "rate": 0.12 },
+    { "min": 177827, "max": 237103, "rate": 0.13 },
+    { "min": 237103, "max": 355655, "rate": 0.14 },
+    { "min": 355655, "max": 999999999, "rate": 0.15 }
+  ]
+}

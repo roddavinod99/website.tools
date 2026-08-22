@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput, SelectField } from "@/components/finance/inputs";
 import { compoundFutureValue, type ContributionTiming } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function CompoundInterestCalculator() {
+  const { currency, setCurrency } = useCurrency("compound-interest-calculator");
   const [principal, setPrincipal] = useState("10000");
   const [monthly, setMonthly] = useState("500");
   const [rate, setRate] = useState("7");
@@ -37,8 +40,9 @@ export function CompoundInterestCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Initial amount" value={principal} onChange={setPrincipal} prefix="$" />
-        <MoneyInput label="Monthly contribution" value={monthly} onChange={setMonthly} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Initial amount" value={principal} onChange={setPrincipal} currency={currency} />
+        <MoneyInput label="Monthly contribution" value={monthly} onChange={setMonthly} currency={currency} />
         <Field label="Annual interest rate">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Annual interest rate" />
         </Field>
@@ -72,15 +76,15 @@ export function CompoundInterestCalculator() {
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Matured value</p>
-              <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future)}</p>
+              <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total invested</p>
-              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.totalContributions)}</p>
+              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.totalContributions, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Interest earned</p>
-              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest)}</p>
+              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest, currency)}</p>
             </div>
           </div>
           <p className="mt-4 text-xs text-surface-500 dark:text-dark-muted">

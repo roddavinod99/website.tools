@@ -39,6 +39,7 @@
     "Ignoring taxes on retirement accounts, which reduce their real value"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What counts as an asset? — Cash, savings, the market value of your home, and investments.",
     "What counts as a liability? — Mortgages, auto and student loans, and card balances.",
     "Is a negative net worth bad? — Not always; many people start with student debt, for example.",
@@ -51,5 +52,15 @@
       "label": "Investor.gov — Net Worth",
       "url": "https://www.investor.gov/additional-resources/general-resources/glossary/net-worth"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic net worth calculation (assets - liabilities); no country-specific assumptions.",
+  "features": [
+    "Net worth calculation (assets minus liabilities)",
+    "Total assets and total liabilities inputs",
+    "Net worth, assets, and liabilities breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

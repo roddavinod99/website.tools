@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { NumberInput, Field, PercentInput } from "@/components/finance/inputs";
 import { savingsGoal } from "@/lib/finance/calculations";
 import { formatMoney, formatDurationMonths } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function SavingsGoalCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [target, setTarget] = useState("50000");
   const [current, setCurrent] = useState("5000");
   const [monthly, setMonthly] = useState("1000");
@@ -43,13 +46,14 @@ export function SavingsGoalCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Goal amount" value={target} onChange={setTarget} prefix="$" />
-        <MoneyInput label="Current savings" value={current} onChange={setCurrent} prefix="$" />
-        <MoneyInput label="Monthly contribution" value={monthly} onChange={setMonthly} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Goal amount" value={target} onChange={setTarget} currency={currency} />
+        <MoneyInput label="Current savings" value={current} onChange={setCurrent} currency={currency} />
+        <MoneyInput label="Monthly contribution" value={monthly} onChange={setMonthly} currency={currency} />
         <Field label="Expected annual return">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Expected annual return" />
         </Field>
-<Field label="Time horizon">
+        <Field label="Time horizon">
           <NumberInput
             value={years}
             onChange={setYears}
@@ -68,7 +72,7 @@ export function SavingsGoalCalculator() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Required monthly</p>
-              <p className="mt-1 text-2xl font-bold text-brand-600 dark:text-brand-400">{formatMoney(result.requiredMonthly)}</p>
+              <p className="mt-1 text-2xl font-bold text-brand-600 dark:text-brand-400">{formatMoney(result.requiredMonthly, currency)}</p>
               <p className="mt-1 text-xs text-surface-500 dark:text-dark-muted">
                 {result.requiredMonthly <= (parseInput(monthly) || 0) ? "You are on track" : "Need to increase savings"}
               </p>
@@ -84,7 +88,7 @@ export function SavingsGoalCalculator() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Interest earned</p>
-              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interestEarned)}</p>
+              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interestEarned, currency)}</p>
             </div>
           </div>
           <p className={`mt-4 text-xs ${result.onTrack ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400"}`}>

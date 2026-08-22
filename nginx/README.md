@@ -60,6 +60,6 @@ sudo systemctl reload nginx
 
 ## Notes
 
-- `unsafe-eval` is required for the BenchmarkBuilder tool (uses `new Function()` in a Web Worker). It is automatically included in `/tools/*` route CSPs by `scripts/postbuild-csp.mjs`.
+- `unsafe-eval` is required for the BenchmarkBuilder tool (uses `new Function()` in a Web Worker). It is automatically included **only** in the `/tools/benchmark-builder` route CSP by `scripts/postbuild-csp.mjs`.
 - `X-XSS-Protection` has been removed (obsolete, ignored by modern browsers)
 - The `if` blocks for user-agent and path blocking are safe for simple pattern matching

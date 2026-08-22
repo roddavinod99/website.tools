@@ -41,6 +41,7 @@
     "Stopping deposits the moment rates dip without comparing alternatives"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "How is this different from a fixed deposit? — A fixed deposit is a lump sum; here you add monthly.",
     "Is the interest compounded monthly? — Yes, it compounds at the stated rate over the term.",
     "Is this tax advice? — No, interest may be taxable depending on where you live.",
@@ -53,5 +54,15 @@
       "label": "Investor.gov — Compound Interest Calculator",
       "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic recurring deposit (annuity due) calculation; 'Recurring Deposit' common in India/UK, similar to SIP. Math globally applicable.",
+  "features": [
+    "Maturity value and interest calculation",
+    "Monthly deposit, rate, and tenure inputs",
+    "Total deposited vs. interest earned breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

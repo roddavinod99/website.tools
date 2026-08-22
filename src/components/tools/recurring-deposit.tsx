@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { recurringFutureValue } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function RecurringDepositCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [monthly, setMonthly] = useState("5000");
   const [rate, setRate] = useState("6.5");
   const [years, setYears] = useState("5");
@@ -33,7 +36,8 @@ export function RecurringDepositCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Monthly deposit" value={monthly} onChange={setMonthly} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Monthly deposit" value={monthly} onChange={setMonthly} currency={currency} />
         <Field label="Annual interest rate">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Annual interest rate" />
         </Field>
@@ -49,15 +53,15 @@ export function RecurringDepositCalculator() {
         >
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Maturity value</p>
-            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future)}</p>
+            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total deposited</p>
-            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.invested)}</p>
+            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.invested, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Interest earned</p>
-            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest)}</p>
+            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest, currency)}</p>
           </div>
         </div>
       ) : (

@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { breakEven } from "@/lib/finance/calculations";
 import { formatMoney, formatNumber } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -11,6 +13,7 @@ function parseInput(raw: string): number {
 }
 
 export function BreakEven() {
+  const { currency, setCurrency } = useCurrency();
   const [fixedCosts, setFixedCosts] = useState("50000");
   const [variableCost, setVariableCost] = useState("15");
   const [price, setPrice] = useState("40");
@@ -27,9 +30,10 @@ export function BreakEven() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Fixed costs" value={fixedCosts} onChange={setFixedCosts} prefix="$" hint="Rent, salaries, insurance — costs that don't change with volume" />
-        <MoneyInput label="Variable cost per unit" value={variableCost} onChange={setVariableCost} prefix="$" hint="Materials and labor per item sold" />
-        <MoneyInput label="Selling price per unit" value={price} onChange={setPrice} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Fixed costs" value={fixedCosts} onChange={setFixedCosts} currency={currency} hint="Rent, salaries, insurance — costs that don't change with volume" />
+        <MoneyInput label="Variable cost per unit" value={variableCost} onChange={setVariableCost} currency={currency} hint="Materials and labor per item sold" />
+        <MoneyInput label="Selling price per unit" value={price} onChange={setPrice} currency={currency} />
       </div>
 
       {result ? (
@@ -44,15 +48,15 @@ export function BreakEven() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Break-even revenue</p>
-              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.breakEvenRevenue)}</p>
+              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.breakEvenRevenue, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Contribution margin</p>
-              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.contributionMarginPerUnit)} per unit</p>
+              <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.contributionMarginPerUnit, currency)} per unit</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">
-            The contribution margin per unit is {formatMoney(result.contributionMarginPerUnit)} — about {result.marginPct.toFixed(1)}% of the selling price. Any sale above the break-even point contributes that amount to profit.
+            The contribution margin per unit is {formatMoney(result.contributionMarginPerUnit, currency)} — about {result.marginPct.toFixed(1)}% of the selling price. Any sale above the break-even point contributes that amount to profit.
           </p>
         </div>
       ) : (

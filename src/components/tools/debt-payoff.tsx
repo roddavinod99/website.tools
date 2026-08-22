@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, SelectField } from "@/components/finance/inputs";
 import { debtPayoff, type DebtEntry } from "@/lib/finance/calculations";
 import { formatMoney, formatDurationMonths } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -28,6 +30,7 @@ function toEntries(rows: DebtRow[]): DebtEntry[] {
 }
 
 export function DebtPayoff() {
+  const { currency, setCurrency } = useCurrency();
   const [debts, setDebts] = useState<DebtRow[]>([
     { name: "Card A", balance: "4000", apr: "18.99", min: "100" },
     { name: "Loan B", balance: "8000", apr: "7.5", min: "150" },
@@ -53,12 +56,13 @@ export function DebtPayoff() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
         <MoneyInput
           label="Monthly payment budget"
           value={budget}
           onChange={setBudget}
-          prefix="$"
-          hint={`Sum of current minimums: ${formatMoney(monthlyTotal)}`}
+          currency={currency}
+          hint={`Sum of current minimums: ${formatMoney(monthlyTotal, currency)}`}
         />
         <Field label="Strategy">
           <SelectField<"snowball" | "avalanche">
@@ -89,27 +93,23 @@ export function DebtPayoff() {
                 className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
               />
             </Field>
-            <Field label="Balance">
-              <NumberInput
-                ariaLabel={`Debt ${i + 1} balance`}
-                value={debt.balance}
-                onChange={(v) => updateDebt(i, { balance: v })}
-                suffix="$"
-                placeholder="5000"
-              />
-            </Field>
+            <MoneyInput
+              label="Balance"
+              value={debt.balance}
+              onChange={(v) => updateDebt(i, { balance: v })}
+              currency={currency}
+              placeholder="5000"
+            />
             <Field label="APR">
               <NumberInput ariaLabel={`Debt ${i + 1} APR`} value={debt.apr} onChange={(v) => updateDebt(i, { apr: v })} suffix="%" placeholder="15" />
             </Field>
-            <Field label="Min payment">
-              <NumberInput
-                ariaLabel={`Debt ${i + 1} minimum payment`}
-                value={debt.min}
-                onChange={(v) => updateDebt(i, { min: v })}
-                suffix="$"
-                placeholder="100"
-              />
-            </Field>
+            <MoneyInput
+              label="Min payment"
+              value={debt.min}
+              onChange={(v) => updateDebt(i, { min: v })}
+              currency={currency}
+              placeholder="100"
+            />
           </div>
         ))}
         <p className="text-xs text-surface-400 dark:text-dark-muted">
@@ -129,7 +129,7 @@ export function DebtPayoff() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Total interest paid</p>
-              <p className="mt-1 text-xl font-semibold text-amber-600 dark:text-amber-400">{formatMoney(result.totalInterest)}</p>
+              <p className="mt-1 text-xl font-semibold text-amber-600 dark:text-amber-400">{formatMoney(result.totalInterest, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Payoff order</p>

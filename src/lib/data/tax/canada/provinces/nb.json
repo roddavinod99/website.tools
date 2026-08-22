@@ -1,0 +1,10 @@
+{
+  "provinceCode": "nb",
+  "provinceName": "New Brunswick",
+  "slabs": [
+    { "min": 0, "max": 11092, "rate": 0.094 },
+    { "min": 11092, "max": 22184, "rate": 0.1482 },
+    { "min": 22184, "max": 33276, "rate": 0.1652 },
+    { "min": 33276, "max": 999999999, "rate": 0.1652 }
+  ]
+}

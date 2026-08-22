@@ -39,6 +39,7 @@
     "Ignoring that rent also tends to rise over time"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Why does renting invest the down payment? — Money not tied up in a home is assumed to earn the investment return instead.",
     "Are closing and moving costs included? — No, this simplified version omits them.",
     "What if my horizon is very short? — Short horizons usually favor renting because buying costs are spread thinly.",
@@ -51,5 +52,15 @@
       "label": "Realtor.com — Rent vs Buy Calculator",
       "url": "https://www.realtor.com/mortgage/tools/rent-vs-buy-calculator"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Uses US-centric assumptions (1% property tax, 1% maintenance, 3% rent growth). Math is generic but defaults reflect US market.",
+  "features": [
+    "Buy vs. rent net cost comparison",
+    "Home price, rent, down payment, rate, and horizon inputs",
+    "Property tax, maintenance, appreciation, and investment return modeling",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

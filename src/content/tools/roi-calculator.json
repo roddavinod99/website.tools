@@ -40,6 +40,7 @@
     "Ignoring dividends or rental income that should be part of the final value"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What is ROI? — It is profit divided by the total outlay, expressed as a percent.",
     "What is annualized ROI? — The ROI scaled to a per-year rate so periods can be compared.",
     "Can ROI be negative? — Yes: when final value is below the amount invested.",
@@ -59,5 +60,8 @@
       "label": "Investor.gov — Return on Investment",
       "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/return-investment"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic ROI calculation; no country-specific assumptions."
 }

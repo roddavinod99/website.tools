@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { rentVsBuy, type RentVsBuyParams } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function RentVsBuy() {
+  const { currency, setCurrency } = useCurrency();
   const [homePrice, setHomePrice] = useState("400000");
   const [downPct, setDownPct] = useState("20");
   const [rent, setRent] = useState("2000");
@@ -43,8 +46,9 @@ export function RentVsBuy() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Home price" value={homePrice} onChange={setHomePrice} prefix="$" />
-        <MoneyInput label="Monthly rent (comparable home)" value={rent} onChange={setRent} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Home price" value={homePrice} onChange={setHomePrice} currency={currency} />
+        <MoneyInput label="Monthly rent (comparable home)" value={rent} onChange={setRent} currency={currency} />
         <Field label="Down payment">
           <PercentInput value={downPct} onChange={setDownPct} ariaLabel="Down payment percent" />
         </Field>
@@ -71,21 +75,21 @@ export function RentVsBuy() {
               {result.tie ? "It's a wash" : result.buyBetter ? "Buying wins" : "Renting wins"}
             </p>
             <p className="mt-1 text-sm text-surface-600 dark:text-dark-muted">
-              {result.buyBetter ? `Cheaper than renting by` : `More expensive than renting by`} {formatMoney(result.savings)} over {horizon || "5"} years.
+              {result.buyBetter ? `Cheaper than renting by` : `More expensive than renting by`} {formatMoney(result.savings, currency)} over {horizon || "5"} years.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 text-sm">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Net cost of buying</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.netBuyCost)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.netBuyCost, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Net cost of renting</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.netRentCost)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.netRentCost, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly mortgage</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.mortgageMonthly)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.mortgageMonthly, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">

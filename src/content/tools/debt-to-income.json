@@ -40,6 +40,7 @@
     "Checking DTI only once instead of tracking it over time"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Is this financial advice? — No, it is an informational metric.",
     "What is a good DTI? — Below 36% is generally healthy; above 43% limits most mortgage options.",
     "Front-end vs back-end? — Back-end (total debt) is what this calculator shows and what most lenders emphasize.",
@@ -52,5 +53,15 @@
       "label": "CFPB — What is a Debt-to-Income Ratio?",
       "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "DTI ratio calculation is generic; 36%/43% thresholds are US-centric but math applies globally.",
+  "features": [
+    "Monthly debt-to-income ratio calculation",
+    "Gross income and total debt inputs",
+    "Lender threshold indicators (36%, 43%)",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

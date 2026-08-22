@@ -57,5 +57,8 @@
       "label": "Investopedia — Profit Margin",
       "url": "https://www.investopedia.com/terms/p/profitmargin.asp"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic profit margin calculation; no country-specific assumptions."
 }

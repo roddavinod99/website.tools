@@ -1,0 +1,10 @@
+{
+  "provinceCode": "nu",
+  "provinceName": "Nunavut",
+  "slabs": [
+    { "min": 0, "max": 17925, "rate": 0.04 },
+    { "min": 17925, "max": 35850, "rate": 0.07 },
+    { "min": 35850, "max": 53775, "rate": 0.09 },
+    { "min": 53775, "max": 999999999, "rate": 0.115 }
+  ]
+}

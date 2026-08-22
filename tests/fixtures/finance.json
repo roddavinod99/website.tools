@@ -22,7 +22,7 @@
   { "slug": "recurring-deposit", "category": "Finance", "name": "Recurring Deposit Calculator", "input": "5000", "action": "", "expect": "output" },
   { "slug": "down-payment-planner", "category": "Finance", "name": "Down Payment Planner", "input": "40000", "action": "", "expect": "output" },
   { "slug": "tip-calculator", "category": "Finance", "name": "Tip Calculator", "input": "100", "action": "", "expect": "output" },
-  { "slug": "sales-tax", "category": "Finance", "name": "Sales Tax Calculator", "input": "100", "action": "", "expect": "output" },
+  { "slug": "vat-gst", "category": "Finance", "name": "VAT/GST/Sales Tax Calculator", "input": "100", "action": "", "expect": "output" },
   { "slug": "simple-interest", "category": "Finance", "name": "Simple Interest Calculator", "input": "10000", "action": "", "expect": "output" },
   { "slug": "inflation", "category": "Finance", "name": "Inflation Calculator", "input": "1000", "action": "", "expect": "output" },
   { "slug": "net-worth", "category": "Finance", "name": "Net Worth Calculator", "input": "500000", "action": "", "expect": "output" },

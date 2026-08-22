@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { profitMargin } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -11,6 +13,7 @@ function parseInput(raw: string): number {
 }
 
 export function ProfitMarginCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [revenue, setRevenue] = useState("1200");
   const [cost, setCost] = useState("850");
 
@@ -24,8 +27,9 @@ export function ProfitMarginCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Revenue / selling price" value={revenue} onChange={setRevenue} prefix="$" />
-        <MoneyInput label="Cost" value={cost} onChange={setCost} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Revenue / selling price" value={revenue} onChange={setRevenue} currency={currency} />
+        <MoneyInput label="Cost" value={cost} onChange={setCost} currency={currency} />
       </div>
 
       {result ? (
@@ -37,7 +41,7 @@ export function ProfitMarginCalculator() {
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Gross profit</p>
               <p className={`mt-1 text-xl font-semibold ${result.isLoss ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"}`}>
-                {formatMoney(result.grossProfit)}
+                {formatMoney(result.grossProfit, currency)}
               </p>
             </div>
             <div>

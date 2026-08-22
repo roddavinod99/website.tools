@@ -39,6 +39,7 @@
     "Not adjusting the plan as the goal or timeline changes"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this include closing costs? — No, it targets the down payment amount you enter.",
     "What rate should I use? — The rate your savings actually earns, often 3-5%.",
     "Can I plan for a future savings amount? — Yes, change monthly savings and re-run to see the schedule.",
@@ -51,5 +52,15 @@
       "label": "CFPB — Saving for a Down Payment",
       "url": "https://www.consumerfinance.gov/owning-a-home/prepare/save-money-for-down-payment/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic savings goal calculation with compound interest; down payment terminology applies globally. Default rate (4%) reflects typical savings accounts.",
+  "features": [
+    "Time to down payment goal calculation",
+    "Goal, current savings, monthly contribution, and savings rate inputs",
+    "Final balance and interest earned breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

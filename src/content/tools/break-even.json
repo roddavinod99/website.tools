@@ -40,6 +40,7 @@
     "Ignoring the cash-flow timing of when fixed costs actually come due"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Is this financial advice? — No, it is a planning estimate.",
     "What if price is below variable cost? — Every sale loses money and there is no break-even point.",
     "What is contribution margin? — Selling price minus variable cost; the amount each unit contributes to fixed costs and profit.",
@@ -52,5 +53,15 @@
       "label": "SBA — Break-Even Analysis",
       "url": "https://www.sba.gov/business-guides/plan-your-business/calculate-your-startup-costs"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic break-even calculation; no country-specific assumptions.",
+  "features": [
+    "Break-even units and revenue calculation",
+    "Fixed costs, variable costs, and selling price inputs",
+    "Contribution margin per unit",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

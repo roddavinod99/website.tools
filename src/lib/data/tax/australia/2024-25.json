@@ -1,0 +1,24 @@
+{
+  "year": "2024-25",
+  "label": "FY 2024–25",
+  "regimes": [
+    {
+      "id": "standard",
+      "label": "Standard",
+      "description": "Australian resident tax rates with Medicare levy",
+      "standardDeduction": 18200,
+      "slabs": [
+        { "min": 0, "max": 18200, "rate": 0 },
+        { "min": 18200, "max": 45000, "rate": 0.19 },
+        { "min": 45000, "max": 120000, "rate": 0.325 },
+        { "min": 120000, "max": 180000, "rate": 0.37 },
+        { "min": 180000, "max": 999999999, "rate": 0.45 }
+      ],
+      "deductions": [
+        { "name": "medicare", "maxAmount": 0, "description": "Medicare levy (2% of taxable income)" },
+        { "name": "medicare_surcharge", "maxAmount": 0, "description": "Medicare levy surcharge for high income without private health" }
+      ]
+    }
+  ],
+  "defaultRegime": "standard"
+}

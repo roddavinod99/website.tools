@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { loanAmountForPayment } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function HomeAffordabilityCalculator() {
+  const { currency, setCurrency } = useCurrency();
   const [income, setIncome] = useState("90000");
   const [monthlyDebt, setMonthlyDebt] = useState("0");
   const [downPayment, setDownPayment] = useState("40000");
@@ -44,9 +47,10 @@ export function HomeAffordabilityCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Annual household income" value={income} onChange={setIncome} prefix="$" />
-        <MoneyInput label="Other monthly debt payments" value={monthlyDebt} onChange={setMonthlyDebt} prefix="$" hint="Cards, auto, student loans" />
-        <MoneyInput label="Down payment available" value={downPayment} onChange={setDownPayment} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Annual household income" value={income} onChange={setIncome} currency={currency} />
+        <MoneyInput label="Other monthly debt payments" value={monthlyDebt} onChange={setMonthlyDebt} currency={currency} hint="Cards, auto, student loans" />
+        <MoneyInput label="Down payment available" value={downPayment} onChange={setDownPayment} currency={currency} />
         <Field label="Mortgage rate">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Mortgage rate" />
         </Field>
@@ -65,16 +69,16 @@ export function HomeAffordabilityCalculator() {
         >
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Affordable home price</p>
-            <p className="mt-1 text-3xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.affordablePrice)}</p>
+            <p className="mt-1 text-3xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.affordablePrice, currency)}</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Financed amount</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.loanPrincipal)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.loanPrincipal, currency)}</p>
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Monthly housing budget</p>
-              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.housingBudget)}</p>
+              <p className="mt-1 font-semibold text-surface-900 dark:text-dark-text">{formatMoney(result.housingBudget, currency)}</p>
             </div>
           </div>
           <p className="text-xs text-surface-500 dark:text-dark-muted">

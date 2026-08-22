@@ -39,11 +39,28 @@
     "Ignoring that side income is taxed at your marginal rate, not a flat self-employment number"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this calculator include state taxes? — No, it models 2025 US federal income tax only.",
     "What is the marginal vs effective rate? — The marginal rate applies to your next dollar; the effective rate is your average tax across all taxable income.",
     "Do I itemize or take the standard deduction? — The standard deduction for your status is applied; itemized deductions and credits are not modeled.",
     "Is my financial data shared? — No, everything runs locally in your browser.",
     "How are capital gains taxed? — Long-term capital gains have separate, lower brackets; this estimator models ordinary wage income.",
     "Why does my marginal rate matter? — Every extra dollar you earn is taxed at that rate, so it tells you the real cost of a raise or bonus."
+  ],
+  "references": [
+    {
+      "label": "IRS — 2025 Tax Brackets",
+      "url": "https://www.irs.gov/newsroom/irs-provides-tax-inflation-adjustments-for-tax-year-2025"
+    }
+  ],
+  "currencySupport": true,
+  "countrySpecific": true,
+  "assumptions": "2025 US federal income tax brackets and standard deductions only. Does not include state taxes, FICA, credits, or itemized deductions.",
+  "features": [
+    "US 2025 federal tax brackets and standard deduction",
+    "Filing status selection (Single, MFJ, HOH)",
+    "Marginal rate, effective rate, and per-bracket breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

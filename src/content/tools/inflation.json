@@ -39,6 +39,7 @@
     "Planning a retirement goal in nominal dollars without adjusting for inflation"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Why does the same amount buy less? — Inflation raises prices each year, so money goes less far.",
     "What does future value mean? — The projected numeric amount after applying the rate.",
     "What is today's value? — The amount today that purchases the same as the future value then.",
@@ -51,5 +52,15 @@
       "label": "BLS — Consumer Price Index (Inflation)",
       "url": "https://www.bls.gov/cpi/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic inflation calculation with constant annual rate; rate varies by country and period. User should use locally appropriate rate.",
+  "features": [
+    "Purchasing power loss and future value calculation",
+    "Amount, annual inflation rate, and years inputs",
+    "Future value and today's purchasing power breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

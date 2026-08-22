@@ -39,6 +39,7 @@
     "Choosing a longer term to lower the payment without noticing the added interest"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Does this include income-driven repayment? — No, it models standard amortization only.",
     "What rate should I use? — The weighted average across all your loans is a good estimate.",
     "Are forgiveness programs included? — No, they change payments and totals significantly.",
@@ -51,5 +52,15 @@
       "label": "Federal Student Aid — Repayment Plans",
       "url": "https://studentaid.gov/manage-loans/repayment/plans"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Standard student loan amortization; US federal loan terms (10-25 years) but math is generic. Does not model income-driven plans.",
+  "features": [
+    "Monthly payment and total interest calculation",
+    "Adjustable balance, rate, and term",
+    "Extra payment payoff acceleration",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }

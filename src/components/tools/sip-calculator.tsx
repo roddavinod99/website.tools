@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
 import { Field, NumberInput, PercentInput, SelectField } from "@/components/finance/inputs";
 import { sipFutureValue, type ContributionTiming } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
+import { useCurrency } from "@/lib/stores/currency-store";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -12,6 +14,7 @@ function parseInput(raw: string): number {
 }
 
 export function SipCalculator() {
+  const { currency, setCurrency } = useCurrency("sip-calculator");
   const [monthly, setMonthly] = useState("5000");
   const [rate, setRate] = useState("12");
   const [years, setYears] = useState("10");
@@ -34,7 +37,8 @@ export function SipCalculator() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        <MoneyInput label="Monthly investment" value={monthly} onChange={setMonthly} prefix="$" />
+        <CurrencySelector value={currency} onChange={setCurrency} ariaLabel="Select currency" />
+        <MoneyInput label="Monthly investment" value={monthly} onChange={setMonthly} currency={currency} />
         <Field label="Expected annual return">
           <PercentInput value={rate} onChange={setRate} ariaLabel="Expected annual return" />
         </Field>
@@ -67,15 +71,15 @@ export function SipCalculator() {
         >
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Matured value</p>
-            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future)}</p>
+            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">{formatMoney(result.future, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Invested</p>
-            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.invested)}</p>
+            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">{formatMoney(result.invested, currency)}</p>
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Est. returns</p>
-            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest)}</p>
+            <p className="mt-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">{formatMoney(result.interest, currency)}</p>
           </div>
         </div>
       ) : (

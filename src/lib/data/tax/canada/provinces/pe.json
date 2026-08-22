@@ -1,0 +1,10 @@
+{
+  "provinceCode": "pe",
+  "provinceName": "Prince Edward Island",
+  "slabs": [
+    { "min": 0, "max": 10500, "rate": 0.098 },
+    { "min": 10500, "max": 16000, "rate": 0.138 },
+    { "min": 16000, "max": 20000, "rate": 0.167 },
+    { "min": 20000, "max": 999999999, "rate": 0.167 }
+  ]
+}

@@ -39,6 +39,7 @@
     "Choosing a huge payment that's not sustainable, then stopping"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "Is this financial advice? — No, it is a planning estimate.",
     "What if my payment only covers the interest? — The balance never decreases and the payoff plan cannot finish.",
     "Does it include new purchases? — No, it assumes the balance is fixed.",
@@ -51,5 +52,8 @@
       "label": "CFPB — Credit Card Repayment",
       "url": "https://www.consumerfinance.gov/consumer-tools/credit-cards/"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Standard credit card payoff simulation with monthly compounding; no country-specific assumptions."
 }

@@ -39,6 +39,7 @@
     "Forgetting that a 0% return goal needs every dollar saved manually"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What if I can't reach the required monthly amount? — Lengthen the horizon or shrink the goal; the tool lets you see what each choice does.",
     "Does the projection account for inflation? — No, adjust the goal for inflation to model real purchase power.",
     "Can I use a rate of zero? — Yes, that models a no-return cash account.",
@@ -58,5 +59,8 @@
       "label": "Consumer Financial Protection Bureau — Savings",
       "url": "https://www.consumerfinance.gov/consumer-tools/savings/"
     }
-  ]
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic savings goal calculation with compound interest; no country-specific assumptions."
 }

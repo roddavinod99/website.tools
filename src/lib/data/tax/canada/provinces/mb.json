@@ -1,0 +1,10 @@
+{
+  "provinceCode": "mb",
+  "provinceName": "Manitoba",
+  "slabs": [
+    { "min": 0, "max": 10459, "rate": 0.108 },
+    { "min": 10459, "max": 18908, "rate": 0.1275 },
+    { "min": 18908, "max": 29590, "rate": 0.174 },
+    { "min": 29590, "max": 999999999, "rate": 0.174 }
+  ]
+}

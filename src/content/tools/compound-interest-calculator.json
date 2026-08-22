@@ -58,5 +58,17 @@
       "label": "Investor.gov — Compound Interest",
       "url": "https://www.investor.gov/introduction-investing/general-resources/compound-interest"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Generic compound interest calculation; no country-specific assumptions.",
+  "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
+    "Does this assume the rate compounds monthly? — Yes, interest is compounded monthly by default.",
+    "Is this financial advice? — No, it is a projection purely for planning; always consult a qualified advisor.",
+    "Do I have to enter a monthly contribution? — No, set it to 0 to model a single lump sum.",
+    "Is my data sent anywhere? — No, all calculations run in your browser.",
+    "Why does the interest column grow so much in year 20? — Because each year's interest is earned on all previous interest, so growth accelerates over time.",
+    "What rate should I use? — Historically, diversified long-term equity has returned roughly 7-10% nominal annually, but past performance does not guarantee future results."
   ]
 }

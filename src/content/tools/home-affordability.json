@@ -40,6 +40,7 @@
     "Ignoring closing costs and moving expenses when sizing your budget"
   ],
   "faq": [
+    "Does this tool support multiple currencies? — Yes, select your currency from the dropdown. All calculations run locally in your browser.",
     "What is a good DTI to use? — 36% is a common comfortable cap; lenders may stretch to 43%.",
     "Does this include property taxes? — No, those are added on top of the mortgage.",
     "Can I lower the payment by increasing down payment? — Yes, try a larger down payment and re-run.",
@@ -52,5 +53,15 @@
       "label": "CFPB — How Much House Can I Afford?",
       "url": "https://www.consumerfinance.gov/owning-a-home/explore-costs/"
     }
+  ],
+  "currencySupport": true,
+  "countrySpecific": false,
+  "assumptions": "Uses 28/36 rule (US mortgage affordability standard) and DTI thresholds. Math is generic but thresholds are US-centric.",
+  "features": [
+    "Affordable home price from income and debts",
+    "Adjustable down payment, rate, term, and DTI",
+    "Monthly housing budget breakdown",
+    "Multi-currency support",
+    "100% browser-based and private"
   ]
 }
