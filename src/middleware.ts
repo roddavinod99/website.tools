@@ -16,12 +16,22 @@ function loadCspMap(): { defaultCsp: string; perRoute: Record<string, { csp: str
   if (cspMap) return cspMap;
   try {
     const __dirname = dirname(fileURLToPath(import.meta.url));
-    const root = join(__dirname, "..", ".."); // from src/middleware.ts to repo root
-    const cspPath = join(root, "data", "csp-hashes.json");
-    if (!existsSync(cspPath)) return null;
-    const content = readFileSync(cspPath, "utf-8");
-    cspMap = JSON.parse(content);
-    return cspMap;
+    // In standalone output the middleware runs from the standalone root (where server.js lives)
+    // and the data folder is copied to ./data. In development the compiled middleware lives
+    // under .next/server/... and the repo root is two levels up. Try both locations.
+    const candidates = [
+      join(__dirname, "data", "csp-hashes.json"),          // standalone root / data
+      join(__dirname, "..", "..", "data", "csp-hashes.json"), // dev build output
+      join(process.cwd(), "data", "csp-hashes.json"),      // fallback to CWD
+    ];
+    for (const cspPath of candidates) {
+      if (existsSync(cspPath)) {
+        const content = readFileSync(cspPath, "utf-8");
+        cspMap = JSON.parse(content);
+        return cspMap;
+      }
+    }
+    return null;
   } catch {
     return null;
   }
