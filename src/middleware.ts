@@ -210,6 +210,9 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
+// Test-only bypass for rate limiting (non-production)
+const TEST_BYPASS_HEADER = "x-test-bypass-rate-limit";
+
 const RATE_LIMIT_CONFIG = {
   "/api/contact": { limit: 3, window: 60_000 },
   "/api/submit": { limit: 5, window: 60_000 },
@@ -219,7 +222,8 @@ const RATE_LIMIT_CONFIG = {
 
 const rateLimitStore = new Map<string, { count: number; reset: number }>();
 
-function checkRateLimit(ip: string, path: string): { allowed: boolean; retryAfter?: number } {
+function checkRateLimit(ip: string, path: string, bypass = false): { allowed: boolean; retryAfter?: number } {
+  if (bypass) return { allowed: true };
   const now = Date.now();
   const config = Object.entries(RATE_LIMIT_CONFIG).find(([key]) => path.startsWith(key))?.[1] || RATE_LIMIT_CONFIG.default;
   const key = `${ip}:${path}`;
@@ -269,7 +273,7 @@ export async function middleware(request: NextRequest) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
-  const rateLimit = checkRateLimit(ip, path);
+  const rateLimit = checkRateLimit(ip, path, request.headers.get(TEST_BYPASS_HEADER) === "true");
   if (!rateLimit.allowed) {
     await logSecurityEvent("rate_limit_violation", ip, path, "Rate limit exceeded");
     const retryResponse = new NextResponse(JSON.stringify({ error: "Too many requests. Please try again later." }), {

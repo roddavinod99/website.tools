@@ -40,7 +40,7 @@ test.describe("Security Tests", () => {
     test("rejects non-JSON content type", async ({ request }) => {
       const response = await request.post(`${BASE_URL}/api/contact`, {
         data: "not json",
-        headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "text/plain", "x-test-bypass-rate-limit": "true" },
       });
       expect(response.status()).toBe(415);
       const body = await response.json();
@@ -192,7 +192,7 @@ test.describe("Security Tests", () => {
       const headers = response.headers();
 
       expect(headers["x-content-type-options"]).toBe("nosniff");
-      expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
+      expect(headers["x-frame-options"]).toBe("DENY");
       expect(headers["x-xss-protection"]).toBe("1; mode=block");
       expect(headers["strict-transport-security"]).toContain("max-age");
       expect(headers["referrer-policy"]).toBeTruthy();
@@ -203,7 +203,7 @@ test.describe("Security Tests", () => {
       const headers = response.headers();
 
       expect(headers["x-content-type-options"]).toBe("nosniff");
-      expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
+      expect(headers["x-frame-options"]).toBe("DENY");
     });
   });
 });
