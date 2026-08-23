@@ -35,6 +35,7 @@ export function TooltipProvider({ children }: TooltipProviderProps) {
 
 export function Tooltip({ children, content, side = "top", align = "center", delay = 200, className }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasTrigger, setHasTrigger] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
@@ -47,6 +48,10 @@ export function Tooltip({ children, content, side = "top", align = "center", del
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    setHasTrigger(!!triggerRef.current);
+  }, []);
+
   return (
     <div
       ref={triggerRef}
@@ -57,7 +62,7 @@ export function Tooltip({ children, content, side = "top", align = "center", del
       className="inline-block"
     >
       {children}
-      {isOpen && triggerRef.current && (
+      {isOpen && hasTrigger && (
         <Portal>
           <TooltipContentPrimitive
             content={content}

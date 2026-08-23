@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BookOpen, ArrowRight } from "lucide-react";
@@ -20,13 +20,9 @@ interface GuidesListProps {
 
 export function GuidesList({ topics, initialTopic }: GuidesListProps) {
   const searchParams = useSearchParams();
-  const [activeTopic, setActiveTopic] = useState<string | null>(initialTopic ?? null);
-
-  // Sync with URL on mount
-  useEffect(() => {
-    const rawTopic = searchParams?.get("topic");
-    setActiveTopic(rawTopic ? decodeURIComponent(rawTopic) : null);
-  }, [searchParams]);
+  const urlTopic = searchParams?.get("topic");
+  const derivedTopic = urlTopic ? decodeURIComponent(urlTopic) : initialTopic ?? null;
+  const [activeTopic, setActiveTopic] = useState<string | null>(derivedTopic);
 
   const visibleTopics = useMemo(
     () => (activeTopic ? topics.filter((t) => t.category === activeTopic) : topics),

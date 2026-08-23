@@ -244,7 +244,7 @@ export function CurrencyConverter() {
               </div>
               {!showAllRates && Object.keys(rates.rates).length > 20 && (
                 <p className="mt-2 text-xs text-surface-500 dark:text-dark-muted text-center">
-                  Showing top 20 of {Object.keys(rates.rates).length} currencies. Click "Show all rates" to see more.
+                  Showing top 20 of {Object.keys(rates.rates).length} currencies. Click &ldquo;Show all rates&rdquo; to see more.
                 </p>
               )}
             </div>
