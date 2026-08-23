@@ -18,10 +18,10 @@ DevStackIO is a privacy-first developer tools platform built with Next.js 16. Th
 │  - Attack path blocking                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                  Next.js (PM2 Cluster x2)                    │
-│  ├── Static Pages (SSG) ── 260+ tool pages, categories      │
-│  ├── ISR ── sitemap.xml (24h revalidation)                  │
-│  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
-│  └── Middleware ── Rate limiter (proxy.ts)                  │
+ │  ├── Static Pages (SSG) ── ~260 pages (164 tools, 8 categories, 25 blog posts, 28 guides, ~30 static) │
+ │  ├── ISR ── sitemap.xml (24h revalidation)                  │
+ │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
+ │  └── Middleware ── Rate limiter & security (middleware.ts)  │
 ├─────────────────────────────────────────────────────────────┤
 │                  Client Browser                              │
 │  ├── Web Workers ── Search, JSON, CSV, Hash                 │
@@ -38,7 +38,7 @@ All tool processing runs client-side using Web APIs. No file uploads or text inp
 
 ### 2. Static-First Rendering
 Tool pages use Static Site Generation (SSG) with `generateStaticParams`. This means:
-- All 123 tool pages are pre-rendered at build time
+- All 164 tool pages are pre-rendered at build time
 - Instant page loads (no server processing)
 - Excellent SEO (fully rendered HTML)
 - Minimal server resource usage
@@ -59,7 +59,7 @@ The API is minimal and focused on functionality that cannot run client-side:
 ### 5. Security Layers
 Security is implemented at multiple layers:
 1. **Nginx** — SSL, rate limiting, attack blocking, **per-route hash-based CSP**
-2. **Next.js Middleware** (proxy.ts) — Application-level rate limiting
+2. **Next.js Middleware** (middleware.ts) — Application-level rate limiting
 3. **API Routes** — Input validation, sanitization, origin checking
 4. **Client-side** — DOMPurify sanitization
 
@@ -67,7 +67,7 @@ Security is implemented at multiple layers:
 The platform uses **Google AdSense** for sustainable free access:
 
 **Auto Ads** — Enabled globally via `AdSenseScript` component:
-- One script tag loads `pagead2.googlesyndication.com/pagead/js/adsbygoogle.js`
+- Script loaded **via manual DOM injection** (`useEffect` + `document.createElement('script')`) with `lazyOnload` strategy (avoids `next/script` warning)
 - Auto Ads config: `enable_page_level_ads: true`
 - Handles: Anchor ads (mobile), Vignette ads (page transitions), Side rails (desktop widescreen), In-page banners, Multiplex ads
 

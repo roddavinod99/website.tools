@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - **Server**: Oracle Cloud ARM64 (Ampere A1) — Ubuntu 24.04
-- **Node.js**: 20+ (LTS)
+- **Node.js**: 24 (LTS) — CI/CD pipelines use Node 24
 - **PM2**: `npm install -g pm2`
 - **Nginx**: `apt install nginx`
 - **SSL**: Let's Encrypt (`certbot`)
@@ -16,7 +16,7 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
               ↓                       ↓
          SSL/TLS 1.2/1.3        Next.js Standalone
               ↓                       ↓
-         Rate Limiting          260+ SSG Pages
+         Rate Limiting          ~260 SSG Pages (164 tools, categories, blog, guides, static)
               ↓                       ↓
          Attack Blocking        API Routes
 ```
@@ -59,7 +59,7 @@ The platform uses **Google AdSense Auto Ads** for automatic ad placement optimiz
 
 The implementation (`src/components/ads/adsense-script.tsx`):
 
-- Loads AdSense script with `afterInteractive` strategy
+- Loads AdSense script **via manual DOM injection** (`useEffect` + `document.createElement('script')`) with `lazyOnload` strategy (avoids `next/script` warning)
 - Enables **Auto Ads** via `enable_page_level_ads: true`
 - Provides **manual ad units** as React components for strategic placement:
   - `AdBanner` — Horizontal responsive banner (728x90 / fluid)
@@ -109,7 +109,7 @@ never log user content.
 ### Usage & Terms
 
 - **No authentication required** for the current public endpoints.
-- Requests are **rate-limited** at both the application (`src/proxy.ts`) and
+- Requests are **rate-limited** at both the application (`src/middleware.ts`) and
   Nginx layers. Excessive requests may be rejected with `429 Too Many
   Requests`.
 - Inputs are **validated and size-limited**; `domain`/`ip` values resolve
@@ -156,7 +156,7 @@ If a paid/freemium tier is introduced (per the monetization roadmap):
 git clone https://github.com/roddavinod99/tools.git /var/www/tools
 
 # 2. Install Node.js and PM2
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash -
 sudo apt install -y nodejs
 npm install -g pm2
 
@@ -192,7 +192,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-> **Note**: The CI/CD workflow automatically copies the generated `nginx/csp.generated.conf` to `/etc/nginx/csp.generated.conf` on each deploy. Your production nginx config must `include /etc/nginx/csp.generated.conf;` and use `add_header Content-Security-Policy $csp always;` (see `nginx/nginx.prod.conf.example` for the expected pattern).
+> **Note**: CSP is issued per-request (nonce-based) by the Next.js middleware (`src/middleware.ts`) and is the single source of truth. Do **not** add a static `Content-Security-Policy` header at the nginx level — two CSP headers are intersected by the browser and would break hydration. `scripts/verify-csp.mjs` runs in CI after every deploy to confirm the served policy authorizes all inline scripts.
 
 ## SSL Certificate
 

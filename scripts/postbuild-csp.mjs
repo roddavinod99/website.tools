@@ -25,6 +25,7 @@ const EXTERNAL_SCRIPT_SOURCES = [
   "https://googleads.g.doubleclick.net",
   "https://static.cloudflareinsights.com",
   "https://ep1.adtrafficquality.google",
+  "https://ep2.adtrafficquality.google",
   "https://tpc.googlesyndication.com",
 ];
 
@@ -118,7 +119,9 @@ function buildCsp(scriptHashes, styleHashes, includeWasm, includeEval) {
   if (includeEval) scriptSources.push("'unsafe-eval'");
   scriptSources.push(...EXTERNAL_SCRIPT_SOURCES);
 
-  const styleSources = ["'self'", ...styleHashes, "https://fonts.googleapis.com"];
+  // Inline styles are allowed (React 19 injects runtime <style> elements that
+  // cannot be pre-hashed); script-src remains strictly hash/nonce-locked.
+  const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
   return [
     "default-src 'self'",
@@ -210,6 +213,16 @@ writeFileSync(
       routeCount: htmlFiles.length,
       scriptHashCount: sortedScripts.length,
       styleHashCount: sortedStyles.length,
+      // Directive source lists consumed by src/middleware.ts to compose the
+      // per-request nonce-based CSP (single source of truth lives here).
+      policyInputs: {
+        externalScriptSources: EXTERNAL_SCRIPT_SOURCES,
+        imgSources: IMG_SOURCES,
+        connectSources: CONNECT_SOURCES,
+        frameSources: FRAME_SOURCES,
+        wasmRoutes: [...WASM_ROUTES].sort(),
+        evalRoutes: [...EVAL_ROUTES].sort(),
+      },
       defaultCsp,
       perRoute,
     },

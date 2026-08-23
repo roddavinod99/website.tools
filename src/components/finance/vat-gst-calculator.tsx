@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { CurrencySelector } from "@/components/finance/currency-selector";
 import { MoneyInput } from "@/components/finance/money-input";
-import { Field, SelectField } from "@/components/finance/inputs";
+import { Field, SelectField, PercentInput } from "@/components/finance/inputs";
 import { CountrySelector } from "@/components/finance/country-selector";
 import { calculateVatGst, splitCanadaRate } from "@/lib/tax/vat-gst";
 import { getVatGstRate } from "@/lib/data/vat-gst-rates";
@@ -42,6 +42,7 @@ export function VatGstCalculator() {
   const [amount, setAmount] = useState("100");
   const [currency, setCurrency] = useState("USD");
   const [province, setProvince] = useState("");
+  const [customRate, setCustomRate] = useState("");
 
   const countries = useMemo(() => getAllCountries(), []);
   const currentCountry = countries.find((c) => c.code === country);
@@ -49,24 +50,33 @@ export function VatGstCalculator() {
 
   const rateOptions = useMemo((): RateOption[] => {
     if (!rateInfo) return [];
-    const opts: RateOption[] = [
-      { value: String(rateInfo.standardRate), label: `${rateInfo.taxName} (${formatPercent(rateInfo.standardRate * 100)})` },
-    ];
+    // Dedupe by value: countries like the US have standardRate 0 alongside
+    // zeroRate true, which would otherwise emit two "0"-valued options and
+    // collide React keys in SelectField.
+    const opts: RateOption[] = [];
+    const push = (value: string, label: string) => {
+      if (!opts.some((o) => o.value === value)) opts.push({ value, label });
+    };
+    push(
+      String(rateInfo.standardRate),
+      `${rateInfo.taxName} (${formatPercent(rateInfo.standardRate * 100)})`
+    );
     for (const r of rateInfo.reducedRates) {
-      opts.push({ value: String(r), label: `Reduced ${formatPercent(r * 100)}` });
+      push(String(r), `Reduced ${formatPercent(r * 100)}`);
     }
     if (rateInfo.zeroRate) {
-      opts.push({ value: "0", label: "Zero rate (0%)" });
+      push("0", "Zero rate (0%)");
     }
-    opts.push({ value: "custom", label: "Custom rate…" });
+    push("custom", "Custom rate…");
     return opts;
   }, [rateInfo]);
 
-  const provinces = rateInfo?.provinces?.map((p) => ({ value: p.code, label: `${p.name} (${p.type} ${formatPercent(p.rate * 100)})` })) ?? [];
+  const provinceList: ProvinceOption[] = rateInfo?.provinces ?? [];
+  const provinces = provinceList.map((p) => ({ value: p.code, label: `${p.name} (${p.type} ${formatPercent(p.rate * 100)})` }));
 
   const result = useMemo((): VatGstResultWithBreakdown | null => {
     const amt = parseInput(amount);
-    const selRate = parseInput(rate);
+    const selRate = parseInput(rate === "custom" ? customRate : rate);
     if (isNaN(amt) || isNaN(selRate) || amt <= 0) return null;
 
     // Canada special handling
@@ -85,11 +95,12 @@ export function VatGstCalculator() {
     }
 
     return calculateVatGst({ amount: amt, rate: selRate, mode });
-  }, [amount, rate, mode, country, province]);
+  }, [amount, rate, customRate, mode, country, province]);
 
   const handleCountryChange = (newCountry: string) => {
     setCountry(newCountry);
     setRate("");
+    setCustomRate("");
     setProvince("");
     // set default mode per country
     const info = getVatGstRate(newCountry);
@@ -119,10 +130,14 @@ export function VatGstCalculator() {
     );
   }
 
-  // Determine display rate label
-  const displayRate = rate
-    ? (rate === "custom" ? "Custom" : `${formatPercent(parseFloat(rate) * 100)} ${rateInfo?.taxName}`)
-    : "Select rate";
+  // Human-readable applied rate for the result footer; handles the custom case
+  // where `rate` is the sentinel "custom" rather than a number.
+  const displayRate =
+    rate === "custom"
+      ? formatPercent(parseInput(customRate) * 100)
+      : rate !== ""
+        ? formatPercent(parseFloat(rate) * 100)
+        : "";
 
   return (
     <div className="space-y-6">
@@ -148,6 +163,11 @@ export function VatGstCalculator() {
             options={rateOptions}
           />
         </Field>
+        {rate === "custom" && (
+          <Field label="Custom rate" hint="Enter the tax rate percentage to apply">
+            <PercentInput value={customRate} onChange={setCustomRate} ariaLabel="Custom tax rate percent" />
+          </Field>
+        )}
         {country === "CA" && rateInfo?.provinces && rateInfo.provinces.length > 0 && (
           <Field label="Province / Territory">
             <SelectField<string>
@@ -200,8 +220,8 @@ export function VatGstCalculator() {
 
           <p className="text-xs text-surface-500 dark:text-dark-muted">
             {mode === "exclusive"
-              ? `Tax calculated on base amount. ${rateInfo?.taxName} rate: ${formatPercent(parseFloat(rate) * 100)}.`
-              : `Tax extracted from inclusive amount. ${rateInfo?.taxName} rate: ${formatPercent(parseFloat(rate) * 100)}.`}
+              ? `Tax calculated on base amount. ${rateInfo?.taxName} rate applied: ${displayRate}.`
+              : `Tax extracted from inclusive amount. ${rateInfo?.taxName} rate applied: ${displayRate}.`}
           </p>
         </div>
       ) : (

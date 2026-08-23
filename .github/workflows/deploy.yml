@@ -183,9 +183,9 @@ jobs:
             fi
             echo "Verified $CSS_COUNT CSS chunk(s) in standalone output"
 
-            # Deploy generated CSP hash map to Nginx (produced by postbuild-csp)
-            sudo cp nginx/csp.generated.conf /etc/nginx/csp.generated.conf
-            sudo nginx -t && sudo systemctl reload nginx || { echo "ERROR: nginx config test failed" >&2; sudo nginx -t; exit 1; }
+            # CSP is issued per-request (nonce-based) by the Next.js middleware;
+            # nginx must not add a second static CSP header. The generated map
+            # (data/csp-hashes.json) is copied into the standalone output above.
 
             # Restart application (ecosystem app is named "devstackio"; "tools" is stale)
             pm2 delete tools 2>/dev/null || true
@@ -196,6 +196,11 @@ jobs:
             sleep 5
             curl -sf http://127.0.0.1:3000/api/health || exit 1
             curl -sf -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ | grep -q 200 || { echo "ERROR: Homepage 500" >&2; exit 1; }
+
+            # Verify the served CSP actually authorizes every inline script in
+            # the served HTML. A mismatch here silently kills React hydration
+            # (dead buttons, stuck "Loading tool..."), so fail the deploy.
+            node scripts/verify-csp.mjs http://127.0.0.1:3000/
 
             # Best-effort sitemap + IndexNow submission (needs INDEXNOW_KEY + network)
             set +e

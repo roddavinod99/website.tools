@@ -1,0 +1,4622 @@
+[
+  {
+    "slug": "base64",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": true,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "url-encoder",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "html-entity",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "binary",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "hex",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "escape-unescape",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "image-to-base64",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "morse-code",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "base64-decoder",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "base64-encoder",
+    "category": "Encoders",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": true,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "html-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": true
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "css-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": true
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "js-minifier",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "sql-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "xml-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": true
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "yaml-formatter",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "text-analyzer",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-diff",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-beautifier",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-minifier",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-validator",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "css-minifier",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "html-minifier",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "docker-run-to-compose",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "yaml-viewer",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "benchmark-builder",
+    "category": "Formatters",
+    "capabilities": {
+      "worker": true,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "uuid-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "password-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "qr-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": true,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "random-data",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ascii-art",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "barcode-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "lorem-ipsum",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "cron-expression",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "prompt-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "prompt-improver",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "random-port-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "meta-tag-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "token-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "wifi-qr-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "numeronym-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "vcard-generator",
+    "category": "Generators",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "json-to-csv",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "csv-to-json",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "json-to-xml",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "xml-to-json",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "markdown-to-html",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "html-to-markdown",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "json-to-yaml",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "toml-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "timestamp-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": true,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "color-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "unit-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "case-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "base-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "number-to-words",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-to-typescript",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-to-go",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "markdown-editor",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "roman-numeral-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 7
+    }
+  },
+  {
+    "slug": "nato-alphabet",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "text-to-unicode",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "list-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "temperature-converter",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "table-to-json",
+    "category": "Converters",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "jwt-decoder",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": true,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "jwt-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "hash-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": true,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "totp-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ssl-decoder",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "csp-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "file-checksum",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": true,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-schema-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "bcrypt-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "ulid-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "hmac-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "rsa-key-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "password-strength",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "bip39-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "mac-address-lookup",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 3,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "mac-address-generator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "phone-number-parser",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "iban-validator",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "encrypt-decrypt",
+    "category": "Security Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "image-compressor",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "image-resizer",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "favicon-generator",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "svg-optimizer",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "placeholder-image",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "svg-to-css",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "exif-reader",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": true
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "exif-transfer",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "color-eyedropper",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "contrast-checker",
+    "category": "Image Tools",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 5,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "regex-tester",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "diff-checker",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "word-counter",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "text-sorter",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "http-header-parser",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "url-parser",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "user-agent-parser",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": true,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ip-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "json-path-finder",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "markdown-preview",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": true,
+      "validation": true,
+      "fileUpload": true,
+      "dragDrop": true,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "slug-generator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "string-length",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "dns-lookup",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": true
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "server"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ip-lookup",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "server"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "basic-auth-generator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "mime-types",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": true,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 6
+    }
+  },
+  {
+    "slug": "keycode-info",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "slugify-string",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": true,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 3,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "safelink-decoder",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "device-information",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "email-normalizer",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "text-diff-visual",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "string-obfuscator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "math-evaluator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "chronometer",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "percentage-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "emoji-picker",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "ipv4-subnet-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 3,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ipv4-address-converter",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "ipv4-range-expander",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 3,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "ipv6-ula-generator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 3,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "chmod-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "eta-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "http-status-codes",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "git-cheatsheet",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "regex-memo",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 2
+    }
+  },
+  {
+    "slug": "date-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "date-formatter",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": true,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "ipv6-calculator",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": true,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "string-comparison",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "code-complexity",
+    "category": "Utilities",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 4,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "compound-interest-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "sip-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "loan-emi-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "mortgage-payoff",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "cagr-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "roi-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "profit-margin-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "savings-goal-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": true,
+      "trending": false,
+      "new": false,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "income-tax-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "capital-gains-tax",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "debt-payoff",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 3
+    }
+  },
+  {
+    "slug": "credit-card-payoff",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "debt-to-income",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "break-even",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "auto-loan",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "student-loan",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "home-affordability",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "rent-vs-buy",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": true,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "retirement-savings",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "fixed-deposit",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "recurring-deposit",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "down-payment-planner",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "tip-calculator",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "vat-gst",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 5,
+      "examplesCount": 5
+    }
+  },
+  {
+    "slug": "simple-interest",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "inflation",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "net-worth",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "emergency-fund",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": false,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "client"
+    },
+    "content": {
+      "faqCount": 7,
+      "examplesCount": 4
+    }
+  },
+  {
+    "slug": "currency-converter",
+    "category": "Finance",
+    "capabilities": {
+      "worker": false,
+      "wasm": false,
+      "copy": false,
+      "download": false,
+      "validation": true,
+      "fileUpload": false,
+      "dragDrop": false,
+      "realTime": false,
+      "multipleInputs": false,
+      "comparison": false,
+      "syntaxHighlighting": false,
+      "tabs": false
+    },
+    "registryFlags": {
+      "featured": false,
+      "trending": false,
+      "new": true,
+      "processing": "server"
+    },
+    "content": {
+      "faqCount": 6,
+      "examplesCount": 4
+    }
+  }
+]

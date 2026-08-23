@@ -8,11 +8,52 @@ import { fileURLToPath } from "node:url";
 // Force Node.js runtime to access fs for CSP hash map
 export const runtime = "nodejs";
 
+// Policy inputs emitted by scripts/postbuild-csp.mjs at build time.
+interface CspPolicyInputs {
+  externalScriptSources: string[];
+  imgSources: string[];
+  connectSources: string[];
+  frameSources: string[];
+  wasmRoutes: string[];
+  evalRoutes: string[];
+}
+
+interface CspRouteEntry {
+  scripts: string[];
+  styles: string[];
+  csp: string;
+}
+
 // CSP hash map (generated at build time by postbuild-csp.mjs)
 // Lazy-loaded and cached per process; skipped gracefully if missing (e.g., dev before first build)
-let cspMap: { defaultCsp: string; perRoute: Record<string, { csp: string }> } | null = null;
+let cspMap: { defaultCsp: string; policyInputs?: CspPolicyInputs; perRoute: Record<string, CspRouteEntry> } | null =
+  null;
 
-function loadCspMap(): { defaultCsp: string; perRoute: Record<string, { csp: string }> } | null {
+// Fallbacks mirroring scripts/postbuild-csp.mjs, used only if data/csp-hashes.json
+// cannot be loaded (e.g., dev before first build).
+const FALLBACK_POLICY_INPUTS: CspPolicyInputs = {
+  externalScriptSources: [
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    "https://pagead2.googlesyndication.com",
+    "https://googleads.g.doubleclick.net",
+    "https://static.cloudflareinsights.com",
+    "https://ep1.adtrafficquality.google",
+    "https://ep2.adtrafficquality.google",
+    "https://tpc.googlesyndication.com",
+  ],
+  imgSources: [],
+  connectSources: [],
+  frameSources: [],
+  wasmRoutes: [],
+  evalRoutes: [],
+};
+
+function loadCspMap(): {
+  defaultCsp: string;
+  policyInputs?: CspPolicyInputs;
+  perRoute: Record<string, CspRouteEntry>;
+} | null {
   if (cspMap) return cspMap;
   try {
     const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,8 +66,8 @@ function loadCspMap(): { defaultCsp: string; perRoute: Record<string, { csp: str
       join(process.cwd(), "data", "csp-hashes.json"),      // fallback to CWD
     ];
     for (const cspPath of candidates) {
-      if (existsSync(cspPath)) {
-        const content = readFileSync(cspPath, "utf-8");
+      if (existsSync(/* turbopackIgnore: true */ cspPath)) {
+        const content = readFileSync(/* turbopackIgnore: true */ cspPath, "utf-8");
         cspMap = JSON.parse(content);
         return cspMap;
       }
@@ -37,14 +78,60 @@ function loadCspMap(): { defaultCsp: string; perRoute: Record<string, { csp: str
   }
 }
 
-function getCspForPath(pathname: string): string | null {
+// Per-request nonce for script-src. Next.js reads the CSP header from the
+// request (forwarded below) and automatically applies this nonce to every
+// <script> tag it renders — including the streamed RSC bootstrap/payload
+// scripts (self.__next_f.push, $RC/$RB runtime) whose content varies per
+// request, which a build-time hash allowlist can never cover.
+function generateNonce(): string {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+function normalizeRoutePath(pathname: string): string {
+  return pathname.split("?")[0].replace(/\/$/, "") || "/";
+}
+
+// Builds a nonce-based CSP. Build-time inline-script hashes are kept as an
+// additional allowlist layer; the nonce is what makes hydration work for
+// dynamically rendered responses.
+function buildNonceCsp(nonce: string, pathname: string): string {
   const map = loadCspMap();
-  if (!map) return null;
-  // Skip CSP for API routes (they return JSON, not HTML)
-  if (pathname.startsWith("/api/")) return null;
-  // Normalize: strip query, strip trailing slash (except root)
-  const normalized = pathname.split("?")[0].replace(/\/$/, "") || "/";
-  return map.perRoute[normalized]?.csp ?? map.defaultCsp ?? null;
+  const normalized = normalizeRoutePath(pathname);
+  const route = map?.perRoute[normalized];
+  const inputs = map?.policyInputs ?? FALLBACK_POLICY_INPUTS;
+
+  const scriptSources = [
+    "'self'",
+    `'nonce-${nonce}'`,
+    ...(route?.scripts ?? []),
+    ...inputs.externalScriptSources,
+  ];
+  if (inputs.wasmRoutes.includes(normalized)) scriptSources.push("'wasm-unsafe-eval'");
+  if (inputs.evalRoutes.includes(normalized)) scriptSources.push("'unsafe-eval'");
+
+  // Styles: React 19 hoists/injects <style> elements at runtime whose content
+  // cannot be pre-hashed, so style-src allows inline styles. Script execution
+  // remains strictly locked down via nonce + hashes; CSS injection cannot run
+  // JavaScript, and exfiltration channels are covered by img/connect-src.
+  const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
+
+  return [
+    "default-src 'self'",
+    `script-src ${scriptSources.join(" ")}`,
+    `style-src ${styleSources.join(" ")}`,
+    `img-src 'self' ${inputs.imgSources.join(" ")}`,
+    `connect-src 'self' ${inputs.connectSources.join(" ")}`,
+    "font-src 'self' https://fonts.gstatic.com",
+    `frame-src 'self' ${inputs.frameSources.join(" ")}`,
+    "frame-ancestors 'none'",
+    "form-action 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+  ].join("; ");
 }
 
 const ATTACK_PATHS = [
@@ -114,7 +201,7 @@ function isSuspiciousUserAgent(ua: string): boolean {
 
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
+  "X-Frame-Options": "DENY",
   "X-XSS-Protection": "1; mode=block",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
@@ -230,10 +317,25 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Add CSP header from generated hash map (skips API routes and static assets via matcher)
-  const csp = getCspForPath(path);
-  if (csp) {
-    response.headers.set("Content-Security-Policy", csp);
+  // Add CSP header (skips API routes and static assets via matcher).
+  // Skipped in development: Turbopack dev injects inline scripts with unstable
+  // content and the nonce would not cover scripts rendered before middleware
+  // state is warm, so CSP is only enforced for production builds.
+  if (process.env.NODE_ENV !== "development" && !path.startsWith("/api/")) {
+    const nonce = generateNonce();
+    const csp = buildNonceCsp(nonce, path);
+
+    // Forward the CSP header (and a plain nonce) on the REQUEST so Next.js SSR
+    // picks it up and stamps the nonce onto every script it renders. This is
+    // the officially supported Next.js CSP pattern.
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-nonce", nonce);
+    requestHeaders.set("content-security-policy", csp);
+
+    const nonceResponse = NextResponse.next({ request: { headers: requestHeaders } });
+    nonceResponse.headers.set("Content-Security-Policy", csp);
+    addSecurityHeaders(nonceResponse);
+    return nonceResponse;
   }
 
   return response;

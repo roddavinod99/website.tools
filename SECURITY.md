@@ -43,7 +43,7 @@ Layer 1: Nginx Reverse Proxy
 ├── Security headers (CSP, HSTS, etc.)
 └── Request size limits (10 MB)
 
-Layer 2: Next.js Middleware (proxy.ts)
+Layer 2: Next.js Middleware (middleware.ts)
 ├── Application rate limiting
 ├── Security headers
 └── Request validation

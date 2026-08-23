@@ -77,7 +77,6 @@ export function CgtCalculator() {
       isMainResidence,
       indiaMarginalSlabPct: parseFloat(indiaMarginalSlabPct),
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     meta,
     countryCode,

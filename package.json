@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -56,6 +56,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@babel/parser": "8.0.4",
+    "@babel/types": "8.0.4",
     "@ericthered926/duckduckgo-mcp-server": "0.6.0",
     "@modelcontextprotocol/server-filesystem": "2026.7.10",
     "@modelcontextprotocol/server-github": "2025.4.8",
@@ -73,6 +75,7 @@
     "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "^16.2.10",
+    "jscodeshift": "17.4.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"

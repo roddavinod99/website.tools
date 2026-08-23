@@ -76,6 +76,35 @@ export interface CookieCategory {
   required: boolean;
 }
 
+export interface ToolCapabilities {
+  slug: string;
+  category: string;
+  capabilities: {
+    worker: boolean;
+    wasm: boolean;
+    copy: boolean;
+    download: boolean;
+    validation: boolean;
+    fileUpload: boolean;
+    dragDrop: boolean;
+    realTime: boolean;
+    multipleInputs: boolean;
+    comparison: boolean;
+    syntaxHighlighting: boolean;
+    tabs: boolean;
+  };
+  registryFlags: {
+    featured: boolean;
+    trending: boolean;
+    new: boolean;
+    processing: "client" | "server" | "hybrid";
+  };
+  content: {
+    faqCount: number;
+    examplesCount: number;
+  };
+}
+
 export interface AdPlaceholderProps {
   className?: string;
   slot?: string;

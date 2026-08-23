@@ -16,9 +16,6 @@ function IN(input: Partial<CgtInput> = {}): CgtInput {
 function US(input: Partial<CgtInput> = {}): CgtInput {
   return { countryCode: "US", filingStatus: "single", taxableIncome: 100000, ...input } as CgtInput;
 }
-function UK(input: Partial<CgtInput> = {}): CgtInput {
-  return { countryCode: "GB", ...input } as CgtInput;
-}
 function CA(input: Partial<CgtInput> = {}): CgtInput {
   return { countryCode: "CA", province: "on", taxableIncome: 80000, ...input } as CgtInput;
 }
@@ -92,12 +89,6 @@ describe("CGT India", () => {
 });
 
 describe("CGT US", () => {
-  const makeUS = (overrides: Partial<CgtInput> = {}): CgtInput => ({
-    countryCode: "US",
-    filingStatus: "single",
-    taxableIncome: 100000,
-    ...overrides,
-  } as CgtInput);
 
   it("ST at ordinary rates", () => {
     const r = calculateCgtUs(US({ assetType: "listed-shares", purchasePrice: 10000, salePrice: 20000, expenses: 0, holdingPeriodMonths: 6 }));
@@ -176,12 +167,6 @@ describe("CGT UK", () => {
 });
 
 describe("CGT Canada", () => {
-  const makeCA = (overrides: Partial<CgtInput> = {}): CgtInput => ({
-    countryCode: "CA",
-    province: "on",
-    taxableIncome: 80000,
-    ...overrides,
-  } as CgtInput);
 
   it("50% inclusion, combined marginal", () => {
     const r = calculateCgtCanada(CA({ assetType: "listed-shares", purchasePrice: 100000, salePrice: 140000, expenses: 0, holdingPeriodMonths: 36, province: "on", taxableIncome: 80000 }));
@@ -211,12 +196,6 @@ describe("CGT Canada", () => {
 });
 
 describe("CGT Australia", () => {
-  const makeAU = (overrides: Partial<CgtInput> = {}): CgtInput => ({
-    countryCode: "AU",
-    taxableIncome: 80000,
-    residency: "resident",
-    ...overrides,
-  } as CgtInput);
 
   it("50% discount after 12m for resident", () => {
     const r = calculateCgtAustralia(AU({ assetType: "listed-shares", purchasePrice: 100000, salePrice: 140000, expenses: 0, holdingPeriodMonths: 24, residency: "resident", taxableIncome: 80000 }));

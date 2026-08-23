@@ -98,7 +98,7 @@ src/
 ├── workers/                # Web Worker implementations
 │   ├── compute.worker.ts   # Heavy computation worker
 │   └── search.worker.ts    # Fuse.js search worker
-├── proxy.ts                # Rate limiter middleware
+├── middleware.ts           # Rate limiter & security middleware
 └── types/                  # TypeScript type definitions
 ```
 
@@ -127,7 +127,7 @@ This project uses Google AdSense for sustainable free access:
 - **Privacy Compliant** — No user data sent to AdSense; all tool processing remains client-side
 
 ### Ad Components
-- `AdSenseScript` — Loads AdSense JS with Auto Ads configuration
+- `AdSenseScript` — Loads AdSense JS **via manual DOM injection** (`useEffect` + `document.createElement('script')`) with `lazyOnload` strategy (avoids `next/script` warning)
 - `AdBanner` — Horizontal banner ads (728x90 / responsive)
 - `InContentAd` — Rectangle ads within content (336x280 / responsive)
 - `ResponsiveAd` — Auto-sizing ad units

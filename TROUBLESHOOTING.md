@@ -15,7 +15,7 @@
 **Problem**: Build succeeds locally but fails in CI.
 
 **Solutions**:
-1. Check Node.js version matches CI (`NODE_VERSION: "20"` in deploy.yml)
+1. Check Node.js version matches CI (`NODE_VERSION: "24"` in deploy.yml)
 2. Run `npm ci` instead of `npm install` (clean install)
 3. Check for platform-specific dependencies
 
@@ -126,7 +126,7 @@
 1. Delete `node_modules` and `package-lock.json`
 2. Run `npm cache clean --force`
 3. Run `npm install` again
-4. Check Node.js version: `node --version` (must be 20+)
+4. Check Node.js version: `node --version` (must be 24+)
 
 ### Monitoring & Health
 
