@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BookOpen, ArrowRight } from "lucide-react";
@@ -15,28 +15,43 @@ interface GuideTopic {
 
 interface GuidesListProps {
   topics: GuideTopic[];
+  initialTopic?: string | null | undefined;
 }
 
-export function GuidesList({ topics }: GuidesListProps) {
+export function GuidesList({ topics, initialTopic }: GuidesListProps) {
   const searchParams = useSearchParams();
-  const rawTopic = searchParams?.get("topic");
-  const activeTopic = rawTopic ? decodeURIComponent(rawTopic) : null;
+  const [activeTopic, setActiveTopic] = useState<string | null>(initialTopic ?? null);
+
+  // Sync with URL on mount
+  useEffect(() => {
+    const rawTopic = searchParams?.get("topic");
+    setActiveTopic(rawTopic ? decodeURIComponent(rawTopic) : null);
+  }, [searchParams]);
 
   const visibleTopics = useMemo(
     () => (activeTopic ? topics.filter((t) => t.category === activeTopic) : topics),
     [topics, activeTopic]
   );
 
+  const handleCategoryChange = (category: string | null) => {
+    setActiveTopic(category);
+    if (category) {
+      window.history.pushState({}, "", `/guides?topic=${encodeURIComponent(category)}`);
+    } else {
+      window.history.pushState({}, "", `/guides`);
+    }
+  };
+
   return (
     <>
       {activeTopic && (
         <div className="mt-4">
-          <Link
-            href="/guides"
+          <button
+            onClick={() => handleCategoryChange(null)}
             className="inline-flex items-center gap-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400"
           >
             ← Show all guides
-          </Link>
+          </button>
         </div>
       )}
 

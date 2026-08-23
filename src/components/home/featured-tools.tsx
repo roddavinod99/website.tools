@@ -22,27 +22,30 @@ export function FeaturedTools({
   featuredTools: Tool[];
   featuresBySlug?: Record<string, string[]>;
 }) {
+  const topFeatured = featuredTools.slice(0, 4);
+
   return (
     <section className="border-t border-surface-200 dark:border-dark-border">
-      <div className="container py-16 md:py-24">
-        <div className="flex items-center justify-between">
+      <div className="container py-12 md:py-16">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
-              Featured Tools
+              Start with the Most Popular
             </h2>
             <p className="mt-1 text-surface-600 dark:text-dark-muted">
-              Start with the tools developers reach for most
+              The tools developers reach for most
             </p>
           </div>
           <Link
             href="/tools"
             className="hidden sm:inline-flex text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
           >
-            View all tools →
+            View all tools
+            <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredTools.slice(0, 8).map((tool) => {
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {topFeatured.map((tool) => {
             const Icon = iconMap[tool.icon] || Braces;
             return (
               <ToolLink
@@ -67,6 +70,7 @@ export function FeaturedTools({
                     {tool.category}
                   </span>
                   {tool.new && <Badge variant="new">New</Badge>}
+                  {tool.trending && <Badge variant="warning">Trending</Badge>}
                 </div>
               </ToolLink>
             );

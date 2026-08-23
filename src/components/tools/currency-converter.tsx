@@ -34,6 +34,8 @@ export function CurrencyConverter() {
   const [loading, setLoading] = useState(true);
   const [amount, setAmount] = useState("100");
   const [toCurrency, setToCurrency] = useState("INR");
+  const [showAllRates, setShowAllRates] = useState(false);
+  const [rateSearch, setRateSearch] = useState("");
 
   const converted = useMemo(() => {
     if (!rates || !rates.rates[fromCurrency] || !rates.rates[toCurrency]) return null;
@@ -161,27 +163,91 @@ export function CurrencyConverter() {
       )}
 
       {converted !== null && exchangeRate !== null && rates ? (
-        <div
-          data-testid="tool-output"
-          className="grid gap-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 sm:grid-cols-3 dark:border-dark-border dark:bg-dark-surface"
-        >
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">You convert</p>
-            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">
-              {formatMoney(parseInput(amount), fromCurrency)}
-            </p>
+        <div className="space-y-4">
+          <div
+            data-testid="tool-output"
+            className="grid gap-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 sm:grid-cols-3 dark:border-dark-border dark:bg-dark-surface"
+          >
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">You convert</p>
+              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">
+                {formatMoney(parseInput(amount), fromCurrency)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Exchange rate</p>
+              <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">
+                1 {fromCurrency} = {formatMoney(exchangeRate, toCurrency)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">You get</p>
+              <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">
+                {formatMoney(converted, toCurrency)}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">Exchange rate</p>
-            <p className="mt-1 text-xl font-semibold text-surface-700 dark:text-dark-text">
-              1 {fromCurrency} = {formatMoney(exchangeRate, toCurrency)}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">You get</p>
-            <p className="mt-1 text-2xl font-bold text-surface-900 dark:text-dark-text">
-              {formatMoney(converted, toCurrency)}
-            </p>
+
+          {/* All Rates Table - Top 20 + Searchable "Show All" */}
+          <div className="rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-surface-200 dark:border-dark-border">
+              <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text">All Exchange Rates</h3>
+              <button
+                onClick={() => setShowAllRates(!showAllRates)}
+                className="text-xs text-brand-600 hover:text-brand-700 dark:text-brand-400 font-medium flex items-center gap-1"
+                aria-expanded={showAllRates}
+              >
+                {showAllRates ? "Show less" : "Show all rates"} ({Object.keys(rates.rates).length} currencies)
+              </button>
+            </div>
+            <div className="p-4">
+              <input
+                type="text"
+                value={rateSearch}
+                onChange={(e) => setRateSearch(e.target.value)}
+                placeholder="Search currencies..."
+                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted mb-3"
+                aria-label="Search exchange rates"
+              />
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-surface-200 dark:border-dark-border">
+                      <th className="text-left py-2 px-3 font-medium text-surface-600 dark:text-dark-muted">Currency</th>
+                      <th className="text-right py-2 px-3 font-medium text-surface-600 dark:text-dark-muted">Rate (1 {rates.base})</th>
+                      <th className="text-right py-2 px-3 font-medium text-surface-600 dark:text-dark-muted">1 {toCurrency} =</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(rates.rates)
+                      .filter(([code]) => code.toLowerCase().includes(rateSearch.toLowerCase()))
+                      .sort((a, b) => {
+                        const aPop = POPULAR_CURRENCIES.indexOf(a[0]);
+                        const bPop = POPULAR_CURRENCIES.indexOf(b[0]);
+                        if (aPop !== -1 && bPop !== -1) return aPop - bPop;
+                        if (aPop !== -1) return -1;
+                        if (bPop !== -1) return 1;
+                        return a[0].localeCompare(b[0]);
+                      })
+                      .slice(0, showAllRates ? undefined : 20)
+                      .map(([code, rate]) => (
+                        <tr key={code} className="border-b border-surface-100 dark:border-dark-border/50 hover:bg-surface-50 dark:hover:bg-dark-surface/50">
+                          <td className="py-2 px-3 font-medium text-surface-900 dark:text-dark-text">{code}</td>
+                          <td className="py-2 px-3 text-right text-surface-700 dark:text-dark-text font-mono">{rate.toFixed(6)}</td>
+                          <td className="py-2 px-3 text-right text-surface-500 dark:text-dark-muted font-mono">
+                            {(1 / rate).toFixed(6)}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+              {!showAllRates && Object.keys(rates.rates).length > 20 && (
+                <p className="mt-2 text-xs text-surface-500 dark:text-dark-muted text-center">
+                  Showing top 20 of {Object.keys(rates.rates).length} currencies. Click "Show all rates" to see more.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       ) : (

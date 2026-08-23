@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { validateFileSize } from "@/lib/file-security";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 type ECCLevel = "L" | "M" | "Q" | "H";
 type OutputFormat = "png" | "svg" | "jpeg";
@@ -364,62 +365,73 @@ export function QRGenerator() {
         )}
       </div>
 
-      <details className="rounded-lg border border-surface-200 dark:border-dark-border">
-        <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">Advanced Options</summary>
-        <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4 border-t border-surface-200 dark:border-dark-border">
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Error Correction</label>
-            <select value={ecc} onChange={(e) => setEcc(e.target.value as ECCLevel)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-              {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_MAP[l]}</option>))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Output Format</label>
-            <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-              {(["png", "svg", "jpeg"] as OutputFormat[]).map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Cell Size: {cellSize}px</label>
-            <input type="range" min={4} max={20} value={cellSize} onChange={(e) => setCellSize(parseInt(e.target.value))} className="w-full accent-brand-500" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Margin: {margin} modules</label>
-            <input type="range" min={1} max={8} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))} className="w-full accent-brand-500" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Dot Shape</label>
-            <select value={dotShape} onChange={(e) => setDotShape(e.target.value as DotShape)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-              <option value="square">Square</option>
-              <option value="circle">Circle</option>
-              <option value="rounded">Rounded</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Foreground Color</label>
-            <div className="flex items-center gap-2">
-              <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-              <input type="text" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+      <AdvancedOptions title="Advanced options" defaultOpen={false}>
+        <OptionGroup title="Core Settings" description="Fundamental QR code configuration">
+          <OptionRow columns={2}>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Error Correction</label>
+              <select value={ecc} onChange={(e) => setEcc(e.target.value as ECCLevel)}
+                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_MAP[l]}</option>))}
+              </select>
             </div>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Background Color</label>
-            <div className="flex items-center gap-2">
-              <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-              <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Output Format</label>
+              <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                {(["png", "svg", "jpeg"] as OutputFormat[]).map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
+              </select>
             </div>
-          </div>
-          <div className="flex items-end">
-            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-              <input type="checkbox" checked={useGradient} onChange={(e) => setUseGradient(e.target.checked)} className="accent-brand-500" />
-              Gradient colors
-            </label>
-          </div>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Cell Size: {cellSize}px</label>
+              <input type="range" min={4} max={20} value={cellSize} onChange={(e) => setCellSize(parseInt(e.target.value))} className="w-full accent-brand-500" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Margin: {margin} modules</label>
+              <input type="range" min={1} max={8} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))} className="w-full accent-brand-500" />
+            </div>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Appearance" description="Customize how your QR code looks">
+          <OptionRow columns={2}>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Dot Shape</label>
+              <select value={dotShape} onChange={(e) => setDotShape(e.target.value as DotShape)}
+                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                <option value="square">Square</option>
+                <option value="circle">Circle</option>
+                <option value="rounded">Rounded</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Foreground Color</label>
+              <div className="flex items-center gap-2">
+                <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                <input type="text" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Background Color</label>
+              <div className="flex items-center gap-2">
+                <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </div>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Gradient" description="Add gradient colors to your QR code">
+          <OptionRow columns={2}>
+            <div className="flex items-end">
+              <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text w-full">
+                <input type="checkbox" checked={useGradient} onChange={(e) => setUseGradient(e.target.checked)} className="accent-brand-500" />
+                Enable gradient colors
+              </label>
+            </div>
+          </OptionRow>
           {useGradient && (
-            <>
+            <OptionRow columns={2}>
               <div>
                 <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Gradient Start</label>
                 <div className="flex items-center gap-2">
@@ -434,23 +446,30 @@ export function QRGenerator() {
                   <input type="text" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
                 </div>
               </div>
-            </>
+            </OptionRow>
           )}
-          <div className="flex items-end">
-            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-              <input type="checkbox" checked={includeLogo} onChange={(e) => setIncludeLogo(e.target.checked)} className="accent-brand-500" />
-              Add Logo
-            </label>
-          </div>
-          {includeLogo && (
-            <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Logo Image</label>
-              <button onClick={() => fileRef.current?.click()} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border transition-colors">Upload Logo</button>
-              <input ref={fileRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+        </OptionGroup>
+
+        <OptionGroup title="Logo" description="Embed a logo in the center of your QR code">
+          <OptionRow columns={1}>
+            <div className="flex items-end">
+              <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+                <input type="checkbox" checked={includeLogo} onChange={(e) => setIncludeLogo(e.target.checked)} className="accent-brand-500" />
+                Add Logo
+              </label>
             </div>
+          </OptionRow>
+          {includeLogo && (
+            <OptionRow columns={1}>
+              <div>
+                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Logo Image</label>
+                <button onClick={() => fileRef.current?.click()} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border transition-colors">Upload Logo</button>
+                <input ref={fileRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+              </div>
+            </OptionRow>
           )}
-        </div>
-      </details>
+        </OptionGroup>
+      </AdvancedOptions>
 
       <canvas ref={canvasRef} className="hidden" />
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect } from "react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 function booleanToHumanReadable(value: boolean | undefined): string {
   return value ? "Yes" : "No";
@@ -70,11 +71,94 @@ export function PhoneNumberParser() {
     ].filter((item) => item.value);
   }, [parsed]);
 
+  // Advanced details for expanded view
+  const advancedDetails = useMemo(() => {
+    if (!parsed) return [];
+    return [
+      { label: "Country Code (ISO)", value: parsed.country || "" },
+      { label: "National Number", value: parsed.nationalNumber?.toString() || "" },
+      { label: "Extension", value: parsed.ext || "None" },
+      { label: "Leading Zero(s)", value: parsed.leadingZero ? "Yes" : "No" },
+      { label: "Preferred Intl Carrier Code", value: parsed.preferredInternationalCarrierCode || "None" },
+    ].filter((item) => item.value);
+  }, [parsed]);
+
   const copy = useCallback(async (text: string, field: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(""), 1500);
   }, []);
+
+  const renderParsedDetails = () => (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        {parsedDetails!.map((item) => (
+          <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+            <div>
+              <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
+              <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{item.value}</p>
+            </div>
+            <button
+              onClick={() => copy(item.value, item.label)}
+              className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+            >
+              {copiedField === item.label ? "Copied!" : "Copy"}
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <AdvancedOptions title="Advanced details" defaultOpen={false}>
+        <OptionGroup title="Parsed Components" description="Detailed breakdown of the phone number structure">
+          <OptionRow columns={2}>
+            {advancedDetails.map((item) => (
+              <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
+                  <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{item.value}</p>
+                </div>
+                <button
+                  onClick={() => copy(item.value, item.label)}
+                  className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+                >
+                  {copiedField === item.label ? "Copied!" : "Copy"}
+                </button>
+              </div>
+            ))}
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Validation Details" description="Technical validation information">
+          <OptionRow columns={2}>
+            <div className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+              <div>
+                <p className="text-xs text-surface-500 dark:text-dark-muted">isValid()</p>
+                <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{booleanToHumanReadable(parsed?.isValid())}</p>
+              </div>
+              <button
+                onClick={() => copy(booleanToHumanReadable(parsed?.isValid()), "isValid")}
+                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+              >
+                {copiedField === "isValid" ? "Copied!" : "Copy"}
+              </button>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+              <div>
+                <p className="text-xs text-surface-500 dark:text-dark-muted">isPossible()</p>
+                <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{booleanToHumanReadable(parsed?.isPossible())}</p>
+              </div>
+              <button
+                onClick={() => copy(booleanToHumanReadable(parsed?.isPossible()), "isPossible")}
+                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+              >
+                {copiedField === "isPossible" ? "Copied!" : "Copy"}
+              </button>
+            </div>
+          </OptionRow>
+        </OptionGroup>
+      </AdvancedOptions>
+    </div>
+  );
 
   return (
     <div className="space-y-4">
@@ -107,23 +191,10 @@ export function PhoneNumberParser() {
         />
       </div>
 
-      {parsedDetails && (
-        <div className="space-y-2">
-          {parsedDetails.map((item) => (
-            <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
-              <div>
-                <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
-                <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{item.value}</p>
-              </div>
-              <button
-                onClick={() => copy(item.value, item.label)}
-                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
-              >
-                {copiedField === item.label ? "Copied!" : "Copy"}
-              </button>
-            </div>
-          ))}
-        </div>
+      {parsedDetails ? renderParsedDetails() : (
+        <p className="rounded-lg border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+          Enter a phone number to parse and validate
+        </p>
       )}
 
       <p className="text-[10px] text-surface-400 dark:text-dark-muted text-center">

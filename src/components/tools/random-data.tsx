@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 type DataCategory = "people" | "companies" | "finance" | "internet" | "ids" | "dates" | "text" | "numbers";
 type ExportFormat = "json" | "csv" | "tsv" | "text" | "html-table" | "sql" | "xml" | "yaml";
@@ -359,7 +360,7 @@ export function RandomData() {
           <input type="text" value={seedInput} onChange={(e) => setSeedInput(e.target.value)} placeholder="Optional seed"
             className="w-28 rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
-        {(format === "csv" || format === "tsv") && (
+{(format === "csv" || format === "tsv") && (
           <div className="flex items-end">
             <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
               <input type="checkbox" checked={includeHeader} onChange={(e) => setIncludeHeader(e.target.checked)} className="accent-brand-500" />
@@ -367,37 +368,67 @@ export function RandomData() {
             </label>
           </div>
         )}
+
       </div>
 
-      {(category === "text") && (
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Prefix</label>
-            <input type="text" value={textPrefix} onChange={(e) => setTextPrefix(e.target.value)} placeholder="e.g. start_"
-              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Suffix</label>
-            <input type="text" value={textSuffix} onChange={(e) => setTextSuffix(e.target.value)} placeholder="e.g. _end"
-              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-          </div>
-        </div>
-      )}
+      <AdvancedOptions title="Advanced options" defaultOpen={false}>
+        <OptionGroup title="Data Settings" description="Configure data generation parameters">
+          <OptionRow columns={2}>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Locale</label>
+              <select value={locale} onChange={(e) => setLocale(e.target.value as Locale)}
+                className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                <option value="en-US">en-US</option>
+                <option value="en-GB">en-GB</option>
+                <option value="in-IN">in-IN</option>
+                <option value="de-DE">de-DE</option>
+                <option value="fr-FR">fr-FR</option>
+                <option value="es-ES">es-ES</option>
+                <option value="ja-JP">ja-JP</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Seed</label>
+              <input type="text" value={seedInput} onChange={(e) => setSeedInput(e.target.value)} placeholder="Optional seed"
+                className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            </div>
+          </OptionRow>
+        </OptionGroup>
 
-      {(category === "numbers") && (
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Min Value</label>
-            <input type="number" value={numMin} onChange={(e) => setNumMin(parseFloat(e.target.value) || 0)}
-              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Max Value</label>
-            <input type="number" value={numMax} onChange={(e) => setNumMax(parseFloat(e.target.value) || 0)}
-              className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-          </div>
-        </div>
-      )}
+        {(category === "text") && (
+          <OptionGroup title="Text Formatting" description="Add prefix/suffix to generated text fields">
+            <OptionRow columns={2}>
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Prefix</label>
+                <input type="text" value={textPrefix} onChange={(e) => setTextPrefix(e.target.value)} placeholder="e.g. start_"
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Suffix</label>
+                <input type="text" value={textSuffix} onChange={(e) => setTextSuffix(e.target.value)} placeholder="e.g. _end"
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </OptionRow>
+          </OptionGroup>
+        )}
+
+        {(category === "numbers") && (
+          <OptionGroup title="Number Range" description="Set minimum and maximum values for generated numbers">
+            <OptionRow columns={2}>
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Min Value</label>
+                <input type="number" value={numMin} onChange={(e) => setNumMin(parseFloat(e.target.value) || 0)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Max Value</label>
+                <input type="number" value={numMax} onChange={(e) => setNumMax(parseFloat(e.target.value) || 0)}
+                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </OptionRow>
+          </OptionGroup>
+        )}
+      </AdvancedOptions>
 
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>

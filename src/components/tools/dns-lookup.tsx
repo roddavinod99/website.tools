@@ -155,6 +155,19 @@ export function DNSLookup() {
 
       {data?.Answer && data.Answer.length > 0 && (
         <div>
+          {/* DNS Response Summary Flags */}
+          <div className="mb-3 flex flex-wrap gap-1.5" aria-label="DNS Response Flags">
+            {data.RD && <span className="inline-flex items-center gap-1 rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" title="Recursion Desired">RD</span>}
+            {data.RA && <span className="inline-flex items-center gap-1 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300" title="Recursion Available">RA</span>}
+            {data.AD && <span className="inline-flex items-center gap-1 rounded bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-900/30 dark:text-purple-300" title="Authenticated Data">AD</span>}
+            {data.CD && <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-300" title="Checking Disabled">CD</span>}
+            {data.TC && <span className="inline-flex items-center gap-1 rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/30 dark:text-red-300" title="Truncated">TC</span>}
+            <span className="inline-flex items-center gap-1 rounded bg-surface-100 px-2 py-0.5 text-xs font-medium text-surface-700 dark:bg-dark-surface dark:text-dark-muted" title="Response Code">
+              RCODE: {data.Status ?? 0}
+            </span>
+          </div>
+
+          {/* Answer Records Table */}
           <div data-testid="tool-output" className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
             <table className="table-base font-mono">
               <thead>
@@ -182,18 +195,86 @@ export function DNSLookup() {
               </tbody>
             </table>
           </div>
-          <div className="flex gap-2 mt-2">
+
+          {/* Authority Section */}
+          {data.Authority && data.Authority.length > 0 && (
+            <div className="mt-3">
+              <h4 className="text-xs font-semibold text-surface-600 dark:text-dark-muted mb-2 uppercase tracking-wide">Authority Records</h4>
+              <div className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+                <table className="table-base font-mono text-xs">
+                  <thead>
+                    <tr className="bg-surface-50 dark:bg-dark-surface">
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Name</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">TTL</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Type</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.Authority.map((record, i) => {
+                      const typeName = typeMapReverse[record.type] || `TYPE${record.type}`;
+                      return (
+                        <tr key={i} className="border-t border-surface-200 dark:border-dark-border">
+                          <td className="table-cell text-surface-900 dark:text-dark-text">{record.name}</td>
+                          <td className="table-cell text-surface-500 dark:text-dark-muted">{record.TTL}s</td>
+                          <td className="table-cell"><span className="rounded bg-amber-100 px-1.5 py-0.5 text-amber-700 dark:bg-amber-800 dark:text-amber-200">{typeName}</span></td>
+                          <td className="table-cell text-surface-900 dark:text-dark-text break-all max-w-xs">{record.data}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Additional Section */}
+          {data.Additional && data.Additional.length > 0 && (
+            <div className="mt-3">
+              <h4 className="text-xs font-semibold text-surface-600 dark:text-dark-muted mb-2 uppercase tracking-wide">Additional Records</h4>
+              <div className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+                <table className="table-base font-mono text-xs">
+                  <thead>
+                    <tr className="bg-surface-50 dark:bg-dark-surface">
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Name</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">TTL</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Type</th>
+                      <th className="table-header text-left text-surface-600 dark:text-dark-muted font-medium">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.Additional.map((record, i) => {
+                      const typeName = typeMapReverse[record.type] || `TYPE${record.type}`;
+                      return (
+                        <tr key={i} className="border-t border-surface-200 dark:border-dark-border">
+                          <td className="table-cell text-surface-900 dark:text-dark-text">{record.name}</td>
+                          <td className="table-cell text-surface-500 dark:text-dark-muted">{record.TTL}s</td>
+                          <td className="table-cell"><span className="rounded bg-emerald-100 px-1.5 py-0.5 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200">{typeName}</span></td>
+                          <td className="table-cell text-surface-900 dark:text-dark-text break-all max-w-xs">{record.data}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Actions & Raw Response */}
+          <div className="flex flex-wrap gap-2 mt-3">
             <button onClick={copyJson} className="text-xs text-brand-500 hover:text-brand-600">Copy as JSON</button>
             <button onClick={copyText} className="text-xs text-brand-500 hover:text-brand-600">Copy as text</button>
             <button onClick={() => setShowRaw(!showRaw)} className="text-xs text-surface-500 hover:text-surface-700 dark:text-dark-muted dark:hover:text-dark-text">
-              {showRaw ? "Hide raw" : "Show raw"}
+              {showRaw ? "Hide raw response" : "View raw response"}
             </button>
           </div>
           {showRaw && (
-            <pre className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-40 whitespace-pre-wrap">
+            <pre className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">
               {JSON.stringify(data, null, 2)}
             </pre>
           )}
+
+          {/* WHOIS / RDAP Summary */}
           {whoisLoading && (
             <div className="mt-3 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
               Loading WHOIS/RDAP data…

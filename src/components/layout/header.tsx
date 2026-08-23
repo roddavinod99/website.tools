@@ -7,7 +7,7 @@ import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command, ChevronD
 import { mainNav, siteConfig, categories } from "@/lib/data";
 import { setStorageItem } from "@/lib/client-storage";
 import { cn } from "@/lib/utils";
-import { ShortcutsModal } from "@/components/layout/shortcuts-modal";
+import { ShortcutsModal, shortcutCategories } from "@/components/layout/shortcuts-modal";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
 
@@ -121,6 +121,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -194,15 +195,26 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
             <Logo size="md" />
           </Link>
           <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
-            {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex h-10 items-center px-3 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
-              >
-                {item.title}
-              </Link>
-            ))}
+            {mainNav.map((item) => {
+              const isTools = item.href === "/tools";
+              const hasNew = isTools && allTools.some((t) => t.new === true);
+              const hasTrending = isTools && allTools.some((t) => t.trending === true);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex h-10 items-center gap-1.5 px-3 text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text rounded-md touch-target"
+                >
+                  {item.title}
+                  {isTools && (hasNew || hasTrending) && (
+                    <span className="flex items-center gap-1">
+                      {hasNew && <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">New</span>}
+                      {hasTrending && <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Trending</span>}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
             <CategoryMenu allTools={allTools} />
             <div className="mx-2 h-5 w-px bg-surface-300 dark:bg-dark-border" aria-hidden="true" />
             <a
@@ -217,6 +229,16 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
           </nav>
         </div>
         <div className="flex items-center gap-2 shrink-0">
+          {/* Mobile search button - visible only on mobile */}
+          <button
+            onClick={handleSearchClick}
+            aria-label="Search tools..."
+            className="flex sm:hidden h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
+          >
+            <Search className="h-5 w-5" aria-hidden="true" />
+          </button>
+
+          {/* Desktop search bar - hidden on mobile */}
           <button
             onClick={handleSearchClick}
             aria-label="Search tools..."
@@ -241,13 +263,60 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
             <span className="hidden dark:inline" suppressHydrationWarning><Sun className="h-5 w-5" aria-hidden="true" /></span>
             <span className="inline dark:hidden" suppressHydrationWarning><Moon className="h-5 w-5" aria-hidden="true" /></span>
           </button>
-          <button
-            onClick={() => setShortcutsOpen(true)}
-            aria-label="Keyboard shortcuts (?)"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
-          >
-            <HelpCircle className="h-5 w-5" aria-hidden="true" />
-          </button>
+          {/* Keyboard Shortcuts Hover Tooltip */}
+          <div className="relative" onMouseEnter={() => setShowShortcuts(true)} onMouseLeave={() => setShowShortcuts(false)}>
+            <button
+              onClick={() => setShortcutsOpen(true)}
+              aria-label="Keyboard shortcuts (?)"
+              aria-expanded={showShortcuts}
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-surface-500 transition-colors hover:bg-surface-200 dark:text-dark-muted dark:hover:bg-dark-surface touch-target"
+            >
+              <HelpCircle className="h-5 w-5" aria-hidden="true" />
+            </button>
+
+            {showShortcuts && (
+              <div className="absolute right-0 top-full mt-2 z-50 w-80 max-w-[90vw] rounded-xl border border-surface-200 bg-white p-4 shadow-lg dark:border-dark-border dark:bg-dark-surface animate-fade-in-down">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text">Keyboard Shortcuts</h3>
+                  <span className="text-xs text-surface-400 dark:text-dark-muted">Hover to keep open</span>
+                </div>
+                <div className="space-y-3 max-h-80 overflow-auto">
+                  {shortcutCategories.map((category, catIndex) => (
+                    <section key={catIndex} className="space-y-2">
+                      <h4 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">{category.title}</h4>
+                      <dl className="grid grid-cols-[auto_1fr] gap-1.5 gap-y-2">
+                        {category.shortcuts.map((shortcut, idx) => (
+                          <div key={idx} className="contents">
+                            <dt className="flex items-center gap-2 text-xs text-surface-600 dark:text-dark-muted">
+                              <kbd className="flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-[10px] font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
+                                {shortcut.key}
+                              </kbd>
+                            </dt>
+                            <dd className="text-xs text-surface-700 dark:text-dark-text self-center">{shortcut.description}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  ))}
+                  <div className="pt-2 border-t border-surface-200 dark:border-dark-border">
+                    <p className="text-[10px] text-surface-400 dark:text-dark-muted text-center">
+                      <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+                        <Command className="h-3 w-3" /> K
+                      </kbd>{" "}
+                      to search tools anywhere.{" "}
+                      <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+                        ?
+                      </kbd>{" "}
+                      to reopen this help.
+                    </p>
+                    <p className="mt-1 text-[10px] text-surface-400 dark:text-dark-muted text-center">
+                      <strong>Mac:</strong> <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1 py-0.5 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">⌘</kbd> Command | <strong>Windows:</strong> <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1 py-0.5 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">Ctrl</kbd> Control
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"

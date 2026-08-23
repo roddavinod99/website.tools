@@ -5,22 +5,22 @@ import { cn } from "@/lib/utils";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 import { X, Command } from "lucide-react";
 
-interface ShortcutItem {
+export interface ShortcutItem {
   key: string;
   description: string;
   keys?: string[];
 }
 
-interface ShortcutsModalProps {
+export interface ShortcutsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const shortcutCategories: { title: string; shortcuts: ShortcutItem[] }[] = [
+export const shortcutCategories: { title: string; shortcuts: ShortcutItem[] }[] = [
   {
     title: "Global",
     shortcuts: [
-      { key: "⌘K", description: "Open search" },
+      { key: "⌘K / Ctrl+K", description: "Open search" },
       { key: "?", description: "Show shortcuts help" },
       { key: "Esc", description: "Close modal / search" },
     ],
@@ -28,20 +28,20 @@ const shortcutCategories: { title: string; shortcuts: ShortcutItem[] }[] = [
   {
     title: "Navigation",
     shortcuts: [
-      { key: "⌘1", description: "Go to Tools" },
-      { key: "⌘2", description: "Go to Categories" },
-      { key: "⌘3", description: "Go to Guides" },
-      { key: "⌘4", description: "Go to Blog" },
+      { key: "⌘1 / Ctrl+1", description: "Go to Tools" },
+      { key: "⌘2 / Ctrl+2", description: "Go to Categories" },
+      { key: "⌘3 / Ctrl+3", description: "Go to Guides" },
+      { key: "⌘4 / Ctrl+4", description: "Go to Blog" },
     ],
   },
   {
     title: "Tool Pages",
     shortcuts: [
-      { key: "⌘Enter", description: "Run / Format (supported tools)" },
-      { key: "⌘Shift+C", description: "Copy output (supported tools)" },
-      { key: "⌘Shift+M", description: "Minify (formatters)" },
-      { key: "⌘Shift+V", description: "Validate (formatters)" },
-      { key: "⌘↑/↓", description: "Navigate search results" },
+      { key: "⌘Enter / Ctrl+Enter", description: "Run / Format (supported tools)" },
+      { key: "⌘Shift+C / Ctrl+Shift+C", description: "Copy output (supported tools)" },
+      { key: "⌘Shift+M / Ctrl+Shift+M", description: "Minify (formatters)" },
+      { key: "⌘Shift+V / Ctrl+Shift+V", description: "Validate (formatters)" },
+      { key: "⌘↑/↓ / Ctrl+↑/↓", description: "Navigate search results" },
     ],
   },
   {
@@ -141,7 +141,6 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
               </dl>
             </section>
           ))}
-
           <div className="pt-4 border-t border-surface-200 dark:border-dark-border">
             <p className="text-xs text-surface-400 dark:text-dark-muted text-center">
               <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">

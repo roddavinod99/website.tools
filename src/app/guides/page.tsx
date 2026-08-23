@@ -47,7 +47,8 @@ const itemListJsonLd = {
   })),
 };
 
-export default function GuidesPage() {
+export default async function GuidesPage({ searchParams }: { searchParams: Promise<{ topic?: string }> }) {
+  const resolvedParams = await searchParams;
   return (
     <>
       <script
@@ -74,9 +75,7 @@ export default function GuidesPage() {
       <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
-            <Suspense fallback={<div className="text-sm text-surface-500 dark:text-dark-muted">Loading guides…</div>}>
-              <GuidesList topics={learningTopics} />
-            </Suspense>
+            <GuidesList topics={learningTopics} initialTopic={resolvedParams.topic ?? null} />
           </div>
         </div>
       </section>

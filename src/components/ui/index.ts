@@ -22,3 +22,8 @@ export { FormatterShell } from "./formatter-shell";
 export { GeneratorShell } from "./generator-shell";
 export { CodecShell } from "./codec-shell";
 export { ImageShell } from "./image-shell";
+export { FeatureBadge, FeatureBadgesGroup } from "./feature-badge";
+export { AdvancedOptions, OptionGroup, OptionRow } from "./advanced-options";
+export { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "./tooltip";
+export { Portal } from "./portal";
+export { TryExamples } from "./try-examples";

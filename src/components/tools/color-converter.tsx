@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 interface RGB { r: number; g: number; b: number; a?: number }
 interface HSL { h: number; s: number; l: number; a?: number }
@@ -253,6 +254,82 @@ export function ColorConverter() {
 
       {rgb && (
         <>
+          <AdvancedOptions title="Advanced color tools" defaultOpen={false}>
+            <OptionGroup title="Color Harmonies" description="Generate color schemes based on color theory">
+              <OptionRow columns={2}>
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Analogous</p>
+                  <div className="flex gap-1">{analogous.map((c, i) => <button key={i} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+                </div>
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Complementary</p>
+                  <div className="flex gap-1">{complementary.map((c, i) => <button key={i} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+                </div>
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Triadic</p>
+                  <div className="flex gap-1">{triadic.map((c, i) => <button key={i} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+                </div>
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Tetradic</p>
+                  <div className="flex gap-1">{tetradic.map((c, i) => <button key={i} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+                </div>
+                <div>
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Monochromatic</p>
+                  <div className="flex gap-1">{monochromatic.map((c, i) => <button key={i} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+                </div>
+              </OptionRow>
+            </OptionGroup>
+
+            <OptionGroup title="Shades & Tints" description="Generate lighter and darker variations">
+              <OptionRow columns={1}>
+                <div className="grid grid-cols-6 gap-1">
+                  {palette.slice(0, 6).map((c, i) => <button key={`t${i}`} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c.hex }} onClick={() => setInput(c.hex)} title={c.hex} />)}
+                </div>
+                <div className="grid grid-cols-6 gap-1 mt-1">
+                  {palette.slice(6).map((c, i) => <button key={`s${i}`} className="h-6 w-6 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c.hex }} onClick={() => setInput(c.hex)} title={c.hex} />)}
+                </div>
+              </OptionRow>
+            </OptionGroup>
+
+            <OptionGroup title="WCAG Contrast Checker" description="Check color contrast for accessibility compliance">
+              <OptionRow columns={2}>
+                <div>
+                  <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Foreground</label>
+                  <div className="flex gap-1 items-center">
+                    <input type="color" value={parseColor(fgInput) ? rgbToHex(parseColor(fgInput)!) : "#000000"} onChange={(e) => setFgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
+                    <input type="text" value={fgInput} onChange={(e) => setFgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Background</label>
+                  <div className="flex gap-1 items-center">
+                    <input type="color" value={parseColor(bgInput) ? rgbToHex(parseColor(bgInput)!) : "#ffffff"} onChange={(e) => setBgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
+                    <input type="text" value={bgInput} onChange={(e) => setBgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  </div>
+                </div>
+              </OptionRow>
+              {contrast !== null && (
+                <OptionRow columns={1}>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="text-sm font-mono text-surface-700 dark:text-dark-text">Ratio: {contrast.toFixed(2)}:1</span>
+                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${contrast >= 7 ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400" : contrast >= 4.5 ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400" : contrast >= 3 ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400" : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"}`}>
+                      {contrast >= 7 ? "AAA Pass" : contrast >= 4.5 ? "AA Normal Pass" : contrast >= 3 ? "AA Large Pass" : "Fail"}
+                    </span>
+                    <span className="text-xs text-surface-400 dark:text-dark-muted">
+                      {contrast >= 7 ? "AAA (7:1)" : contrast >= 4.5 ? "AA Normal (4.5:1)" : contrast >= 3 ? "AA Large (3:1)" : "Below WCAG AA"}
+                    </span>
+                  </div>
+                </OptionRow>
+              )}
+            </OptionGroup>
+
+            <OptionGroup title="Presets" description="Quick color presets">
+              <OptionRow columns={1}>
+                <div className="flex flex-wrap gap-1">{presets.map((c, i) => <button key={i} className="h-5 w-5 rounded border border-surface-200 dark:border-dark-border cursor-pointer" style={{ backgroundColor: c }} onClick={() => setInput(c)} title={c} />)}</div>
+              </OptionRow>
+            </OptionGroup>
+          </AdvancedOptions>
+
           <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
             <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Color Palette</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { validateFileSize } from "@/lib/file-security";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 type Mode = "encode" | "decode";
 type OutputFormat = "plain" | "datauri" | "base64url";
@@ -197,7 +198,7 @@ export function Base64Tool() {
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 mb-3">
         <label htmlFor="base64-output-format" className="sr-only">Output format</label>
         <select id="base64-output-format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
@@ -217,6 +218,50 @@ export function Base64Tool() {
           Upload File
         </button>
       </div>
+
+      <AdvancedOptions title="Advanced options" defaultOpen={false}>
+        <OptionGroup title="Encoding & Output" description="Configure how data is encoded and formatted">
+          <OptionRow columns={2}>
+            <label htmlFor="base64-char-encoding" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Character Encoding</label>
+            <select id="base64-char-encoding" value={charEncoding} onChange={(e) => setCharEncoding(e.target.value as CharEncoding)}
+              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              <option value="utf-8">UTF-8 (default)</option>
+              <option value="ascii">ASCII</option>
+              <option value="utf-16">UTF-16</option>
+              <option value="latin-1">Latin-1</option>
+            </select>
+
+            <label htmlFor="base64-output-format" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output Format</label>
+            <select id="base64-output-format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              <option value="plain">Plain Text</option>
+              <option value="datauri">Data URI</option>
+              <option value="base64url">Base64url (URL-safe)</option>
+            </select>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="File Operations" description="Upload, drag & drop, or download files">
+          <OptionRow columns={1}>
+            <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()} className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted">
+              <p>Drag & drop a file here</p>
+              <button onClick={handleFileUpload} className="mt-2 rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+                Browse Files
+              </button>
+            </div>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Download Options" description="Export results in different formats">
+          <OptionRow columns={3}>
+            <button onClick={downloadTxt} disabled={!output} className="rounded border border-surface-200 px-3 py-1.5 text-xs text-surface-600 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Download as text file">.txt</button>
+            <button onClick={downloadBin} disabled={!output} className="rounded border border-surface-200 px-3 py-1.5 text-xs text-surface-600 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Download as binary file">.bin</button>
+            {mode === "decode" && (
+              <button onClick={handleDecodedFileDownload} disabled={!output} className="rounded border border-surface-200 px-3 py-1.5 text-xs text-surface-600 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Save decoded file">Save Decoded</button>
+            )}
+          </OptionRow>
+        </OptionGroup>
+      </AdvancedOptions>
 
       <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()}>
         <label htmlFor="base64-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">

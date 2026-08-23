@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { TryExamples } from "@/components/ui/try-examples";
 
 interface TokenSpan {
   text: string;
@@ -226,6 +227,15 @@ export function JSONFormatter() {
           </div>
         </div>
       </div>
+
+      <TryExamples
+        examples={[
+          '{"users": [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]}',
+          '{"products": [{"id": 1, "name": "Widget", "price": 19.99, "tags": ["new", "sale"]}]}',
+          '{"config": {"api": {"timeout": 5000, "retries": 3}, "features": ["auth", "logging"]}}'
+        ]}
+        onExampleSelect={(ex) => handleChange(ex)}
+      />
 
       <div className="flex flex-wrap items-center gap-2">
         <button onClick={format} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Format</button>

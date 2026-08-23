@@ -13,6 +13,7 @@ import {
   hmacHex,
   type HmacHashId,
 } from "@/lib/crypto-hash";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 // sha512-224/256 are hand-rolled for unsupported WebCrypto envs.
 
@@ -344,6 +345,7 @@ export function HashGenerator() {
   return (
     <div className="space-y-4">
       <div>
+        <div className="flex flex-wrap gap-2">
         <div className="flex flex-wrap gap-2 mb-3">
           {coreAlgos.map((a) => (
             <span key={a.id}
@@ -363,54 +365,104 @@ export function HashGenerator() {
           ))}
         </div>
       </div>
-
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2">
-          <label htmlFor="hash-format" className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
-          <select id="hash-format" value={hashFmt} onChange={(e) => setHashFmt(e.target.value as "hex" | "base64" | "binary")}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="hex">Hex</option>
-            <option value="base64">Base64</option>
-            <option value="binary">Binary</option>
-          </select>
-        </div>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="hash-hmac" checked={hmac} onChange={(e) => setHmac(e.target.checked)} className="accent-brand-500" />
-          HMAC
-        </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="hash-compare" checked={compareMode} onChange={(e) => setCompareMode(e.target.checked)} className="accent-brand-500" />
-          Compare
-        </label>
-        <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="hash-bulk" checked={bulkMode} onChange={(e) => setBulkMode(e.target.checked)} className="accent-brand-500" />
-          Bulk (per line)
-        </label>
       </div>
 
-      {hmac && (
-        <div>
-          <label htmlFor="hash-hmac-key" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">HMAC Secret Key</label>
-          <input type="text" id="hash-hmac-key" value={hmacKey} onChange={(e) => setHmacKey(e.target.value)} placeholder="Enter secret key..."
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-        </div>
-      )}
+      <AdvancedOptions title="Advanced options" defaultOpen={false}>
+        <OptionGroup title="Output Format" description="Choose how hash results are displayed">
+          <OptionRow columns={2}>
+            <div className="flex items-center gap-2">
+              <label htmlFor="hash-format" className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
+              <select id="hash-format" value={hashFmt} onChange={(e) => setHashFmt(e.target.value as "hex" | "base64" | "binary")}
+                className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                <option value="hex">Hex</option>
+                <option value="base64">Base64</option>
+                <option value="binary">Binary</option>
+              </select>
+            </div>
+          </OptionRow>
+        </OptionGroup>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label htmlFor="hash-salt" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt (optional)</label>
-          <input type="text" id="hash-salt" value={salt} onChange={(e) => setSalt(e.target.value)} placeholder="Enter salt..."
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-        </div>
-        <div>
-          <label htmlFor="hash-salt-pos" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt Position</label>
-          <select id="hash-salt-pos" value={saltPos} onChange={(e) => setSaltPos(e.target.value as "prepend" | "append")}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-            <option value="prepend">Prepend</option>
-            <option value="append">Append</option>
-          </select>
-        </div>
-      </div>
+        <OptionGroup title="HMAC & Keyed Hashing" description="Generate HMAC signatures with a secret key">
+          <OptionRow columns={2}>
+            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="hash-hmac" checked={hmac} onChange={(e) => setHmac(e.target.checked)} className="accent-brand-500" />
+              Enable HMAC
+            </label>
+          </OptionRow>
+          {hmac && (
+            <OptionRow columns={1}>
+              <div>
+                <label htmlFor="hash-hmac-key" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">HMAC Secret Key</label>
+                <input type="text" id="hash-hmac-key" value={hmacKey} onChange={(e) => setHmacKey(e.target.value)} placeholder="Enter secret key..."
+                  className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              </div>
+            </OptionRow>
+          )}
+        </OptionGroup>
+
+        <OptionGroup title="Salted Hashing" description="Add salt to input before hashing for additional security">
+          <OptionRow columns={2}>
+            <div>
+              <label htmlFor="hash-salt" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt (optional)</label>
+              <input type="text" id="hash-salt" value={salt} onChange={(e) => setSalt(e.target.value)} placeholder="Enter salt..."
+                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            </div>
+            <div>
+              <label htmlFor="hash-salt-pos" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt Position</label>
+              <select id="hash-salt-pos" value={saltPos} onChange={(e) => setSaltPos(e.target.value as "prepend" | "append")}
+                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                <option value="prepend">Prepend</option>
+                <option value="append">Append</option>
+              </select>
+            </div>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Special Modes" description="Additional operation modes">
+          <OptionRow columns={3}>
+            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="hash-compare" checked={compareMode} onChange={(e) => setCompareMode(e.target.checked)} className="accent-brand-500" />
+              Compare Two Hashes
+            </label>
+            <label className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="hash-bulk" checked={bulkMode} onChange={(e) => setBulkMode(e.target.checked)} className="accent-brand-500" />
+              Bulk (per line)
+            </label>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="File Hashing" description="Hash files directly (supports large files)">
+          <OptionRow columns={1}>
+            <div
+              ref={dropRef}
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
+            >
+              <p>Drop a file here or <label htmlFor="hash-file-picker" className="text-brand-500 hover:text-brand-600 cursor-pointer underline">browse<input type="file" id="hash-file-picker" onChange={handleFilePick} className="hidden" /></label></p>
+              <div className="flex items-center gap-2 justify-center mt-2">
+                <span className="text-xs">Algorithm:</span>
+                <label htmlFor="hash-file-algo" className="sr-only">File hash algorithm</label>
+                <select id="hash-file-algo" value={fileAlgo} onChange={(e) => setFileAlgo(e.target.value)}
+                  className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 focus:outline-none dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  {ALL_ALGORITHMS.filter((a) => a.id !== "CRC32" && a.id !== "CRC32C" && a.id !== "RIPEMD-160").map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+                </select>
+              </div>
+              {hasFile && (
+                <div className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+                  <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">{file?.name} ({file ? (file.size / 1024).toFixed(1) : 0} KB)</p>
+                  <code className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all select-all">{fileHash}</code>
+                  {fileMatchesExpected !== null && (
+                    <p className={`mt-1 text-xs font-medium ${fileMatchesExpected ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                      {fileMatchesExpected ? "✓ File hash matches expected" : "✗ File hash does not match expected"}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </OptionRow>
+        </OptionGroup>
+      </AdvancedOptions>
 
       {!compareMode && !bulkMode && (
         <div>

@@ -3,16 +3,8 @@ import { Hero } from "@/components/home/hero";
 import { TOOL_COUNT, siteConfig, allTools, featuredTools, categories, faqItems } from "@/lib/constants";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
-import { TaskSection } from "@/components/home/task-section";
-import { PrivacySection } from "@/components/home/privacy-section";
-import { LearningSection } from "@/components/home/learning-section";
-import { RecentlyAdded } from "@/components/home/recently-added";
-import { ToolsCta } from "@/components/home/tools-cta";
-import { PlatformSection } from "@/components/home/platform-section";
-import { CommunitySection } from "@/components/home/community-section";
-import { NewsletterSection } from "@/components/home/newsletter-section";
-import { FAQSection } from "@/components/home/faq-section";
 import { AdBanner } from "@/components/ads";
+import { ToolsCta } from "@/components/home/tools-cta";
 import { adSlots } from "@/lib/data/ads";
 
 export const metadata: Metadata = {
@@ -65,8 +57,6 @@ const homepageJsonLd = {
         "query-input": "required name=search_term_string",
       },
       publisher: {
-        // Reference to the canonical Organization node emitted in layout.tsx
-        // (avoids a duplicate Organization entity on the page).
         "@id": `${siteConfig.url}/#organization`,
         name: "DevStackIO",
       },
@@ -146,20 +136,10 @@ export default function Home() {
         toolCount={TOOL_COUNT}
         allTools={allTools}
       />
-      <AdBanner className="my-12" slot={adSlots.homeTop} />
+      <AdBanner className="my-10" slot={adSlots.homeTop} />
       <CategoriesSection />
       <FeaturedTools featuredTools={featuredTools} />
-      <TaskSection allTools={allTools} />
-      <AdBanner className="my-12" slot={adSlots.homeMid} />
-      <PrivacySection allTools={allTools} />
-      <LearningSection />
-      <RecentlyAdded allTools={allTools} />
-      <AdBanner className="my-12" slot={adSlots.homeBottom} />
       <ToolsCta />
-      <PlatformSection />
-      <CommunitySection />
-      <NewsletterSection />
-      <FAQSection faqItems={faqItems} />
     </>
   );
 }

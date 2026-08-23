@@ -11,6 +11,7 @@ import { ToolCard } from "@/components/ui/tool-card";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FeatureBadgesGroup } from "@/components/ui/feature-badge";
 import Link from "next/link";
 import {
   CircleCheck, CircleAlert,
@@ -323,6 +324,13 @@ export function ToolClient({
               <p className="mt-1.5 text-base text-surface-500 dark:text-dark-muted max-w-prose">
                 {tool.description}
               </p>
+
+              {/* Feature Badges - Key capabilities at a glance */}
+              {content.features && content.features.length > 0 && (
+                <div className="mt-3" aria-label="Key features">
+                  <FeatureBadgesGroup features={content.features} maxVisible={5} variant="brand" size="sm" />
+                </div>
+              )}
 
               {/* Tool Interface Card */}
               <div id={`tool-interface-${tool.slug}`} className="mt-5 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">

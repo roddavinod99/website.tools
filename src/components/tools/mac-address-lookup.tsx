@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 const OUI_DB: Record<string, string> = {
   "00000C": "Cisco", "000142": "Cisco", "00036B": "Cisco", "000496": "Cisco",
@@ -311,12 +312,28 @@ function normalizeKey(mac: string): string {
   return mac.replace(/[^0-9a-fA-F]/g, "").toUpperCase().substring(0, 6);
 }
 
+function getMacType(mac: string): string {
+  const firstByte = parseInt(mac.substring(0, 2), 16);
+  if (firstByte & 1) return "Multicast / Group";
+  if (firstByte & 2) return "Locally Administered (LAA)";
+  return "Universally Administered (UAA)";
+}
+
+function getBlockRange(prefix: string): string {
+  const base = parseInt(prefix, 16) << 20;
+  const start = base.toString(16).toUpperCase().padStart(12, "0");
+  const end = (base + 0xFFFFF).toString(16).toUpperCase().padStart(12, "0");
+  const format = (s: string) => `${s.substring(0,2)}:${s.substring(2,4)}:${s.substring(4,6)}:${s.substring(6,8)}:${s.substring(8,10)}:${s.substring(10,12)}`;
+  return `${format(start)} – ${format(end)}`;
+}
+
 export function MacAddressLookup() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<{ mac: string; vendor: string; prefix: string } | null>(null);
   const [partialMatches, setPartialMatches] = useState<{ prefix: string; vendor: string }[]>([]);
   const [error, setError] = useState("");
   const [copyFeedback, setCopyFeedback] = useState("");
+  const [showRaw, setShowRaw] = useState(false);
 
   const lookup = () => {
     setError("");
@@ -387,16 +404,44 @@ export function MacAddressLookup() {
       )}
 
       {result && (
-        <div
-          className="relative group rounded-lg border border-surface-200 bg-surface-50 px-4 py-3 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
-          onClick={() => copyValue(result.vendor)}
-        >
-          <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">MAC Address</span>
-          <span className="block text-sm font-mono text-surface-900 dark:text-dark-text mb-2">{result.mac}</span>
-          <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">Vendor / Manufacturer</span>
-          <span className="block text-lg font-semibold text-brand-600 dark:text-brand-400">{result.vendor}</span>
-          <span className="block text-[10px] text-surface-400 dark:text-dark-muted mt-1">OUI Prefix: {result.prefix}</span>
-          <span className="absolute top-2 right-2 text-[9px] text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">copy</span>
+        <div className="space-y-3">
+          <div
+            className="relative group rounded-lg border border-surface-200 bg-surface-50 px-4 py-3 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
+            onClick={() => copyValue(result.vendor)}
+          >
+            <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">MAC Address</span>
+            <span className="block text-sm font-mono text-surface-900 dark:text-dark-text mb-2">{result.mac}</span>
+            <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">Vendor / Manufacturer</span>
+            <span className="block text-lg font-semibold text-brand-600 dark:text-brand-400">{result.vendor}</span>
+            <span className="block text-[10px] text-surface-400 dark:text-dark-muted mt-1">OUI Prefix: {result.prefix}</span>
+            <span className="absolute top-2 right-2 text-[9px] text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">copy</span>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => copyValue(result.mac)} className="text-xs text-brand-500 hover:text-brand-600">Copy MAC</button>
+            <button onClick={() => copyValue(result.vendor)} className="text-xs text-brand-500 hover:text-brand-600">Copy Vendor</button>
+            <button onClick={() => setShowRaw(!showRaw)} className="text-xs text-surface-500 hover:text-surface-700 dark:text-dark-muted dark:hover:text-dark-text">
+              {showRaw ? "Hide details" : "Show details"}
+            </button>
+          </div>
+
+          {showRaw && (
+            <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface space-y-2 text-xs">
+              <div className="grid grid-cols-2 gap-2 text-surface-600 dark:text-dark-muted">
+                <span>MAC Type:</span>
+                <span className="font-mono text-surface-900 dark:text-dark-text">{getMacType(result.mac)}</span>
+                <span>OUI Prefix:</span>
+                <span className="font-mono text-surface-900 dark:text-dark-text">{result.prefix}</span>
+                <span>Block Range:</span>
+                <span className="font-mono text-surface-900 dark:text-dark-text">{getBlockRange(result.prefix)}</span>
+                <span>Block Size:</span>
+                <span className="font-mono text-surface-900 dark:text-dark-text">1,048,576 addresses (2^20)</span>
+              </div>
+              <pre className="rounded bg-surface-50 p-2 font-mono text-[10px] overflow-auto max-h-40 whitespace-pre-wrap">
+                {JSON.stringify({ mac: result.mac, vendor: result.vendor, prefix: result.prefix, type: getMacType(result.mac), blockRange: getBlockRange(result.prefix) }, null, 2)}
+              </pre>
+            </div>
+          )}
         </div>
       )}
 

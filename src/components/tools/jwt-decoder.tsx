@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Shield, ShieldAlert, ShieldCheck, Download } from "lucide-react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 function base64UrlDecode(str: string): string {
   try {
@@ -304,39 +305,44 @@ export function JWTDecoder() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
-            <p className="text-xs font-medium text-surface-600 dark:text-dark-muted mb-2">Signature Verification</p>
-            <div className="flex gap-2">
-              <input type="text" value={secret} onChange={(e) => setSecret(e.target.value)} placeholder="Enter HMAC secret to verify..."
-                className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-              <button onClick={verifySig} disabled={!secret} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Verify</button>
-            </div>
-            {sigResult && (
-              <p className={`mt-1 text-xs flex items-center gap-1 ${sigResult === "match" ? "text-green-600 dark:text-green-400" : sigResult === "mismatch" ? "text-red-600 dark:text-red-400" : "text-yellow-600 dark:text-yellow-400"}`}>
-                {sigResult === "match" ? <CheckCircle size={12} /> : <AlertCircle size={12} />}
-                {sigResult === "match" ? "Signature matches" : sigResult === "mismatch" ? "Signature does not match" : "Unsupported algorithm (RS/ES/PS use public key crypto)"}
-              </p>
-            )}
-          </div>
+          <AdvancedOptions title="Advanced details" defaultOpen={false}>
+            <OptionGroup title="Signature Verification" description="Verify HMAC-signed tokens with a secret">
+              <OptionRow columns={1}>
+                <div className="flex gap-2">
+                  <input type="text" value={secret} onChange={(e) => setSecret(e.target.value)} placeholder="Enter HMAC secret to verify..."
+                    className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  <button onClick={verifySig} disabled={!secret} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Verify</button>
+                </div>
+                {sigResult && (
+                  <p className={`mt-1 text-xs flex items-center gap-1 ${sigResult === "match" ? "text-green-600 dark:text-green-400" : sigResult === "mismatch" ? "text-red-600 dark:text-red-400" : "text-yellow-600 dark:text-yellow-400"}`}>
+                    {sigResult === "match" ? <CheckCircle size={12} /> : <AlertCircle size={12} />}
+                    {sigResult === "match" ? "Signature matches" : sigResult === "mismatch" ? "Signature does not match" : "Unsupported algorithm (RS/ES/PS use public key crypto)"}
+                  </p>
+                )}
+              </OptionRow>
+            </OptionGroup>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs text-surface-500 dark:text-dark-muted">Algorithm</p>
-              <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{decoded.header.alg as string}</p>
-            </div>
-            <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs text-surface-500 dark:text-dark-muted">Token Size</p>
-              <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{tokenSize} B</p>
-            </div>
-            <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs text-surface-500 dark:text-dark-muted">Payload Size</p>
-              <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{new TextEncoder().encode(JSON.stringify(decoded.payload)).length} B</p>
-            </div>
-            <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-xs text-surface-500 dark:text-dark-muted">Claims</p>
-              <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{Object.keys(decoded.payload).length}</p>
-            </div>
-          </div>
+            <OptionGroup title="Token Statistics" description="Detailed token metrics">
+              <OptionRow columns={4}>
+                <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
+                  <p className="text-xs text-surface-500 dark:text-dark-muted">Algorithm</p>
+                  <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{decoded.header.alg as string}</p>
+                </div>
+                <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
+                  <p className="text-xs text-surface-500 dark:text-dark-muted">Token Size</p>
+                  <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{tokenSize} B</p>
+                </div>
+                <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
+                  <p className="text-xs text-surface-500 dark:text-dark-muted">Payload Size</p>
+                  <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{new TextEncoder().encode(JSON.stringify(decoded.payload)).length} B</p>
+                </div>
+                <div className="rounded border border-surface-200 bg-white px-3 py-2 text-center dark:border-dark-border dark:bg-dark-surface">
+                  <p className="text-xs text-surface-500 dark:text-dark-muted">Claims</p>
+                  <p className="text-sm font-bold text-surface-900 dark:text-dark-text">{Object.keys(decoded.payload).length}</p>
+                </div>
+              </OptionRow>
+            </OptionGroup>
+          </AdvancedOptions>
         </>
       )}
     </div>

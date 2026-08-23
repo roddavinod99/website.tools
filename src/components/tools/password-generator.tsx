@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
@@ -288,39 +289,50 @@ export function PasswordGenerator() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <label htmlFor="pwd-exclude-ambiguous" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="pwd-exclude-ambiguous" checked={excludeAmbiguous} onChange={(e) => setExcludeAmbiguous(e.target.checked)} className="accent-brand-500" />
-          Exclude Ambiguous (O/0/I/1/l/|/!)
-        </label>
-        <label htmlFor="pwd-exclude-similar" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="pwd-exclude-similar" checked={excludeSimilar} onChange={(e) => setExcludeSimilar(e.target.checked)} className="accent-brand-500" />
-          Exclude Similar (O/0/I/1/l/|)
-        </label>
-        <label htmlFor="pwd-no-dupes" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="pwd-no-dupes" checked={noDupes} onChange={(e) => setNoDupes(e.target.checked)} className="accent-brand-500" />
-          No Duplicate Chars
-        </label>
-        <label htmlFor="pwd-pronounceable" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="pwd-pronounceable" checked={pronounceable} onChange={(e) => { setPronounceable(e.target.checked); if (e.target.checked) setPinMode(false); }} className="accent-brand-500" />
-          Pronounceable
-        </label>
-        <label htmlFor="pwd-pin-mode" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="pwd-pin-mode" checked={pinMode} onChange={(e) => { setPinMode(e.target.checked); if (e.target.checked) { setPronounceable(false); if (length > 16) setLength(8); } }} className="accent-brand-500" />
-          PIN Mode
-        </label>
-      </div>
+      <AdvancedOptions title="Advanced options" defaultOpen={false}>
+        <OptionGroup title="Character Filtering" description="Refine which characters can appear in generated passwords">
+          <OptionRow columns={2}>
+            <label htmlFor="pwd-exclude-ambiguous" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="pwd-exclude-ambiguous" checked={excludeAmbiguous} onChange={(e) => setExcludeAmbiguous(e.target.checked)} className="accent-brand-500" />
+              Exclude Ambiguous (O/0/I/1/l/|/!)
+            </label>
+            <label htmlFor="pwd-exclude-similar" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="pwd-exclude-similar" checked={excludeSimilar} onChange={(e) => setExcludeSimilar(e.target.checked)} className="accent-brand-500" />
+              Exclude Similar (O/0/I/1/l/|)
+            </label>
+            <label htmlFor="pwd-no-dupes" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="pwd-no-dupes" checked={noDupes} onChange={(e) => setNoDupes(e.target.checked)} className="accent-brand-500" />
+              No Duplicate Chars
+            </label>
+          </OptionRow>
+        </OptionGroup>
 
-      <div>
-        <label htmlFor="pwd-custom-set" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Custom Character Set (overrides selections)</label>
-        <input
-          type="text" id="pwd-custom-set" value={customSet} onChange={(e) => setCustomSet(e.target.value)} placeholder="e.g. ABCabc123"
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
-        />
-        {charsetDisplay && !pronounceable && !pinMode && (
-          <p className="mt-1 text-xs text-surface-500 dark:text-dark-muted">Chars: {charsetSize} &mdash; {charsetDisplay.trim()}</p>
-        )}
-      </div>
+        <OptionGroup title="Generation Modes" description="Alternative password styles">
+          <OptionRow columns={2}>
+            <label htmlFor="pwd-pronounceable" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="pwd-pronounceable" checked={pronounceable} onChange={(e) => { setPronounceable(e.target.checked); if (e.target.checked) setPinMode(false); }} className="accent-brand-500" />
+              Pronounceable
+            </label>
+            <label htmlFor="pwd-pin-mode" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
+              <input type="checkbox" id="pwd-pin-mode" checked={pinMode} onChange={(e) => { setPinMode(e.target.checked); if (e.target.checked) { setPronounceable(false); if (length > 16) setLength(8); } }} className="accent-brand-500" />
+              PIN Mode
+            </label>
+          </OptionRow>
+        </OptionGroup>
+
+        <OptionGroup title="Custom Charset" description="Define your own character set (overrides all other selections)">
+          <OptionRow columns={1}>
+            <label htmlFor="pwd-custom-set" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Custom Character Set</label>
+            <input
+              type="text" id="pwd-custom-set" value={customSet} onChange={(e) => setCustomSet(e.target.value)} placeholder="e.g. ABCabc123"
+              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+            />
+            {charsetDisplay && !pronounceable && !pinMode && (
+              <p className="mt-1 text-xs text-surface-500 dark:text-dark-muted">Chars: {charsetSize} &mdash; {charsetDisplay.trim()}</p>
+            )}
+          </OptionRow>
+        </OptionGroup>
+      </AdvancedOptions>
 
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
