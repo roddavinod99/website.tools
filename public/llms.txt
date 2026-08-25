@@ -1,20 +1,13 @@
 # DevStackIO Tools — Free Online Developer Tools
 
-> The internet's best collection of free online tools for developers. Everything runs in your browser — nothing is uploaded to any server. No registration, no login, no rate limits. 100% free forever.
-
-## URL
-https://tools.devstackio.com
-
-## Parent Website
-https://www.devstackio.com
+> The internet's best collection of free online developer tools. Tool inputs are processed in your browser and never uploaded or stored; no registration, no login, no rate limits. 100% free forever.
 
 DevStackIO Tools is the official tools website of the DevStackIO developer platform.
 
-## Sitemap
-https://tools.devstackio.com/sitemap.xml
+- [Sitemap](https://tools.devstackio.com/sitemap.xml): full URL index for crawlers
+- [Main site](https://www.devstackio.com): parent DevStackIO platform
 
-## What
-DevStackIO Tools provides 140+ free online developer tools across 7 categories, all processing data entirely in the browser (client-side). No server uploads, no data persistence, no tracking. Fully responsive with dark mode support. This tools website is part of the DevStackIO platform.
+DevStackIO Tools provides 140+ free online developer tools across 7 categories, all processing data entirely in the browser (client-side). Tool inputs are never uploaded or persisted; optional consent-gated analytics exist. Fully responsive with dark mode support.
 
 ## Categories
 

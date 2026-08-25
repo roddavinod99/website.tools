@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 type Mode = "encode" | "decode";
@@ -131,12 +131,12 @@ export function Base64Tool() {
     URL.revokeObjectURL(url);
   };
 
-  const handleFileDrop = useCallback((e: React.DragEvent) => {
+  const handleFileDrop = useCallback(async (e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (!file) return;
-    const sizeCheck = validateFileSize(file);
-    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+    const validation = await validateFileUpload(file);
+    if (!validation.valid) { setError(validation.error!); return; }
     const reader = new FileReader();
     reader.onload = () => {
       const result = reader.result as string;
@@ -147,15 +147,15 @@ export function Base64Tool() {
     reader.readAsDataURL(file);
   }, []);
 
-  const handleFileUpload = useCallback(() => {
+  const handleFileUpload = useCallback(async () => {
     const inputEl = document.createElement("input");
     inputEl.type = "file";
     inputEl.accept = ".txt,.json,.csv,.xml,text/plain,application/json,text/csv,text/xml";
-    inputEl.onchange = () => {
+    inputEl.onchange = async () => {
       const file = inputEl.files?.[0];
       if (!file) return;
-      const sizeCheck = validateFileSize(file);
-      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+      const validation = await validateFileUpload(file);
+      if (!validation.valid) { setError(validation.error!); return; }
       const reader = new FileReader();
       reader.onload = () => {
         const content = reader.result as string;

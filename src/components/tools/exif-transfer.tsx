@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 interface ExifData {
   Make?: string; Model?: string; Lens?: string; Software?: string;
@@ -125,8 +125,8 @@ export function ExifTransfer() {
 
   const processFile = useCallback(async (file: File, type: "source" | "target") => {
     setError(""); setSuccess("");
-    const sizeCheck = validateFileSize(file);
-    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+    const validation = await validateFileUpload(file);
+    if (!validation.valid) { setError(validation.error!); return; }
     const preview = URL.createObjectURL(file);
     const exif = await readExifBasic(file);
     const entry = { file, preview, exif, rawSize: file.size };

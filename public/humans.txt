@@ -1,7 +1,17 @@
-# DevStackIO Tools - Human-readable credits
-TEAM: DevStackIO Developers
-SITE: https://tools.devstackio.com
-CONTACT: contact@devstackio.com
-TECHNOLOGY: Next.js, TypeScript, TailwindCSS, Web Workers
-STANDARDS: HTML5, CSS3, ES2022, Schema.org JSON-LD
-LAST_UPDATED: 2026
+/* TEAM */
+Creator: DevStackIO Developers
+Contact: contact@devstackio.com [DevStackIO]
+Twitter: @devstackio
+From: Internet
+
+/* SITE */
+Site name: DevStackIO Tools
+Site URL: https://tools.devstackio.com
+Last update: 2026-08-25
+Standards: HTML5, CSS3, ES2022, Schema.org JSON-LD, WCAG 2.2 AA
+Components: Next.js (App Router), TypeScript, TailwindCSS, Web Workers, Rust WebAssembly
+Doctype: HTML5
+Language: English
+
+/* THANKS */
+Everyone who reports bugs and suggests tools via /feedback and /suggest.

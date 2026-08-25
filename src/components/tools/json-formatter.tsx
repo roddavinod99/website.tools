@@ -319,6 +319,7 @@ export function JSONFormatter() {
           )}
           <pre
             ref={outputRef}
+            data-testid="tool-output"
             className={`rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg overflow-auto max-h-96 ${wordWrap ? "whitespace-pre-wrap" : "whitespace-pre"}`}
           >
             {tokens.map((line, li) => (

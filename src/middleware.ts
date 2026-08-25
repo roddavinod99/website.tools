@@ -16,6 +16,7 @@ interface CspPolicyInputs {
   frameSources: string[];
   wasmRoutes: string[];
   evalRoutes: string[];
+  runtimeScriptHashes: string[];
 }
 
 interface CspRouteEntry {
@@ -47,6 +48,11 @@ const FALLBACK_POLICY_INPUTS: CspPolicyInputs = {
   frameSources: [],
   wasmRoutes: [],
   evalRoutes: [],
+  runtimeScriptHashes: [
+    "'sha256-kRLMUXmOCgzW0BvF6scLq7v833betJPetxeEdIJQY6o='",
+    "'sha256-sVHHUBEAsEdwrK4HuoxH+nrITuR2Sp1IGK69vwoVAwU='",
+    "'sha256-YLw1nX2ugL49IzuzLvgrgG+JoZre2Z59qpDxGBbEbSk='",
+  ],
 };
 
 function loadCspMap(): {
@@ -78,27 +84,21 @@ function loadCspMap(): {
   }
 }
 
-// Per-request nonce for script-src. Next.js reads the CSP header from the
-// request (forwarded below) and automatically applies this nonce to every
-// <script> tag it renders — including the streamed RSC bootstrap/payload
-// scripts (self.__next_f.push, $RC/$RB runtime) whose content varies per
-// request, which a build-time hash allowlist can never cover.
-function generateNonce(): string {
-  const bytes = new Uint8Array(16);
-  crypto.getRandomValues(bytes);
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary);
-}
-
+// Builds the per-route hash-based CSP from data/csp-hashes.json (generated at
+// build time by scripts/postbuild-csp.mjs). Uses hashes — not nonces — because
+// this app relies on static/ISR pages, and the official Next.js docs state:
+// "When Content Security Policy (CSP) nonces are used, all pages in your Next.js
+// application must be dynamically rendered. ... Incremental Static Regeneration
+// (ISR) [is] disabled." ISR is incompatible with nonce-based CSP because
+// pre-rendered HTML cannot carry per-request nonces.
 function normalizeRoutePath(pathname: string): string {
   return pathname.split("?")[0].replace(/\/$/, "") || "/";
 }
 
-// Builds a nonce-based CSP. Build-time inline-script hashes are kept as an
-// additional allowlist layer; the nonce is what makes hydration work for
-// dynamically rendered responses.
-function buildNonceCsp(nonce: string, pathname: string): string {
+// Builds the hash-based CSP for a route. The script-src allowlist includes
+// 'self', all build-time inline-script hashes for the route, runtime hashes
+// from third-party scripts (GTM/GA/AdSense), and external script sources.
+function buildHashCsp(pathname: string): string {
   const map = loadCspMap();
   const normalized = normalizeRoutePath(pathname);
   const route = map?.perRoute[normalized];
@@ -106,8 +106,8 @@ function buildNonceCsp(nonce: string, pathname: string): string {
 
   const scriptSources = [
     "'self'",
-    `'nonce-${nonce}'`,
     ...(route?.scripts ?? []),
+    ...(inputs.runtimeScriptHashes ?? []),
     ...inputs.externalScriptSources,
   ];
   if (inputs.wasmRoutes.includes(normalized)) scriptSources.push("'wasm-unsafe-eval'");
@@ -115,8 +115,8 @@ function buildNonceCsp(nonce: string, pathname: string): string {
 
   // Styles: React 19 hoists/injects <style> elements at runtime whose content
   // cannot be pre-hashed, so style-src allows inline styles. Script execution
-  // remains strictly locked down via nonce + hashes; CSS injection cannot run
-  // JavaScript, and exfiltration channels are covered by img/connect-src.
+  // remains strictly hash-locked; CSS injection cannot run JavaScript, and
+  // exfiltration channels are covered by img/connect-src.
   const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
   return [
@@ -323,23 +323,19 @@ export async function middleware(request: NextRequest) {
 
   // Add CSP header (skips API routes and static assets via matcher).
   // Skipped in development: Turbopack dev injects inline scripts with unstable
-  // content and the nonce would not cover scripts rendered before middleware
-  // state is warm, so CSP is only enforced for production builds.
+  // content; hash-based CSP is only enforced for production builds.
   if (process.env.NODE_ENV !== "development" && !path.startsWith("/api/")) {
-    const nonce = generateNonce();
-    const csp = buildNonceCsp(nonce, path);
+    const csp = buildHashCsp(path);
 
-    // Forward the CSP header (and a plain nonce) on the REQUEST so Next.js SSR
-    // picks it up and stamps the nonce onto every script it renders. This is
-    // the officially supported Next.js CSP pattern.
+    // Forward the CSP header on the REQUEST so Next.js can use it for SSR
+    // hydration if needed. Hash-based CSP works with static/ISR pages.
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-nonce", nonce);
     requestHeaders.set("content-security-policy", csp);
 
-    const nonceResponse = NextResponse.next({ request: { headers: requestHeaders } });
-    nonceResponse.headers.set("Content-Security-Policy", csp);
-    addSecurityHeaders(nonceResponse);
-    return nonceResponse;
+    const cspResponse = NextResponse.next({ request: { headers: requestHeaders } });
+    cspResponse.headers.set("Content-Security-Policy", csp);
+    addSecurityHeaders(cspResponse);
+    return cspResponse;
   }
 
   return response;

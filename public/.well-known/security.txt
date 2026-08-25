@@ -4,7 +4,8 @@ Contact: https://github.com/roddavinod99
 
 # Disclosure Policy
 Preferred-Languages: en
-Policy: https://tools.devstackio.com/.well-known/security.txt
+Policy: https://tools.devstackio.com/security
+Canonical: https://tools.devstackio.com/.well-known/security.txt
 
 # Timestamp
 Expires: 2027-08-20T00:00:00.000Z

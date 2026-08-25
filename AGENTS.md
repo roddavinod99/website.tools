@@ -251,6 +251,21 @@ leaves the page.
 - **Tracking claim**: Footer badges must reflect actual behavior. Use "Your Data Stays Local" (tools process data client-side) rather than absolute "No Tracking" when consent-gated analytics/ads exist.
 - **Visitor counter**: Hide public display until a meaningful threshold (e.g., 10,000 visits) to avoid credibility backfire from low numbers. The counter API continues running for internal analytics.
 
+## GDPR Compliance (Controller Checklist)
+
+- **Lawful basis & transparency**: Audit what data is processed, who has access; document legal justification per Article 6 (consent requires easy revocation); privacy policy must be concise, transparent, plain-language.
+- **Data security**: Privacy by design & default (Art. 25); encrypt/pseudonymize/anonymize where feasible (Art. 32); internal security policy & staff training; DPIA when high risk (Art. 35); breach notification to authority within **72h** (Art. 33), subjects without undue delay (Art. 34).
+- **Accountability & governance**: Designated compliance owner; **Data Processing Agreement with every third-party processor** (analytics, email, cloud); EU representative if outside EU (Art. 27); DPO if required.
+- **Privacy rights** (~1 month to fulfill): Access (Art. 15), Rectification (16), Erasure/"right to be forgotten" (17), Restriction (18), Portability (20), Objection — direct marketing must stop immediately (21), Automated decision-making safeguards (22).
+- **Project compliance**: `/privacy`, `/cookie-policy`, `/dpa` pages exist; CookieConsent gates analytics; tools process client-side. **VERIFY** `/privacy` covers: purposes, legal basis, retention periods, user-rights how-to (access/erasure contact path), GA/IP handling, breach-contact. DPA page should reference processors list (GA, AdSense/Google ad serving, hosting).
+
+## CCPA/CPRA Compliance
+
+- **Consumer rights**: Know (categories + specifics, 2 free requests/12mo, respond ≤45 days), Delete (with exceptions, ≤45 days), Opt-out of sale/sharing (sharing = cross-context behavioral advertising; honor **GPC** global privacy control signal as valid opt-out; respond ≤15 business days; no account creation required; re-ask opt-in only after 12 months), Correct inaccurate PI (CPRA), Limit use/disclosure of sensitive PI (SSN, financial acct, precise geo, genetic/biometric, health, orientation, beliefs, union membership), Non-discrimination for exercising rights.
+- **Applicability**: For-profit doing CA business with Revenue > $25M, OR PI of ≥100k CA residents/households, OR ≥50% revenue from selling PI.
+- **Required notices**: Notice at collection at/before collection (categories + purposes + Do-Not-Sell link if selling + privacy-policy link); privacy policy must describe all rights & how to exercise.
+- **Project compliance**: Site is privacy-first (tools client-side; server stores only contact/submission text + hashed IP visit counts → likely below 100k threshold). **VERIFY** `/privacy` states: no sale/sharing of PI (so no DNSH link needed), categories collected (contact form fields, hashed visit counter), retention, and how to exercise know/delete/correct via contact email. If AdSense personalization counts as "sharing" for CA users, ensure consent banner blocks ads personalization pre-consent (consent-init.js) — keep GPC handling on roadmap.
+
 ------------------------------------------------------------------------
 
 # Security Requirements
@@ -470,7 +485,7 @@ Every page must include:
 -   title (unique, ≤60 chars)
 -   description (unique, ≤160 chars)
 -   canonical URL (absolute, self-referencing)
--   OpenGraph: og:title, og:description, og:type, og:url, og:image
+-   OpenGraph: og:title, og:description, og:type, og:url, og:image, **og:image:alt** (required when og:image present)
 -   Twitter Cards: twitter:card, twitter:title, twitter:description, twitter:image
 -   JSON-LD structured data (see Structured Data Templates section)
 
@@ -479,22 +494,23 @@ Structured data requirements by page type:
 -   Homepage: WebSite + Organization + SearchAction + FAQPage (if FAQ exists)
 -   Tool pages: SoftwareApplication + BreadcrumbList + FAQPage (if FAQ exists) + HowTo (if guide exists)
 -   Category/Listing pages: CollectionPage + BreadcrumbList + ItemList
--   Learning/Article pages: TechArticle/BlogPosting + BreadcrumbList + Organization
+-   Learning/Article pages: TechArticle/BlogPosting + BreadcrumbList + Organization — **use `og:type="article"` with `article:published_time` and `article:modified_time`**
 -   All pages: Organization (in footer or global) — **emit once globally in `layout.tsx` with `@id: ".../#organization"`; pages must reference it by `@id`, never re-declare**
 
 Sitemap requirements:
 
 -   Auto-generated from tool registry at build time
 -   Include all tool pages, category pages, static pages
--   lastmod from git commit date or content hash
+-   **lastmod from git commit date or content hash — REQUIRED for tool pages + category pages** (W3C Datetime format: YYYY-MM-DD or full ISO 8601; must be page modification date, NOT sitemap generation date)
 -   Submit to Google Search Console + Bing Webmaster + IndexNow
+-   **IndexNow**: Automate submission on content add/update/delete. Requires: key file `{key}.txt` at site root (8–128 hex chars), batch POST to `https://api.indexnow.org/indexnow` with `host`, `key`, `urlList` (≤10,000 URLs). See `crawl/seo/indexnow.md` for implementation plan.
 
 Robots.txt requirements:
 
 -   Allow all tool pages, category pages, learning resources
 -   Disallow: /api/*, /private/*, /admin/*, /contact/success
 -   Reference sitemap.xml location
--   Crawl-delay: 10 (if needed)
+-   **Crawl-delay: 10** (optional; NOT part of RFC 9309 — Google ignores it; omitting is fine)
 
 Core Web Vitals targets (enforced in CI):
 
@@ -502,6 +518,27 @@ Core Web Vitals targets (enforced in CI):
 -   INP ≤ 200ms
 -   CLS ≤ 0.1
 -   Lighthouse Performance ≥ 90
+
+### Additional SEO File Requirements
+
+#### security.txt (RFC 9116)
+- **Required fields**: `Contact` (≥1, must start with `mailto:`/`tel:`/`https://`) and single `Expires` (ISO 8601 future date)
+- **Location**: `/.well-known/security.txt` (preferred) + `/security.txt` (fallback)
+- **VERIFY**: Content has required Contact and Expires; add `Canonical` + `Policy` linking `/security` page
+
+#### llms.txt (llmstxt.org v2)
+- **Format**: H1 project name → blockquote summary → zero+ free markdown → zero+ H2 sections with linked lists (`- [name](url): notes`) → final `## Optional` section
+- **VERIFY**: Content follows format; served as `text/plain` with cache headers
+
+#### humans.txt (humanstxt.org)
+- **Location**: Site root (`/humans.txt`)
+- **Format**: Free-form; de-facto sections `/* TEAM */`, `/* SITE */`
+- **VERIFY**: Content exists & follows convention; add `<link rel="author" href="/humans.txt">` to layout head
+
+#### Web Manifest (MDN)
+- **Required members for PWA**: `name`, `short_name`, `description`, `icons` (192×192 + 512×512 PNG), `start_url`, `display`, `theme_color`, `background_color`, `categories`, `shortcuts`
+- **Optional**: `id`
+- **VERIFY**: All members present in `src/app/manifest.ts` output
 
 -----------------------------------------------------------------------
 
@@ -1969,8 +2006,11 @@ considered finished.
 
 # Authoritative References
 
+AI should use these references to verify best practices, standards, and conventions. Always check these sources before implementing a feature or making a change. Avoid relying on memory or assumptions. Always verify against the official documentation. Always check for the latest version of the documentation. Always check for browser compatibility and support before using a feature. Always check for security implications before implementing a feature. Always check for accessibility implications before implementing a feature. Always check for performance implications before implementing a feature. Always check for SEO implications before implementing a feature.
+
 ## Web Standards
 
+-   <https://devdocs.io/>
 -   <https://developer.mozilla.org/>
 -   <https://html.spec.whatwg.org/>
 -   <https://tc39.es/ecma262/>

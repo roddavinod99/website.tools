@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 interface ExifData {
   Make?: string; Model?: string; Lens?: string; Software?: string;
@@ -166,8 +166,8 @@ export function ExifReader() {
 
   const processFile = useCallback(async (file: File) => {
     if (!file.type.startsWith("image/")) { setError("Not an image"); return; }
-    const sizeCheck = validateFileSize(file);
-    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+    const validation = await validateFileUpload(file);
+    if (!validation.valid) { setError(validation.error!); return; }
     setError("");
     setWarning("");
 

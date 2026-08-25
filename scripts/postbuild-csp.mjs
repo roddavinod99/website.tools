@@ -18,6 +18,7 @@ const SERVER_APP = join(ROOT, ".next", "server", "app");
 const OUT_JSON = join(ROOT, "data", "csp-hashes.json");
 const OUT_NGINX = join(ROOT, "nginx", "csp.generated.conf");
 
+// External script sources allowed in script-src (third-party domains)
 const EXTERNAL_SCRIPT_SOURCES = [
   "https://www.googletagmanager.com",
   "https://www.google-analytics.com",
@@ -27,6 +28,16 @@ const EXTERNAL_SCRIPT_SOURCES = [
   "https://ep1.adtrafficquality.google",
   "https://ep2.adtrafficquality.google",
   "https://tpc.googlesyndication.com",
+];
+
+// Runtime script hashes: hashes of inline scripts injected by third-party
+// scripts (GTM, GA, AdSense) at runtime. These are NOT present in the
+// statically rendered HTML at build time, so they must be explicitly allowed.
+// Values obtained from CSP violation reports on production.
+const RUNTIME_SCRIPT_HASHES = [
+  "'sha256-kRLMUXmOCgzW0BvF6scLq7v833betJPetxeEdIJQY6o='",
+  "'sha256-sVHHUBEAsEdwrK4HuoxH+nrITuR2Sp1IGK69vwoVAwU='",
+  "'sha256-YLw1nX2ugL49IzuzLvgrgG+JoZre2Z59qpDxGBbEbSk='",
 ];
 
 const IMG_SOURCES = [
@@ -114,13 +125,15 @@ const EVAL_ROUTES = new Set([
 ]);
 
 function buildCsp(scriptHashes, styleHashes, includeWasm, includeEval) {
-  const scriptSources = ["'self'", ...scriptHashes];
+  const scriptSources = ["'self'", "'strict-dynamic'", ...scriptHashes, ...RUNTIME_SCRIPT_HASHES];
   if (includeWasm) scriptSources.push("'wasm-unsafe-eval'");
   if (includeEval) scriptSources.push("'unsafe-eval'");
   scriptSources.push(...EXTERNAL_SCRIPT_SOURCES);
 
   // Inline styles are allowed (React 19 injects runtime <style> elements that
   // cannot be pre-hashed); script-src remains strictly hash/nonce-locked.
+  // 'strict-dynamic' allows nonce-validated scripts to load additional scripts
+  // (e.g., Next.js RSC payload) without requiring their hashes in the policy.
   const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
   return [
@@ -222,6 +235,7 @@ writeFileSync(
         frameSources: FRAME_SOURCES,
         wasmRoutes: [...WASM_ROUTES].sort(),
         evalRoutes: [...EVAL_ROUTES].sort(),
+        runtimeScriptHashes: RUNTIME_SCRIPT_HASHES,
       },
       defaultCsp,
       perRoute,

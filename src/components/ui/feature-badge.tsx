@@ -114,18 +114,22 @@ export function FeatureBadgesGroup({
   return (
     <div className="flex flex-wrap gap-2" role="list" aria-label="Key features">
       {visible.map((feature, i) => (
-        <FeatureBadge key={i} feature={feature} variant={variant} size={size} withIcon />
+        <div key={i} role="listitem">
+          <FeatureBadge feature={feature} variant={variant} size={size} withIcon />
+        </div>
       ))}
       {hiddenCount > 0 && onShowMore && (
-        <button
-          type="button"
-          onClick={onShowMore}
-          className="inline-flex items-center gap-1 rounded-full border border-surface-200 bg-white px-2.5 py-1 text-[11px] font-medium text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border transition-colors"
-          aria-label={`${showMoreLabel} (${hiddenCount} more features)`}
-        >
-          <HelpCircle className="h-3 w-3" aria-hidden="true" />
-          +{hiddenCount}
-        </button>
+        <div role="listitem">
+          <button
+            type="button"
+            onClick={onShowMore}
+            className="inline-flex items-center gap-1 rounded-full border border-surface-200 bg-white px-2.5 py-1 text-[11px] font-medium text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border transition-colors"
+            aria-label={`${showMoreLabel} (${hiddenCount} more features)`}
+          >
+            <HelpCircle className="h-3 w-3" aria-hidden="true" />
+            +{hiddenCount}
+          </button>
+        </div>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 type GeneratorMode = "image" | "text";
 type BorderRadiusOption = "square" | "rounded" | "circle";
@@ -263,15 +263,15 @@ export function FaviconGenerator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = useCallback((file: File | null) => {
+  const handleImageUpload = useCallback(async (file: File | null) => {
     if (!file) return;
     const validTypes = ["image/png", "image/jpeg", "image/webp", "image/svg+xml"];
     if (!validTypes.includes(file.type)) {
       setError("Please upload PNG, JPG, WebP, or SVG (max 10MB)");
       return;
     }
-    const sizeCheck = validateFileSize(file, 10 * 1024 * 1024);
-    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+    const validation = await validateFileUpload(file, { maxFileSize: 10 * 1024 * 1024 });
+    if (!validation.valid) { setError(validation.error!); return; }
     setError("");
     const url = URL.createObjectURL(file);
     setImageUrl(url);

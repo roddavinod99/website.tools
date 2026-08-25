@@ -3,6 +3,7 @@ import { allTools, categories, siteConfig, learningTopics } from "@/lib/constant
 import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";
+import { TOOL_LASTMOD } from "@/lib/seo/__generated__/tool-lastmod";
 
 export const revalidate = 86400;
 
@@ -68,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const toolPages: MetadataRoute.Sitemap = allTools
     .filter((tool) => !tool.noindex)
-    .map((tool) => entry(`${BASE}/tools/${tool.slug}`));
+    .map((tool) => entry(`${BASE}/tools/${tool.slug}`, dateFrom(TOOL_LASTMOD[tool.slug])));
 
   const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) =>
     entry(`${BASE}/guides/${topic.slug}`, new Date(topic.modified))

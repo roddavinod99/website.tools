@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { Copy, Check, Download, Upload, X } from "lucide-react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 import { tryWasm } from "@/lib/wasm/with-fallback";
 import { sha224BytesWasm, sha224HashWasm } from "@/lib/wasm/wasm-wrapper";
 import { sha224Hex } from "@/lib/crypto-hash";
@@ -78,13 +78,13 @@ export function FileChecksum() {
     setSelectedAlgos((prev) => prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]);
   };
 
-  const handleFiles = useCallback((fileList: FileList | null) => {
+  const handleFiles = useCallback(async (fileList: FileList | null) => {
     if (!fileList) return;
     const validFiles: File[] = [];
     for (const file of Array.from(fileList)) {
-      const sizeCheck = validateFileSize(file, 25 * 1024 * 1024);
-      if (!sizeCheck.valid) {
-        alert(`${file.name}: ${sizeCheck.error}`);
+      const validation = await validateFileUpload(file, { maxFileSize: 25 * 1024 * 1024 });
+      if (!validation.valid) {
+        alert(`${file.name}: ${validation.error}`);
         continue;
       }
       validFiles.push(file);

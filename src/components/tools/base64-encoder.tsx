@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 type CharEncoding = "utf-8" | "ascii" | "utf-16le" | "utf-16be";
 
@@ -59,11 +59,11 @@ export function Base64Encoder() {
   const handleFileUpload = () => {
     const el = document.createElement("input");
     el.type = "file";
-    el.onchange = () => {
+    el.onchange = async () => {
       const file = el.files?.[0];
       if (!file) return;
-      const sizeCheck = validateFileSize(file);
-      if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+      const validation = await validateFileUpload(file);
+      if (!validation.valid) { setError(validation.error!); return; }
       const reader = new FileReader();
       reader.onload = () => setInput(reader.result as string);
       reader.readAsText(file);

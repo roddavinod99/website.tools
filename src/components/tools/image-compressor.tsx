@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { detectDpiFromBuffer, setJpegDpi, buildZip } from "@/lib/image-utils";
 import { randomUUID } from "@/lib/web-crypto";
+import { validateFileUpload } from "@/lib/file-security";
 
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
@@ -142,6 +143,11 @@ export function ImageCompressor() {
     const newEntries: ImageEntry[] = [];
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
+      const validation = await validateFileUpload(file);
+      if (!validation.valid) {
+        setError(validation.error || "Invalid file");
+        continue;
+      }
       if (!file.type.match(/^image\/(jpeg|png|webp)$/)) continue;
       if (totalSize + file.size > MAX_TOTAL_SIZE) {
         setError("Total size exceeds 25MB limit");

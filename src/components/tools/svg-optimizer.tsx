@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useRef } from "react";
 import { sanitize } from "@/lib/sanitize";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 interface OptimizeOptions {
   removeXmlDecl: boolean;
@@ -281,12 +281,12 @@ export function SvgOptimizer() {
     setInput(text);
   }, []);
 
-  const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const sizeCheck = validateFileSize(file, 25 * 1024 * 1024);
-    if (!sizeCheck.valid) {
-      setFileError(sizeCheck.error || "File too large");
+    const validation = await validateFileUpload(file, { maxFileSize: 25 * 1024 * 1024 });
+    if (!validation.valid) {
+      setFileError(validation.error || "File too large");
       return;
     }
     setFileError("");

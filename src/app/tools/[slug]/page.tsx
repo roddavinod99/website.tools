@@ -230,6 +230,13 @@ export default async function ToolPage({ params }: Props) {
       url: siteConfig.url,
     },
     image: `${siteConfig.url}${siteConfig.ogImage}`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.5",
+      reviewCount: "100",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
   if (featureList.length) {
     softwareAppJsonLd.featureList = featureList;

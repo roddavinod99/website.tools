@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import { Upload } from "lucide-react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 const safeSanitize = (html: string) => {
   try { return DOMPurify.sanitize(html); } catch { return html; }
@@ -88,12 +88,12 @@ export function SvgToCss() {
     a.click();
   };
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const sizeCheck = validateFileSize(file, 25 * 1024 * 1024);
-    if (!sizeCheck.valid) {
-      setFileError(sizeCheck.error || "File too large");
+    const validation = await validateFileUpload(file, { maxFileSize: 25 * 1024 * 1024 });
+    if (!validation.valid) {
+      setFileError(validation.error || "File too large");
       return;
     }
     setFileError("");

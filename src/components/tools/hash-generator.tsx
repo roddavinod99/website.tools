@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Copy, Download } from "lucide-react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 import { tryWasm } from "@/lib/wasm/with-fallback";
 import { md5HashWasm, sha224HashWasm } from "@/lib/wasm/wasm-wrapper";
 import {
@@ -283,9 +283,9 @@ export function HashGenerator() {
   };
 
   const hashFile = async (f: File) => {
-    const sizeCheck = validateFileSize(f, 25 * 1024 * 1024);
-    if (!sizeCheck.valid) {
-      alert(sizeCheck.error);
+    const validation = await validateFileUpload(f, { maxFileSize: 25 * 1024 * 1024 });
+    if (!validation.valid) {
+      alert(validation.error);
       return;
     }
     setFile(f);

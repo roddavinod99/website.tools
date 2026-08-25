@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef } from "react";
 import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Upload } from "lucide-react";
-import { validateFileSize } from "@/lib/file-security";
+import { validateFileUpload } from "@/lib/file-security";
 
 const EXAMPLE_PEM = `-----BEGIN CERTIFICATE-----
 MIIB9TCCAV+gAwIBAgIUQrKJ1xL0KHBm0BVJjG6BVOQt07MwDQYJKoZIhvcNAQEL
@@ -341,11 +341,11 @@ export function SslDecoder() {
 
   const loadExample = () => setInput(EXAMPLE_PEM);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    const sizeCheck = validateFileSize(f);
-    if (!sizeCheck.valid) { setError(sizeCheck.error!); return; }
+    const validation = await validateFileUpload(f);
+    if (!validation.valid) { setError(validation.error!); return; }
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") setInput(reader.result);

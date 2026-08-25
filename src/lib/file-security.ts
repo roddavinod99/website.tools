@@ -285,11 +285,15 @@ export async function detectZipBomb(file: File): Promise<FileSecurityResult> {
   return { valid: true };
 }
 
-export async function validateFileUpload(file: File): Promise<FileSecurityResult> {
+export async function validateFileUpload(
+  file: File,
+  options: { maxFileSize?: number } = {}
+): Promise<FileSecurityResult> {
+  const { maxFileSize = MAX_FILE_SIZE } = options;
   if (file.size === 0) {
     return { valid: false, error: "File is empty." };
   }
-  if (file.size > MAX_FILE_SIZE) {
+  if (file.size > maxFileSize) {
     return {
       valid: false,
       error: "File exceeds maximum allowed size.",
