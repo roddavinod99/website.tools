@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
 const OUI_DB: Record<string, string> = {
   "00000C": "Cisco", "000142": "Cisco", "00036B": "Cisco", "000496": "Cisco",

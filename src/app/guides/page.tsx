@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { learningTopics, siteConfig } from "@/lib/constants";
 import { GuidesList } from "./guides-list";
 

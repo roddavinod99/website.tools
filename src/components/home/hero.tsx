@@ -19,7 +19,7 @@ const trustPoints = [
   { label: "Fast", icon: Zap },
 ];
 
-export function Hero({ badgeText, toolCount, allTools }: { badgeText: string; toolCount: number; allTools: Tool[] }) {
+export function Hero({ badgeText, allTools }: { badgeText: string; allTools: Tool[] }) {
   const router = useRouter();
 
   return (

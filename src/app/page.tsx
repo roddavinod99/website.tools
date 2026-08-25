@@ -133,7 +133,6 @@ export default function Home() {
       />
       <Hero
         badgeText={`${TOOL_COUNT} free tools. No login required.`}
-        toolCount={TOOL_COUNT}
         allTools={allTools}
       />
       <AdBanner className="my-10" slot={adSlots.homeTop} />

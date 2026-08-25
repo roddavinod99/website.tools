@@ -49,14 +49,6 @@ export function CurrencyConverter() {
     return rates.rates[toCurrency] / rates.rates[fromCurrency];
   }, [rates, fromCurrency, toCurrency]);
 
-  const currencies = useMemo(() => {
-    if (!rates) return POPULAR_CURRENCIES;
-    const known = Object.keys(rates.rates).sort();
-    const union = [...POPULAR_CURRENCIES];
-    for (const c of known) if (!union.includes(c)) union.push(c);
-    return union;
-  }, [rates]);
-
   async function fetchRates(): Promise<RatesPayload> {
     const res = await fetch("/api/currency-rates");
     const json = await res.json().catch(() => null);

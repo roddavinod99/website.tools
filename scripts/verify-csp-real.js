@@ -1,6 +1,6 @@
-const { chromium } = require('playwright');
+import { chromium } from 'playwright';
 
-(async () => {
+async function main() {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
   
@@ -46,4 +46,6 @@ const { chromium } = require('playwright');
   }
   
   await browser.close();
-})();
+}
+
+main().catch(console.error);
