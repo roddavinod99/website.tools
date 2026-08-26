@@ -2,14 +2,14 @@
 
 import { ImageMinus, Crop, Image as ImageIcon, Square, ImagePlus, Info, FileCode, Droplets } from "lucide-react";
 import { ToolkitShell } from "./toolkit-shell";
-import { ImageCompressor } from "../tools/image-compressor";
-import { ImageResizer } from "../tools/image-resizer";
-import { SvgOptimizer } from "../tools/svg-optimizer";
-import { FaviconGenerator } from "../tools/favicon-generator";
-import { PlaceholderImage } from "../tools/placeholder-image";
-import { ExifReader } from "../tools/exif-reader";
-import { SvgToCss } from "../tools/svg-to-css";
-import { ColorEyedropper } from "../tools/color-eyedropper";
+import { ImageCompressor } from "@/components/tools/image/image-compressor";
+import { ImageResizer } from "@/components/tools/image/image-resizer";
+import { SvgOptimizer } from "@/components/tools/image/svg-optimizer";
+import { FaviconGenerator } from "@/components/tools/image/favicon-generator";
+import { PlaceholderImage } from "@/components/tools/generators/placeholder-image";
+import { ExifReader } from "@/components/tools/image/exif-reader";
+import { SvgToCss } from "@/components/tools/image/svg-to-css";
+import { ColorEyedropper } from "@/components/tools/image/color-eyedropper";
 
 export function ImageToolkit() {
   return (

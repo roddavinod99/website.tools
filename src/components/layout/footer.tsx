@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ExternalLink, ShieldCheck, EyeOff, Lock } from "lucide-react";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { VisitCounter } from "@/components/layout/visit-counter";
 
 function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {

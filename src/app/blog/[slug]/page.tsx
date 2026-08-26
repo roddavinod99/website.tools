@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { getBlogPost, getPostContent, getPostUrl, blogPosts } from "@/lib/blog";
 import { markdownToHtml } from "@/lib/markdown";
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
-import { learningTopics, siteConfig } from "@/lib/constants";
+import { learningTopics, siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Tutorials",

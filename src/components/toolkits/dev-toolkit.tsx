@@ -2,22 +2,22 @@
 
 import { ToolkitShell, type Tab } from "./toolkit-shell";
 import { Palette, Code, Database, FileX, FileType, FileText, Network, Globe, Monitor, SearchCode, Hash, FileStack, Clock, Binary, Ruler, ArrowUpDown } from "lucide-react";
-import { CSSFormatter } from "../tools/css-formatter";
-import { HTMLFormatter } from "../tools/html-formatter";
-import { SQLFormatter } from "../tools/sql-formatter";
-import { XMLFormatter } from "../tools/xml-formatter";
-import { YAMLFormatter } from "../tools/yaml-formatter";
-import { JSMinifier } from "../tools/js-minifier";
-import { IpCalculator } from "../tools/ip-calculator";
-import { UrlParser } from "../tools/url-parser";
-import { HttpHeaderParser } from "../tools/http-header-parser";
-import { UserAgentParser } from "../tools/user-agent-parser";
-import { RegexTester } from "../tools/regex-tester";
-import { MarkdownPreview } from "../tools/markdown-preview";
-import { TimestampConverter } from "../tools/timestamp-converter";
-import { ColorConverter } from "../tools/color-converter";
-import { UnitConverter } from "../tools/unit-converter";
-import { BaseConverter } from "../tools/base-converter";
+import { CSSFormatter } from "@/components/tools/formatters/css-formatter";
+import { HTMLFormatter } from "@/components/tools/formatters/html-formatter";
+import { SQLFormatter } from "@/components/tools/formatters/sql-formatter";
+import { XMLFormatter } from "@/components/tools/formatters/xml-formatter";
+import { YAMLFormatter } from "@/components/tools/formatters/yaml-formatter";
+import { JSMinifier } from "@/components/tools/formatters/js-minifier";
+import { IpCalculator } from "@/components/tools/network/ip-calculator";
+import { UrlParser } from "@/components/tools/utilities/url-parser";
+import { HttpHeaderParser } from "@/components/tools/network/http-header-parser";
+import { UserAgentParser } from "@/components/tools/network/user-agent-parser";
+import { RegexTester } from "@/components/tools/utilities/regex-tester";
+import { MarkdownPreview } from "@/components/tools/formatters/markdown-preview";
+import { TimestampConverter } from "@/components/tools/utilities/timestamp-converter";
+import { ColorConverter } from "@/components/tools/image/color-converter";
+import { UnitConverter } from "@/components/tools/converters/unit-converter";
+import { BaseConverter } from "@/components/tools/converters/base-converter";
 
 export function DevToolkit() {
   const tabs: Tab[] = [

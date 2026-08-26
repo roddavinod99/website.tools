@@ -1,19 +1,19 @@
 "use client";
 
 import { ToolkitShell } from "./toolkit-shell";
-import { JSONFormatter } from "../tools/json-formatter";
-import { JSONValidator } from "../tools/json-validator";
-import { JSONMinifier } from "../tools/json-minifier";
-import { JSONBeautifier } from "../tools/json-beautifier";
-import { JSONDiff } from "../tools/json-diff";
-import { JSONToCSV } from "../tools/json-to-csv";
-import { JSONToYAML } from "../tools/json-to-yaml";
-import { JsonToXml } from "../tools/json-to-xml";
-import { XmlToJson } from "../tools/xml-to-json";
-import { JsonToTypescript } from "../tools/json-to-typescript";
-import { JsonToGo } from "../tools/json-to-go";
-import { JsonSchemaGenerator } from "../tools/json-schema-generator";
-import { JsonPathFinder } from "../tools/json-path-finder";
+import { JSONFormatter } from "@/components/tools/formatters/json-formatter";
+import { JSONValidator } from "@/components/tools/json/json-validator";
+import { JSONMinifier } from "@/components/tools/json/json-minifier";
+import { JSONBeautifier } from "@/components/tools/json/json-beautifier";
+import { JSONDiff } from "@/components/tools/json/json-diff";
+import { JSONToCSV } from "@/components/tools/converters/json-to-csv";
+import { JSONToYAML } from "@/components/tools/formatters/json-to-yaml";
+import { JsonToXml } from "@/components/tools/json/json-to-xml";
+import { XmlToJson } from "@/components/tools/converters/xml-to-json";
+import { JsonToTypescript } from "@/components/tools/json/json-to-typescript";
+import { JsonToGo } from "@/components/tools/json/json-to-go";
+import { JsonSchemaGenerator } from "@/components/tools/json/json-schema-generator";
+import { JsonPathFinder } from "@/components/tools/json/json-path-finder";
 import {
   Braces,
   CircleCheck,

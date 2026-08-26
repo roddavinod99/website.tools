@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { blogPosts } from "@/lib/blog";
 
 function xmlEscape(str: string): string {

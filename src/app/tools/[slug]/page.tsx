@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { allTools, siteConfig, learningTopics, categories } from "@/lib/constants";
+import { allTools, siteConfig, learningTopics, categories } from "@/lib/data";
 import { getToolContent } from "@/lib/tool-content";
 import { parseFaqItem } from "@/lib/faq";
 import { featuresBySlug } from "@/lib/data/tool-features";
@@ -69,6 +69,12 @@ export default async function ToolPage({ params }: Props) {
   const sameCategory = relatedGroups.sameCategory;
   const relatedTools = relatedGroups.related;
   const popularTools = relatedGroups.popular;
+
+  // Build next-step suggestions (max 4)
+  const nextStepCandidates = [...sameCategory, ...relatedTools, ...popularTools]
+    .filter((t) => t.slug !== tool.slug)
+    .slice(0, 4);
+  const nextSteps = nextStepCandidates.map((t) => ({ tool: t.slug, label: t.name }));
 
   const toolGuideMap: Record<string, string> = {
     "json-formatter": "getting-started-json",
@@ -289,6 +295,7 @@ export default async function ToolPage({ params }: Props) {
         tocItems={tocItems}
         mainSiteUrl={siteConfig.mainSiteUrl}
         categorySlug={categorySlug}
+        nextSteps={nextSteps}
       />
     </>
   );

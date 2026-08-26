@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import { learningTopics } from "@/lib/constants";
+import { learningTopics } from "@/lib/data";
 
 export function LearningSection() {
   return (

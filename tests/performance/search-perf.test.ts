@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { searchTools } from "@/lib/search";
-import { allTools } from "@/lib/constants";
+import { allTools } from "@/lib/data";
 
 describe("Search Performance", () => {
   it("should search through all tools in under 50ms", () => {

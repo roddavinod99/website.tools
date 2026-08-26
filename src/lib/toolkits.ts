@@ -1,4 +1,4 @@
-import { allTools } from "./constants";
+import { allTools } from "./data";
 
 export interface Toolkit {
   name: string;

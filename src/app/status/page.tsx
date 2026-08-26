@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CircleCheck } from "lucide-react";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "System Status",

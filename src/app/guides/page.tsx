@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { learningTopics, siteConfig } from "@/lib/constants";
+import { learningTopics, siteConfig } from "@/lib/data";
 import { GuidesList } from "./guides-list";
 
 export const metadata: Metadata = {

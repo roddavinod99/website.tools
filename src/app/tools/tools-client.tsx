@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { Fragment } from "react";
-import { allTools, categories, siteConfig } from "@/lib/constants";
+import { allTools, categories, siteConfig } from "@/lib/data";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { getAllCapabilities } from "@/lib/data/tool-capabilities";
 import { ToolCard } from "@/components/ui/tool-card";

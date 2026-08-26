@@ -2,13 +2,13 @@
 
 import { Shield, Key, KeyRound, Smartphone, ShieldCheck, ShieldAlert, FileCheck } from "lucide-react";
 import { ToolkitShell } from "./toolkit-shell";
-import { HashGenerator } from "../tools/hash-generator";
-import { JWTDecoder } from "../tools/jwt-decoder";
-import { JwtGenerator } from "../tools/jwt-generator";
-import { TotpGenerator } from "../tools/totp-generator";
-import { SslDecoder } from "../tools/ssl-decoder";
-import { CspGenerator } from "../tools/csp-generator";
-import { FileChecksum } from "../tools/file-checksum";
+import { HashGenerator } from "@/components/tools/crypto/hash-generator";
+import { JWTDecoder } from "@/components/tools/crypto/jwt-decoder";
+import { JwtGenerator } from "@/components/tools/crypto/jwt-generator";
+import { TotpGenerator } from "@/components/tools/crypto/totp-generator";
+import { SslDecoder } from "@/components/tools/security/ssl-decoder";
+import { CspGenerator } from "@/components/tools/security/csp-generator";
+import { FileChecksum } from "@/components/tools/utilities/file-checksum";
 
 export function SecurityToolkit() {
   return (

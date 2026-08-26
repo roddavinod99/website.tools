@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig, TOOL_COUNT } from "@/lib/constants";
+import { siteConfig, TOOL_COUNT } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",

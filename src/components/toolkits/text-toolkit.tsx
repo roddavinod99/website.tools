@@ -2,14 +2,14 @@
 
 import { ToolkitShell, type Tab } from "./toolkit-shell";
 import { Hash, SearchCode, CaseSensitive, ArrowUpDown, GitCompare, Link, Ruler, Heading } from "lucide-react";
-import { WordCounter } from "../tools/word-counter";
-import { TextAnalyzer } from "../tools/text-analyzer";
-import { CaseConverter } from "../tools/case-converter";
-import { TextSorter } from "../tools/text-sorter";
-import { DiffChecker } from "../tools/diff-checker";
-import { SlugGenerator } from "../tools/slug-generator";
-import { StringLength } from "../tools/string-length";
-import { NumberToWords } from "../tools/number-to-words";
+import { WordCounter } from "@/components/tools/utilities/word-counter";
+import { TextAnalyzer } from "@/components/tools/text/text-analyzer";
+import { CaseConverter } from "@/components/tools/utilities/case-converter";
+import { TextSorter } from "@/components/tools/text-sorter";
+import { DiffChecker } from "@/components/tools/utilities/diff-checker";
+import { SlugGenerator } from "@/components/tools/utilities/slug-generator";
+import { StringLength } from "@/components/tools/utilities/string-length";
+import { NumberToWords } from "@/components/tools/utilities/number-to-words";
 
 export function TextToolkit() {
   const tabs: Tab[] = [

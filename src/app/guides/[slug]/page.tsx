@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ArrowRight, Zap } from "lucide-react";
-import { learningTopics, siteConfig, allTools } from "@/lib/constants";
+import { learningTopics, siteConfig, allTools } from "@/lib/data";
 import { getGuideContent, getGuideUrl } from "@/lib/guides";
 import { markdownToHtml } from "@/lib/markdown";
 

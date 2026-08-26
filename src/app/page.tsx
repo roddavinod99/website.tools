@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
-import { TOOL_COUNT, siteConfig, allTools, featuredTools, categories, faqItems } from "@/lib/constants";
+import { TOOL_COUNT, siteConfig, allTools, featuredTools, categories, faqItems } from "@/lib/data";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
 import { AdBanner } from "@/components/ads";

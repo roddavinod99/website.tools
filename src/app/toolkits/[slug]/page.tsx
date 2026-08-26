@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { toolkits, toolkitSlugs } from "@/lib/toolkits";
-import { allTools, siteConfig } from "@/lib/constants";
+import { allTools, siteConfig } from "@/lib/data";
 import { DynamicToolkitLoader, type ToolkitSlug } from "@/components/toolkits/dynamic-toolkit-loader";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/card";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {

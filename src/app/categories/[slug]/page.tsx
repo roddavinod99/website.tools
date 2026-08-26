@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { categories, allTools, siteConfig } from "@/lib/constants";
+import { categories, allTools, siteConfig } from "@/lib/data";
 import { categoryMetas } from "@/lib/data/categories";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";

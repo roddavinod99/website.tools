@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Roadmap",

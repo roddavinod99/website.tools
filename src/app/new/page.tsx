@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allTools, siteConfig } from "@/lib/constants";
+import { allTools, siteConfig } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { allTools, siteConfig, TOOL_COUNT } from "@/lib/constants";
+import { allTools, siteConfig, TOOL_COUNT } from "@/lib/data";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { Search } from "lucide-react";
 import { SearchResults } from "./search-results";

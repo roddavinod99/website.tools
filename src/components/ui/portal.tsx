@@ -26,7 +26,6 @@ export function Portal({ children, container }: PortalProps) {
       if (element.parentNode) {
         element.parentNode.removeChild(element);
       }
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(false);
     };
   }, [targetContainer]);

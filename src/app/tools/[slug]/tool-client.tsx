@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
-import { ShareButtons } from "@/components/tools/share-buttons";
-import { FinanceDisclaimer } from "@/components/tools/finance-disclaimer";
+import { ShareButtons } from "@/components/tools/utilities/share-buttons";
+import { FinanceDisclaimer } from "@/components/tools/finance/finance-disclaimer";
 import { InContentAd, SidebarAd } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
 import { TableOfContents, type TocItem } from "@/components/layout/table-of-contents";
@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FeatureBadgesGroup } from "@/components/ui/feature-badge";
+import { NextStepCTA } from "@/components/ui/next-step-cta";
 import Link from "next/link";
 import {
   CircleCheck, CircleAlert,
@@ -60,6 +61,7 @@ interface ToolClientProps {
   tocItems: TocItem[];
   mainSiteUrl: string;
   categorySlug?: string;
+  nextSteps?: { tool: string; label: string }[];
 }
 
 function generateTocItems(content: ToolContent): TocItem[] {
@@ -239,6 +241,7 @@ export function ToolClient({
   tocItems,
   mainSiteUrl,
   categorySlug,
+  nextSteps = [],
 }: ToolClientProps) {
   const [activeTocId, setActiveTocId] = useState("");
   const [copied, setCopied] = useState(false);
@@ -336,6 +339,11 @@ export function ToolClient({
               <div id={`tool-interface-${tool.slug}`} className="mt-5 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
                 <ToolInterface slug={tool.slug} name={tool.name} />
               </div>
+
+              {/* Next Step CTA */}
+              {nextSteps && nextSteps.length > 0 && (
+                <NextStepCTA suggestions={nextSteps} />
+              )}
 
               {/* Tool Actions - immediately accessible */}
               <ToolActions copied={copied} onCopy={() => handleCopy()} />

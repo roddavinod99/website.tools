@@ -9,7 +9,7 @@ const ALLOWED_TAGS = [
 ];
 
 const ALLOWED_ATTR = [
-  "href", "target", "rel", "alt", "class", "id",
+  "href", "target", "rel", "alt", "class", "id", "tabindex",
   "width", "height", "viewBox", "fill", "stroke", "stroke-width",
   "d", "cx", "cy", "r", "x", "y", "rx", "ry", "points", "xmlns",
   "preserveAspectRatio", "fill-rule", "clip-rule", "transform",

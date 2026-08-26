@@ -34,7 +34,7 @@ export function BenchmarkBuilder() {
     setResult(null);
 
     workerRef.current?.terminate();
-    const worker = new Worker(new URL("../../workers/benchmark.worker.ts", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("../../../workers/benchmark.worker.ts", import.meta.url), { type: "module" });
     workerRef.current = worker;
 
     worker.onmessage = (e) => {

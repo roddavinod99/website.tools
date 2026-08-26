@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ArrowRight } from "lucide-react";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { comparisons } from "@/lib/data/comparisons";
 
 export const metadata: Metadata = {

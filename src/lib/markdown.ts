@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypeHighlight from "rehype-highlight";
+import { sanitize } from "./sanitize";
 
 export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await unified()
@@ -16,5 +17,7 @@ export async function markdownToHtml(markdown: string): Promise<string> {
 
   const html = String(result);
 
-  return html.replace(/<pre(?=[\s>])(?![^>]*tabindex)([^>]*)>/g, '<pre tabindex="0"$1>');
+  const withTabindex = html.replace(/<pre(?=[\s>])(?![^>]*tabindex)([^>]*)>/g, '<pre tabindex="0"$1>');
+
+  return sanitize(withTabindex);
 }

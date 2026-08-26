@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { categories } from "@/lib/constants";
+import { categories } from "@/lib/data";
 import { CategoryCard } from "@/components/ui/category-card";
 
 const categoryBlurbs: Record<string, string> = {

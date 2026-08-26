@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allTools, categories, siteConfig, learningTopics } from "@/lib/constants";
+import { allTools, categories, siteConfig, learningTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
 import { ChevronRight } from "lucide-react";
 

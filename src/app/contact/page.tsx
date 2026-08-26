@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import { ContactForm } from "@/components/legal/contact-form";
 
 export const metadata: Metadata = {

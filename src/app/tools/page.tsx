@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Fragment } from "react";
-import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/constants";
+import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/data";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { ToolCard } from "@/components/ui/tool-card";
 import { Search } from "lucide-react";

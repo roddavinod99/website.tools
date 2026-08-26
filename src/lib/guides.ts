@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { siteConfig } from "./constants";
+import { siteConfig } from "./data";
 
 export async function getGuideContent(slug: string): Promise<string | null> {
   try {

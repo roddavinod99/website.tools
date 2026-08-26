@@ -2,14 +2,14 @@
 
 import { FingerprintPattern, Lock, QrCode, Barcode, Type, Shuffle, TextCursor, Clock } from "lucide-react";
 import { ToolkitShell, type Tab } from "./toolkit-shell";
-import { UUIDGenerator } from "../tools/uuid-generator";
-import { PasswordGenerator } from "../tools/password-generator";
-import { QRGenerator } from "../tools/qr-generator";
-import { BarcodeGenerator } from "../tools/barcode-generator";
-import { LoremIpsum } from "../tools/lorem-ipsum";
-import { RandomData } from "../tools/random-data";
-import { AsciiArt } from "../tools/ascii-art";
-import { CronExpression } from "../tools/cron-expression";
+import { UUIDGenerator } from "@/components/tools/utilities/uuid-generator";
+import { PasswordGenerator } from "@/components/tools/security/password-generator";
+import { QRGenerator } from "@/components/tools/generators/qr-generator";
+import { BarcodeGenerator } from "@/components/tools/generators/barcode-generator";
+import { LoremIpsum } from "@/components/tools/utilities/lorem-ipsum";
+import { RandomData } from "@/components/tools/generators/random-data";
+import { AsciiArt } from "@/components/tools/utilities/ascii-art";
+import { CronExpression } from "@/components/tools/utilities/cron-expression";
 
 const tabs: Tab[] = [
   { id: "uuid", label: "UUID", icon: <FingerprintPattern className="h-4 w-4" />, content: <UUIDGenerator /> },

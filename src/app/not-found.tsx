@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Search, ArrowRight, Home } from "lucide-react";
-import { categories, allTools } from "@/lib/constants";
+import { categories, allTools } from "@/lib/data";
 
 export default function NotFound() {
   const popularTools = [...allTools]

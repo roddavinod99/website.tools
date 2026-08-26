@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ArrowRight, Zap } from "lucide-react";
-import { siteConfig, allTools } from "@/lib/constants";
+import { siteConfig, allTools } from "@/lib/data";
 import { comparisons, getComparison } from "@/lib/data/comparisons";
 
 interface Props {

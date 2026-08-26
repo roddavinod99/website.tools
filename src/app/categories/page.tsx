@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { categories, siteConfig } from "@/lib/constants";
+import { categories, siteConfig } from "@/lib/data";
 import { CategoryCard } from "@/components/ui/category-card";
 
 export const metadata: Metadata = {

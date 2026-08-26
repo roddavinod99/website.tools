@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/data";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allTools, categories, siteConfig, learningTopics } from "@/lib/constants";
+import { allTools, categories, siteConfig, learningTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";

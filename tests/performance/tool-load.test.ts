@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 // These are lightweight structural tests that don't require a browser
 // They verify the tool registry is well-formed for performance
 
-import { allTools } from "@/lib/constants";
+import { allTools } from "@/lib/data";
 
 describe("Tool Registry Performance", () => {
   it("should have all tools with required fields", () => {
