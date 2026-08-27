@@ -38,6 +38,12 @@ const RUNTIME_SCRIPT_HASHES = [
   "'sha256-kRLMUXmOCgzW0BvF6scLq7v833betJPetxeEdIJQY6o='",
   "'sha256-sVHHUBEAsEdwrK4HuoxH+nrITuR2Sp1IGK69vwoVAwU='",
   "'sha256-YLw1nX2ugL49IzuzLvgrgG+JoZre2Z59qpDxGBbEbSk='",
+  // gtag config script (added from CSP violation report 2026-08-26)
+  "'sha256-mIxLHJJZwV5Uj4GMP38z9Br5vGZj+qwcn0DUYFgzZHs='",
+  // Cloudflare injected script (added from CSP violation report 2026-08-26)
+  "'sha256-pjeP+t0K56c51TgdsYubqJPcu5bIeYKoeMpDj9TGpX0='",
+  // Inline script from GTM/GA/AdSense (added from CSP violation report 2026-08-27)
+  "'sha256-DWzsM+N/Zd7sEGzcNSsij2K+quQ9bM+xuhPo65HrQNc='",
 ];
 
 const IMG_SOURCES = [
@@ -148,6 +154,9 @@ function buildCsp(scriptHashes, styleHashes, includeWasm, includeEval) {
     "form-action 'self'",
     "base-uri 'self'",
     "object-src 'none'",
+    "require-trusted-types-for 'script'",
+    "trusted-types dompurify",
+    "report-uri /api/csp-report",
   ].join("; ");
 }
 

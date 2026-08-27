@@ -7,6 +7,9 @@ import { AdBanner } from "@/components/ads";
 import { ToolsCta } from "@/components/home/tools-cta";
 import { adSlots } from "@/lib/data/ads";
 
+// Homepage is fully static - no dynamic data, no revalidation needed
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Free Developer Tools for Everyday Work",
   description:

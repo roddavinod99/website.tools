@@ -190,7 +190,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
           <Link
             href="/"
             className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text shrink-0"
-            aria-label="DevStack IO Tools — Home"
+            aria-label="DevStack IO Tools"
           >
             <Logo size="md" />
           </Link>

@@ -345,6 +345,25 @@
 - done
 - v1.1.2
 - v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+## [1.1.6] - 2026-08-27
+
+### Changed
+
+- v1.1.5
+- rose
+- v1.1.4
+- v1.1.3
+- done
+- v1.1.2
+- v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Fixed
+
+- update verify-csp.mjs for hash-based CSP
+- resolve GitHub Actions deploy failures
+- lint errors in guides-list, portal, tooltip, currency-converter
+- update OG preview card to 1200x630
+- update security tests for DENY frame option + add rate-limit bypass for contact test
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
 ## Template
 
 For future releases:

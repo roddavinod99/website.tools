@@ -3,6 +3,12 @@
 import { useRef, useEffect, useState } from "react";
 import type { AdPlaceholderProps } from "@/types";
 
+declare global {
+  interface Window {
+    __npa?: boolean;
+  }
+}
+
 const ADSENSE_PUBLISHER_ID = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "";
 const IS_DEV = process.env.NODE_ENV === "development";
 
@@ -243,6 +249,7 @@ export function AdContainer({
         data-ad-slot={finalSlot}
         data-ad-format={format}
         data-full-width-responsive={format === "horizontal" || format === "auto" || format === "fluid" ? "true" : "false"}
+        data-npa={(window as { __npa?: boolean }).__npa ? "1" : "0"}
       />
     </div>
   );

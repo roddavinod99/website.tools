@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,7 +27,21 @@
     "test:security": "playwright test tests/security.spec.ts",
     "test:seo": "playwright test tests/seo-structured-data.spec.ts",
     "analyze": "cross-env ANALYZE=true next build",
-    "clean": "node scripts/cleanup.mjs"
+    "clean": "node scripts/cleanup.mjs",
+    "csp:auto-update": "node scripts/csp-auto-update.mjs"
+  },
+  "browserslist": {
+    "production": [
+      "last 2 Chrome versions",
+      "last 2 Firefox versions",
+      "last 2 Safari versions",
+      "last 2 Edge versions"
+    ],
+    "development": [
+      "last 1 Chrome version",
+      "last 1 Firefox version",
+      "last 1 Safari version"
+    ]
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

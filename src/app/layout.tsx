@@ -16,8 +16,9 @@ import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 import { AdSenseScript } from "@/components/ads/adsense-script";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
+import "@/lib/trusted-types";
 
-export const revalidate = 3600;
+// Individual pages can override with export const dynamic = 'force-static' or revalidate
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 const HAS_GOOGLE_TAGS = !!(process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID);
@@ -155,14 +156,14 @@ export default function RootLayout({
           <Script
             id="consent-init"
             src="/consent-init.js"
-            strategy="beforeInteractive"
+            strategy="lazyOnload"
           />
         )}
         {GA_ID && (
           <Script
             id="analytics-init"
             src="/analytics-init.js"
-            strategy="beforeInteractive"
+            strategy="lazyOnload"
           />
         )}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

@@ -4,6 +4,11 @@
     window.dataLayer.push(arguments);
   };
 
+  // Non-personalized ads (NPA) flag for AdSense.
+  // true = non-personalized (consent denied), false = personalized (consent granted).
+  // Default to true (non-personalized) until user consents.
+  window.__npa = true;
+
   window.gtag("consent", "default", {
     ad_storage: "denied",
     ad_user_data: "denied",

@@ -77,6 +77,7 @@ declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
+    __npa?: boolean;
   }
 }
 
@@ -91,8 +92,13 @@ function updateConsentMode(prefs: CookiePreferences) {
     security_storage: "granted",
   };
 
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("consent", "update", consentMode);
+  if (typeof window !== "undefined") {
+    if (window.gtag) {
+      window.gtag("consent", "update", consentMode);
+    }
+    // Update NPA (non-personalized ads) flag for AdSense
+    // true = non-personalized (consent denied), false = personalized (consent granted)
+    window.__npa = !prefs.advertising;
   }
 }
 
