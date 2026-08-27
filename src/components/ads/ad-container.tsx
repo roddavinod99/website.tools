@@ -65,6 +65,12 @@ export function AdContainer({
   const [isVisible, setIsVisible] = useState(false);
   const [adLoaded, setAdLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [npaValue] = useState(() => {
+    if (typeof window !== "undefined") {
+      return (window as { __npa?: boolean }).__npa ? "1" : "0";
+    }
+    return "0";
+  });
   const checkTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const initialDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
@@ -249,7 +255,7 @@ export function AdContainer({
         data-ad-slot={finalSlot}
         data-ad-format={format}
         data-full-width-responsive={format === "horizontal" || format === "auto" || format === "fluid" ? "true" : "false"}
-        data-npa={(window as { __npa?: boolean }).__npa ? "1" : "0"}
+        data-npa={npaValue}
       />
     </div>
   );

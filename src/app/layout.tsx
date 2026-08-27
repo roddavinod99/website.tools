@@ -144,7 +144,6 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${notoSansArabic.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
       <head>
         <Script
