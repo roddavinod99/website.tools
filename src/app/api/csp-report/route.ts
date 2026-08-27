@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFileSync, appendFileSync, existsSync, mkdirSync } from "node:fs";
+import { writeFileSync, appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const LOG_DIR = join(process.cwd(), "logs");
@@ -69,9 +69,4 @@ export async function POST(request: NextRequest) {
     console.error("[CSP Report] Failed to process:", e);
     return new NextResponse("Bad Request", { status: 400 });
   }
-}
-
-function readFileSync(path: string, encoding: string): string {
-  const fs = require("node:fs");
-  return fs.readFileSync(path, encoding);
 }
