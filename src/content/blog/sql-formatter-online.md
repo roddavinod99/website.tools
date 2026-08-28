@@ -297,3 +297,15 @@ Not yet. The `/api` page shows planned endpoints. For now, use the CLI: `npx sql
 ---
 
 *Format your SQL now → [Free SQL Formatter](/tools/sql-formatter) — MySQL, PostgreSQL, SQLite, T-SQL, BigQuery. Client-side, configurable, syntax validation included.*
+---
+
+## Related Resources
+
+## More Blog Posts
+
+- [Base64 Encode/Decode Online — Free Tool for Developers](/blog/base64-encode-decode-online)
+- [UUID v4 vs v7 Generator — Which UUID Version Should You Use?](/blog/uuid-v4-vs-v7-generator)
+- [Hash Generator Online — MD5, SHA-256, SHA-512 & More](/blog/hash-generator-online)
+- [Image Compressor for Web — Reduce Size 40-80% (JPEG, PNG, WebP, AVIF)](/blog/image-compressor-for-web)
+- [URL Parser & Analyzer — Break Down Any URL Into Components](/blog/url-parser-analyzer)
+

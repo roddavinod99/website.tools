@@ -623,16 +623,16 @@ export function ToolClient({
                   <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="/learning"
+                  href="/guides"
                   className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
                 >
                   <div className="flex items-start gap-2">
                     <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
                     <div>
                       <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
-                        Learning Center
+                        Developer Guides
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">Core concepts and fundamentals</p>
+                      <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth guides and tutorials</p>
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />

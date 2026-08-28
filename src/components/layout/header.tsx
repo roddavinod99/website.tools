@@ -34,7 +34,7 @@ const NAV_SHORTCUTS: Record<string, string> = {
   "1": "/tools",
   "2": "/categories",
   "3": "/guides",
-  "4": "/learning",
+  "4": "/blog",
 };
 
 function CategoryMenu({ allTools }: { allTools: import("@/types").Tool[] }) {

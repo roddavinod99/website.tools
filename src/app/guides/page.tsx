@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { learningTopics, siteConfig } from "@/lib/data";
+import { guidesTopics, siteConfig } from "@/lib/data";
 import { GuidesList } from "./guides-list";
 
 export const metadata: Metadata = {
@@ -37,8 +37,8 @@ const itemListJsonLd = {
   name: "Developer Guides",
   description: "Free developer guides covering JSON, JWT, Base64, CSS minification, regex, timestamps, HTML encoding, and data serialization.",
   url: `${siteConfig.url}/guides`,
-  numberOfItems: learningTopics.length,
-  itemListElement: learningTopics.map((topic, i) => ({
+  numberOfItems: guidesTopics.length,
+  itemListElement: guidesTopics.map((topic, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: topic.title,
@@ -74,7 +74,7 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
       <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
-            <GuidesList topics={learningTopics} initialTopic={resolvedParams.topic ?? null} />
+            <GuidesList topics={guidesTopics} initialTopic={resolvedParams.topic ?? null} />
           </div>
         </div>
       </section>

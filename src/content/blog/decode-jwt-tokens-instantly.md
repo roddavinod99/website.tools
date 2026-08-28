@@ -297,3 +297,15 @@ Check: `SameSite` cookies, CORS, `Authorization` header vs cookie, token storage
 ---
 
 *Decode your token now → [Free JWT Decoder](/tools/jwt-decoder) — Paste, inspect, verify. Zero upload, total privacy, supports HS256/RS256/ES256/EdDSA + JWKS.*
+---
+
+## Related Resources
+
+## More Blog Posts
+
+- [Base64 Encode/Decode Online — Free Tool for Developers](/blog/base64-encode-decode-online)
+- [UUID v4 vs v7 Generator — Which UUID Version Should You Use?](/blog/uuid-v4-vs-v7-generator)
+- [SQL Formatter Online — Format, Beautify & Validate SQL Queries](/blog/sql-formatter-online)
+- [Hash Generator Online — MD5, SHA-256, SHA-512 & More](/blog/hash-generator-online)
+- [Image Compressor for Web — Reduce Size 40-80% (JPEG, PNG, WebP, AVIF)](/blog/image-compressor-for-web)
+

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allTools, categories, siteConfig, learningTopics } from "@/lib/data";
+import { allTools, categories, siteConfig, guidesTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";
@@ -36,7 +36,6 @@ const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/guides`),
   entry(`${BASE}/blog`, latestBlogDate),
   entry(`${BASE}/compare`),
-  entry(`${BASE}/learning`),
   entry(`${BASE}/popular`),
   entry(`${BASE}/new`),
   entry(`${BASE}/changelog`),
@@ -71,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((tool) => !tool.noindex)
     .map((tool) => entry(`${BASE}/tools/${tool.slug}`, dateFrom(TOOL_LASTMOD[tool.slug])));
 
-  const guidePages: MetadataRoute.Sitemap = learningTopics.map((topic) =>
+  const guidePages: MetadataRoute.Sitemap = guidesTopics.map((topic) =>
     entry(`${BASE}/guides/${topic.slug}`, new Date(topic.modified))
   );
 

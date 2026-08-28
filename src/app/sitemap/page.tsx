@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { allTools, categories, siteConfig, learningTopics } from "@/lib/data";
+import { allTools, categories, siteConfig, guidesTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
 import { ChevronRight } from "lucide-react";
 
@@ -19,7 +19,6 @@ const staticPages = [
   { title: "Guides", href: "/guides" },
   { title: "Tutorials", href: "/tutorials" },
   { title: "Blog", href: "/blog" },
-  { title: "Learning Center", href: "/learning" },
   { title: "Best Practices", href: "/best-practices" },
   { title: "API", href: "/api" },
   { title: "Toolkits", href: "/toolkits" },
@@ -107,12 +106,12 @@ export default function SitemapPage() {
             </ul>
           </div>
 
-          <div>
+<div>
             <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text border-b border-surface-200 dark:border-dark-border pb-2 mb-4">
-              Guides &amp; Learning
+              Guides & Learning
             </h2>
             <ul className="space-y-2">
-              {learningTopics.map((topic) => (
+              {guidesTopics.map((topic) => (
                 <li key={topic.slug}>
                   <Link
                     href={`/guides/${topic.slug}`}

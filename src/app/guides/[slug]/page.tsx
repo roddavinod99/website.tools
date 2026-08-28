@@ -2,24 +2,24 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ArrowRight, Zap } from "lucide-react";
-import { learningTopics, siteConfig, allTools } from "@/lib/data";
+import { guidesTopics, siteConfig, allTools } from "@/lib/data";
 import { getGuideContent, getGuideUrl } from "@/lib/guides";
 import { markdownToHtml } from "@/lib/markdown";
 
 const guideToBlog: Record<string, { slug: string; title: string }> = {
-  "getting-started-json": {
+  "concepts/json-basics": {
     slug: "getting-started-json",
     title: "Getting Started with JSON: A Complete Guide",
   },
-  "understanding-jwt": {
+  "concepts/jwt-structure": {
     slug: "understanding-jwt",
     title: "Understanding JWT Tokens: How They Work",
   },
-  "image-optimization-guide": {
+  "best-practices/image-optimization": {
     slug: "image-optimization",
     title: "Image Optimization for the Web",
   },
-  "password-security": {
+  "best-practices/password-security": {
     slug: "password-security",
     title: "Password Security: Best Practices for 2026",
   },
@@ -30,12 +30,12 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return learningTopics.map((topic) => ({ slug: topic.slug }));
+  return guidesTopics.map((topic) => ({ slug: topic.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const topic = learningTopics.find((t) => t.slug === slug);
+  const topic = guidesTopics.find((t) => t.slug === slug);
   if (!topic) return {};
   const canonical = getGuideUrl(slug);
   return {
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
-  const topic = learningTopics.find((t) => t.slug === slug);
+  const topic = guidesTopics.find((t) => t.slug === slug);
   if (!topic) notFound();
 
   const content = await getGuideContent(slug);

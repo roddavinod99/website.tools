@@ -115,3 +115,22 @@ JSON is not the only data format. Each alternative has trade-offs.
 - CSV — For tabular data, CSV is simpler and more compact than an array of JSON objects. Many data science and analytics tools work better with CSV. CSV lacks type information (everything is a string) and does not support nested structures.
 
 When to choose which? Use JSON as your default for APIs, configuration, and data storage. Use YAML when you need comments or are working in an ecosystem that already uses it (Kubernetes, CI/CD). Use TOML for language-specific configuration tooling (Cargo, pip). Use XML only when you need its advanced features (namespaces, schemas, transformations) or when interoperability with legacy systems requires it.
+---
+
+## Related Resources
+- [Guide: JSON Basics](/guides/concepts/json-basics)
+
+## Related Tools
+
+- [json-formatter](/tools/json-formatter)
+- [json-validator](/tools/json-validator)
+- [json-minifier](/tools/json-minifier)
+
+## More Blog Posts
+
+- [Base64 Encode/Decode Online — Free Tool for Developers](/blog/base64-encode-decode-online)
+- [UUID v4 vs v7 Generator — Which UUID Version Should You Use?](/blog/uuid-v4-vs-v7-generator)
+- [SQL Formatter Online — Format, Beautify & Validate SQL Queries](/blog/sql-formatter-online)
+- [Hash Generator Online — MD5, SHA-256, SHA-512 & More](/blog/hash-generator-online)
+- [Image Compressor for Web — Reduce Size 40-80% (JPEG, PNG, WebP, AVIF)](/blog/image-compressor-for-web)
+

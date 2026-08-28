@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import { learningTopics } from "@/lib/data";
+import { guidesTopics } from "@/lib/data";
 
 export function LearningSection() {
   return (
@@ -22,7 +22,7 @@ export function LearningSection() {
         </Link>
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {learningTopics.slice(0, 6).map((topic) => (
+        {guidesTopics.slice(0, 6).map((topic) => (
           <Link
             key={topic.slug}
             href={`/guides/${topic.slug}`}

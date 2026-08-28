@@ -400,3 +400,15 @@ Yes — use word-level or character-level mode. Line-level on minified code show
 ---
 
 *Compare text now → [Free Text Diff Checker](/tools/diff-checker) — Side-by-side, unified, inline views. Word/char level, ignore whitespace, patch export. Client-side, Web Worker powered.*
+---
+
+## Related Resources
+
+## More Blog Posts
+
+- [Base64 Encode/Decode Online — Free Tool for Developers](/blog/base64-encode-decode-online)
+- [UUID v4 vs v7 Generator — Which UUID Version Should You Use?](/blog/uuid-v4-vs-v7-generator)
+- [SQL Formatter Online — Format, Beautify & Validate SQL Queries](/blog/sql-formatter-online)
+- [Hash Generator Online — MD5, SHA-256, SHA-512 & More](/blog/hash-generator-online)
+- [Image Compressor for Web — Reduce Size 40-80% (JPEG, PNG, WebP, AVIF)](/blog/image-compressor-for-web)
+

@@ -81,3 +81,15 @@ Follow these guidelines to get the most out of UUIDs in production:
 - **Index UUID Columns Judiciously:** If you query by UUID frequently, index it — but prefer clustered indexes on a sequential surrogate key with a UUID as a secondary indexed column for write-heavy tables. Some databases (SQL Server, MySQL with InnoDB) cluster the table by the primary key; a random clustered key causes severe fragmentation.
 - **Never Truncate UUIDs:** It is tempting to take the first 8 or 16 characters of a UUID for a "short ID." This is dangerous. Truncating a UUID drastically reduces entropy and geometrically increases collision probability. Eight hex characters is only 32 bits — you'll likely see collisions after just 77,000 generated IDs (birthday problem). If you need short IDs, use a purpose-built scheme like NanoID or base-62 encoding of a larger random value.
 - **Make UUID v7 the Default:** For all new projects that need distributed unique identifiers, start with UUID v7. It provides the interoperability and standardization of UUIDs with the database performance characteristics of sequential keys. The only reason to choose v4 over v7 is if you absolutely must avoid encoding any timestamp information — a valid privacy or security concern in some contexts.
+---
+
+## Related Resources
+
+## More Blog Posts
+
+- [Base64 Encode/Decode Online — Free Tool for Developers](/blog/base64-encode-decode-online)
+- [UUID v4 vs v7 Generator — Which UUID Version Should You Use?](/blog/uuid-v4-vs-v7-generator)
+- [SQL Formatter Online — Format, Beautify & Validate SQL Queries](/blog/sql-formatter-online)
+- [Hash Generator Online — MD5, SHA-256, SHA-512 & More](/blog/hash-generator-online)
+- [Image Compressor for Web — Reduce Size 40-80% (JPEG, PNG, WebP, AVIF)](/blog/image-compressor-for-web)
+

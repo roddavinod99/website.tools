@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
-import { learningTopics, siteConfig } from "@/lib/data";
+import { guidesTopics, siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Tutorials",
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function TutorialsPage() {
+  const tutorialTopics = guidesTopics.filter((t) => t.category === "Tutorials");
   return (
     <>
     <div className="border-b border-surface-200 dark:border-dark-border">
@@ -36,7 +37,7 @@ export default function TutorialsPage() {
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
           <div className="grid gap-4">
-            {learningTopics.map((topic) => (
+            {tutorialTopics.map((topic) => (
               <Link
                 key={topic.slug}
                 href={`/guides/${topic.slug}`}
