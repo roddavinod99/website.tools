@@ -9,4 +9,5 @@ paths = [
   '''src/content/tools/jwt-decoder\.json$''',
   '''tests/fixtures/jwt\.json$''',
   '''src/lib/tool-content\.ts$''',
+  '''public/search-index\.json$''',
 ]
