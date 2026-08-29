@@ -252,10 +252,10 @@ export function UUIDGenerator() {
     nanoidLength: 21,
   });
 
-  const [version, setVersion] = useState<UuidVersion>((state.version as UuidVersion) ?? "v4");
-  const [count, setCount] = useState((state.count as number) ?? 5);
-  const [format, setFormat] = useState<FormatStyle>((state.format as FormatStyle) ?? "hyphens");
-  const [exportFmt, setExportFmt] = useState<ExportFormat>((state.exportFmt as ExportFormat) ?? "text");
+  const [version, setVersion] = useState<UuidVersion>(() => (state.version as UuidVersion) ?? "v4");
+  const [count, setCount] = useState(() => (state.count as number) ?? 5);
+  const [format, setFormat] = useState<FormatStyle>(() => (state.format as FormatStyle) ?? "hyphens");
+  const [exportFmt, setExportFmt] = useState<ExportFormat>(() => (state.exportFmt as ExportFormat) ?? "text");
   const [uuids, setUuids] = useState<string[]>(() => {
     const init: string[] = [];
     for (let i = 0; i < 5; i++) init.push(formatUuid(makeUuid("v4"), "hyphens"));
@@ -265,31 +265,18 @@ export function UUIDGenerator() {
   const [generating, setGenerating] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(-1);
   const [history, setHistory] = useState<{ time: string; uuids: string[] }[]>([]);
-  const [autoRefresh, setAutoRefresh] = useState((state.autoRefresh as boolean) ?? false);
+  const [autoRefresh, setAutoRefresh] = useState(() => (state.autoRefresh as boolean) ?? false);
   const [validateInput, setValidateInput] = useState("");
   const [validateResult, setValidateResult] = useState<ReturnType<typeof validateUuid> | null>(null);
-  const [tsIdType, setTsIdType] = useState<"snowflake" | "nanoid">((state.tsIdType as "snowflake" | "nanoid") ?? "snowflake");
+  const [tsIdType, setTsIdType] = useState<"snowflake" | "nanoid">(() => (state.tsIdType as "snowflake" | "nanoid") ?? "snowflake");
   const [tsIds, setTsIds] = useState<string[]>([]);
-  const [workerId, setWorkerId] = useState((state.workerId as number) ?? 1);
-  const [nanoidAlphabet, setNanoidAlphabet] = useState((state.nanoidAlphabet as string) ?? "useandom-26T198340PX75pxq");
-  const [nanoidLength, setNanoidLength] = useState((state.nanoidLength as number) ?? 21);
+  const [workerId, setWorkerId] = useState(() => (state.workerId as number) ?? 1);
+  const [nanoidAlphabet, setNanoidAlphabet] = useState(() => (state.nanoidAlphabet as string) ?? "useandom-26T198340PX75pxq");
+  const [nanoidLength, setNanoidLength] = useState(() => (state.nanoidLength as number) ?? 21);
   const cancelRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [namespace, setNamespace] = useState<keyof typeof UUID_NAMESPACES>((state.namespace as keyof typeof UUID_NAMESPACES) ?? "DNS");
-  const [uuidName, setUuidName] = useState((state.uuidName as string) ?? "example.com");
-
-  // Sync local state with URL state
-  useEffect(() => { setVersion((state.version as UuidVersion) ?? "v4"); }, [state.version]);
-  useEffect(() => { setCount((state.count as number) ?? 5); }, [state.count]);
-  useEffect(() => { setFormat((state.format as FormatStyle) ?? "hyphens"); }, [state.format]);
-  useEffect(() => { setExportFmt((state.exportFmt as ExportFormat) ?? "text"); }, [state.exportFmt]);
-  useEffect(() => { setAutoRefresh((state.autoRefresh as boolean) ?? false); }, [state.autoRefresh]);
-  useEffect(() => { setNamespace((state.namespace as keyof typeof UUID_NAMESPACES) ?? "DNS"); }, [state.namespace]);
-  useEffect(() => { setUuidName((state.uuidName as string) ?? "example.com"); }, [state.uuidName]);
-  useEffect(() => { setTsIdType((state.tsIdType as "snowflake" | "nanoid") ?? "snowflake"); }, [state.tsIdType]);
-  useEffect(() => { setWorkerId((state.workerId as number) ?? 1); }, [state.workerId]);
-  useEffect(() => { setNanoidAlphabet((state.nanoidAlphabet as string) ?? "useandom-26T198340PX75pxq"); }, [state.nanoidAlphabet]);
-  useEffect(() => { setNanoidLength((state.nanoidLength as number) ?? 21); }, [state.nanoidLength]);
+  const [namespace, setNamespace] = useState<keyof typeof UUID_NAMESPACES>(() => (state.namespace as keyof typeof UUID_NAMESPACES) ?? "DNS");
+  const [uuidName, setUuidName] = useState(() => (state.uuidName as string) ?? "example.com");
 
   const generate = useCallback(async () => {
     if (generating) return;

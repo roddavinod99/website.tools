@@ -97,29 +97,20 @@ export function JSONFormatter() {
     searchTerm: "",
   });
 
-  const [input, setInput] = useState(state.input as string);
+  const [input, setInput] = useState(() => state.input as string);
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);
   const [errorCol, setErrorCol] = useState<number | null>(null);
-  const [indent, setIndent] = useState<number | string>(state.indent as number | string);
-  const [sortKeysEnabled, setSortKeysEnabled] = useState(state.sortKeysEnabled as boolean);
-  const [stripQuotes, setStripQuotes] = useState(state.stripQuotes as boolean);
-  const [compactArrays, setCompactArrays] = useState(state.compactArrays as boolean);
-  const [wordWrap, setWordWrap] = useState(state.wordWrap as boolean);
-  const [searchTerm, setSearchTerm] = useState(state.searchTerm as string);
+  const [indent, setIndent] = useState<number | string>(() => state.indent as number | string);
+  const [sortKeysEnabled, setSortKeysEnabled] = useState(() => state.sortKeysEnabled as boolean);
+  const [stripQuotes, setStripQuotes] = useState(() => state.stripQuotes as boolean);
+  const [compactArrays, setCompactArrays] = useState(() => state.compactArrays as boolean);
+  const [wordWrap, setWordWrap] = useState(() => state.wordWrap as boolean);
+  const [searchTerm, setSearchTerm] = useState(() => state.searchTerm as string);
   const [searchIndex, setSearchIndex] = useState(0);
   const outputRef = useRef<HTMLPreElement>(null);
   const pasteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Sync local state with URL state
-  useEffect(() => { setInput(state.input as string); }, [state.input]);
-  useEffect(() => { setIndent(state.indent as number | string); }, [state.indent]);
-  useEffect(() => { setSortKeysEnabled(state.sortKeysEnabled as boolean); }, [state.sortKeysEnabled]);
-  useEffect(() => { setStripQuotes(state.stripQuotes as boolean); }, [state.stripQuotes]);
-  useEffect(() => { setCompactArrays(state.compactArrays as boolean); }, [state.compactArrays]);
-  useEffect(() => { setWordWrap(state.wordWrap as boolean); }, [state.wordWrap]);
-  useEffect(() => { setSearchTerm(state.searchTerm as string); }, [state.searchTerm]);
 
   const handleChange = useCallback((val: string) => {
     setInput(val);

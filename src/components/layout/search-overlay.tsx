@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useMiniSearch, type SearchResult } from "@/lib/search-minisearch";
 import { useFocusTrap } from "@/lib/use-focus-trap";
@@ -22,17 +22,15 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
   const panelRef = useRef<HTMLDivElement>(null);
   const { search, ready, error } = useMiniSearch();
   const [localQuery, setLocalQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
+
+  const results = useMemo(() => {
+    if (!ready || localQuery.trim().length < 2) return [];
+    return search(localQuery, { limit: 15 });
+  }, [search, ready, localQuery]);
 
   const handleSearch = useCallback((q: string) => {
     setLocalQuery(q);
-    if (q.trim().length >= 2) {
-      const res = search(q, { limit: 15 });
-      setResults(res);
-    } else {
-      setResults([]);
-    }
-  }, [search]);
+  }, []);
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -49,8 +47,6 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
   useEffect(() => {
     if (!isOpen) return;
-    setLocalQuery("");
-    setResults([]);
     setTimeout(() => inputRef.current?.focus(), 50);
   }, [isOpen]);
 
@@ -112,7 +108,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
             className="flex-1 h-14 bg-transparent px-3 text-base text-surface-900 placeholder:text-surface-400 focus:outline-none dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           {localQuery && (
-            <button type="button" onClick={() => { setLocalQuery(""); setResults([]); }} className="p-1 text-surface-400 hover:text-surface-600">
+            <button type="button" onClick={() => { setLocalQuery(() => ""); }} className="p-1 text-surface-400 hover:text-surface-600">
               <X className="h-4 w-4" />
             </button>
           )}

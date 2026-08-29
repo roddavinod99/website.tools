@@ -1,5 +1,5 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 export type ToolState = Record<string, string | number | boolean | null>;
 
@@ -29,46 +29,30 @@ export function useToolUrlState(initialState: ToolState = {}) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [state, setState] = useState<ToolState>(() => {
-    if (typeof window !== "undefined" && searchParams) {
+
+  const state = useMemo(() => {
+    if (searchParams) {
       return { ...initialState, ...deserializeState(searchParams) };
     }
     return initialState;
-  });
-
-  useEffect(() => {
-    if (searchParams) {
-      const urlState = deserializeState(searchParams);
-      setState((prev) => ({ ...prev, ...urlState }));
-    }
-  }, [searchParams]);
+  }, [searchParams, initialState]);
 
   const updateState = useCallback((updates: Partial<ToolState>) => {
-    setState((prev) => {
-      const newState: ToolState = { ...prev };
-      for (const [key, value] of Object.entries(updates)) {
-        if (value === null || value === undefined || value === "") {
-          delete newState[key];
-        } else {
-          newState[key] = value;
-        }
+    const currentParams = new URLSearchParams(searchParams?.toString() || "");
+    for (const [key, value] of Object.entries(updates)) {
+      if (value === null || value === undefined || value === "") {
+        currentParams.delete(key);
+      } else {
+        currentParams.set(key, String(value));
       }
-      const params = new URLSearchParams();
-      for (const [key, value] of Object.entries(newState)) {
-        if (value !== null && value !== undefined && value !== "") {
-          params.set(key, String(value));
-        }
-      }
-      const newUrl = `${pathname}?${params.toString()}`;
-      router.replace(newUrl, { scroll: false });
-      return newState;
-    });
-  }, [router, pathname]);
+    }
+    const newUrl = `${pathname}?${currentParams.toString()}`;
+    router.replace(newUrl, { scroll: false });
+  }, [router, pathname, searchParams]);
 
   const clearState = useCallback(() => {
-    setState(initialState);
     router.replace(pathname, { scroll: false });
-  }, [router, pathname, initialState]);
+  }, [router, pathname]);
 
   return { state, updateState, clearState };
 }

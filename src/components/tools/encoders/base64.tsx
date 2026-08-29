@@ -63,19 +63,14 @@ export function Base64Tool() {
     input: "",
   });
 
-  const [input, setInput] = useState((state.input as string) ?? "");
+  const [input, setInput] = useState(() => (state.input as string) ?? "");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [validationMsg, setValidationMsg] = useState<{ ok: boolean; text: string } | null>(null);
-  const [mode, setMode] = useState<Mode>((state.mode as Mode) ?? "encode");
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>((state.outputFormat as OutputFormat) ?? "plain");
-  const [charEncoding, setCharEncoding] = useState<CharEncoding>((state.charEncoding as CharEncoding) ?? "utf-8");
+  const [mode, setMode] = useState<Mode>(() => (state.mode as Mode) ?? "encode");
+  const [outputFormat, setOutputFormat] = useState<OutputFormat>(() => (state.outputFormat as OutputFormat) ?? "plain");
+  const [charEncoding, setCharEncoding] = useState<CharEncoding>(() => (state.charEncoding as CharEncoding) ?? "utf-8");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
-
-  useEffect(() => { setInput((state.input as string) ?? ""); }, [state.input]);
-  useEffect(() => { setMode((state.mode as Mode) ?? "encode"); }, [state.mode]);
-  useEffect(() => { setOutputFormat((state.outputFormat as OutputFormat) ?? "plain"); }, [state.outputFormat]);
-  useEffect(() => { setCharEncoding((state.charEncoding as CharEncoding) ?? "utf-8"); }, [state.charEncoding]);
 
   const convert = useCallback(() => {
     setError("");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMiniSearch, type SearchResult } from "@/lib/search-minisearch";
@@ -31,16 +31,11 @@ export function SearchResults() {
   const searchParams = useSearchParams();
   const q = (searchParams?.get("q") || "").trim().toLowerCase();
   const { search, ready, error } = useMiniSearch();
-  const [results, setResults] = useState<SearchResult[]>([]);
 
-  useEffect(() => {
-    if (q.trim().length >= 2) {
-      const res = search(q, { limit: 50 });
-      setResults(res);
-    } else {
-      setResults([]);
-    }
-  }, [q, search]);
+  const results = useMemo(() => {
+    if (!ready || q.trim().length < 2) return [];
+    return search(q, { limit: 50 });
+  }, [search, ready, q]);
 
   if (!q) {
     return (
