@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const comparison = getComparison(slug);
   if (!comparison) return {};
   const canonical = `${siteConfig.url}/compare/${comparison.slug}`;
-  const dynamicOgImage = `${siteConfig.url}/og/compare/${comparison.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${comparison.slug}`;
   return {
     title: comparison.title,
     description: comparison.description,
@@ -47,6 +47,7 @@ export default async function ComparisonPage({ params }: Props) {
   const comparison = getComparison(slug);
   if (!comparison) notFound();
   const canonical = `${siteConfig.url}/compare/${comparison.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${comparison.slug}`;
 
   const toolLinks = comparison.tools
     .map((toolSlug) => allTools.find((t) => t.slug === toolSlug))
@@ -60,6 +61,7 @@ export default async function ComparisonPage({ params }: Props) {
       url: canonical,
       datePublished: comparison.published,
       dateModified: comparison.modified,
+      image: dynamicOgImage,
       author: {
         "@type": "Organization",
         "@id": `${siteConfig.url}/#organization`,

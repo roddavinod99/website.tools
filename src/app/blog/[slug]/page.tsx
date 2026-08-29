@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blogPost = getBlogPost(slug);
   if (!blogPost) return {};
   const canonical = getPostUrl(blogPost.slug);
-  const dynamicOgImage = `${siteConfig.url}/og/blog/${slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
   return {
     title: blogPost.title,
     description: blogPost.excerpt,
@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!content) notFound();
   const htmlContent = await markdownToHtml(content);
 
-  const dynamicOgImage = `${siteConfig.url}/og/blog/${slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
   return (
     <>
       <script

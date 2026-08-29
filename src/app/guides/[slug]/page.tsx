@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const topic = guidesTopics.find((t) => t.slug === slug);
   if (!topic) return {};
   const canonical = getGuideUrl(slug);
-  const dynamicOgImage = `${siteConfig.url}/og/guides/${slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
   return {
     title: `${topic.title} - Guide`,
     description: topic.description,
@@ -75,7 +75,7 @@ export default async function GuidePage({ params }: Props) {
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
   const canonical = getGuideUrl(slug);
-  const dynamicOgImage = `${siteConfig.url}/og/guides/${slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
   const graphItems = [
     {
       "@type": "TechArticle",

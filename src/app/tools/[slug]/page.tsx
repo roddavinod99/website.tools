@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = allTools.find((t) => t.slug === slug) ?? allTools.find((t) => t.aliasSlugs?.includes(slug));
   if (!tool) return {};
   const canonical = `${siteConfig.url}/tools/${tool.slug}`;
-  const dynamicOgImage = `${siteConfig.url}/og/tools/${tool.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${tool.slug}`;
   return {
     title: tool.name,
     description: tool.description,
@@ -154,7 +154,7 @@ export default async function ToolPage({ params }: Props) {
   })();
 
   const toolUrl = `${siteConfig.url}/tools/${tool.slug}`;
-  const dynamicOgImage = `${siteConfig.url}/og/tools/${tool.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/${tool.slug}`;
 
   const tocItems = [
     { id: "about", label: "About", level: 1 },
