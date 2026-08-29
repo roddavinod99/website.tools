@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const topic = guidesTopics.find((t) => t.slug === slug);
   if (!topic) return {};
   const canonical = getGuideUrl(slug);
+  const dynamicOgImage = `${siteConfig.url}/og/guides/${slug}`;
   return {
     title: `${topic.title} - Guide`,
     description: topic.description,
@@ -50,13 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: topic.published,
       modifiedTime: topic.modified,
-      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${topic.title} - DevStackIO Guide` }],
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${topic.title} - DevStackIO Guide` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${topic.title} - Guide`,
       description: topic.description,
-      images: [siteConfig.ogImage],
+      images: [dynamicOgImage],
     },
   };
 }
@@ -74,6 +75,7 @@ export default async function GuidePage({ params }: Props) {
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
   const canonical = getGuideUrl(slug);
+  const dynamicOgImage = `${siteConfig.url}/og/guides/${slug}`;
   const graphItems = [
     {
       "@type": "TechArticle",
@@ -82,7 +84,7 @@ export default async function GuidePage({ params }: Props) {
       url: canonical,
       datePublished: `${topic.published}T00:00:00Z`,
       dateModified: `${topic.modified}T00:00:00Z`,
-      image: `${siteConfig.url}${siteConfig.ogImage}`,
+      image: dynamicOgImage,
       mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
       author: {
         "@type": "Organization",

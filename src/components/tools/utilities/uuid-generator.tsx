@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useToolUrlState } from "@/lib/url-state";
 
 type UuidVersion = "v4" | "v7" | "v1" | "v3" | "v5";
 type FormatStyle = "hyphens" | "no-hyphens" | "uppercase" | "lowercase" | "curly" | "uuid-format" | "base64";
@@ -237,10 +238,24 @@ function validateUuid(input: string): { valid: boolean; version: string; variant
 }
 
 export function UUIDGenerator() {
-  const [version, setVersion] = useState<UuidVersion>("v4");
-  const [count, setCount] = useState(5);
-  const [format, setFormat] = useState<FormatStyle>("hyphens");
-  const [exportFmt, setExportFmt] = useState<ExportFormat>("text");
+  const { state, updateState } = useToolUrlState({
+    version: "v4",
+    count: 5,
+    format: "hyphens",
+    exportFmt: "text",
+    autoRefresh: false,
+    namespace: "DNS" as keyof typeof UUID_NAMESPACES,
+    uuidName: "example.com",
+    tsIdType: "snowflake" as "snowflake" | "nanoid",
+    workerId: 1,
+    nanoidAlphabet: "useandom-26T198340PX75pxq" as const,
+    nanoidLength: 21,
+  });
+
+  const [version, setVersion] = useState<UuidVersion>((state.version as UuidVersion) ?? "v4");
+  const [count, setCount] = useState((state.count as number) ?? 5);
+  const [format, setFormat] = useState<FormatStyle>((state.format as FormatStyle) ?? "hyphens");
+  const [exportFmt, setExportFmt] = useState<ExportFormat>((state.exportFmt as ExportFormat) ?? "text");
   const [uuids, setUuids] = useState<string[]>(() => {
     const init: string[] = [];
     for (let i = 0; i < 5; i++) init.push(formatUuid(makeUuid("v4"), "hyphens"));
@@ -250,18 +265,31 @@ export function UUIDGenerator() {
   const [generating, setGenerating] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(-1);
   const [history, setHistory] = useState<{ time: string; uuids: string[] }[]>([]);
-  const [autoRefresh, setAutoRefresh] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState((state.autoRefresh as boolean) ?? false);
   const [validateInput, setValidateInput] = useState("");
   const [validateResult, setValidateResult] = useState<ReturnType<typeof validateUuid> | null>(null);
-  const [tsIdType, setTsIdType] = useState<"snowflake" | "nanoid">("snowflake");
+  const [tsIdType, setTsIdType] = useState<"snowflake" | "nanoid">((state.tsIdType as "snowflake" | "nanoid") ?? "snowflake");
   const [tsIds, setTsIds] = useState<string[]>([]);
-  const [workerId, setWorkerId] = useState(1);
-  const [nanoidAlphabet, setNanoidAlphabet] = useState(NANOID_DEFAULT_ALPHABET);
-  const [nanoidLength, setNanoidLength] = useState(21);
+  const [workerId, setWorkerId] = useState((state.workerId as number) ?? 1);
+  const [nanoidAlphabet, setNanoidAlphabet] = useState((state.nanoidAlphabet as string) ?? "useandom-26T198340PX75pxq");
+  const [nanoidLength, setNanoidLength] = useState((state.nanoidLength as number) ?? 21);
   const cancelRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [namespace, setNamespace] = useState<keyof typeof UUID_NAMESPACES>("DNS");
-  const [uuidName, setUuidName] = useState("example.com");
+  const [namespace, setNamespace] = useState<keyof typeof UUID_NAMESPACES>((state.namespace as keyof typeof UUID_NAMESPACES) ?? "DNS");
+  const [uuidName, setUuidName] = useState((state.uuidName as string) ?? "example.com");
+
+  // Sync local state with URL state
+  useEffect(() => { setVersion((state.version as UuidVersion) ?? "v4"); }, [state.version]);
+  useEffect(() => { setCount((state.count as number) ?? 5); }, [state.count]);
+  useEffect(() => { setFormat((state.format as FormatStyle) ?? "hyphens"); }, [state.format]);
+  useEffect(() => { setExportFmt((state.exportFmt as ExportFormat) ?? "text"); }, [state.exportFmt]);
+  useEffect(() => { setAutoRefresh((state.autoRefresh as boolean) ?? false); }, [state.autoRefresh]);
+  useEffect(() => { setNamespace((state.namespace as keyof typeof UUID_NAMESPACES) ?? "DNS"); }, [state.namespace]);
+  useEffect(() => { setUuidName((state.uuidName as string) ?? "example.com"); }, [state.uuidName]);
+  useEffect(() => { setTsIdType((state.tsIdType as "snowflake" | "nanoid") ?? "snowflake"); }, [state.tsIdType]);
+  useEffect(() => { setWorkerId((state.workerId as number) ?? 1); }, [state.workerId]);
+  useEffect(() => { setNanoidAlphabet((state.nanoidAlphabet as string) ?? "useandom-26T198340PX75pxq"); }, [state.nanoidAlphabet]);
+  useEffect(() => { setNanoidLength((state.nanoidLength as number) ?? 21); }, [state.nanoidLength]);
 
   const generate = useCallback(async () => {
     if (generating) return;
@@ -296,14 +324,62 @@ export function UUIDGenerator() {
     return () => { if (timerRef.current) clearInterval(timerRef.current); cancelRef.current = true; };
   }, [autoRefresh, generate]);
 
+  const handleCountChange = (c: number) => {
+    const clamped = Math.min(10000, Math.max(1, c));
+    setCount(clamped);
+    updateState({ count: clamped });
+  };
+
+  const handleExportFmtChange = (f: ExportFormat) => {
+    setExportFmt(f);
+    updateState({ exportFmt: f });
+  };
+
+  const handleAutoRefreshChange = (enabled: boolean) => {
+    setAutoRefresh(enabled);
+    updateState({ autoRefresh: enabled });
+  };
+
+  const handleNamespaceChange = (ns: keyof typeof UUID_NAMESPACES) => {
+    setNamespace(ns);
+    updateState({ namespace: ns });
+  };
+
+  const handleUuidNameChange = (name: string) => {
+    setUuidName(name);
+    updateState({ uuidName: name });
+  };
+
+  const handleTsIdTypeChange = (t: "snowflake" | "nanoid") => {
+    setTsIdType(t);
+    updateState({ tsIdType: t });
+  };
+
+  const handleWorkerIdChange = (id: number) => {
+    setWorkerId(id);
+    updateState({ workerId: id });
+  };
+
+  const handleNanoidAlphabetChange = (alphabet: string) => {
+    setNanoidAlphabet(alphabet);
+    updateState({ nanoidAlphabet: alphabet });
+  };
+
   const handleVersionChange = (v: UuidVersion) => {
     setVersion(v);
+    updateState({ version: v });
     if (autoRefresh) generate();
   };
 
   const handleFormatChange = (f: FormatStyle) => {
     setFormat(f);
+    updateState({ format: f });
     if (autoRefresh) generate();
+  };
+
+  const handleNanoidLengthChange = (len: number) => {
+    setNanoidLength(len);
+    updateState({ nanoidLength: len });
   };
 
   const copyOne = async (text: string, idx: number) => {
@@ -379,7 +455,7 @@ export function UUIDGenerator() {
       <div className="flex items-center gap-2">
         <label htmlFor="uuid-count" className="text-sm font-medium text-surface-700 dark:text-dark-text">Count:</label>
         <input type="number" id="uuid-count" min={1} max={10000} value={count}
-          onChange={(e) => setCount(Math.min(10000, Math.max(1, parseInt(e.target.value) || 1)))}
+          onChange={(e) => handleCountChange(Math.min(10000, Math.max(1, parseInt(e.target.value) || 1)))}
           className="w-20 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
       <div className="flex items-center gap-2">
@@ -401,7 +477,7 @@ export function UUIDGenerator() {
         <div className="flex flex-wrap items-end gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <div>
             <label htmlFor="uuid-namespace" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Namespace</label>
-            <select id="uuid-namespace" value={namespace} onChange={(e) => setNamespace(e.target.value as keyof typeof UUID_NAMESPACES)}
+            <select id="uuid-namespace" value={namespace} onChange={(e) => handleNamespaceChange(e.target.value as keyof typeof UUID_NAMESPACES)}
               className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               {Object.keys(UUID_NAMESPACES).map((ns) => (
                 <option key={ns} value={ns}>{ns} ({UUID_NAMESPACES[ns].slice(0, 8)}…)</option>
@@ -410,7 +486,7 @@ export function UUIDGenerator() {
           </div>
           <div className="flex-1 min-w-[200px]">
             <label htmlFor="uuid-name" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Name</label>
-            <input type="text" id="uuid-name" value={uuidName} onChange={(e) => setUuidName(e.target.value)}
+            <input type="text" id="uuid-name" value={uuidName} onChange={(e) => handleUuidNameChange(e.target.value)}
               placeholder="e.g. example.com or any string"
               className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
@@ -433,7 +509,7 @@ export function UUIDGenerator() {
           </>
         )}
         <label htmlFor="uuid-auto-refresh" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
-          <input type="checkbox" id="uuid-auto-refresh" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} className="accent-brand-500" />
+          <input type="checkbox" id="uuid-auto-refresh" checked={autoRefresh} onChange={(e) => handleAutoRefreshChange(e.target.checked)} className="accent-brand-500" />
           Auto-refresh (3s)
         </label>
       </div>
@@ -454,7 +530,7 @@ export function UUIDGenerator() {
 
       <div className="flex flex-wrap gap-2">
         <label htmlFor="uuid-export-format" className="sr-only">Export format</label>
-        <select id="uuid-export-format" value={exportFmt} onChange={(e) => setExportFmt(e.target.value as ExportFormat)}
+        <select id="uuid-export-format" value={exportFmt} onChange={(e) => handleExportFmtChange(e.target.value as ExportFormat)}
           className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="text">Text (line)</option>
           <option value="json">JSON Array</option>
@@ -496,7 +572,7 @@ export function UUIDGenerator() {
         <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Timestamp-based IDs</p>
         <div className="flex flex-wrap gap-2 mb-2">
           <label htmlFor="uuid-ts-id-type" className="sr-only">Timestamp ID type</label>
-          <select id="uuid-ts-id-type" value={tsIdType} onChange={(e) => setTsIdType(e.target.value as "snowflake" | "nanoid")}
+          <select id="uuid-ts-id-type" value={tsIdType} onChange={(e) => handleTsIdTypeChange(e.target.value as "snowflake" | "nanoid")}
             className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="snowflake">Snowflake (64-bit)</option>
             <option value="nanoid">NanoID</option>
@@ -505,7 +581,7 @@ export function UUIDGenerator() {
             <div className="flex items-center gap-2">
               <label htmlFor="uuid-worker-id" className="text-xs text-surface-500 dark:text-dark-muted">Worker ID (0–1023):</label>
               <input type="number" id="uuid-worker-id" min={0} max={1023} value={workerId}
-                onChange={(e) => setWorkerId(Math.max(0, Math.min(1023, parseInt(e.target.value) || 0)))}
+                onChange={(e) => handleWorkerIdChange(Math.max(0, Math.min(1023, parseInt(e.target.value) || 0)))}
                 className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
           ) : (
@@ -513,13 +589,13 @@ export function UUIDGenerator() {
               <div className="flex items-center gap-2">
                 <label htmlFor="uuid-nanoid-length" className="text-xs text-surface-500 dark:text-dark-muted">Length:</label>
                 <input type="number" id="uuid-nanoid-length" min={1} max={256} value={nanoidLength}
-                  onChange={(e) => setNanoidLength(Math.max(1, Math.min(256, parseInt(e.target.value) || 1)))}
+                  onChange={(e) => handleNanoidLengthChange(Math.max(1, Math.min(256, parseInt(e.target.value) || 1)))}
                   className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
               <div className="flex items-center gap-2 flex-1 min-w-[220px]">
                 <label htmlFor="uuid-nanoid-alphabet" className="text-xs text-surface-500 dark:text-dark-muted shrink-0">Alphabet:</label>
                 <input type="text" id="uuid-nanoid-alphabet" value={nanoidAlphabet}
-                  onChange={(e) => setNanoidAlphabet(e.target.value)}
+                  onChange={(e) => handleNanoidAlphabetChange(e.target.value)}
                   className="w-full rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
             </>

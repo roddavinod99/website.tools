@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = categories.find((c) => c.slug === slug);
   if (!category) return {};
   const canonical = `${siteConfig.url}/categories/${slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/categories/${slug}`;
   return {
     title: `${category.name} Tools`,
     description: category.description,
@@ -32,13 +33,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonical,
       siteName: siteConfig.name,
       type: "website",
-      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${category.name} Tools - DevStackIO` }],
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${category.name} Tools - DevStackIO` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${category.name} Tools - DevStackIO`,
       description: category.description,
-      images: [siteConfig.ogImage],
+      images: [dynamicOgImage],
     },
   };
 }

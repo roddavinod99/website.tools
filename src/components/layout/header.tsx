@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command, ChevronDown, ChevronRight } from "lucide-react";
-import { mainNav, siteConfig, categories } from "@/lib/data";
+import { mainNav, siteConfig, categories, allTools } from "@/lib/data";
 import { setStorageItem } from "@/lib/client-storage";
 import { cn } from "@/lib/utils";
 import { ShortcutsModal, shortcutCategories } from "@/components/layout/shortcuts-modal";
@@ -116,7 +116,7 @@ function CategoryMenu({ allTools }: { allTools: import("@/types").Tool[] }) {
   );
 }
 
-export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
+export function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -371,7 +371,7 @@ export function Header({ allTools }: { allTools: import("@/types").Tool[] }) {
       )}
 
       <Suspense fallback={null}>
-        <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} allTools={allTools} />
+        <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       </Suspense>
 
       <ShortcutsModal isOpen={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />

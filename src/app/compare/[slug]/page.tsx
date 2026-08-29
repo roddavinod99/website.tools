@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const comparison = getComparison(slug);
   if (!comparison) return {};
   const canonical = `${siteConfig.url}/compare/${comparison.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/compare/${comparison.slug}`;
   return {
     title: comparison.title,
     description: comparison.description,
@@ -30,11 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: comparison.published,
       modifiedTime: comparison.modified,
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${comparison.title} - DevStackIO` }],
     },
     twitter: {
       card: "summary_large_image",
       title: comparison.title,
       description: comparison.description,
+      images: [dynamicOgImage],
     },
   };
 }

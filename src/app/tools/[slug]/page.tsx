@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = allTools.find((t) => t.slug === slug) ?? allTools.find((t) => t.aliasSlugs?.includes(slug));
   if (!tool) return {};
   const canonical = `${siteConfig.url}/tools/${tool.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/tools/${tool.slug}`;
   return {
     title: tool.name,
     description: tool.description,
@@ -40,13 +41,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonical,
       siteName: siteConfig.name,
       type: "website",
-      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${tool.name} - DevStackIO` }],
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${tool.name} - DevStackIO` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${tool.name} - Free Online Tool`,
       description: tool.description,
-      images: [siteConfig.ogImage],
+      images: [dynamicOgImage],
     },
   };
 }
@@ -153,6 +154,7 @@ export default async function ToolPage({ params }: Props) {
   })();
 
   const toolUrl = `${siteConfig.url}/tools/${tool.slug}`;
+  const dynamicOgImage = `${siteConfig.url}/og/tools/${tool.slug}`;
 
   const tocItems = [
     { id: "about", label: "About", level: 1 },
@@ -186,7 +188,7 @@ export default async function ToolPage({ params }: Props) {
         "@type": "HowTo",
         name: `How to use ${tool.name}`,
         description: `Step-by-step guide to using ${tool.name} for ${tool.description.split(" ").slice(0, 8).join(" ").toLowerCase()}.`,
-        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        image: dynamicOgImage,
         totalTime: "PT5M",
         estimatedCost: {
           "@type": "MonetaryAmount",
@@ -235,7 +237,7 @@ export default async function ToolPage({ params }: Props) {
       name: "DevStackIO",
       url: siteConfig.url,
     },
-    image: `${siteConfig.url}${siteConfig.ogImage}`,
+    image: dynamicOgImage,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",

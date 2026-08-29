@@ -1,88 +1,136 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useFuseSearch } from "@/lib/search-fuse";
+import { useMiniSearch, type SearchResult } from "@/lib/search-minisearch";
 import { Badge } from "@/components/ui/badge";
-import type { Tool } from "@/types";
+import { FileText, BookOpen, Code, FlaskConical, FolderOpen, Package } from "lucide-react";
 
-interface SearchResultsProps {
-  tools: Tool[];
-  featuresBySlug: Record<string, string[]>;
-}
+const TYPE_ICONS = {
+  tool: Code,
+  guide: BookOpen,
+  blog: FileText,
+  compare: FlaskConical,
+  category: FolderOpen,
+  workflow: FlaskConical,
+  toolkit: Package,
+} as const;
 
-export function SearchResults({ tools, featuresBySlug }: SearchResultsProps) {
+const TYPE_LABELS: Record<string, string> = {
+  tool: "Tool",
+  guide: "Guide",
+  blog: "Blog",
+  compare: "Comparison",
+  category: "Category",
+  workflow: "Workflow",
+  toolkit: "Toolkit",
+};
+
+export function SearchResults() {
   const searchParams = useSearchParams();
   const q = (searchParams?.get("q") || "").trim().toLowerCase();
-  const { search, results, ready } = useFuseSearch(tools);
+  const { search, ready, error } = useMiniSearch();
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
-    search(q);
+    if (q.trim().length >= 2) {
+      const res = search(q, { limit: 50 });
+      setResults(res);
+    } else {
+      setResults([]);
+    }
   }, [q, search]);
 
   if (!q) {
     return (
-      <div className="text-center text-surface-500 dark:text-dark-muted">
-        <p>Type to search across all tools.</p>
+      <div className="text-center text-surface-500 dark:text-dark-muted py-12">
+        <p className="text-lg">Type to search tools, guides, blog posts, comparisons & more.</p>
       </div>
     );
   }
 
   if (!ready) {
     return (
-      <div className="text-center text-surface-500 dark:text-dark-muted">
-        <p>Searching…</p>
+      <div className="text-center text-surface-500 dark:text-dark-muted py-12">
+        <p>Loading search index…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-500 py-12">
+        <p>Search error: {error}</p>
       </div>
     );
   }
 
   if (results.length === 0) {
     return (
-      <div className="text-center text-surface-500 dark:text-dark-muted">
-        <p>No tools found for &ldquo;{q}&rdquo;</p>
+      <div className="text-center text-surface-500 dark:text-dark-muted py-12">
+        <p>No results for &ldquo;{q}&rdquo;</p>
         <p className="mt-1 text-sm">Try a different search term</p>
       </div>
     );
   }
 
+  // Group results by type
+  const grouped = results.reduce((acc, r) => {
+    if (!acc[r.type]) acc[r.type] = [];
+    acc[r.type].push(r);
+    return acc;
+  }, {} as Record<string, SearchResult[]>);
+
+  const typeOrder = ["tool", "guide", "blog", "compare", "category", "workflow", "toolkit"];
+
   return (
     <>
       <p className="text-sm text-surface-500 dark:text-dark-muted mb-4">
-        {results.length} tool{results.length !== 1 ? "s" : ""} found for &ldquo;{q}&rdquo;
+        {results.length} result{results.length !== 1 ? "s" : ""} for &ldquo;{q}&rdquo;
       </p>
-      <div className="grid gap-4">
-        {results.map((tool) => (
-          <Link
-            key={tool.id}
-            href={`/tools/${tool.slug}`}
-            className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-          >
-            <div className="flex items-start justify-between">
-              <Badge variant="default">{tool.category}</Badge>
-              {tool.trending && <Badge variant="warning">Hot</Badge>}
+      {typeOrder.map((type) => {
+        const items = grouped[type];
+        if (!items || items.length === 0) return null;
+        const Icon = TYPE_ICONS[type as keyof typeof TYPE_ICONS] || FileText;
+        return (
+          <section key={type} className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Icon className="h-5 w-5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+              <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text capitalize">
+                {TYPE_LABELS[type]} ({items.length})
+              </h2>
             </div>
-            <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-              {tool.name}
-            </h3>
-            <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-              {tool.description}
-            </p>
-            {featuresBySlug[tool.slug] && (
-              <ul className="mt-3 flex flex-wrap gap-1.5">
-                {featuresBySlug[tool.slug].slice(0, 3).map((feature) => (
-                  <li
-                    key={feature}
-                    className="rounded-full border border-surface-200 bg-surface-50 px-2 py-0.5 text-[10px] font-medium text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
-                  >
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Link>
-        ))}
-      </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {items.map((result) => (
+                <Link
+                  key={result.id}
+                  href={result.url}
+                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                >
+                  <div className="flex items-start justify-between">
+                    <Badge variant="default">{TYPE_LABELS[type]}</Badge>
+                    {result.popularity && result.popularity >= 90 && (
+                      <Badge variant="success">Most used</Badge>
+                    )}
+                  </div>
+                  <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400 line-clamp-1">
+                    {result.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    {result.text.slice(0, 200)}
+                  </p>
+                  {result.category && (
+                    <span className="mt-2 inline-block shrink-0 rounded-md bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                      {result.category}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </>
   );
 }

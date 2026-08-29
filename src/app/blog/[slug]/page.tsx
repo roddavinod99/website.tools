@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blogPost = getBlogPost(slug);
   if (!blogPost) return {};
   const canonical = getPostUrl(blogPost.slug);
+  const dynamicOgImage = `${siteConfig.url}/og/blog/${slug}`;
   return {
     title: blogPost.title,
     description: blogPost.excerpt,
@@ -37,11 +38,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "DevStackIO Tools",
       type: "article",
       publishedTime: blogPost.dateISO,
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${blogPost.title} - DevStackIO Blog` }],
     },
     twitter: {
       card: "summary_large_image",
       title: blogPost.title,
       description: blogPost.excerpt,
+      images: [dynamicOgImage],
     },
   };
 }
@@ -54,6 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!content) notFound();
   const htmlContent = await markdownToHtml(content);
 
+  const dynamicOgImage = `${siteConfig.url}/og/blog/${slug}`;
   return (
     <>
       <script
@@ -67,7 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
             url: getPostUrl(blogPost.slug),
             datePublished: blogPost.dateISO,
             dateModified: blogPost.dateISO,
-            image: `${siteConfig.url}${siteConfig.ogImage}`,
+            image: dynamicOgImage,
             wordCount: content.split(/\s+/).length,
             author: {
               "@type": "Organization",

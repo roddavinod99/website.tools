@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Suspense } from "react";
-import { Noto_Sans_Arabic } from "next/font/google";
 import "../styles/globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -24,13 +23,6 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 const HAS_GOOGLE_TAGS = !!(process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID);
 const VERIFICATION_GOOGLE = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "";
 const VERIFICATION_BING = process.env.NEXT_PUBLIC_BING_VERIFICATION || "";
-
-const notoSansArabic = Noto_Sans_Arabic({
-  variable: "--font-noto-sans-arabic",
-  subsets: ["arabic"],
-  display: "swap",
-  weight: "400",
-});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -143,7 +135,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${notoSansArabic.variable} h-full antialiased`}
+      className="h-full antialiased"
+      suppressHydrationWarning
     >
       <head>
         <Script
@@ -198,7 +191,7 @@ export default function RootLayout({
                 <PreloadPopularTools featuredTools={featuredTools} />
               </Suspense>
               <AdSenseScript />
-              <Header allTools={allTools} />
+              <Header />
               <main id="main-content" className="flex-1">{children}</main>
               <AdBanner slot={adSlots.footer} />
               <Footer />

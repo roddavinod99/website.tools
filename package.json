@@ -1,12 +1,12 @@
 {
   "name": "tools",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "predev": "node scripts/prebuild.mjs",
     "prebuild": "node scripts/prebuild.mjs",
-    "build": "next build && node scripts/postbuild-csp.mjs",
+    "build": "next build && node scripts/postbuild-csp.mjs && node scripts/build-search-index.mjs",
     "start": "next start",
     "build:wasm": "node scripts/build-wasm.mjs",
     "version": "node scripts/release.mjs",
@@ -44,6 +44,7 @@
     ]
   },
   "dependencies": {
+    "@vercel/og": "1.0.2",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
@@ -90,6 +91,8 @@
     "eslint": "^9",
     "eslint-config-next": "^16.2.10",
     "jscodeshift": "17.4.0",
+    "minisearch": "7.2.0",
+    "schema-dts": "2.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"

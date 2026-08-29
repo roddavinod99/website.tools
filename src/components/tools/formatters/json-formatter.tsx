@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { TryExamples } from "@/components/ui/try-examples";
+import { useToolUrlState } from "@/lib/url-state";
 
 interface TokenSpan {
   text: string;
@@ -86,28 +87,48 @@ function getErrorLineCol(input: string, msg: string): { line: number; col: numbe
 }
 
 export function JSONFormatter() {
-  const [input, setInput] = useState("");
+  const { state, updateState } = useToolUrlState({
+    input: "",
+    indent: "2",
+    sortKeysEnabled: false,
+    stripQuotes: false,
+    compactArrays: false,
+    wordWrap: true,
+    searchTerm: "",
+  });
+
+  const [input, setInput] = useState(state.input as string);
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);
   const [errorCol, setErrorCol] = useState<number | null>(null);
-  const [indent, setIndent] = useState<number | string>(2);
-  const [sortKeysEnabled, setSortKeysEnabled] = useState(false);
-  const [stripQuotes, setStripQuotes] = useState(false);
-  const [compactArrays, setCompactArrays] = useState(false);
-  const [wordWrap, setWordWrap] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [indent, setIndent] = useState<number | string>(state.indent as number | string);
+  const [sortKeysEnabled, setSortKeysEnabled] = useState(state.sortKeysEnabled as boolean);
+  const [stripQuotes, setStripQuotes] = useState(state.stripQuotes as boolean);
+  const [compactArrays, setCompactArrays] = useState(state.compactArrays as boolean);
+  const [wordWrap, setWordWrap] = useState(state.wordWrap as boolean);
+  const [searchTerm, setSearchTerm] = useState(state.searchTerm as string);
   const [searchIndex, setSearchIndex] = useState(0);
   const outputRef = useRef<HTMLPreElement>(null);
   const pasteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Sync local state with URL state
+  useEffect(() => { setInput(state.input as string); }, [state.input]);
+  useEffect(() => { setIndent(state.indent as number | string); }, [state.indent]);
+  useEffect(() => { setSortKeysEnabled(state.sortKeysEnabled as boolean); }, [state.sortKeysEnabled]);
+  useEffect(() => { setStripQuotes(state.stripQuotes as boolean); }, [state.stripQuotes]);
+  useEffect(() => { setCompactArrays(state.compactArrays as boolean); }, [state.compactArrays]);
+  useEffect(() => { setWordWrap(state.wordWrap as boolean); }, [state.wordWrap]);
+  useEffect(() => { setSearchTerm(state.searchTerm as string); }, [state.searchTerm]);
+
   const handleChange = useCallback((val: string) => {
     setInput(val);
+    updateState({ input: val });
     if (pasteTimer.current) clearTimeout(pasteTimer.current);
     pasteTimer.current = setTimeout(() => {
       try { const p = JSON.parse(val); setOutput(JSON.stringify(p, null, indent === "tab" ? "\t" : Number(indent))); setError(""); setErrorLine(null); setErrorCol(null); } catch {}
     }, 400);
-  }, [indent]);
+  }, [indent, updateState]);
 
   const format = useCallback(async () => {
     const runFormat = () => {
@@ -179,7 +200,8 @@ export function JSONFormatter() {
 
   const clear = useCallback(() => {
     setInput(""); setOutput(""); setError(""); setErrorLine(null); setErrorCol(null); setSearchTerm(""); setSearchIndex(0);
-  }, []);
+    updateState({ input: "", searchTerm: "" });
+  }, [updateState]);
 
   const tokens = useMemo(() => output ? tokenizeJson(output) : [], [output]);
 
@@ -250,7 +272,7 @@ export function JSONFormatter() {
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-1.5">
           <label htmlFor="json-indent" className="text-xs text-surface-500 dark:text-dark-muted">Indent:</label>
-          <select id="json-indent" value={String(indent)} onChange={(e) => setIndent(e.target.value === "tab" ? "tab" : Number(e.target.value))}
+          <select id="json-indent" value={String(indent)} onChange={(e) => { const val = e.target.value === "tab" ? "tab" : Number(e.target.value); setIndent(val); updateState({ indent: val }); }}
             className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="2">2 spaces</option>
             <option value="4">4 spaces</option>
@@ -259,16 +281,16 @@ export function JSONFormatter() {
           </select>
         </div>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" id="json-sort-keys" checked={sortKeysEnabled} onChange={(e) => setSortKeysEnabled(e.target.checked)} className="rounded border-surface-300" /> Sort keys
+          <input type="checkbox" id="json-sort-keys" checked={sortKeysEnabled} onChange={(e) => { const val = e.target.checked; setSortKeysEnabled(val); updateState({ sortKeysEnabled: val }); }} className="rounded border-surface-300" /> Sort keys
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" id="json-strip-quotes" checked={stripQuotes} onChange={(e) => setStripQuotes(e.target.checked)} className="rounded border-surface-300" /> Strip key quotes
+          <input type="checkbox" id="json-strip-quotes" checked={stripQuotes} onChange={(e) => { const val = e.target.checked; setStripQuotes(val); updateState({ stripQuotes: val }); }} className="rounded border-surface-300" /> Strip key quotes
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" id="json-compact-arrays" checked={compactArrays} onChange={(e) => setCompactArrays(e.target.checked)} className="rounded border-surface-300" /> Compact arrays
+          <input type="checkbox" id="json-compact-arrays" checked={compactArrays} onChange={(e) => { const val = e.target.checked; setCompactArrays(val); updateState({ compactArrays: val }); }} className="rounded border-surface-300" /> Compact arrays
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
-          <input type="checkbox" id="json-word-wrap" checked={wordWrap} onChange={(e) => setWordWrap(e.target.checked)} className="rounded border-surface-300" /> Word wrap
+          <input type="checkbox" id="json-word-wrap" checked={wordWrap} onChange={(e) => { const val = e.target.checked; setWordWrap(val); updateState({ wordWrap: val }); }} className="rounded border-surface-300" /> Word wrap
         </label>
       </div>
 
@@ -297,7 +319,7 @@ export function JSONFormatter() {
               <input
                 id="json-search"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => { setSearchTerm(e.target.value); updateState({ searchTerm: e.target.value }); }}
                 placeholder="Search in output..."
                 className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
@@ -311,7 +333,7 @@ export function JSONFormatter() {
               <input
                 id="json-search-empty"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => { setSearchTerm(e.target.value); updateState({ searchTerm: e.target.value }); }}
                 placeholder="Search in output..."
                 className="flex-1 rounded border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />

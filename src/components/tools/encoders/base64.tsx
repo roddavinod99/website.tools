@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { validateFileUpload } from "@/lib/file-security";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
+import { useToolUrlState } from "@/lib/url-state";
 
 type Mode = "encode" | "decode";
 type OutputFormat = "plain" | "datauri" | "base64url";
@@ -55,14 +56,26 @@ function decodeChar(str: string, enc: CharEncoding): string {
 }
 
 export function Base64Tool() {
-  const [input, setInput] = useState("");
+  const { state, updateState } = useToolUrlState({
+    mode: "encode",
+    outputFormat: "plain",
+    charEncoding: "utf-8",
+    input: "",
+  });
+
+  const [input, setInput] = useState((state.input as string) ?? "");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [validationMsg, setValidationMsg] = useState<{ ok: boolean; text: string } | null>(null);
-  const [mode, setMode] = useState<Mode>("encode");
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>("plain");
-  const [charEncoding, setCharEncoding] = useState<CharEncoding>("utf-8");
+  const [mode, setMode] = useState<Mode>((state.mode as Mode) ?? "encode");
+  const [outputFormat, setOutputFormat] = useState<OutputFormat>((state.outputFormat as OutputFormat) ?? "plain");
+  const [charEncoding, setCharEncoding] = useState<CharEncoding>((state.charEncoding as CharEncoding) ?? "utf-8");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  useEffect(() => { setInput((state.input as string) ?? ""); }, [state.input]);
+  useEffect(() => { setMode((state.mode as Mode) ?? "encode"); }, [state.mode]);
+  useEffect(() => { setOutputFormat((state.outputFormat as OutputFormat) ?? "plain"); }, [state.outputFormat]);
+  useEffect(() => { setCharEncoding((state.charEncoding as CharEncoding) ?? "utf-8"); }, [state.charEncoding]);
 
   const convert = useCallback(() => {
     setError("");
@@ -109,6 +122,7 @@ export function Base64Tool() {
 
   const handleInputChange = (val: string) => {
     setInput(val);
+    updateState({ input: val });
   };
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
@@ -143,9 +157,10 @@ export function Base64Tool() {
       setInput(result);
       setMode("decode");
       setOutputFormat("datauri");
+      updateState({ input: result, mode: "decode", outputFormat: "datauri" });
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [updateState]);
 
   const handleFileUpload = useCallback(async () => {
     const inputEl = document.createElement("input");
@@ -161,6 +176,7 @@ export function Base64Tool() {
         const content = reader.result as string;
         setInput(content);
         setMode("encode");
+        updateState({ input: content, mode: "encode" });
       };
       if (TEXT_MIME_TYPES.some((m) => file.type.includes(m.split("/")[1]))) {
         reader.readAsText(file);
@@ -168,10 +184,11 @@ export function Base64Tool() {
         reader.readAsDataURL(file);
         setMode("decode");
         setOutputFormat("datauri");
+        updateState({ mode: "decode", outputFormat: "datauri" });
       }
     };
     inputEl.click();
-  }, []);
+  }, [updateState]);
 
   const handleDecodedFileDownload = () => {
     if (!output || mode !== "decode") return;
@@ -191,7 +208,7 @@ export function Base64Tool() {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
-          <button key={m} onClick={() => { setMode(m); setError(""); }}
+          <button key={m} onClick={() => { setMode(m); setError(""); updateState({ mode: m }); }}
             className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Encode" : "Decode"}
           </button>
@@ -200,14 +217,14 @@ export function Base64Tool() {
 
       <div className="flex flex-wrap gap-2 mb-3">
         <label htmlFor="base64-output-format" className="sr-only">Output format</label>
-        <select id="base64-output-format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+        <select id="base64-output-format" value={outputFormat} onChange={(e) => { const v = e.target.value as OutputFormat; setOutputFormat(v); updateState({ outputFormat: v }); }}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="plain">Plain Text</option>
           <option value="datauri">Data URI</option>
           <option value="base64url">Base64url</option>
         </select>
         <label htmlFor="base64-char-encoding" className="sr-only">Character encoding</label>
-        <select id="base64-char-encoding" value={charEncoding} onChange={(e) => setCharEncoding(e.target.value as CharEncoding)}
+        <select id="base64-char-encoding" value={charEncoding} onChange={(e) => { const v = e.target.value as CharEncoding; setCharEncoding(v); updateState({ charEncoding: v }); }}
           className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="utf-8">UTF-8</option>
           <option value="ascii">ASCII</option>
@@ -223,7 +240,7 @@ export function Base64Tool() {
         <OptionGroup title="Encoding & Output" description="Configure how data is encoded and formatted">
           <OptionRow columns={2}>
             <label htmlFor="base64-char-encoding" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Character Encoding</label>
-            <select id="base64-char-encoding" value={charEncoding} onChange={(e) => setCharEncoding(e.target.value as CharEncoding)}
+            <select id="base64-char-encoding" value={charEncoding} onChange={(e) => { const v = e.target.value as CharEncoding; setCharEncoding(v); updateState({ charEncoding: v }); }}
               className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               <option value="utf-8">UTF-8 (default)</option>
               <option value="ascii">ASCII</option>
@@ -232,7 +249,7 @@ export function Base64Tool() {
             </select>
 
             <label htmlFor="base64-output-format" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output Format</label>
-            <select id="base64-output-format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+            <select id="base64-output-format" value={outputFormat} onChange={(e) => { const v = e.target.value as OutputFormat; setOutputFormat(v); updateState({ outputFormat: v }); }}
               className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               <option value="plain">Plain Text</option>
               <option value="datauri">Data URI</option>
