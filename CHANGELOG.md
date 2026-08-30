@@ -453,6 +453,36 @@
 - update OG preview card to 1200x630
 - update security tests for DENY frame option + add rate-limit bypass for contact test
 - rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
+## [1.1.11] - 2026-08-30
+
+### Changed
+
+- preview card issues fixed
+- solved deploy issue.
+- Deploy issue
+- v1.1.10
+- v1.1.9
+- v1.1.8
+- v1.1.7
+- v1.1.6
+- v1.1.5
+- rose
+- v1.1.4
+- v1.1.3
+- done
+- v1.1.2
+- v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Infrastructure
+
+- replace IndexNow key with newly generated value
+### Fixed
+
+- update verify-csp.mjs for hash-based CSP
+- resolve GitHub Actions deploy failures
+- lint errors in guides-list, portal, tooltip, currency-converter
+- update OG preview card to 1200x630
+- update security tests for DENY frame option + add rate-limit bypass for contact test
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
 ## Template
 
 For future releases:

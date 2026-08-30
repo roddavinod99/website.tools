@@ -25,20 +25,33 @@ const guideToBlog: Record<string, { slug: string; title: string }> = {
   },
 };
 
+const guideAliases: Record<string, string> = {
+  "getting-started-json": "concepts/json-basics",
+  "understanding-jwt": "concepts/jwt-structure",
+};
+
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export async function generateStaticParams() {
-  return guidesTopics.map((topic) => ({ slug: topic.slug }));
+  const canonical = guidesTopics.map((topic) => ({
+    slug: topic.slug.split("/"),
+  }));
+  const aliasParams = Object.keys(guideAliases).map((alias) => ({
+    slug: alias.split("/"),
+  }));
+  return [...canonical, ...aliasParams];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const topic = guidesTopics.find((t) => t.slug === slug);
+  const fullSlug = slug.join("/");
+  const resolved = guideAliases[fullSlug] ?? fullSlug;
+  const topic = guidesTopics.find((t) => t.slug === resolved);
   if (!topic) return {};
-  const canonical = getGuideUrl(slug);
-  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
+  const canonical = getGuideUrl(resolved);
+  const dynamicOgImage = `${siteConfig.url}/og/${resolved}`;
   return {
     title: `${topic.title} - Guide`,
     description: topic.description,
@@ -64,18 +77,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
-  const topic = guidesTopics.find((t) => t.slug === slug);
+  const fullSlug = slug.join("/");
+  const resolvedSlug = guideAliases[fullSlug] ?? fullSlug;
+  const topic = guidesTopics.find((t) => t.slug === resolvedSlug);
   if (!topic) notFound();
 
-  const content = await getGuideContent(slug);
+  const content = await getGuideContent(resolvedSlug);
   const htmlContent = content ? await markdownToHtml(content) : null;
 
   const toolLinks = (topic.tools ?? [])
     .map((toolSlug) => allTools.find((t) => t.slug === toolSlug))
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
-  const canonical = getGuideUrl(slug);
-  const dynamicOgImage = `${siteConfig.url}/og/${slug}`;
+  const canonical = getGuideUrl(resolvedSlug);
+  const dynamicOgImage = `${siteConfig.url}/og/${resolvedSlug}`;
   const graphItems = [
     {
       "@type": "TechArticle",
@@ -182,16 +197,16 @@ export default async function GuidePage({ params }: Props) {
             </div>
           )}
 
-          {guideToBlog[slug] && (
+          {guideToBlog[resolvedSlug] && (
             <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
                 Read the full guide
               </h3>
               <Link
-                href={`/blog/${guideToBlog[slug].slug}`}
+                href={`/blog/${guideToBlog[resolvedSlug].slug}`}
                 className="group mt-2 flex items-center gap-2 text-brand-500 hover:text-brand-600 dark:text-brand-400"
               >
-                <span className="font-medium">{guideToBlog[slug].title}</span>
+                <span className="font-medium">{guideToBlog[resolvedSlug].title}</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -201,3 +216,4 @@ export default async function GuidePage({ params }: Props) {
     </>
   );
 }
+

@@ -40,7 +40,6 @@ function loadModule(modPath, exportName) {
   }
   if (depth !== 0) return null;
   const structStr = content.slice(arrStart, i + 1);
-  // eslint-disable-next-line no-eval
   return eval(`(${structStr})`);
 }
 
@@ -53,7 +52,7 @@ const workflows = loadModule(workflowsDataPath, 'workflows');
 
 // Load toolkits manually since it contains function calls
 const toolkitsContent = fs.readFileSync(toolkitsDataPath, 'utf8');
-const toolkitsArray = parseToolkits(toolkitsContent);
+const toolkitsArray = parseToolkits();
 
 if (!guidesTopics || !blogPosts || !allTools || !comparisons || !categories || !workflows || !toolkitsArray.length) {
   console.error('Failed to load one or more data sources');
@@ -66,8 +65,6 @@ const blogBySlug = Object.fromEntries(blogPosts.map((b) => [b.slug, b]));
 const toolBySlug = Object.fromEntries(allTools.map((t) => [t.slug, t]));
 const comparisonBySlug = Object.fromEntries(comparisons.map((c) => [c.slug, c]));
 const categoryBySlug = Object.fromEntries(categories.map((c) => [c.slug, c]));
-const workflowBySlug = Object.fromEntries(workflows.map((w) => [w.slug, w]));
-const toolkitBySlug = Object.fromEntries(toolkitsArray.map((tk) => [tk.slug, tk]));
 
 // Build reverse mappings for bidirectional linking
 const toolToGuides = new Map();
@@ -123,7 +120,7 @@ for (const toolkit of toolkitsArray) {
   }
 }
 
-function parseToolkits(content) {
+function parseToolkits() {
   const toolkits = [];
   const toolkitRegex = /"([^"]+)"\s*:\s*\{([\s\S]*?)\n\s*\}/g;
   let match;

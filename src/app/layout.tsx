@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import "../styles/globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { siteConfig, allTools, featuredTools } from "@/lib/data";
+import { siteConfig, featuredTools } from "@/lib/data";
 import { Analytics } from "@/components/layout/analytics";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";

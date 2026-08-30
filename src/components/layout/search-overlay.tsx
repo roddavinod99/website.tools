@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useMiniSearch, type SearchResult } from "@/lib/search-minisearch";
+import { useMiniSearch } from "@/lib/search-minisearch";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 import { Search, X, FileText, BookOpen, Code, FlaskConical } from "lucide-react";
 

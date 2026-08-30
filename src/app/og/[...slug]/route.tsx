@@ -1,5 +1,5 @@
 import { ImageResponse } from "@vercel/og";
-import { allTools, siteConfig } from "@/lib/data";
+import { allTools } from "@/lib/data";
 import { comparisons } from "@/lib/data/comparisons";
 import { guidesTopics } from "@/lib/data/guides";
 import { blogPosts } from "@/lib/blog";
@@ -105,7 +105,6 @@ export async function GET(
   }
 
   const typeLabel = getTypeLabel(data.type);
-  const siteName = "DevStackIO";
 
   // Try to fetch Inter font, fallback to system fonts on failure
   let fontData: ArrayBuffer | null = null;
@@ -122,7 +121,6 @@ export async function GET(
   }
 
   let fonts: Array<{ name: string; data: ArrayBuffer; weight: 400 | 700 | 800; style: "normal" }> = [];
-  let fontFamily = "system-ui, sans-serif";
 
   if (fontData) {
     const data = fontData as ArrayBuffer;
@@ -131,7 +129,6 @@ export async function GET(
       { name: "Inter", data, weight: 700 as const, style: "normal" as const },
       { name: "Inter", data, weight: 800 as const, style: "normal" as const },
     ];
-    fontFamily = "Inter";
   }
 
   return new ImageResponse(
