@@ -123,6 +123,9 @@ SEO.md
 SSH/
 docs/suggestions/upgrade.md
 
+# OG image review artifacts (regenerate with docs/suggestions/download-og-images.mjs)
+docs/suggestions/og-images/
+
 
 
 

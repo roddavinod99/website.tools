@@ -282,84 +282,106 @@ export function QRGenerator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
             {qrType === "url" ? "URL" : qrType === "email" ? "Email Address" : qrType === "phone" ? "Phone Number" : qrType === "sms" ? "Phone Number" : qrType === "wifi" ? "SSID (Network Name)" : qrType === "vcard" ? "Phone Number" : qrType === "location" ? "Label" : "Text"}
+            <input type="text" value={input} onChange={(e) => setInput(e.target.value)}
+              placeholder={qrType === "url" ? "https://example.com" : qrType === "email" ? "user@example.com" : qrType === "phone" ? "+1234567890" : qrType === "sms" ? "+1234567890" : qrType === "wifi" ? "MyNetwork" : qrType === "location" ? "My Location" : "Enter text..."}
+              className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           </label>
-          <input type="text" value={input} onChange={(e) => setInput(e.target.value)}
-            placeholder={qrType === "url" ? "https://example.com" : qrType === "email" ? "user@example.com" : qrType === "phone" ? "+1234567890" : qrType === "sms" ? "+1234567890" : qrType === "wifi" ? "MyNetwork" : qrType === "location" ? "My Location" : "Enter text..."}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
 
         {qrType === "email" && (
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Subject</label>
-            <input type="text" value={extra.subject || ""} onChange={(e) => setExtra(p => ({ ...p, subject: e.target.value }))} placeholder="Email subject"
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+              Subject
+              <input type="text" value={extra.subject || ""} onChange={(e) => setExtra(p => ({ ...p, subject: e.target.value }))} placeholder="Email subject"
+                className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            </label>
           </div>
         )}
         {qrType === "sms" && (
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Message Body</label>
-            <input type="text" value={extra.body || ""} onChange={(e) => setExtra(p => ({ ...p, body: e.target.value }))} placeholder="SMS text"
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+              Message Body
+              <input type="text" value={extra.body || ""} onChange={(e) => setExtra(p => ({ ...p, body: e.target.value }))} placeholder="SMS text"
+                className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            </label>
           </div>
         )}
         {qrType === "wifi" && (
           <>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Password</label>
-              <input type="text" value={extra.password || ""} onChange={(e) => setExtra(p => ({ ...p, password: e.target.value }))} placeholder="WiFi password"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Password
+                <input type="text" value={extra.password || ""} onChange={(e) => setExtra(p => ({ ...p, password: e.target.value }))} placeholder="WiFi password"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Encryption</label>
-              <select value={extra.encryption || "WPA"} onChange={(e) => setExtra(p => ({ ...p, encryption: e.target.value }))}
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                <option value="WPA">WPA/WPA2</option>
-                <option value="WEP">WEP</option>
-                <option value="nopass">No Password</option>
-              </select>
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Encryption
+                <select value={extra.encryption || "WPA"} onChange={(e) => setExtra(p => ({ ...p, encryption: e.target.value }))}
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="WPA">WPA/WPA2</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">No Password</option>
+                </select>
+              </label>
             </div>
           </>
         )}
         {qrType === "vcard" && (
           <>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Full Name</label>
-              <input type="text" value={extra.name || ""} onChange={(e) => setExtra(p => ({ ...p, name: e.target.value }))} placeholder="John Doe"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Full Name
+                <input type="text" value={extra.name || ""} onChange={(e) => setExtra(p => ({ ...p, name: e.target.value }))} placeholder="John Doe"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Organization</label>
-              <input type="text" value={extra.org || ""} onChange={(e) => setExtra(p => ({ ...p, org: e.target.value }))} placeholder="Company Inc."
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Organization
+                <input type="text" value={extra.org || ""} onChange={(e) => setExtra(p => ({ ...p, org: e.target.value }))} placeholder="Company Inc."
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Email</label>
-              <input type="text" value={extra.email || ""} onChange={(e) => setExtra(p => ({ ...p, email: e.target.value }))} placeholder="john@example.com"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Email
+                <input type="text" value={extra.email || ""} onChange={(e) => setExtra(p => ({ ...p, email: e.target.value }))} placeholder="john@example.com"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Website</label>
-              <input type="text" value={extra.url || ""} onChange={(e) => setExtra(p => ({ ...p, url: e.target.value }))} placeholder="https://example.com"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Website
+                <input type="text" value={extra.url || ""} onChange={(e) => setExtra(p => ({ ...p, url: e.target.value }))} placeholder="https://example.com"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Address</label>
-              <input type="text" value={extra.address || ""} onChange={(e) => setExtra(p => ({ ...p, address: e.target.value }))} placeholder="123 Main St, City"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Address
+                <input type="text" value={extra.address || ""} onChange={(e) => setExtra(p => ({ ...p, address: e.target.value }))} placeholder="123 Main St, City"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
           </>
         )}
         {qrType === "location" && (
           <>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Latitude</label>
-              <input type="number" step="any" value={extra.lat || ""} onChange={(e) => setExtra(p => ({ ...p, lat: e.target.value }))} placeholder="37.7749"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Latitude
+                <input type="number" step="any" value={extra.lat || ""} onChange={(e) => setExtra(p => ({ ...p, lat: e.target.value }))} placeholder="37.7749"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Longitude</label>
-              <input type="number" step="any" value={extra.lng || ""} onChange={(e) => setExtra(p => ({ ...p, lng: e.target.value }))} placeholder="-122.4194"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
+                Longitude
+                <input type="number" step="any" value={extra.lng || ""} onChange={(e) => setExtra(p => ({ ...p, lng: e.target.value }))} placeholder="-122.4194"
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              </label>
             </div>
           </>
         )}
@@ -369,26 +391,34 @@ export function QRGenerator() {
         <OptionGroup title="Core Settings" description="Fundamental QR code configuration">
           <OptionRow columns={2}>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Error Correction</label>
-              <select value={ecc} onChange={(e) => setEcc(e.target.value as ECCLevel)}
-                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_MAP[l]}</option>))}
-              </select>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Error Correction
+                <select value={ecc} onChange={(e) => setEcc(e.target.value as ECCLevel)}
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  {(["L", "M", "Q", "H"] as ECCLevel[]).map((l) => (<option key={l} value={l}>{ECC_MAP[l]}</option>))}
+                </select>
+              </label>
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Output Format</label>
-              <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
-                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                {(["png", "svg", "jpeg"] as OutputFormat[]).map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
-              </select>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Output Format
+                <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  {(["png", "svg", "jpeg"] as OutputFormat[]).map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
+                </select>
+              </label>
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Cell Size: {cellSize}px</label>
-              <input type="range" min={4} max={20} value={cellSize} onChange={(e) => setCellSize(parseInt(e.target.value))} className="w-full accent-brand-500" />
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Cell Size: {cellSize}px
+                <input type="range" min={4} max={20} value={cellSize} onChange={(e) => setCellSize(parseInt(e.target.value))} className="mt-1 w-full accent-brand-500" />
+              </label>
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Margin: {margin} modules</label>
-              <input type="range" min={1} max={8} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))} className="w-full accent-brand-500" />
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Margin: {margin} modules
+                <input type="range" min={1} max={8} value={margin} onChange={(e) => setMargin(parseInt(e.target.value))} className="mt-1 w-full accent-brand-500" />
+              </label>
             </div>
           </OptionRow>
         </OptionGroup>
@@ -396,27 +426,33 @@ export function QRGenerator() {
         <OptionGroup title="Appearance" description="Customize how your QR code looks">
           <OptionRow columns={2}>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Dot Shape</label>
-              <select value={dotShape} onChange={(e) => setDotShape(e.target.value as DotShape)}
-                className="w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                <option value="square">Square</option>
-                <option value="circle">Circle</option>
-                <option value="rounded">Rounded</option>
-              </select>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Dot Shape
+                <select value={dotShape} onChange={(e) => setDotShape(e.target.value as DotShape)}
+                  className="mt-1 w-full rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <option value="square">Square</option>
+                  <option value="circle">Circle</option>
+                  <option value="rounded">Rounded</option>
+                </select>
+              </label>
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Foreground Color</label>
-              <div className="flex items-center gap-2">
-                <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-                <input type="text" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-              </div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Foreground Color
+                <div className="mt-1 flex items-center gap-2">
+                  <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                  <input type="text" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                </div>
+              </label>
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Background Color</label>
-              <div className="flex items-center gap-2">
-                <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-                <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-              </div>
+              <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                Background Color
+                <div className="mt-1 flex items-center gap-2">
+                  <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                  <input type="text" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                </div>
+              </label>
             </div>
           </OptionRow>
         </OptionGroup>
@@ -433,18 +469,22 @@ export function QRGenerator() {
           {useGradient && (
             <OptionRow columns={2}>
               <div>
-                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Gradient Start</label>
-                <div className="flex items-center gap-2">
-                  <input type="color" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-                  <input type="text" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-                </div>
+                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                  Gradient Start
+                  <div className="mt-1 flex items-center gap-2">
+                    <input type="color" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                    <input type="text" value={gradientStart} onChange={(e) => setGradientStart(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  </div>
+                </label>
               </div>
               <div>
-                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Gradient End</label>
-                <div className="flex items-center gap-2">
-                  <input type="color" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
-                  <input type="text" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-                </div>
+                <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">
+                  Gradient End
+                  <div className="mt-1 flex items-center gap-2">
+                    <input type="color" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="h-8 w-12 rounded border border-surface-200 dark:border-dark-border" />
+                    <input type="text" value={gradientEnd} onChange={(e) => setGradientEnd(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  </div>
+                </label>
               </div>
             </OptionRow>
           )}
