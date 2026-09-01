@@ -248,7 +248,7 @@ leaves the page.
 
 ## Trust Badge & Counter Conventions
 
-- **Tracking claim**: Footer badges must reflect actual behavior. Use "Your Data Stays Local" (tools process data client-side) rather than absolute "No Tracking" when consent-gated analytics/ads exist.
+- **Tracking claim**: Tool pages display the three trust badges ("100% Client-Side", "Your Data Stays Local", "No Account Required") **above the tool title** in `src/app/tools/[slug]/tool-client.tsx`. This is the moment of highest user intent, not the footer. The footer retains a smaller, secondary strip. Use the wording "Your Data Stays Local" (tools process data client-side) rather than absolute "No Tracking" when consent-gated analytics/ads exist.
 - **Visitor counter**: Hide public display until a meaningful threshold (e.g., 10,000 visits) to avoid credibility backfire from low numbers. The counter API continues running for internal analytics.
 
 ## GDPR Compliance (Controller Checklist)
@@ -546,15 +546,17 @@ Core Web Vitals targets (enforced in CI):
 
 Every page must include appropriate JSON-LD structured data. Use the templates below with Next.js App Router's `metadata` export or a dedicated helper.
 
-> **Note on the current implementation:** This repo does **not** have a shared
-> `@/components/JsonLd` component or `generate*JsonLd` helpers. Structured data
-> is built **inline in each page file** (Server Components) and emitted in a
-> single `<script type="application/ld+json">` via `@graph` and
-> `dangerouslySetInnerHTML` (see `src/app/tools/[slug]/page.tsx`). The templates
-> and helpers below are the **reference schema pattern to follow** — keep the
-> `@graph` shape, escape `<` as `\u003c`, and use absolute URLs from `siteConfig`.
-> When working on an existing page, extend the page's existing inline `@graph`
-> array rather than introducing a shared component.
+> **Note on the current implementation:** Shared JSON-LD helpers exist in
+> `src/lib/seo/json-ld.ts` — use `breadcrumbList()`, `collectionPage()`, `itemList()`,
+> and `jsonLdScriptBody()` to build and serialize nodes. All emitted script bodies
+> **must** go through `jsonLdScriptBody()` so the official Next.js JSON-LD guide's
+> `<` → `\u003c` escape rule is applied consistently (see the
+> [Next.js JSON-LD guide](https://nextjs.org/docs/app/guides/json-ld)). The listing
+> pages (`/tools`, `/categories/[slug]`, `/popular`) use these helpers; the tool
+> detail page still uses an inline `@graph` for the per-tool schemas
+> (SoftwareApplication, HowTo, FAQPage, BreadcrumbList) because those are
+> page-specific. The templates below are the **reference schema pattern to follow** —
+> keep the `@graph` shape and use absolute URLs from `siteConfig`.
 
 ### Validation
 
@@ -1402,9 +1404,24 @@ Finance tool id is `fi30`.
 }
 ```
 
-Optional fields: `featured`, `new`, `trending`, `worker`, `wasm`,
-`aliasSlugs`, `keywords`, `noindex`. The registry drives search indexing,
-sitemap generation, metadata, and the `/tools/[slug]` page.
+Optional fields:
+- `featured`, `new`, `trending` — show badges on the tool card and page header
+- `worker`, `wasm`, `processing` — capability metadata; drives tool-feature filtering
+- `aliasSlugs` — alternate slugs that `redirect()` to the canonical one
+- `keywords` — search-index seed terms beyond name + description
+- `noindex` — excludes the page from search engines via `metadata.robots = noindex`
+- `guideSlug` — path to a guide under `/guides/`. When set, `app/tools/[slug]/page.tsx`
+  resolves it via `guidesTopics` and renders a "Learning Resources" link in the
+  sidebar. Use this for tools that have a real in-depth guide.
+- `examples` — `string[]` of one-click sample inputs. When non-empty, the tool page
+  renders a "Load example" button strip below the tool interface and dispatches a
+  `devstackio:load-example` `CustomEvent` for the tool to consume via
+  `useLoadExample("slug", (text) => setInput(text))` from `@/lib/load-example`
+  (see Step 5 below). Use this for the top ~20 tools; tools with their own option
+  UIs (UUID, Password, Image) can skip.
+
+The registry drives search indexing, sitemap generation, metadata, the `/tools/[slug]`
+page, and the homepage's "Recently added" / "Featured" rails.
 
 ## 2. Component — `src/components/tools/<slug>.tsx`
 
@@ -1454,7 +1471,24 @@ Example shape:
 }
 ```
 
-## 5. Test fixture — `tests/fixtures/<category>.json`
+## 5. (Optional) Subscribe to load-example events
+
+If your tool's registry entry has `examples` populated, add a one-line hook to
+your tool component so the page-level "Load example" buttons work:
+
+```tsx
+import { useLoadExample } from "@/lib/load-example";
+// ...inside the component, after your useState declarations:
+useLoadExample("your-slug", (text) => setInput(text));
+```
+
+The hook listens for `window` events of name `devstackio:load-example` whose
+`detail.slug` matches your slug, then calls your callback with the example text.
+Tools that don't subscribe are unaffected by the events. Skip this step for
+tools that have their own option UIs (generators, image tools, calculators with
+toggles).
+
+## 6. Test fixture — `tests/fixtures/<category>.json`
 
 Add one entry to the fixture pack for your tool's category so the
 data-driven `tests/tools.spec.ts` covers it. `action` is an optional button
@@ -1477,7 +1511,7 @@ with `data-testid="tool-output"`, an output textarea/pre/code with text, an
     time out waiting for an editable element. Keep a read-only result element
     that is NOT the first textarea, or omit the `input` for the fixture.
 
-## 6. Verify
+## 7. Verify
 
 ```bash
 npm run build          # generates .next/standalone for Playwright
