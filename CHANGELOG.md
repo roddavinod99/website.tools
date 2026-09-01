@@ -615,6 +615,11 @@
 ### Added
 
 - add one-click Load example buttons + top trust badges
+## [1.2.1] - 2026-09-01
+
+### Documentation
+
+- add User Experience Goals + user-facing component map
 ## Template
 
 For future releases:
