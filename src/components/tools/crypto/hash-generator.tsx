@@ -14,6 +14,7 @@ import {
   type HmacHashId,
 } from "@/lib/crypto-hash";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
+import { useLoadExample } from "@/lib/load-example";
 
 // sha512-224/256 are hand-rolled for unsupported WebCrypto envs.
 
@@ -192,6 +193,7 @@ function birthdayProb(bits: number): string {
 
 export function HashGenerator() {
   const [input, setInput] = useState("");
+  useLoadExample("hash-generator", (text) => setInput(text));
   const [selected, setSelected] = useState(() => ALL_ALGORITHMS.map((a) => a.id));
   const [results, setResults] = useState<Record<string, string>>({});
   const [hmac, setHmac] = useState(false);

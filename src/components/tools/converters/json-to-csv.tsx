@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload } from "lucide-react";
+import { useLoadExample } from "@/lib/load-example";
 
 
 type Delimiter = "comma" | "tab" | "semicolon" | "pipe" | "custom";
@@ -71,6 +72,7 @@ function detectColumnTypes(rows: Record<string, unknown>[]): Record<string, stri
 
 export function JSONToCSV() {
   const [input, setInput] = useState("");
+  useLoadExample("json-to-csv", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [delimiter, setDelimiter] = useState<Delimiter>("comma");

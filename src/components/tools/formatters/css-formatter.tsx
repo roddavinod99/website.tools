@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, RefreshCw, Minimize, Upload } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 type IndentType = "spaces" | "tabs";
 type OutputMode = "expanded" | "compact" | "compressed";
@@ -90,6 +91,7 @@ function validateCSS(css: string): string[] {
 
 export function CSSFormatter() {
   const [input, setInput] = useState("");
+  useLoadExample("css-formatter", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);

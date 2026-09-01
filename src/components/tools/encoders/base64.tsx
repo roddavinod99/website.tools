@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { validateFileUpload } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 import { useToolUrlState } from "@/lib/url-state";
 
@@ -119,6 +120,8 @@ export function Base64Tool() {
     setInput(val);
     updateState({ input: val });
   };
+
+  useLoadExample("base64", handleInputChange);
 
   const copy = async () => { if (output) await navigator.clipboard.writeText(output); };
 

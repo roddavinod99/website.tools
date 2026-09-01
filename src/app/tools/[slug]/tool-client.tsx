@@ -13,16 +13,18 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FeatureBadgesGroup } from "@/components/ui/feature-badge";
 import { NextStepCTA } from "@/components/ui/next-step-cta";
+import { TryExamples } from "@/components/ui/try-examples";
 import Link from "next/link";
 import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
   Copy, FileText, ExternalLink, FolderOpen,
-  type LucideIcon,
+  ShieldCheck, EyeOff, Lock, type LucideIcon,
 } from "lucide-react";
 import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
 import { copyText } from "@/lib/clipboard";
 import { parseFaqItem } from "@/lib/faq";
+import { dispatchLoadExample } from "@/lib/load-example";
 
 interface ToolData {
   id: string;
@@ -35,6 +37,7 @@ interface ToolData {
   trending?: boolean;
   new?: boolean;
   icon?: string;
+  examples?: string[];
 }
 
 interface ToolContent {
@@ -254,6 +257,13 @@ export function ToolClient({
     }
   }, [tool.slug]);
 
+  const handleLoadExample = useCallback(
+    (text: string) => {
+      dispatchLoadExample(tool.slug, text);
+    },
+    [tool.slug],
+  );
+
   useEffect(() => {
     const onShortcut = (e: KeyboardEvent) => {
       if (isToolShortcutEvent(e, "Enter", false)) {
@@ -316,6 +326,25 @@ export function ToolClient({
           <div className="max-w-3xl space-y-8">
             {/* Hero with Tool Interface */}
             <section id="hero">
+              {/* Trust badges - above the tool so users see the privacy promise before they engage */}
+              <div
+                className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-surface-500 dark:text-dark-muted"
+                role="list"
+                aria-label="Tool guarantees"
+              >
+                <span className="inline-flex items-center gap-1.5" role="listitem">
+                  <ShieldCheck className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+                  100% Client-Side
+                </span>
+                <span className="inline-flex items-center gap-1.5" role="listitem">
+                  <EyeOff className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+                  Your Data Stays Local
+                </span>
+                <span className="inline-flex items-center gap-1.5" role="listitem">
+                  <Lock className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+                  No Account Required
+                </span>
+              </div>
               <div className="flex items-center gap-2 flex-wrap">
                 <Badge variant="default">{tool.category}</Badge>
                 {tool.trending && <Badge variant="warning">Trending</Badge>}
@@ -339,6 +368,15 @@ export function ToolClient({
               <div id={`tool-interface-${tool.slug}`} className="mt-5 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
                 <ToolInterface slug={tool.slug} name={tool.name} />
               </div>
+
+              {/* Load-example affordance - lets a first-time user try the tool instantly */}
+              {tool.examples && tool.examples.length > 0 && (
+                <TryExamples
+                  examples={tool.examples}
+                  onExampleSelect={handleLoadExample}
+                  label="Load example"
+                />
+              )}
 
               {/* Next Step CTA */}
               {nextSteps && nextSteps.length > 0 && (

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { Copy, Download, RefreshCw, Minimize, ShieldCheck, Trash2 } from "lucide-react";
+import { useLoadExample } from "@/lib/load-example";
 
 type KeywordCase = "upper" | "lower" | "capitalize" | "preserve";
 type Indent = "2" | "4" | "8";
@@ -113,6 +114,7 @@ function countKeywords(sql: string, extra: string[] = []): number {
 
 export function SQLFormatter() {
   const [input, setInput] = useState("");
+  useLoadExample("sql-formatter", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [keywordCase, setKeywordCase] = useState<KeywordCase>("upper");

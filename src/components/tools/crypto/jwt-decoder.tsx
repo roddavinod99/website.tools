@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Copy, ClipboardPaste, AlertCircle, CheckCircle, Clock, Shield, ShieldAlert, ShieldCheck, Download } from "lucide-react";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
+import { useLoadExample } from "@/lib/load-example";
 
 function base64UrlDecode(str: string): string {
   try {
@@ -70,6 +71,7 @@ const claimDescriptions: Record<string, string> = {
 
 export function JWTDecoder() {
   const [input, setInput] = useState("");
+  useLoadExample("jwt-decoder", (text) => setInput(text));
   const [secret, setSecret] = useState("");
   const [sigResult, setSigResult] = useState<"match" | "mismatch" | "unverified" | null>(null);
   const [countdown, setCountdown] = useState("");

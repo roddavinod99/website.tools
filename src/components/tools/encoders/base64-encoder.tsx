@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { validateFileUpload } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 type CharEncoding = "utf-8" | "ascii" | "utf-16le" | "utf-16be";
 
@@ -35,6 +36,7 @@ function encodeBase64(str: string, enc: CharEncoding): string {
 
 export function Base64Encoder() {
   const [input, setInput] = useState("");
+  useLoadExample("base64-encoder", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [encoding, setEncoding] = useState<CharEncoding>("utf-8");
   const [dataUri, setDataUri] = useState(false);

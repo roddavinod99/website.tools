@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, Minimize, Maximize, Upload } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 type Indent = "2" | "4" | "tab";
 type OutputCompat = "es5" | "es6";
@@ -15,6 +16,7 @@ const RESERVED = new Set(["arguments", "async", "await", "break", "case", "catch
 
 export function JSMinifier() {
   const [input, setInput] = useState("");
+  useLoadExample("js-minifier", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);

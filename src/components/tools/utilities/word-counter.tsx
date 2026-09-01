@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from "react";
 import { validateFileSize } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 interface WordStats {
   words: number;
@@ -67,6 +68,7 @@ function fleschLabel(score: number): string {
 
 export function WordCounter() {
   const [text, setText] = useState("");
+  useLoadExample("word-counter", (text) => setText(text));
   const [includeHtml, setIncludeHtml] = useState(true);
   const [wordGoal, setWordGoal] = useState(500);
   const fileRef = useRef<HTMLInputElement>(null);

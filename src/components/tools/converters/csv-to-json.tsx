@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload } from "lucide-react";
+import { useLoadExample } from "@/lib/load-example";
 
 
 type Delimiter = "comma" | "tab" | "semicolon" | "pipe" | "space" | "custom";
@@ -52,6 +53,7 @@ function parseCSV(text: string, delimiter: string, quoteChar: string, escapeChar
 
 export function CsvToJson() {
   const [input, setInput] = useState("");
+  useLoadExample("csv-to-json", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [delimiter, setDelimiter] = useState<Delimiter>("comma");

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef } from "react";
+import { useLoadExample } from "@/lib/load-example";
 
 type CaseType =
   | "camel" | "pascal" | "snake" | "screamingSnake" | "kebab"
@@ -93,6 +94,7 @@ const caseDefinitions: { label: string; key: CaseType }[] = [
 
 export function CaseConverter() {
   const [input, setInput] = useState("hello world example");
+  useLoadExample("case-converter", (text) => setInput(text));
   const [copiedKey, setCopiedKey] = useState<CaseType | null>(null);
   const [history, setHistory] = useState<string[]>([]);
   const [showHistory, setShowHistory] = useState(false);

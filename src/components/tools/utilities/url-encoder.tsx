@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useLoadExample } from "@/lib/load-example";
 
 type Mode = "encode" | "decode";
 type EncodingType = "component" | "full";
@@ -76,6 +77,7 @@ interface HistoryEntry {
 
 export function URLEncoder() {
   const [input, setInput] = useState("");
+  useLoadExample("url-encoder", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [mode, setMode] = useState<Mode>("encode");

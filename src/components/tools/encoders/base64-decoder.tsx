@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useLoadExample } from "@/lib/load-example";
 
 type CharEncoding = "utf-8" | "ascii" | "utf-16le" | "utf-16be";
 
@@ -45,6 +46,7 @@ function isBinary(decoded: string): boolean {
 
 export function Base64Decoder() {
   const [input, setInput] = useState("");
+  useLoadExample("base64-decoder", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [encoding, setEncoding] = useState<CharEncoding>("utf-8");

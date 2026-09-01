@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { useLoadExample } from "@/lib/load-example";
 
 function toPascalCase(str: string): string {
   return str.replace(/[_-]+/g, " ").replace(/\s+/g, " ").split(" ").map((s) => s[0]?.toUpperCase() + s.slice(1)).join("").replace(/[^a-zA-Z0-9]/g, "");
@@ -111,6 +112,7 @@ function generateTypescript(input: string, opts: { outputType: "interface" | "ty
 
 export function JsonToTypescript() {
   const [input, setInput] = useState('{\n  "firstName": "John",\n  "lastName": "Doe",\n  "age": 30,\n  "email": "john@example.com",\n  "address": {\n    "street": "123 Main St",\n    "city": "New York",\n    "zipCode": "10001"\n  },\n  "tags": ["admin", "user"]\n}');
+  useLoadExample("json-to-typescript", (text) => setInput(text));
   const [outputType, setOutputType] = useState<"interface" | "type">("interface");
   const [optional, setOptional] = useState(false);
   const [readonly, setReadonly] = useState(false);

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import { useLoadExample } from "@/lib/load-example";
 
 type Timezone = "UTC" | "local" | "America/New_York" | "America/Chicago" | "America/Denver" | "America/Los_Angeles" | "Europe/London" | "Europe/Berlin" | "Europe/Moscow" | "Asia/Tokyo" | "Asia/Shanghai" | "Asia/Kolkata" | "Asia/Dubai" | "Australia/Sydney" | "Pacific/Auckland";
 
@@ -105,6 +106,7 @@ function getConversions(date: Date, tz: Timezone, nowMs: number): { label: strin
 
 export function TimestampConverter() {
   const [input, setInput] = useState("");
+  useLoadExample("timestamp-converter", (text) => setInput(text));
   const [tz, setTz] = useState<Timezone>("local");
   const [nowMs, setNowMs] = useState<number | null>(() => {
     if (typeof window === "undefined") return null;

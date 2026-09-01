@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Copy, Download, Trash2, RefreshCw, Minimize, ShieldCheck, Upload } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 type IndentType = "spaces" | "tabs";
 type SelfClose = "html" | "xhtml";
@@ -48,6 +49,7 @@ function formatEmbedded(code: string, lang: "css" | "javascript", indent: string
 
 export function HTMLFormatter() {
   const [input, setInput] = useState("");
+  useLoadExample("html-formatter", (text) => setInput(text));
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [errorLine, setErrorLine] = useState<number | null>(null);

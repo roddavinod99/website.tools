@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import { Upload } from "lucide-react";
 import { validateFileSize } from "@/lib/file-security";
+import { useLoadExample } from "@/lib/load-example";
 
 const safeSanitize = (html: string, opts?: object) => {
   try { return opts ? DOMPurify.sanitize(html, opts) : DOMPurify.sanitize(html); } catch { return html; }
@@ -114,6 +115,8 @@ export function MarkdownToHtml() {
   const [example, setExample] = useState("basic");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  useLoadExample("markdown-to-html", (text) => { setInput(text); setExample("custom"); });
 
   const convert = useCallback(() => {
     if (!input.trim()) { setOutput(""); return; }

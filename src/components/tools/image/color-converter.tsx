@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
+import { useLoadExample } from "@/lib/load-example";
 
 interface RGB { r: number; g: number; b: number; a?: number }
 interface HSL { h: number; s: number; l: number; a?: number }
@@ -182,6 +183,7 @@ const presets = [
 
 export function ColorConverter() {
   const [input, setInput] = useState("#0070F3");
+  useLoadExample("color-converter", (text) => setInput(text));
   const [opacity, setOpacity] = useState(1);
   const [fgInput, setFgInput] = useState("#000000");
   const [bgInput, setBgInput] = useState("#FFFFFF");
