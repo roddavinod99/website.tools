@@ -1,23 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Fragment } from "react";
 import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/data";
-import { featuresBySlug } from "@/lib/data/tool-features";
-import { ToolCard } from "@/components/ui/tool-card";
-import { Search } from "lucide-react";
+import { ToolGridSection } from "@/components/ui/tool-grid-section";
+import { ToolSortDropdown } from "@/components/ui/tool-sort-dropdown";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
+import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
+import { parseSortParam, sortTools } from "@/lib/sort-tools";
+import { filterToolsByCapabilities } from "@/lib/filter-tools";
+import { Search } from "lucide-react";
 
 const toolCountText = `${TOOL_COUNT} free online developer tools`;
+const TOOLS_URL = `${siteConfig.url}/tools`;
+const TOOLS_DESCRIPTION =
+  "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.";
 
 export const metadata: Metadata = {
   title: "All Tools",
   description: `Browse ${toolCountText} from DevStackIO. JSON formatters, JWT decoders, UUID generators, image compressors, and more — all client-side.`,
-  alternates: { canonical: `${siteConfig.url}/tools` },
+  alternates: { canonical: TOOLS_URL },
   openGraph: {
     title: "All Developer Tools — DevStackIO",
     description: `Browse ${toolCountText} from DevStackIO. Format, encode, generate, and analyze data entirely in your browser.`,
-    url: `${siteConfig.url}/tools`,
+    url: TOOLS_URL,
     siteName: "DevStackIO Tools",
     type: "website",
     images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "DevStackIO Tools" }],
@@ -30,45 +35,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ToolsPage() {
-  const collectionPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
+interface Props {
+  searchParams: Promise<{ sort?: string | string[]; cap?: string | string[] }>;
+}
+
+export default async function ToolsPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const sort = parseSortParam(params.sort);
+  const filtered = filterToolsByCapabilities(allTools, params.cap);
+  const tools = sortTools(filtered, sort);
+
+  const breadcrumb = breadcrumbList([{ name: "Home", url: siteConfig.url }, { name: "Tools" }]);
+  const collection = collectionPage({
     name: "All Developer Tools",
-    description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
-    url: `${siteConfig.url}/tools`,
-    mainEntity: {
-      "@type": "ItemList",
-      name: "All Developer Tools",
-      description: "Browse our complete collection of free online developer tools. JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more — all client-side, privacy-first.",
-      url: `${siteConfig.url}/tools`,
-      numberOfItems: allTools.length,
-      itemListElement: allTools.map((tool, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: tool.name,
-        url: `${siteConfig.url}/tools/${tool.slug}`,
-      })),
-    },
-  };
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: "Tools" },
-    ],
-  };
+    description: TOOLS_DESCRIPTION,
+    url: TOOLS_URL,
+    items: tools.map((t) => ({ name: t.name, url: `${siteConfig.url}/tools/${t.slug}` })),
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumb) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(collection) }}
       />
       <section>
         <div className="container py-12 md:py-16">
@@ -102,52 +95,29 @@ export default function ToolsPage() {
 
       <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
-        <div className="flex flex-wrap gap-2 mb-8">
-          <Link
-            href="/tools"
-            className="rounded-full border border-brand-primary bg-brand-primary px-4 py-1.5 text-sm font-medium text-white"
-          >
-            All
-          </Link>
-          {categories.slice(0, 10).map((cat) => (
+          <div className="flex flex-wrap gap-2 mb-8">
             <Link
-              key={cat.id}
-              href={`/categories/${cat.slug}`}
-              className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-200 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+              href="/tools"
+              className="rounded-full border border-brand-primary bg-brand-primary px-4 py-1.5 text-sm font-medium text-white"
             >
-              {cat.name}
+              All
             </Link>
-          ))}
-        </div>
+            {categories.slice(0, 10).map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/categories/${cat.slug}`}
+                className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-200 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {allTools.map((tool, index) => (
-            <Fragment key={tool.id}>
-              {index === Math.floor(allTools.length / 2) && (
-                <div className="col-span-full">
-                  <AdBanner className="my-8" slot={adSlots.toolsMid} />
-                </div>
-              )}
-              <ToolCard
-                tool={{
-                  id: tool.id,
-                  name: tool.name,
-                  description: tool.description,
-                  category: tool.category,
-                  slug: tool.slug,
-                  popularity: tool.popularity,
-                  featured: tool.featured,
-                  trending: tool.trending,
-                  new: tool.new,
-                  icon: tool.icon,
-                  features: featuresBySlug[tool.slug],
-                }}
-                variant="default"
-                size="md"
-              />
-            </Fragment>
-          ))}
-        </div>
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <ToolSortDropdown />
+          </div>
+
+          <ToolGridSection tools={tools} midAdSlot={adSlots.toolsMid} />
         </div>
       </section>
     </>

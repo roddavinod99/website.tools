@@ -15,6 +15,7 @@ export interface Tool {
   keywords?: string[];
   noindex?: boolean;
   processing?: "client" | "server" | "hybrid";
+  guideSlug?: string;
 }
 
 export interface Category {

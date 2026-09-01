@@ -5,6 +5,7 @@ import { getToolContent } from "@/lib/tool-content";
 import { parseFaqItem } from "@/lib/faq";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { findRelatedTools } from "@/lib/related-tools";
+import { breadcrumbList, jsonLdScriptBody } from "@/lib/seo/json-ld";
 import { ToolClient } from "./tool-client";
 
 interface Props {
@@ -77,71 +78,9 @@ export default async function ToolPage({ params }: Props) {
     .slice(0, 4);
   const nextSteps = nextStepCandidates.map((t) => ({ tool: t.slug, label: t.name }));
 
-  const toolGuideMap: Record<string, string> = {
-    "json-formatter": "concepts/json-basics",
-    "json-to-yaml": "concepts/data-serialization-formats",
-    "json-to-xml": "concepts/data-serialization-formats",
-    "json-to-typescript": "concepts/json-basics",
-    "json-beautifier": "concepts/json-basics",
-    "json-minifier": "concepts/json-basics",
-    "jwt-decoder": "concepts/jwt-structure",
-    "jwt-generator": "concepts/jwt-structure",
-    "image-compressor": "best-practices/image-optimization",
-    "image-resizer": "best-practices/image-optimization",
-    "password-generator": "best-practices/password-security",
-    "password-strength": "best-practices/password-security",
-    "base64": "concepts/base64-encoding",
-    "base64-encoder": "concepts/base64-encoding",
-    "base64-decoder": "concepts/base64-encoding",
-    "image-to-base64": "concepts/base64-encoding",
-    "css-formatter": "best-practices/css-minification",
-    "css-minifier": "best-practices/css-minification",
-    "regex-tester": "concepts/regex-fundamentals",
-    "regex-memo": "concepts/regex-fundamentals",
-    "timestamp-converter": "concepts/unix-timestamps",
-    "html-entity": "concepts/html-encoding",
-    "html-formatter": "concepts/html-encoding",
-    "yaml-formatter": "concepts/data-serialization-formats",
-    "yaml-viewer": "concepts/data-serialization-formats",
-    "toml-converter": "concepts/data-serialization-formats",
-    "xml-formatter": "concepts/data-serialization-formats",
-    "xml-to-json": "concepts/data-serialization-formats",
-    "json-to-csv": "references/json-to-csv",
-    "csv-to-json": "references/json-to-csv",
-    "sql-formatter": "best-practices/sql-formatting",
-    "html-to-markdown": "references/html-to-markdown",
-    "markdown-to-html": "references/html-to-markdown",
-    "markdown-preview": "concepts/markdown-syntax",
-    "markdown-editor": "concepts/markdown-syntax",
-    "color-converter": "references/color-models",
-    "color-eyedropper": "references/color-models",
-    "diff-checker": "references/text-diff-comparison",
-    "text-diff-visual": "references/text-diff-comparison",
-    "string-comparison": "references/text-diff-comparison",
-    "cron-expression": "concepts/cron-syntax",
-    "url-parser": "references/url-components",
-    "json-schema-generator": "references/json-schema",
-    "json-validator": "references/json-schema",
-    "qr-generator": "tutorials/qr-code-generation",
-    "wifi-qr-generator": "tutorials/qr-code-generation",
-    "random-data": "tutorials/random-data-generation",
-    "lorem-ipsum": "tutorials/random-data-generation",
-    "case-converter": "references/case-conversion",
-    "slug-generator": "references/case-conversion",
-    "ipv4-subnet-calculator": "concepts/ip-subnetting",
-    "ipv6-calculator": "concepts/ip-subnetting",
-    "ip-calculator": "concepts/ip-subnetting",
-    "file-checksum": "best-practices/file-integrity-checksums",
-    "hash-generator": "best-practices/file-integrity-checksums",
-    "word-counter": "troubleshooting/word-count-analysis",
-    "uuid-generator": "concepts/uuid-versions",
-    "ulid-generator": "concepts/uuid-versions",
-    "bcrypt-generator": "best-practices/bcrypt-hashing",
-    "hmac-generator": "best-practices/hmac-authentication",
-  };
-
-  const toolGuideSlug = toolGuideMap[tool.slug];
-  const specificGuide = toolGuideSlug ? guidesTopics.find((t) => t.slug === toolGuideSlug) : null;
+  const specificGuide = tool.guideSlug
+    ? guidesTopics.find((t) => t.slug === tool.guideSlug) ?? null
+    : null;
 
   const categorySlug = categories.find((c) => c.name === tool.category)?.slug ?? "";
   const category = categories.find((c) => c.name === tool.category);
@@ -255,14 +194,11 @@ export default async function ToolPage({ params }: Props) {
   };
 
   const graphItems: Record<string, unknown>[] = [
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-        { "@type": "ListItem", position: 2, name: "Tools", item: `${siteConfig.url}/tools` },
-        { "@type": "ListItem", position: 3, name: tool.name, item: toolUrl },
-      ],
-    },
+    breadcrumbList([
+      { name: "Home", url: siteConfig.url },
+      { name: "Tools", url: `${siteConfig.url}/tools` },
+      { name: tool.name, url: toolUrl },
+    ]),
     softwareAppJsonLd,
     sourceCodeJsonLd,
     ...(faqJsonLd ? [faqJsonLd] : []),
@@ -274,10 +210,7 @@ export default async function ToolPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": graphItems,
-          }).replace(/</g, "\\u003c"),
+          __html: jsonLdScriptBody({ "@context": "https://schema.org", "@graph": graphItems }),
         }}
       />
       <ToolClient

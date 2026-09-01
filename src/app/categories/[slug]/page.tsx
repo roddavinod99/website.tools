@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { categories, allTools, siteConfig } from "@/lib/data";
 import { categoryMetas } from "@/lib/data/categories";
-import { featuresBySlug } from "@/lib/data/tool-features";
-import { ToolCard } from "@/components/ui/tool-card";
+import { ToolGridSection } from "@/components/ui/tool-grid-section";
 import { ChevronRight, CircleCheck } from "lucide-react";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
+import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -50,47 +50,33 @@ export default async function CategoryPage({ params }: Props) {
   if (!category) notFound();
 
   const tools = allTools.filter((t) => t.category === category.name);
+  const categoryUrl = `${siteConfig.url}/categories/${slug}`;
+
+  const breadcrumb = breadcrumbList([
+    { name: "Home", url: siteConfig.url },
+    { name: "Categories", url: `${siteConfig.url}/categories` },
+    { name: category.name },
+  ]);
+  const collection = collectionPage({
+    name: `${category.name} Tools`,
+    description: category.description,
+    url: categoryUrl,
+    items: tools.map((t) => ({
+      name: t.name,
+      url: `${siteConfig.url}/tools/${t.slug}`,
+      description: t.description,
+    })),
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-              { "@type": "ListItem", position: 2, name: "Categories", item: `${siteConfig.url}/categories` },
-              { "@type": "ListItem", position: 3, name: category.name },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumb) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: `${category.name} Tools`,
-            description: category.description,
-            url: `${siteConfig.url}/categories/${slug}`,
-            mainEntity: {
-              "@type": "ItemList",
-              name: `${category.name} Tools`,
-              description: category.description,
-              numberOfItems: tools.length,
-              itemListElement: tools.map((tool, index) => ({
-                "@type": "ListItem",
-                position: index + 1,
-                name: tool.name,
-                url: `${siteConfig.url}/tools/${tool.slug}`,
-                description: tool.description,
-              })),
-            },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(collection) }}
       />
       <section className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-8">
@@ -136,43 +122,15 @@ export default async function CategoryPage({ params }: Props) {
 
       <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
-        {tools.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool, index) => (
-              <>
-                {index === Math.floor(tools.length / 2) && (
-                  <div className="col-span-full">
-                    <AdBanner className="my-8" slot={adSlots.categoryMid} />
-                  </div>
-                )}
-                <ToolCard
-                  key={tool.id}
-                  tool={{
-                    id: tool.id,
-                    name: tool.name,
-                    description: tool.description,
-                    category: tool.category,
-                    slug: tool.slug,
-                    popularity: tool.popularity,
-                    featured: tool.featured,
-                    trending: tool.trending,
-                    new: tool.new,
-                    icon: tool.icon,
-                    features: featuresBySlug[tool.slug],
-                  }}
-                  variant="default"
-                  size="md"
-                />
-              </>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center">
-            <p className="text-surface-500 dark:text-dark-muted">
-              No tools in this category yet. Check back soon.
-            </p>
-          </div>
-        )}
+          {tools.length > 0 ? (
+            <ToolGridSection tools={tools} midAdSlot={adSlots.categoryMid} />
+          ) : (
+            <div className="text-center">
+              <p className="text-surface-500 dark:text-dark-muted">
+                No tools in this category yet. Check back soon.
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </>

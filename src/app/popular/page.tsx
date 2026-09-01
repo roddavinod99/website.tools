@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { allTools, siteConfig } from "@/lib/data";
-import { Badge } from "@/components/ui/badge";
+import { breadcrumbList, itemList, jsonLdScriptBody } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Popular Tools",
@@ -11,21 +10,27 @@ export const metadata: Metadata = {
 
 export default function PopularPage() {
   const tools = [...allTools].sort((a, b) => b.popularity - a.popularity);
+  const url = `${siteConfig.url}/popular`;
+  const description =
+    "Most used free developer tools on DevStackIO — JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more.";
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: "Popular Tools" },
-    ],
-  };
+  const breadcrumb = breadcrumbList([{ name: "Home", url: siteConfig.url }, { name: "Popular Tools" }]);
+  const list = itemList({
+    name: "Popular Developer Tools",
+    description,
+    url,
+    items: tools.map((t) => ({ name: t.name, url: `${siteConfig.url}/tools/${t.slug}` })),
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(list) }}
       />
       <div className="border-b border-surface-200 dark:border-dark-border">
         <div className="container py-12 md:py-16">
@@ -49,30 +54,33 @@ export default function PopularPage() {
       <section className="bg-surface-50 dark:bg-dark-surface">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
-            <div className="grid gap-4">
+            <ul className="space-y-3">
               {tools.map((tool) => (
-                <Link
-                  key={tool.id}
-                  href={`/tools/${tool.slug}`}
-                  className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
-                >
-                  <div className="flex items-start justify-between">
-                    <Badge variant="default">{tool.category}</Badge>
-                    {tool.popularity >= 90 && (
-                      <span className="rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
-                        Most used
+                <li key={tool.id}>
+                  <a
+                    href={`/tools/${tool.slug}`}
+                    className="group block rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                  >
+                    <div className="flex items-start justify-between">
+                      <span className="rounded-full bg-[var(--selection-bg)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-secondary)]">
+                        {tool.category}
                       </span>
-                    )}
-                  </div>
-                  <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
-                    {tool.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
-                    {tool.description}
-                  </p>
-                </Link>
+                      {tool.popularity >= 90 && (
+                        <span className="rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                          Most used
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                      {tool.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                      {tool.description}
+                    </p>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>

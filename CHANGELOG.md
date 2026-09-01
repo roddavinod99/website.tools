@@ -1,5 +1,34 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- **Sitemap submitter rewritten to match the official IndexNow spec
+  (https://www.indexnow.org/documentation).** Now extracts every `<loc>` from
+  `/sitemap.xml` and POSTs the full URL list to the single aggregator at
+  `https://api.indexnow.org/indexnow` in batches of up to 10,000 URLs. The
+  aggregator automatically shares submissions with Bing, Yandex, Seznam,
+  Naver, Amazon, and Yep — submitting to each engine separately was
+  duplicate work that risked 429s.
+- Submitter now verifies the `/{KEY}.txt` ownership file is reachable and
+  matches `INDEXNOW_KEY` before posting, so a missing or wrong key fails
+  fast locally instead of returning HTTP 422 from the aggregator.
+- Submitter state (`data/sitemap-state.json`) is now configurable via
+  `SITEMAP_STATE_PATH`. The deploy workflow sets it to
+  `/var/www/tools/data/sitemap-state.json` so the hash/skip window survives
+  `git reset --hard` between deploys.
+- Deploy workflow now exports `INDEXNOW_KEY` from GitHub Secrets into the
+  generated `.env` so IndexNow submissions actually run on each deploy.
+- `.env.example` documents both `INDEXNOW_KEY` and `SITEMAP_STATE_PATH`.
+- `scripts/indexnow-submit.ts` is now a thin shim that spawns the canonical
+  `.mjs` submitter with an ephemeral state file, so ad-hoc runs don't
+  disturb the host's persistent state.
+- Cleaner skip-decision log lines and proper handling of the "never
+  submitted" case.
+- Removed the dead `SEARCH_ENGINES` fallback array (Bing/Yandex pings
+  are deprecated, and IndexNow already covers them).
+
 ## [0.1.3] - 2026-07-28
 
 ### Added
@@ -512,6 +541,72 @@
 - done
 - v1.1.2
 - v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Infrastructure
+
+- replace IndexNow key with newly generated value
+## [1.1.13] - 2026-09-01
+
+### Changed
+
+- v1.1.12
+- guide page issue solved
+- preview card issues fixed
+- solved deploy issue.
+- Deploy issue
+- v1.1.10
+- v1.1.9
+- v1.1.8
+- v1.1.7
+- v1.1.6
+- v1.1.5
+- rose
+- v1.1.4
+- v1.1.3
+- done
+- v1.1.2
+- v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Fixed
+
+- OG image route, toolkits index, qr-generator a11y, lighthouse cleanup
+- update verify-csp.mjs for hash-based CSP
+- resolve GitHub Actions deploy failures
+- lint errors in guides-list, portal, tooltip, currency-converter
+- update OG preview card to 1200x630
+- update security tests for DENY frame option + add rate-limit bypass for contact test
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
+### Infrastructure
+
+- replace IndexNow key with newly generated value
+## [1.1.14] - 2026-09-01
+
+### Changed
+
+- v1.1.12
+- guide page issue solved
+- preview card issues fixed
+- solved deploy issue.
+- Deploy issue
+- v1.1.10
+- v1.1.9
+- v1.1.8
+- v1.1.7
+- v1.1.6
+- v1.1.5
+- rose
+- v1.1.4
+- v1.1.3
+- done
+- v1.1.2
+- v1.1.1 - homepage audit fixes: CLS prevention, hydration fix, a11y labels, FAQ JSON-LD, org dedup, tracking badge, visitor threshold, AdSense loader
+### Fixed
+
+- OG image route, toolkits index, qr-generator a11y, lighthouse cleanup
+- update verify-csp.mjs for hash-based CSP
+- resolve GitHub Actions deploy failures
+- lint errors in guides-list, portal, tooltip, currency-converter
+- update OG preview card to 1200x630
+- update security tests for DENY frame option + add rate-limit bypass for contact test
+- rename gitleaks.toml to .gitleaks.toml so JWT example allowlist is actually loaded
 ### Infrastructure
 
 - replace IndexNow key with newly generated value
