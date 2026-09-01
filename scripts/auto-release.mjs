@@ -14,20 +14,21 @@ async function main() {
   const args = process.argv.slice(2);
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
-  
+  const includeNoise = args.includes("--include-noise");
+
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8"));
   const currentVersion = pkg.version || "0.0.0";
   if (isVerbose) {
     console.log(`Current version: ${currentVersion}`);
   }
-  
-  const result = computeRelease(currentVersion);
-  
+
+  const result = computeRelease(currentVersion, { includeNoise });
+
   if (!result.bumped) {
     console.log(`No release needed: ${result.reason}`);
     return 0;
   }
-  
+
   if (isVerbose) {
     console.log(`Base ref: ${result.baseRef}`);
     console.log(`Release type: ${result.releaseType}`);
@@ -37,7 +38,7 @@ async function main() {
       console.log(`  [${e.category}] ${e.description}`);
     }
   }
-  
+
   if (isDryRun) {
     console.log("DRY RUN - no changes made");
     return 0;

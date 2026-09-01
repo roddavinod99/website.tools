@@ -10,6 +10,31 @@ function exec(command) {
   }
 }
 
+/**
+ * Subject patterns that identify a commit as not user-facing changelog
+ * material. These commits are excluded from generated CHANGELOG entries
+ * and the bump signal (i.e. they never trigger a version bump on their
+ * own). The list is intentionally explicit and conservative — false
+ * positives hide real work.
+ */
+export const NOISE_COMMIT_PATTERNS = [
+  // `release: v1.2.3` / `release v1.2.3` / `Release: v1.2.3`
+  /^release:?\s*v?\d/i,
+  // Bare version tags written as commit subjects, e.g. `v1.1.10`
+  /^v\d+\.\d+(\.\d+)?$/i,
+  // One-word / placeholder subjects that carry no meaning
+  /^(rose|done|wip|test|tests|typo|merge|updates?)$/i,
+  // `solved X` / `fixed X` with no scope — too vague to be a useful entry
+  /^solved\s+(deploy|the\s+)/i,
+];
+
+export function isNoiseCommit(subject) {
+  if (typeof subject !== "string") return false;
+  const trimmed = subject.trim();
+  if (!trimmed) return true;
+  return NOISE_COMMIT_PATTERNS.some((re) => re.test(trimmed));
+}
+
 export function parseSemVer(version) {
   const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/);
   if (!match) return null;
@@ -44,19 +69,23 @@ export function incrementVersion(current, type) {
 export function getReleaseTypeForCommit(subject, body = "") {
   const subjectLower = subject.toLowerCase();
   const bodyLower = body.toLowerCase();
-  
-  if (/\b(breaking change|breaks?)\b/.test(bodyLower) || /^feat!|^fix!|^feat\([^)]*\)!/.test(subjectLower)) {
+
+  if (
+    /\bbreaking change\b/.test(bodyLower) ||
+    /\bbreaking[- ]change:/i.test(bodyLower) ||
+    /^feat!|^fix!|^feat\([^)]*\)!/i.test(subjectLower)
+  ) {
     return "major";
   }
-  
-  if (/^feat\(|^feat:/.test(subjectLower)) {
+
+  if (/^feat(\(|\:)/.test(subjectLower)) {
     return "minor";
   }
-  
-  if (/^(fix|chore|docs|perf|refactor|build|ci|test|style|security)(\(|:)/.test(subjectLower)) {
+
+  if (/^(fix|chore|docs|perf|refactor|build|ci|test|style|security)(\(|\:)/.test(subjectLower)) {
     return "patch";
   }
-  
+
   return "patch";
 }
 
@@ -100,30 +129,35 @@ export function createChangelogEntry(subject) {
   return { category, description };
 }
 
-export function getCommitsSince(baseRef) {
+export function getCommitsSince(baseRef, { includeNoise = false } = {}) {
   const subjects = exec(`git log --format=%s ${baseRef}..HEAD`);
   const bodies = exec(`git log --format=%B ${baseRef}..HEAD`);
-  
+
   if (!subjects) return [];
-  
-  const lines = subjects.split("\n").filter(Boolean);
-  const bodiesArr = bodies.split("\n\n\n").filter(Boolean);
-  
-  return lines.map((subject, i) => ({
+
+  const subjectLines = subjects.split("\n").filter(Boolean);
+  const bodyChunks = bodies.split("\n\n\n").filter(Boolean);
+
+  const commits = subjectLines.map((subject, i) => ({
     subject,
-    _body: bodiesArr[i] || "",
+    _body: bodyChunks[i] || "",
   }));
+
+  if (includeNoise) return commits;
+  return commits.filter((c) => !isNoiseCommit(c.subject));
 }
 
 export function findLastVersionTag() {
-  // No shell glob: "git tag -l 'v[0-9]*'" breaks under cmd.exe on Windows.
-  const tags = exec("git tag --list --sort=-v:refname");
-  if (!tags) return null;
-  const versionTag = tags
-    .split("\n")
-    .map((t) => t.trim())
-    .filter((t) => /^v[0-9]/.test(t))[0];
-  return versionTag || null;
+  // Use `git describe --tags --abbrev=0 --match='v[0-9]*' HEAD` so we get
+  // the most recent tag that is REACHABLE from HEAD, not just the highest
+  // semver tag globally (the previous `git tag --list --sort=-v:refname`
+  // could return a tag that isn't an ancestor of HEAD if e.g. someone
+  // tagged a feature branch out of order). `--abbrev=0` strips the
+  // distance/hash suffix. `--tags` covers lightweight tags too. `git
+  // describe` exits non-zero when no matching tag is reachable, so the
+  // wrapping `exec()` returns "" in that case.
+  const tag = exec("git describe --tags --abbrev=0 --match='v[0-9]*' HEAD");
+  return tag || null;
 }
 
 export function findVersionCommit(version) {
@@ -149,22 +183,22 @@ export function determineBaseRef(currentVersion) {
   return exec("git rev-list --max-parents=0 HEAD");
 }
 
-export function computeRelease(currentVersion) {
+export function computeRelease(currentVersion, { includeNoise = false } = {}) {
   const baseRef = determineBaseRef(currentVersion);
-  const commits = getCommitsSince(baseRef);
-  
+  const commits = getCommitsSince(baseRef, { includeNoise });
+
   if (!commits.length) {
     return { bumped: false, version: currentVersion, entries: [], reason: "no new commits since last release" };
   }
-  
+
   const types = commits.map(c => getReleaseTypeForCommit(c.subject, c._body));
   const releaseType = getMaxReleaseType(types);
   const entries = commits.map(c => createChangelogEntry(c.subject));
-  
+
   const current = parseSemVer(currentVersion);
   const next = incrementVersion(current, releaseType);
   const nextVersion = formatVersion(next);
-  
+
   return { bumped: true, version: nextVersion, entries, releaseType, baseRef };
 }
 

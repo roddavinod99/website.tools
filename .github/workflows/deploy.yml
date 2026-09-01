@@ -157,9 +157,11 @@ jobs:
               "NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}" \
               "NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=${{ secrets.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID }}" \
               "IP_HASH_SALT=${{ secrets.IP_HASH_SALT }}" \
+              "INDEXNOW_KEY=${{ secrets.INDEXNOW_KEY }}" \
               'PORT=3000' \
               'NODE_ENV=production' \
-              'VISIT_COUNTER_PATH=/var/www/tools/data/visit-counter/visits.jsonl' > .env
+              'VISIT_COUNTER_PATH=/var/www/tools/data/visit-counter/visits.jsonl' \
+              'SITEMAP_STATE_PATH=/var/www/tools/data/sitemap-state.json' > .env
 
             # Install dependencies and build
             npm ci
