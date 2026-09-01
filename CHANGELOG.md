@@ -620,6 +620,11 @@
 ### Documentation
 
 - add User Experience Goals + user-facing component map
+## [1.2.2] - 2026-09-01
+
+### Documentation
+
+- sync registry field list, trust badge location, JSON-LD note
 ## Template
 
 For future releases:
