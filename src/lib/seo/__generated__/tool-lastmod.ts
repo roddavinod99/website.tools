@@ -124,7 +124,7 @@ export const TOOL_LASTMOD: Record<string, string> = {
   "profit-margin-calculator": "2026-08-27T00:42:25+05:30",
   "prompt-generator": "2026-08-27T00:42:25+05:30",
   "prompt-improver": "2026-08-27T00:42:25+05:30",
-  "qr-generator": "2026-08-27T00:42:25+05:30",
+  "qr-generator": "2026-09-01T01:20:54+05:30",
   "random-data": "2026-08-27T00:42:25+05:30",
   "random-port-generator": "2026-08-27T00:42:25+05:30",
   "recurring-deposit": "2026-08-27T00:42:25+05:30",
