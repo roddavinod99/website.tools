@@ -610,6 +610,11 @@
 ### Infrastructure
 
 - replace IndexNow key with newly generated value
+## [1.2.0] - 2026-09-01
+
+### Added
+
+- add one-click Load example buttons + top trust badges
 ## Template
 
 For future releases:
