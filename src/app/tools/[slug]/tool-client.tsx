@@ -27,6 +27,7 @@ import { parseFaqItem } from "@/lib/faq";
 import { dispatchLoadExample } from "@/lib/load-example";
 import { useNetworkRequestCount } from "@/lib/network-monitor";
 import { siteConfig } from "@/lib/data";
+import { recordToolView } from "@/lib/personalize";
 
 interface ToolData {
   id: string;
@@ -289,6 +290,12 @@ export function ToolClient({
   );
 
   const { count: requestCount, recent: recentRequests } = useNetworkRequestCount();
+
+  // Record this tool as "recently used" once on mount. SSR-safe: hooks only
+  // fire on the client, so the localStorage write never runs on the server.
+  useEffect(() => {
+    recordToolView(tool.slug);
+  }, [tool.slug]);
 
   const networkPillTitle = useMemo(() => {
     if (requestCount === 0) {

@@ -4,6 +4,7 @@ import { TOOL_COUNT, siteConfig, allTools, featuredTools, trendingTools, categor
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
 import { TrendingRail } from "@/components/home/trending-rail";
+import { PinnedRail, RecentRail } from "@/components/home/personalize-rails";
 import { AdBanner } from "@/components/ads";
 import { ToolsCta } from "@/components/home/tools-cta";
 import { adSlots } from "@/lib/data/ads";
@@ -165,7 +166,9 @@ export default function Home() {
         allTools={allTools}
       />
       <CategoriesSection />
+      <PinnedRail tools={allTools} />
       <FeaturedTools featuredTools={featuredTools} />
+      <RecentRail tools={allTools} />
       <TrendingRail trendingTools={trendingTools} />
       <AdBanner className="my-10" slot={adSlots.homeTop} />
       <ToolsCta />
