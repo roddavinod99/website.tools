@@ -630,6 +630,11 @@
 ### Added
 
 - add live 'N network requests' trust pill on tool pages
+## [1.4.0] - 2026-09-02
+
+### Added
+
+- surface 8 featured tools + new 'Trending now' rail
 ## Template
 
 For future releases:
