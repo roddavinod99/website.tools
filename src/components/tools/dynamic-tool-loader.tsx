@@ -173,6 +173,8 @@ const toolLoaders: Record<string, ToolLoader> = {
   "scientific-calculator": () => import("./math/scientific-calculator").then((m) => ({ default: m.ScientificCalculator })),
   "statistics-calculator": () => import("./math/statistics-calculator").then((m) => ({ default: m.StatisticsCalculator })),
   "discount-calculator": () => import("./math/discount-calculator").then((m) => ({ default: m.DiscountCalculator })),
+  "wire-gauge-calculator": () => import("./electrical/wire-gauge-calculator").then((m) => ({ default: m.WireGaugeCalculator })),
+  "voltage-drop-calculator": () => import("./electrical/voltage-drop-calculator").then((m) => ({ default: m.VoltageDropCalculator })),
   "vat-gst": () => import("./finance/vat-gst-calculator").then((m) => ({ default: m.VatGstCalculatorTool })),
   "simple-interest": () => import("./finance/simple-interest").then((m) => ({ default: m.SimpleInterestCalculator })),
   "inflation": () => import("./finance/inflation").then((m) => ({ default: m.InflationCalculator })),

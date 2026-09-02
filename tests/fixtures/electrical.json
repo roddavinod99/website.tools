@@ -1,0 +1,4 @@
+[
+  { "slug": "wire-gauge-calculator", "category": "Electrical", "name": "Wire Gauge Calculator", "input": "12", "action": "", "expect": "output" },
+  { "slug": "voltage-drop-calculator", "category": "Electrical", "name": "Voltage Drop Calculator", "input": "15", "action": "", "expect": "output" }
+]

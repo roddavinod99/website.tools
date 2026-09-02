@@ -224,4 +224,10 @@ export const allTools: Tool[] = [
     category: "Math", slug: "statistics-calculator", popularity: 72, icon: "BarChart3", new: true, keywords: ["statistics", "average", "mean", "median", "standard deviation", "variance", "math"], examples: ["1, 2, 3, 4, 5", "10, 20, 30, 40, 50", "100, 200, 300, 400, 500"] },
   { id: "m3", name: "Discount Calculator", description: "Free online discount calculator. Apply one or more discounts in sequence to any price, see the final price, total saved, and effective discount percentage. 100% client-side, no upload.",
     category: "Math", slug: "discount-calculator", popularity: 76, icon: "Percent", new: true, keywords: ["discount", "sale", "percent off", "coupon", "stacked", "savings"], examples: ["100", "50, 20", "200, 30, 10"] },
+
+  // ── Electrical (2) ──
+  { id: "el1", name: "Wire Gauge Calculator", description: "Free online wire gauge calculator. Convert between American Wire Gauge (AWG), millimeters squared (mm²), diameter in mm, and copper resistance per km. Includes an AWG quick-reference table for the most common gauges.",
+    category: "Electrical", slug: "wire-gauge-calculator", popularity: 80, icon: "Cable", new: true, keywords: ["awg", "wire", "gauge", "mm2", "diameter", "copper", "resistance"], examples: ["12", "10", "14", "8"] },
+  { id: "el2", name: "Voltage Drop Calculator", description: "Free online voltage drop calculator for 12V / 24V DC and 120V / 240V AC single- and three-phase systems. Enter current, length, and AWG; get the drop in volts and percent, plus a pass/fail against the recommended limit.",
+    category: "Electrical", slug: "voltage-drop-calculator", popularity: 75, icon: "Zap", new: true, keywords: ["voltage", "drop", "wire", "12v", "24v", "120v", "240v", "3-phase", "awg"], examples: ["12", "15", "50", "100"] },
 ];

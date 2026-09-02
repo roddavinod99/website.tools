@@ -1,0 +1,65 @@
+{
+  "whatItDoes": "Converts between American Wire Gauge (AWG), millimeters squared (mm²), diameter in millimeters, and resistance per kilometer for the most common AWG sizes. Includes a quick-reference table for AWG 0000 through AWG 28 with their corresponding diameter, cross-section, and copper resistance.",
+  "whyItExists": "Every electrician, engineer, and hobbyist has had to convert between AWG and mm² at some point. The conversion isn't linear (each AWG step changes by a fixed ratio, not a fixed amount), so mental math is impractical. This calculator gives the answer instantly, plus the diameter and resistance for the resulting size.",
+  "whoShouldUse": "Electricians selecting wire size, electrical engineers designing harnesses, DIY solar / RV / boat owners picking battery cable gauge, audio / HiFi enthusiasts matching speaker wire, and electronics hobbyists converting between AWG and mm² when sourcing parts.",
+  "useCases": [
+    "Convert an AWG to its mm² cross-section to source metric wire",
+    "Convert a mm² specification back to the nearest AWG size",
+    "Look up the diameter of an AWG for a clearance calculation",
+    "Verify copper resistance per km for voltage-drop estimates",
+    "Compare AWG vs mm² sizes when the parts catalogue uses different units"
+  ],
+  "instructions": [
+    "Pick a conversion mode (AWG→mm², mm²→AWG, AWG→diameter, or diameter→AWG)",
+    "Enter the value to convert (AWG accepts '12', '12 AWG', or '#12')",
+    "Read the result: primary value, secondary cross-section/diameter, and resistance",
+    "Open the AWG quick-reference table for a side-by-side look at the most common sizes",
+    "The result uses the standard AWG formula and copper at 20°C for resistance"
+  ],
+  "examples": [
+    "AWG 12 → 3.309 mm², 2.053 mm diameter, 5.21 Ω/km",
+    "AWG 10 → 5.261 mm², 2.588 mm diameter, 3.28 Ω/km",
+    "AWG 14 → 2.081 mm², 1.628 mm diameter, 8.29 Ω/km",
+    "AWG 8 → 8.366 mm², 3.264 mm diameter, 2.06 Ω/km",
+    "3.309 mm² → AWG 12 (exact)"
+  ],
+  "bestPractices": [
+    "Always check both directions when sourcing — a 2.5 mm² wire is close to AWG 13, not 12",
+    "For high-current applications, round DOWN (heavier wire) not up",
+    "Resistance values are for copper at 20°C; aluminum is ~1.54× higher (use the material toggle in the voltage-drop calculator)",
+    "AWG only applies to round solid wire; stranded wire uses circular mils, not AWG",
+    "For very small wires (AWG 30+), use stranded equivalents because solid wire is fragile"
+  ],
+  "commonMistakes": [
+    "Assuming AWG → mm² is linear (each AWG step is a fixed ratio, not a fixed amount)",
+    "Confusing diameter and cross-section (a 2 mm diameter is 3.14 mm² cross-section)",
+    "Using aluminum resistance values for copper (aluminum is ~1.54× more resistive)",
+    "Choosing AWG by physical thickness instead of cross-section (stranded wire diameter ≠ solid wire diameter)",
+    "Forgetting that 0000, 000, 00, 0 are negative AWG numbers — 0000 is AWG -4, not AWG 4"
+  ],
+  "faq": [
+    "Is AWG a diameter or cross-section? — It's a gauge index, not a size. The standard formula is: area = 0.012668 mm² × 92^((36−n)/19.5), which means each AWG step is ~1.26× the area of the previous step.",
+    "Why is 0000 smaller than 0? — In AWG, higher numbers are thinner. 0000 (often written 4/0) is the largest at ~107 mm². 0 (1/0) is smaller. Negative AWG numbers: -4 = 0000, -3 = 000, -2 = 00, -1 = 0.",
+    "Does the calculator handle stranded wire? — No. AWG is defined for solid round wire. Stranded wire uses circular mils (CM) or the cross-section in mm². The calculator covers the solid-wire case.",
+    "What about aluminum? — Aluminum has ~1.54× the resistance of copper at the same cross-section. For voltage drop, use the voltage-drop calculator (which has a material toggle) rather than this one.",
+    "Is the resistance value accurate for AC? — The values shown are DC resistance at 20°C. AC resistance is slightly higher due to skin effect, especially for large conductors at high frequency."
+  ],
+  "features": [
+    "AWG ↔ mm² ↔ diameter ↔ resistance conversion",
+    "All four directions supported",
+    "AWG quick-reference table for the most common sizes",
+    "Copper resistance per km at 20°C",
+    "Closest-standard AWG hint for mm²-to-AWG conversion",
+    "100% client-side, no network roundtrips"
+  ],
+  "references": [
+    {
+      "label": "NEC — American Wire Gauge table",
+      "url": "https://www.electricalengineeringtoolbox.com/wire-gauges.htm"
+    },
+    {
+      "label": "Wikipedia — American Wire Gauge",
+      "url": "https://en.wikipedia.org/wiki/American_wire_gauge"
+    }
+  ]
+}

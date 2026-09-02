@@ -10,6 +10,7 @@ import { getVatGstRate } from "@/lib/data/vat-gst-rates";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
 import { useCurrency } from "@/lib/stores/currency-store";
 import { getAllCountries } from "@/lib/data/vat-gst-rates";
+import { usePrefillTool } from "@/lib/load-example";
 
 interface ProvinceOption {
   code: string;
@@ -43,6 +44,26 @@ export function VatGstCalculator() {
   const [currency, setCurrency] = useState("USD");
   const [province, setProvince] = useState("");
   const [customRate, setCustomRate] = useState("");
+
+  // Long-tail landing pages (PR 7 of PLAN.md) prefill the calculator
+  // with { country, mode, rate, amount, currency, province } so e.g.
+  // /vat/germany-19-on-100 lands with the German VAT already applied.
+  // The shared VatGstCalculator is used by both the /tools/vat-gst page
+  // and the long-tail /vat/* pages; the prefill only fires on the
+  // long-tail pages because the /tools/* page doesn't dispatch the
+  // devstackio:prefill-tool event.
+  usePrefillTool("vat-gst", (prefill) => {
+    if (prefill.country) setCountry(prefill.country);
+    if (prefill.mode === "exclusive" || prefill.mode === "inclusive") setMode(prefill.mode);
+    if (prefill.amount) setAmount(prefill.amount);
+    if (prefill.currency) setCurrency(prefill.currency);
+    if (prefill.province) setProvince(prefill.province);
+    // The "rate" key in the prefill is interpreted as a pre-chosen rate
+    // option (e.g. "standard" or "reduced" or a numeric value); we just
+    // pass it through. The prefill event is fired by the landing-page
+    // route, not the /tools/vat-gst page.
+    if (prefill.rate) setRate(prefill.rate);
+  });
 
   const countries = useMemo(() => getAllCountries(), []);
   const currentCountry = countries.find((c) => c.code === country);

@@ -7,6 +7,7 @@ import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { inflation } from "@/lib/finance/calculations";
 import { formatMoney, formatPercent } from "@/lib/finance/format";
 import { useCurrency } from "@/lib/stores/currency-store";
+import { usePrefillTool } from "@/lib/load-example";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -18,6 +19,15 @@ export function InflationCalculator() {
   const [amount, setAmount] = useState("1000");
   const [rate, setRate] = useState("3");
   const [years, setYears] = useState("10");
+
+  // Long-tail landing pages (PR 7 of PLAN.md) prefill the calculator
+  // with { amount, rate, years } so e.g. /inflation/1000-10y-3pct
+  // lands with the result already computed.
+  usePrefillTool("inflation", (prefill) => {
+    if (prefill.amount) setAmount(prefill.amount);
+    if (prefill.rate) setRate(prefill.rate);
+    if (prefill.years) setYears(prefill.years);
+  });
 
   const result = useMemo(() => {
     const a = parseInput(amount);

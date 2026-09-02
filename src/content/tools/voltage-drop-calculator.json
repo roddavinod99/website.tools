@@ -1,0 +1,67 @@
+{
+  "whatItDoes": "Computes the voltage drop along a wire run for 12V, 24V, 120V, or 240V AC systems, single- or three-phase. Enter the current, the one-way length, the AWG, and the wire material (copper or aluminum); see the drop in volts and percent, plus a pass/fail against the recommended limit (3% for 12V/24V, 3% for 120V/240V single-phase, 5% for 240V three-phase).",
+  "whyItExists": "Voltage drop is the silent killer of low-voltage systems. A wire that's 'thick enough' for the current can still cause motors to stall and LEDs to dim if the run is long. The recommended limit (typically 3% for low-voltage and 5% for three-phase mains) is what the NEC and most equipment manuals use. This calculator checks that limit instantly.",
+  "whoShouldUse": "Solar installers sizing battery and panel cables, marine and RV electricians, off-grid and battery-backed-up electricians, audio / PA / lighting installers running long cable runs, and three-phase commercial electricians verifying feeder sizes.",
+  "useCases": [
+    "Verify a 12V solar battery cable won't drop below 11.5V at the inverter",
+    "Size a 24V LED strip wire so the strip gets 23V+ at the far end",
+    "Confirm a 100ft 120V feeder doesn't drop below 116V under load",
+    "Check a 240V three-phase motor feeder stays within the 5% NEC guideline",
+    "Compare copper vs aluminum wire for the same run"
+  ],
+  "instructions": [
+    "Pick the system: 12V / 24V / 120V single / 240V single / 240V three-phase",
+    "Pick the wire material: copper or aluminum",
+    "Enter the load current in amps",
+    "Enter the one-way run length in feet (round-trip is computed automatically)",
+    "Pick the wire gauge from the AWG dropdown",
+    "Read the drop in volts and percent; green = within limit, red = too high"
+  ],
+  "examples": [
+    "12V, 15A, 50ft, AWG 12 copper → 1.18V drop, 9.84% — exceeds 3%, use AWG 8",
+    "12V, 15A, 50ft, AWG 8 copper → 0.47V drop, 3.94% — still over 3%, use AWG 6",
+    "120V, 15A, 100ft, AWG 14 copper → 2.40V drop, 2.00% — within 3%",
+    "240V three-phase, 50A, 200ft, AWG 6 aluminum → 9.49V drop, 3.95% — within 5%",
+    "24V, 10A, 30ft, AWG 14 copper → 1.13V drop, 4.71% — exceeds 3%, use AWG 12"
+  ],
+  "bestPractices": [
+    "Use the 3% rule for 12V and 24V systems — they have the least headroom",
+    "For 120V/240V mains, NEC recommends ≤ 3% drop on the branch circuit and ≤ 5% total (feeder + branch)",
+    "If the calculator says 'over limit', go to a heavier gauge (lower AWG number) or split the run into shorter segments",
+    "Aluminum wire is ~1.54× more resistive than copper — go two AWG sizes heavier to match copper performance",
+    "For long DC runs (battery cables, solar), use the voltage-drop calculator plus a 25% safety margin on the current"
+  ],
+  "commonMistakes": [
+    "Entering the round-trip length instead of one-way (the calculator doubles it internally — entering 100ft round-trip gives 200ft total)",
+    "Choosing aluminum when the wire is actually copper (1.54× resistance difference is significant)",
+    "Ignoring the 3% / 5% recommended limit (the math is right, the system just won't work well)",
+    "Picking the wrong phase (single-phase vs three-phase — three-phase uses √3 in the formula)",
+    "Forgetting that wire resistance increases with temperature (values are at 20°C, hotter runs are worse)"
+  ],
+  "faq": [
+    "What's the recommended voltage-drop limit? — 3% for low-voltage (12V/24V) and 120V/240V single-phase branch circuits, 5% total (feeder + branch) for 240V three-phase. Below 3% is 'excellent'; 3-5% is 'acceptable'; over 5% means equipment may not work correctly.",
+    "Why does the formula double the length? — Current flows out on one conductor and back on the other. The total wire the current travels is L + L, so we use 2L. For three-phase, the formula is √3 × I × R × L (line-to-line voltage, line current).",
+    "Does the wire temperature matter? — Yes. The values shown are at 20°C. A wire in a hot attic (say 40°C) has ~1.08× the resistance. The calculator doesn't model this; for hot-environment runs, derate by 10-15% or use a heavier gauge.",
+    "What gauge do I need for a 100ft run at 12V / 30A? — Use the calculator with current=30, length=100, gauge=8 copper. The drop is ~6.28V (way too high). Try AWG 4: drop ~2.5V (4.2%, still over 3%). Try AWG 2: drop ~1.6V (2.7%, OK). So AWG 2 copper for 100ft at 30A, 12V.",
+    "Why does the calculator say 'over limit' but the equipment still works? — The recommended limits are conservative. Many loads (especially resistive ones like heaters) tolerate 5-10% drop without complaint. Sensitive electronics (CPUs, sensors, LED drivers) need the full 3%."
+  ],
+  "features": [
+    "12V, 24V, 120V, 240V AC (single and three-phase)",
+    "Copper or aluminum wire",
+    "Round-trip length computed automatically",
+    "Pass/fail indicator (green = within limit, red = exceeds)",
+    "Recommended limit (3% for 12V/24V/120V/240V single, 5% for three-phase)",
+    "AWG dropdown covering 0000 (4/0) through 28",
+    "100% client-side, no network roundtrips"
+  ],
+  "references": [
+    {
+      "label": "NEC — Voltage drop calculations (NFPA 70)",
+      "url": "https://www.mikeholt.com/instructor2/img/product/pdf/sample%20-%202008-NEC-Analysis-of-Changes.pdf"
+    },
+    {
+      "label": "Southwire — Voltage Drop Calculator reference",
+      "url": "https://www.southwire.com/calculator-BTEM"
+    }
+  ]
+}
