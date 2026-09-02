@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
@@ -142,11 +142,51 @@ console.log(
 // ---------------------------------------------------------------------------
 const ENV = loadNextEnv();
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || ENV.INDEXNOW_KEY || "";
+const INDEXNOW_KEY_RE = /^[A-Za-z0-9-]{8,128}$/;
+const PUBLIC_DIR = join(ROOT, "public");
+
+// Remove any previously-generated IndexNow key files so a rotated key
+// (e.g. after a secret leak) does not leave the old ownership-verification
+// file at the site root. The key-file pattern is restrictive enough to
+// avoid touching humans.txt, llms.txt, security.txt, or any user-uploaded
+// .txt file: a 8-128 char [A-Za-z0-9-] stem plus .txt, with the body
+// matching the stem.
+function pruneStaleIndexNowKeyFiles(currentKey) {
+  let entries;
+  try {
+    entries = readdirSync(PUBLIC_DIR);
+  } catch {
+    return 0;
+  }
+  let removed = 0;
+  for (const name of entries) {
+    const m = name.match(/^([A-Za-z0-9-]{8,128})\.txt$/);
+    if (!m) continue;
+    const stem = m[1];
+    if (stem === currentKey) continue;
+    const filePath = join(PUBLIC_DIR, name);
+    try {
+      const body = readFileSync(filePath, "utf-8").trim();
+      if (body !== stem) continue;
+      unlinkSync(filePath);
+      console.log(`[prebuild] Pruned stale IndexNow key file: ${filePath}`);
+      removed += 1;
+    } catch {
+      // ignore: unreadable file is not ours to manage
+    }
+  }
+  return removed;
+}
+
 if (INDEXNOW_KEY) {
-  if (/^[A-Za-z0-9-]{8,128}$/.test(INDEXNOW_KEY)) {
-    const keyFile = join(ROOT, "public", `${INDEXNOW_KEY}.txt`);
+  if (INDEXNOW_KEY_RE.test(INDEXNOW_KEY)) {
+    const keyFile = join(PUBLIC_DIR, `${INDEXNOW_KEY}.txt`);
     writeFileSync(keyFile, INDEXNOW_KEY, "utf-8");
     console.log(`[prebuild] Generated ${keyFile} (IndexNow verification)`);
+    const pruned = pruneStaleIndexNowKeyFiles(INDEXNOW_KEY);
+    if (pruned > 0) {
+      console.log(`[prebuild] Pruned ${pruned} stale IndexNow key file(s)`);
+    }
   } else {
     console.warn(
       "[prebuild] INDEXNOW_KEY ignored: must be 8-128 chars of [A-Za-z0-9-]"
@@ -154,6 +194,7 @@ if (INDEXNOW_KEY) {
   }
 } else {
   console.log("[prebuild] INDEXNOW_KEY not set — skipping IndexNow key file");
+  pruneStaleIndexNowKeyFiles("");
 }
 
 // ---------------------------------------------------------------------------
