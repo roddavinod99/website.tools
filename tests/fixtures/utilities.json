@@ -10,7 +10,6 @@
   { "slug": "string-length", "category": "Utilities", "name": "String Length", "input": "Hello World!", "action": "Calculate", "expect": "output" },
   { "slug": "dns-lookup", "category": "Utilities", "name": "DNS Lookup", "input": "example.com", "action": "Lookup", "expect": "output" },
   { "slug": "ip-lookup", "category": "Utilities", "name": "IP Lookup", "input": "8.8.8.8", "action": "Lookup", "expect": "output" },
-  { "slug": "date-calculator", "category": "Utilities", "name": "Date Calculator", "input": "", "action": "", "expect": "output" },
   { "slug": "date-formatter", "category": "Utilities", "name": "Date & Time Formatter", "input": "", "action": "", "expect": "output" },
   { "slug": "ipv6-calculator", "category": "Utilities", "name": "IPv6 Calculator", "input": "2001:db8::1", "action": "", "expect": "output" },
   { "slug": "string-comparison", "category": "Utilities", "name": "String Comparator", "input": "hello", "input2": "hello", "action": "", "expect": "output" },

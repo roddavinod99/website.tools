@@ -25,6 +25,7 @@
 
 import type { LandingPage } from "./landing-pages";
 import { buildBmiLandingPages } from "./health-calculators-data";
+import { buildDateTimeLandingPages } from "./date-time-calculators-data";
 
 // ─────────────────────────────────────────────────────────────────────
 // Category unit-label map (mirrors src/components/tools/converters/unit-converter.tsx)
@@ -670,5 +671,6 @@ export function buildAllLandingPages(): LandingPage[] {
   return [
     ...buildUnitConversionLandingPages(),
     ...buildBmiLandingPages(),
+    ...buildDateTimeLandingPages(),
   ];
 }

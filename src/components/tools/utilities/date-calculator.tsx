@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePrefillTool } from "@/lib/load-example";
 
 const MS_PER_DAY = 86400000;
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -56,6 +57,25 @@ export function DateCalculator() {
     const d = new Date();
     d.setDate(d.getDate() + 30);
     return d.toISOString().slice(0, 10);
+  });
+
+  // Long-tail landing pages (PR 4 of PLAN.md) prefill the calculator
+  // with { startDate, endDate, op, amount, unit, mode } so e.g.
+  // /date/days-between-2026-01-01-and-2026-09-02 lands with the
+  // difference computed immediately. The hook is a no-op when the
+  // user lands on /tools/date-calculator directly.
+  usePrefillTool("date-calculator", (prefill) => {
+    if (prefill.mode === "arithmetic" || prefill.mode === "difference") {
+      setMode(prefill.mode);
+    }
+    if (prefill.startDate) setStartIso(prefill.startDate);
+    if (prefill.dateA) setDateA(prefill.dateA);
+    if (prefill.dateB) setDateB(prefill.dateB);
+    if (prefill.op === "add" || prefill.op === "subtract") setOp(prefill.op);
+    if (prefill.amount) setAmount(prefill.amount);
+    if (prefill.unit === "days" || prefill.unit === "weeks" || prefill.unit === "months" || prefill.unit === "years") {
+      setUnit(prefill.unit);
+    }
   });
 
   const result = useMemo(() => {

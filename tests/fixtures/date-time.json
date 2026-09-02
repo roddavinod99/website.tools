@@ -1,0 +1,4 @@
+[
+  { "slug": "age-calculator", "category": "Date-Time", "name": "Age Calculator", "input": "1990-05-15", "action": "", "expect": "output" },
+  { "slug": "date-calculator", "category": "Date-Time", "name": "Date Calculator", "input": "2026-09-02", "action": "", "expect": "output" }
+]

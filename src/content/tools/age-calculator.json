@@ -1,0 +1,65 @@
+{
+  "whatItDoes": "Calculates the exact age in years, months, and days from a date of birth, plus total days, hours, and minutes. Shows the day of the week the person was born on, their zodiac sign, generation, and the date and day of their next birthday.",
+  "whyItExists": "Most age calculators stop at 'you are 33 years old' — but the more useful question is usually 'exactly how old am I, in days?', or 'how many days until my next birthday?'. This calculator answers both, plus the fun bits (zodiac, generation) that the user typically wants to share on social media.",
+  "whoShouldUse": "Anyone curious about their exact age in days, hours, and minutes. Parents tracking milestones, twins comparing ages, retirees computing age in days for an anniversary, and social-media users wanting the 'how many days old am I' stat.",
+  "useCases": [
+    "Find the exact number of days you've been alive",
+    "Compute how many days until your next birthday",
+    "Look up a historical figure's age at a specific date",
+    "Verify the age difference between two people",
+    "Determine the day of the week you were born on",
+    "Look up zodiac sign and generation from a birth year"
+  ],
+  "instructions": [
+    "Pick the date of birth from the calendar (must be in the past)",
+    "Pick the 'age at' date — defaults to today, but you can pick any past or future date",
+    "Read the years / months / days breakdown plus total days, hours, and minutes",
+    "Scroll down for the next-birthday countdown and the day-of-week of birth",
+    "Click the result card to copy a shareable summary"
+  ],
+  "examples": [
+    "Born 1990-05-15, age at 2026-09-02 → 36 years, 3 months, 18 days (13,234 total days)",
+    "Born 2000-01-01, age at 2026-09-02 → 26 years, 8 months, 1 day",
+    "Born 1985-12-25, next birthday in 2026 → 116 days (Christmas Day)",
+    "Born 2010-07-04, age at 2026-09-02 → 16 years, 1 month, 29 days (Generation Alpha)"
+  ],
+  "bestPractices": [
+    "Use the 'age at' field to compute age at any date, not just today",
+    "For legal age verification, the 'age at' date should be the date of the event",
+    "Zodiac and generation are estimates, not medical facts",
+    "Total hours and minutes use wall-clock time (24-hour days), not calendar math",
+    "For high-precision needs (legal, medical), use a tool that also accounts for time of day"
+  ],
+  "commonMistakes": [
+    "Forgetting that '1 year' in the breakdown is calendar years, not 365 days",
+    "Assuming the 'age at' date can be in the past before the birthdate — it must be after",
+    "Confusing the 'age at' date with the date the result was computed",
+    "Treating the zodiac sign as a personality assessment rather than a calendar marker",
+    "Off-by-one errors when computing age near a birthday (Jan 1 vs Dec 31)"
+  ],
+  "faq": [
+    "How is the age in years/months/days computed? We use calendar arithmetic: years and months are added by incrementing the calendar (Jan 31 + 1 month = Feb 28), then the remaining days are the difference in days. This is what 'how old am I' means in everyday usage.",
+    "Why are total days different from years×365 + months×30 + days? Because calendar years are 365 or 366 days, months are 28-31 days, and the breakdown uses calendar math. The total-days figure is the exact count.",
+    "What is the 'age at' date for? It lets you compute age at any past or future date, not just today. Useful for legal, historical, or 'how old was I when...' questions.",
+    "How is the next birthday computed? We take the birthdate's month and day, set it to the 'age at' year, and if that's already passed, bump it to the next year. Then we count the days.",
+    "Why doesn't it show seconds? Seconds roll over constantly; including them would make the result stale by the time you read it. The 'minutes' figure updates only when the minute changes."
+  ],
+  "features": [
+    "Years, months, days breakdown plus total days/hours/minutes",
+    "Day of the week you were born on",
+    "Western zodiac sign",
+    "Generation cohort (Gen Alpha, Gen Z, Millennial, etc.)",
+    "Next-birthday countdown with day of week",
+    "Copyable shareable summary"
+  ],
+  "references": [
+    {
+      "label": "MDN — Date Reference",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
+    },
+    {
+      "label": "Pew Research — Generation definitions",
+      "url": "https://www.pewresearch.org/topic/generations/"
+    }
+  ]
+}
