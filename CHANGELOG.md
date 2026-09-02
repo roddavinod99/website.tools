@@ -660,6 +660,11 @@
 ### Added
 
 - long-tail conversion URLs for unit converter (~412 pages)
+## [1.9.0] - 2026-09-02
+
+### Added
+
+- add BMI Calculator with 50 pre-filled landing pages
 ## Template
 
 For future releases:
