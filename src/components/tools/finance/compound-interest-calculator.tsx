@@ -7,6 +7,7 @@ import { Field, NumberInput, PercentInput, SelectField } from "@/components/fina
 import { compoundFutureValue, type ContributionTiming } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
 import { useCurrency } from "@/lib/stores/currency-store";
+import { usePrefillTool } from "@/lib/load-example";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -20,6 +21,20 @@ export function CompoundInterestCalculator() {
   const [rate, setRate] = useState("7");
   const [years, setYears] = useState("10");
   const [timing, setTiming] = useState<ContributionTiming>("annuityDue");
+
+  // Long-tail landing pages (PR 5 of PLAN.md) prefill the calculator
+  // with { principal, monthly, rate, years, timing } so e.g.
+  // /finance/compound-10000-10y-7pct-monthly-500 lands with the
+  // projection computed immediately.
+  usePrefillTool("compound-interest-calculator", (prefill) => {
+    if (prefill.principal) setPrincipal(prefill.principal);
+    if (prefill.monthly) setMonthly(prefill.monthly);
+    if (prefill.rate) setRate(prefill.rate);
+    if (prefill.years) setYears(prefill.years);
+    if (prefill.timing === "annuity" || prefill.timing === "annuityDue") {
+      setTiming(prefill.timing);
+    }
+  });
 
   const result = useMemo(() => {
     const p = parseInput(principal);

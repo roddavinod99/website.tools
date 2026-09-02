@@ -7,6 +7,7 @@ import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { loanScheduleTotals } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
 import { useCurrency } from "@/lib/stores/currency-store";
+import { usePrefillTool } from "@/lib/load-example";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -18,6 +19,16 @@ export function MortgagePayoff() {
   const [principal, setPrincipal] = useState("350000");
   const [rate, setRate] = useState("6.5");
   const [years, setYears] = useState("30");
+
+  // Long-tail landing pages (PR 5 of PLAN.md) prefill the calculator
+  // with { principal, rate, years } so e.g.
+  // /finance/mortgage-300000-30y-7pct lands with the monthly payment
+  // computed immediately.
+  usePrefillTool("mortgage-payoff", (prefill) => {
+    if (prefill.principal) setPrincipal(prefill.principal);
+    if (prefill.rate) setRate(prefill.rate);
+    if (prefill.years) setYears(prefill.years);
+  });
 
   const result = useMemo(() => {
     const p = parseInput(principal);
