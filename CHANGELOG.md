@@ -665,6 +665,11 @@
 ### Added
 
 - add BMI Calculator with 50 pre-filled landing pages
+## [1.10.0] - 2026-09-02
+
+### Added
+
+- add Age Calculator and date-time long-tail (~116 pages)
 ## Template
 
 For future releases:
