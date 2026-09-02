@@ -22,7 +22,7 @@ export function FeaturedTools({
   featuredTools: Tool[];
   featuresBySlug?: Record<string, string[]>;
 }) {
-  const topFeatured = featuredTools.slice(0, 4);
+  const topFeatured = featuredTools.slice(0, 8);
 
   return (
     <section className="border-t border-surface-200 dark:border-dark-border">

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
-import { TOOL_COUNT, siteConfig, allTools, featuredTools, categories, faqItems } from "@/lib/data";
+import { TOOL_COUNT, siteConfig, allTools, featuredTools, trendingTools, categories, faqItems } from "@/lib/data";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
+import { TrendingRail } from "@/components/home/trending-rail";
 import { AdBanner } from "@/components/ads";
 import { ToolsCta } from "@/components/home/tools-cta";
 import { adSlots } from "@/lib/data/ads";
@@ -95,6 +96,31 @@ const homepageJsonLd = {
       })),
     },
     {
+      "@type": "ItemList",
+      name: "Trending developer tools",
+      description: "Developer tools developers are reaching for most right now on DevStackIO.",
+      url: siteConfig.url,
+      numberOfItems: trendingTools.length,
+      itemListElement: trendingTools.map((tool, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          name: tool.name,
+          description: tool.description,
+          url: `${siteConfig.url}/tools/${tool.slug}`,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Cloud",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+          },
+        },
+      })),
+    },
+    {
       "@type": "FAQPage",
       mainEntity: faqItems.map((faq) => ({
         "@type": "Question",
@@ -138,9 +164,10 @@ export default function Home() {
         badgeText={`${TOOL_COUNT} free tools. No login required.`}
         allTools={allTools}
       />
-      <AdBanner className="my-10" slot={adSlots.homeTop} />
       <CategoriesSection />
       <FeaturedTools featuredTools={featuredTools} />
+      <TrendingRail trendingTools={trendingTools} />
+      <AdBanner className="my-10" slot={adSlots.homeTop} />
       <ToolsCta />
     </>
   );

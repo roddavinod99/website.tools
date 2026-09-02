@@ -12,6 +12,8 @@ function getCategories(allTools: { category: string }[]) {
 }
 
 export const featuredTools = allTools.filter((t) => t.featured);
+export const trendingTools = allTools.filter((t) => t.trending);
+export const newTools = allTools.filter((t) => t.new);
 
 export const faqItems = [
   { question: "Are the tools really free?", answer: "Yes, all tools on DevStackIO are completely free. We believe developer tools should be accessible to everyone." },
