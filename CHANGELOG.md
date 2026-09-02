@@ -640,6 +640,11 @@
 ### Added
 
 - promote power-user affordances on every tool page
+## [1.6.0] - 2026-09-02
+
+### Added
+
+- pin + recently-used rails with localStorage personalization
 ## Template
 
 For future releases:
