@@ -115,6 +115,7 @@ const toolLoaders: Record<string, ToolLoader> = {
   "math-evaluator": () => import("./utilities/math-evaluator").then((m) => ({ default: m.MathEvaluator })),
   "chronometer": () => import("./utilities/chronometer").then((m) => ({ default: m.Chronometer })),
   "percentage-calculator": () => import("./finance/percentage-calculator").then((m) => ({ default: m.PercentageCalculator })),
+  "bmi-calculator": () => import("./health/bmi-calculator").then((m) => ({ default: m.BMICalculator })),
   "emoji-picker": () => import("./utilities/emoji-picker").then((m) => ({ default: m.EmojiPicker })),
   "ipv4-subnet-calculator": () => import("./network/ipv4-subnet-calculator").then((m) => ({ default: m.Ipv4SubnetCalculator })),
   "ipv4-address-converter": () => import("./network/ipv4-address-converter").then((m) => ({ default: m.Ipv4AddressConverter })),

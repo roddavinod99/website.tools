@@ -1,0 +1,72 @@
+{
+  "whatItDoes": "Calculates your Body Mass Index (BMI) from your height and weight in either metric (cm/kg) or imperial (in/lb) units. Returns the BMI value to one decimal place, classifies it on the WHO standard scale (underweight, normal, overweight, obese class I-III), shows the BMI Prime ratio, and computes the healthy weight range for your height.",
+  "whyItExists": "BMI is the most widely-used screening tool for weight categories that may lead to health problems. While it's not a perfect measure (it doesn't distinguish between muscle and fat), it's a fast, free, accessible first-pass indicator that millions of people use daily to check whether they fall in a healthy range. The calculator handles both metric and imperial units, with cm/m auto-detection for height and full WHO classification with educational descriptions.",
+  "whoShouldUse": "Adults who want a quick BMI check, healthcare students learning the WHO classification, fitness coaches screening clients, parents checking their teenager's weight category, and anyone tracking weight as part of a health goal.",
+  "useCases": [
+    "Check whether your current weight is in a healthy range for your height",
+    "Calculate the healthy weight range to target for a fitness goal",
+    "Screen children and teens using the same WHO classification",
+    "Compute BMI Prime to compare with clinical thresholds (1.0 = upper normal)",
+    "Convert between metric and imperial inputs without re-entering values",
+    "Get a quick reference table of every WHO BMI category"
+  ],
+  "instructions": [
+    "Pick a unit system: metric (cm + kg) or imperial (in + lb)",
+    "Enter your height — centimeters for metric, inches for imperial",
+    "Enter your weight — kilograms for metric, pounds for imperial",
+    "Read the BMI value and your WHO classification immediately",
+    "Use the 'Swap units' button to convert without re-typing values",
+    "Click the result card to copy a shareable summary"
+  ],
+  "examples": [
+    "Metric: 175 cm, 70 kg → BMI 22.9 (Normal)",
+    "Metric: 180 cm, 75 kg → BMI 23.1 (Normal)",
+    "Imperial: 5'9\" (69 in), 154 lb → BMI 22.7 (Normal)",
+    "Metric: 165 cm, 60 kg → BMI 22.0 (Normal)",
+    "Metric: 170 cm, 95 kg → BMI 32.9 (Obese class I)"
+  ],
+  "bestPractices": [
+    "BMI is a population-level screening tool, not a personal health diagnosis",
+    "For children and teens (under 20), use the age- and sex-specific CDC BMI percentile instead of the standard adult cutoffs",
+    "Muscle weighs more than fat — athletes and bodybuilders often score 'overweight' or 'obese' despite being healthy",
+    "Pregnancy changes the meaning of BMI; consult a healthcare provider for prenatal weight guidance",
+    "Re-measure at the same time of day, ideally fasted, for consistent tracking"
+  ],
+  "commonMistakes": [
+    "Confusing the metric and imperial inputs (cm vs m, kg vs lb)",
+    "Treating BMI as a body-fat measurement — it isn't; it just uses weight",
+    "Using BMI as the only health metric — blood pressure, cholesterol, and lifestyle matter more",
+    "Believing the 'overweight' cutoff is wrong because you're muscular",
+    "Comparing adult and pediatric BMI without adjusting for age and sex"
+  ],
+  "faq": [
+    "What is BMI? Body Mass Index is a simple weight-to-height ratio (weight ÷ height²). It estimates body fat for most adults but is a screening tool, not a diagnosis.",
+    "Is the WHO classification accurate? For population screening yes, but it doesn't account for muscle mass, bone density, or ethnicity. Athletes routinely score 'overweight' or 'obese'.",
+    "What is BMI Prime? It's a simpler ratio: actual BMI ÷ 25 (the upper normal). 1.0 = upper normal, 1.5 = 50% over the upper normal. Clinicians find it easier to read.",
+    "Should I use metric or imperial? Both produce identical results. Use whichever you measure in. Use the 'Swap units' button to convert without re-entering values.",
+    "Is the calculation done in my browser? Yes — your height and weight never leave your device, never touch a server, never get logged.",
+    "What is the healthy weight range? For any height, the healthy BMI is 18.5-24.9. The calculator shows the corresponding weight range automatically."
+  ],
+  "features": [
+    "Metric and imperial units with auto-conversion",
+    "WHO standard classification with 8 categories",
+    "BMI Prime ratio for clinical comparison",
+    "Healthy weight range for your height",
+    "One-click result sharing",
+    "100% client-side — your measurements never leave the browser"
+  ],
+  "references": [
+    {
+      "label": "WHO — BMI classification",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight"
+    },
+    {
+      "label": "CDC — About BMI for adults",
+      "url": "https://www.cdc.gov/bmi/adult-bmi-calculator.html"
+    },
+    {
+      "label": "NIH — BMI calculator",
+      "url": "https://www.nhlbi.nih.gov/calculate-your-bmi"
+    }
+  ]
+}

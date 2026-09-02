@@ -207,5 +207,9 @@ export const allTools: Tool[] = [
   { id: "fi28", name: "Emergency Fund Calculator", description: "Free emergency fund calculator. See how many months of expenses your savings cover and what target to aim for.",
    category: "Finance", slug: "emergency-fund", popularity: 56, icon: "Umbrella", new: true, keywords: ["emergency fund", "savings", "buffer", "rainy day", "expenses", "months"] },
   { id: "fi29", name: "Currency Converter", description: "Free currency converter with live exchange rates for 160+ world currencies, refreshed every 10 minutes.",
-   category: "Finance", slug: "currency-converter", popularity: 82, icon: "ArrowLeftRight", new: true, processing: "server", keywords: ["currency", "exchange rate", "fx", "convert", "usd", "eur", "inr", "money"] },
+    category: "Finance", slug: "currency-converter", popularity: 82, icon: "ArrowLeftRight", new: true, processing: "server", keywords: ["currency", "exchange rate", "fx", "convert", "usd", "eur", "inr", "money"] },
+
+  // ── Health (1) ──
+  { id: "h1", name: "BMI Calculator", description: "Free online BMI calculator with metric and imperial units. Instantly compute your Body Mass Index, WHO weight classification, BMI Prime, and healthy weight range — all in your browser, 100% client-side.",
+    category: "Health", slug: "bmi-calculator", popularity: 90, icon: "HeartPulse", featured: true, new: true, keywords: ["bmi", "body mass index", "weight", "health", "fitness", "calculator", "who", "obesity", "underweight"], examples: ["180, 75", "165, 60", "170, 70", "175, 80"] },
 ];
