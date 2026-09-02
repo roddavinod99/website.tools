@@ -18,7 +18,7 @@ import Link from "next/link";
 import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
-  Copy, FileText, ExternalLink, FolderOpen,
+  Copy, FileText, ExternalLink, FolderOpen, Keyboard,
   ShieldCheck, EyeOff, Lock, Activity, type LucideIcon,
 } from "lucide-react";
 import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
@@ -26,6 +26,7 @@ import { copyText } from "@/lib/clipboard";
 import { parseFaqItem } from "@/lib/faq";
 import { dispatchLoadExample } from "@/lib/load-example";
 import { useNetworkRequestCount } from "@/lib/network-monitor";
+import { siteConfig } from "@/lib/data";
 
 interface ToolData {
   id: string;
@@ -107,8 +108,15 @@ function ToolActions({ copied, onCopy }: { copied: boolean; onCopy: () => void }
       <Button variant="ghost" size="sm" onClick={onCopy} aria-label="Copy output (Ctrl+Shift+C)">
         <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         <span className="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
-        <kbd className="ml-1 hidden lg:inline-flex h-4 items-center gap-1 rounded border border-surface-200 bg-white px-1 text-[10px] text-surface-400 dark:border-dark-border dark:bg-dark-bg">
-          <span>Ctrl</span><span>⇧</span><span>C</span>
+        <kbd
+          className="ml-1 inline-flex h-5 items-center gap-0.5 rounded border border-surface-200 bg-white px-1.5 font-mono text-[10px] font-medium text-surface-500 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted"
+          aria-hidden="true"
+        >
+          <span>Ctrl</span>
+          <span className="text-surface-300 dark:text-dark-border">+</span>
+          <span>Shift</span>
+          <span className="text-surface-300 dark:text-dark-border">+</span>
+          <span>C</span>
         </kbd>
       </Button>
     </div>
@@ -146,11 +154,12 @@ interface QuickLink {
   external?: boolean;
 }
 
-function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: {
+function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl, toolsRepo }: {
   tool: ToolData;
   specificGuide: ToolClientProps["specificGuide"];
   categorySlug?: string;
   mainSiteUrl: string;
+  toolsRepo?: string;
 }) {
   const links: QuickLink[] = [
     {
@@ -179,6 +188,20 @@ function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl }: {
     icon: <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />,
     external: true,
   });
+
+  // Open-source transparency: link to the tool's source file in the public
+  // repo via GitHub's code search, so the privacy/auditability promise is
+  // verifiable in one click. The search URL is stable even when files
+  // move between subdirectories (formatters/, crypto/, utilities/, ...).
+  // We only render the link if a toolsRepo is configured in siteConfig.
+  if (toolsRepo) {
+    links.push({
+      href: `${toolsRepo}/search?q=${encodeURIComponent(`"${tool.slug}" path:src/components/tools`)}&type=code`,
+      label: "View source",
+      icon: <Copy className="h-3.5 w-3.5" aria-hidden="true" />,
+      external: true,
+    });
+  }
 
   return (
     <nav className="mt-3 flex flex-wrap items-center gap-2 text-sm" aria-label="Quick links">
@@ -419,8 +442,17 @@ export function ToolClient({
               {/* Tool Actions - immediately accessible */}
               <ToolActions copied={copied} onCopy={() => handleCopy()} />
 
+              {/* Keyboard shortcut hint - tells power users the ? modal is reachable */}
+              <p className="mt-2 flex items-center gap-1.5 text-xs text-surface-500 dark:text-dark-muted">
+                <Keyboard className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>
+                  Press <kbd className="inline-flex h-4 min-w-4 items-center justify-center rounded border border-surface-200 bg-white px-1 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted" aria-hidden="true">?</kbd>{" "}
+                  for keyboard shortcuts
+                </span>
+              </p>
+
               {/* Quick Links */}
-              <QuickLinks tool={tool} specificGuide={specificGuide} categorySlug={categorySlug} mainSiteUrl={mainSiteUrl} />
+              <QuickLinks tool={tool} specificGuide={specificGuide} categorySlug={categorySlug} mainSiteUrl={mainSiteUrl} toolsRepo={siteConfig.links.toolsRepo} />
             </section>
 
             <InContentAd className="my-2" slot={adSlots.toolInContent1} />

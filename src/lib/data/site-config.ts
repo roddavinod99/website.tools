@@ -10,6 +10,7 @@ export const siteConfig: SiteConfig = {
   ogImage: "/tools-devstackio--preview-card.png",
   links: {
     github: "https://github.com/roddavinod99",
+    toolsRepo: "https://github.com/roddavinod99/website.tools",
   },
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@devstackio.com",
   legal: {
