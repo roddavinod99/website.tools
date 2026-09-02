@@ -645,6 +645,16 @@
 ### Added
 
 - pin + recently-used rails with localStorage personalization
+## [1.7.0] - 2026-09-02
+
+### Added
+
+- landing-page engine for long-tail conversion URLs
+### Documentation
+
+- restore 1M/mo target per corrected user input
+- correct traffic target to 100K/mo per locked-in decision
+- add competitive strategy for rapidtables.com alternative
 ## Template
 
 For future releases:
