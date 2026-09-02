@@ -376,7 +376,7 @@ All PRs honor these rules:
 | +6 | ~720 | 15K - 40K | Phase 2 + 3 |
 | +9 | ~830 | 40K - 80K | Phase 4 |
 | +12 | ~830 | 80K - 120K | **100K hit** |
-| +18 | ~1,000+ | 150K - 300K | Phase 5 momentum |
+| +18 | ~1,000+ | 1.5M - 3M | Phase 5 momentum |
 
 ## 14. The 5 things we will NOT do
 
