@@ -1,6 +1,6 @@
 # Competitive Strategy: tools.devstackio.com vs rapidtables.com
 
-> **Goal**: Make `tools.devstackio.com` the best alternative to `https://www.rapidtables.com` on the entire internet (humans + AI agents). Drive from current baseline to **100,000+ visitors/month within 9-12 months** on a sustainable privacy-first stack.
+> **Goal**: Make `tools.devstackio.com` the best alternative to `https://www.rapidtables.com` on the entire internet (humans + AI agents). Drive from current baseline to **1,000,000+ visitors/month within 9-12 months** on a sustainable privacy-first stack.
 
 ---
 
@@ -29,7 +29,7 @@ RapidTables gets ~6 million visitors/month on a 15-year-old, ad-monetized, mobil
 7. **Conversion tables**: the most-linked content on every page (e.g. "0°F = -17.78°C, 32°F = 0°C, 212°F = 100°C").
 8. **15+ years of accumulated inbound links** from educators, students, and other sites.
 
-## 4. The 6 honest gaps blocking 100K/mo
+## 4. The 6 honest gaps blocking 1M/mo
 
 1. **Calculator footprint is thin.** Only ~25% of RapidTables' coverage in math/health/date/electrical/lighting.
 2. **No `/convert/<x>-to-<y>/` URL pattern.** Single `unit-converter` page vs their ~500 temperature URLs alone.
@@ -55,7 +55,7 @@ RapidTables gets ~6 million visitors/month on a 15-year-old, ad-monetized, mobil
 | Decision | Choice |
 |---|---|
 | Scope | **Phases 1 + 2**: 12 calculators + 350+ conversion URLs |
-| Timeline | **9-12 months** to 100K/mo |
+| Timeline | **9-12 months** to 1M/mo |
 | URL strategy | **Static SSG** for all new pages (pre-rendered at build time) |
 | Audience | **Full expansion** (dev tools + consumer calculators) |
 | URL prefix | **`/convert/*`** (matches RapidTables 1:1) |
@@ -375,7 +375,7 @@ All PRs honor these rules:
 | +3 | ~590 | 5K - 15K | Phase 1 + 2 partial |
 | +6 | ~720 | 15K - 40K | Phase 2 + 3 |
 | +9 | ~830 | 40K - 80K | Phase 4 |
-| +12 | ~830 | 80K - 120K | **100K hit** |
+| +12 | ~830 | 800K - 1.2M | **1M hit** |
 | +18 | ~1,000+ | 1.5M - 3M | Phase 5 momentum |
 
 ## 14. The 5 things we will NOT do
