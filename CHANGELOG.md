@@ -635,6 +635,11 @@
 ### Added
 
 - surface 8 featured tools + new 'Trending now' rail
+## [1.5.0] - 2026-09-02
+
+### Added
+
+- promote power-user affordances on every tool page
 ## Template
 
 For future releases:
