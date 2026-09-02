@@ -18,21 +18,41 @@
  * - detail: { slug: string, text: string }
  * - Tools that opt in check `event.detail.slug === "<their slug>"` before
  *   acting, so the event is harmless for tools that don't subscribe.
+ *
+ * Long-tail landing pages (PR 1 / PR 2 of the rapidtables-alternative
+ * plan: PLAN.md) need a richer prefill — the unit converter, for
+ * example, wants to prefill { value, fromUnit, toUnit, category }, not
+ * just a single string. A second event `devstackio:prefill-tool` carries
+ * the full Record<string, string> so the tool can apply it however it
+ * wants. Tools that don't subscribe are unaffected.
  */
 
 import { useEffect } from "react";
 
 export const LOAD_EXAMPLE_EVENT = "devstackio:load-example";
+export const PREFILL_TOOL_EVENT = "devstackio:prefill-tool";
 
 export interface LoadExampleDetail {
   slug: string;
   text: string;
 }
 
+export interface PrefillToolDetail {
+  slug: string;
+  prefill: Record<string, string>;
+}
+
 export function dispatchLoadExample(slug: string, text: string) {
   if (typeof window === "undefined") return;
   window.dispatchEvent(
     new CustomEvent<LoadExampleDetail>(LOAD_EXAMPLE_EVENT, { detail: { slug, text } }),
+  );
+}
+
+export function dispatchPrefillTool(slug: string, prefill: Record<string, string>) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent<PrefillToolDetail>(PREFILL_TOOL_EVENT, { detail: { slug, prefill } }),
   );
 }
 
@@ -55,5 +75,27 @@ export function useLoadExample(slug: string, onLoad: (text: string) => void) {
     window.addEventListener(LOAD_EXAMPLE_EVENT, handler);
     return () => window.removeEventListener(LOAD_EXAMPLE_EVENT, handler);
   }, [slug, onLoad]);
+}
+
+/**
+ * Subscribe a tool to prefill events. Unlike useLoadExample which only
+ * passes a single string, this passes the full Record<string, string>
+ * the landing-page route forwarded. Tools that have multi-input UIs
+ * (unit converter, mortgage calculator, BMI) subscribe here.
+ */
+export function usePrefillTool(
+  slug: string,
+  onPrefill: (prefill: Record<string, string>) => void,
+) {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<PrefillToolDetail>).detail;
+      if (!detail || detail.slug !== slug) return;
+      onPrefill(detail.prefill);
+    };
+    window.addEventListener(PREFILL_TOOL_EVENT, handler);
+    return () => window.removeEventListener(PREFILL_TOOL_EVENT, handler);
+  }, [slug, onPrefill]);
 }
 

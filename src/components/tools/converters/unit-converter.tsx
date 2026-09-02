@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
+import { usePrefillTool } from "@/lib/load-example";
 
 interface UnitDef {
   label: string;
@@ -236,6 +237,22 @@ export function UnitConverter() {
   }, [value, fromDef, toDef]);
 
   const swap = useCallback(() => { setFromUnit(toUnit); setToUnit(fromUnit); }, [toUnit, fromUnit]);
+
+  // Long-tail landing pages (PR 2 of the rapidtables-alternative plan:
+  // PLAN.md) prefill the calculator with { value, fromUnit, toUnit, category }
+  // so e.g. /convert/temperature/100-c-to-f shows "100 °C = 212 °F"
+  // immediately on load. We subscribe to the prefill event and apply it
+  // after mount. Pre-fill is a no-op for users who land on the canonical
+  // /tools/unit-converter page since the prefill event isn't dispatched
+  // there.
+  usePrefillTool("unit-converter", (prefill) => {
+    if (prefill.category && prefill.category in categories) {
+      setCategory(prefill.category as CategoryKey);
+    }
+    if (prefill.fromUnit) setFromUnit(prefill.fromUnit);
+    if (prefill.toUnit) setToUnit(prefill.toUnit);
+    if (prefill.value) setValue(prefill.value);
+  });
 
   const copy = useCallback(async (text: string) => {
     await navigator.clipboard.writeText(text);

@@ -22,6 +22,13 @@
 
 import { allTools } from "@/lib/data/tools";
 import type { Tool } from "@/types";
+import { buildAllLandingPages } from "./conversions-data";
+
+// Re-export the engine's landing pages from the merged dataset. The
+// conversions-data module augments the engine with the long-tail
+// unit-conversion URLs (PR 2 of the rapidtables-alternative plan:
+// PLAN.md). Other PRs (BMI, age, etc.) will append their own entries
+// to the same merged dataset.
 
 export type LandingPageIntent = "compute" | "convert" | "learn" | "define";
 
@@ -85,6 +92,10 @@ export interface LandingPage {
  * landing page needs to change its title or prefill, mark the old
  * entry as `noindex: true` and add a new entry. This keeps old
  * indexable URLs stable.
+ *
+ * As of PR 2, this is the engine's smoke-test placeholder + the full
+ * unit-conversion long-tail built by `conversions-data.ts`. PR 3+ (BMI,
+ * age, etc.) will append their own builders to the same module.
  */
 export const landingPages: LandingPage[] = [
   // Smoke-test entry: validates the catch-all route + JSON-LD emission
@@ -101,6 +112,7 @@ export const landingPages: LandingPage[] = [
     prefill: { value: "1", fromUnit: "meter", toUnit: "foot" },
     noindex: true,
   },
+  ...buildAllLandingPages(),
 ];
 
 /**
