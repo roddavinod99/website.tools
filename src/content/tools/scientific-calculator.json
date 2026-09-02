@@ -1,0 +1,73 @@
+{
+  "whatItDoes": "Full scientific calculator with history, memory, and trig/log/exp functions. Standard arithmetic (+, −, ×, ÷), parentheses-free expression chaining, percent, square root, x², reciprocal, exponent (x^y), π, e, sin/cos/tan, asin/acos/atan, log (base 10), ln, 10^x, e^x, and 4-key memory (MC/MR/M+/M−). Degree and radian angle modes.",
+  "whyItExists": "Browser-based scientific calculators save students, engineers, and scientists the trip to a physical calculator or the trust gap of an unvetted online one. This one is 100% client-side, has a clean history view, and supports the angle mode that matters to your work (DEG for everyday math, RAD for calculus and physics).",
+  "whoShouldUse": "Students doing trig or log problems, engineers computing on the fly, scientists and statisticians who need a quick reliable calculator, and anyone who needs more than a basic pocket calculator.",
+  "useCases": [
+    "Compute sin, cos, tan with one keystroke and an angle mode toggle",
+    "Use memory (M+, M−, MR) to accumulate a sum across multiple values",
+    "Square a number, take a square root, or raise to a power",
+    "Convert between degrees and radians via the trig inverse functions",
+    "Switch to DEG or RAD mode depending on whether you're doing geometry or calculus",
+    "Copy the last 10 results to share a calculation"
+  ],
+  "instructions": [
+    "Pick a unit system: metric (cm + kg) or imperial (in + lb) — wait, that's a different tool. For this one, just enter numbers with the digit keys",
+    "Click an operator (+, −, ×, ÷) to chain operations; click = to evaluate",
+    "Press AC to clear all history, C to clear only the current entry",
+    "Use √, x², 1/x, ±, % for common unary operations",
+    "Use the memory keys (MC, MR, M+, M−) to accumulate or recall values",
+    "Use sin/cos/tan in DEG mode for everyday math, RAD for calculus",
+    "Use log (base 10), ln (natural log), 10^x, e^x for exponential work",
+    "The history list shows your last 10 calculations"
+  ],
+  "examples": [
+    "sin(30°) in DEG mode → 0.5",
+    "cos(π) in RAD mode → −1",
+    "2 + 3 × 4 = 14 (operator precedence)",
+    "√144 → 12",
+    "log(100) → 2",
+    "2^10 → 1024"
+  ],
+  "bestPractices": [
+    "Pick the right angle mode for your problem — DEG for geometry, RAD for calculus and physics",
+    "Use memory to accumulate a sum, e.g. tap M+ after each value",
+    "Press AC to reset between unrelated calculations; C clears only the current entry",
+    "The calculator uses up to 10 significant digits, more than enough for most work",
+    "Use the history view to copy-paste results into homework or reports"
+  ],
+  "commonMistakes": [
+    "Forgetting to switch between DEG and RAD mode — sin(30) gives different answers",
+    "Treating %, 1/x, and x² as the same as percent of, reciprocal of, and square of",
+    "Confusing log (base 10) with ln (natural log, base e)",
+    "Expecting parentheses: this calculator does standard arithmetic only, not full expressions",
+    "Relying on long results past 10 significant digits — small floating-point error accumulates"
+  ],
+  "faq": [
+    "How is sin(30) different in DEG vs RAD? — In DEG mode, sin(30) = 0.5 (30 degrees). In RAD mode, sin(30) ≈ −0.988 (30 radians). The same key gives a different answer.",
+    "Is memory persistent across page reloads? — No. Memory and history live in component state, so they reset on refresh. We do not store them anywhere — privacy-first.",
+    "What is the precision? — 10 significant digits, more than a physical calculator. Displayed values round to the shortest unambiguous representation.",
+    "Can I type a full expression like 2 + 3 * 4? — No. This calculator does standard chained arithmetic: enter 2, press +, enter 3, press +, enter 4, press =. The result is 9. There is no operator-precedence parser.",
+    "What is the difference between log and ln? — log is base 10 (log₁₀), ln is the natural log (base e ≈ 2.718). Use log for engineering and pH, ln for calculus and statistics."
+  ],
+  "features": [
+    "Standard arithmetic with chainable operators",
+    "Square root, x², reciprocal, percent, sign flip",
+    "Trig (sin/cos/tan) and inverse trig (asin/acos/atan)",
+    "Logarithm (base 10), natural log, 10^x, e^x",
+    "Constants π and e",
+    "Memory: MC, MR, M+, M−",
+    "DEG / RAD angle mode",
+    "10-step history with copyable entries",
+    "100% browser-based, no network roundtrips"
+  ],
+  "references": [
+    {
+      "label": "MDN — Math object",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math"
+    },
+    {
+      "label": "Khan Academy — Trigonometry",
+      "url": "https://www.khanacademy.org/math/trigonometry"
+    }
+  ]
+}

@@ -195,7 +195,7 @@ export const allTools: Tool[] = [
   { id: "fi22", name: "Down Payment Planner", description: "Free down payment planner. Find out how long it takes to save for a house down payment with monthly savings.",
    category: "Finance", slug: "down-payment-planner", popularity: 60, icon: "Home", new: true, keywords: ["down payment", "savings", "home", "goal", "house", "plan"] },
   { id: "fi23", name: "Tip Calculator", description: "Free tip calculator for restaurants and services. Split the bill easily with tip rate, per-person totals, and grand total.",
-   category: "Finance", slug: "tip-calculator", popularity: 68, icon: "ReceiptText", new: true, keywords: ["tip", "gratuity", "split the bill", "restaurant", "per person", "calculator"] },
+    category: "Math", slug: "tip-calculator", popularity: 68, icon: "ReceiptText", new: true, keywords: ["tip", "gratuity", "split the bill", "restaurant", "per person", "calculator"] },
 { id: "fi24", name: "VAT/GST/Sales Tax Calculator", description: "Free VAT, GST, and Sales Tax calculator for 35+ countries. Calculate tax exclusive or inclusive, with country-specific rates, reduced rates, and provincial breakdowns.",
     category: "Finance", slug: "vat-gst", popularity: 62, icon: "ShoppingCart", new: true, keywords: ["vat", "gst", "sales tax", "tax rate", "checkout", "receipt", "amount", "inclusive", "exclusive", "provincial"] },
   { id: "fi25", name: "Simple Interest Calculator", description: "Free simple interest calculator. Compute interest and total for any principal, rate, and time without compounding.",
@@ -216,4 +216,12 @@ export const allTools: Tool[] = [
   // ── Date-Time (2) ──
   { id: "d1", name: "Age Calculator", description: "Free online age calculator. Compute your exact age in years, months, days, hours, and minutes from any date of birth, plus day-of-week, zodiac sign, generation, and the next-birthday countdown. Runs 100% in your browser.",
     category: "Date-Time", slug: "age-calculator", popularity: 88, icon: "Cake", featured: true, new: true, keywords: ["age", "birthday", "born", "years", "months", "days", "zodiac", "generation", "calculator"], examples: ["1990-05-15", "2000-01-01", "1985-12-25", "2010-07-04"] },
+
+  // ── Math (3) ──
+  { id: "m1", name: "Scientific Calculator", description: "Free online scientific calculator with history, memory, and trig/log/exp functions. Standard arithmetic, parentheses, percent, square root, powers, π, e, sin, cos, tan, log, ln, and 10^x. Runs 100% in your browser.",
+    category: "Math", slug: "scientific-calculator", popularity: 85, icon: "Calculator", featured: true, new: true, keywords: ["scientific", "calculator", "sin", "cos", "tan", "log", "ln", "sqrt", "pi", "e", "memory", "history"], examples: ["2 + 2 * 3", "sqrt(16)", "sin(30)", "log(100)"] },
+  { id: "m2", name: "Statistics Calculator", description: "Free online statistics calculator. Compute mean (average), standard deviation, and variance from a list of numbers. Paste a comma- or newline-separated list and get all three metrics instantly, 100% in your browser.",
+    category: "Math", slug: "statistics-calculator", popularity: 72, icon: "BarChart3", new: true, keywords: ["statistics", "average", "mean", "median", "standard deviation", "variance", "math"], examples: ["1, 2, 3, 4, 5", "10, 20, 30, 40, 50", "100, 200, 300, 400, 500"] },
+  { id: "m3", name: "Discount Calculator", description: "Free online discount calculator. Apply one or more discounts in sequence to any price, see the final price, total saved, and effective discount percentage. 100% client-side, no upload.",
+    category: "Math", slug: "discount-calculator", popularity: 76, icon: "Percent", new: true, keywords: ["discount", "sale", "percent off", "coupon", "stacked", "savings"], examples: ["100", "50, 20", "200, 30, 10"] },
 ];

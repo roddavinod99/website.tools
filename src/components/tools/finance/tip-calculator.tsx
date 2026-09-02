@@ -7,6 +7,7 @@ import { Field, NumberInput, PercentInput } from "@/components/finance/inputs";
 import { tipCalculator } from "@/lib/finance/calculations";
 import { formatMoney } from "@/lib/finance/format";
 import { useCurrency } from "@/lib/stores/currency-store";
+import { usePrefillTool } from "@/lib/load-example";
 
 function parseInput(raw: string): number {
   const v = parseFloat(raw);
@@ -18,6 +19,15 @@ export function TipCalculator() {
   const [bill, setBill] = useState("100");
   const [tipPct, setTipPct] = useState("18");
   const [people, setPeople] = useState("1");
+
+  // Long-tail landing pages (PR 6 of PLAN.md) prefill the calculator
+  // with { bill, tipPct, people } so e.g. /tip/18-on-100 lands with
+  // the tip and per-person totals computed immediately.
+  usePrefillTool("tip-calculator", (prefill) => {
+    if (prefill.bill) setBill(prefill.bill);
+    if (prefill.tipPct) setTipPct(prefill.tipPct);
+    if (prefill.people) setPeople(prefill.people);
+  });
 
   const result = useMemo(() => {
     const b = parseInput(bill);

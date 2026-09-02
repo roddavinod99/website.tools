@@ -1,0 +1,67 @@
+{
+  "whatItDoes": "Applies one or more discount percentages in sequence to a starting price and shows the final price, the total amount saved, and the effective discount percentage. Discounts stack multiplicatively: a 20% off + 10% off stack is 28% off, not 30%.",
+  "whyItExists": "Most shoppers intuitively add discount percentages, but stores always apply them in sequence. A 20% + 10% coupon is 1 − 0.8 × 0.7 = 0.44, so 44% off, not 30%. This calculator shows the real final price for any stack of discounts, the actual dollar amount saved, and the effective percentage so you can compare to 'X% off' offers.",
+  "whoShouldUse": "Shoppers comparing stacked coupon offers, retail marketers designing promotion campaigns, e-commerce analysts evaluating discount effectiveness, and small business owners sanity-checking sale pricing.",
+  "useCases": [
+    "Apply a sale price plus a coupon code and see the real final cost",
+    "Compare two stacks of discounts (e.g. 20% + 10% vs 25% + 5%) to find the better deal",
+    "Compute the effective discount percentage of a multi-stage promotion",
+    "Verify a store's advertised savings against the actual price",
+    "Build a price ladder: apply a flash sale, then a loyalty discount, then a coupon"
+  ],
+  "instructions": [
+    "Enter the original price (the pre-discount price)",
+    "Enter the discount percentages in the order they'll be applied, separated by commas or newlines",
+    "Read the final price, the amount saved, and the effective percentage",
+    "The step-by-step breakdown shows each discount and the running subtotal",
+    "Edit the input to recompute instantly"
+  ],
+  "examples": [
+    "$100 with 20% off → $80 (saves $20, 20% effective)",
+    "$100 with 20% + 10% off → $72 (saves $28, 28% effective)",
+    "$200 with 30% + 10% + 5% off → $119.70 (saves $80.30, 40.15% effective)",
+    "$50 with 50% off → $25 (saves $25, 50% effective)",
+    "$100 with 20% off + 20% off → $64 (saves $36, 36% effective)"
+  ],
+  "bestPractices": [
+    "Apply discounts in the order the store applies them: sale price first, then coupon",
+    "Compare the effective percentage, not the sum, when stacking offers",
+    "For very small effective differences (1-2%), the store may be obscuring the real price — round-trip check before checkout",
+    "When evaluating BOGO (buy one get one), the effective discount depends on whether the second item is the same or a different price",
+    "Use the step-by-step breakdown to verify a store's advertising matches their checkout math"
+  ],
+  "commonMistakes": [
+    "Adding discount percentages: 20% + 10% ≠ 30%, it's 28%",
+    "Applying in the wrong order: stores usually apply the larger discount first",
+    "Forgetting the order: the same set of discounts applied in a different order gives the same result mathematically, but the line items may differ",
+    "Confusing 'X% off' with '$X off' — 20% off $100 = $20, but $20 off $100 = 20%",
+    "Trusting advertised 'up to X% off' — the average is much less than the maximum",
+    "Rounding after each step instead of at the end — small errors compound over many discounts"
+  ],
+  "faq": [
+    "How does stacking work? — Each discount multiplies the running subtotal. A 20% discount on $100 leaves $80; a 10% discount on that leaves $80 × 0.9 = $72. The final is 1 − (0.8 × 0.9) = 1 − 0.72 = 0.28 of the original, so 28% off.",
+    "Why is 20% + 10% = 28% and not 30%? — Because each discount is taken on the running total, not the original. $100 × 0.8 × 0.9 = $72, which is 28% off the original. Adding the percentages would only work if the discounts applied to non-overlapping portions of the price.",
+    "Does the order of discounts matter? — Mathematically no: multiplication is commutative. In practice, stores always apply the larger discount first, so the line items differ. The final price is the same either way.",
+    "What about 'BOGO free' (buy one get one free)? — That depends on the relative price of the two items. The simplest case (BOGO where the second item is the same price) is 50% off if you buy 2. For mixed carts, treat each line as its own discount calculation.",
+    "Is this calculator accurate? — Yes, uses standard arithmetic with full floating-point precision. The displayed values are rounded for readability; the final price is exact to 2 decimal places."
+  ],
+  "features": [
+    "Stack any number of discounts in sequence",
+    "Real-time final price and dollar amount saved",
+    "Effective discount percentage (what the stack really equals)",
+    "Step-by-step breakdown showing each discount and the running subtotal",
+    "Comma- or newline-separated input, accepts up to thousands of values",
+    "Reset button for quick new-lookup",
+    "100% client-side — no upload, no tracking"
+  ],
+  "references": [
+    {
+      "label": "Khan Academy — Percent word problems",
+      "url": "https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates/pre-algebra-percent-word-problems"
+    },
+    {
+      "label": "Consumer.gov — Sales and discounts",
+      "url": "https://consumer.gov/scams-fraud/online-shopping"
+    }
+  ]
+}

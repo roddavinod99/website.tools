@@ -1,0 +1,68 @@
+{
+  "whatItDoes": "Computes mean (average), sample standard deviation, sample variance, sum, count, min, max, and range from a list of numbers. Paste a comma-, space-, or newline-separated list and get all metrics instantly.",
+  "whyItExists": "Most spreadsheets, calculators, and online tools give you either the mean or the standard deviation — rarely all of them at once, with the right formulas. This one uses sample variance (n−1, Bessel's correction), which is what every introductory statistics textbook uses for a single sample. No data leaves your browser.",
+  "whoShouldUse": "Students doing homework or studying for the AP Statistics or GRE, researchers sanity-checking a calculation, data analysts previewing a small dataset, and anyone who needs quick stats from a list of numbers.",
+  "useCases": [
+    "Compute the average of test scores",
+    "Find the standard deviation of a sample to understand variability",
+    "Verify variance calculations from a textbook",
+    "Get min/max/range of a quick data preview",
+    "Compute summary statistics on a small dataset before pushing it to a real tool",
+    "Sanity-check Excel or Google Sheets formula results"
+  ],
+  "instructions": [
+    "Paste or type your numbers into the textarea, separated by commas, spaces, or newlines",
+    "Pick a display mode: All metrics (default), or just one",
+    "Read the result panel — copy the values you need",
+    "Click the result panel to copy a formatted summary",
+    "Edit the input to recompute; the parser handles up to several thousand numbers"
+  ],
+  "examples": [
+    "Mean of 1, 2, 3, 4, 5 → 3",
+    "Std dev of 10, 20, 30, 40, 50 → ~17.078",
+    "Variance of 2, 4, 4, 4, 5, 5, 7, 9 → 4",
+    "Mean of 100, 200, 300, 400, 500 → 300",
+    "Range of 5, 12, 8, 20, 3 → 17 (max 20 − min 3)"
+  ],
+  "bestPractices": [
+    "Use sample variance (n−1) for a single sample, population variance (n) only if you have the entire population",
+    "For skewed distributions, prefer the median over the mean — this calculator gives mean only",
+    "Round standard deviation to the precision of your data; do not over-report decimals",
+    "Verify with a known sample first (e.g. 1, 2, 3, 4, 5 should give mean 3 and stddev ~1.581)",
+    "For large lists, paste from a spreadsheet or text file — the parser handles thousands of numbers"
+  ],
+  "commonMistakes": [
+    "Confusing sample variance (n−1) with population variance (n) — this tool uses n−1",
+    "Using mean when the distribution is heavily skewed or has outliers",
+    "Forgetting that standard deviation is in the same units as the data; variance is in squared units",
+    "Including text in the input — the parser skips non-numeric tokens silently",
+    "Reporting variance when the user asked for standard deviation (common)",
+    "Treating the mean as the 'middle' — it's the balance point, not the median"
+  ],
+  "faq": [
+    "What formula is used for standard deviation? — Sample standard deviation: σ = sqrt(Σ(x - x̄)² / (n−1)). This is Bessel's correction and the default in textbooks and Excel's STDEV.S.",
+    "Why use sample variance and not population variance? — Because in practice you almost always have a sample of a larger population. The n−1 divisor unbiases the estimate. If you genuinely have the entire population, divide by n instead.",
+    "What happens if I enter text or non-numbers? — The parser silently skips them. The 'Parsed N numbers' counter shows how many valid values were extracted.",
+    "What is the maximum input size? — The parser handles thousands of numbers easily. For 10,000+ numbers, expect a brief render pause as the loop runs.",
+    "Can I get the median or mode? — Not in this calculator. The most common follow-up is to use a spreadsheet or a dedicated statistics package."
+  ],
+  "features": [
+    "Mean, sample variance, sample standard deviation",
+    "Sum, count, min, max, range",
+    "All-metrics view or single-metric filter",
+    "Comma-, space-, or newline-separated input",
+    "Click-to-copy formatted summary",
+    "100% client-side — numbers never leave the browser",
+    "No data limit (handles thousands of values)"
+  ],
+  "references": [
+    {
+      "label": "Khan Academy — Standard deviation",
+      "url": "https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/variance-standard-deviation-sample"
+    },
+    {
+      "label": "NIST — Sample variance",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda35ed.htm"
+    }
+  ]
+}

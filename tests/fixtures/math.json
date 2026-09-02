@@ -1,0 +1,6 @@
+[
+  { "slug": "scientific-calculator", "category": "Math", "name": "Scientific Calculator", "input": "", "action": "", "expect": "output" },
+  { "slug": "statistics-calculator", "category": "Math", "name": "Statistics Calculator", "input": "1, 2, 3, 4, 5", "action": "", "expect": "output" },
+  { "slug": "discount-calculator", "category": "Math", "name": "Discount Calculator", "input": "100", "action": "", "expect": "output" },
+  { "slug": "tip-calculator", "category": "Math", "name": "Tip Calculator", "input": "100", "action": "", "expect": "output" }
+]
