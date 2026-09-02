@@ -655,6 +655,11 @@
 - restore 1M/mo target per corrected user input
 - correct traffic target to 100K/mo per locked-in decision
 - add competitive strategy for rapidtables.com alternative
+## [1.8.0] - 2026-09-02
+
+### Added
+
+- long-tail conversion URLs for unit converter (~412 pages)
 ## Template
 
 For future releases:
