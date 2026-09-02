@@ -4,6 +4,7 @@ import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";
 import { TOOL_LASTMOD } from "@/lib/seo/__generated__/tool-lastmod";
+import { listIndexableLandingPages, landingPageUrl } from "@/lib/seo/landing-pages";
 
 export const revalidate = 86400;
 
@@ -86,6 +87,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry(`${BASE}/toolkits/${slug}`)
   );
 
+  // Long-tail conversion landing pages emitted by the landing-page engine
+  // (PR 1 of the rapidtables-alternative plan: PLAN.md). Each entry's
+  // lastmod is derived from the canonical tool's git lastmod so search
+  // engines see a real modification date, not the build date.
+  const conversionPages: MetadataRoute.Sitemap = listIndexableLandingPages().map((page) => {
+    const lastmod = dateFrom(TOOL_LASTMOD[page.canonicalSlug]);
+    return entry(landingPageUrl(page, BASE), lastmod);
+  });
+
   return [
     ...staticPages,
     ...categoriesPages,
@@ -94,5 +104,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPages,
     ...comparisonPages,
     ...toolkitPages,
+    ...conversionPages,
   ];
 }

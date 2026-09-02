@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, type ReactNode } from "react
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/utilities/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance/finance-disclaimer";
+import { EmbedWidget } from "@/components/embed-widget";
 import { InContentAd, SidebarAd } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
 import { TableOfContents, type TocItem } from "@/components/layout/table-of-contents";
@@ -448,6 +449,13 @@ export function ToolClient({
 
               {/* Tool Actions - immediately accessible */}
               <ToolActions copied={copied} onCopy={() => handleCopy()} />
+
+              {/* Embed widget - lets bloggers, SO answerers, and docs authors
+                  paste a free iframe snippet; each embed is a backlink to
+                  the canonical tool. Backlink strategy per PLAN.md. */}
+              <div className="mt-3">
+                <EmbedWidget slug={tool.slug} title={tool.name} />
+              </div>
 
               {/* Keyboard shortcut hint - tells power users the ? modal is reachable */}
               <p className="mt-2 flex items-center gap-1.5 text-xs text-surface-500 dark:text-dark-muted">

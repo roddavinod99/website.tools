@@ -1,11 +1,13 @@
 /**
- * Centralized JSON-LD helpers for the /tools, /categories, /popular, and /new
- * listing pages. All emitted script bodies go through {@link jsonLdScriptBody}
- * so that `<` is escaped to `\u003c` consistently (per the official Next.js
- * JSON-LD guide: https://nextjs.org/docs/app/guides/json-ld ).
+ * Centralized JSON-LD helpers for the /tools, /categories, /popular, /new,
+ * and /convert/* listing and landing pages. All emitted script bodies go
+ * through {@link jsonLdScriptBody} so that `<` is escaped to `\u003c`
+ * consistently (per the official Next.js JSON-LD guide:
+ * https://nextjs.org/docs/app/guides/json-ld ).
  */
 
 const JSON_LD_CONTEXT = "https://schema.org" as const;
+const ORGANIZATION_ID_SUFFIX = "#organization" as const;
 
 export interface BreadcrumbItem {
   name: string;
@@ -70,6 +72,87 @@ export function itemList({ name, description, url, items }: ItemListInput) {
       name: item.name,
       url: item.url,
       ...(item.description ? { description: item.description } : {}),
+    })),
+  };
+}
+
+/**
+ * WebApplication schema for landing pages that wrap an interactive tool.
+ * Distinct from SoftwareApplication (used for the canonical /tools/<slug>
+ * pages) because landing pages are long-tail entry points with richer
+ * per-page metadata (feature list, optional screenshot, optional browser
+ * requirements).
+ *
+ * Per AGENTS.md: the publisher references the global Organization @id
+ * rather than redeclaring it.
+ */
+export interface WebApplicationInput {
+  name: string;
+  description: string;
+  url: string;
+  /** Application category, e.g. "DeveloperApplication" | "UtilitiesApplication" | "HealthApplication" */
+  applicationCategory: string;
+  /** Optional list of human-readable feature names */
+  featureList?: string[];
+  /** Absolute URL to a screenshot, when present */
+  screenshotUrl?: string;
+  /** Absolute site URL (no trailing slash), used to build the Organization @id */
+  siteUrl: string;
+  /** Absolute URL of the Organization JSON-LD @id, defaults to `<siteUrl>/#organization` */
+  organizationId?: string;
+  /** "WebApplication" is the default; pass "SoftwareApplication" for desktop / package-shaped tools */
+  type?: "WebApplication" | "SoftwareApplication";
+}
+
+export function webApplicationJsonLd(input: WebApplicationInput) {
+  const orgId = input.organizationId ?? `${input.siteUrl.replace(/\/+$/, "")}/${ORGANIZATION_ID_SUFFIX}`;
+  return {
+    "@context": JSON_LD_CONTEXT,
+    "@type": input.type ?? "WebApplication",
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    applicationCategory: input.applicationCategory,
+    operatingSystem: "Any Browser",
+    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    ...(input.featureList && input.featureList.length > 0 ? { featureList: input.featureList } : {}),
+    ...(input.screenshotUrl ? { screenshot: input.screenshotUrl } : {}),
+    publisher: {
+      "@id": orgId,
+      name: "DevStackIO",
+      url: input.siteUrl,
+    },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
+}
+
+/**
+ * FAQPage schema. Used by both /tools/<slug> pages (when the tool's
+ * ToolContent has a FAQ) and /convert/<category>/<slug> landing pages
+ * (when the LandingPage has FAQ items). Accepts plain-text answers;
+ * the emitted node is safe to inline in the document body.
+ */
+export interface FaqInput {
+  question: string;
+  answer: string;
+}
+
+export function faqPageJsonLd(faqs: FaqInput[]) {
+  return {
+    "@context": JSON_LD_CONTEXT,
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
     })),
   };
 }
