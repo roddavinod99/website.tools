@@ -680,6 +680,11 @@
 ### Added
 
 - add Scientific, Statistics, and Discount calculators
+## [1.13.0] - 2026-09-02
+
+### Added
+
+- add Wire Gauge and Voltage Drop calculators + PR 7 long-tail
 ## Template
 
 For future releases:
