@@ -675,6 +675,11 @@
 ### Added
 
 - long-tail finance landing pages (~79 URLs)
+## [1.12.0] - 2026-09-02
+
+### Added
+
+- add Scientific, Statistics, and Discount calculators
 ## Template
 
 For future releases:
