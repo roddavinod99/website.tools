@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, type ReactNode } from "react";
+import { useState, useEffect, useCallback, useMemo, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/utilities/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance/finance-disclaimer";
@@ -19,12 +19,13 @@ import {
   CircleCheck, CircleAlert,
   Lightbulb, BookOpen, ArrowRight, ChevronRight,
   Copy, FileText, ExternalLink, FolderOpen,
-  ShieldCheck, EyeOff, Lock, type LucideIcon,
+  ShieldCheck, EyeOff, Lock, Activity, type LucideIcon,
 } from "lucide-react";
 import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
 import { copyText } from "@/lib/clipboard";
 import { parseFaqItem } from "@/lib/faq";
 import { dispatchLoadExample } from "@/lib/load-example";
+import { useNetworkRequestCount } from "@/lib/network-monitor";
 
 interface ToolData {
   id: string;
@@ -264,6 +265,23 @@ export function ToolClient({
     [tool.slug],
   );
 
+  const { count: requestCount, recent: recentRequests } = useNetworkRequestCount();
+
+  const networkPillTitle = useMemo(() => {
+    if (requestCount === 0) {
+      return "This page has made 0 outbound network requests since it loaded. Your tool input never leaves the browser.";
+    }
+    const paths = recentRequests.map((r) => {
+      try {
+        return new URL(r.url, window.location.href).pathname;
+      } catch {
+        return r.url;
+      }
+    });
+    const list = paths.length ? `\nRecent: ${paths.join(", ")}` : "";
+    return `This page has made ${requestCount} outbound network request(s) since it loaded — none of them carried your tool input.${list}`;
+  }, [requestCount, recentRequests]);
+
   useEffect(() => {
     const onShortcut = (e: KeyboardEvent) => {
       if (isToolShortcutEvent(e, "Enter", false)) {
@@ -343,6 +361,21 @@ export function ToolClient({
                 <span className="inline-flex items-center gap-1.5" role="listitem">
                   <Lock className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
                   No Account Required
+                </span>
+                <span
+                  className="inline-flex items-center gap-1.5"
+                  role="listitem"
+                  title={networkPillTitle}
+                >
+                  <Activity
+                    className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400"
+                    aria-hidden="true"
+                  />
+                  <span data-testid="network-request-count">
+                    {requestCount === 0
+                      ? "0 network requests"
+                      : `${requestCount} network request${requestCount === 1 ? "" : "s"}`}
+                  </span>
                 </span>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
