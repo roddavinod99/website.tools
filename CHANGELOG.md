@@ -670,6 +670,11 @@
 ### Added
 
 - add Age Calculator and date-time long-tail (~116 pages)
+## [1.11.0] - 2026-09-02
+
+### Added
+
+- long-tail finance landing pages (~79 URLs)
 ## Template
 
 For future releases:
