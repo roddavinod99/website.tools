@@ -625,6 +625,11 @@
 ### Documentation
 
 - sync registry field list, trust badge location, JSON-LD note
+## [1.3.0] - 2026-09-02
+
+### Added
+
+- add live 'N network requests' trust pill on tool pages
 ## Template
 
 For future releases:
