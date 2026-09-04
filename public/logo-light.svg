@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <!-- Wordmark: DevStackIO -->
+  <text x="6" y="32" font-size="26" font-weight="700" fill="#0A0A0A" letter-spacing="-0.5">DevStackIO</text>
+  <!-- Tools badge -->
+  <rect x="160" y="14" width="34" height="20" rx="4" fill="#E6F1FE" />
+  <text x="177" y="28" font-size="11" font-weight="600" fill="#0058CC" text-anchor="middle">Tools</text>
+</svg>
