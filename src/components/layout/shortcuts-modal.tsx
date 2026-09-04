@@ -86,7 +86,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-bg)]/70 backdrop-blur animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-title"
@@ -95,15 +95,15 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
       <div
         ref={contentRef}
         tabIndex={-1}
-        className="relative w-full max-w-2xl max-h-[85vh] overflow-auto rounded-2xl bg-white shadow-2xl dark:bg-dark-surface animate-slide-up"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm animate-slide-up"
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-surface-200 p-4 dark:border-dark-border">
-          <h2 id="shortcuts-title" className="text-lg font-semibold text-surface-900 dark:text-dark-text">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--color-border)] p-4 bg-[var(--color-bg)]">
+          <h2 id="shortcuts-title" className="text-lg font-semibold text-[var(--color-text)]">
             Keyboard Shortcuts
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-200 dark:hover:bg-dark-bg dark:hover:text-dark-text transition-colors"
+            className="rounded-md p-1 text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)] hover:bg-[var(--color-surface-2)] transition-colors"
             aria-label="Close shortcuts"
           >
             <X className="h-5 w-5" />
@@ -113,15 +113,15 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
         <div className="p-4 space-y-6">
           {shortcutCategories.map((category, catIndex) => (
             <section key={catIndex} className="space-y-3">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
                 {category.title}
               </h3>
               <dl className="grid grid-cols-[auto_1fr] gap-2 gap-y-3">
                 {category.shortcuts.map((shortcut, idx) => (
                   <div key={idx} className="contents">
-                    <dt className="flex items-center gap-2 text-sm text-surface-600 dark:text-dark-muted">
+                    <dt className="flex items-center gap-2 text-sm text-[var(--color-text)]">
                       <kbd className={cn(
-                        "flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-2 py-1 font-mono text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text",
+                        "flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 font-mono text-xs font-medium text-[var(--color-text-muted)]",
                         shortcut.keys && shortcut.keys.length > 1 && "flex-col"
                       )}>
                         {shortcut.keys && shortcut.keys.length > 1 ? (
@@ -133,7 +133,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
                         )}
                       </kbd>
                     </dt>
-                    <dd className="text-sm text-surface-700 dark:text-dark-text self-center">
+                    <dd className="text-sm text-[var(--color-text)] self-center">
                       {shortcut.description}
                     </dd>
                   </div>
@@ -141,13 +141,13 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
               </dl>
             </section>
           ))}
-          <div className="pt-4 border-t border-surface-200 dark:border-dark-border">
-            <p className="text-xs text-surface-400 dark:text-dark-muted text-center">
-              <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+          <div className="pt-4 border-t border-[var(--color-border)]">
+            <p className="text-xs text-[var(--color-text-muted)] text-center">
+              <kbd className="inline-flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-text-muted)]">
                 <Command className="h-3 w-3" /> K
               </kbd>{" "}
               to search tools anywhere.{" "}
-              <kbd className="inline-flex items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+              <kbd className="inline-flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-text-muted)]">
                 ?
               </kbd>{" "}
               to reopen this help.

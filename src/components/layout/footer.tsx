@@ -1,25 +1,9 @@
 import Link from "next/link";
 import { ExternalLink, ShieldCheck, EyeOff, Lock } from "lucide-react";
 import { siteConfig } from "@/lib/data";
+import { Logomark, Wordmark } from "@/components/ui/logomark";
+import { Badge } from "@/components/ui/badge";
 import { VisitCounter } from "@/components/layout/visit-counter";
-
-function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const sizes = {
-    sm: { font: "text-lg", badge: "text-xs px-1.5 py-0.5" },
-    md: { font: "text-xl", badge: "text-xs px-2 py-0.5" },
-    lg: { font: "text-2xl", badge: "text-sm px-2.5 py-0.5" },
-  };
-  const s = sizes[size];
-  return (
-    <span className={`flex items-center gap-1 font-bold ${s.font} text-surface-900 dark:text-dark-text`}>
-      <span className="text-brand-600 dark:text-brand-400">DevStack</span>
-      <span className="text-neutral-900 dark:text-neutral-100">IO</span>
-      <span className={`ml-1 rounded bg-brand-100 px-1.5 py-0.5 text-xs font-semibold text-brand-700 dark:bg-brand-900/30 dark:text-brand-400`}>
-        Tools
-      </span>
-    </span>
-  );
-}
 
 const footerLinks = [
   {
@@ -65,23 +49,25 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface" role="contentinfo">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]" role="contentinfo">
       <div className="container py-16 md:py-20">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-surface-900 dark:text-dark-text mb-4">
-              <Logo size="md" />
+            <Link href="/" className="flex items-center gap-2 mb-4" aria-label="DevStackIO Tools Home">
+              <Logomark size="sm" />
+              <Wordmark className="text-lg" />
+              <Badge>Tools</Badge>
             </Link>
-            <p className="text-sm text-surface-600 dark:text-dark-muted max-w-xs leading-relaxed">
+            <p className="text-sm text-[var(--color-text-muted)] max-w-xs leading-relaxed">
               Free online developer tools from DevStackIO. Everything runs in your browser — nothing is uploaded to any server.
             </p>
-            <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted max-w-xs">
+            <p className="mt-4 text-sm text-[var(--color-text-muted)] max-w-xs">
               DevStackIO Tools is part of the{" "}
               <a
                 href={siteConfig.mainSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-600 hover:text-brand-700 underline underline-offset-2"
+                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-2"
               >
                 DevStackIO
               </a>{" "}
@@ -92,17 +78,17 @@ export function Footer() {
                 href={siteConfig.mainSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-surface-600 hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text transition-colors"
+                className="flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
               >
                 DevStackIO Home
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
-              <span className="text-surface-300 dark:text-dark-border">|</span>
+              <span className="text-[var(--color-border)]">|</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-surface-500 hover:text-surface-600 dark:hover:text-dark-text transition-colors"
+                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
                 aria-label="GitHub"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -114,7 +100,7 @@ export function Footer() {
           </div>
           {footerLinks.map((group) => (
             <div key={group.title}>
-              <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text uppercase tracking-wider">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
                 {group.title}
               </h3>
               <ul className="mt-4 space-y-3">
@@ -122,7 +108,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-surface-600 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
+                      className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
                     >
                       {link.label}
                     </Link>
@@ -132,7 +118,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-surface-200 pt-8 dark:border-dark-border">
+        <div className="mt-12 border-t border-[var(--color-border)] pt-8">
           <div className="mb-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             {[
               { icon: ShieldCheck, label: "100% Client-Side", href: "/security" },
@@ -142,47 +128,47 @@ export function Footer() {
               <Link
                 key={label}
                 href={href}
-                className="flex items-center gap-2 text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text"
+                className="flex items-center gap-2 text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]"
               >
-                <Icon className="h-4 w-4 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+                <Icon className="h-4 w-4 text-[var(--color-accent)]" aria-hidden="true" />
                 {label}
               </Link>
             ))}
-            <span className="hidden h-4 w-px bg-surface-300 dark:bg-dark-border sm:block" aria-hidden="true" />
-            <Link href="/security" className="text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text">
+            <span className="hidden h-4 w-px bg-[var(--color-border)] sm:block" aria-hidden="true" />
+            <Link href="/security" className="text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]">
               Security
             </Link>
-            <Link href="/accessibility" className="text-sm text-surface-500 transition-colors hover:text-surface-900 dark:text-dark-muted dark:hover:text-dark-text">
+            <Link href="/accessibility" className="text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]">
               Accessibility
             </Link>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="text-sm text-surface-500 dark:text-dark-muted">
+            <p className="text-sm text-[var(--color-text-muted)]">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-surface-500 dark:text-dark-muted">
-              <Link href="/privacy" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-[var(--color-text-muted)]">
+              <Link href="/privacy" className="hover:text-[var(--color-text)] transition-colors">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/terms" className="hover:text-[var(--color-text)] transition-colors">
                 Terms
               </Link>
-              <Link href="/cookie-policy" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/cookie-policy" className="hover:text-[var(--color-text)] transition-colors">
                 Cookies
               </Link>
-              <Link href="/disclaimer" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/disclaimer" className="hover:text-[var(--color-text)] transition-colors">
                 Disclaimer
               </Link>
-              <Link href="/about" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/about" className="hover:text-[var(--color-text)] transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/contact" className="hover:text-[var(--color-text)] transition-colors">
                 Contact
               </Link>
-              <Link href="/sitemap" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <Link href="/sitemap" className="hover:text-[var(--color-text)] transition-colors">
                 Sitemap
               </Link>
-              <a href="/feed.xml" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">
+              <a href="/feed.xml" className="hover:text-[var(--color-text)] transition-colors">
                 RSS
               </a>
             </div>

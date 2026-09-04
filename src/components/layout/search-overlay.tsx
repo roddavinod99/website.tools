@@ -93,10 +93,10 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]" role="dialog" aria-modal="true" aria-label="Search tools and guides">
-      <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-      <div ref={panelRef} className="relative w-full max-w-xl mx-4 rounded-xl border border-surface-200 bg-white shadow-2xl dark:border-dark-border dark:bg-dark-surface">
-        <form onSubmit={handleSubmit} className="flex items-center border-b border-surface-200 px-4 dark:border-dark-border">
-          <Search className="h-5 w-5 shrink-0 text-surface-400" />
+      <div className="fixed inset-0 z-50 bg-[var(--color-bg)]/70 backdrop-blur" onClick={onClose} />
+      <div ref={panelRef} className="relative mx-auto mt-24 w-full max-w-xl rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm">
+        <form onSubmit={handleSubmit} className="flex items-center border-b border-[var(--color-border)] px-4">
+          <Search className="h-5 w-5 shrink-0 text-[var(--color-text-subtle)]" />
           <label htmlFor="search-overlay-input" className="sr-only">Search tools and guides</label>
           <input
             id="search-overlay-input"
@@ -105,40 +105,40 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
             value={localQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder={ready ? "Search tools, guides, blog..." : "Loading search..."}
-            className="flex-1 h-14 bg-transparent px-3 text-base text-surface-900 placeholder:text-surface-400 focus:outline-none dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="flex-1 h-14 bg-transparent px-3 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none"
           />
           {localQuery && (
-            <button type="button" onClick={() => { setLocalQuery(() => ""); }} className="p-1 text-surface-400 hover:text-surface-600">
+            <button type="button" onClick={() => { setLocalQuery(() => ""); }} className="p-1 text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)]">
               <X className="h-4 w-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-flex h-6 items-center gap-1 rounded border border-surface-200 bg-surface-50 px-1.5 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg">
+          <kbd className="hidden sm:inline-flex h-6 items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-1.5 text-xs text-[var(--color-text-muted)]">
             ESC
           </kbd>
         </form>
 
         <div className="max-h-80 overflow-y-auto p-2">
           {error && (
-            <div className="flex items-center justify-center py-8 text-sm text-red-500">
+            <div className="flex items-center justify-center py-8 text-sm text-[var(--color-danger)]">
               Search unavailable: {error}
             </div>
           )}
 
           {!ready && !error && (
-            <div className="flex items-center justify-center py-8 text-sm text-surface-400 dark:text-dark-muted">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-surface-300 border-t-brand-500 mr-2" />
+            <div className="flex items-center justify-center py-8 text-sm text-[var(--color-text-muted)]">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-accent)] mr-2" />
               Loading search index...
             </div>
           )}
 
           {ready && !localQuery && !error && (
-            <div className="py-8 text-center text-sm text-surface-400 dark:text-dark-muted">
+            <div className="rounded-md bg-[var(--color-accent-soft)] px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
               Type to search tools, guides, blog posts & comparisons
             </div>
           )}
 
           {ready && localQuery && results.length === 0 && !error && (
-            <div className="py-8 text-center text-sm text-surface-400 dark:text-dark-muted">
+            <div className="rounded-md bg-[var(--color-accent-soft)] px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
               No results for &ldquo;{localQuery}&rdquo;
             </div>
           )}
@@ -153,22 +153,23 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                     data-search-result
                     onClick={() => handleSelect(result.url)}
                     onKeyDown={(e) => { if (e.key === "Enter") handleSelect(result.url); }}
-                    className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-surface-200 focus:bg-surface-200 focus:outline-none dark:hover:bg-dark-bg dark:focus:bg-dark-bg"
+                    className="group w-full flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-[var(--color-surface-2)] focus:bg-[var(--color-surface-2)] focus:outline-none"
                   >
-                    <Icon className="h-4 w-4 shrink-0 text-surface-400 dark:text-dark-muted" aria-hidden="true" />
-                    <span className="shrink-0 rounded-md bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] opacity-0 group-hover:opacity-100" aria-hidden="true" />
+                    <Icon className="h-4 w-4 shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
+                    <span className="shrink-0 rounded-md bg-[var(--color-surface)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
                       {result.type}
                     </span>
                     {result.category && (
-                      <span className="shrink-0 rounded-md bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                      <span className="shrink-0 rounded-md bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
                         {result.category}
                       </span>
                     )}
-                    <span className="flex-1 font-medium text-surface-900 dark:text-dark-text truncate">
+                    <span className="flex-1 font-medium text-[var(--color-text)] truncate">
                       {result.title}
                     </span>
                     {result.popularity && result.popularity >= 90 && (
-                      <span className="shrink-0 rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                      <span className="shrink-0 rounded-full bg-[var(--color-surface)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
                         Most used
                       </span>
                     )}
@@ -178,7 +179,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
               {results.length >= 15 && (
                 <button
                   onClick={handleSubmit}
-                  className="w-full rounded-lg px-3 py-2 text-center text-xs text-surface-400 hover:text-surface-600 dark:text-dark-muted dark:hover:text-dark-text"
+                  className="w-full rounded-md px-3 py-2 text-center text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                 >
                   View all results &rarr;
                 </button>
