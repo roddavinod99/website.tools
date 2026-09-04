@@ -19,7 +19,7 @@ export function TryExamples({ examples, onExampleSelect, label = "Try an example
           key={i}
           type="button"
           onClick={() => onExampleSelect(ex)}
-          className="inline-flex items-center gap-1 rounded border border-surface-200 bg-white px-2.5 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)] hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)] transition-colors"
           aria-label={`Load example ${i + 1}`}
         >
           <Play className="h-3 w-3" aria-hidden="true" />

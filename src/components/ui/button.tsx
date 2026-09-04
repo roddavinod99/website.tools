@@ -2,7 +2,7 @@ import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "outline";
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "subtle";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   leftIcon?: ReactNode;
@@ -11,13 +11,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variantClasses: Record<string, string> = {
   primary:
-    "bg-success-600 border-success-600 text-white shadow-sm hover:bg-success-700 hover:border-success-700 active:bg-success-800 dark:bg-success-600 dark:border-success-600 dark:text-white dark:hover:bg-success-700",
+    "bg-[var(--color-accent)] border-[var(--color-accent)] text-[var(--color-accent-fg)] hover:bg-[var(--color-accent-hover)] hover:border-[var(--color-accent-hover)] active:bg-[var(--color-accent-hover)] dark:bg-[var(--color-accent)] dark:border-[var(--color-accent)] dark:hover:bg-[var(--color-accent-hover)]",
   secondary:
-    "bg-surface-100 border-surface-300 text-surface-800 hover:bg-surface-200 hover:border-surface-400 dark:bg-dark-surface dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-border dark:hover:border-dark-border-hover",
+    "bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-surface-2)] hover:border-[var(--color-border-strong)] dark:bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:hover:bg-[var(--color-surface-2)]",
   ghost:
-    "bg-transparent border-transparent text-surface-700 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface dark:hover:text-dark-text",
+    "bg-transparent border-transparent text-[var(--color-text)] hover:bg-[var(--color-surface-2)] dark:hover:bg-[var(--color-surface-2)]",
   outline:
-    "bg-transparent border-surface-300 text-brand-600 hover:bg-brand-50 hover:border-brand-300 dark:border-dark-border dark:text-brand-400 dark:hover:bg-dark-surface",
+    "bg-transparent border-[var(--color-border)] text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] hover:border-[var(--color-accent)] dark:border-[var(--color-border)] dark:text-[var(--color-accent)]",
+  subtle:
+    "bg-[var(--color-accent-soft)] border-transparent text-[var(--color-accent-hover)] hover:bg-[color-mix(in_oklab,var(--color-accent)_15%,transparent)] dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]",
 };
 
 const sizeClasses: Record<string, string> = {

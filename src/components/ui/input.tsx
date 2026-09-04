@@ -19,13 +19,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="mb-1.5 block text-sm font-medium text-surface-700 dark:text-dark-text">
+          <label htmlFor={inputId} className="mb-1.5 block text-sm font-medium text-[var(--color-text)]">
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-surface-400 dark:text-dark-muted">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--color-text-subtle)]">
               {leftIcon}
             </div>
           )}
@@ -36,29 +36,29 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={error ? "true" : "false"}
             aria-describedby={describedBy}
             className={cn(
-              "flex w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus-ring transition-colors duration-150",
+              "w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors duration-150",
               leftIcon && "pl-10",
               rightIcon && "pr-10",
-              error && "state-error",
-              success && "state-success",
-              disabled && "state-disabled bg-surface-50 dark:bg-dark-surface",
+              error && "border-[var(--color-danger)]",
+              success && "border-[var(--color-success)]",
+              disabled && "opacity-60 bg-[var(--color-surface-2)]",
               className,
             )}
             {...props}
           />
           {rightIcon && (
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-surface-400 dark:text-dark-muted">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[var(--color-text-subtle)]">
               {rightIcon}
             </div>
           )}
         </div>
         {error && (
-          <p id={errorId} className="mt-1.5 text-sm text-error" role="alert">
+          <p id={errorId} className="mt-1.5 text-sm text-[var(--color-danger)]" role="alert">
             {error}
           </p>
         )}
         {success && (
-          <p id={successId} className="mt-1.5 text-sm text-success" role="status">
+          <p id={successId} className="mt-1.5 text-sm text-[var(--color-success)]" role="status">
             {success}
           </p>
         )}

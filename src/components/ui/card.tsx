@@ -6,10 +6,11 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClasses: Record<string, string> = {
-  default: "rounded-xl border border-surface-200 bg-white shadow-sm dark:border-dark-border dark:bg-dark-surface",
-  elevated: "rounded-xl border border-surface-200 bg-white shadow-md dark:border-dark-border dark:bg-dark-surface",
-  outlined: "rounded-xl border border-surface-300 bg-white dark:border-dark-border-hover dark:bg-dark-surface",
-  interactive: "rounded-xl border border-surface-200 bg-white shadow-sm card-interactive dark:border-dark-border dark:bg-dark-surface",
+  default: "rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] dark:bg-[var(--color-surface)]",
+  elevated: "rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] shadow-sm dark:bg-[var(--color-surface)]",
+  outlined: "rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-bg)] dark:bg-[var(--color-surface)]",
+  interactive:
+    "rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] card-interactive dark:bg-[var(--color-surface)]",
 };
 
 const paddingClasses: Record<string, string> = {

@@ -72,8 +72,8 @@ export function Tab({ id, children, disabled = false, className = "", badge }: T
       className={`
         flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-all
         ${isActive
-          ? "text-brand-primary border-b-2 border-brand-primary -mb-px"
-          : "text-result-secondary hover:text-result-primary"}
+          ? "border-b-2 border-[var(--color-accent)] text-[var(--color-accent)]"
+          : "border-b-2 border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]"}
         ${disabled ? "opacity-40 cursor-not-allowed" : ""}
         ${className}
       `}

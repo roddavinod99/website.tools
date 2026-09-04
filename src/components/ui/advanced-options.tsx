@@ -20,24 +20,24 @@ export function AdvancedOptions({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-t border-surface-200 dark:border-dark-border">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center justify-between w-full px-4 py-3 text-left text-sm font-medium text-surface-700 hover:bg-surface-50 dark:text-dark-text dark:hover:bg-dark-surface transition-colors",
-          isOpen && "bg-surface-50 dark:bg-dark-surface/50"
+          "flex items-center justify-between w-full px-4 py-3 text-left text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-surface-2)] transition-colors",
+          isOpen && "bg-[var(--color-surface-2)]"
         )}
         aria-expanded={isOpen}
         aria-controls="advanced-options-panel"
       >
         <span className="flex items-center gap-2">
-          <Settings className="h-4 w-4 flex-shrink-0 text-surface-500 dark:text-dark-muted" aria-hidden="true" />
+          <Settings className="h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
           {triggerLabel || title}
         </span>
         <ChevronDown
           className={cn(
-            "h-4 w-4 flex-shrink-0 text-surface-500 transition-transform duration-200",
+            "h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)] transition-transform duration-200",
             isOpen && "rotate-180"
           )}
           aria-hidden="true"
@@ -70,10 +70,10 @@ interface OptionGroupProps {
 export function OptionGroup({ title, children, description }: OptionGroupProps) {
   return (
     <fieldset className="space-y-3">
-      <legend className="text-xs font-semibold text-surface-600 dark:text-dark-muted uppercase tracking-wide">
+      <legend className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">
         {title}
       </legend>
-      {description && <p className="text-xs text-surface-500 dark:text-dark-muted">{description}</p>}
+      {description && <p className="text-xs text-[var(--color-text-muted)]">{description}</p>}
       <div className="space-y-3">{children}</div>
     </fieldset>
   );

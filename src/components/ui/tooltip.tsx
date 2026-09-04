@@ -161,7 +161,7 @@ function TooltipContentPrimitive({
     <div
       style={{ position: "fixed", top: position.top, left: position.left, zIndex: 50 }}
       className={cn(
-        "max-w-xs rounded-lg bg-surface-900 px-3 py-2 text-xs text-white shadow-lg dark:bg-dark-text",
+        "max-w-xs rounded-md border border-[var(--color-border)] bg-[var(--color-surface-2)] px-2 py-1 text-xs text-[var(--color-text)] shadow-sm",
         "animate-in fade-in-0 zoom-in-95 duration-150",
         className
       )}

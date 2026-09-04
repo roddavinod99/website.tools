@@ -20,13 +20,13 @@ export function ToolGridSection({
   midAdSlot = adSlots.toolsMid,
   variant = "default",
   size = "md",
-  gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3",
+  gridClassName = "mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3",
   showPopularity = true,
   showCategory = true,
 }: ToolGridSectionProps) {
   if (tools.length === 0) {
     return (
-      <p className="col-span-full text-center text-surface-500 dark:text-dark-muted py-12">
+      <p className="col-span-full text-center text-[var(--color-text-muted)] py-12">
         No tools to display.
       </p>
     );

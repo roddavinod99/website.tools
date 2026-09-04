@@ -34,15 +34,17 @@ export function ToolHeader({ tool, actions, capabilities }: ToolHeaderProps) {
   return (
     <header className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge variant="default">{tool.category}</Badge>
+        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          {tool.category}
+        </span>
         {tool.trending && <Badge variant="warning">Trending</Badge>}
         {tool.new && <Badge variant="new">New</Badge>}
         {tool.featured && <Badge variant="default">Featured</Badge>}
       </div>
-      <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 dark:text-dark-text">
+      <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text)]">
         {tool.name}
       </h1>
-      <p className="text-base text-surface-500 dark:text-dark-muted max-w-prose">
+      <p className="text-base text-[var(--color-text-muted)] max-w-3xl">
         {tool.description}
       </p>
       {capabilities && (
