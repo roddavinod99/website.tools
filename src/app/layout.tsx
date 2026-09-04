@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "../styles/globals.css";
 import { Header } from "@/components/layout/header";
@@ -23,6 +24,17 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 const HAS_GOOGLE_TAGS = !!(process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID);
 const VERIFICATION_GOOGLE = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "";
 const VERIFICATION_BING = process.env.NEXT_PUBLIC_BING_VERIFICATION || "";
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-sans",
+});
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -124,7 +136,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0070f3",
+  themeColor: "#0070F3",
 };
 
 export default function RootLayout({
@@ -135,7 +147,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="h-full antialiased"
+      className={`h-full antialiased ${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <head>
