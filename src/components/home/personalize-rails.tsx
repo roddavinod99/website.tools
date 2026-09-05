@@ -33,30 +33,36 @@ function RailShell({
   icon: Icon,
   iconClass,
   badgeClass,
+  eyebrow,
   title,
   subtitle,
+  titleId,
   viewAllHref,
   viewAllLabel,
   empty,
   tools,
   pinnedIcon,
+  badgeLabel,
 }: {
   icon: LucideIcon;
   iconClass: string;
   badgeClass: string;
+  eyebrow: string;
   title: string;
   subtitle: string;
+  titleId: string;
   viewAllHref: string;
   viewAllLabel: string;
   empty: string;
   tools: Tool[];
   pinnedIcon: React.ReactNode;
+  badgeLabel: string;
 }) {
   if (tools.length === 0) {
     return (
-      <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-bg)]" aria-labelledby={titleId}>
         <div className="container py-10 md:py-12">
-          <div className="flex items-center gap-3 text-sm text-surface-500 dark:text-dark-muted">
+          <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
             <Icon className="h-4 w-4" aria-hidden="true" />
             {empty}
           </div>
@@ -66,26 +72,24 @@ function RailShell({
   }
 
   return (
-    <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-bg)]" aria-labelledby={titleId}>
       <div className="container py-12 md:py-16">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <span className={`inline-flex h-9 w-9 items-center justify-center rounded-lg ${iconClass}`}>
-              <Icon className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <div>
-              <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
-                {title}
-              </h2>
-              <p className="mt-1 text-surface-600 dark:text-dark-muted">{subtitle}</p>
-            </div>
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+              {eyebrow}
+            </p>
+            <h2 id={titleId} className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
+              {title}
+            </h2>
+            <p className="mt-2 text-base text-[var(--color-text-muted)] text-pretty">{subtitle}</p>
           </div>
           <Link
             href={viewAllHref}
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
           >
             {viewAllLabel}
-            <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -93,25 +97,25 @@ function RailShell({
             <ToolLink
               key={tool.id}
               slug={tool.slug}
-              className="group relative flex flex-col rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+              className="group relative flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
             >
               <div className="flex items-start justify-between">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${iconClass}`}>
+                <div className={`flex h-10 w-10 items-center justify-center rounded-md ${iconClass}`}>
                   <Bookmark className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeClass}`}>
+                <span className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-medium ${badgeClass}`}>
                   {pinnedIcon}
-                  {title.split(" ")[0]}
+                  {badgeLabel}
                 </span>
               </div>
-              <h3 className="mt-4 font-semibold text-surface-900 dark:text-dark-text group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+              <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
                 {tool.name}
               </h3>
-              <p className="mt-1 flex-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+              <p className="mt-1 flex-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
                 {tool.description}
               </p>
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-xs text-surface-600 dark:text-dark-muted">{tool.category}</span>
+                <span className="text-xs text-[var(--color-text-muted)]">{tool.category}</span>
               </div>
             </ToolLink>
           ))}
@@ -129,15 +133,18 @@ export function PinnedRail({ tools }: RailProps) {
   return (
     <RailShell
       icon={Bookmark}
-      iconClass="bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
-      badgeClass="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400"
+      iconClass="bg-[var(--color-accent-soft)] text-[var(--color-accent)]"
+      badgeClass="border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-accent)]"
+      eyebrow="For you"
       title="Your pinned tools"
       subtitle="Tools you've bookmarked for quick access"
+      titleId="pinned-heading"
       viewAllHref="/tools"
       viewAllLabel="View all tools"
       empty="No pinned tools yet — click the bookmark icon on any tool to add it here."
       tools={resolveTools(pinned, bySlug)}
       pinnedIcon={<Bookmark className="h-2.5 w-2.5" aria-hidden="true" />}
+      badgeLabel="Pinned"
     />
   );
 }
@@ -150,15 +157,18 @@ export function RecentRail({ tools }: RailProps) {
   return (
     <RailShell
       icon={History}
-      iconClass="bg-surface-100 text-surface-600 dark:bg-dark-border dark:text-dark-muted"
-      badgeClass="bg-surface-100 text-surface-600 dark:bg-dark-border dark:text-dark-muted"
+      iconClass="bg-[var(--color-surface-2)] text-[var(--color-text-muted)]"
+      badgeClass="border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)]"
+      eyebrow="Recently used"
       title="Recently used"
       subtitle="Pick up where you left off"
+      titleId="recent-rail-heading"
       viewAllHref="/tools"
       viewAllLabel="View all tools"
       empty="Your recently used tools will appear here once you start exploring."
       tools={resolveTools(recent, bySlug)}
       pinnedIcon={<History className="h-2.5 w-2.5" aria-hidden="true" />}
+      badgeLabel="Recent"
     />
   );
 }

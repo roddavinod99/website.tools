@@ -147,9 +147,9 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
   }, [goToTool, localQuery]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-2xl">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-surface-400 dark:text-dark-muted" aria-hidden="true" />
+        <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-subtle)]" aria-hidden="true" />
         <label htmlFor="tool-search" className="sr-only">Search developer tools</label>
         <input
           id="tool-search"
@@ -168,9 +168,9 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
           aria-controls="tool-search-results"
           aria-autocomplete="list"
           autoComplete="off"
-          className="h-14 w-full rounded-xl border border-surface-200 bg-white pl-12 pr-14 text-base text-surface-900 placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="h-14 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] pl-12 pr-14 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30"
         />
-        <span className="absolute right-4 top-1/2 hidden -translate-y-1/2 items-center gap-1 rounded-md border border-surface-200 bg-surface-50 px-2 py-1 text-xs text-surface-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted sm:flex" aria-hidden="true">
+        <span className="absolute right-4 top-1/2 hidden -translate-y-1/2 items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-xs text-[var(--color-text-subtle)] sm:flex" aria-hidden="true">
           <Command className="h-3.5 w-3.5" />
           K
         </span>
@@ -180,22 +180,22 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
         <div
           ref={panelRef}
           id="tool-search-results"
-          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-surface-200 bg-white shadow-2xl dark:border-dark-border dark:bg-dark-surface"
+          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] shadow-lg"
         >
           {showResults && (
             <div role="listbox" aria-label="Search results" className="max-h-96 overflow-y-auto p-2">
               {!ready && (
-                <div className="px-3 py-6 text-center text-sm text-surface-400 dark:text-dark-muted">
+                <div className="px-3 py-6 text-center text-sm text-[var(--color-text-muted)]">
                   Loading search index...
                 </div>
               )}
               {ready && results.length === 0 && (
-                <div className="px-3 py-6 text-center text-sm text-surface-400 dark:text-dark-muted">
+                <div className="px-3 py-6 text-center text-sm text-[var(--color-text-muted)]">
                   No tools found for &ldquo;{localQuery}&rdquo;
                   <button
                     type="button"
                     onClick={() => goToSearchPage(localQuery.trim())}
-                    className="mt-3 flex w-full items-center justify-center gap-1 rounded-lg bg-brand-50 px-3 py-2 text-sm font-medium text-brand-600 hover:bg-brand-100 dark:bg-brand-900/30 dark:text-brand-400"
+                    className="mt-3 flex w-full items-center justify-center gap-1 rounded-md bg-[var(--color-accent-soft)] px-3 py-2 text-sm font-medium text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]/80"
                   >
                     View full search results
                     <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -211,15 +211,15 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
                         data-search-result
                         onClick={() => goToTool(tool.slug, localQuery)}
                         onKeyDown={(e) => handleResultKeyDown(e, tool.slug)}
-                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-surface-100 focus:bg-surface-100 focus:outline-none dark:hover:bg-dark-bg dark:focus:bg-dark-bg"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors hover:bg-[var(--color-surface-2)] focus:bg-[var(--color-surface-2)] focus:outline-none"
                       >
-                        <span className="shrink-0 rounded-md bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                        <span className="shrink-0 rounded-md bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
                           {tool.category}
                         </span>
-                        <span className="flex-1 font-medium text-surface-900 dark:text-dark-text truncate">
+                        <span className="flex-1 font-medium text-[var(--color-text)] truncate">
                           {tool.name}
                         </span>
-                        <span className="shrink-0 text-surface-400 dark:text-dark-muted" aria-hidden="true">
+                        <span className="shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true">
                           <CornerDownLeft className="h-3.5 w-3.5" />
                         </span>
                         <span className="sr-only">{index + 1} of {results.length}</span>
@@ -235,7 +235,7 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
             <div className="max-h-96 overflow-y-auto p-2">
               {recentSearches.length > 0 && (
                 <div className="px-3 py-2">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-subtle)]">
                     Recent searches
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -248,7 +248,7 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
                           search(term);
                           inputRef.current?.focus();
                         }}
-                        className="rounded-full border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-medium text-surface-600 transition-colors hover:border-brand-300 hover:text-brand-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted dark:hover:text-brand-400"
+                        className="rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                       >
                         {term}
                       </button>
@@ -257,7 +257,7 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
                 </div>
               )}
               <div className="px-3 py-2">
-                <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-dark-muted">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-subtle)]">
                   Popular tools
                 </p>
                 <ul className="mt-2 space-y-0.5">
@@ -268,15 +268,15 @@ export function ToolSearch({ allTools }: { allTools: Tool[] }) {
                         data-search-result
                         onClick={() => goToTool(tool.slug, tool.name)}
                         onKeyDown={(e) => handleResultKeyDown(e, tool.slug)}
-                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-surface-100 focus:bg-surface-100 focus:outline-none dark:hover:bg-dark-bg dark:focus:bg-dark-bg"
+                        className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors hover:bg-[var(--color-surface-2)] focus:bg-[var(--color-surface-2)] focus:outline-none"
                       >
-                        <span className="shrink-0 rounded-md bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                        <span className="shrink-0 rounded-md bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
                           {tool.category}
                         </span>
-                        <span className="flex-1 font-medium text-surface-900 dark:text-dark-text truncate">
+                        <span className="flex-1 font-medium text-[var(--color-text)] truncate">
                           {tool.name}
                         </span>
-                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-surface-400 dark:text-dark-muted" aria-hidden="true" />
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
                       </button>
                     </li>
                   ))}

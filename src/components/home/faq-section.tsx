@@ -13,36 +13,39 @@ export function FAQSection({ faqItems }: { faqItems: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="border-t border-surface-200 dark:border-dark-border">
+    <section className="border-t border-[var(--color-border)]" aria-labelledby="faq-heading">
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl text-center">
+          <p className="text-center text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            FAQ
+          </p>
+          <h2 id="faq-heading" className="mt-2 text-center text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
             Frequently Asked Questions
           </h2>
           <div className="mt-8 space-y-2">
             {faqItems.map((item, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
+                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="flex w-full items-center justify-between px-5 py-4 text-left"
                   aria-expanded={openIndex === i}
                 >
-                  <span className="font-medium text-surface-900 dark:text-dark-text">
+                  <span className="font-medium text-[var(--color-text)]">
                     {item.question}
                   </span>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-surface-400 transition-transform duration-200",
+                      "h-4 w-4 text-[var(--color-text-subtle)] transition-transform duration-200",
                       openIndex === i && "rotate-180",
                     )}
                   />
                 </button>
                 {openIndex === i && (
                   <div className="px-5 pb-4">
-                    <p className="text-sm text-surface-600 dark:text-dark-muted">
+                    <p className="text-sm text-[var(--color-text-muted)]">
                       {item.answer}
                     </p>
                   </div>

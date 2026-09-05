@@ -2,8 +2,9 @@
 
 import { lazy, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Search, Check, Lock, Zap, Shield, User } from "lucide-react";
+import { Check, Lock, Zap, Shield, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logomark } from "@/components/ui/logomark";
 import type { Tool } from "@/types";
 
 const ToolSearch = lazy(() =>
@@ -23,52 +24,45 @@ export function Hero({ badgeText, allTools }: { badgeText: string; allTools: Too
   const router = useRouter();
 
   return (
-    <section className="relative overflow-hidden border-b border-surface-200 dark:border-dark-border">
-      <div className="container relative py-12 md:py-16 lg:py-20">
+    <section className="relative border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+      <div className="container relative py-16 md:py-20 lg:py-24">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-surface-200 bg-white px-4 py-1.5 text-sm text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
-            <span className="flex h-2 w-2 rounded-full bg-brand-400" aria-hidden="true" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5 text-sm text-[var(--color-text-muted)]">
+            <Logomark size="sm" />
             {badgeText}
           </div>
 
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-surface-900 dark:text-dark-text sm:text-5xl lg:text-6xl text-balance">
-            Free Developer Tools for Everyday Work
+          <h1 className="mt-6 text-4xl font-bold tracking-tight text-[var(--color-text)] text-balance sm:text-5xl lg:text-6xl">
+            Free Developer <span className="text-[var(--color-accent)] underline decoration-[var(--color-accent)] decoration-2 underline-offset-4">Tools</span> for Everyday Work
           </h1>
 
-          <p className="mt-3 text-lg text-surface-600 dark:text-dark-muted sm:text-xl max-w-2xl mx-auto text-pretty">
+          <p className="mt-4 text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto text-pretty">
             Format, convert, generate, validate, encode, decode, and analyze — all in your browser.
           </p>
 
-          <div className="mt-8 mx-auto max-w-2xl animate-fade-in-up">
+          <div className="mt-8 mx-auto max-w-2xl">
             <Suspense fallback={
-              <div className="h-14 w-full rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface" />
+              <div className="h-14 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)]" />
             }>
               <ToolSearch allTools={allTools} />
             </Suspense>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button size="lg" className="gap-2 w-full sm:w-auto" onClick={() => router.push("/tools")}>
-              Explore All Tools
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <Button variant="primary" size="lg" onClick={() => router.push("/tools")}>
+              Browse all tools
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="gap-2 w-full sm:w-auto"
-              onClick={() => router.push("/search")}
-            >
-              <Search className="h-4 w-4" aria-hidden="true" />
+            <Button variant="subtle" size="lg" onClick={() => router.push("/search")}>
               Search Tools
             </Button>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
             {trustPoints.map((point) => {
               const Icon = point.icon;
               return (
-                <div key={point.label} className="flex items-center gap-1.5 rounded-full border border-surface-200 bg-white px-3 py-1.5 text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                <div key={point.label} className="flex items-center gap-1.5 text-[var(--color-text-muted)]">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
                     <Icon className="h-3 w-3" aria-hidden="true" />
                   </span>
                   <span className="font-medium">{point.label}</span>

@@ -28,19 +28,22 @@ export function CategoriesSection() {
   const topCategories = categories.filter((c) => TOP_CATEGORIES.includes(c.name));
 
   return (
-    <section className="container py-12 md:py-16">
-      <div className="flex items-center justify-between mb-8">
+    <section className="container py-12 md:py-16" aria-labelledby="categories-heading">
+      <div className="flex items-end justify-between mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            Browse
+          </p>
+          <h2 id="categories-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
             Tools for Every Task
           </h2>
-          <p className="mt-1 text-surface-600 dark:text-dark-muted">
+          <p className="mt-2 text-base text-[var(--color-text-muted)] text-pretty">
             Browse tools by what you&apos;re trying to accomplish.
           </p>
         </div>
         <Link
           href="/categories"
-          className="inline-flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
+          className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
         >
           View all categories
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

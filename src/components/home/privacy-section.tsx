@@ -6,19 +6,22 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
   const clientTools = allTools.filter((t) => t.processing !== "server");
 
   return (
-    <section className="border-t border-surface-200 dark:border-dark-border">
+    <section className="border-t border-[var(--color-border)]" aria-labelledby="privacy-heading">
       <div className="container py-16 md:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+              Privacy
+            </p>
+            <h2 id="privacy-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
               Built with Privacy in Mind
             </h2>
-            <p className="mt-3 text-surface-600 dark:text-dark-muted">
+            <p className="mt-3 text-base text-[var(--color-text-muted)] text-pretty">
               Many DevStackIO tools process your data directly in your browser.
               When a tool supports client-side processing, your input does not
               need to be uploaded to our servers.
             </p>
-            <p className="mt-3 text-sm text-surface-600 dark:text-dark-muted">
+            <p className="mt-3 text-sm text-[var(--color-text-muted)]">
               Of the {allTools.length} tools on the platform, {clientTools.length} run
               their core logic entirely in your browser.{" "}
               {serverTools.length > 0 && (
@@ -36,8 +39,8 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
                 "Privacy-focused design",
                 "Free to use",
               ].map((point) => (
-                <li key={point} className="flex items-center gap-3 text-sm text-surface-700 dark:text-dark-muted">
-                  <CheckCircle className="h-5 w-5 shrink-0 text-success-500 dark:text-success-400" aria-hidden="true" />
+                <li key={point} className="flex items-center gap-3 text-sm text-[var(--color-text)]">
+                  <CheckCircle className="h-5 w-5 shrink-0 text-[var(--color-success)]" aria-hidden="true" />
                   {point}
                 </li>
               ))}
@@ -73,15 +76,15 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
               return (
                 <div
                   key={item.title}
-                  className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm dark:border-dark-border dark:bg-dark-surface"
+                  className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-4 font-semibold text-surface-900 dark:text-dark-text">
+                  <h3 className="mt-4 font-semibold text-[var(--color-text)]">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-sm text-surface-600 dark:text-dark-muted">
+                  <p className="mt-1 text-sm text-[var(--color-text-muted)]">
                     {item.text}
                   </p>
                 </div>
