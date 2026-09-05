@@ -37,7 +37,7 @@ export default function DMCAPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)]">
             <strong>Summary:</strong> DevStackIO respects intellectual property rights. If you believe your copyrighted
             work has been infringed on our platform, submit a DMCA notice to{" "}
             <a href="mailto:contact@devstackio.com" className="underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>.

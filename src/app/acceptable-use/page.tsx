@@ -37,7 +37,7 @@ export default function AcceptableUsePage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)]">
             <strong>Scope:</strong> This policy applies to all users of DevStackIO tools, website, API, and services.
             It supplements our{" "}
             <a href="/terms" className="underline hover:text-[var(--color-accent-hover)]">Terms of Service</a>

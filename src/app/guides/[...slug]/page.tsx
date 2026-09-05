@@ -152,7 +152,7 @@ export default async function GuidePage({ params }: Props) {
       </section>
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] text-[var(--color-accent)]">
+          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)]">
             {topic.category}
           </p>
           <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
@@ -178,7 +178,7 @@ export default async function GuidePage({ params }: Props) {
           {toolLinks.length > 0 && (
             <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                <Zap className="h-4 w-4 text-[var(--color-accent)] text-[var(--color-accent)]" />
+                <Zap className="h-4 w-4 text-[var(--color-accent)]" />
                 Related tools
               </h2>
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">

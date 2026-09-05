@@ -36,7 +36,7 @@ export default function AccessibilityPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)]">
             <strong>Our Commitment:</strong> We aim to conform to the Web Content Accessibility Guidelines
             (WCAG) 2.2 Level AA. Accessibility is treated as a design requirement for every new tool, not
             as an afterthought.

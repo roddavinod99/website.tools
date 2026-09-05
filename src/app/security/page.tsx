@@ -247,7 +247,7 @@ export default function SecurityPage() {
                 "Service worker uses HTTPS",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--color-border-strong)] text-xs text-[var(--color-accent)] text-[var(--color-accent)]">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--color-border-strong)] text-xs text-[var(--color-accent)]">
                     ✓
                   </span>
                   <span className="text-sm">{item}</span>

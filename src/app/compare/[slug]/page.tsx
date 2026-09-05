@@ -129,7 +129,7 @@ export default async function ComparisonPage({ params }: Props) {
       </section>
       <article className="prose container py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] text-[var(--color-accent)]">
+          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)]">
             {comparison.category}
           </p>
           <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
@@ -141,7 +141,7 @@ export default async function ComparisonPage({ params }: Props) {
             {comparison.sections.map((section, index) => (
               <section key={section.title}>
                 <h2 className="flex items-start gap-3 text-2xl font-semibold text-[var(--color-text)]">
-                  <span className="text-[var(--color-accent)] text-[var(--color-accent)]">
+                  <span className="text-[var(--color-accent)]">
                     {index + 1}.
                   </span>
                   {section.title}
@@ -156,7 +156,7 @@ export default async function ComparisonPage({ params }: Props) {
           {toolLinks.length > 0 && (
             <div className="mt-12 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
-                <Zap className="h-5 w-5 text-[var(--color-accent)] text-[var(--color-accent)]" />
+                <Zap className="h-5 w-5 text-[var(--color-accent)]" />
                 Try the tools
               </h2>
               <p className="mt-2 text-sm text-[var(--color-text-muted)]">

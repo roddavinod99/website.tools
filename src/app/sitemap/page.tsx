@@ -137,7 +137,7 @@ export default function SitemapPage() {
                   <h3 className="font-medium text-[var(--color-text)] mb-3 flex items-center gap-2">
                     <Link
                       href={`/categories/${cat.slug}`}
-                      className="hover:text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                      className="hover:text-[var(--color-accent)] transition-colors"
                     >
                       {cat.name}
                     </Link>

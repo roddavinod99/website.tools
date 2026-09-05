@@ -83,7 +83,7 @@ export function Footer() {
                 DevStackIO Home
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
-              <span className="text-[var(--color-border)]">|</span>
+              <span className="text-[var(--color-text-subtle)]" aria-hidden="true">|</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"

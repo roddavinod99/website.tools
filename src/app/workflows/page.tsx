@@ -84,7 +84,7 @@ export default function WorkflowsIndex() {
                     <p className="mt-2 text-[var(--color-text-muted)]">{w.description}</p>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {w.steps.map((s, idx) => (
-                        <li key={s.toolSlug} className="text-xs font-medium text-[var(--color-accent)] text-[var(--color-accent)]">
+                        <li key={s.toolSlug} className="text-xs font-medium text-[var(--color-accent)]">
                           {idx + 1}. {s.label}
                         </li>
                       ))}

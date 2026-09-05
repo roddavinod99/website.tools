@@ -111,7 +111,7 @@ export default function ComparePage() {
                         <p className="mt-2 flex-1 text-sm text-[var(--color-text-muted)]">
                           {comparison.description}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent)] text-[var(--color-accent)]">
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent)]">
                           Read comparison
                           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                         </span>
