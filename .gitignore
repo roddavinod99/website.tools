@@ -135,6 +135,11 @@ docs/suggestions/upgrade.md
 # OG image review artifacts (regenerate with docs/suggestions/download-og-images.mjs)
 docs/suggestions/og-images/
 
+# Local AI agent skills (restored from global superpowers + claude sources;
+# opencode loads these automatically from C:\Users\Vinod\.config\opencode\
+# and C:\Users\Vinod\.claude\, so they never need to live in this repo).
+.agents/
+
 
 
 
