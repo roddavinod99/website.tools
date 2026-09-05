@@ -84,7 +84,7 @@ export default async function WorkflowPage({ params }: Props) {
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
           <header className="mb-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-sm font-medium text-[var(--color-text-muted)]">
               {workflow.category}
             </span>
             <h1 className="mt-4 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">

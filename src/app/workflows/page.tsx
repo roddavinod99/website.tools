@@ -51,7 +51,7 @@ export default function WorkflowsIndex() {
       <section className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-sm font-medium text-[var(--color-text-muted)]">
               <Workflow className="h-4 w-4" aria-hidden="true" />
               Workflows
             </span>
