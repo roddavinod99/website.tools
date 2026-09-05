@@ -59,29 +59,29 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="container py-12 md:py-16">
-      <article className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+      <article className="prose mx-auto max-w-3xl">
+        <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
           About DevStackIO
         </h1>
 
-        <div className="mt-8 space-y-8 text-surface-600 dark:text-dark-muted">
+        <div className="mt-8 space-y-8 text-[var(--color-text-muted)]">
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">The DevStackIO Platform</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">The DevStackIO Platform</h2>
             <p className="mt-2">
               DevStackIO is the parent platform behind{" "}
-              <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">tools.devstackio.com</a>
+              <a href={siteConfig.url} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">tools.devstackio.com</a>
               {" — "}the official collection of free online developer tools. Both websites are maintained
               by the same team and share the same commitment to privacy, quality, and accessibility.
             </p>
             <p className="mt-2">
-              <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+              <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
                 DevStackIO
               </a>{" "}
               is the parent organization that provides the developer tools platform, learning resources,
               APIs, and utilities for the developer community.
             </p>
             <p className="mt-2">
-              <a href={siteConfig.url} className="text-brand-500 hover:text-brand-600 underline">
+              <a href={siteConfig.url} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
                 Tools.DevStackIO
               </a>{" "}
               is our dedicated tools website featuring {TOOL_COUNT}+ free online developer utilities —
@@ -90,7 +90,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Mission</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Our Mission</h2>
             <p className="mt-2">
               DevStackIO is building the internet&apos;s best collection of free online tools for
               developers. We believe that high-quality developer tools should be accessible to
@@ -103,7 +103,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Vision</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Our Vision</h2>
             <p className="mt-2">
               We envision a world where every developer, regardless of location or resources, has
               access to professional-grade tools. By combining utilities, educational content, and
@@ -113,7 +113,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Why DevStackIO Exists</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Why DevStackIO Exists</h2>
             <p className="mt-2">
               Developers frequently need quick, reliable tools for tasks like JSON formatting, JWT
               decoding, image optimization, and more. Existing solutions often require uploads to
@@ -123,33 +123,33 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Principles</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Our Principles</h2>
             <ul className="mt-2 space-y-3">
               <li className="flex gap-3">
-                <span className="text-brand-500 font-bold">01</span>
+                <span className="text-[var(--color-accent)] font-bold">01</span>
                 <div><strong>Privacy First</strong> &mdash; We never store or share your data. All processing happens in your browser.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-brand-500 font-bold">02</span>
+                <span className="text-[var(--color-accent)] font-bold">02</span>
                 <div><strong>Free Forever</strong> &mdash; Core tools will always be free. No hidden charges, no credit card needed.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-brand-500 font-bold">03</span>
+                <span className="text-[var(--color-accent)] font-bold">03</span>
                 <div><strong>Quality Over Quantity</strong> &mdash; Every tool is thoughtfully designed, thoroughly tested, and continuously improved.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-brand-500 font-bold">04</span>
+                <span className="text-[var(--color-accent)] font-bold">04</span>
                 <div><strong>Developer Experience</strong> &mdash; Fast, keyboard-friendly, accessible, and a joy to use.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-brand-500 font-bold">05</span>
+                <span className="text-[var(--color-accent)] font-bold">05</span>
                 <div><strong>Open-Source Philosophy</strong> &mdash; We believe in transparency and community-driven development where possible.</div>
               </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Our Roadmap</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Our Roadmap</h2>
             <p className="mt-2">
               We are continuously expanding our tool collection and platform capabilities. Upcoming
               developments include:
@@ -166,12 +166,12 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Open Source</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Open Source</h2>
             <p className="mt-2">
               We believe in the power of open source. Our tools are built with transparency and
               community input. We welcome contributions, bug reports, and feature suggestions from
               the developer community. Visit our{" "}
-              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:text-brand-600 underline">
+              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
                 GitHub repository
               </a>{" "}
               to contribute.
@@ -179,10 +179,10 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact Us</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Contact Us</h2>
             <p className="mt-2">
               Have questions, suggestions, or feedback? We&apos;d love to hear from you.{" "}
-              <a href="/contact" className="text-brand-500 hover:text-brand-600 underline">Get in touch</a>.
+              <a href="/contact" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">Get in touch</a>.
             </p>
           </section>
         </div>

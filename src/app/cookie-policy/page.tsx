@@ -17,22 +17,22 @@ export default function CookiePolicyPage() {
 
   return (
     <div className="container py-12 md:py-16">
-      <article className="mx-auto max-w-3xl">
+      <article className="prose mx-auto max-w-3xl">
         <div className="mb-8">
-          <p className="text-sm text-surface-500 dark:text-dark-muted">Last updated: {lastUpdated}</p>
-          <h1 className="mt-2 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <p className="text-sm text-[var(--color-text-muted)]">Last updated: {lastUpdated}</p>
+          <h1 className="mt-2 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             Cookie Policy
           </h1>
         </div>
 
-        <div className="prose prose-surface dark:prose-invert max-w-none space-y-6 text-surface-600 dark:text-dark-muted">
+        <div className="prose prose-surface dark:prose-invert max-w-none space-y-6 text-[var(--color-text-muted)]">
           <p>
             This Cookie Policy explains how DevStackIO uses cookies and similar tracking technologies
             on our website. By using DevStackIO, you consent to the use of cookies as described in
             this policy.
           </p>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">What Are Cookies</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">What Are Cookies</h2>
           <p>
             Cookies are small text files stored on your device when you visit a website. They help
             websites remember your preferences, understand how you use the site, and improve your
@@ -40,7 +40,7 @@ export default function CookiePolicyPage() {
             &quot;session&quot; (deleted when you close your browser).
           </p>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">How We Use Cookies</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">How We Use Cookies</h2>
           <p>We use cookies for the following purposes:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Necessary:</strong> Essential for the website to function properly, including dark mode preference storage, security features, and the visitor counter that tracks active sessions (a first-party, HttpOnly cookie that only counts visits).</li>
@@ -49,18 +49,18 @@ export default function CookiePolicyPage() {
             <li><strong>Advertising:</strong> If enabled, these cookies help deliver relevant advertisements and measure ad performance. We do not currently serve ads but prepare for future use.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Cookies We Use</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Cookies We Use</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-surface-200 dark:border-dark-border">
-                  <th className="py-2 pr-4 text-left font-semibold text-surface-900 dark:text-dark-text">Cookie</th>
-                  <th className="py-2 pr-4 text-left font-semibold text-surface-900 dark:text-dark-text">Type</th>
-                  <th className="py-2 pr-4 text-left font-semibold text-surface-900 dark:text-dark-text">Purpose</th>
-                  <th className="py-2 text-left font-semibold text-surface-900 dark:text-dark-text">Duration</th>
+                <tr className="border-b border-[var(--color-border)]">
+                  <th className="py-2 pr-4 text-left font-semibold text-[var(--color-text)]">Cookie</th>
+                  <th className="py-2 pr-4 text-left font-semibold text-[var(--color-text)]">Type</th>
+                  <th className="py-2 pr-4 text-left font-semibold text-[var(--color-text)]">Purpose</th>
+                  <th className="py-2 text-left font-semibold text-[var(--color-text)]">Duration</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-surface-200 dark:divide-dark-border">
+              <tbody className="divide-y divide-[var(--color-border)]">
                 <tr>
                   <td className="py-2 pr-4 font-mono text-xs">cookie-consent</td>
                   <td className="py-2 pr-4">Necessary</td>
@@ -95,7 +95,7 @@ export default function CookiePolicyPage() {
             </table>
           </div>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Third-Party Cookies</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Third-Party Cookies</h2>
           <p>
             We may use third-party services that set their own cookies. These include:
           </p>
@@ -105,7 +105,7 @@ export default function CookiePolicyPage() {
             <li><strong>Cloudflare:</strong> For security and performance optimization.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Managing Cookies</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Managing Cookies</h2>
           <p>
             You can manage your cookie preferences at any time by clicking the &quot;Cookie Preferences&quot;
             link in the footer. You can also configure cookies through your browser settings:
@@ -117,7 +117,7 @@ export default function CookiePolicyPage() {
             <li>Edge: Settings &rarr; Cookies and site permissions &rarr; Cookies and site data</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Your Rights</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Your Rights</h2>
           <p>
             Under GDPR, you have the right to:
           </p>
@@ -127,16 +127,16 @@ export default function CookiePolicyPage() {
             <li>Request deletion of your data</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Changes to This Policy</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Changes to This Policy</h2>
           <p>
             We may update this Cookie Policy from time to time. Changes will be posted on this page
             with an updated &quot;Last updated&quot; date.
           </p>
 
-          <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact</h2>
+          <h2 className="text-2xl font-bold text-[var(--color-text)]">Contact</h2>
           <p>
             If you have questions about this Cookie Policy, please{" "}
-            <a href="/contact" className="text-brand-500 hover:text-brand-600 underline">contact us</a>.
+            <a href="/contact" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">contact us</a>.
           </p>
         </div>
       </article>

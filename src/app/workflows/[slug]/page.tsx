@@ -69,14 +69,14 @@ export default async function WorkflowPage({ params }: Props) {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <Link href="/workflows" className="hover:text-surface-900 dark:hover:text-dark-text">Workflows</Link>
+            <Link href="/workflows" className="hover:text-[var(--color-text)]">Workflows</Link>
             <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-surface-900 dark:text-dark-text">{workflow.title}</span>
+            <span className="text-[var(--color-text)]">{workflow.title}</span>
           </nav>
         </div>
       </section>
@@ -84,13 +84,13 @@ export default async function WorkflowPage({ params }: Props) {
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
           <header className="mb-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-surface-200 bg-white px-3 py-1 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)]">
               {workflow.category}
             </span>
-            <h1 className="mt-4 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="mt-4 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               {workflow.title}
             </h1>
-            <p className="mt-3 text-lg text-surface-600 dark:text-dark-muted">
+            <p className="mt-3 text-lg text-[var(--color-text-muted)]">
               {workflow.description}
             </p>
           </header>
@@ -98,36 +98,36 @@ export default async function WorkflowPage({ params }: Props) {
           <ol className="space-y-6" role="list" aria-label={`${workflow.title} steps`}>
             {workflow.steps.map((step, index) => (
               <li key={step.toolSlug} className="group relative flex gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 text-lg font-bold dark:bg-brand-900/30 dark:text-brand-400">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)] text-lg font-bold dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]">
                   {index + 1}
                 </div>
                 <div className="flex-1 space-y-2 pt-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-surface-900 dark:text-dark-text">
+                    <h3 className="text-lg font-semibold text-[var(--color-text)]">
                       {step.label}
                     </h3>
                     <Link
                       href={`/tools/${step.toolSlug}`}
-                      className="inline-flex items-center gap-1 text-sm text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)]"
                     >
                       Open tool
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                   </div>
-                  <p className="text-surface-600 dark:text-dark-muted">{step.description}</p>
+                  <p className="text-[var(--color-text-muted)]">{step.description}</p>
                 </div>
               </li>
             ))}
           </ol>
 
-          <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-6 dark:border-dark-border dark:bg-dark-surface">
-            <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Run the full workflow</h2>
-            <p className="mt-2 text-surface-600 dark:text-dark-muted">
+          <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">Run the full workflow</h2>
+            <p className="mt-2 text-[var(--color-text-muted)]">
               Open the first tool with the workflow context; each step will pass its output to the next.
             </p>
             <Link
               href={`/tools/${workflow.steps[0].toolSlug}?workflow=${workflow.slug}&step=1`}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] transition-colors"
             >
               <CheckCircle className="h-4 w-4" aria-hidden="true" />
               Start workflow

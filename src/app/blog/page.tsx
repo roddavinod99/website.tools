@@ -58,20 +58,20 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <div className="border-b border-surface-200 dark:border-dark-border">
+      <div className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               Blog
             </h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-2 text-lg text-[var(--color-text-muted)]">
               Tutorials, tips, and industry insights
             </p>
           </div>
         </div>
       </div>
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
             <div className="space-y-6">
@@ -79,17 +79,17 @@ export default function BlogPage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group block rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                  className="group block rounded-lg border border-[var(--color-border)] bg-white p-6 transition-all hover:-translate-y-0.5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
                 >
-                  <div className="flex items-center gap-3 text-xs text-surface-400 dark:text-dark-muted">
+                  <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
                     <span>{post.date}</span>
                     <span>&middot;</span>
                     <span>{post.readTime} read</span>
                   </div>
-                  <h2 className="mt-2 text-xl font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                  <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)] dark:group-hover:text-[var(--color-accent)]">
                     {post.title}
                   </h2>
-                  <p className="mt-2 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                  <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-2">
                     {post.excerpt}
                   </p>
                 </Link>

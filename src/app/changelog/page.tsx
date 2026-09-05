@@ -18,7 +18,7 @@ const changes = [
 ];
 
 const typeStyles = {
-  feature: "bg-brand-100 text-brand-700 dark:bg-brand-800 dark:text-brand-200",
+  feature: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
   improvement: "bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200",
 };
 
@@ -40,13 +40,13 @@ export default function ChangelogPage() {
       />
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             Changelog
           </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+          <p className="mt-2 text-lg text-[var(--color-text-muted)]">
             Latest updates and improvements
           </p>
-          <p className="mt-4 text-surface-600 dark:text-dark-muted">
+          <p className="mt-4 text-[var(--color-text-muted)]">
             A running record of what&apos;s changed on DevStackIO. This changelog tracks new tools,
             performance improvements, accessibility fixes, and platform updates in reverse chronological
             order. We move fast but transparently &mdash; every notable change is documented here so you always
@@ -57,16 +57,16 @@ export default function ChangelogPage() {
             {changes.map((change, i) => (
               <div
                 key={i}
-                className="flex items-start gap-4 rounded-xl border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface"
+                className="flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-4 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <Badge className={typeStyles[change.type]}>
                       {change.type === "feature" ? "Feature" : "Improvement"}
                     </Badge>
-                    <span className="text-xs text-surface-400 dark:text-dark-muted">{change.date}</span>
+                    <span className="text-xs text-[var(--color-text-muted)]">{change.date}</span>
                   </div>
-                  <p className="mt-2 text-sm text-surface-700 dark:text-dark-muted">{change.text}</p>
+                  <p className="mt-2 text-sm text-[var(--color-text-muted)]">{change.text}</p>
                 </div>
               </div>
             ))}

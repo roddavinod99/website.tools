@@ -17,22 +17,22 @@ export default function TermsPage() {
 
   return (
     <div className="container py-12 md:py-16">
-      <article className="mx-auto max-w-3xl">
+      <article className="prose mx-auto max-w-3xl">
         <div className="mb-8">
-          <p className="text-sm text-surface-500 dark:text-dark-muted">Last updated: {lastUpdated}</p>
-          <h1 className="mt-2 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <p className="text-sm text-[var(--color-text-muted)]">Last updated: {lastUpdated}</p>
+          <h1 className="mt-2 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             Terms and Conditions
           </h1>
         </div>
 
-        <div className="space-y-6 text-surface-600 dark:text-dark-muted">
+        <div className="space-y-6 text-[var(--color-text-muted)]">
           <p>
             By accessing or using DevStackIO, you agree to be bound by these Terms and Conditions.
             If you do not agree with any part of these terms, you may not use our services.
           </p>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Use of Service</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Use of Service</h2>
             <p className="mt-2">
               All tools are provided free of charge for personal and commercial use. You may use
               any tool without creating an account or providing personal information. You agree to:
@@ -46,7 +46,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Intellectual Property</h2>
             <p className="mt-2">
               The DevStackIO name, logo, and website design are our intellectual property. The tools
               themselves and their outputs are provided for your use. You retain all rights to your
@@ -55,7 +55,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">No Warranty</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">No Warranty</h2>
             <p className="mt-2">
               Tools are provided &quot;as is&quot; without warranty of any kind, either express or
               implied. While we strive for accuracy, you should verify critical outputs independently.
@@ -65,7 +65,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Limitation of Liability</h2>
             <p className="mt-2">
               DevStackIO shall not be liable for any direct, indirect, incidental, special,
               consequential, or exemplary damages resulting from your use of the tools or inability
@@ -74,7 +74,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Third-Party Services</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Third-Party Services</h2>
             <p className="mt-2">
               Our website may use third-party services (e.g., analytics, CDN, advertising). These
               services have their own terms and privacy policies. We are not responsible for the
@@ -83,7 +83,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Termination</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Termination</h2>
             <p className="mt-2">
               We reserve the right to suspend or terminate access to our services for violations
               of these terms, at our sole discretion and without prior notice.
@@ -91,7 +91,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Governing Law</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Governing Law</h2>
             <p className="mt-2">
               These terms shall be governed by and construed in accordance with the applicable laws,
               without regard to its conflict of law provisions.
@@ -99,7 +99,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Changes</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Changes</h2>
             <p className="mt-2">
               We reserve the right to update these terms at any time. Continued use of DevStackIO
               after changes constitutes acceptance of the new terms. We will notify users of
@@ -108,10 +108,10 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">Contact</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">Contact</h2>
             <p className="mt-2">
               If you have questions about these terms, please{" "}
-              <a href="/contact" className="text-brand-500 hover:text-brand-600 underline">contact us</a>.
+              <a href="/contact" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">contact us</a>.
             </p>
           </section>
         </div>

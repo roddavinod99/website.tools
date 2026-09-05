@@ -19,10 +19,10 @@ export default function StatusPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="mx-auto max-w-2xl">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+        <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
           System Status
         </h1>
-        <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+        <p className="mt-2 text-lg text-[var(--color-text-muted)]">
           Current status of DevStackIO services
         </p>
 
@@ -30,9 +30,9 @@ export default function StatusPage() {
           {services.map((service) => (
             <div
               key={service.name}
-              className="flex items-center justify-between rounded-xl border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface"
+              className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white p-4 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
             >
-              <span className="font-medium text-surface-900 dark:text-dark-text">{service.name}</span>
+              <span className="font-medium text-[var(--color-text)]">{service.name}</span>
               <span className={`flex items-center gap-1.5 text-sm ${
                 service.status === "operational"
                   ? "text-green-700 dark:text-green-400"
@@ -45,7 +45,7 @@ export default function StatusPage() {
           ))}
         </div>
 
-        <p className="mt-8 text-sm text-surface-400 dark:text-dark-muted text-center">
+        <p className="mt-8 text-sm text-[var(--color-text-muted)] text-center">
           Last updated: {new Date().toLocaleDateString()}
         </p>
       </div>

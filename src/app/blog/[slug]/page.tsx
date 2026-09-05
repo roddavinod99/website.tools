@@ -111,23 +111,23 @@ export default async function BlogPostPage({ params }: Props) {
           }),
         }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" />
-            <Link href="/blog" className="hover:text-surface-900 dark:hover:text-dark-text">Blog</Link>
+            <Link href="/blog" className="hover:text-[var(--color-text)]">Blog</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{blogPost.title}</span>
+            <span className="text-[var(--color-text)]">{blogPost.title}</span>
           </nav>
         </div>
       </section>
       <article className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <div className="flex items-center gap-3 text-sm text-surface-400 dark:text-dark-muted">
+          <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
             <Link
               href="/about"
-              className="font-medium text-surface-600 hover:text-brand-500 dark:text-dark-muted dark:hover:text-brand-400"
+              className="font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] dark:text-[var(--color-text-muted)] dark:hover:text-[var(--color-accent)]"
             >
               {siteConfig.name} Team
             </Link>
@@ -136,23 +136,23 @@ export default async function BlogPostPage({ params }: Props) {
             <span>&middot;</span>
             <span>{blogPost.readTime} read</span>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="mt-4 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             {blogPost.title}
           </h1>
-          <p className="mt-4 text-lg text-surface-500 dark:text-dark-muted">
+          <p className="mt-4 text-lg text-[var(--color-text-muted)]">
             {blogPost.excerpt}
           </p>
           <div className="mt-8 prose prose-surface dark:prose-invert max-w-none">
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </div>
           {blogToGuide[blogPost.slug] && (
-            <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Quick guide
               </h3>
               <Link
                 href={`/guides/${blogToGuide[blogPost.slug].slug}`}
-                className="mt-2 inline-flex items-center gap-2 font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400"
+                className="mt-2 inline-flex items-center gap-2 font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)]"
               >
                 {blogToGuide[blogPost.slug].title}
               </Link>

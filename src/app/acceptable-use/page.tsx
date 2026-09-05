@@ -22,50 +22,50 @@ export default function AcceptableUsePage() {
 
   return (
     <div className="container py-12 md:py-16">
-      <article className="mx-auto max-w-3xl">
+      <article className="prose mx-auto max-w-3xl">
         <div className="mb-8">
-          <p className="text-sm text-surface-500 dark:text-dark-muted">
+          <p className="text-sm text-[var(--color-text-muted)]">
             Last updated: {lastUpdated} | Effective: {effectiveDate}
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             Acceptable Use Policy
           </h1>
-          <p className="mt-2 text-lg text-surface-600 dark:text-dark-muted">
+          <p className="mt-2 text-lg text-[var(--color-text-muted)]">
             This policy defines acceptable and prohibited uses of DevStackIO tools and services.
             By using DevStackIO, you agree to comply with this policy.
           </p>
         </div>
 
-        <div className="mb-8 p-4 rounded-lg bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800">
-          <p className="text-sm text-brand-700 dark:text-brand-300">
+        <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
+          <p className="text-sm text-[var(--color-accent)] dark:text-[var(--color-accent)]">
             <strong>Scope:</strong> This policy applies to all users of DevStackIO tools, website, API, and services.
             It supplements our{" "}
-            <a href="/terms" className="underline hover:text-brand-600">Terms of Service</a>
+            <a href="/terms" className="underline hover:text-[var(--color-accent-hover)]">Terms of Service</a>
             {" "}and{" "}
-            <a href="/privacy" className="underline hover:text-brand-600">Privacy Policy</a>.
+            <a href="/privacy" className="underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a>.
             Violations may result in suspension or termination of access.
           </p>
         </div>
 
-        <nav className="mb-8 p-4 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-          <h2 className="text-sm font-semibold text-surface-900 dark:text-dark-text mb-3">Table of Contents</h2>
-          <ol className="list-decimal pl-6 space-y-1 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="#1-general-principles" className="text-brand-500 underline hover:text-brand-600">1. General Principles</a></li>
-            <li><a href="#2-prohibited-activities" className="text-brand-500 underline hover:text-brand-600">2. Prohibited Activities</a></li>
-            <li><a href="#3-tool-specific-restrictions" className="text-brand-500 underline hover:text-brand-600">3. Tool-Specific Restrictions</a></li>
-            <li><a href="#4-api-usage" className="text-brand-500 underline hover:text-brand-600">4. API Usage (Current and Future)</a></li>
-            <li><a href="#5-security-and-integrity" className="text-brand-500 underline hover:text-brand-600">5. Security and Integrity</a></li>
-            <li><a href="#6-intellectual-property" className="text-brand-500 underline hover:text-brand-600">6. Intellectual Property</a></li>
-            <li><a href="#7-user-conduct" className="text-brand-500 underline hover:text-brand-600">7. User Conduct</a></li>
-            <li><a href="#8-enforcement" className="text-brand-500 underline hover:text-brand-600">8. Enforcement and Consequences</a></li>
-            <li><a href="#9-reporting-violations" className="text-brand-500 underline hover:text-brand-600">9. Reporting Violations</a></li>
-            <li><a href="#10-changes" className="text-brand-500 underline hover:text-brand-600">10. Changes to This Policy</a></li>
+        <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+          <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
+          <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
+            <li><a href="#1-general-principles" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">1. General Principles</a></li>
+            <li><a href="#2-prohibited-activities" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">2. Prohibited Activities</a></li>
+            <li><a href="#3-tool-specific-restrictions" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">3. Tool-Specific Restrictions</a></li>
+            <li><a href="#4-api-usage" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">4. API Usage (Current and Future)</a></li>
+            <li><a href="#5-security-and-integrity" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">5. Security and Integrity</a></li>
+            <li><a href="#6-intellectual-property" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">6. Intellectual Property</a></li>
+            <li><a href="#7-user-conduct" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">7. User Conduct</a></li>
+            <li><a href="#8-enforcement" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">8. Enforcement and Consequences</a></li>
+            <li><a href="#9-reporting-violations" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">9. Reporting Violations</a></li>
+            <li><a href="#10-changes" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">10. Changes to This Policy</a></li>
           </ol>
         </nav>
 
-        <div className="space-y-8 text-surface-600 dark:text-dark-muted">
+        <div className="space-y-8 text-[var(--color-text-muted)]">
           <section id="1-general-principles">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">1. General Principles</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">1. General Principles</h2>
             <div className="mt-4 space-y-4">
               <p>
                 DevStackIO provides free, browser-based developer tools for formatting, converting, generating, and
@@ -76,8 +76,8 @@ export default function AcceptableUsePage() {
                 By using DevStackIO, you agree to use our tools responsibly, ethically, and in compliance with all
                 applicable laws and this policy.
               </p>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text mb-2">Core Principles</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)] mb-2">Core Principles</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li><strong>Lawful Use:</strong> Use tools only for lawful purposes.</li>
                   <li><strong>Respect Privacy:</strong> Do not process others' private data without consent.</li>
@@ -90,11 +90,11 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="2-prohibited-activities">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">2. Prohibited Activities</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">2. Prohibited Activities</h2>
             <p className="mt-2">The following activities are strictly prohibited:</p>
             <div className="mt-4 space-y-6">
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.1 Illegal Activities</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.1 Illegal Activities</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Processing, generating, or facilitating illegal content, activities, or instructions</li>
                   <li>Generating code, configs, or data for malware, exploits, ransomware, or cyberattacks</li>
@@ -105,7 +105,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.2 Harmful Content</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.2 Harmful Content</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Generating content that promotes violence, self-harm, or terrorism</li>
                   <li>Creating content that exploits minors or vulnerable populations</li>
@@ -116,7 +116,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.3 Security Violations</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.3 Security Violations</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Attempting to reverse-engineer, decompile, or extract source code from our tools</li>
                   <li>Probing, scanning, or testing our infrastructure for vulnerabilities without authorization</li>
@@ -127,7 +127,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.4 Abuse and Overload</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.4 Abuse and Overload</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Automated scraping, crawling, or bulk API calls without explicit permission</li>
                   <li>Running tools in automated loops, bots, or scripts that degrade performance</li>
@@ -138,7 +138,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.5 Intellectual Property Violations</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.5 Intellectual Property Violations</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Using tools to remove copyright notices, watermarks, or attribution</li>
                   <li>Generating content that infringes patents, trademarks, trade secrets, or copyrights</li>
@@ -148,7 +148,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">2.6 Privacy Violations</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">2.6 Privacy Violations</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Processing personal data without lawful basis or consent (GDPR Art. 6)</li>
                   <li>Inputting others' private data (PII, credentials, keys, tokens) into tools</li>
@@ -160,11 +160,11 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="3-tool-specific-restrictions">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">3. Tool-Specific Restrictions</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">3. Tool-Specific Restrictions</h2>
             <p className="mt-2">Certain tool categories have additional restrictions:</p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Security & Cryptography Tools</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Security & Cryptography Tools</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Do not use for generating production secrets without proper entropy review</li>
                   <li>Do not use generated keys/certs in production without independent validation</li>
@@ -173,8 +173,8 @@ export default function AcceptableUsePage() {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Network & Infrastructure Tools</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Network & Infrastructure Tools</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>DNS/IP tools: Do not use for reconnaissance, enumeration, or attack planning</li>
                   <li>Certificate tools: Do not use for MITM, spoofing, or impersonation</li>
@@ -182,8 +182,8 @@ export default function AcceptableUsePage() {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Encoding/Decoding & Data Tools</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Encoding/Decoding & Data Tools</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Base64/URL/HTML tools: Do not use for obfuscating malicious payloads</li>
                   <li>Data converters: Do not use for data exfiltration formatting</li>
@@ -191,8 +191,8 @@ export default function AcceptableUsePage() {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Generators (UUID, Password, QR, etc.)</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Generators (UUID, Password, QR, etc.)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Do not generate credentials for unauthorized access</li>
                   <li>QR codes: Do not encode malicious URLs, phishing links, or exploit payloads</li>
@@ -200,8 +200,8 @@ export default function AcceptableUsePage() {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Formatters & Validators</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Formatters & Validators</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Do not use for formatting obfuscated malware code</li>
                   <li>SQL formatter: Do not use for SQL injection payload formatting</li>
@@ -212,44 +212,44 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="4-api-usage">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">4. API Usage (Current and Future)</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">4. API Usage (Current and Future)</h2>
             <p className="mt-2">
               DevStackIO currently provides a web interface. If/when a public API is released, the following
               will apply in addition to this policy:
             </p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Rate Limits</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Rate Limits</h3>
                 <p className="mt-2 text-sm">Respect published rate limits. Do not circumvent via multiple keys, IPs, or accounts.</p>
               </div>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Authentication</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Authentication</h3>
                 <p className="mt-2 text-sm">Use only your own API keys. Do not share, sell, or transfer keys.</p>
               </div>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Data Handling</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Data Handling</h3>
                 <p className="mt-2 text-sm">Do not submit PII, secrets, or confidential data via API unless explicitly supported.</p>
               </div>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Attribution</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Attribution</h3>
                 <p className="mt-2 text-sm">Display "Powered by DevStackIO" or equivalent attribution in API-driven applications.</p>
               </div>
             </div>
-            <p className="mt-4 text-sm text-surface-500 dark:text-dark-muted">
+            <p className="mt-4 text-sm text-[var(--color-text-muted)]">
               A separate API Terms of Service will govern API access upon release.
             </p>
           </section>
 
           <section id="5-security-and-integrity">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">5. Security and Integrity</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">5. Security and Integrity</h2>
             <div className="mt-4 space-y-4">
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">5.1 Vulnerability Disclosure</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">5.1 Vulnerability Disclosure</h3>
                 <p className="mt-2">
                   We encourage responsible security research. If you discover a vulnerability, please report it via:
                 </p>
-                <div className="mt-2 p-3 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                  <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
+                <div className="mt-2 p-3 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                  <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
                   <p><strong>PGP:</strong> Available on request</p>
                 </div>
                 <p className="mt-2 text-sm">
@@ -259,7 +259,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">5.2 No Warranty on Security</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">5.2 No Warranty on Security</h3>
                 <p className="mt-2">
                   While we implement strong security measures (CSP, HSTS, SRI, client-side architecture),
                   no system is completely secure. You use tools at your own risk. Verify outputs independently
@@ -268,7 +268,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">5.3 Client-Side Architecture</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">5.3 Client-Side Architecture</h3>
                 <p className="mt-2">
                   Our tools run entirely in your browser. This means:
                 </p>
@@ -283,22 +283,22 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="6-intellectual-property">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">6. Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">6. Intellectual Property</h2>
             <div className="mt-4 space-y-4">
               <p>
                 DevStackIO name, logo, brand, website design, and tool implementations are our intellectual property.
                 You retain all rights to your input data and tool outputs.
               </p>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Permitted Uses</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Permitted Uses</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Personal and commercial use of tools and outputs</li>
                   <li>Incorporation of tool outputs into your projects, products, or services</li>
                   <li>Sharing tool outputs with colleagues, clients, or in documentation</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Restricted Uses</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Restricted Uses</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Redistributing, reselling, or rebranding the DevStackIO tools themselves</li>
                   <li>Creating derivative works of our tool implementations (not outputs)</li>
@@ -306,7 +306,7 @@ export default function AcceptableUsePage() {
                   <li>Reverse engineering, decompiling, or extracting our source code</li>
                 </ul>
               </div>
-              <p className="text-sm text-surface-500 dark:text-dark-muted">
+              <p className="text-sm text-[var(--color-text-muted)]">
                 Open source components within our tools remain under their respective licenses (MIT, Apache-2.0, etc.).
                 See individual tool credits for details.
               </p>
@@ -314,10 +314,10 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="7-user-conduct">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">7. User Conduct</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">7. User Conduct</h2>
             <div className="mt-4 space-y-4">
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">7.1 Account-Free Usage</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">7.1 Account-Free Usage</h3>
                 <p className="mt-2">
                   DevStackIO requires no account. This means we cannot enforce per-user bans. Instead, we may:
                 </p>
@@ -330,7 +330,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">7.2 Shared Responsibility</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">7.2 Shared Responsibility</h3>
                 <p className="mt-2">
                   If you share access to DevStackIO (e.g., in a team, classroom, or organization), you are responsible
                   for all use under your session. Ensure all users comply with this policy.
@@ -338,7 +338,7 @@ export default function AcceptableUsePage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">7.3 Educational and Research Use</h3>
+                <h3 className="font-semibold text-[var(--color-text)]">7.3 Educational and Research Use</h3>
                 <p className="mt-2">
                   Academic, educational, and security research use is permitted and encouraged. When using tools
                   for vulnerability research, malware analysis, or security education:
@@ -354,13 +354,13 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="8-enforcement">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">8. Enforcement and Consequences</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">8. Enforcement and Consequences</h2>
             <div className="mt-4 space-y-4">
               <p>
                 We enforce this policy through technical measures and, where necessary, legal action:
               </p>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Progressive Enforcement</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Progressive Enforcement</h3>
                 <ol className="mt-2 list-decimal pl-6 space-y-2 text-sm">
                   <li><strong>Warning:</strong> Automated notice for first minor violation</li>
                   <li><strong>Temporary Restriction:</strong> Rate limiting, CAPTCHA, or feature limits (24h-7d)</li>
@@ -369,10 +369,10 @@ export default function AcceptableUsePage() {
                   <li><strong>Legal Action:</strong> For criminal activity, IP theft, or significant harm</li>
                 </ol>
               </div>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-                <h3 className="font-semibold text-surface-900 dark:text-dark-text">Appeals</h3>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <h3 className="font-semibold text-[var(--color-text)]">Appeals</h3>
                 <p className="mt-2 text-sm">
-                  To appeal a restriction, contact <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
+                  To appeal a restriction, contact <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
                   with your IP, the restriction details, and explanation. We review appeals within 5 business days.
                 </p>
               </div>
@@ -380,18 +380,18 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="9-reporting-violations">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">9. Reporting Violations</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">9. Reporting Violations</h2>
             <div className="mt-4 space-y-4">
               <p>
                 Help us keep DevStackIO safe. Report violations to:
               </p>
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-surface-200 dark:border-dark-border space-y-2">
-                <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
-                <p><strong>Copyright/DMCA:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
-                <p><strong>General Policy:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a></p>
-                <p><strong>Security Issues:</strong> <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
+              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)] space-y-2">
+                <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+                <p><strong>Copyright/DMCA:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
+                <p><strong>General Policy:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+                <p><strong>Security Issues:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
               </div>
-              <p className="text-sm text-surface-500 dark:text-dark-muted">
+              <p className="text-sm text-[var(--color-text-muted)]">
                 Include: Description of violation, URL/tool involved, screenshots if applicable, and your contact info.
                 Anonymous reports accepted but may limit follow-up.
               </p>
@@ -399,7 +399,7 @@ export default function AcceptableUsePage() {
           </section>
 
           <section id="10-changes">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">10. Changes to This Policy</h2>
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">10. Changes to This Policy</h2>
             <p className="mt-2">
               We may update this Acceptable Use Policy from time to time. Changes will be posted on this page with
               an updated "Last updated" date. Material changes will be announced via:
@@ -416,24 +416,24 @@ export default function AcceptableUsePage() {
           </section>
         </div>
 
-        <div className="mt-12 p-6 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-          <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Related Documents</h2>
-          <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-surface-600 dark:text-dark-muted">
-            <li><a href="/terms" className="text-brand-500 underline hover:text-brand-600">Terms of Service</a></li>
-            <li><a href="/privacy" className="text-brand-500 underline hover:text-brand-600">Privacy Policy</a></li>
-            <li><a href="/cookie-policy" className="text-brand-500 underline hover:text-brand-600">Cookie Policy</a></li>
-            <li><a href="/dmca" className="text-brand-500 underline hover:text-brand-600">DMCA / Copyright Policy</a></li>
-            <li><a href="/dpa" className="text-brand-500 underline hover:text-brand-600">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/security" className="text-brand-500 underline hover:text-brand-600">Security Policy</a></li>
+        <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+          <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
+          <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
+            <li><a href="/terms" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Terms of Service</a></li>
+            <li><a href="/privacy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a></li>
+            <li><a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Policy</a></li>
+            <li><a href="/dmca" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">DMCA / Copyright Policy</a></li>
+            <li><a href="/dpa" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/security" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Security Policy</a></li>
           </ul>
         </div>
 
-        <div className="mt-8 p-6 rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border">
-          <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">Contact</h2>
-          <p className="mt-2 text-surface-600 dark:text-dark-muted">
+        <div className="mt-8 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+          <h2 className="text-lg font-semibold text-[var(--color-text)]">Contact</h2>
+          <p className="mt-2 text-[var(--color-text-muted)]">
             Questions about this Acceptable Use Policy? Contact us at
-            <a href="mailto:contact@devstackio.com" className="text-brand-500 underline hover:text-brand-600">contact@devstackio.com</a>
-            or use our <a href="/contact" className="text-brand-500 underline hover:text-brand-600">contact form</a>.
+            <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
+            or use our <a href="/contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact form</a>.
           </p>
         </div>
       </article>

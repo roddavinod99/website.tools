@@ -70,30 +70,30 @@ export default function ComparePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <div className="border-b border-surface-200 dark:border-dark-border">
+      <div className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl">
-            <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-              <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+            <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+              <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
               <ChevronRight className="h-3 w-3" />
-              <span className="text-surface-900 dark:text-dark-text">Compare</span>
+              <span className="text-[var(--color-text)]">Compare</span>
             </nav>
-            <h1 className="mt-6 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="mt-6 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               Compare Developer Tools
             </h1>
-            <p className="mt-3 text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-3 text-lg text-[var(--color-text-muted)]">
               Side-by-side guides to help you choose the right encoding, hash, encryption, or data format for the job.
             </p>
           </div>
         </div>
       </div>
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl space-y-12">
             {categories.map((category) => (
               <div key={category}>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                   {category}
                 </h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -103,15 +103,15 @@ export default function ComparePage() {
                       <Link
                         key={comparison.slug}
                         href={`/compare/${comparison.slug}`}
-                        className="group flex flex-col rounded-xl border border-surface-200 bg-white p-5 transition-colors hover:border-brand-500 dark:border-dark-border dark:bg-dark-surface dark:hover:border-brand-400"
+                        className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-white p-5 transition-colors hover:border-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:hover:border-[var(--color-accent)]"
                       >
-                        <h3 className="font-semibold text-surface-900 dark:text-dark-text">
+                        <h3 className="font-semibold text-[var(--color-text)]">
                           {comparison.title}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm text-surface-500 dark:text-dark-muted">
+                        <p className="mt-2 flex-1 text-sm text-[var(--color-text-muted)]">
                           {comparison.description}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 dark:text-brand-400">
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent)] dark:text-[var(--color-accent)]">
                           Read comparison
                           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                         </span>

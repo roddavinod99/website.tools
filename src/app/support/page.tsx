@@ -19,10 +19,10 @@ export default function SupportPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="mx-auto max-w-2xl">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+        <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
           Support
         </h1>
-        <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+        <p className="mt-2 text-lg text-[var(--color-text-muted)]">
           How can we help you?
         </p>
 
@@ -33,13 +33,13 @@ export default function SupportPage() {
               <a
                 key={opt.title}
                 href={opt.href}
-                className="group rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                className="group rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
               >
-                <Icon className="h-5 w-5 text-brand-500" />
-                <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text">
+                <Icon className="h-5 w-5 text-[var(--color-accent)]" />
+                <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)]">
                   {opt.title}
                 </h3>
-                <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted">{opt.description}</p>
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">{opt.description}</p>
               </a>
             );
           })}

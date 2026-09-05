@@ -116,37 +116,37 @@ export default async function ComparisonPage({ params }: Props) {
           }).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" />
-            <Link href="/compare" className="hover:text-surface-900 dark:hover:text-dark-text">Compare</Link>
+            <Link href="/compare" className="hover:text-[var(--color-text)]">Compare</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{comparison.title}</span>
+            <span className="text-[var(--color-text)]">{comparison.title}</span>
           </nav>
         </div>
       </section>
-      <article className="container py-12 md:py-16">
+      <article className="prose container py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-brand-500 dark:text-brand-400">
+          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] dark:text-[var(--color-accent)]">
             {comparison.category}
           </p>
-          <h1 className="mt-3 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             {comparison.title}
           </h1>
-          <p className="mt-4 text-lg text-surface-500 dark:text-dark-muted">{comparison.intro}</p>
+          <p className="mt-4 text-lg text-[var(--color-text-muted)]">{comparison.intro}</p>
 
           <div className="mt-10 space-y-10">
             {comparison.sections.map((section, index) => (
               <section key={section.title}>
-                <h2 className="flex items-start gap-3 text-2xl font-semibold text-surface-900 dark:text-dark-text">
-                  <span className="text-brand-500 dark:text-brand-400">
+                <h2 className="flex items-start gap-3 text-2xl font-semibold text-[var(--color-text)]">
+                  <span className="text-[var(--color-accent)] dark:text-[var(--color-accent)]">
                     {index + 1}.
                   </span>
                   {section.title}
                 </h2>
-                <p className="mt-3 leading-relaxed text-surface-600 dark:text-dark-muted">
+                <p className="mt-3 leading-relaxed text-[var(--color-text-muted)]">
                   {section.body}
                 </p>
               </section>
@@ -154,12 +154,12 @@ export default async function ComparisonPage({ params }: Props) {
           </div>
 
           {toolLinks.length > 0 && (
-            <div className="mt-12 rounded-xl border border-surface-200 bg-surface-50 p-6 dark:border-dark-border dark:bg-dark-surface">
-              <h2 className="flex items-center gap-2 text-lg font-semibold text-surface-900 dark:text-dark-text">
-                <Zap className="h-5 w-5 text-brand-500 dark:text-brand-400" />
+            <div className="mt-12 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
+                <Zap className="h-5 w-5 text-[var(--color-accent)] dark:text-[var(--color-accent)]" />
                 Try the tools
               </h2>
-              <p className="mt-2 text-sm text-surface-500 dark:text-dark-muted">
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">
                 Run these conversions and checks instantly in your browser — no data leaves your device.
               </p>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -167,7 +167,7 @@ export default async function ComparisonPage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white px-4 py-3 text-sm font-medium text-surface-700 transition-colors hover:border-brand-500 hover:text-brand-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-400 dark:hover:text-brand-400"
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)] dark:hover:border-[var(--color-accent)] dark:hover:text-[var(--color-accent)]"
                     >
                       {tool.name}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -180,20 +180,20 @@ export default async function ComparisonPage({ params }: Props) {
 
           {comparison.faq.length > 0 && (
             <section className="mt-12">
-              <h2 className="text-2xl font-semibold text-surface-900 dark:text-dark-text">
+              <h2 className="text-2xl font-semibold text-[var(--color-text)]">
                 Frequently Asked Questions
               </h2>
               <div className="mt-6 space-y-4">
                 {comparison.faq.map((item) => (
                   <details
                     key={item.question}
-                    className="group rounded-lg border border-surface-200 bg-white p-5 dark:border-dark-border dark:bg-dark-surface"
+                    className="group rounded-lg border border-[var(--color-border)] bg-white p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
                   >
-                    <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium text-surface-900 dark:text-dark-text">
+                    <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium text-[var(--color-text)]">
                       {item.question}
                       <ChevronRight className="h-4 w-4 shrink-0 transition-transform group-open:rotate-90" />
                     </summary>
-                    <p className="mt-3 text-sm leading-relaxed text-surface-600 dark:text-dark-muted">
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">
                       {item.answer}
                     </p>
                   </details>
@@ -202,16 +202,16 @@ export default async function ComparisonPage({ params }: Props) {
             </section>
           )}
 
-          <div className="mt-12 rounded-xl border border-surface-200 bg-surface-50 p-6 text-center dark:border-dark-border dark:bg-dark-surface">
-            <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">
+          <div className="mt-12 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">
               More comparisons
             </h2>
-            <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted">
+            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
               Explore side-by-side guides for other developer tools and formats.
             </p>
             <Link
               href="/compare"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-600 dark:hover:bg-brand-400"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-accent-hover)] dark:hover:bg-[var(--color-accent)]"
             >
               View all comparisons
               <ArrowRight className="h-4 w-4" />

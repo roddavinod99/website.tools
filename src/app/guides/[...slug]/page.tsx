@@ -139,29 +139,29 @@ export default async function GuidePage({ params }: Props) {
           }).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" />
-            <Link href="/guides" className="hover:text-surface-900 dark:hover:text-dark-text">Guides</Link>
+            <Link href="/guides" className="hover:text-[var(--color-text)]">Guides</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{topic.title}</span>
+            <span className="text-[var(--color-text)]">{topic.title}</span>
           </nav>
         </div>
       </section>
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-brand-500 dark:text-brand-400">
+          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] dark:text-[var(--color-accent)]">
             {topic.category}
           </p>
-          <h1 className="mt-3 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             {topic.title}
           </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+          <p className="mt-2 text-lg text-[var(--color-text-muted)]">
             {topic.description}
           </p>
-          <p className="mt-3 text-sm text-surface-400 dark:text-dark-muted">
+          <p className="mt-3 text-sm text-[var(--color-text-muted)]">
             Updated {topic.modified} &middot; {topic.readTime} read
           </p>
 
@@ -170,15 +170,15 @@ export default async function GuidePage({ params }: Props) {
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
             </div>
           ) : (
-            <div className="mt-8 rounded-xl border border-surface-200 bg-surface-50 p-8 text-center dark:border-dark-border dark:bg-dark-surface">
-              <p className="text-surface-500 dark:text-dark-muted">Content for this guide is being written. Check back soon.</p>
+            <div className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+              <p className="text-[var(--color-text-muted)]">Content for this guide is being written. Check back soon.</p>
             </div>
           )}
 
           {toolLinks.length > 0 && (
-            <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
-              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
-                <Zap className="h-4 w-4 text-brand-500 dark:text-brand-400" />
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                <Zap className="h-4 w-4 text-[var(--color-accent)] dark:text-[var(--color-accent)]" />
                 Related tools
               </h2>
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -186,7 +186,7 @@ export default async function GuidePage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white px-3.5 py-2.5 text-sm font-medium text-surface-700 transition-colors hover:border-brand-500 hover:text-brand-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-400 dark:hover:text-brand-400"
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)] dark:hover:border-[var(--color-accent)] dark:hover:text-[var(--color-accent)]"
                     >
                       {tool.name}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -198,13 +198,13 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {guideToBlog[resolvedSlug] && (
-            <div className="mt-10 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Read the full guide
               </h3>
               <Link
                 href={`/blog/${guideToBlog[resolvedSlug].slug}`}
-                className="group mt-2 flex items-center gap-2 text-brand-500 hover:text-brand-600 dark:text-brand-400"
+                className="group mt-2 flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)]"
               >
                 <span className="font-medium">{guideToBlog[resolvedSlug].title}</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
