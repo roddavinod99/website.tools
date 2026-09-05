@@ -215,12 +215,12 @@ export function AdContainer({
     return (
       <div
         ref={adRef}
-        className={`flex items-center justify-center rounded-lg border-2 border-dashed border-surface-300 bg-surface-50 dark:border-dark-border dark:bg-dark-surface ${devSizing} ${className}`}
+        className={`flex items-center justify-center rounded-md border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] ${devSizing} ${className}`}
         role="img"
         aria-label="Advertisement placeholder"
       >
         {children || (
-          <span className="text-xs text-surface-400 dark:text-dark-muted">
+          <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             {displayLabel}{finalWidth && finalHeight ? ` (${finalWidth}x${finalHeight})` : ""}
           </span>
         )}
