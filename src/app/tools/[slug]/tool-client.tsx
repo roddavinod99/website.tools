@@ -106,18 +106,18 @@ function generateTocItems(content: ToolContent): TocItem[] {
 
 function ToolActions({ copied, onCopy }: { copied: boolean; onCopy: () => void }) {
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" role="group" aria-label="Tool actions">
+    <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Tool actions">
       <Button variant="ghost" size="sm" onClick={onCopy} aria-label="Copy output (Ctrl+Shift+C)">
         <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         <span className="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
         <kbd
-          className="ml-1 inline-flex h-5 items-center gap-0.5 rounded border border-surface-200 bg-white px-1.5 font-mono text-[10px] font-medium text-surface-500 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted"
+          className="ml-1 inline-flex h-5 items-center gap-0.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1.5 font-mono text-[10px] font-medium text-[var(--color-text-muted)]"
           aria-hidden="true"
         >
           <span>Ctrl</span>
-          <span className="text-surface-300 dark:text-dark-border">+</span>
+          <span className="text-[var(--color-text-subtle)]">+</span>
           <span>Shift</span>
-          <span className="text-surface-300 dark:text-dark-border">+</span>
+          <span className="text-[var(--color-text-subtle)]">+</span>
           <span>C</span>
         </kbd>
       </Button>
@@ -213,7 +213,7 @@ function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl, toolsRepo 
           href={link.href}
           target={link.external ? "_blank" : undefined}
           rel={link.external ? "noopener noreferrer" : undefined}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-surface-500 hover:text-surface-900 hover:bg-surface-100 dark:text-dark-muted dark:hover:text-dark-text dark:hover:bg-dark-surface transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-accent)]"
         >
           {link.icon}
           <span>{link.label}</span>
@@ -225,8 +225,8 @@ function QuickLinks({ tool, specificGuide, categorySlug, mainSiteUrl, toolsRepo 
 
 function SectionHeading({ children, icon: Icon }: { children: ReactNode; icon?: LucideIcon }) {
   return (
-    <h2 className="flex items-center gap-2 text-xl font-bold text-surface-900 dark:text-dark-text">
-      {Icon && <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />}
+    <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
+      {Icon && <Icon className="h-5 w-5 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />}
       {children}
     </h2>
   );
@@ -246,14 +246,14 @@ function CollapsibleSection({
   return (
     <details
       id={id}
-      className="group rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
+      className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 [&::-webkit-details-marker]:hidden">
-        <h2 className="flex items-center gap-2 text-xl font-bold text-surface-900 dark:text-dark-text">
-          {Icon && <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />}
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
+          {Icon && <Icon className="h-5 w-5 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />}
           {title}
         </h2>
-        <ChevronRight className="h-4 w-4 flex-shrink-0 text-surface-400 transition-transform group-open:rotate-90" aria-hidden="true" />
+        <ChevronRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)] transition-transform group-open:rotate-90" aria-hidden="true" />
       </summary>
       <div className="px-4 pb-4">{children}</div>
     </details>
@@ -362,74 +362,43 @@ export function ToolClient({
 
       <div className="container py-6 md:py-8">
         {/* Breadcrumb */}
-        <nav className="mb-6 flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Home</Link>
+        <nav className="mb-6 flex items-center gap-2 text-sm text-[var(--color-text-muted)]" aria-label="Breadcrumb">
+          <Link href="/" className="transition-colors hover:text-[var(--color-text)]">Home</Link>
           <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-          <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text transition-colors">Tools</Link>
+          <Link href="/tools" className="transition-colors hover:text-[var(--color-text)]">Tools</Link>
           <ChevronRight className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-          <span className="text-surface-900 dark:text-dark-text font-medium">{tool.name}</span>
+          <span className="font-medium text-[var(--color-text)]">{tool.name}</span>
         </nav>
 
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+<div className="grid gap-8 lg:grid-cols-[1fr_300px]">
           {/* Main column */}
           <div className="max-w-3xl space-y-8">
             {/* Hero with Tool Interface */}
-            <section id="hero">
-              {/* Trust badges - above the tool so users see the privacy promise before they engage */}
-              <div
-                className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-surface-500 dark:text-dark-muted"
-                role="list"
-                aria-label="Tool guarantees"
-              >
-                <span className="inline-flex items-center gap-1.5" role="listitem">
-                  <ShieldCheck className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
-                  100% Client-Side
-                </span>
-                <span className="inline-flex items-center gap-1.5" role="listitem">
-                  <EyeOff className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
-                  Your Data Stays Local
-                </span>
-                <span className="inline-flex items-center gap-1.5" role="listitem">
-                  <Lock className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400" aria-hidden="true" />
-                  No Account Required
-                </span>
-                <span
-                  className="inline-flex items-center gap-1.5"
-                  role="listitem"
-                  title={networkPillTitle}
-                >
-                  <Activity
-                    className="h-3.5 w-3.5 text-brand-500 dark:text-brand-400"
-                    aria-hidden="true"
-                  />
-                  <span data-testid="network-request-count">
-                    {requestCount === 0
-                      ? "0 network requests"
-                      : `${requestCount} network request${requestCount === 1 ? "" : "s"}`}
-                  </span>
-                </span>
-              </div>
+            <section id="hero" className="space-y-5">
+              {/* Category chip + tool header */}
               <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant="default">{tool.category}</Badge>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+                  {tool.category}
+                </span>
                 {tool.trending && <Badge variant="warning">Trending</Badge>}
                 {tool.new && <Badge variant="new">New</Badge>}
               </div>
-              <h1 className="mt-2 text-2xl font-bold text-surface-900 dark:text-dark-text sm:text-3xl">
+              <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl">
                 {tool.name}
               </h1>
-              <p className="mt-1.5 text-base text-surface-500 dark:text-dark-muted max-w-prose">
+              <p className="text-base text-[var(--color-text-muted)] max-w-3xl text-pretty">
                 {tool.description}
               </p>
 
               {/* Feature Badges - Key capabilities at a glance */}
               {content.features && content.features.length > 0 && (
-                <div className="mt-3" aria-label="Key features">
+                <div aria-label="Key features">
                   <FeatureBadgesGroup features={content.features} maxVisible={5} variant="brand" size="sm" />
                 </div>
               )}
 
               {/* Tool Interface Card */}
-              <div id={`tool-interface-${tool.slug}`} className="mt-5 rounded-xl border border-surface-200 bg-white p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
+              <div id={`tool-interface-${tool.slug}`} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6">
                 <ToolInterface slug={tool.slug} name={tool.name} />
               </div>
 
@@ -458,10 +427,10 @@ export function ToolClient({
               </div>
 
               {/* Keyboard shortcut hint - tells power users the ? modal is reachable */}
-              <p className="mt-2 flex items-center gap-1.5 text-xs text-surface-500 dark:text-dark-muted">
+              <p className="mt-2 flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
                 <Keyboard className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>
-                  Press <kbd className="inline-flex h-4 min-w-4 items-center justify-center rounded border border-surface-200 bg-white px-1 font-mono text-[10px] text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted" aria-hidden="true">?</kbd>{" "}
+                  Press <kbd className="inline-flex h-4 min-w-4 items-center justify-center rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1 font-mono text-[10px] text-[var(--color-text-muted)]" aria-hidden="true">?</kbd>{" "}
                   for keyboard shortcuts
                 </span>
               </p>
@@ -477,33 +446,33 @@ export function ToolClient({
 
             {/* About */}
             {content.whatItDoes || content.whyItExists || content.whoShouldUse ? (
-              <section id="about" className="space-y-3">
+              <section id="about" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>About</SectionHeading>
-                <div className="space-y-3 text-surface-600 dark:text-dark-muted">
+                <div className="space-y-3 text-[var(--color-text-muted)]">
                   <p>{content.whatItDoes}</p>
                   <p>{content.whyItExists}</p>
-                  <p className="text-sm text-surface-400 dark:text-dark-muted">
+                  <p className="text-sm text-[var(--color-text-subtle)]">
                     This tool is part of the{" "}
-                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
+                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">
                       DevStackIO
                     </a>{" "}
                     platform — a collection of free online developer tools from DevStackIO.
                     Browse more free developer resources on{" "}
-                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:text-brand-700 underline">
+                    <a href={mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">
                       DevStackIO
                     </a>.
                   </p>
                   <div>
-                    <h3 className="font-semibold text-surface-900 dark:text-dark-text">Who should use this tool?</h3>
+                    <h3 className="font-semibold text-[var(--color-text)]">Who should use this tool?</h3>
                     <p className="mt-1">{content.whoShouldUse}</p>
                   </div>
                   {content.useCases.length > 0 && (
                     <div>
-                      <h3 className="font-semibold text-surface-900 dark:text-dark-text">Common use cases</h3>
+                      <h3 className="font-semibold text-[var(--color-text)]">Common use cases</h3>
                       <ul className="mt-2 space-y-1">
                         {content.useCases.map((uc, i) => (
                           <li key={i} className="flex items-start gap-2">
-                            <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                            <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                             <span>{uc}</span>
                           </li>
                         ))}
@@ -516,13 +485,13 @@ export function ToolClient({
 
             {/* Key Features */}
             {content.features && content.features.length > 0 && (
-              <section id="features" className="space-y-3">
+              <section id="features" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>Key Features</SectionHeading>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {content.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-white p-2.5 dark:border-dark-border dark:bg-dark-surface">
-                      <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                      <span className="text-sm text-surface-600 dark:text-dark-muted">{feature}</span>
+                    <li key={feature} className="flex items-start gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5">
+                      <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
+                      <span className="text-sm text-[var(--color-text-muted)]">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -531,15 +500,15 @@ export function ToolClient({
 
             {/* How to Use */}
             {content.instructions.length > 0 && (
-              <section id="how-to-use" className="space-y-3">
+              <section id="how-to-use" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>How to Use</SectionHeading>
                 <div className="space-y-2.5">
                   {content.instructions.map((inst, i) => (
                     <div key={i} className="flex gap-3">
-                      <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 text-sm font-semibold dark:bg-brand-900/30 dark:text-brand-400">
+                      <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)] text-sm font-semibold">
                         {i + 1}
                       </div>
-                      <p className="text-surface-600 dark:text-dark-muted">{inst}</p>
+                      <p className="text-[var(--color-text-muted)]">{inst}</p>
                     </div>
                   ))}
                 </div>
@@ -548,12 +517,12 @@ export function ToolClient({
 
             {/* Examples */}
             {content.examples.length > 0 && (
-              <section id="examples" className="space-y-3">
+              <section id="examples" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>Examples</SectionHeading>
                 <div className="space-y-2.5">
                   {content.examples.map((ex, i) => (
                     <Card key={i} variant="outlined" padding="sm">
-                      <pre tabIndex={0} className="overflow-x-auto whitespace-pre-wrap rounded-md bg-surface-50 p-2.5 text-xs dark:bg-dark-bg">
+                      <pre tabIndex={0} className="overflow-x-auto whitespace-pre-wrap rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 text-xs">
                         <code>{ex}</code>
                       </pre>
                     </Card>
@@ -568,8 +537,8 @@ export function ToolClient({
                 <ul className="space-y-2">
                   {content.bestPractices.map((bp, i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" aria-hidden="true" />
-                      <span className="text-sm text-surface-600 dark:text-dark-muted">{bp}</span>
+                      <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-warning)]" aria-hidden="true" />
+                      <span className="text-sm text-[var(--color-text-muted)]">{bp}</span>
                     </li>
                   ))}
                 </ul>
@@ -582,8 +551,8 @@ export function ToolClient({
                 <ul className="space-y-2">
                   {content.commonMistakes.map((cm, i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <CircleAlert className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500" aria-hidden="true" />
-                      <span className="text-sm text-surface-600 dark:text-dark-muted">{cm}</span>
+                      <CircleAlert className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-danger)]" aria-hidden="true" />
+                      <span className="text-sm text-[var(--color-text-muted)]">{cm}</span>
                     </li>
                   ))}
                 </ul>
@@ -592,17 +561,17 @@ export function ToolClient({
 
             {/* FAQ */}
             {content.faq.length > 0 && (
-              <section id="faq" className="space-y-3">
+              <section id="faq" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>FAQ</SectionHeading>
                 <div className="space-y-2">
                   {content.faq.map((item, i) => {
                     const { question, answer } = parseFaqItem(item);
                     return (
-                      <div key={i} className="rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
-                        <p className="px-4 pt-3 font-medium text-surface-900 dark:text-dark-text">
+                      <div key={i} className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)]">
+                        <p className="px-4 pt-3 font-medium text-[var(--color-text)]">
                           {question}
                         </p>
-                        <p className="px-4 pb-3 text-sm text-surface-500 dark:text-dark-muted">
+                        <p className="px-4 pb-3 text-sm text-[var(--color-text-muted)]">
                           {answer}
                         </p>
                       </div>
@@ -615,7 +584,7 @@ export function ToolClient({
             {/* References */}
             {content.references && content.references.length > 0 && (
               <CollapsibleSection id="references" title="References" icon={BookOpen}>
-                <p className="mb-3 text-sm text-surface-500 dark:text-dark-muted">
+                <p className="mb-3 text-sm text-[var(--color-text-muted)]">
                   Authoritative specifications, standards, and in-depth reading for {tool.name}.
                 </p>
                 <ul className="space-y-2">
@@ -624,8 +593,8 @@ export function ToolClient({
                     if (isInternal) {
                       return (
                         <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
-                          <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
-                          <Link href={ref.url} className="text-sm text-surface-600 hover:text-brand-600 dark:text-dark-muted dark:hover:text-brand-400 underline">
+                          <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
+                          <Link href={ref.url} className="text-sm text-[var(--color-text-muted)] underline hover:text-[var(--color-accent)]">
                             {ref.label}
                           </Link>
                         </li>
@@ -633,12 +602,12 @@ export function ToolClient({
                     }
                     return (
                       <li key={`${ref.label}-${ref.url}`} className="flex items-start gap-2.5">
-                        <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                        <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                         <a
                           href={ref.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-brand-600 hover:text-brand-700 underline dark:text-brand-400"
+                          className="text-sm text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]"
                         >
                           {ref.label}
                         </a>
@@ -652,18 +621,63 @@ export function ToolClient({
             <InContentAd className="my-2" slot={adSlots.toolInContent2} />
 
             {/* Share */}
-            <section className="space-y-3">
+            <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading>Share</SectionHeading>
               <ShareButtons />
             </section>
           </div>
 
           {/* Sidebar */}
-          <aside className="mt-8 space-y-6 lg:mt-0 lg:sticky lg:top-24 lg:self-start">
+          <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+            {/* Trust badges - right column on lg+, top of column on tablet.
+                Users see the privacy promise without scrolling past the tool. */}
+            <div
+              className="flex flex-col gap-2"
+              role="list"
+              aria-label="Tool guarantees"
+            >
+              <span
+                className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)]"
+                role="listitem"
+              >
+                <ShieldCheck className="h-3.5 w-3.5 text-[var(--color-accent)]" aria-hidden="true" />
+                100% Client-Side
+              </span>
+              <span
+                className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)]"
+                role="listitem"
+              >
+                <EyeOff className="h-3.5 w-3.5 text-[var(--color-accent)]" aria-hidden="true" />
+                Your Data Stays Local
+              </span>
+              <span
+                className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)]"
+                role="listitem"
+              >
+                <Lock className="h-3.5 w-3.5 text-[var(--color-accent)]" aria-hidden="true" />
+                No Account Required
+              </span>
+              <span
+                className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)]"
+                role="listitem"
+                title={networkPillTitle}
+              >
+                <Activity
+                  className="h-3.5 w-3.5 text-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+                <span data-testid="network-request-count">
+                  {requestCount === 0
+                    ? "0 network requests"
+                    : `${requestCount} network request${requestCount === 1 ? "" : "s"}`}
+                </span>
+              </span>
+            </div>
+
             {/* Related Tools */}
-            <section id="related-tools" className="space-y-3">
+            <section id="related-tools" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading>Related Tools</SectionHeading>
-              <div className="space-y-2">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                 {relatedList.map((rt) => (
                   <ToolCard
                     key={rt.id}
@@ -688,72 +702,72 @@ export function ToolClient({
             </section>
 
             {/* Learning Resources */}
-            <section id="learning-resources" className="space-y-3">
+            <section id="learning-resources" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading icon={BookOpen}>Learning Resources</SectionHeading>
               <div className="space-y-2">
                 {specificGuide && (
                   <Link
                     href={`/guides/${specificGuide.slug}`}
-                    className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <div className="flex items-start gap-2">
-                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                       <div>
-                        <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                        <p className="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                           {specificGuide.title}
                         </p>
-                        <p className="text-xs text-surface-400 dark:text-dark-muted">{specificGuide.readTime} read</p>
+                        <p className="text-xs text-[var(--color-text-subtle)]">{specificGuide.readTime} read</p>
                       </div>
                     </div>
-                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
                   </Link>
                 )}
                 {categorySlug && (
                   <Link
                     href={`/categories/${categorySlug}`}
-                    className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                    className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <div className="flex items-start gap-2">
-                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                      <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                       <div>
-                        <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                        <p className="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                           More {tool.category} Tools
                         </p>
-                        <p className="text-xs text-surface-400 dark:text-dark-muted">Browse the full category</p>
+                        <p className="text-xs text-[var(--color-text-subtle)]">Browse the full category</p>
                       </div>
                     </div>
-                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
                   </Link>
                 )}
                 <Link
                   href="/guides"
-                  className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <div className="flex items-start gap-2">
-                    <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                    <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                     <div>
-                      <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                      <p className="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                         Developer Guides
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth tutorials and best practices</p>
+                      <p className="text-xs text-[var(--color-text-subtle)]">In-depth tutorials and best practices</p>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/guides"
-                  className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white p-2.5 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <div className="flex items-start gap-2">
-                    <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" aria-hidden="true" />
+                    <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
                     <div>
-                      <p className="text-sm font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400">
+                      <p className="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                         Developer Guides
                       </p>
-                      <p className="text-xs text-surface-400 dark:text-dark-muted">In-depth guides and tutorials</p>
+                      <p className="text-xs text-[var(--color-text-subtle)]">In-depth guides and tutorials</p>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-surface-400" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
                 </Link>
               </div>
             </section>
