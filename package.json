@@ -26,6 +26,7 @@
     "test:snapshots": "playwright test tests/snapshots.spec.ts",
     "test:security": "playwright test tests/security.spec.ts",
     "test:seo": "playwright test tests/seo-structured-data.spec.ts",
+    "audit:tools": "node scripts/tool-audit.mjs",
     "analyze": "cross-env ANALYZE=true next build",
     "clean": "node scripts/cleanup.mjs",
     "csp:auto-update": "node scripts/csp-auto-update.mjs"
