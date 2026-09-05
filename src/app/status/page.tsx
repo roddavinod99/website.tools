@@ -30,7 +30,7 @@ export default function StatusPage() {
           {services.map((service) => (
             <div
               key={service.name}
-              className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white p-4 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+              className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white p-4 border-[var(--color-border)] bg-[var(--color-surface)]"
             >
               <span className="font-medium text-[var(--color-text)]">{service.name}</span>
               <span className={`flex items-center gap-1.5 text-sm ${

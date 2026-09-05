@@ -25,7 +25,7 @@ export default function CookiePolicyPage() {
           </h1>
         </div>
 
-        <div className="prose prose-surface dark:prose-invert max-w-none space-y-6 text-[var(--color-text-muted)]">
+        <div className="prose-surface dark:prose-invert max-w-none space-y-6 text-[var(--color-text-muted)]">
           <p>
             This Cookie Policy explains how DevStackIO uses cookies and similar tracking technologies
             on our website. By using DevStackIO, you consent to the use of cookies as described in

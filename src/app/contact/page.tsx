@@ -36,7 +36,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm text-[var(--color-text-muted)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text-muted)]">
+        <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)]">
           <strong>Business inquiries:</strong>{" "}
           <a href={`mailto:${siteConfig.contactEmail}`} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
             {siteConfig.contactEmail}

@@ -51,7 +51,7 @@ export default function WorkflowsIndex() {
       <section className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
               <Workflow className="h-4 w-4" aria-hidden="true" />
               Workflows
             </span>
@@ -65,13 +65,13 @@ export default function WorkflowsIndex() {
         </div>
       </section>
 
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-4xl space-y-6">
             {workflows.map((w) => (
               <article
                 key={w.slug}
-                className="group rounded-lg border border-[var(--color-border)] bg-white p-6 transition-shadow dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                className="group rounded-lg border border-[var(--color-border)] bg-white p-6 transition-shadow border-[var(--color-border)] bg-[var(--color-surface)]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -84,7 +84,7 @@ export default function WorkflowsIndex() {
                     <p className="mt-2 text-[var(--color-text-muted)]">{w.description}</p>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {w.steps.map((s, idx) => (
-                        <li key={s.toolSlug} className="text-xs font-medium text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+                        <li key={s.toolSlug} className="text-xs font-medium text-[var(--color-accent)] text-[var(--color-accent)]">
                           {idx + 1}. {s.label}
                         </li>
                       ))}

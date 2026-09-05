@@ -36,7 +36,7 @@ export default function AccessibilityPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
             <strong>Our Commitment:</strong> We aim to conform to the Web Content Accessibility Guidelines
             (WCAG) 2.2 Level AA. Accessibility is treated as a design requirement for every new tool, not
             as an afterthought.
@@ -74,10 +74,10 @@ export default function AccessibilityPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">2. Keyboard Accessibility</h2>
             <p className="mt-2">Every tool and page on this site is fully operable from the keyboard:</p>
             <ul className="mt-2 list-disc pl-6 space-y-1">
-              <li>All interactive elements — buttons, inputs, menus, and links — are reachable with the <kbd className="rounded border border-surface-300 px-1.5 py-0.5 text-xs dark:border-dark-border">Tab</kbd> key.</li>
+              <li>All interactive elements — buttons, inputs, menus, and links — are reachable with the <kbd className="rounded border border-[var(--color-border-strong)] px-1.5 py-0.5 text-xs">Tab</kbd> key.</li>
               <li>Visible focus indicators are provided on every focusable element.</li>
               <li>Menus and dropdowns can be opened, navigated, and closed with the keyboard.</li>
-              <li>A global keyboard shortcuts modal is available (press <kbd className="rounded border border-surface-300 px-1.5 py-0.5 text-xs dark:border-dark-border">?</kbd> or the shortcuts button in the header).</li>
+              <li>A global keyboard shortcuts modal is available (press <kbd className="rounded border border-[var(--color-border-strong)] px-1.5 py-0.5 text-xs">?</kbd> or the shortcuts button in the header).</li>
               <li>No keyboard trap: focus can always be moved away from any component.</li>
             </ul>
           </section>

@@ -84,7 +84,7 @@ export default async function WorkflowPage({ params }: Props) {
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
           <header className="mb-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1 text-sm font-medium text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
               {workflow.category}
             </span>
             <h1 className="mt-4 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
@@ -98,7 +98,7 @@ export default async function WorkflowPage({ params }: Props) {
           <ol className="space-y-6" role="list" aria-label={`${workflow.title} steps`}>
             {workflow.steps.map((step, index) => (
               <li key={step.toolSlug} className="group relative flex gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)] text-lg font-bold dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)] text-lg font-bold bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
                   {index + 1}
                 </div>
                 <div className="flex-1 space-y-2 pt-1">
@@ -108,7 +108,7 @@ export default async function WorkflowPage({ params }: Props) {
                     </h3>
                     <Link
                       href={`/tools/${step.toolSlug}`}
-                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)]"
+                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)]"
                     >
                       Open tool
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -120,7 +120,7 @@ export default async function WorkflowPage({ params }: Props) {
             ))}
           </ol>
 
-          <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+          <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
             <h2 className="text-lg font-semibold text-[var(--color-text)]">Run the full workflow</h2>
             <p className="mt-2 text-[var(--color-text-muted)]">
               Open the first tool with the workflow context; each step will pass its output to the next.

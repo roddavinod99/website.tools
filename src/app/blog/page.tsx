@@ -71,7 +71,7 @@ export default function BlogPage() {
         </div>
       </div>
 
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
             <div className="space-y-6">
@@ -79,14 +79,14 @@ export default function BlogPage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group block rounded-lg border border-[var(--color-border)] bg-white p-6 transition-all hover:-translate-y-0.5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                  className="group block rounded-lg border border-[var(--color-border)] bg-white p-6 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
                 >
                   <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
                     <span>{post.date}</span>
                     <span>&middot;</span>
                     <span>{post.readTime} read</span>
                   </div>
-                  <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)] dark:group-hover:text-[var(--color-accent)]">
+                  <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                     {post.title}
                   </h2>
                   <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-2">

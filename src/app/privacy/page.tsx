@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
             <strong>Key Promise:</strong> Your code, files, and data never leave your browser. We implement
             client-side processing by design — not as a feature, but as our foundational architecture.
           </p>
@@ -415,7 +415,7 @@ export default function PrivacyPage() {
               </div>
             </div>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-              <h3 className="font-semibold text-[var(--color-accent)] dark:text-[var(--color-accent)]">How to Exercise Your Rights</h3>
+              <h3 className="font-semibold text-[var(--color-accent)] text-[var(--color-accent)]">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
                 Email <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
                 or use our <a href="/contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact form</a>.

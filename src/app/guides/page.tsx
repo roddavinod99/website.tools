@@ -71,7 +71,7 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
         </div>
       </div>
 
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
             <GuidesList topics={guidesTopics} initialTopic={resolvedParams.topic ?? null} />

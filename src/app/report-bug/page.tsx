@@ -49,13 +49,13 @@ export default function ReportBugPage() {
               <label className="block text-sm font-medium text-[var(--color-text-muted)]">Tool/Page</label>
               <input type="text" value={tool} onChange={(e) => setTool(e.target.value)} required
                 placeholder="e.g., JSON Formatter"
-                className="mt-1 flex h-10 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)] dark:placeholder:text-[var(--color-text-subtle)]" />
+                className="mt-1 flex h-10 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-[var(--color-text-muted)]">Describe the Bug</label>
               <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows={4}
                 placeholder="What happened? What did you expect to happen?"
-                className="mt-1 flex w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)] dark:placeholder:text-[var(--color-text-subtle)]" />
+                className="mt-1 flex w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
             </div>
             {status === "error" && (
               <p className="text-sm text-red-600 dark:text-red-400">Failed to submit. Please try again.</p>

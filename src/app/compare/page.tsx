@@ -88,7 +88,7 @@ export default function ComparePage() {
         </div>
       </div>
 
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl space-y-12">
             {categories.map((category) => (
@@ -103,7 +103,7 @@ export default function ComparePage() {
                       <Link
                         key={comparison.slug}
                         href={`/compare/${comparison.slug}`}
-                        className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-white p-5 transition-colors hover:border-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:hover:border-[var(--color-accent)]"
+                        className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-white p-5 transition-colors hover:border-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)]"
                       >
                         <h3 className="font-semibold text-[var(--color-text)]">
                           {comparison.title}
@@ -111,7 +111,7 @@ export default function ComparePage() {
                         <p className="mt-2 flex-1 text-sm text-[var(--color-text-muted)]">
                           {comparison.description}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent)] text-[var(--color-accent)]">
                           Read comparison
                           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                         </span>

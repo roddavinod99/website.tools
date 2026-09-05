@@ -17,10 +17,10 @@ export default function ContactSuccessPage() {
         <div className="flex justify-center">
           <CheckCircle className="h-16 w-16 text-green-500" />
         </div>
-        <h1 className="mt-6 text-3xl font-bold text-surface-900 dark:text-dark-text">
+        <h1 className="mt-6 text-3xl font-bold text-[var(--color-text)]">
           Message Sent!
         </h1>
-        <p className="mt-3 text-surface-600 dark:text-dark-muted">
+        <p className="mt-3 text-[var(--color-text-muted)]">
           Thank you for reaching out. We have received your message and will respond
           within 24&ndash;48 hours.
         </p>
@@ -33,7 +33,7 @@ export default function ContactSuccessPage() {
           </Link>
           <Link
             href="/tools"
-            className="inline-flex items-center gap-2 rounded-lg border border-surface-200 bg-white px-6 py-3 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-3 text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-surface-2)] transition-colors"
           >
             Browse Tools
           </Link>

@@ -61,7 +61,7 @@ export default function SecurityPage() {
             <p className="mt-2">
               We take security seriously. If you discover a security vulnerability, please report it privately:
             </p>
-            <div className="mt-4 p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)] space-y-2">
+            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
               <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
               <p><strong>GitHub Profile:</strong>{" "}
                 <a href="https://github.com/roddavinod99" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">github.com/roddavinod99</a>
@@ -98,7 +98,7 @@ export default function SecurityPage() {
             <div className="mt-4">
               <h3 className="font-semibold text-[var(--color-text)]">Defense in Depth</h3>
               <div className="mt-3 space-y-4">
-                <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 1: Nginx Reverse Proxy</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>TLS 1.2/1.3</li>
@@ -111,7 +111,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 2: Next.js Middleware (proxy.ts)</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>Application rate limiting</li>
@@ -120,7 +120,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 3: API Routes</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>Input sanitization</li>
@@ -132,7 +132,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 4: Client-Side</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>DOMPurify HTML/SVG sanitization</li>
@@ -247,7 +247,7 @@ export default function SecurityPage() {
                 "Service worker uses HTTPS",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-surface-300 text-xs text-[var(--color-accent)] dark:border-dark-border dark:text-[var(--color-accent)]">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--color-border-strong)] text-xs text-[var(--color-accent)] text-[var(--color-accent)]">
                     ✓
                   </span>
                   <span className="text-sm">{item}</span>

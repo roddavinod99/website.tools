@@ -33,10 +33,10 @@ export default function SupportPage() {
               <a
                 key={opt.title}
                 href={opt.href}
-                className="group rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                className="group rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all border-[var(--color-border)] bg-[var(--color-surface)]"
               >
                 <Icon className="h-5 w-5 text-[var(--color-accent)]" />
-                <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)]">
+                <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)]">
                   {opt.title}
                 </h3>
                 <p className="mt-1 text-sm text-[var(--color-text-muted)]">{opt.description}</p>

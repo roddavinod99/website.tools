@@ -37,7 +37,7 @@ export default function DMCAPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
             <strong>Summary:</strong> DevStackIO respects intellectual property rights. If you believe your copyrighted
             work has been infringed on our platform, submit a DMCA notice to{" "}
             <a href="mailto:contact@devstackio.com" className="underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>.
@@ -103,7 +103,7 @@ export default function DMCAPage() {
               Your written notification must include substantially the following:
             </p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Required Elements</h3>
                 <ol className="list-decimal pl-6 space-y-2">
                   <li><strong>Physical or electronic signature</strong> of the copyright owner or authorized agent.</li>
@@ -115,9 +115,9 @@ export default function DMCAPage() {
                 </ol>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Template</h3>
-                <pre className="bg-surface-50 dark:bg-dark-bg p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-[var(--color-text-muted)]"><code>To: DevStackIO Copyright Agent
+                <pre className="bg-[var(--color-surface)] p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-[var(--color-text-muted)]"><code>To: DevStackIO Copyright Agent
 Email: contact@devstackio.com
 Subject: DMCA Notice - [Your Name/Company]
 
@@ -152,7 +152,7 @@ Date: [Date]</code></pre>
           <section id="4-our-response-process">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">4. Our Response Process</h2>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Timeline</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li><strong>Acknowledgment:</strong> Within 1 business day of receipt</li>
@@ -162,7 +162,7 @@ Date: [Date]</code></pre>
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">What We Review</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Completeness of notice (all § 512(c)(3) elements)</li>
@@ -202,7 +202,7 @@ Date: [Date]</code></pre>
             </p>
 
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Required Elements (§ 512(g)(3))</h3>
                 <ol className="list-decimal pl-6 space-y-2">
                   <li>Physical or electronic signature of the subscriber.</li>
@@ -214,9 +214,9 @@ Date: [Date]</code></pre>
                 </ol>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Counter-Notification Template</h3>
-                <pre className="bg-surface-50 dark:bg-dark-bg p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-[var(--color-text-muted)]"><code>To: DevStackIO Copyright Agent
+                <pre className="bg-[var(--color-surface)] p-4 rounded text-sm overflow-x-auto whitespace-pre-wrap text-[var(--color-text-muted)]"><code>To: DevStackIO Copyright Agent
 Email: contact@devstackio.com
 Subject: Counter-Notification - [Case Reference if known]
 
@@ -263,7 +263,7 @@ Date: [Date]</code></pre>
               repeat infringers in appropriate circumstances.
             </p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Policy</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>We track valid DMCA notices per user/account.</li>
@@ -274,7 +274,7 @@ Date: [Date]</code></pre>
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)] mb-2">Appeal Process</h3>
                 <ol className="list-decimal pl-6 space-y-2">
                   <li>Submit written appeal to <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a> within 30 days.</li>
@@ -293,7 +293,7 @@ Date: [Date]</code></pre>
               Before acting on a DMCA notice, we consider whether the use may qualify as fair use, including:
             </p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Four Factors (17 U.S.C. § 107)</h3>
                 <ol className="mt-2 list-decimal pl-6 space-y-2">
                   <li><strong>Purpose and character:</strong> Educational, transformative, non-commercial, research, criticism, commentary, news reporting.</li>
@@ -303,7 +303,7 @@ Date: [Date]</code></pre>
                 </ol>
               </div>
 
-              <div className="p-4 rounded-lg bg-white dark:bg-dark-surface border border-[var(--color-border)]">
+              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Common Fair Use Scenarios on DevStackIO</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-2">
                   <li>Code snippets in documentation, tutorials, or blog posts for educational purposes</li>

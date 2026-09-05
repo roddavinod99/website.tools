@@ -61,7 +61,7 @@ export default function RoadmapPage() {
                 {quarter.items.map((item) => (
                   <div
                     key={item.title}
-                    className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white p-4 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                    className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white p-4 border-[var(--color-border)] bg-[var(--color-surface)]"
                   >
                     <span className="font-medium text-[var(--color-text)]">{item.title}</span>
                     <Badge variant={statusColors[item.status]}>{item.status}</Badge>

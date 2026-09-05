@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
             <Link
               href="/about"
-              className="font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] dark:text-[var(--color-text-muted)] dark:hover:text-[var(--color-accent)]"
+              className="font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)]"
             >
               {siteConfig.name} Team
             </Link>
@@ -146,13 +146,13 @@ export default async function BlogPostPage({ params }: Props) {
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </div>
           {blogToGuide[blogPost.slug] && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Quick guide
               </h3>
               <Link
                 href={`/guides/${blogToGuide[blogPost.slug].slug}`}
-                className="mt-2 inline-flex items-center gap-2 font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)]"
+                className="mt-2 inline-flex items-center gap-2 font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)]"
               >
                 {blogToGuide[blogPost.slug].title}
               </Link>

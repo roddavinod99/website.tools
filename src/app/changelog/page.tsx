@@ -57,7 +57,7 @@ export default function ChangelogPage() {
             {changes.map((change, i) => (
               <div
                 key={i}
-                className="flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-4 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                className="flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-4 border-[var(--color-border)] bg-[var(--color-surface)]"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">

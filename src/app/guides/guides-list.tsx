@@ -44,7 +44,7 @@ export function GuidesList({ topics, initialTopic }: GuidesListProps) {
         <div className="mt-4">
           <button
             onClick={() => handleCategoryChange(null)}
-            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)]"
+            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)]"
           >
             ← Show all guides
           </button>
@@ -56,13 +56,13 @@ export function GuidesList({ topics, initialTopic }: GuidesListProps) {
           <Link
             key={topic.slug}
             href={`/guides/${topic.slug}`}
-            className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+            className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-[var(--color-accent)] dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]">
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
               <BookOpen className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)] dark:group-hover:text-[var(--color-accent)]">
+              <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                 {topic.title}
               </h3>
               <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
@@ -78,7 +78,7 @@ export function GuidesList({ topics, initialTopic }: GuidesListProps) {
       </div>
 
       {visibleTopics.length === 0 && (
-        <div className="mt-8 rounded-lg border border-dashed border-[var(--color-border-strong)] p-8 text-center text-sm text-[var(--color-text-muted)] dark:border-[var(--color-border)] dark:text-[var(--color-text-muted)]">
+        <div className="mt-8 rounded-lg border border-dashed border-[var(--color-border-strong)] p-8 text-center text-sm text-[var(--color-text-muted)] border-[var(--color-border)] text-[var(--color-text-muted)]">
           No guides found for this topic.
         </div>
       )}

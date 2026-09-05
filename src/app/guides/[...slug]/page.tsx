@@ -152,7 +152,7 @@ export default async function GuidePage({ params }: Props) {
       </section>
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)] text-[var(--color-accent)]">
             {topic.category}
           </p>
           <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
@@ -170,15 +170,15 @@ export default async function GuidePage({ params }: Props) {
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
             </div>
           ) : (
-            <div className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <div className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
               <p className="text-[var(--color-text-muted)]">Content for this guide is being written. Check back soon.</p>
             </div>
           )}
 
           {toolLinks.length > 0 && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                <Zap className="h-4 w-4 text-[var(--color-accent)] dark:text-[var(--color-accent)]" />
+                <Zap className="h-4 w-4 text-[var(--color-accent)] text-[var(--color-accent)]" />
                 Related tools
               </h2>
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -186,7 +186,7 @@ export default async function GuidePage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)] dark:text-[var(--color-text)] dark:hover:border-[var(--color-accent)] dark:hover:text-[var(--color-accent)]"
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                     >
                       {tool.name}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -198,13 +198,13 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {guideToBlog[resolvedSlug] && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Read the full guide
               </h3>
               <Link
                 href={`/blog/${guideToBlog[resolvedSlug].slug}`}
-                className="group mt-2 flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] dark:text-[var(--color-accent)]"
+                className="group mt-2 flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)]"
               >
                 <span className="font-medium">{guideToBlog[resolvedSlug].title}</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

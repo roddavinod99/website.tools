@@ -33,7 +33,7 @@ export default function TutorialsPage() {
       </div>
     </div>
 
-    <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]">
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)] border-[var(--color-border)] bg-[var(--color-surface)]">
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
           <div className="grid gap-4">
@@ -41,13 +41,13 @@ export default function TutorialsPage() {
               <Link
                 key={topic.slug}
                 href={`/guides/${topic.slug}`}
-                className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 dark:border-[var(--color-border)] dark:bg-[var(--color-surface)]"
+                className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
               >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-[var(--color-accent)] dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
                   <BookOpen className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] dark:text-[var(--color-text)] dark:group-hover:text-[var(--color-accent)]">
+                  <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                     {topic.title}
                   </h3>
                   <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

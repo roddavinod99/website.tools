@@ -36,7 +36,7 @@ export default function DPAPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)] dark:text-[var(--color-accent)]">
+          <p className="text-sm text-[var(--color-accent)] text-[var(--color-accent)]">
             <strong>Status:</strong> This DPA is incorporated by reference into the{" "}
             <a href="/terms" className="underline hover:text-[var(--color-accent-hover)]">Terms of Service</a>
             {" "}and applies to all processing of personal data by DevStackIO on behalf of customers.
