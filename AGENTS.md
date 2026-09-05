@@ -77,6 +77,51 @@ Avoid unnecessary dependencies.
 
 ------------------------------------------------------------------------
 
+## 4. Research-First Discipline (Source Before Code)
+
+Every decision that affects design, accessibility, performance, security, structured data, or tooling **must be grounded in an official source before any code is written.** Do not assemble a design, a regex, a configuration, a migration, or a tooling choice from memory or from invented-from-scratch heuristics. The cost of writing a script, a regex, or a class-string migration based on assumptions is the same as the cost of doing it from a verified source — but the latter is correct and the former almost always ships with bugs the next reviewer has to find.
+
+This rule exists because the prior redesign session wrote class-string migrations and dedup scripts based on assumptions about which patterns were "adjacent identical" and which were "trailing override", and shipped a Critical CTA-hover bug plus a workflow badge text-color override that took three whole-branch reviews to surface. The fix was the same effort as reading the relevant docs first.
+
+### 4.1 Sources to use, by domain
+
+| Domain | Authoritative source | When |
+|---|---|---|
+| Tailwind v4 (theme, `@custom-variant`, `@utility`, `color-mix`) | `tailwindcss.com/docs` (current v4 branch) | any token system, theme, or utility change |
+| React 19 / Next.js App Router (`metadata`, `viewport`, `next/font`, `next/script`, `notFound()`, server vs client components) | `nextjs.org/docs` | any framework-level change |
+| CSS color, gradients, `prefers-*`, `font-feature-settings`, `focus-visible` | `developer.mozilla.org` (MDN) | any non-trivial CSS |
+| WCAG 2.2 contrast, focus, target size, motion | `w3.org/TR/WCAG22` | any a11y claim |
+| Structured data (JSON-LD shapes, `@id`, `@graph`, `BreadcrumbList`, `SoftwareApplication`, `FAQPage`, `HowTo`) | `schema.org` and `developers.google.com/search/docs` | any SEO/JSON-LD change |
+| `security.txt` (RFC 9116), `humans.txt` (humanstxt.org), `llms.txt` (llmstxt.org), `manifest.webmanifest` (MDN) | the format's own spec / convention site | any of these files |
+| AdSense policy (label wording, content-first placement, Better Ads Standards) | `support.google.com/adsense/answer/48182` | any ad change |
+| GDPR / CCPA / cookie consent | `gdpr.eu`, `oag.ca.gov/privacy/ccpa` | any privacy/consent claim |
+| OWASP (input validation, XSS, SSRF, headers, logging) | `owasp.org` and `cheatsheetseries.owasp.org` | any security claim |
+| Core Web Vitals, Lighthouse | `web.dev/vitals` and `developer.chrome.com/docs/lighthouse` | any performance claim |
+| Geist font (license, weights, stylistic sets, loading) | the official Vercel Geist release notes | any typography change |
+| GitHub PR / workflow / branch hygiene | `docs.github.com` | any CI / release / merge change |
+| Playwright config (`test.use`, `addInitScript`, `expect.toHaveScreenshot`) | `playwright.dev/docs` | any browser-automation test |
+
+### 4.2 Workflow
+
+1. **State the decision.** One sentence: "I need to <do X>." Be specific. "Improve the design" is not specific; "rewrite the token system to use Tailwind v4's `@theme inline` with a 4-axis palette" is.
+2. **Cite the source.** Before writing code, run the `context7` MCP server (or `web-search` for non-library questions) and pull the relevant section of the official doc. The minimum acceptable citation is a section heading + a short quote, kept in the working context for the duration of the change.
+3. **Quote any non-obvious syntax verbatim** from the source. For example, Tailwind v4's `@custom-variant` syntax is not the same as v3's `darkMode`; `next/font`'s `variable` option returns a CSS variable name string, not a className; Playwright's `addInitScript` runs in every frame, not just the page. Do not paraphrase these from memory.
+4. **Cite the source in the commit message** when the change is non-trivial. Pattern: `style(theme): rewrite tokens per Tailwind v4 @theme inline (tailwindcss.com/docs/theme)`.
+5. **Test the cited claim.** A citation is not a substitute for verification — write the test (build, unit, e2e, visual snapshot) and run it.
+
+### 4.3 What "research-first" forbids
+
+- Inventing a class-string migration script from first principles (use a sed, a real refactor tool, or — when sed suffices — the smallest possible expression, and **prove the regex against a representative sample before running it on the codebase**).
+- Picking color values, contrast targets, focus-ring shapes, or radii because "they look about right" without checking the WCAG / design-token spec the project uses.
+- Deciding between two APIs (e.g., `next/script` vs manual DOM injection) from memory; the docs answer this in 30 seconds and the cost of getting it wrong is a console warning, a CLS regression, or a hydration mismatch.
+- Generating a regex to "find all class strings that match a pattern" without first reading the source files the regex is meant to operate on. The pattern almost never matches what you think it matches, and the false-negative (the script says "0 hits" when there are many) is the most expensive failure mode because the next reviewer trusts the report.
+
+### 4.4 What "research-first" does **not** change
+
+This rule does not slow routine maintenance. Reformatting code, renaming variables, adding a `<Button>` to a page, fixing a known bug, or writing a test for a known behavior do not require a citation. The rule applies when the change is **non-trivial** — meaning a future reviewer would reasonably ask "where did that come from?" — and a citation answers that question in the source rather than in the review.
+
+------------------------------------------------------------------------
+
 # Technology Stack
 
 -   Next.js (App Router)
@@ -115,7 +160,11 @@ in the future.
     -   **sequential-thinking** — multi-step reasoning, planning, and
         problem decomposition for complex tasks.
     -   **context7** — up-to-date library/framework/SDK documentation
-        (see the global AGENTS.md for detailed usage steps).
+        (see the global AGENTS.md for detailed usage steps). This is the
+        primary tool for the **Research-First Discipline** (see § 4 below):
+        before any non-trivial Tailwind / Next.js / Playwright / React / Geist
+        change, fetch the relevant section of the current docs from `context7`
+        and quote the non-obvious syntax verbatim.
 3.  **Future-proofing.** When a new MCP server is added, use it as required
     by the task. Do not wait for these instructions to be rewritten —
     inspect the new server's tool and resource names and follow its
@@ -2170,13 +2219,14 @@ AI should use these references to verify best practices, standards, and conventi
 
 When uncertain:
 
-1.  Prefer security.
-2.  Prefer privacy.
-3.  Prefer simplicity.
-4.  Prefer native browser APIs.
-5.  Prefer maintainability.
-6.  Prefer documented standards over assumptions.
-7.  If you are unsure how to do something, use `gh_grep` to search code examples from GitHub.
+1.  **Cite the source first.** Before guessing at a design, an API, a regex, or a config, read the official docs (see § 4.1). A 30-second lookup is cheaper than a 30-minute fix-and-review loop.
+2.  Prefer security.
+3.  Prefer privacy.
+4.  Prefer simplicity.
+5.  Prefer native browser APIs.
+6.  Prefer maintainability.
+7.  Prefer documented standards over assumptions.
+8.  If you are still unsure how to do something after reading the source, use `gh_grep` to search code examples from GitHub.
 
 ------------------------------------------------------------------------
 
