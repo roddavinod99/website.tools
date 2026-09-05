@@ -76,24 +76,24 @@ export default function ToolkitsIndex() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-surface-200 bg-white px-3 py-1 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-sm font-medium text-[var(--color-text)]">
               <Boxes className="h-4 w-4" aria-hidden="true" />
               Toolkits
             </span>
-            <h1 className="mt-4 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="mt-4 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               Curated Developer Toolkits
             </h1>
-            <p className="mt-3 text-lg text-surface-600 dark:text-dark-muted">
+            <p className="mt-3 text-lg text-[var(--color-text-muted)]">
               Hand-picked groups of tools for common tasks. Open a toolkit to see its tools, or jump straight to a single tool.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {list.map((tk) => {
@@ -101,7 +101,7 @@ export default function ToolkitsIndex() {
               return (
                 <article
                   key={tk.slug}
-                  className="group flex flex-col rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+                  className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${tk.color} text-white`}>
@@ -109,24 +109,24 @@ export default function ToolkitsIndex() {
                     </div>
                     <Link
                       href={`/toolkits/${tk.slug}`}
-                      className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-500 text-white transition-colors hover:bg-brand-600"
+                      className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)] text-white transition-colors hover:bg-[var(--color-accent-hover)]"
                       aria-label={`Open ${tk.name}`}
                     >
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                   </div>
-                  <h2 className="mt-4 text-lg font-bold text-surface-900 dark:text-dark-text">
+                  <h2 className="mt-4 text-lg font-bold text-[var(--color-text)]">
                     <Link
                       href={`/toolkits/${tk.slug}`}
-                      className="hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                      className="hover:text-[var(--color-accent)] transition-colors"
                     >
                       {tk.name}
                     </Link>
                   </h2>
-                  <p className="mt-2 text-sm text-surface-600 dark:text-dark-muted line-clamp-3">
+                  <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-3">
                     {tk.description}
                   </p>
-                  <span className="mt-4 text-xs font-medium text-surface-500 dark:text-dark-muted">
+                  <span className="mt-4 text-xs font-medium text-[var(--color-text-muted)]">
                     {tk.toolCount} {tk.toolCount === 1 ? "tool" : "tools"}
                   </span>
                 </article>

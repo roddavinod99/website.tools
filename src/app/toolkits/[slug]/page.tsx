@@ -57,14 +57,14 @@ export default async function ToolkitPage({ params }: Props) {
 
   return (
     <>
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" />
-            <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text">Tools</Link>
+            <Link href="/tools" className="hover:text-[var(--color-text)]">Tools</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{tk.name}</span>
+            <span className="text-[var(--color-text)]">{tk.name}</span>
           </nav>
         </div>
       </section>
@@ -72,20 +72,20 @@ export default async function ToolkitPage({ params }: Props) {
       <section className="container py-12 md:py-16">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">{tk.name}</h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">{tk.description}</p>
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">{tk.name}</h1>
+            <p className="mt-2 text-lg text-[var(--color-text-muted)]">{tk.description}</p>
           </div>
           <DynamicToolkitLoader slug={slug as ToolkitSlug} />
         </div>
       </section>
 
-      <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">
               All {tk.name} Tools
             </h2>
-            <p className="mt-1 text-surface-600 dark:text-dark-muted">
+            <p className="mt-1 text-[var(--color-text-muted)]">
               Open each tool on its own page for detailed guides, examples, and best practices.
             </p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,12 +93,12 @@ export default async function ToolkitPage({ params }: Props) {
                 <li key={tool.id}>
                   <Link
                     href={`/tools/${tool.slug}`}
-                    className="group flex flex-col rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                    className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
-                    <span className="font-medium text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 transition-colors">
+                    <span className="font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
                       {tool.name}
                     </span>
-                    <span className="mt-1 text-xs text-surface-500 dark:text-dark-muted line-clamp-2">
+                    <span className="mt-1 text-xs text-[var(--color-text-muted)] line-clamp-2">
                       {tool.description}
                     </span>
                   </Link>
@@ -109,13 +109,13 @@ export default async function ToolkitPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-2xl font-bold text-surface-900 dark:text-dark-text">
+            <h2 className="text-2xl font-bold text-[var(--color-text)]">
               Explore More Toolkits
             </h2>
-            <p className="mt-1 text-surface-600 dark:text-dark-muted">
+            <p className="mt-1 text-[var(--color-text-muted)]">
               Browse other curated collections of developer tools.
             </p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -125,15 +125,15 @@ export default async function ToolkitPage({ params }: Props) {
                   <Link
                     key={other.slug}
                     href={`/toolkits/${other.slug}`}
-                    className="group flex flex-col rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                    className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
-                    <h3 className="font-semibold text-surface-900 group-hover:text-brand-600 dark:text-dark-text dark:group-hover:text-brand-400 transition-colors">
+                    <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
                       {other.name}
                     </h3>
-                    <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
                       {other.description}
                     </p>
-                    <span className="mt-3 text-xs font-medium text-surface-600 dark:text-dark-muted">
+                    <span className="mt-3 text-xs font-medium text-[var(--color-text-muted)]">
                       {other.toolCount} tools
                     </span>
                   </Link>

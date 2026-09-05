@@ -81,14 +81,14 @@ function ConversionTable({ page }: { page: LandingPage }) {
   const table = page.content?.table;
   if (!table || table.length === 0) return null;
   return (
-    <section className="mt-8 rounded-xl border border-surface-200 bg-white p-5 dark:border-dark-border dark:bg-dark-surface">
-      <h2 className="text-lg font-semibold text-surface-900 dark:text-dark-text">
+    <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
+      <h2 className="text-lg font-semibold text-[var(--color-text)]">
         Conversion table
       </h2>
       <div className="mt-3 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-surface-200 text-left text-xs uppercase tracking-wide text-surface-500 dark:border-dark-border dark:text-dark-muted">
+            <tr className="border-b border-[var(--color-border)] text-left text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
               {table[0]?.label !== undefined && <th className="pb-2 pr-4">Reference</th>}
               <th className="pb-2 pr-4">From</th>
               <th className="pb-2">To</th>
@@ -98,13 +98,13 @@ function ConversionTable({ page }: { page: LandingPage }) {
             {table.map((row, i) => (
               <tr
                 key={i}
-                className="border-b border-surface-100 last:border-b-0 dark:border-dark-border"
+                className="border-b border-[var(--color-border)] last:border-b-0"
               >
                 {row.label !== undefined && (
-                  <td className="py-2 pr-4 text-surface-600 dark:text-dark-muted">{row.label}</td>
+                  <td className="py-2 pr-4 text-[var(--color-text-muted)]">{row.label}</td>
                 )}
-                <td className="py-2 pr-4 font-mono text-surface-900 dark:text-dark-text">{row.from}</td>
-                <td className="py-2 font-mono text-surface-900 dark:text-dark-text">{row.to}</td>
+                <td className="py-2 pr-4 font-mono text-[var(--color-text)]">{row.from}</td>
+                <td className="py-2 font-mono text-[var(--color-text)]">{row.to}</td>
               </tr>
             ))}
           </tbody>
@@ -118,8 +118,8 @@ function SeeAlso({ page }: { page: LandingPage }) {
   const refs = page.content?.seeAlso;
   if (!refs || refs.length === 0) return null;
   return (
-    <section className="mt-8 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-bg">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+    <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
         See also
       </h2>
       <ul className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -139,7 +139,7 @@ function SeeAlso({ page }: { page: LandingPage }) {
             <li key={ref}>
               <Link
                 href={href}
-                className="group flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-white px-3.5 py-2.5 text-sm font-medium text-surface-700 transition-colors hover:border-brand-500 hover:text-brand-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-400 dark:hover:text-brand-400"
+                className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
               >
                 {refPage.title}
                 <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -159,19 +159,19 @@ function FaqList({ faqs }: { faqs: { question: string; answer: string }[] }) {
       {faqs.map((faq, i) => (
         <details
           key={i}
-          className="group rounded-lg border border-surface-200 bg-white px-4 py-3 dark:border-dark-border dark:bg-dark-surface"
+          className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
-            <h3 className="flex items-center gap-2 text-sm font-semibold text-surface-900 dark:text-dark-text">
-              <CircleHelp className="h-4 w-4 text-brand-500 dark:text-brand-400" aria-hidden="true" />
+            <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
+              <CircleHelp className="h-4 w-4 text-[var(--color-accent)]" aria-hidden="true" />
               {faq.question}
             </h3>
             <ChevronDown
-              className="h-4 w-4 flex-shrink-0 text-surface-400 transition-transform group-open:rotate-180"
+              className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)] transition-transform group-open:rotate-180"
               aria-hidden="true"
             />
           </summary>
-          <p className="mt-2 pl-6 text-sm text-surface-600 dark:text-dark-muted">{faq.answer}</p>
+          <p className="mt-2 pl-6 text-sm text-[var(--color-text-muted)]">{faq.answer}</p>
         </details>
       ))}
     </div>
@@ -215,28 +215,28 @@ export default async function LandingPageRoute({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScriptBody({ "@context": "https://schema.org", "@graph": graphItems }) }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-6">
           <nav
-            className="flex flex-wrap items-center gap-2 text-sm text-surface-500 dark:text-dark-muted"
+            className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-text-muted)]"
             aria-label="Breadcrumb"
           >
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">
+            <Link href="/" className="hover:text-[var(--color-text)]">
               Home
             </Link>
             <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <Link href="/tools" className="hover:text-surface-900 dark:hover:text-dark-text">
+            <Link href="/tools" className="hover:text-[var(--color-text)]">
               Tools
             </Link>
             <ChevronRight className="h-3 w-3" aria-hidden="true" />
             <Link
               href={`/convert/${page.category}`}
-              className="hover:text-surface-900 dark:hover:text-dark-text"
+              className="hover:text-[var(--color-text)]"
             >
               {categoryLabel}
             </Link>
             <ChevronRight className="h-3 w-3" aria-hidden="true" />
-            <span className="text-surface-900 dark:text-dark-text">{page.title}</span>
+            <span className="text-[var(--color-text)]">{page.title}</span>
           </nav>
         </div>
       </section>
@@ -244,18 +244,18 @@ export default async function LandingPageRoute({ params }: Props) {
       <div className="container py-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
           <main>
-            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-brand-500 dark:text-brand-400">
+            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-[var(--color-accent)]">
               <Calculator className="h-3.5 w-3.5" aria-hidden="true" />
               {categoryLabel}
             </div>
-            <h1 className="mt-3 text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               {page.title}
             </h1>
-            <p className="mt-2 max-w-2xl text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-2 max-w-2xl text-lg text-[var(--color-text-muted)]">
               {page.description}
             </p>
             {page.content?.intro && (
-              <p className="mt-4 max-w-2xl text-base text-surface-600 dark:text-dark-muted">
+              <p className="mt-4 max-w-2xl text-base text-[var(--color-text-muted)]">
                 {page.content.intro}
               </p>
             )}
@@ -264,7 +264,7 @@ export default async function LandingPageRoute({ params }: Props) {
               <TrustBadges />
             </div>
 
-            <div className="mt-6 rounded-xl border border-surface-200 bg-white p-5 dark:border-dark-border dark:bg-dark-surface">
+            <div className="mt-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
               <LandingToolSection
                 tool={{ slug: tool.slug, name: tool.name }}
                 prefill={page.prefill}
@@ -273,16 +273,16 @@ export default async function LandingPageRoute({ params }: Props) {
             </div>
 
             {page.content?.formula && (
-              <section className="mt-8 rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-bg">
-                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+              <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Formula
                 </h2>
-                <p className="mt-2 font-mono text-base text-surface-900 dark:text-dark-text">
+                <p className="mt-2 font-mono text-base text-[var(--color-text)]">
                   {page.content.formula}
                 </p>
                 {page.content.example && (
-                  <p className="mt-3 text-sm text-surface-600 dark:text-dark-muted">
+                  <p className="mt-3 text-sm text-[var(--color-text-muted)]">
                     {page.content.example}
                   </p>
                 )}
@@ -294,7 +294,7 @@ export default async function LandingPageRoute({ params }: Props) {
 
             {page.faq && page.faq.length > 0 && (
               <section className="mt-10">
-                <h2 className="text-xl font-bold text-surface-900 dark:text-dark-text">
+                <h2 className="text-xl font-bold text-[var(--color-text)]">
                   Frequently asked questions
                 </h2>
                 <div className="mt-4">
@@ -311,16 +311,16 @@ export default async function LandingPageRoute({ params }: Props) {
           </main>
 
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <section className="rounded-xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-bg">
-              <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-surface-500 dark:text-dark-muted">
+            <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+              <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 <FileText className="h-4 w-4" aria-hidden="true" />
                 About this page
               </h3>
-              <p className="mt-2 text-sm text-surface-600 dark:text-dark-muted">
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">
                 This page wraps the{" "}
                 <Link
                   href={`/tools/${tool.slug}`}
-                  className="font-medium text-brand-600 underline hover:text-brand-700 dark:text-brand-400"
+                  className="font-medium text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]"
                 >
                   {tool.name}
                 </Link>{" "}

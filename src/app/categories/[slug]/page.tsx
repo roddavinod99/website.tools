@@ -78,14 +78,14 @@ export default async function CategoryPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(collection) }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
-          <nav className="flex items-center gap-2 text-sm text-surface-500 dark:text-dark-muted">
-            <Link href="/" className="hover:text-surface-900 dark:hover:text-dark-text">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <Link href="/" className="hover:text-[var(--color-text)]">Home</Link>
             <ChevronRight className="h-3 w-3" />
-            <Link href="/categories" className="hover:text-surface-900 dark:hover:text-dark-text">Categories</Link>
+            <Link href="/categories" className="hover:text-[var(--color-text)]">Categories</Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-surface-900 dark:text-dark-text">{category.name}</span>
+            <span className="text-[var(--color-text)]">{category.name}</span>
           </nav>
         </div>
       </section>
@@ -94,13 +94,13 @@ export default async function CategoryPage({ params }: Props) {
 
       <section className="container py-12 md:py-16">
         <div className="max-w-2xl">
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+          <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
             {category.name} Tools
           </h1>
-          <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+          <p className="mt-2 text-lg text-[var(--color-text-muted)]">
             {category.description}
           </p>
-          <p className="mt-1 text-sm text-surface-400 dark:text-dark-muted">
+          <p className="mt-1 text-sm text-[var(--color-text-subtle)]">
             {tools.length} tools available
           </p>
           {(() => {
@@ -109,8 +109,8 @@ export default async function CategoryPage({ params }: Props) {
             return (
               <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                 {meta.seoFeatures.slice(0, 6).map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm text-surface-600 dark:text-dark-muted">
-                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                  <li key={feature} className="flex items-start gap-2 text-sm text-[var(--color-text-muted)]">
+                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" />
                     {feature}
                   </li>
                 ))}
@@ -120,13 +120,13 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           {tools.length > 0 ? (
             <ToolGridSection tools={tools} midAdSlot={adSlots.categoryMid} />
           ) : (
             <div className="text-center">
-              <p className="text-surface-500 dark:text-dark-muted">
+              <p className="text-[var(--color-text-muted)]">
                 No tools in this category yet. Check back soon.
               </p>
             </div>

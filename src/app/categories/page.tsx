@@ -58,29 +58,29 @@ export default function CategoriesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <section className="border-b border-surface-200 dark:border-dark-border">
+      <section className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               Categories
             </h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-2 text-lg text-[var(--color-text-muted)]">
               Browse our tools by category
             </p>
-            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            <p className="mt-4 text-[var(--color-text-muted)]">
               DevStackIO organizes every free developer tool into focused categories so you can find the
               right utility fast. From encoders and formatters to generators, converters, and security
               tools, each category groups related helpers into a single place. All tools run entirely in
               your browser &mdash; nothing is uploaded to our servers, so your data stays private. Explore
               the sections below or head straight to the{" "}
-              <Link href="/tools" className="text-brand-500 underline hover:text-brand-600">full tool list</Link>{" "}
+              <Link href="/tools" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">full tool list</Link>{" "}
               to see everything available.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((cat) => (

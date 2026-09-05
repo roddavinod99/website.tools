@@ -66,13 +66,13 @@ export default async function ToolsPage({ searchParams }: Props) {
       <section>
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               All Tools
             </h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-2 text-lg text-[var(--color-text-muted)]">
               {allTools.length} free tools. No login required.
             </p>
-            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            <p className="mt-4 text-[var(--color-text-muted)]">
               DevStackIO offers a growing library of free online developer tools that run entirely in your
               browser. Format and validate JSON, decode JWT tokens, generate UUIDs, encode and decode
               Base64, compress images, and much more &mdash; all without uploading your data or creating an
@@ -80,11 +80,11 @@ export default async function ToolsPage({ searchParams }: Props) {
               the search box or category filters below to find the right tool for the task.
             </p>
             <form action="/search" method="GET" className="mt-6 relative">
-              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-surface-400" />
+              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-subtle)]" />
               <input
                 name="q"
                 placeholder="Search tools..."
-                className="flex h-12 w-full rounded-lg border border-surface-200 bg-white pl-10 pr-4 text-base text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                className="flex h-12 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
               />
             </form>
           </div>
@@ -93,12 +93,12 @@ export default async function ToolsPage({ searchParams }: Props) {
 
       <AdBanner className="my-12" slot={adSlots.toolsTop} />
 
-      <section className="border-t border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface">
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-2 mb-8">
             <Link
               href="/tools"
-              className="rounded-full border border-brand-primary bg-brand-primary px-4 py-1.5 text-sm font-medium text-white"
+              className="rounded-md border border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-4 py-1.5 text-sm font-medium text-[var(--color-accent)]"
             >
               All
             </Link>
@@ -106,7 +106,7 @@ export default async function ToolsPage({ searchParams }: Props) {
               <Link
                 key={cat.id}
                 href={`/categories/${cat.slug}`}
-                className="rounded-full border border-surface-200 px-4 py-1.5 text-sm text-surface-600 transition-colors hover:bg-surface-200 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+                className="rounded-md border border-[var(--color-border)] px-4 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-border-strong)] hover:text-[var(--color-text)]"
               >
                 {cat.name}
               </Link>

@@ -32,16 +32,16 @@ export default function PopularPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(list) }}
       />
-      <div className="border-b border-surface-200 dark:border-dark-border">
+      <div className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-surface-900 dark:text-dark-text sm:text-4xl">
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
               Popular Tools
             </h1>
-            <p className="mt-2 text-lg text-surface-500 dark:text-dark-muted">
+            <p className="mt-2 text-lg text-[var(--color-text-muted)]">
               The most used tools by our community
             </p>
-            <p className="mt-4 text-surface-600 dark:text-dark-muted">
+            <p className="mt-4 text-[var(--color-text-muted)]">
               The developer tools our community reaches for most. These utilities cover the everyday
               workflow &mdash; formatting JSON, decoding JWTs, generating UUIDs, encoding with Base64, and
               more. Each tool runs entirely in your browser, which means your data never leaves your device.
@@ -51,7 +51,7 @@ export default function PopularPage() {
           </div>
         </div>
       </div>
-      <section className="bg-surface-50 dark:bg-dark-surface">
+      <section className="bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-2xl">
             <ul className="space-y-3">
@@ -59,22 +59,22 @@ export default function PopularPage() {
                 <li key={tool.id}>
                   <a
                     href={`/tools/${tool.slug}`}
-                    className="group block rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface"
+                    className="group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <div className="flex items-start justify-between">
-                      <span className="rounded-full bg-[var(--selection-bg)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-secondary)]">
+                      <span className="rounded-full bg-[var(--color-surface-2)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
                         {tool.category}
                       </span>
                       {tool.popularity >= 90 && (
-                        <span className="rounded-full bg-surface-100 px-1.5 py-0.5 text-[10px] font-medium text-surface-600 dark:bg-dark-border dark:text-dark-muted">
+                        <span className="rounded-full bg-[var(--color-surface-2)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
                           Most used
                         </span>
                       )}
                     </div>
-                    <h3 className="mt-3 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">
+                    <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
                       {tool.name}
                     </h3>
-                    <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
+                    <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
                       {tool.description}
                     </p>
                   </a>
