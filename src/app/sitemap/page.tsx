@@ -63,7 +63,7 @@ export default function SitemapPage() {
                 <li key={p.href}>
                   <Link
                     href={p.href}
-                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                   >
                     {p.title}
                   </Link>
@@ -81,7 +81,7 @@ export default function SitemapPage() {
                 <li key={cat.slug}>
                   <Link
                     href={`/categories/${cat.slug}`}
-                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                   >
                     {cat.name}
                   </Link>
@@ -97,7 +97,7 @@ export default function SitemapPage() {
                 <li key={tk.slug}>
                   <Link
                     href={`/toolkits/${tk.slug}`}
-                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                   >
                     {tk.name}
                   </Link>
@@ -115,7 +115,7 @@ export default function SitemapPage() {
                 <li key={topic.slug}>
                   <Link
                     href={`/guides/${topic.slug}`}
-                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                   >
                     {topic.title}
                   </Link>
@@ -148,7 +148,7 @@ export default function SitemapPage() {
                       <li key={tool.id}>
                         <Link
                           href={`/tools/${tool.slug}`}
-                          className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                          className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                         >
                           {tool.name}
                         </Link>
@@ -170,7 +170,7 @@ export default function SitemapPage() {
           </p>
           <Link
             href="/sitemap.xml"
-            className="mt-2 inline-block text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] font-mono underline"
+            className="mt-2 inline-block text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] font-mono underline"
           >
             /sitemap.xml
           </Link>

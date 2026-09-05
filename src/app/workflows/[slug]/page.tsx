@@ -108,7 +108,7 @@ export default async function WorkflowPage({ params }: Props) {
                     </h3>
                     <Link
                       href={`/tools/${step.toolSlug}`}
-                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
                     >
                       Open tool
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
