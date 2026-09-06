@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { CookieConsent } from "@/components/legal/cookie-consent";
 import { FileCleanupProvider } from "@/components/layout/file-cleanup-provider";
 import { ServiceWorkerRegister } from "@/components/layout/service-worker-register";
+import { PrelineProvider } from "@/components/providers/preline-provider";
 import { PreloadPopularTools } from "@/components/layout/tool-preloader";
 import { AnalyticsTracker } from "@/components/layout/analytics-tracker";
 import { AdSenseScript } from "@/components/ads/adsense-script";
@@ -191,25 +192,27 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--text)]">
-        <ThemeProvider>
-          <ServiceWorkerRegister />
-          <FileCleanupProvider>
-              <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
-                Skip to content
-              </a>
-              <Suspense>
-                <Analytics />
-                <AnalyticsTracker />
-                <PreloadPopularTools featuredTools={featuredTools} />
-              </Suspense>
-              <AdSenseScript />
-              <Header />
-              <main id="main-content" className="flex-1">{children}</main>
-              <AdBanner slot={adSlots.footer} />
-              <Footer />
-              <CookieConsent />
-          </FileCleanupProvider>
-        </ThemeProvider>
+        <PrelineProvider enabled>
+          <ThemeProvider>
+            <ServiceWorkerRegister />
+            <FileCleanupProvider>
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
+                  Skip to content
+                </a>
+                <Suspense>
+                  <Analytics />
+                  <AnalyticsTracker />
+                  <PreloadPopularTools featuredTools={featuredTools} />
+                </Suspense>
+                <AdSenseScript />
+                <Header />
+                <main id="main-content" className="flex-1">{children}</main>
+                <AdBanner slot={adSlots.footer} />
+                <Footer />
+                <CookieConsent />
+            </FileCleanupProvider>
+          </ThemeProvider>
+        </PrelineProvider>
       </body>
     </html>
   );

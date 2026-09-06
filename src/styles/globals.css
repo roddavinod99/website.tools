@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Preline UI (v4.2.0) — scan dist/*.js so Tailwind v4 picks up the data-attribute
+   classes (hs-*, data-hs-*, etc.) used by the preline-provider bootstrap.
+   We do NOT import preline/variants.css (v4 ships per-plugin variants under
+   src/plugins/<name>/variants.css and they are optional @custom-variant
+   helpers — Preline components work without them) or preline/css/themes/theme.css
+   (its CSS custom properties are only required if we opt into Preline-themed
+   overrides, which we don't — we drive theming from the Crisp Minimal tokens
+   declared in @theme inline below). See preline-provider.tsx for the runtime
+   bootstrap. */
+@source "../../../node_modules/preline/dist/*.js";
+
+/* Tailwind Forms plugin — required peer dep of Preline for native form styling. */
+@plugin "@tailwindcss/forms";
+
 /* ============================================================
    DevStackIO Tools — Crisp Modern Minimal Design System
    Monochrome surface, single Electric Blue accent, Geist typography,
