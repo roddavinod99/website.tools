@@ -1,10 +1,30 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import noNestedCard from "./eslint-rules/no-nested-card-elements.cjs";
+import noHardcodedColors from "./eslint-rules/no-hardcoded-colors.cjs";
+import noRoundedLg from "./eslint-rules/no-rounded-lg-in-content.cjs";
+
+const localPlugin = {
+  name: "local",
+  rules: {
+    "no-nested-card-elements": noNestedCard,
+    "no-hardcoded-colors": noHardcodedColors,
+    "no-rounded-lg-in-content": noRoundedLg
+  }
+};
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    plugins: { local: localPlugin },
+    rules: {
+      "local/no-nested-card-elements": "error",
+      "local/no-hardcoded-colors": "warn",
+      "local/no-rounded-lg-in-content": "error"
+    }
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
