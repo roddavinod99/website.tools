@@ -76,7 +76,7 @@ function RailShell({
       <div className="container py-12 md:py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
               {eyebrow}
             </p>
             <h2 id={titleId} className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -86,7 +86,7 @@ function RailShell({
           </div>
           <Link
             href={viewAllHref}
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-[var(--color-accent-hover)]"
           >
             {viewAllLabel}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -108,7 +108,7 @@ function RailShell({
                   {badgeLabel}
                 </span>
               </div>
-              <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+              <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                 {tool.name}
               </h3>
               <p className="mt-1 flex-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
@@ -133,8 +133,8 @@ export function PinnedRail({ tools }: RailProps) {
   return (
     <RailShell
       icon={Bookmark}
-      iconClass="bg-[var(--color-accent-soft)] text-[var(--color-accent)]"
-      badgeClass="border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-accent)]"
+      iconClass="bg-blue-50 text-blue-700 dark:text-blue-400"
+      badgeClass="border border-[var(--color-border)] bg-[var(--color-surface)] text-blue-700 dark:text-blue-400"
       eyebrow="For you"
       title="Your pinned tools"
       subtitle="Tools you've bookmarked for quick access"

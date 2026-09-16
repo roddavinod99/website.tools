@@ -29,7 +29,7 @@ export function FeaturedTools({
       <div className="container py-12 md:py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
               Featured
             </p>
             <h2 id="featured-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -41,7 +41,7 @@ export function FeaturedTools({
           </div>
           <Link
             href="/tools"
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-800"
           >
             View all tools
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -57,12 +57,12 @@ export function FeaturedTools({
                 className="group relative flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
               >
                 <div className="flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[var(--color-text-subtle)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 text-[var(--color-text-muted)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
                 </div>
-                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                   {tool.name}
                 </h3>
                 <p className="mt-1 flex-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

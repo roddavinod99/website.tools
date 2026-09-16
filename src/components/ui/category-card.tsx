@@ -94,7 +94,7 @@ export function CategoryCard({
             </p>
           </div>
         </div>
-        <p className="mt-2 text-xs text-surface-400 dark:text-dark-muted">
+        <p className="mt-2 text-xs text-surface-500 dark:text-dark-muted">
           {toolCount} tools
         </p>
       </Link>
@@ -115,7 +115,7 @@ export function CategoryCard({
       <p className="mt-1 text-sm text-surface-500 dark:text-dark-muted line-clamp-2">
         {description}
       </p>
-      <p className="mt-2 text-xs text-surface-400 dark:text-dark-muted">
+      <p className="mt-2 text-xs text-surface-500 dark:text-dark-muted">
         {toolCount} tools
       </p>
     </Link>

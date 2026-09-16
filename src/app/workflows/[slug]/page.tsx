@@ -98,7 +98,7 @@ export default async function WorkflowPage({ params }: Props) {
           <ol className="space-y-6" role="list" aria-label={`${workflow.title} steps`}>
             {workflow.steps.map((step, index) => (
               <li key={step.toolSlug} className="group relative flex gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent)] text-lg font-bold bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400 text-lg font-bold bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                   {index + 1}
                 </div>
                 <div className="flex-1 space-y-2 pt-1">
@@ -108,7 +108,7 @@ export default async function WorkflowPage({ params }: Props) {
                     </h3>
                     <Link
                       href={`/tools/${step.toolSlug}`}
-                      className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+                      className="inline-flex items-center gap-1 text-sm text-blue-700 dark:text-blue-400 hover:text-blue-800"
                     >
                       Open tool
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />

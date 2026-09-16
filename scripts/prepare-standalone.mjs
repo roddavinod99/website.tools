@@ -26,4 +26,14 @@ if (existsSync(publicDir)) {
   cpSync(publicDir, join(standaloneDir, "public"), { recursive: true });
 }
 
+// The middleware serves per-route CSP hashes from ./data/csp-hashes.json
+// (see src/middleware.ts). Copy the fresh build artifact so the standalone
+// server enforces hashes matching the HTML it serves — a stale copy blocks
+// hydration scripts and leaves every tool stuck on "Loading tool...".
+const cspHashes = join(root, "data", "csp-hashes.json");
+if (existsSync(cspHashes)) {
+  mkdirSync(join(standaloneDir, "data"), { recursive: true });
+  cpSync(cspHashes, join(standaloneDir, "data", "csp-hashes.json"));
+}
+
 console.log("prepare-standalone: provisioned .next/standalone with static assets.");

@@ -16,7 +16,7 @@ export function FAQSection({ faqItems }: { faqItems: FaqItem[] }) {
     <section className="border-t border-[var(--color-border)]" aria-labelledby="faq-heading">
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
-          <p className="text-center text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-center text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             FAQ
           </p>
           <h2 id="faq-heading" className="mt-2 text-center text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -38,7 +38,7 @@ export function FAQSection({ faqItems }: { faqItems: FaqItem[] }) {
                   </span>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-[var(--color-text-subtle)] transition-transform duration-200",
+                      "h-4 w-4 text-[var(--color-text-muted)] transition-transform duration-200",
                       openIndex === i && "rotate-180",
                     )}
                   />

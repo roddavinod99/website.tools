@@ -6,7 +6,7 @@ export function PlatformSection() {
     <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="platform-heading">
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             The platform
           </p>
           <h2 id="platform-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -42,7 +42,7 @@ export function PlatformSection() {
                 key={item.title}
                 className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-6"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 font-semibold text-[var(--color-text)]">
@@ -58,7 +58,7 @@ export function PlatformSection() {
         <div className="mt-8 text-center">
           <Link
             href="/roadmap"
-            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-800"
           >
             View our roadmap <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

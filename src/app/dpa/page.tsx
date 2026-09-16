@@ -36,9 +36,9 @@ export default function DPAPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)]">
+          <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Status:</strong> This DPA is incorporated by reference into the{" "}
-            <a href="/terms" className="underline hover:text-[var(--color-accent-hover)]">Terms of Service</a>
+            <a href="/terms" className="underline hover:text-blue-800">Terms of Service</a>
             {" "}and applies to all processing of personal data by DevStackIO on behalf of customers.
             For enterprise customers with a signed agreement, this DPA forms part of that agreement.
           </p>
@@ -47,24 +47,24 @@ export default function DPAPage() {
         <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#1-definitions" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">1. Definitions and Interpretation</a></li>
-            <li><a href="#2-scope" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">2. Scope and Applicability</a></li>
-            <li><a href="#3-processing-details" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">3. Processing Details</a></li>
-            <li><a href="#4-controller-obligations" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">4. Controller Obligations</a></li>
-            <li><a href="#5-processor-obligations" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">5. Processor Obligations</a></li>
-            <li><a href="#6-security-measures" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">6. Technical and Organizational Measures</a></li>
-            <li><a href="#7-subprocessors" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">7. Subprocessors</a></li>
-            <li><a href="#8-data-subject-rights" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">8. Data Subject Rights</a></li>
-            <li><a href="#9-international-transfers" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">9. International Transfers</a></li>
-            <li><a href="#10-data-breach" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">10. Personal Data Breach Notification</a></li>
-            <li><a href="#11-deletion-return" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">11. Deletion or Return of Personal Data</a></li>
-            <li><a href="#12-audit" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">12. Audit and Inspection</a></li>
-            <li><a href="#13-liability" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">13. Liability</a></li>
-            <li><a href="#14-term-termination" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">14. Term and Termination</a></li>
-            <li><a href="#15-general" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">15. General Provisions</a></li>
-            <li><a href="#annex-1" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 1: Processing Details</a></li>
-            <li><a href="#annex-2" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 2: Technical and Organizational Measures</a></li>
-            <li><a href="#annex-3" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 3: Approved Subprocessors</a></li>
+            <li><a href="#1-definitions" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Definitions and Interpretation</a></li>
+            <li><a href="#2-scope" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">2. Scope and Applicability</a></li>
+            <li><a href="#3-processing-details" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">3. Processing Details</a></li>
+            <li><a href="#4-controller-obligations" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">4. Controller Obligations</a></li>
+            <li><a href="#5-processor-obligations" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">5. Processor Obligations</a></li>
+            <li><a href="#6-security-measures" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">6. Technical and Organizational Measures</a></li>
+            <li><a href="#7-subprocessors" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">7. Subprocessors</a></li>
+            <li><a href="#8-data-subject-rights" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">8. Data Subject Rights</a></li>
+            <li><a href="#9-international-transfers" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">9. International Transfers</a></li>
+            <li><a href="#10-data-breach" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">10. Personal Data Breach Notification</a></li>
+            <li><a href="#11-deletion-return" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">11. Deletion or Return of Personal Data</a></li>
+            <li><a href="#12-audit" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">12. Audit and Inspection</a></li>
+            <li><a href="#13-liability" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">13. Liability</a></li>
+            <li><a href="#14-term-termination" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">14. Term and Termination</a></li>
+            <li><a href="#15-general" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">15. General Provisions</a></li>
+            <li><a href="#annex-1" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 1: Processing Details</a></li>
+            <li><a href="#annex-2" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 2: Technical and Organizational Measures</a></li>
+            <li><a href="#annex-3" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 3: Approved Subprocessors</a></li>
           </ol>
         </nav>
 
@@ -129,7 +129,7 @@ export default function DPAPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">3. Processing Details</h2>
             <p className="mt-2">
               The subject matter, nature, purpose, duration, categories of Personal Data, and categories of Data Subjects
-              are set out in <a href="#annex-1" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 1</a>.
+              are set out in <a href="#annex-1" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 1</a>.
             </p>
             <p className="mt-2">
               Processor shall only Process Personal Data in accordance with Controller's documented instructions, unless
@@ -155,12 +155,12 @@ export default function DPAPage() {
             <ul className="mt-2 list-disc pl-6 space-y-2">
               <li>Process Personal Data only on Controller's documented instructions;</li>
               <li>Ensure all personnel authorized to Process Personal Data are subject to confidentiality obligations;</li>
-              <li>Implement and maintain the technical and organizational measures set out in <a href="#annex-2" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 2</a>;</li>
-              <li>Not engage Subprocessors without prior specific or general written authorization (see <a href="#7-subprocessors" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 7</a>);</li>
+              <li>Implement and maintain the technical and organizational measures set out in <a href="#annex-2" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 2</a>;</li>
+              <li>Not engage Subprocessors without prior specific or general written authorization (see <a href="#7-subprocessors" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 7</a>);</li>
               <li>Assist Controller in fulfilling its obligations under Articles 32-36 GDPR;</li>
               <li>Notify Controller promptly if it becomes aware of any instruction that violates GDPR or other data protection laws;</li>
               <li>Ensure that Subprocessors are bound by written agreements with substantially the same data protection obligations;</li>
-              <li>Delete or return all Personal Data at Controller's choice upon termination (see <a href="#11-deletion-return" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 11</a>).</li>
+              <li>Delete or return all Personal Data at Controller's choice upon termination (see <a href="#11-deletion-return" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 11</a>).</li>
             </ul>
           </section>
 
@@ -168,7 +168,7 @@ export default function DPAPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">6. Technical and Organizational Measures</h2>
             <p className="mt-2">
               Processor shall implement and maintain appropriate technical and organizational measures to ensure a level of
-              security appropriate to the risk, as detailed in <a href="#annex-2" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 2</a>.
+              security appropriate to the risk, as detailed in <a href="#annex-2" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 2</a>.
               These measures shall ensure the ongoing confidentiality, integrity, availability, and resilience of Processing
               systems and services.
             </p>
@@ -182,7 +182,7 @@ export default function DPAPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">7. Subprocessors</h2>
             <p className="mt-2">
               Controller provides general written authorization for Processor to engage the Subprocessors listed in
-              <a href="#annex-3" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 3</a>.
+              <a href="#annex-3" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 3</a>.
             </p>
             <p className="mt-2">
               Processor shall notify Controller of any intended changes concerning the addition or replacement of Subprocessors
@@ -234,7 +234,7 @@ export default function DPAPage() {
             <p className="mt-2">
               Processor shall inform Controller of the legal basis for any international transfer and provide a copy of
               the applicable safeguards upon request. Current Subprocessors and their transfer mechanisms are listed in
-              <a href="#annex-3" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Annex 3</a>.
+              <a href="#annex-3" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Annex 3</a>.
             </p>
           </section>
 
@@ -310,7 +310,7 @@ export default function DPAPage() {
             <p className="mt-2">
               This Addendum takes effect on the Effective Date and continues for the duration of the Agreement.
               Upon termination or expiration of the Agreement, this Addendum remains in effect until all Personal Data
-              has been deleted or returned per <a href="#11-deletion-return" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 11</a>.
+              has been deleted or returned per <a href="#11-deletion-return" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 11</a>.
             </p>
             <p className="mt-2">
               Either party may terminate this Addendum immediately if the other party commits a material breach of its
@@ -335,7 +335,7 @@ export default function DPAPage() {
 
           <section id="annex-1">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Annex 1: Processing Details</h2>
-            <p className="mt-2">Pursuant to <a href="#3-processing-details" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 3</a>.</p>
+            <p className="mt-2">Pursuant to <a href="#3-processing-details" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 3</a>.</p>
             <div className="mt-4 space-y-4 text-sm">
               <div>
                 <h3 className="font-semibold text-[var(--color-text)]">Subject Matter of Processing</h3>
@@ -384,7 +384,7 @@ export default function DPAPage() {
 
           <section id="annex-2">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Annex 2: Technical and Organizational Measures</h2>
-            <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 6</a> and Article 32 GDPR.</p>
+            <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 6</a> and Article 32 GDPR.</p>
             <div className="mt-4 space-y-4">
               <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">1. Pseudonymization and Encryption</h3>
@@ -438,7 +438,7 @@ export default function DPAPage() {
 
           <section id="annex-3">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Annex 3: Approved Subprocessors</h2>
-            <p className="mt-2">Pursuant to <a href="#7-subprocessors" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 7</a>. Last updated: {lastUpdated}.</p>
+            <p className="mt-2">Pursuant to <a href="#7-subprocessors" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 7</a>. Last updated: {lastUpdated}.</p>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
@@ -483,7 +483,7 @@ export default function DPAPage() {
               </table>
             </div>
             <p className="mt-4 text-sm text-[var(--color-text-muted)]">
-              Processor shall notify Controller of any changes to this list per <a href="#7-subprocessors" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Section 7</a>.
+              Processor shall notify Controller of any changes to this list per <a href="#7-subprocessors" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 7</a>.
               Subprocessors are engaged under written agreements containing data protection obligations no less
               protective than this Addendum.
             </p>
@@ -499,7 +499,7 @@ export default function DPAPage() {
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <p className="font-semibold text-[var(--color-text)]">DevStackIO (Processor)</p>
-              <p className="mt-4 text-[var(--color-text-muted)]">Contact: <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+              <p className="mt-4 text-[var(--color-text-muted)]">Contact: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p className="mt-2 text-[var(--color-text-muted)]">Date: {effectiveDate}</p>
             </div>
             <div>

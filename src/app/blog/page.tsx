@@ -86,7 +86,7 @@ export default function BlogPage() {
                     <span>&middot;</span>
                     <span>{post.readTime} read</span>
                   </div>
-                  <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                  <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                     {post.title}
                   </h2>
                   <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-2">

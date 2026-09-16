@@ -18,7 +18,7 @@ const changes = [
 ];
 
 const typeStyles = {
-  feature: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+  feature: "bg-[var(--color-accent-soft)] text-blue-700",
   improvement: "bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200",
 };
 

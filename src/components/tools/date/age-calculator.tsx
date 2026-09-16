@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 const MS_PER_DAY = 86400000;
 const MS_PER_HOUR = 3600000;
@@ -114,6 +114,8 @@ export function AgeCalculator() {
   // Long-tail landing pages (PR 4 of PLAN.md) prefill the calculator
   // with { birthdate } so e.g. /age/from-1990-05-15 shows the age
   // for a person born on 1990-05-15 immediately on load.
+  useLoadExample("age-calculator", (text) => setBirthdate(text.trim()));
+
   usePrefillTool("age-calculator", (prefill) => {
     if (prefill.birthdate) setBirthdate(prefill.birthdate);
     if (prefill.atDate) setAtDate(prefill.atDate);

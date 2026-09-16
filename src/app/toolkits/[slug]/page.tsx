@@ -95,7 +95,7 @@ export default async function ToolkitPage({ params }: Props) {
                     href={`/tools/${tool.slug}`}
                     className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
-                    <span className="font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+                    <span className="font-medium text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                       {tool.name}
                     </span>
                     <span className="mt-1 text-xs text-[var(--color-text-muted)] line-clamp-2">
@@ -127,7 +127,7 @@ export default async function ToolkitPage({ params }: Props) {
                     href={`/toolkits/${other.slug}`}
                     className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
-                    <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+                    <h3 className="font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                       {other.name}
                     </h3>
                     <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

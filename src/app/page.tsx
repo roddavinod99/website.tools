@@ -3,6 +3,9 @@ import { Hero } from "@/components/home/hero";
 import { TOOL_COUNT, siteConfig, allTools, featuredTools, trendingTools, categories, faqItems } from "@/lib/data";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedTools } from "@/components/home/featured-tools";
+import { RecentlyAdded } from "@/components/home/recently-added";
+import { ConversionsRail } from "@/components/home/conversions-rail";
+import { LearningSection } from "@/components/home/learning-section";
 import { TrendingRail } from "@/components/home/trending-rail";
 import { PinnedRail, RecentRail } from "@/components/home/personalize-rails";
 import { AdBanner } from "@/components/ads";
@@ -168,9 +171,12 @@ export default function Home() {
       <CategoriesSection />
       <PinnedRail tools={allTools} />
       <FeaturedTools featuredTools={featuredTools} />
+      <RecentlyAdded allTools={allTools} />
       <RecentRail tools={allTools} />
       <TrendingRail trendingTools={trendingTools} />
+      <ConversionsRail allTools={allTools} />
       <AdBanner className="my-10" slot={adSlots.homeTop} />
+      <LearningSection />
       <ToolsCta />
     </>
   );

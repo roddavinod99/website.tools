@@ -35,8 +35,8 @@ export default function SupportPage() {
                 href={opt.href}
                 className="group rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all border-[var(--color-border)] bg-[var(--color-surface)]"
               >
-                <Icon className="h-5 w-5 text-[var(--color-accent)]" />
-                <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)]">
+                <Icon className="h-5 w-5 text-blue-700 dark:text-blue-400" />
+                <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 text-[var(--color-text)]">
                   {opt.title}
                 </h3>
                 <p className="mt-1 text-sm text-[var(--color-text-muted)]">{opt.description}</p>

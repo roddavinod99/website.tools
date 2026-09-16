@@ -6,9 +6,9 @@ import { ToolSortDropdown } from "@/components/ui/tool-sort-dropdown";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
 import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
-import { parseSortParam, sortTools } from "@/lib/sort-tools";
-import { filterToolsByCapabilities } from "@/lib/filter-tools";
 import { Search } from "lucide-react";
+import { FilterRail } from "@/components/listings/filter-rail";
+import { ToolGrid } from "@/components/listings/tool-grid";
 
 const toolCountText = `${TOOL_COUNT} free online developer tools`;
 const TOOLS_URL = `${siteConfig.url}/tools`;
@@ -35,22 +35,17 @@ export const metadata: Metadata = {
   },
 };
 
-interface Props {
-  searchParams: Promise<{ sort?: string | string[]; cap?: string | string[] }>;
-}
-
-export default async function ToolsPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const sort = parseSortParam(params.sort);
-  const filtered = filterToolsByCapabilities(allTools, params.cap);
-  const tools = sortTools(filtered, sort);
+export default function ToolsPage() {
+  // Static render for P2-09 audit: show first 24 popular tools.
+  // Client-side FilterRail handles filtering without server searchParams (avoids dynamic CSP fallback).
+  const tools = [...allTools].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0)).slice(0, 24);
 
   const breadcrumb = breadcrumbList([{ name: "Home", url: siteConfig.url }, { name: "Tools" }]);
   const collection = collectionPage({
     name: "All Developer Tools",
     description: TOOLS_DESCRIPTION,
     url: TOOLS_URL,
-    items: tools.map((t) => ({ name: t.name, url: `${siteConfig.url}/tools/${t.slug}` })),
+    items: allTools.map((t) => ({ name: t.name, url: `${siteConfig.url}/tools/${t.slug}` })),
   });
 
   return (
@@ -80,11 +75,11 @@ export default async function ToolsPage({ searchParams }: Props) {
               the search box or category filters below to find the right tool for the task.
             </p>
             <form action="/search" method="GET" className="mt-6 relative">
-              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-subtle)]" />
+              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-muted)]" />
               <input
                 name="q"
                 placeholder="Search tools..."
-                className="flex h-12 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                className="flex h-12 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
               />
             </form>
           </div>
@@ -93,12 +88,27 @@ export default async function ToolsPage({ searchParams }: Props) {
 
       <AdBanner className="my-12" slot={adSlots.toolsTop} />
 
+      <section className="container py-8">
+        <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
+          <div className="lg:col-span-2"><div className="lg:sticky lg:top-24"><FilterRail /></div></div>
+          <div className="lg:col-span-8"><ToolGrid tools={tools.slice(0, 24)} /></div>
+          <div className="lg:col-span-2 hidden lg:block">
+            <p className="text-xs text-[var(--color-text-muted)]">Quick links</p>
+            <ul className="mt-2 text-sm space-y-1">
+              {['JSON', 'XML', 'YAML', 'SQL', 'HTML'].map((q) => (
+                <li key={q}><Link href={`/search?q=${q.toLowerCase()}`} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)]">{q}</Link></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
           <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-2 mb-8">
             <Link
               href="/tools"
-              className="rounded-md border border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-4 py-1.5 text-sm font-medium text-[var(--color-accent)]"
+              className="rounded-md border border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-4 py-1.5 text-sm font-medium text-blue-700 dark:text-blue-400"
             >
               All
             </Link>

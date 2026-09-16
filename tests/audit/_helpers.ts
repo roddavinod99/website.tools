@@ -1,65 +1,45 @@
-import { type Page } from '@playwright/test';
+import { type ConsoleMessage, type Page } from '@playwright/test';
 
-export type ToolVariant =
-  | 'standard'
-  | 'generator'
-  | 'image'
-  | 'calculator'
-  | 'converter'
-  | 'diff'
-  | 'formatter'
-  | 'lookup';
+type SmokeStatus = 'pass' | 'fail' | 'not-run';
 
-export function detectVariant(slug: string | undefined, _keywords: string[] = []): ToolVariant {
-  if (!slug) return 'standard';
-  const n = slug.toLowerCase();
-  if (n.includes('generator') || n.includes('uuid') || n.includes('password') || n.includes('lorem') || n.includes('random-') || n.includes('ascii') || n.includes('barcode') || n.includes('cron') || n.includes('token') || n.includes('numeronym') || n.startsWith('qr-') || n.endsWith('-qr-generator')) return 'generator';
-  if (n.includes('image') || n.includes('qr') || n.endsWith('-qr') || n === 'qr-generator' || n === 'wifi-qr-generator') return 'image';
-  if (n.includes('calc') || n.includes('bmi') || n.includes('sip') || n.includes('emi') || n.includes('mortgage') || n.includes('loan') || n.includes('tip') || n.includes('percent')) return 'calculator';
-  if (n.includes('convert') || n.includes('encoder') || n.includes('base64') || n.includes('hex') || n.includes('binary')) return 'converter';
-  if (n.includes('diff')) return 'diff';
-  if (n.includes('format') || n.includes('json') || n.includes('xml') || n.includes('yaml') || n.includes('sql') || n.includes('css') || n.includes('html') || n.includes('minif') || n.includes('beautif') || n.includes('lint') || n.includes('validate') || n.includes('view')) return 'formatter';
-  if (n.includes('lookup') || n.includes('dns') || n.includes('whois') || n.includes('ip')) return 'lookup';
-  return 'standard';
-}
-
-export async function runChecks(page: Page, variant: ToolVariant): Promise<Record<string, 'pass' | 'fail' | 'warn'>> {
-  const results: Record<string, 'pass' | 'fail' | 'warn'> = {};
-  const url = page.url();
-
-  // pageLoads
-  const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
-  results.pageLoads = response && response.status() === 200 ? 'pass' : 'fail';
-
-  // noConsoleErrors (collect for 200ms after load)
+// These checks establish initial load health only. They do not exercise tool
+// inputs, correctness, copy/export, or errors triggered by later interaction.
+export async function runChecks(page: Page, slug: string, timeout = 10000) {
+  const checks: Record<string, SmokeStatus> = {
+    pageLoads: 'not-run', workspaceLoads: 'not-run', noBrowserErrors: 'not-run',
+  };
   const errors: string[] = [];
-  const onError = (e: Error) => errors.push(e.message);
+  const browserErrors: string[] = [];
+  const onError = (error: Error) => browserErrors.push(error.message);
+  const onConsole = (message: ConsoleMessage) => {
+    if (message.type() === 'error') browserErrors.push(message.text());
+  };
   page.on('pageerror', onError);
-  await page.waitForTimeout(200);
-  page.off('pageerror', onError);
-  results.noConsoleErrors = errors.length === 0 ? 'pass' : 'fail';
-
-  // firstTextareaEditable (not for generator)
-  if (variant !== 'generator') {
-    const ta = page.locator('textarea').first();
-    const exists = (await ta.count()) > 0;
-    if (!exists) {
-      results.firstTextareaEditable = 'warn'; // some tools (e.g. calculator) use input fields
-    } else {
-      const readonly = await ta.getAttribute('readonly');
-      const disabled = await ta.getAttribute('disabled');
-      results.firstTextareaEditable = !readonly && !disabled ? 'pass' : 'fail';
-    }
-  } else {
-    results.firstTextareaEditable = 'pass';
+  page.on('console', onConsole);
+  try {
+    const response = await page.goto(`/tools/${slug}`, { waitUntil: 'domcontentloaded', timeout });
+    checks.pageLoads = response?.status() === 200 ? 'pass' : 'fail';
+    if (checks.pageLoads === 'fail') errors.push(`HTTP status: ${response?.status() ?? 'no response'}`);
+    checks.workspaceLoads = 'fail';
+    // Observe the actual loader's DOM, not the surrounding page or a fixed delay.
+    const ready = await page.waitForFunction(id => {
+      const workspace = document.getElementById(id);
+      if (!workspace || workspace.getBoundingClientRect().height === 0 ||
+          getComputedStyle(workspace).visibility === 'hidden') return false;
+      const text = workspace.textContent?.trim() ?? '';
+      if (text.includes('Loading tool...') || text.includes('Tool interface coming soon')) return false;
+      return text.length > 0 || !!workspace.querySelector('input, textarea, select, button, canvas, img');
+    }, `tool-interface-${slug}`, { timeout });
+    await ready.dispose();
+    checks.workspaceLoads = 'pass';
+  } catch (error) {
+    if (checks.pageLoads === 'not-run') checks.pageLoads = 'fail';
+    errors.push(error instanceof Error ? error.message : String(error));
+  } finally {
+    page.off('pageerror', onError);
+    page.off('console', onConsole);
+    checks.noBrowserErrors = browserErrors.length ? 'fail' : 'pass';
+    errors.push(...browserErrors);
   }
-
-  return results;
-}
-
-export function summarize(results: Record<string, 'pass' | 'fail' | 'warn'>): 'pass' | 'fail' | 'warn' {
-  const vals = Object.values(results);
-  if (vals.includes('fail')) return 'fail';
-  if (vals.includes('warn')) return 'warn';
-  return 'pass';
+  return { checks, errors };
 }

@@ -14,5 +14,13 @@ export function loadExampleFor(
   if (typeof keyOrIndex === 'number') {
     return all[keyOrIndex] ?? null;
   }
-  return all.find((e) => e.key === keyOrIndex) ?? null;
+  // Keyed lookup first (e.g. ?example=valid). A numeric string (e.g.
+  // ?example=0) falls back to positional index so shareable URLs work
+  // for plain string[] registries whose specs carry no key.
+  const byKey = all.find((e) => e.key === keyOrIndex);
+  if (byKey) return byKey;
+  if (/^\d+$/.test(keyOrIndex)) {
+    return all[Number(keyOrIndex)] ?? null;
+  }
+  return null;
 }

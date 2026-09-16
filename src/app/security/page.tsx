@@ -62,9 +62,9 @@ export default function SecurityPage() {
               We take security seriously. If you discover a security vulnerability, please report it privately:
             </p>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>GitHub Profile:</strong>{" "}
-                <a href="https://github.com/roddavinod99" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">github.com/roddavinod99</a>
+                <a href="https://github.com/roddavinod99" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">github.com/roddavinod99</a>
               </p>
             </div>
             <p className="mt-4">
@@ -219,7 +219,7 @@ export default function SecurityPage() {
                           href={verify}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]"
+                          className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800"
                         >
                           Verify
                         </a>
@@ -247,7 +247,7 @@ export default function SecurityPage() {
                 "Service worker uses HTTPS",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--color-border-strong)] text-xs text-[var(--color-accent)]">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[var(--color-border-strong)] text-xs text-blue-700 dark:text-blue-400">
                     ✓
                   </span>
                   <span className="text-sm">{item}</span>
@@ -260,11 +260,11 @@ export default function SecurityPage() {
         <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
-            <li><a href="/terms" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Terms of Service</a></li>
-            <li><a href="/privacy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a></li>
-            <li><a href="/acceptable-use" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Acceptable Use Policy</a></li>
-            <li><a href="/dpa" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/dmca" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">DMCA / Copyright Policy</a></li>
+            <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>
+            <li><a href="/privacy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Privacy Policy</a></li>
+            <li><a href="/acceptable-use" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Acceptable Use Policy</a></li>
+            <li><a href="/dpa" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/dmca" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">DMCA / Copyright Policy</a></li>
           </ul>
         </div>
 
@@ -272,7 +272,7 @@ export default function SecurityPage() {
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Contact</h2>
           <p className="mt-2 text-[var(--color-text-muted)]">
             Questions about this Security Policy? Contact us at
-            <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>.
+            <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>.
           </p>
         </div>
       </article>

@@ -16,37 +16,37 @@ const taskGroups: TaskGroup[] = [
   {
     title: "Work with JSON",
     icon: Braces,
-    color: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+    color: "bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400",
     slugs: ["json-formatter", "json-validator", "json-diff", "json-to-csv", "json-to-yaml", "json-to-typescript"],
   },
   {
     title: "Authentication & Tokens",
     icon: KeyRound,
-    color: "bg-[var(--color-danger)]/10 text-[var(--color-danger)]",
+    color: "bg-[var(--color-danger)]/10 text-red-700",
     slugs: ["jwt-decoder", "jwt-generator", "totp-generator", "bcrypt-generator", "hmac-generator"],
   },
   {
     title: "Images",
     icon: ImageIcon,
-    color: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+    color: "bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400",
     slugs: ["image-compressor", "image-resizer", "exif-reader", "favicon-generator", "svg-optimizer"],
   },
   {
     title: "URLs & Web Data",
     icon: Globe,
-    color: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+    color: "bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400",
     slugs: ["url-encoder", "url-parser", "html-entity", "http-status-codes", "mime-types"],
   },
   {
     title: "Data Conversion",
     icon: Repeat,
-    color: "bg-[var(--color-warning)]/10 text-[var(--color-warning)]",
+    color: "bg-[var(--color-warning)]/10 text-amber-800",
     slugs: ["json-to-csv", "csv-to-json", "json-to-yaml", "toml-converter", "timestamp-converter"],
   },
   {
     title: "Text & Regex",
     icon: FileText,
-    color: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+    color: "bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400",
     slugs: ["regex-tester", "case-converter", "text-sorter", "word-counter", "slug-generator"],
   },
 ];
@@ -58,7 +58,7 @@ export function TaskSection({ allTools }: { allTools: Tool[] }) {
     <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="tasks-heading">
       <div className="container py-16 md:py-24">
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             Tasks
           </p>
           <h2 id="tasks-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -93,10 +93,10 @@ export function TaskSection({ allTools }: { allTools: Tool[] }) {
                     <li key={tool.slug}>
                       <Link
                         href={`/tools/${tool.slug}`}
-                        className="group flex items-center justify-between rounded-md px-2 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-accent)]"
+                        className="group flex items-center justify-between rounded-md px-2 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-blue-700 dark:text-blue-400"
                       >
                         <span className="truncate">{tool.name}</span>
-                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[var(--color-text-subtle)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[var(--color-text-muted)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
                       </Link>
                     </li>
                   ))}

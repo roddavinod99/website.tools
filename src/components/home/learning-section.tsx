@@ -7,7 +7,7 @@ export function LearningSection() {
     <section className="container py-16 md:py-24" aria-labelledby="learning-heading">
       <div className="flex items-end justify-between mb-8">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             Learning
           </p>
           <h2 id="learning-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -19,7 +19,7 @@ export function LearningSection() {
         </div>
         <Link
           href="/guides"
-          className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+          className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-800"
         >
           View all guides <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
@@ -31,13 +31,13 @@ export function LearningSection() {
             href={`/guides/${topic.slug}`}
             className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
           >
-            <h3 className="font-semibold text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]">
+            <h3 className="font-semibold text-[var(--color-text)] transition-colors group-hover:text-blue-700 dark:text-blue-400">
               {topic.title}
             </h3>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-2">
               {topic.description}
             </p>
-            <div className="mt-4 flex items-center gap-1.5 text-xs text-[var(--color-text-subtle)]">
+            <div className="mt-4 flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
               <Clock className="h-3 w-3" aria-hidden="true" />
               {topic.readTime} read
             </div>

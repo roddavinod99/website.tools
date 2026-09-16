@@ -31,7 +31,7 @@ export function CategoriesSection() {
     <section className="container py-12 md:py-16" aria-labelledby="categories-heading">
       <div className="flex items-end justify-between mb-8">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             Browse
           </p>
           <h2 id="categories-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -43,7 +43,7 @@ export function CategoriesSection() {
         </div>
         <Link
           href="/categories"
-          className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+          className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-800"
         >
           View all categories
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

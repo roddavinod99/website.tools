@@ -118,7 +118,7 @@ export default function ToolkitsIndex() {
                   <h2 className="mt-4 text-lg font-bold text-[var(--color-text)]">
                     <Link
                       href={`/toolkits/${tk.slug}`}
-                      className="hover:text-[var(--color-accent)] transition-colors"
+                      className="hover:text-blue-700 dark:text-blue-400 transition-colors"
                     >
                       {tk.name}
                     </Link>

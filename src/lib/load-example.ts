@@ -27,12 +27,27 @@
  * wants. Tools that don't subscribe are unaffected.
  */
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { ExampleSpec } from "./examples/types";
-import { normalizeExamples } from "./examples/normalize";
+import { loadExampleFor } from "./examples/loader";
 
 export const LOAD_EXAMPLE_EVENT = "devstackio:load-example";
 export const PREFILL_TOOL_EVENT = "devstackio:prefill-tool";
+export const TOOL_READY_EVENT = "devstackio:tool-ready";
+
+export interface ToolReadyDetail {
+  slug: string;
+}
+
+/**
+ * Announce that a tool component has mounted and subscribed to example
+ * events. The tool page disables its example buttons until this fires, so
+ * a click can never land before any subscriber exists (a silent no-op).
+ */
+export function dispatchToolReady(slug: string) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent<ToolReadyDetail>(TOOL_READY_EVENT, { detail: { slug } }));
+}
 
 /**
  * Event detail for the "load example" event.
@@ -47,6 +62,13 @@ export interface LoadExampleDetail {
   spec: ExampleSpec;
   text?: string;
   state?: Record<string, unknown>;
+  /**
+   * Whether the tool should run its primary action after loading the
+   * example. Defaults to true (formatters/validators/converters). Tools
+   * that subscribe decide how to honor it; tools that live-compute from
+   * input already satisfy it by populating.
+   */
+  autoRun?: boolean;
 }
 
 export interface PrefillToolDetail {
@@ -60,10 +82,10 @@ export interface PrefillToolDetail {
  * `spec: { kind: 'text', text }` so subscribers that read the spec can use
  * the same code path as multi-input examples.
  */
-export function dispatchLoadExample(slug: string, text: string) {
+export function dispatchLoadExample(slug: string, text: string, autoRun = true) {
   if (typeof window === "undefined") return;
   const spec: ExampleSpec = { kind: "text", text };
-  const detail: LoadExampleDetail = { slug, spec, text };
+  const detail: LoadExampleDetail = { slug, spec, text, autoRun };
   window.dispatchEvent(new CustomEvent<LoadExampleDetail>(LOAD_EXAMPLE_EVENT, { detail }));
 }
 
@@ -76,12 +98,12 @@ export function dispatchLoadExampleSpec(
   slug: string,
   raw: unknown,
   keyOrIndex: string | number,
+  autoRun = true,
 ) {
   if (typeof window === "undefined") return;
-  const all = normalizeExamples(raw);
-  const spec = typeof keyOrIndex === "number" ? all[keyOrIndex] : all.find((e) => e.key === keyOrIndex);
+  const spec = loadExampleFor(raw, keyOrIndex);
   if (!spec) return;
-  const detail: LoadExampleDetail = { slug, spec };
+  const detail: LoadExampleDetail = { slug, spec, autoRun };
   if (spec.kind === "text") detail.text = spec.text;
   else detail.state = spec.state;
   window.dispatchEvent(new CustomEvent<LoadExampleDetail>(LOAD_EXAMPLE_EVENT, { detail }));
@@ -108,16 +130,26 @@ export function dispatchPrefillTool(slug: string, prefill: Record<string, string
  *   useLoadExample("json-formatter", (text) => setInput(text));
  */
 export function useLoadExample(slug: string, onLoad: (text: string) => void) {
+  // Latest-callback ref: the subscription mounts once per slug and never
+  // has an unsubscribe gap, so a click can never land between resubscribes.
+  const onLoadRef = useRef(onLoad);
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+  });
   useEffect(() => {
     if (typeof window === "undefined") return;
     const handler = (event: Event) => {
       const detail = (event as CustomEvent<LoadExampleDetail>).detail;
       if (!detail || detail.slug !== slug) return;
-      if (typeof detail.text === "string") onLoad(detail.text);
+      if (typeof detail.text === "string") onLoadRef.current(detail.text);
     };
     window.addEventListener(LOAD_EXAMPLE_EVENT, handler);
+    // Readiness means "subscribed": announcing here (not on mount) makes
+    // ready ⟹ subscriber-exists by construction, independent of effect
+    // ordering between sibling components.
+    dispatchToolReady(slug);
     return () => window.removeEventListener(LOAD_EXAMPLE_EVENT, handler);
-  }, [slug, onLoad]);
+  }, [slug]);
 }
 
 /**
@@ -136,16 +168,22 @@ export function useLoadExampleState(
   slug: string,
   onLoad: (state: Record<string, unknown>) => void,
 ) {
+  const onLoadRef = useRef(onLoad);
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+  });
   useEffect(() => {
     if (typeof window === "undefined") return;
     const handler = (event: Event) => {
       const detail = (event as CustomEvent<LoadExampleDetail>).detail;
       if (!detail || detail.slug !== slug) return;
-      if (detail.state) onLoad(detail.state);
+      if (detail.state) onLoadRef.current(detail.state);
     };
     window.addEventListener(LOAD_EXAMPLE_EVENT, handler);
+    // See useLoadExample: ready ⟹ subscribed, by construction.
+    dispatchToolReady(slug);
     return () => window.removeEventListener(LOAD_EXAMPLE_EVENT, handler);
-  }, [slug, onLoad]);
+  }, [slug]);
 }
 
 /**
@@ -158,15 +196,21 @@ export function usePrefillTool(
   slug: string,
   onPrefill: (prefill: Record<string, string>) => void,
 ) {
+  const onPrefillRef = useRef(onPrefill);
+  useEffect(() => {
+    onPrefillRef.current = onPrefill;
+  });
   useEffect(() => {
     if (typeof window === "undefined") return;
     const handler = (event: Event) => {
       const detail = (event as CustomEvent<PrefillToolDetail>).detail;
       if (!detail || detail.slug !== slug) return;
-      onPrefill(detail.prefill);
+      onPrefillRef.current(detail.prefill);
     };
     window.addEventListener(PREFILL_TOOL_EVENT, handler);
+    // See useLoadExample: ready ⟹ subscribed, by construction.
+    dispatchToolReady(slug);
     return () => window.removeEventListener(PREFILL_TOOL_EVENT, handler);
-  }, [slug, onPrefill]);
+  }, [slug]);
 }
 

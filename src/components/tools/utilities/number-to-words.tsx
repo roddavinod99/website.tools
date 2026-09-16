@@ -220,8 +220,13 @@ export function NumberToWords() {
     if (!parsed || parsed.num === BigInt(0)) return [];
     const n = parsed.num < BigInt(0) ? -parsed.num : parsed.num;
     const breakdown: { label: string; value: string }[] = [];
+    // MDN BigInt: "A BigInt value cannot be used with methods in the built-in Math object"
+    // and MDN Math.pow: "Math.pow() only accepts numbers." Turbopack transpiles
+    // BigInt(1000) ** BigInt(i) to Math.pow(BigInt, BigInt) → TypeError.
+    // Use iterative multiplication (github.com/mastermunj/to-words pattern) instead of **.
     for (let i = SCALES_INTL.length - 1; i >= 0; i--) {
-      const divisor = BigInt(1000) ** BigInt(i);
+      let divisor = BigInt(1);
+      for (let j = 0; j < i; j++) divisor *= BigInt(1000);
       if (n >= divisor) {
         const count = Number(n / divisor);
         if (count > 0 && count < 1000) {

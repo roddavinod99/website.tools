@@ -33,6 +33,30 @@ describe('loadExampleFor', () => {
       state: { from: 'hi', to: 'aGk=' },
     });
   });
+
+  it('resolves a numeric-string index for plain string arrays (?example=0 URLs)', () => {
+    expect(loadExampleFor(['a', 'b'], '0')).toEqual<ExampleSpec>({ kind: 'text', text: 'a' });
+    expect(loadExampleFor(['a', 'b'], '1')).toEqual<ExampleSpec>({ kind: 'text', text: 'b' });
+    expect(loadExampleFor(['a'], '5')).toBeNull();
+  });
+
+  it('prefers an explicit key over a numeric-string fallback', () => {
+    const out = loadExampleFor({ '0': 'zero-keyed', other: 'x' }, '0');
+    expect(out).toEqual<ExampleSpec>({ kind: 'text', text: 'zero-keyed', key: '0' });
+  });
+
+  it('preserves text alongside other state instead of dropping it', () => {
+    const out = loadExampleFor([{ text: 'hello', mode: 'encode' }], 0);
+    expect(out).toEqual<ExampleSpec>({
+      kind: 'object',
+      state: { text: 'hello', mode: 'encode' },
+    });
+  });
+
+  it('promotes array-entry keys to the spec', () => {
+    const out = loadExampleFor([{ key: 'valid', text: '{"a":1}' }], 'valid');
+    expect(out).toEqual<ExampleSpec>({ kind: 'text', text: '{"a":1}', key: 'valid' });
+  });
 });
 
 describe('dispatchLoadExampleSpec', () => {

@@ -1,11 +1,6 @@
 import type { ExampleSpec } from './types';
 export type { ExampleSpec } from './types';
 
-type RawExample =
-  | string
-  | { label?: string; [k: string]: unknown }
-  | Record<string, string>;
-
 function isPlainObject(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null && !Array.isArray(v);
 }
@@ -65,16 +60,18 @@ export function normalizeExamples(raw: unknown): ExampleSpec[] {
         return { kind: 'text', text: entry };
       }
       if (isPlainObject(entry)) {
-        const { label, text, ...rest } = entry as { label?: string; text?: unknown; [k: string]: unknown };
+        const { label, key, text, ...rest } = entry as { label?: string; key?: string; text?: unknown; [k: string]: unknown };
+        const extras = { ...(label !== undefined ? { label } : {}), ...(typeof key === 'string' ? { key } : {}) };
         if (typeof text === 'string' && Object.keys(rest).length === 0) {
-          // Array<{ label?, text: string }>
-          return { kind: 'text', text, ...(label !== undefined ? { label } : {}) };
+          // Array<{ label?, key?, text: string }>
+          return { kind: 'text', text, ...extras };
         }
-        // Array<{ label?, from?, to?, ... }> — state is the rest
+        // Array<{ label?, key?, text?, ... }> — state keeps every field except label/key,
+        // including text when it accompanies other state (e.g. { text, mode }).
         return {
           kind: 'object',
-          state: rest,
-          ...(label !== undefined ? { label } : {}),
+          state: typeof text === 'string' ? { text, ...rest } : rest,
+          ...extras,
         };
       }
       return { kind: 'text', text: String(entry) };

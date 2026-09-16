@@ -45,18 +45,18 @@ export function SearchResults() {
     );
   }
 
-  if (!ready) {
-    return (
-      <div className="text-center text-[var(--color-text-muted)] py-12">
-        <p>Loading search index…</p>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="text-center text-red-500 py-12">
         <p>Search error: {error}</p>
+      </div>
+    );
+  }
+
+  if (!ready) {
+    return (
+      <div className="text-center text-[var(--color-text-muted)] py-12">
+        <p>Loading search index…</p>
       </div>
     );
   }
@@ -91,7 +91,7 @@ export function SearchResults() {
         return (
           <section key={type} className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Icon className="h-5 w-5 text-[var(--color-accent)]" aria-hidden="true" />
+              <Icon className="h-5 w-5 text-blue-700 dark:text-blue-400" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-[var(--color-text)] capitalize">
                 {TYPE_LABELS[type]} ({items.length})
               </h2>
@@ -101,7 +101,7 @@ export function SearchResults() {
                 <Link
                   key={result.id}
                   href={result.url}
-                  className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                  className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
                 >
                   <div className="flex items-start justify-between">
                     <Badge variant="default">{TYPE_LABELS[type]}</Badge>
@@ -109,14 +109,14 @@ export function SearchResults() {
                       <Badge variant="success">Most used</Badge>
                     )}
                   </div>
-                  <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] line-clamp-1">
+                  <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 line-clamp-1">
                     {result.title}
                   </h3>
                   <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
                     {result.text.slice(0, 200)}
                   </p>
                   {result.category && (
-                    <span className="mt-2 inline-block shrink-0 rounded-md bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
+                    <span className="mt-2 inline-block shrink-0 rounded-md bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 dark:text-blue-400">
                       {result.category}
                     </span>
                   )}

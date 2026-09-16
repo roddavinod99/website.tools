@@ -2230,6 +2230,16 @@ When uncertain:
 
 ------------------------------------------------------------------------
 
+## Platform Conventions (P0-P4 Overhaul)
+
+- **Tool audit gate** (`scripts/tool-audit.mjs`, `npm run audit:tools`): no tool ships without passing the audit (page loads, no console errors, first textarea editable, examples populate, primary action produces output). CI gate `audit:ci` fails PR on any `fail`.
+- **ExamplesRow contract** (`src/components/ui/examples-row.tsx`, `src/lib/load-example.ts`): single/two/N inputs via `ExampleSpec`, `autoRun` true by default, `dispatchLoadExample` + `useLoadExample` with `ready ⟹ subscribed` guarantee, 200ms debounce, `aria-busy`.
+- **Preline lazy-load** (`src/components/providers/preline-provider.tsx`): `window.HSStaticMethods.autoInit()` on idle/interaction/IntersectionObserver, errors swallowed, no `preline/variants.css` (v4 per-plugin only).
+- **Visual + a11y + perf + ad rules** (spec §10-13): tokens only (`--color-*`), no `card`-in-`card`, radius ≤6px, `AdContainer` min-height reserved (no CLS), axe-core WCAG 2.2 AA 0 violations, Lighthouse ≥90, per-route JS ≤250KB (warn until token migration).
+- **Definition of Done additions** (spec §15.3): every tool has `src/content/tools/<slug>.json` + `tests/fixtures/<category>.json` entry + `data-testid="tool-output"` + `npm run test:tools` 120/120; `src/app/tools/[slug]/page.tsx` emits `SoftwareApplication`+`BreadcrumbList`+`FAQPage`+`HowTo` via `jsonLdScriptBody`.
+
+------------------------------------------------------------------------
+
 # Enterprise Platform Standards (Recommended Upgrade)
 
 ## Architecture Evolution

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 /**
  * Scientific Calculator — pure browser implementation, 100% client-side.
@@ -92,6 +92,11 @@ export function ScientificCalculator() {
 
   // Long-tail landing pages (PR 6 of PLAN.md) prefill the calculator
   // with an initial value, e.g. /calc/sin-30-degrees.
+  useLoadExample("scientific-calculator", (text) => {
+    setDisplay(text.trim());
+    setWaitingForOperand(false);
+  });
+
   usePrefillTool("scientific-calculator", (prefill) => {
     if (prefill.value) setDisplay(prefill.value);
     if (prefill.angleMode === "deg" || prefill.angleMode === "rad") {

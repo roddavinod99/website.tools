@@ -34,7 +34,7 @@ export function ToolHeader({ tool, actions, capabilities }: ToolHeaderProps) {
   return (
     <header className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+        <span className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
           {tool.category}
         </span>
         {tool.trending && <Badge variant="warning">Trending</Badge>}

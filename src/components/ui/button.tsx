@@ -17,9 +17,9 @@ const variantClasses: Record<string, string> = {
   ghost:
     "bg-transparent border-transparent text-[var(--color-text)] hover:bg-[var(--color-surface-2)] dark:hover:bg-[var(--color-surface-2)]",
   outline:
-    "bg-transparent border-[var(--color-border)] text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] hover:border-[var(--color-accent)] dark:border-[var(--color-border)] dark:text-[var(--color-accent)]",
+    "bg-transparent border-[var(--color-border)] text-blue-700 hover:bg-[var(--color-accent-soft)] hover:border-[var(--color-accent)] dark:border-[var(--color-border)] dark:text-blue-700",
   subtle:
-    "bg-[var(--color-accent-soft)] border-transparent text-[var(--color-accent-hover)] hover:bg-[color-mix(in_oklab,var(--color-accent)_15%,transparent)] dark:bg-[var(--color-accent-soft)] dark:text-[var(--color-accent)]",
+    "bg-[var(--color-accent-soft)] border-transparent text-[var(--color-accent-hover)] hover:bg-[color-mix(in_oklab,var(--color-accent)_15%,transparent)] dark:bg-[var(--color-accent-soft)] dark:text-blue-700",
 };
 
 const sizeClasses: Record<string, string> = {

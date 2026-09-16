@@ -53,12 +53,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {error && (
-          <p id={errorId} className="mt-1.5 text-sm text-[var(--color-danger)]" role="alert">
+          <p id={errorId} className="mt-1.5 text-sm text-red-700" role="alert">
             {error}
           </p>
         )}
         {success && (
-          <p id={successId} className="mt-1.5 text-sm text-[var(--color-success)]" role="status">
+          <p id={successId} className="mt-1.5 text-sm text-emerald-700" role="status">
             {success}
           </p>
         )}

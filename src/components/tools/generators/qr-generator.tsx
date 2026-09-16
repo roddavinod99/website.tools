@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useLoadExample } from "@/lib/load-example";
 import { validateFileSize } from "@/lib/file-security";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
@@ -69,6 +70,8 @@ export function QRGenerator() {
       setQrCode(mod.default || mod);
     });
   }, []);
+
+  useLoadExample("qr-generator", (text) => setInput(text));
 
   const getEffectiveInput = useCallback(() => {
     if (!input.trim()) return "";

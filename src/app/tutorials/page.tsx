@@ -43,11 +43,11 @@ export default function TutorialsPage() {
                 href={`/guides/${topic.slug}`}
                 className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
               >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400 bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                   <BookOpen className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                  <h3 className="font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                     {topic.title}
                   </h3>
                   <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
@@ -57,7 +57,7 @@ export default function TutorialsPage() {
                     {topic.readTime} read
                   </p>
                 </div>
-                <ArrowRight className="mt-2 h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)]" />
+                <ArrowRight className="mt-2 h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)]" />
               </Link>
             ))}
           </div>

@@ -12,7 +12,7 @@ export function RecentlyAdded({ allTools }: { allTools: Tool[] }) {
       <div className="container py-16 md:py-24">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
               Just shipped
             </p>
             <h2 id="recent-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -24,7 +24,7 @@ export function RecentlyAdded({ allTools }: { allTools: Tool[] }) {
           </div>
           <Link
             href="/new"
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-[var(--color-accent-hover)]"
           >
             View all new tools <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
@@ -37,15 +37,15 @@ export function RecentlyAdded({ allTools }: { allTools: Tool[] }) {
               className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
             >
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-accent-soft)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
+                <span className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:text-blue-400">
                   <Sparkles className="h-3 w-3" aria-hidden="true" />
                   New
                 </span>
-                <span className="text-xs text-[var(--color-text-subtle)]">
+                <span className="text-xs text-[var(--color-text-muted)]">
                   {tool.category}
                 </span>
               </div>
-              <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+              <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                 {tool.name}
               </h3>
               <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
@@ -57,7 +57,7 @@ export function RecentlyAdded({ allTools }: { allTools: Tool[] }) {
         <div className="mt-8 text-center sm:hidden">
           <Link
             href="/new"
-            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-[var(--color-accent-hover)]"
           >
             View all new tools <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

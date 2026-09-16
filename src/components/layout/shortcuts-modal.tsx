@@ -103,7 +103,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
           </h2>
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)] hover:bg-[var(--color-surface-2)] transition-colors"
+            className="rounded-md p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text-muted)] hover:bg-[var(--color-surface-2)] transition-colors"
             aria-label="Close shortcuts"
           >
             <X className="h-5 w-5" />

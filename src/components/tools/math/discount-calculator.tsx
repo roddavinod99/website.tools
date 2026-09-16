@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 /**
  * Discount Calculator — pure browser implementation, 100% client-side.
@@ -43,6 +43,13 @@ export function DiscountCalculator() {
 
   // Long-tail landing pages (PR 6 of PLAN.md) prefill the calculator
   // with { price, discounts }, e.g. /discount/30-off-100.
+  // Registry examples are "price[, discount...]" (e.g. "50, 20" = $50 with 20% off).
+  useLoadExample("discount-calculator", (text) => {
+    const [p, ...ds] = text.split(",").map((s) => s.trim()).filter(Boolean);
+    if (p) setPrice(p);
+    if (ds.length) setRaw(ds.join(", "));
+  });
+
   usePrefillTool("discount-calculator", (prefill) => {
     if (prefill.price) setPrice(prefill.price);
     if (prefill.discounts) setRaw(prefill.discounts);

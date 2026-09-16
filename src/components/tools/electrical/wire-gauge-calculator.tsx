@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 /**
  * Wire Gauge Calculator — AWG / mm² / diameter / resistance.
@@ -102,6 +102,11 @@ export function WireGaugeCalculator() {
   // Long-tail landing pages (PR 7 of PLAN.md) prefill the calculator
   // with { mode, awg, area, diameter } so e.g. /wire/awg-12-to-mm2
   // lands with the conversion already computed.
+  useLoadExample("wire-gauge-calculator", (text) => {
+    setMode("awg-to-mm2");
+    setAwg(text.trim());
+  });
+
   usePrefillTool("wire-gauge-calculator", (prefill) => {
     if (prefill.mode === "awg-to-mm2" || prefill.mode === "mm2-to-awg" || prefill.mode === "awg-to-diameter" || prefill.mode === "diameter-to-awg") {
       setMode(prefill.mode);

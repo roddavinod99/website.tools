@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 /**
  * Statistics Calculator — pure browser implementation, 100% client-side.
@@ -36,6 +36,8 @@ export function StatisticsCalculator() {
 
   // Long-tail landing pages (PR 6 of PLAN.md) prefill the calculator
   // with a comma-separated number list, e.g. /stats/average-of-10,20,30.
+  useLoadExample("statistics-calculator", (text) => setRaw(text));
+
   usePrefillTool("statistics-calculator", (prefill) => {
     if (prefill.numbers) setRaw(prefill.numbers);
     if (prefill.mode === "all" || prefill.mode === "mean" || prefill.mode === "stddev" || prefill.mode === "variance") {

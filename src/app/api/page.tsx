@@ -67,7 +67,7 @@ export default function APIPage() {
                   <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded bg-[var(--color-accent-soft)] px-1.5 py-0.5 font-mono text-xs font-semibold text-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                      <span className="rounded bg-[var(--color-accent-soft)] px-1.5 py-0.5 font-mono text-xs font-semibold text-blue-700 dark:text-blue-400 bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                         {ep.method}
                       </span>
                       <code className="rounded bg-[var(--color-surface-2)] px-2 py-0.5 font-mono text-sm bg-[var(--color-surface)]">

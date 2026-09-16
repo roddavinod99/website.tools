@@ -73,7 +73,7 @@ export default function CategoriesPage() {
               tools, each category groups related helpers into a single place. All tools run entirely in
               your browser &mdash; nothing is uploaded to our servers, so your data stays private. Explore
               the sections below or head straight to the{" "}
-              <Link href="/tools" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">full tool list</Link>{" "}
+              <Link href="/tools" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">full tool list</Link>{" "}
               to see everything available.
             </p>
           </div>

@@ -9,7 +9,7 @@ export default defineConfig({
   reporter: [["html", { open: "never" }], ["list"]],
   testMatch: "**/*.spec.ts",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.AUDIT_BASE_URL || "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -19,7 +19,8 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: {
+  // An explicit audit URL refers to an already-running local or remote server.
+  webServer: process.env.AUDIT_BASE_URL ? undefined : {
     command: "node scripts/prepare-standalone.mjs && node .next/standalone/server.js",
     port: 3000,
     reuseExistingServer: true,
