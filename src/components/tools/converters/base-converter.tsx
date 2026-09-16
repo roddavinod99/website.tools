@@ -186,7 +186,7 @@ export function BaseConverter() {
             onChange={(e) => setInput(e.target.value)}
             onBlur={handleDetect}
             placeholder="255, 0xFF, 0b11111111, 0o377..."
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div>
@@ -194,7 +194,7 @@ export function BaseConverter() {
           <select
             value={fromBase}
             onChange={(e) => setFromBase(parseInt(e.target.value))}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+            className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
           >
             {BASE_LABELS.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
           </select>
@@ -202,12 +202,12 @@ export function BaseConverter() {
       </div>
 
       <div className="flex gap-2">
-        <button onClick={handleClear} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={handleClear} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           Clear
         </button>
         <button
           onClick={() => setShowCustom(!showCustom)}
-          className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${showCustom ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}
+          className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${showCustom ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}
         >
           Custom Base
         </button>
@@ -217,7 +217,7 @@ export function BaseConverter() {
 
       {decimalValue !== null && (
         <>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <div className="flex items-center justify-between">
               <span className="text-sm text-surface-500 dark:text-dark-muted">Decimal Value</span>
               <code className="text-sm font-mono text-surface-900 dark:text-dark-text select-all">
@@ -231,7 +231,7 @@ export function BaseConverter() {
             {conversions.map((c) => (
               <div
                 key={c.value}
-                className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface"
+                className="flex items-center justify-between rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface"
               >
                 <span className="text-sm text-surface-500 dark:text-dark-muted w-36 shrink-0">{c.label}</span>
                 <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text overflow-auto max-h-10 select-all">
@@ -249,7 +249,7 @@ export function BaseConverter() {
           </div>
 
           {showCustom && (
-            <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
               <div className="flex gap-3 items-end">
                 <div>
                   <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Custom Base (2-64)</label>
@@ -259,12 +259,12 @@ export function BaseConverter() {
                     max={64}
                     value={customBase}
                     onChange={(e) => setCustomBase(Math.min(64, Math.max(2, parseInt(e.target.value) || 2)))}
-                    className="w-24 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                    className="w-24 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                   />
                 </div>
                 <div className="flex-1">
                   <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Result (base-{customBase})</label>
-                  <code className="block rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm font-mono text-surface-900 select-all dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  <code className="block rounded-md border border-surface-200 bg-surface-50 px-3 py-2 text-sm font-mono text-surface-900 select-all dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                     {customResult || "\u2014"}
                   </code>
                 </div>
@@ -273,17 +273,17 @@ export function BaseConverter() {
           )}
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">Bit Length</p>
               <p className="text-lg font-bold text-brand-500">{bitCount}</p>
             </div>
-            <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">ASCII Interpretation</p>
               <p className="text-sm font-mono text-surface-900 dark:text-dark-text select-all">{ascii}</p>
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Two&apos;s Complement (signed, {bitLength}-bit)</p>
             <div className="flex gap-2 items-center mb-2">
               <label className="text-xs text-surface-500 dark:text-dark-muted">Bit width:</label>

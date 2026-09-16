@@ -191,25 +191,25 @@ X-Request-ID: abc-123-def-456`);
       <div>
         <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Raw HTTP Headers</label>
         <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="Header-Name: header-value" rows={5}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
       <div className="flex flex-wrap gap-2">
-        <button onClick={parse} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
+        <button onClick={parse} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
         <button onClick={() => setSorted(v => !v)} disabled={headers.length === 0}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors"
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors"
         >{sorted ? "Unsorted" : "Sort A-Z"}</button>
         <button onClick={() => { copyAs("text"); }} disabled={headers.length === 0}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy Text</button>
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy Text</button>
         <button onClick={() => { copyAs("json"); }} disabled={headers.length === 0}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy JSON</button>
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Copy JSON</button>
         <button onClick={exportJSON} disabled={headers.length === 0}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Export JSON</button>
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">Export JSON</button>
         <button onClick={() => setBuilderMode(v => !v)} disabled={headers.length === 0}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">{builderMode ? "Done Editing" : "Edit Headers"}</button>
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface disabled:opacity-50 transition-colors">{builderMode ? "Done Editing" : "Edit Headers"}</button>
       </div>
 
-      {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
+      {error && <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
 
       {headers.length > 0 && (
         <>
@@ -247,7 +247,7 @@ X-Request-ID: abc-123-def-456`);
               CORS: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
             };
             return (
-              <div key={cat} className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+              <div key={cat} className="rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
                 <button onClick={() => toggleCat(cat)} className="flex items-center justify-between w-full px-3 py-2 bg-surface-50 dark:bg-dark-surface text-xs font-medium text-surface-700 dark:text-dark-text hover:bg-surface-100 dark:hover:bg-dark-border transition-colors">
                   <span className={cn("px-1.5 py-0.5 rounded text-[10px] font-medium", catColors[cat] || "")}>{CATEGORIES[cat]?.label || cat}</span>
                   <span className="flex items-center gap-2">
@@ -312,7 +312,7 @@ X-Request-ID: abc-123-def-456`);
           })}
 
           {groupedHeaders["Custom"] && groupedHeaders["Custom"].length > 0 && (
-            <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+            <div className="rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
               <button onClick={() => toggleCat("Custom")} className="flex items-center justify-between w-full px-3 py-2 bg-surface-50 dark:bg-dark-surface text-xs font-medium text-surface-700 dark:text-dark-text hover:bg-surface-100 dark:hover:bg-dark-border transition-colors">
                 <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-100 text-surface-600 dark:bg-dark-surface dark:text-dark-muted">Custom</span>
                 <span className="flex items-center gap-2">
@@ -355,16 +355,16 @@ X-Request-ID: abc-123-def-456`);
               <div>
                 <label className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-0.5">Name</label>
                 <input type="text" value={builderName} onChange={e => setBuilderName(e.target.value)} placeholder="Header-Name"
-                  className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                  className="rounded-md border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                 />
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-0.5">Value</label>
                 <input type="text" value={builderValue} onChange={e => setBuilderValue(e.target.value)} placeholder="header-value"
-                  className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                  className="rounded-md border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                 />
               </div>
-              <button onClick={addHeader} className="rounded-lg bg-brand-500 px-4 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Add</button>
+              <button onClick={addHeader} className="rounded-md bg-brand-500 px-4 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Add</button>
             </div>
           )}
 
@@ -374,11 +374,11 @@ X-Request-ID: abc-123-def-456`);
               <div className="mt-2 space-y-2">
                 <div>
                   <span className="text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">cURL</span>
-                  <pre className="mt-0.5 rounded-lg bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text overflow-x-auto">{generateCurl(headers)}</pre>
+                  <pre className="mt-0.5 rounded-md bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text overflow-x-auto">{generateCurl(headers)}</pre>
                 </div>
                 <div>
                   <span className="text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">JavaScript Fetch</span>
-                  <pre className="mt-0.5 rounded-lg bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text overflow-x-auto">{generateFetch(headers)}</pre>
+                  <pre className="mt-0.5 rounded-md bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text overflow-x-auto">{generateFetch(headers)}</pre>
                 </div>
               </div>
             </details>
@@ -387,7 +387,7 @@ X-Request-ID: abc-123-def-456`);
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
           {copyFeedback}
         </div>
       )}

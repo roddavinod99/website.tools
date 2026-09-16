@@ -22,14 +22,14 @@ export default function NotFound() {
         <div className="mt-8">
           <Link
             href="/search"
-            className="inline-flex items-center gap-2 rounded-lg bg-brand-500 px-6 py-3 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+            className="inline-flex items-center gap-2 rounded-md bg-brand-500 px-6 py-3 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
           >
             <Search className="h-4 w-4" />
             Search Tools
           </Link>
           <Link
             href="/"
-            className="ml-3 inline-flex items-center gap-2 rounded-lg border border-surface-200 bg-white px-6 py-3 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors"
+            className="ml-3 inline-flex items-center gap-2 rounded-md border border-surface-200 bg-white px-6 py-3 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border transition-colors"
           >
             <Home className="h-4 w-4" />
             Go Home

@@ -171,13 +171,13 @@ export default async function GuidePage({ params }: Props) {
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
             </Prose>
           ) : (
-            <div className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="mt-8 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
               <p className="text-[var(--color-text-muted)]">Content for this guide is being written. Check back soon.</p>
             </div>
           )}
 
           {toolLinks.length > 0 && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 <Zap className="h-4 w-4 text-blue-700 dark:text-blue-400" />
                 Related tools
@@ -187,7 +187,7 @@ export default async function GuidePage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
+                      className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
                     >
                       {tool.name}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -199,7 +199,7 @@ export default async function GuidePage({ params }: Props) {
           )}
 
           {guideToBlog[resolvedSlug] && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Read the full guide
               </h3>

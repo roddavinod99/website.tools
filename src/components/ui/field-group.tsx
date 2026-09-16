@@ -43,7 +43,7 @@ export function FieldGroup({
   };
 
   return (
-    <div className={`rounded-lg border p-3 ${error ? "border-result-error bg-red-50 dark:bg-red-900/20" : "border-tool-border bg-tool-surface"} ${className}`}>
+    <div className={`rounded-md border p-3 ${error ? "border-result-error bg-red-50 dark:bg-red-900/20" : "border-tool-border bg-tool-surface"} ${className}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <label className="block text-xs font-medium text-result-secondary mb-1">{label}</label>

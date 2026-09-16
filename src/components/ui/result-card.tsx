@@ -40,7 +40,7 @@ export function ResultCard({
 
   return (
     <div
-      className={`rounded-xl border border-tool-border bg-tool-surface p-5 shadow-[var(--tool-card-shadow)] ${className}`}
+      className={`rounded-md border border-tool-border bg-tool-surface p-5 shadow-[var(--tool-card-shadow)] ${className}`}
       data-testid="tool-output"
     >
       <div className="flex items-start justify-between gap-4">

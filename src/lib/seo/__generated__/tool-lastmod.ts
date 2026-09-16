@@ -118,7 +118,7 @@ export const TOOL_LASTMOD: Record<string, string> = {
   "mortgage-payoff": "2026-09-02T21:30:16+05:30",
   "nato-alphabet": "2026-08-27T00:42:25+05:30",
   "net-worth": "2026-08-27T00:42:25+05:30",
-  "number-to-words": "2026-09-16T14:26:37+05:30",
+  "number-to-words": "2026-09-16T14:56:06+05:30",
   "numeronym-generator": "2026-08-27T00:42:25+05:30",
   "password-generator": "2026-08-27T00:42:25+05:30",
   "password-strength": "2026-08-27T00:42:25+05:30",

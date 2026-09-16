@@ -231,7 +231,7 @@ export function JSONFormatter() {
             placeholder='{"key": "value"}'
             rows={8}
             spellCheck={false}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 pr-20 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 pr-20 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           <div className="absolute bottom-2 right-2 flex gap-1 text-[10px] text-surface-400 dark:text-dark-muted">
             <span>{inputLines}L</span>
@@ -244,13 +244,13 @@ export function JSONFormatter() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <button onClick={format} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Format</button>
-        <button onClick={minify} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Minify</button>
-        <button onClick={validate} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Validate</button>
-        <button onClick={() => copy(output)} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy formatted JSON to clipboard">Copy Formatted</button>
-        <button onClick={() => copy(JSON.stringify(JSON.parse(input || "{}")))} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy minified JSON to clipboard">Copy Minified</button>
-        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download formatted JSON as file">Download</button>
-        <button onClick={clear} className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors">Clear</button>
+        <button onClick={format} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Format</button>
+        <button onClick={minify} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Minify</button>
+        <button onClick={validate} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Validate</button>
+        <button onClick={() => copy(output)} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy formatted JSON to clipboard">Copy Formatted</button>
+        <button onClick={() => copy(JSON.stringify(JSON.parse(input || "{}")))} disabled={!input} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy minified JSON to clipboard">Copy Minified</button>
+        <button onClick={download} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download formatted JSON as file">Download</button>
+        <button onClick={clear} className="rounded-md border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors">Clear</button>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -279,7 +279,7 @@ export function JSONFormatter() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
           {errorLine !== null && (
             <p className="text-xs text-red-500 dark:text-red-400 mt-0.5">Line {errorLine}, Column {errorCol}</p>
@@ -326,7 +326,7 @@ export function JSONFormatter() {
           <pre
             ref={outputRef}
             data-testid="tool-output"
-            className={`rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg overflow-auto max-h-96 ${wordWrap ? "whitespace-pre-wrap" : "whitespace-pre"}`}
+            className={`rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg overflow-auto max-h-96 ${wordWrap ? "whitespace-pre-wrap" : "whitespace-pre"}`}
           >
             {tokens.map((line, li) => (
               <div key={li} className="flex">

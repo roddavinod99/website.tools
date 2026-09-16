@@ -35,7 +35,7 @@ export default function AccessibilityPage() {
           </p>
         </div>
 
-        <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
+        <div className="mb-8 p-4 rounded-md bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
           <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Our Commitment:</strong> We aim to conform to the Web Content Accessibility Guidelines
             (WCAG) 2.2 Level AA. Accessibility is treated as a design requirement for every new tool, not
@@ -43,7 +43,7 @@ export default function AccessibilityPage() {
           </p>
         </div>
 
-        <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <nav className="mb-8 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
             <li><a href="#1-conformance" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Conformance Status</a></li>
@@ -130,7 +130,7 @@ export default function AccessibilityPage() {
               We welcome your feedback on the accessibility of DevStackIO. If you encounter an accessibility
               barrier, please let us know so we can address it:
             </p>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
               <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>Contact page:</strong> <a href="/contact" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Contact DevStackIO</a></p>
             </div>
@@ -141,7 +141,7 @@ export default function AccessibilityPage() {
           </section>
         </div>
 
-        <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <div className="mt-12 p-6 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
             <li><a href="/security" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Security Policy</a></li>

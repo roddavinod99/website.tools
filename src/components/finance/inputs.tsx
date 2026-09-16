@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const inputBase =
-  "w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted";
+  "w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted";
 
 interface FieldProps {
   label: string;

@@ -59,7 +59,7 @@ export default function PopularPage() {
                 <li key={tool.id}>
                   <a
                     href={`/tools/${tool.slug}`}
-                    className="group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
+                    className="group block rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
                   >
                     <div className="flex items-start justify-between">
                       <span className="rounded-full bg-[var(--color-surface-2)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">

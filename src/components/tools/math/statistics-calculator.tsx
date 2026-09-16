@@ -89,7 +89,7 @@ export function StatisticsCalculator() {
           onChange={(e) => setRaw(e.target.value)}
           rows={4}
           placeholder="1, 2, 3, 4, 5"
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         />
         <p className="mt-1 text-[10px] text-surface-500 dark:text-dark-muted">
           Parsed {stats?.n ?? 0} number{stats?.n === 1 ? "" : "s"}.
@@ -107,7 +107,7 @@ export function StatisticsCalculator() {
           id="stats-mode"
           value={mode}
           onChange={(e) => setMode(e.target.value as Mode)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
         >
           <option value="all">All metrics</option>
           <option value="mean">Mean only</option>
@@ -124,7 +124,7 @@ export function StatisticsCalculator() {
         <div
           data-testid="tool-output"
           onClick={copy}
-          className="cursor-pointer rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="cursor-pointer rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           {show("count") && <StatRow label="Count (n)" value={String(stats.n)} />}
           {show("sum") && <StatRow label="Sum" value={fmt(stats.sum)} />}
@@ -145,7 +145,7 @@ export function StatisticsCalculator() {
       )}
 
       {!stats && (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter at least one number to compute statistics.
         </p>
       )}

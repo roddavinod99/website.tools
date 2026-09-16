@@ -54,7 +54,7 @@ export function FeaturedTools({
               <ToolLink
                 key={tool.id}
                 slug={tool.slug}
-                className="group relative flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
+                className="group relative flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">

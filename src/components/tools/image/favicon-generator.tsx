@@ -524,7 +524,7 @@ export function FaviconGenerator() {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setMode("text")}
-          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
             mode === "text"
               ? "bg-brand-500 text-white"
               : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border"
@@ -534,7 +534,7 @@ export function FaviconGenerator() {
         </button>
         <button
           onClick={() => setMode("image")}
-          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
             mode === "image"
               ? "bg-brand-500 text-white"
               : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border"
@@ -555,7 +555,7 @@ export function FaviconGenerator() {
               onChange={(e) => setText(e.target.value)}
               placeholder="⚡"
               maxLength={5}
-              className="w-32 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+              className="w-32 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
             />
           </div>
           <div className="flex flex-wrap items-end gap-3">
@@ -564,7 +564,7 @@ export function FaviconGenerator() {
               <select
                 value={fontFamily}
                 onChange={(e) => setFontFamily(e.target.value)}
-                className="rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="rounded-md border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 {FONT_FAMILIES.map((f) => (
                   <option key={f} value={f}>{f.split(",")[0]}</option>
@@ -579,7 +579,7 @@ export function FaviconGenerator() {
                 onChange={(e) => setFontSize(parseInt(e.target.value) || 0)}
                 min={0}
                 max={500}
-                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
             </div>
           </div>
@@ -590,7 +590,7 @@ export function FaviconGenerator() {
           onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
           onClick={() => fileRef.current?.click()}
-          className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 transition-colors ${
+          className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed p-4 transition-colors ${
             dragging
               ? "border-brand-500 bg-brand-50 dark:bg-brand-500/10"
               : "border-surface-200 bg-white hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface"
@@ -624,7 +624,7 @@ export function FaviconGenerator() {
             type="color"
             value={bgColor}
             onChange={(e) => setBgColor(e.target.value)}
-            className="h-9 w-14 cursor-pointer rounded-lg border border-surface-200 dark:border-dark-border"
+            className="h-9 w-14 cursor-pointer rounded-md border border-surface-200 dark:border-dark-border"
           />
         </div>
         {mode === "text" && (
@@ -634,7 +634,7 @@ export function FaviconGenerator() {
               type="color"
               value={textColor}
               onChange={(e) => setTextColor(e.target.value)}
-              className="h-9 w-14 cursor-pointer rounded-lg border border-surface-200 dark:border-dark-border"
+              className="h-9 w-14 cursor-pointer rounded-md border border-surface-200 dark:border-dark-border"
             />
           </div>
         )}
@@ -643,7 +643,7 @@ export function FaviconGenerator() {
           <select
             value={fillType}
             onChange={(e) => setFillType(e.target.value as FillType)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+            className="rounded-md border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
           >
             <option value="solid">Solid</option>
             <option value="gradient">Gradient</option>
@@ -654,7 +654,7 @@ export function FaviconGenerator() {
           <select
             value={borderRadius}
             onChange={(e) => setBorderRadius(e.target.value as BorderRadiusOption)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+            className="rounded-md border border-surface-200 bg-white px-2 py-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
           >
             <option value="square">Square</option>
             <option value="rounded">Rounded</option>
@@ -674,7 +674,7 @@ export function FaviconGenerator() {
         </div>
       </div>
 
-      <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+      <details className="rounded-md border border-surface-200 dark:border-dark-border">
         <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
           Sizes to Generate ({selectedSizes.length})
         </summary>
@@ -694,7 +694,7 @@ export function FaviconGenerator() {
             {ALL_FAVICON_SIZES.map((s) => (
               <label
                 key={s.size}
-                className="flex items-center gap-1 rounded-lg border border-surface-200 px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                className="flex items-center gap-1 rounded-md border border-surface-200 px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
               >
                 <input
                   type="checkbox"
@@ -712,7 +712,7 @@ export function FaviconGenerator() {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={handleGenerate}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
         >
           Generate Favicons
         </button>
@@ -720,25 +720,25 @@ export function FaviconGenerator() {
           <>
             <button
               onClick={downloadAll}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Download Key Sizes (ico + 4 PNGs + manifest)
             </button>
             <button
               onClick={downloadAllAsZip}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Download as ZIP (all {generatedSizes.length} sizes)
             </button>
             <button
               onClick={copyHTML}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Copy HTML Tags
             </button>
             <button
               onClick={copyManifest}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Copy Manifest JSON
             </button>
@@ -747,9 +747,9 @@ export function FaviconGenerator() {
       </div>
 
       {generatedSizes.length > 0 && (
-        <div data-testid="tool-output" className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div data-testid="tool-output" className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <div className="mb-3 flex items-center gap-4">
-            <div className="relative rounded-lg border border-surface-300 bg-white p-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="relative rounded-md border border-surface-300 bg-white p-2 dark:border-dark-border dark:bg-dark-surface">
               <div className="flex items-center gap-2 rounded-t border-b border-surface-200 bg-surface-100 px-3 py-1 dark:border-dark-border dark:bg-dark-surface">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
                 <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
@@ -781,7 +781,7 @@ export function FaviconGenerator() {
             {generatedSizes.map((gen) => (
               <div
                 key={gen.size}
-                className="flex flex-col items-center rounded-lg border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface"
+                className="flex flex-col items-center rounded-md border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -799,7 +799,7 @@ export function FaviconGenerator() {
 
       {generatedSizes.length > 0 && (
         <>
-          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+          <details className="rounded-md border border-surface-200 dark:border-dark-border">
             <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
               HTML Code Snippets
             </summary>
@@ -807,7 +807,7 @@ export function FaviconGenerator() {
               {generateHTMLTags(bgColor, ALL_FAVICON_SIZES.filter((s) => selectedSizes.includes(s.size)))}
             </pre>
           </details>
-          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+          <details className="rounded-md border border-surface-200 dark:border-dark-border">
             <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
               Web App Manifest JSON
             </summary>

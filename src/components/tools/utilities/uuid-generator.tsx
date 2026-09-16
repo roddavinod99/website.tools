@@ -431,7 +431,7 @@ export function UUIDGenerator() {
       <div className="flex items-center gap-2">
         <label htmlFor="uuid-version" className="text-sm font-medium text-surface-700 dark:text-dark-text">Version:</label>
         <select id="uuid-version" value={version} onChange={(e) => handleVersionChange(e.target.value as UuidVersion)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="v4">UUID v4 (Random)</option>
           <option value="v7">UUID v7 (Time-ordered)</option>
           <option value="v1">UUID v1 (Time-based MAC)</option>
@@ -443,12 +443,12 @@ export function UUIDGenerator() {
         <label htmlFor="uuid-count" className="text-sm font-medium text-surface-700 dark:text-dark-text">Count:</label>
         <input type="number" id="uuid-count" min={1} max={10000} value={count}
           onChange={(e) => handleCountChange(Math.min(10000, Math.max(1, parseInt(e.target.value) || 1)))}
-          className="w-20 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-20 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
       <div className="flex items-center gap-2">
         <label htmlFor="uuid-format" className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
         <select id="uuid-format" value={format} onChange={(e) => handleFormatChange(e.target.value as FormatStyle)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="hyphens">Standard</option>
           <option value="uppercase">Uppercase</option>
           <option value="curly">Braces {}</option>
@@ -461,11 +461,11 @@ export function UUIDGenerator() {
     </div>
 
       {(version === "v3" || version === "v5") && (
-        <div className="flex flex-wrap items-end gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="flex flex-wrap items-end gap-3 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <div>
             <label htmlFor="uuid-namespace" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Namespace</label>
             <select id="uuid-namespace" value={namespace} onChange={(e) => handleNamespaceChange(e.target.value as keyof typeof UUID_NAMESPACES)}
-              className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               {Object.keys(UUID_NAMESPACES).map((ns) => (
                 <option key={ns} value={ns}>{ns} ({UUID_NAMESPACES[ns].slice(0, 8)}…)</option>
               ))}
@@ -475,24 +475,24 @@ export function UUIDGenerator() {
             <label htmlFor="uuid-name" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Name</label>
             <input type="text" id="uuid-name" value={uuidName} onChange={(e) => handleUuidNameChange(e.target.value)}
               placeholder="e.g. example.com or any string"
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
         </div>
       )}
 
       <div className="flex flex-wrap gap-2">
         <button onClick={generate} disabled={generating}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
           {generating ? `Generating ${progress}%` : "Generate"}
         </button>
         {uuids.length > 0 && (
           <>
-            <button onClick={() => copyAll("text")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as text">
+            <button onClick={() => copyAll("text")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as text">
               {copiedIdx === -2 ? "Copied!" : "Copy All"}
             </button>
-            <button onClick={() => copyAll("json")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as JSON">Copy as JSON</button>
-            <button onClick={() => copyAll("csv")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as CSV">Copy as CSV</button>
-            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download UUIDs as text file">Download .txt</button>
+            <button onClick={() => copyAll("json")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as JSON">Copy as JSON</button>
+            <button onClick={() => copyAll("csv")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Copy all UUIDs as CSV">Copy as CSV</button>
+            <button onClick={downloadTxt} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download UUIDs as text file">Download .txt</button>
           </>
         )}
         <label htmlFor="uuid-auto-refresh" className="flex items-center gap-2 text-sm text-surface-700 dark:text-dark-text">
@@ -518,19 +518,19 @@ export function UUIDGenerator() {
       <div className="flex flex-wrap gap-2">
         <label htmlFor="uuid-export-format" className="sr-only">Export format</label>
         <select id="uuid-export-format" value={exportFmt} onChange={(e) => handleExportFmtChange(e.target.value as ExportFormat)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="text">Text (line)</option>
           <option value="json">JSON Array</option>
           <option value="csv">CSV</option>
           <option value="tsv">TSV</option>
         </select>
-        <button onClick={handleExport} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export</button>
+        <button onClick={handleExport} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export</button>
       </div>
 
       {uuids.length > 0 && (
         <div className="max-h-80 overflow-y-auto space-y-1">
           {uuids.map((uuid, i) => (
-            <div key={i} className="flex items-center gap-2 rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div key={i} className="flex items-center gap-2 rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all truncate">{uuid}</code>
               <button onClick={() => copyOne(uuid, i)} className="text-xs text-brand-500 hover:text-brand-600 whitespace-nowrap" aria-label={`Copy UUID ${i + 1} to clipboard`}>
                 {copiedIdx === i ? "Copied!" : "Copy"}
@@ -545,11 +545,11 @@ export function UUIDGenerator() {
         <div className="flex gap-2">
           <label htmlFor="uuid-validate-input" className="sr-only">Enter a UUID to validate</label>
           <input type="text" id="uuid-validate-input" value={validateInput} onChange={(e) => setValidateInput(e.target.value)} placeholder="Enter a UUID to validate..."
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-          <button onClick={handleValidate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Validate</button>
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          <button onClick={handleValidate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Validate</button>
         </div>
         {validateResult && (
-          <div className={`mt-2 rounded-lg border p-2 text-xs ${validateResult.valid ? "border-green-200 bg-green-50 text-green-800 dark:border-green-700 dark:bg-green-900/30 dark:text-green-300" : "border-red-200 bg-red-50 text-red-800 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300"}`}>
+          <div className={`mt-2 rounded-md border p-2 text-xs ${validateResult.valid ? "border-green-200 bg-green-50 text-green-800 dark:border-green-700 dark:bg-green-900/30 dark:text-green-300" : "border-red-200 bg-red-50 text-red-800 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300"}`}>
             {validateResult.valid ? `Valid UUID — ${validateResult.version}, ${validateResult.variant}` : validateResult.error}
           </div>
         )}
@@ -560,7 +560,7 @@ export function UUIDGenerator() {
         <div className="flex flex-wrap gap-2 mb-2">
           <label htmlFor="uuid-ts-id-type" className="sr-only">Timestamp ID type</label>
           <select id="uuid-ts-id-type" value={tsIdType} onChange={(e) => handleTsIdTypeChange(e.target.value as "snowflake" | "nanoid")}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="snowflake">Snowflake (64-bit)</option>
             <option value="nanoid">NanoID</option>
           </select>
@@ -569,7 +569,7 @@ export function UUIDGenerator() {
               <label htmlFor="uuid-worker-id" className="text-xs text-surface-500 dark:text-dark-muted">Worker ID (0–1023):</label>
               <input type="number" id="uuid-worker-id" min={0} max={1023} value={workerId}
                 onChange={(e) => handleWorkerIdChange(Math.max(0, Math.min(1023, parseInt(e.target.value) || 0)))}
-                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                className="w-20 rounded-md border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
           ) : (
             <>
@@ -577,17 +577,17 @@ export function UUIDGenerator() {
                 <label htmlFor="uuid-nanoid-length" className="text-xs text-surface-500 dark:text-dark-muted">Length:</label>
                 <input type="number" id="uuid-nanoid-length" min={1} max={256} value={nanoidLength}
                   onChange={(e) => handleNanoidLengthChange(Math.max(1, Math.min(256, parseInt(e.target.value) || 1)))}
-                  className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-16 rounded-md border border-surface-200 bg-white px-2 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
               <div className="flex items-center gap-2 flex-1 min-w-[220px]">
                 <label htmlFor="uuid-nanoid-alphabet" className="text-xs text-surface-500 dark:text-dark-muted shrink-0">Alphabet:</label>
                 <input type="text" id="uuid-nanoid-alphabet" value={nanoidAlphabet}
                   onChange={(e) => handleNanoidAlphabetChange(e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white px-2 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white px-2 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
             </>
           )}
-          <button onClick={handleGenTsId} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
+          <button onClick={handleGenTsId} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
         </div>
         {tsIdType === "snowflake" && (
           <p className="mb-2 text-xs text-surface-400 dark:text-dark-muted">

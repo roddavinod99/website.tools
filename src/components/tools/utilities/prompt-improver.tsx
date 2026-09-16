@@ -163,19 +163,19 @@ export function PromptImprover() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Your Prompt</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)}
           placeholder="Paste your AI prompt here to analyze and improve it..." rows={6} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="flex items-center gap-3">
         <select value={tone} onChange={(e) => setTone(e.target.value as Tone)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option>Professional</option><option>Casual</option><option>Academic</option><option>Friendly</option>
         </select>
-        <button onClick={improve} className="rounded-lg bg-brand-500 px-6 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Improve Prompt</button>
+        <button onClick={improve} className="rounded-md bg-brand-500 px-6 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Improve Prompt</button>
       </div>
 
       {scores && (
-        <div className="rounded-lg border border-surface-200 dark:border-dark-border p-4">
+        <div className="rounded-md border border-surface-200 dark:border-dark-border p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-medium text-surface-700 dark:text-dark-text">Dimension Scores</h3>
             {avgScore !== null && <span className="text-xs font-medium text-brand-500">Overall: {avgScore}/10</span>}
@@ -198,7 +198,7 @@ export function PromptImprover() {
       )}
 
       {changes.length > 0 && (
-        <div className="rounded-lg border border-surface-200 dark:border-dark-border p-4">
+        <div className="rounded-md border border-surface-200 dark:border-dark-border p-4">
           <h3 className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Changes Made</h3>
           <ul className="space-y-1.5">
             {changes.map((c, i) => (
@@ -218,9 +218,9 @@ export function PromptImprover() {
       {output && (
         <div>
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1 block">Improved Prompt</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
           {showDiff && diff.length > 0 && (
-            <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+            <div className="mt-2 rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
               <div className="px-3 py-1.5 text-xs font-medium text-surface-600 dark:text-dark-muted bg-surface-50 dark:bg-dark-surface border-b border-surface-200 dark:border-dark-border">
                 {addedCount} added · {removedCount} removed
               </div>

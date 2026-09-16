@@ -93,14 +93,14 @@ export function PhoneNumberParser() {
     <div className="space-y-4">
       <div className="space-y-2">
         {parsedDetails!.map((item) => (
-          <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+          <div key={item.label} className="flex items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
             <div>
               <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
               <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{item.value}</p>
             </div>
             <button
               onClick={() => copy(item.value, item.label)}
-              className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+              className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
             >
               {copiedField === item.label ? "Copied!" : "Copy"}
             </button>
@@ -112,14 +112,14 @@ export function PhoneNumberParser() {
         <OptionGroup title="Parsed Components" description="Detailed breakdown of the phone number structure">
           <OptionRow columns={2}>
             {advancedDetails.map((item) => (
-              <div key={item.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+              <div key={item.label} className="flex items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
                 <div>
                   <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
                   <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{item.value}</p>
                 </div>
                 <button
                   onClick={() => copy(item.value, item.label)}
-                  className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+                  className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
                 >
                   {copiedField === item.label ? "Copied!" : "Copy"}
                 </button>
@@ -130,26 +130,26 @@ export function PhoneNumberParser() {
 
         <OptionGroup title="Validation Details" description="Technical validation information">
           <OptionRow columns={2}>
-            <div className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+            <div className="flex items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
               <div>
                 <p className="text-xs text-surface-500 dark:text-dark-muted">isValid()</p>
                 <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{booleanToHumanReadable(parsed?.isValid())}</p>
               </div>
               <button
                 onClick={() => copy(booleanToHumanReadable(parsed?.isValid()), "isValid")}
-                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+                className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
               >
                 {copiedField === "isValid" ? "Copied!" : "Copy"}
               </button>
             </div>
-            <div className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+            <div className="flex items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
               <div>
                 <p className="text-xs text-surface-500 dark:text-dark-muted">isPossible()</p>
                 <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{booleanToHumanReadable(parsed?.isPossible())}</p>
               </div>
               <button
                 onClick={() => copy(booleanToHumanReadable(parsed?.isPossible()), "isPossible")}
-                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+                className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
               >
                 {copiedField === "isPossible" ? "Copied!" : "Copy"}
               </button>
@@ -163,7 +163,7 @@ export function PhoneNumberParser() {
   return (
     <div className="space-y-4">
       {libLoading && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface text-center">
           <p className="text-sm text-surface-500 dark:text-dark-muted">Loading phone number library...</p>
         </div>
       )}
@@ -172,7 +172,7 @@ export function PhoneNumberParser() {
         <select
           value={defaultCountry}
           onChange={(e) => setDefaultCountry(e.target.value)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         >
           {countriesOptions.map((c) => (
             <option key={c.value} value={c.value}>{c.label}</option>
@@ -187,12 +187,12 @@ export function PhoneNumberParser() {
           value={rawPhone}
           onChange={(e) => setRawPhone(e.target.value)}
           placeholder="Enter a phone number"
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       {parsedDetails ? renderParsedDetails() : (
-        <p className="rounded-lg border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter a phone number to parse and validate
         </p>
       )}

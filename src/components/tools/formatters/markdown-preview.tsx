@@ -65,11 +65,11 @@ function renderMarkdown(text: string, hljsInstance?: any): string {
     const trimmed = code.trim();
     const highlighted = highlightCode(trimmed, lang, hljsInstance);
     const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted uppercase">${escapeHtml(lang)}</span>` : "";
-    return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
+    return `<div class="relative rounded-md bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
   });
 
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-brand-500 underline hover:opacity-80">$1</a>');
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-2" />');
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-md my-2" />');
 
   html = html.replace(/^(> .+)$/gm, (match) => {
     const lines = match.split("\n").map(l => l.replace(/^> /, "").replace(/^>$/, ""));
@@ -304,7 +304,7 @@ export function MarkdownPreview() {
         <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 rounded border border-surface-200 px-2 py-1 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">Upload .md</button>
       </div>
 
-      <div ref={containerRef} className="relative flex rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden" style={{ minHeight: "400px" }}>
+      <div ref={containerRef} className="relative flex rounded-md border border-surface-200 dark:border-dark-border overflow-hidden" style={{ minHeight: "400px" }}>
         <div className="relative" style={{ width: `${splitPos}%` }}>
           <textarea
             ref={editorRef}
@@ -349,7 +349,7 @@ export function MarkdownPreview() {
       </div>
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
           {copyFeedback}
         </div>
       )}

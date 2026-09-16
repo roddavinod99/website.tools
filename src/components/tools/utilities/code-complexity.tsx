@@ -106,7 +106,7 @@ export function CodeComplexity() {
   const worst = [...analysis.functions].sort((a, b) => b.cyclomatic - a.cyclomatic).slice(0, 3);
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-xs dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-xs dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -134,7 +134,7 @@ export function CodeComplexity() {
         <p className="text-sm text-surface-500 dark:text-dark-muted">Paste code above to analyze complexity.</p>
       ) : (
         <>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
               Overall
             </p>
@@ -180,7 +180,7 @@ export function CodeComplexity() {
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+    <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
       <p className="text-xs text-surface-500 dark:text-dark-muted">{label}</p>
       <p className="mt-0.5 text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{value}</p>
     </div>

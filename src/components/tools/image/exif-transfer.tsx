@@ -204,7 +204,7 @@ export function ExifTransfer() {
           onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) processFile(f, "source"); }}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => sourceRef.current?.click()}
-          className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 cursor-pointer hover:border-brand-400 transition-colors ${
+          className={`flex flex-col items-center justify-center rounded-md border-2 border-dashed p-4 cursor-pointer hover:border-brand-400 transition-colors ${
             sourceFile ? "border-green-400 bg-green-50/30 dark:bg-green-500/5" : "border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
           }`}
         >
@@ -229,7 +229,7 @@ export function ExifTransfer() {
           onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) processFile(f, "target"); }}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => targetRef.current?.click()}
-          className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 cursor-pointer hover:border-brand-400 transition-colors ${
+          className={`flex flex-col items-center justify-center rounded-md border-2 border-dashed p-4 cursor-pointer hover:border-brand-400 transition-colors ${
             targetFile ? "border-brand-500 bg-brand-50/30 dark:bg-brand-500/5" : "border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"
           }`}
         >
@@ -254,7 +254,7 @@ export function ExifTransfer() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Fields to Transfer</label>
         <div className="flex flex-wrap gap-2">
           {["all", "camera", "date", "gps", "orientation", "custom"].map((opt) => (
-            <button key={opt} onClick={() => setSelection(opt)} className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${selection === opt ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface"}`}>{opt === "orientation" ? "Orientation" : opt.charAt(0).toUpperCase() + opt.slice(1)}</button>
+            <button key={opt} onClick={() => setSelection(opt)} className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${selection === opt ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface"}`}>{opt === "orientation" ? "Orientation" : opt.charAt(0).toUpperCase() + opt.slice(1)}</button>
           ))}
         </div>
         {selection === "custom" && (
@@ -269,9 +269,9 @@ export function ExifTransfer() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={transfer} disabled={!sourceFile || !targetFile} className="rounded-lg bg-brand-500 px-6 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Transfer EXIF</button>
+        <button onClick={transfer} disabled={!sourceFile || !targetFile} className="rounded-md bg-brand-500 px-6 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Transfer EXIF</button>
         {(sourceFile || targetFile) && (
-          <button onClick={clearAll} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text transition-colors">Clear All</button>
+          <button onClick={clearAll} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text transition-colors">Clear All</button>
         )}
       </div>
 
@@ -279,7 +279,7 @@ export function ExifTransfer() {
       {success && <p className="text-sm text-green-600 dark:text-green-400">{success}</p>}
 
       {sourceFile && (
-        <details className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+        <details className="rounded-md border border-surface-200 p-3 dark:border-dark-border">
           <summary className="text-sm font-medium text-surface-700 dark:text-dark-text cursor-pointer">Source EXIF ({Object.keys(sourceFile.exif).length} fields)</summary>
           <div className="mt-2 space-y-0.5 max-h-48 overflow-auto">
             {Object.keys(sourceFile.exif).length > 0 ? Object.entries(sourceFile.exif).map(([k, v]) => (
@@ -290,7 +290,7 @@ export function ExifTransfer() {
       )}
 
       {targetFile && (
-        <details className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+        <details className="rounded-md border border-surface-200 p-3 dark:border-dark-border">
           <summary className="text-sm font-medium text-surface-700 dark:text-dark-text cursor-pointer">Target Current EXIF ({Object.keys(targetFile.exif).length} fields)</summary>
           <div className="mt-2 space-y-0.5 max-h-48 overflow-auto">
             {Object.keys(targetFile.exif).length > 0 ? Object.entries(targetFile.exif).map(([k, v]) => (

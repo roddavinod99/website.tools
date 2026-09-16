@@ -63,7 +63,7 @@ export function GeneratorShell({
           </section>
           <section className="space-y-4">
             {preview && (
-              <div className="rounded-lg border border-tool-border bg-tool-surface p-4">
+              <div className="rounded-md border border-tool-border bg-tool-surface p-4">
                 <h3 className="text-sm font-medium text-result-secondary mb-2">Preview</h3>
                 {preview}
               </div>

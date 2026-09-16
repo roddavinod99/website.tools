@@ -227,7 +227,7 @@ export function TotpGenerator() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Secret Key (Base32)</label>
           <input type="text" value={activeAccount?.secret || ""}
             onChange={(e) => updateAccount(activeId, { secret: e.target.value.toUpperCase() })}
-            className={`w-full rounded-lg border px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:bg-dark-surface dark:text-dark-text ${isValidBase32(activeAccount?.secret || "") ? "border-surface-200 dark:border-dark-border" : "border-red-300 dark:border-red-700"}`} />
+            className={`w-full rounded-md border px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:bg-dark-surface dark:text-dark-text ${isValidBase32(activeAccount?.secret || "") ? "border-surface-200 dark:border-dark-border" : "border-red-300 dark:border-red-700"}`} />
           {!isValidBase32(activeAccount?.secret || "") && activeAccount?.secret && (
             <p className="mt-0.5 text-xs text-red-500">Invalid Base32 format</p>
           )}
@@ -236,7 +236,7 @@ export function TotpGenerator() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Algorithm</label>
           <select value={activeAccount?.algorithm || "SHA-1"}
             onChange={(e) => updateAccount(activeId, { algorithm: e.target.value })}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="SHA-1">SHA-1</option>
             <option value="SHA-256">SHA-256</option>
             <option value="SHA-512">SHA-512</option>
@@ -294,32 +294,32 @@ export function TotpGenerator() {
 
       <div className="flex flex-wrap gap-2">
         <button onClick={() => copyCode(currentCode)} disabled={!currentCode}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors flex items-center gap-2">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors flex items-center gap-2">
           <Copy size={14} /> {copied === currentCode ? "Copied!" : "Copy Code"}
         </button>
         <button onClick={() => { updateAccount(activeId, { secret: generateRandomSecret() }); }}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
           <RefreshCw size={14} /> New Secret
         </button>
         <button onClick={() => setShowQR(!showQR)}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
           <QrCode size={14} /> {showQR ? "Hide QR" : "Show QR"}
         </button>
         <button onClick={exportConfig}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2">
           <Download size={14} /> Export JSON
         </button>
       </div>
 
       {showQR && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Scan with authenticator app</p>
           <div className="flex flex-col items-center gap-3">
             {qrDataUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={qrDataUrl} alt="TOTP QR Code" className="rounded-lg border border-surface-200 dark:border-dark-border" />
+              <img src={qrDataUrl} alt="TOTP QR Code" className="rounded-md border border-surface-200 dark:border-dark-border" />
             ) : (
-              <div className="w-[200px] h-[200px] rounded-lg bg-surface-200 dark:bg-dark-border flex items-center justify-center text-xs text-surface-400">Generating QR...</div>
+              <div className="w-[200px] h-[200px] rounded-md bg-surface-200 dark:bg-dark-border flex items-center justify-center text-xs text-surface-400">Generating QR...</div>
             )}
             <div className="w-full">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">otpauth:// URI</p>

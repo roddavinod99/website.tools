@@ -55,7 +55,7 @@ export function CommunitySection() {
               <Link
                 key={link.title}
                 href={link.href}
-                className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-6 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
+                className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-6 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
               >
                 <div className={cn("flex h-10 w-10 items-center justify-center rounded-md", link.color)}>
                   <Icon className="h-5 w-5" />

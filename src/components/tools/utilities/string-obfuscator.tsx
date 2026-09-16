@@ -103,13 +103,13 @@ export function StringObfuscator() {
           onChange={(e) => setInput(e.target.value)}
           rows={4}
           placeholder="Enter text to obfuscate..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       <div className="space-y-2">
         {results.map((r, i) => (
-          <div key={r.method} className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div key={r.method} className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-surface-700 dark:text-dark-text">{r.method}</span>
@@ -117,7 +117,7 @@ export function StringObfuscator() {
               </div>
               <button
                 onClick={() => copy(r.value, i)}
-                className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
+                className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
               >
                 {copiedIdx === i ? "Copied!" : "Copy"}
               </button>

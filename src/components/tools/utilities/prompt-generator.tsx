@@ -143,28 +143,28 @@ export function PromptGenerator() {
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Category</label>
           <select value={category} onChange={(e) => { setCategory(e.target.value as Category); setUseCase(CATEGORIES[e.target.value as Category][0]); setFields({}); }}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {(Object.keys(CATEGORIES) as Category[]).map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Use Case</label>
           <select value={useCase} onChange={(e) => { setUseCase(e.target.value); setFields({}); }}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {CATEGORIES[category].map(u => <option key={u} value={u}>{u}</option>)}
           </select>
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Tone</label>
           <select value={tone} onChange={(e) => setTone(e.target.value as Tone)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option>Professional</option><option>Casual</option><option>Academic</option>
           </select>
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Output Format</label>
           <select value={format} onChange={(e) => setFormat(e.target.value as Format)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option>Concise</option><option>Detailed</option><option>Step-by-Step</option><option>Bulleted</option>
           </select>
         </div>
@@ -176,18 +176,18 @@ export function PromptGenerator() {
             <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">{f}</label>
             <input type="text" value={fields[f] || ""} onChange={(e) => setFields(prev => ({ ...prev, [f]: e.target.value }))}
               placeholder={`Enter ${f.toLowerCase()}...`}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           </div>
         ))}
         <div className="sm:col-span-2">
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Additional Context (optional)</label>
           <textarea value={customContext} onChange={(e) => setCustomContext(e.target.value)}
             placeholder="Add any extra context or requirements..." rows={2}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       </div>
 
-      <button onClick={generate} className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate Prompt</button>
+      <button onClick={generate} className="rounded-md bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate Prompt</button>
 
       <div className="flex flex-wrap gap-1">
         <button onClick={copy} disabled={!output} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white hover:bg-brand-600 disabled:opacity-40">Copy</button>
@@ -197,7 +197,7 @@ export function PromptGenerator() {
       {output && (
         <div>
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1 block">Generated Prompt</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text whitespace-pre-wrap break-all select-all">{output}</pre>
         </div>
       )}
 

@@ -40,12 +40,12 @@ export function ImageShell({
         )}
         <section className="space-y-4">{children}</section>
         {dropzone && (
-          <div className="rounded-lg border-2 border-dashed border-tool-border bg-tool-surface p-8 text-center">
+          <div className="rounded-md border-2 border-dashed border-tool-border bg-tool-surface p-8 text-center">
             {dropzone}
           </div>
         )}
         {preview && (
-          <div className="rounded-lg border border-tool-border bg-tool-surface p-4">
+          <div className="rounded-md border border-tool-border bg-tool-surface p-4">
             <h3 className="text-sm font-medium text-result-secondary mb-2">Preview</h3>
             {preview}
           </div>

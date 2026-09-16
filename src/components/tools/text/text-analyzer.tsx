@@ -276,7 +276,7 @@ export function TextAnalyzer() {
           <input ref={fileRef} type="file" accept=".txt,.md,.html" onChange={handleFile} className="hidden" />
         </div>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste or type your text here for deep analysis..." rows={8}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {analysis && (
@@ -292,7 +292,7 @@ export function TextAnalyzer() {
               { label: "Reading", value: analysis.readingTime },
               { label: "Speaking", value: analysis.speakingTime },
             ].map((s) => (
-              <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+              <div key={s.label} className="rounded-md border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
                 <div className="text-lg font-bold text-brand-500">{s.value}</div>
                 <div className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</div>
               </div>
@@ -300,7 +300,7 @@ export function TextAnalyzer() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Sentiment</p>
               <div className="flex items-center gap-2">
                 <span className={`text-sm font-semibold ${analysis.sentiment.label === "Positive" ? "text-green-600 dark:text-green-400" : analysis.sentiment.label === "Negative" ? "text-red-600 dark:text-red-400" : "text-surface-600 dark:text-dark-muted"}`}>
@@ -315,7 +315,7 @@ export function TextAnalyzer() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Classification</p>
               <div className="flex flex-wrap gap-2 mb-1">
                 {analysis.languageScores.map((ls, i) => (
@@ -333,7 +333,7 @@ export function TextAnalyzer() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Readability</p>
               <div className="space-y-1">
                 {[
@@ -352,7 +352,7 @@ export function TextAnalyzer() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Vocabulary Levels</p>
               <div className="space-y-1">
                 {[
@@ -372,7 +372,7 @@ export function TextAnalyzer() {
               <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-1">Unique: {analysis.uniqueWords} / {analysis.words} words</p>
             </div>
 
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Entities Detected</p>
               {analysis.entities.length > 0 ? (
                 <div className="flex flex-wrap gap-1">
@@ -394,7 +394,7 @@ export function TextAnalyzer() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Top Words</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {analysis.wordFrequency.map(([w, c]) => (
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text">{w}</span>
@@ -405,7 +405,7 @@ export function TextAnalyzer() {
             </div>
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Density</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {analysis.charDensity.map((c) => (
                   <div key={c.char} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text">{c.char === " " ? "␣" : c.char === "\n" ? "↵" : c.char}</span>
@@ -416,7 +416,7 @@ export function TextAnalyzer() {
             </div>
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Writing Suggestions</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-white p-2 max-h-32 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {analysis.suggestions.map((s, i) => (
                   <div key={i} className="flex gap-2 text-xs py-0.5">
                     <span className="text-brand-500 shrink-0">&#8226;</span>

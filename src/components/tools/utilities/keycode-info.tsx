@@ -55,7 +55,7 @@ export function KeycodeInfo() {
   return (
     <div className="space-y-4">
       {!event && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-6 text-center dark:border-dark-border dark:bg-dark-bg">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-6 text-center dark:border-dark-border dark:bg-dark-bg">
           <p className="text-sm text-surface-500 dark:text-dark-muted">Press any key to see its keycode information</p>
         </div>
       )}
@@ -63,12 +63,12 @@ export function KeycodeInfo() {
       {event && (
         <>
           <div className="flex items-center justify-center">
-            <div className="flex h-28 w-36 items-center justify-center rounded-xl border-2 border-surface-300 bg-white shadow-lg dark:border-dark-border dark:bg-dark-surface">
+            <div className="flex h-28 w-36 items-center justify-center rounded-md border-2 border-surface-300 bg-white shadow-lg dark:border-dark-border dark:bg-dark-surface">
               <span className="text-4xl font-bold text-surface-800 dark:text-dark-text">{displayKey}</span>
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-white overflow-hidden dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white overflow-hidden dark:border-dark-border dark:bg-dark-surface">
             <div className="table-responsive">
             <table className="table-base">
               <tbody>

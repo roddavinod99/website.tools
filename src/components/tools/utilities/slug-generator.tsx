@@ -248,7 +248,7 @@ export function SlugGenerator() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Input Text</label>
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)}
           placeholder="Enter text to slugify..."
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         {hasSpecialChars && (
           <p className="text-xs text-amber-500 mt-1">Non-ASCII characters detected (transliteration will be applied)</p>
         )}
@@ -258,14 +258,14 @@ export function SlugGenerator() {
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Separator:</label>
           <select value={separator} onChange={(e) => setSeparator(e.target.value as Separator)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {SEPARATORS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
           </select>
         </div>
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Case:</label>
           <select value={caseOpt} onChange={(e) => setCaseOpt(e.target.value as CaseOption)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="lowercase">Lowercase</option>
             <option value="uppercase">Uppercase</option>
             <option value="original">Original</option>
@@ -274,7 +274,7 @@ export function SlugGenerator() {
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Sanitize:</label>
           <select value={sanitizeMode} onChange={(e) => setSanitizeMode(e.target.value as SanitizeMode)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="full">Full (remove special chars)</option>
             <option value="spaces-only">Spaces only</option>
           </select>
@@ -282,7 +282,7 @@ export function SlugGenerator() {
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Max Length:</label>
           <input type="number" min={0} max={200} value={maxLength} onChange={(e) => setMaxLength(Math.max(0, parseInt(e.target.value) || 0))}
-            className="w-14 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-14 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
           <input type="checkbox" checked={numbered} onChange={(e) => setNumbered(e.target.checked)} className="accent-brand-500 rounded" />
@@ -298,15 +298,15 @@ export function SlugGenerator() {
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Prefix:</label>
           <input type="text" value={prefix} onChange={(e) => setPrefix(e.target.value)} placeholder="(optional)"
-            className="w-24 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-24 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div className="flex items-center gap-1.5">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Suffix:</label>
           <input type="text" value={suffix} onChange={(e) => setSuffix(e.target.value)} placeholder="(optional)"
-            className="w-24 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-24 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div className="flex-1" />
-        <button onClick={copy} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
+        <button onClick={copy} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
           {copied ? "Copied!" : "Copy Slug"}
         </button>
       </div>
@@ -314,13 +314,13 @@ export function SlugGenerator() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Original Text</label>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text break-all min-h-[2.5rem]">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text break-all min-h-[2.5rem]">
             {input || <span className="text-surface-400 italic">(empty)</span>}
           </div>
         </div>
         <div>
           <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Generated Slug</label>
-          <div data-testid="tool-output" className="rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm font-mono text-brand-800 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-300 break-all select-all min-h-[2.5rem]">
+          <div data-testid="tool-output" className="rounded-md border border-brand-200 bg-brand-50 p-3 text-sm font-mono text-brand-800 dark:border-brand-700 dark:bg-brand-900/20 dark:text-brand-300 break-all select-all min-h-[2.5rem]">
             {slug}
           </div>
         </div>

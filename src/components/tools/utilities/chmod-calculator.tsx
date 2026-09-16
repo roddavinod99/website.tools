@@ -109,11 +109,11 @@ export function ChmodCalculator() {
             onKeyDown={(e) => e.key === "Enter" && applyOctal()}
             maxLength={3}
             placeholder="755"
-            className="w-24 rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-24 rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
           <button
             onClick={applyOctal}
-            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+            className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
           >
             Apply
           </button>
@@ -130,7 +130,7 @@ export function ChmodCalculator() {
               key={p.value}
               onClick={() => applyPreset(p.value)}
               title={p.desc}
-              className={`rounded-lg px-3 py-1.5 text-sm font-mono font-medium transition-colors ${
+              className={`rounded-md px-3 py-1.5 text-sm font-mono font-medium transition-colors ${
                 octal === p.value
                   ? "bg-brand-500 text-white"
                   : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
@@ -192,7 +192,7 @@ export function ChmodCalculator() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         <button
           onClick={() => copyValue("octal", octal)}
-          className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
+          className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
         >
           <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Octal</span>
           <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{octal}</span>
@@ -200,7 +200,7 @@ export function ChmodCalculator() {
         </button>
         <button
           onClick={() => copyValue("symbolic", symbolic)}
-          className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
+          className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
         >
           <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Symbolic</span>
           <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{symbolic}</span>
@@ -208,7 +208,7 @@ export function ChmodCalculator() {
         </button>
         <button
           onClick={() => copyValue("command", chmodCommand)}
-          className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
+          className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-left"
         >
           <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Command</span>
           <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{chmodCommand}</span>
@@ -216,7 +216,7 @@ export function ChmodCalculator() {
         </button>
       </div>
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs text-surface-500 dark:text-dark-muted">
           <span className="font-medium text-surface-700 dark:text-dark-text">Bit values:</span>{" "}
           Read = 4, Write = 2, Execute = 1. Sum per group gives the octal digit. All three groups combined give the chmod value.

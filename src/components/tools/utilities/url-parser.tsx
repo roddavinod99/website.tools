@@ -123,13 +123,13 @@ export function UrlParser() {
         <div className="flex gap-2">
           <input type="text" value={input} onChange={e => setInput(e.target.value)} placeholder="https://example.com/path"
             onKeyDown={e => e.key === "Enter" && parse()}
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
-          <button onClick={parse} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
+          <button onClick={parse} className="shrink-0 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
         </div>
       </div>
 
-      {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
+      {error && <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
 
       {parsed && (
         <>
@@ -145,7 +145,7 @@ export function UrlParser() {
               { label: "Username", value: parsed.username || "(none)" },
               { label: "Password", value: parsed.password ? "****" : "(none)" },
             ])().map(f => (
-              <div key={f.label} className="group relative rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer" onClick={() => copyValue(f.label, f.value)}>
+              <div key={f.label} className="group relative rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer" onClick={() => copyValue(f.label, f.value)}>
                 <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">{f.label}</span>
                 <span className={cn("block text-sm font-mono text-surface-900 dark:text-dark-text truncate", f.cls)}>{f.value}</span>
                 <span className="absolute top-1 right-1 text-[9px] text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">copy</span>
@@ -172,7 +172,7 @@ export function UrlParser() {
           {Object.keys(parsed.searchParams).length > 0 && (
             <div>
               <span className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Query Parameters</span>
-              <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+              <div className="rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
                 <div className="table-responsive">
                 <table className="table-base">
                   <thead><tr className="bg-surface-50 dark:bg-dark-surface">
@@ -202,7 +202,7 @@ export function UrlParser() {
           </div>
 
           {buildMode && (
-            <div className="rounded-lg border border-surface-200 dark:border-dark-border p-3 space-y-2">
+            <div className="rounded-md border border-surface-200 dark:border-dark-border p-3 space-y-2">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {(Object.keys(fields) as (keyof EditableFields)[]).map(k => (
                   <div key={k}>
@@ -213,7 +213,7 @@ export function UrlParser() {
                   </div>
                 ))}
               </div>
-              <div className="rounded-lg bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">
+              <div className="rounded-md bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">
                 {reconstructedUrl}
               </div>
             </div>
@@ -225,26 +225,26 @@ export function UrlParser() {
               <div className="mt-2 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <input type="text" value={baseUrl} onChange={e => setBaseUrl(e.target.value)} placeholder="Base URL"
-                    className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                    className="rounded-md border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                   />
                   <input type="text" value={relativeUrl} onChange={e => setRelativeUrl(e.target.value)} placeholder="Relative URL"
-                    className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                    className="rounded-md border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                   />
-                  <button onClick={resolveRelative} className="rounded-lg bg-brand-500 px-3 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Resolve</button>
+                  <button onClick={resolveRelative} className="rounded-md bg-brand-500 px-3 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Resolve</button>
                 </div>
-                {resolvedUrl && <div className="rounded-lg bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">{resolvedUrl}</div>}
+                {resolvedUrl && <div className="rounded-md bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">{resolvedUrl}</div>}
                 <div className="flex gap-2">
                   <input type="text" value={encodeInput} onChange={e => setEncodeInput(e.target.value)} placeholder="String to encode/decode"
-                    className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                    className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                   />
                   <select value={encodeMode} onChange={e => setEncodeMode(e.target.value as "encode" | "decode")}
-                    className="rounded-lg border border-surface-200 bg-white px-2 py-2 text-xs text-surface-700 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                    className="rounded-md border border-surface-200 bg-white px-2 py-2 text-xs text-surface-700 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                   >
                     <option value="encode">Encode</option><option value="decode">Decode</option>
                   </select>
-                  <button onClick={doEncode} className="rounded-lg bg-brand-500 px-3 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Go</button>
+                  <button onClick={doEncode} className="rounded-md bg-brand-500 px-3 py-2 text-xs font-medium text-white hover:bg-brand-600 transition-colors">Go</button>
                 </div>
-                {encodeResult && <div className="rounded-lg bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">{encodeResult}</div>}
+                {encodeResult && <div className="rounded-md bg-surface-50 dark:bg-dark-surface px-3 py-2 text-xs font-mono text-surface-900 dark:text-dark-text break-all">{encodeResult}</div>}
               </div>
             </details>
           </div>
@@ -252,7 +252,7 @@ export function UrlParser() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
           {copyFeedback}
         </div>
       )}

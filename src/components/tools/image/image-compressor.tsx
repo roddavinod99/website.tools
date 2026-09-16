@@ -357,7 +357,7 @@ export function ImageCompressor() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={() => fileRef.current?.click()}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
+        className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed p-6 transition-colors ${
           dragging
             ? "border-brand-500 bg-brand-50 dark:bg-brand-500/10"
             : "border-surface-200 bg-white hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface"
@@ -388,13 +388,13 @@ export function ImageCompressor() {
 
       {images.length > 0 && (
         <>
-          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="flex flex-wrap items-center gap-3 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <div className="flex items-center gap-2">
               <label className="text-xs text-surface-500 dark:text-dark-muted">Preset:</label>
               <select
                 value={preset}
                 onChange={(e) => applyPreset(e.target.value)}
-                className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 <option value="custom">Custom</option>
                 <option value="lossless">Lossless</option>
@@ -427,7 +427,7 @@ export function ImageCompressor() {
                 setLossless(false);
                 if (preset === LOSSLESS_PRESET) setPreset("custom");
               }}
-              className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+              className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
             >
               {FORMAT_OPTIONS.map((f) => (
                 <option key={f.value} value={f.value}>
@@ -443,13 +443,13 @@ export function ImageCompressor() {
                 max={1200}
                 value={targetDpi}
                 onChange={(e) => setTargetDpi(Math.max(0, parseInt(e.target.value) || 0))}
-                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 aria-label="Output DPI"
               />
             </div>
           </div>
 
-          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+          <details className="rounded-md border border-surface-200 dark:border-dark-border">
             <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
               Resize Options
             </summary>
@@ -461,7 +461,7 @@ export function ImageCompressor() {
                   value={maxWidth}
                   onChange={(e) => setMaxWidth(parseInt(e.target.value) || 0)}
                   min={0}
-                  className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                  className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 />
               </div>
               <div>
@@ -471,7 +471,7 @@ export function ImageCompressor() {
                   value={maxHeight}
                   onChange={(e) => setMaxHeight(parseInt(e.target.value) || 0)}
                   min={0}
-                  className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                  className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 />
               </div>
               <div>
@@ -479,7 +479,7 @@ export function ImageCompressor() {
                 <select
                   value={fitMode}
                   onChange={(e) => setFitMode(e.target.value as FitMode)}
-                  className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                  className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 >
                   <option value="fit">Fit</option>
                   <option value="contain">Contain</option>
@@ -501,7 +501,7 @@ export function ImageCompressor() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={compressAll}
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+              className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
             >
               Compress {images.length > 1 ? `All (${images.length})` : ""}
             </button>
@@ -509,7 +509,7 @@ export function ImageCompressor() {
               <>
                 <button
                   onClick={downloadAll}
-                  className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                  className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
                 >
                   Download All
                 </button>
@@ -517,14 +517,14 @@ export function ImageCompressor() {
             )}
             <button
               onClick={clearAll}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Clear All
             </button>
           </div>
 
           {totalOriginal > 0 && hasCompressed && (
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 text-xs text-surface-600 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
               Total: {formatSize(totalOriginal)} → {formatSize(totalCompressed)} ({totalReduction}% reduction)
             </div>
           )}
@@ -533,7 +533,7 @@ export function ImageCompressor() {
             {images.map((entry) => (
               <div
                 key={entry.id}
-                className="rounded-lg border border-surface-200 p-3 dark:border-dark-border"
+                className="rounded-md border border-surface-200 p-3 dark:border-dark-border"
               >
                 <div className="mb-2 flex items-center justify-between">
                   <span className="truncate text-xs font-medium text-surface-700 dark:text-dark-text">
@@ -613,7 +613,7 @@ export function ImageCompressor() {
                 {entry.compressedUrl && (
                   <button
                     onClick={() => downloadImage(entry)}
-                    className="mt-2 w-full rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                    className="mt-2 w-full rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
                   >
                     Download
                   </button>

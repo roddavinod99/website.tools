@@ -73,7 +73,7 @@ export function ContrastChecker() {
   };
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-sm font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -87,7 +87,7 @@ export function ContrastChecker() {
               value={hexToRgb(fgHex) ? fgHex : "#000000"}
               onChange={(e) => setFgHex(e.target.value)}
               aria-label="Foreground color picker"
-              className="h-11 w-14 shrink-0 cursor-pointer rounded-lg border border-surface-200 dark:border-dark-border"
+              className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-surface-200 dark:border-dark-border"
             />
             <input
               type="text"
@@ -107,7 +107,7 @@ export function ContrastChecker() {
               value={hexToRgb(bgHex) ? bgHex : "#ffffff"}
               onChange={(e) => setBgHex(e.target.value)}
               aria-label="Background color picker"
-              className="h-11 w-14 shrink-0 cursor-pointer rounded-lg border border-surface-200 dark:border-dark-border"
+              className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-surface-200 dark:border-dark-border"
             />
             <input
               type="text"
@@ -122,7 +122,7 @@ export function ContrastChecker() {
       </div>
 
       <div
-        className="rounded-xl border border-surface-200 p-6 text-center dark:border-dark-border"
+        className="rounded-md border border-surface-200 p-6 text-center dark:border-dark-border"
         style={{ backgroundColor: bgHex, color: fgHex }}
       >
         <p className="text-lg font-semibold">Aa Sample text preview</p>
@@ -137,7 +137,7 @@ export function ContrastChecker() {
 
       {valid && (
         <>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
@@ -152,7 +152,7 @@ export function ContrastChecker() {
               </div>
               <button
                 onClick={copyRatio}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
+                className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
               >
                 Copy ratio
               </button>
@@ -183,7 +183,7 @@ export function ContrastChecker() {
                   <button
                     key={p.name}
                     onClick={() => { setFgHex(p.fg); setBgHex(p.bg); }}
-                    className="flex items-center justify-between rounded-lg border border-surface-200 px-3 py-2 text-xs hover:border-brand-300 dark:border-dark-border"
+                    className="flex items-center justify-between rounded-md border border-surface-200 px-3 py-2 text-xs hover:border-brand-300 dark:border-dark-border"
                     style={{ backgroundColor: p.bg, color: p.fg }}
                   >
                     <span className="font-medium">{p.name}</span>

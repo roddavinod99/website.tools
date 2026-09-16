@@ -217,7 +217,7 @@ export function StringLength() {
           <button onClick={pasteFromClipboard} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">Paste</button>
         </div>
         <textarea ref={textareaRef} value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type or paste text here..." rows={5}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="h-2.5 rounded-full bg-surface-200 dark:bg-dark-border overflow-hidden">
@@ -231,7 +231,7 @@ export function StringLength() {
           { label: "Grapheme Clusters", value: info.graphemeClusters },
           { label: "UTF-8 Bytes", value: info.utf8Bytes },
         ].map((s) => (
-          <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+          <div key={s.label} className="rounded-md border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
             <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{s.value.toLocaleString()}</div>
             <div className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</div>
           </div>
@@ -245,7 +245,7 @@ export function StringLength() {
           { label: "Words", value: info.words },
           { label: "Lines", value: info.lines },
         ].map((s) => (
-          <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+          <div key={s.label} className="rounded-md border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
             <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{typeof s.value === "number" ? s.value.toLocaleString() : s.value}</div>
             <div className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</div>
           </div>
@@ -266,7 +266,7 @@ export function StringLength() {
           { label: "Surrogate Pairs", value: info.surrogatePairs },
           { label: "Combining Marks", value: info.combiningMarks },
         ].map((s) => (
-          <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+          <div key={s.label} className="rounded-md border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
             <div className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">{s.value}</div>
             <div className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</div>
           </div>
@@ -274,7 +274,7 @@ export function StringLength() {
       </div>
 
       {info.surrogatePairs > 0 && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-2 dark:border-amber-800 dark:bg-amber-900/20">
+        <div className="rounded-md border border-amber-200 bg-amber-50 p-2 dark:border-amber-800 dark:bg-amber-900/20">
           <p className="text-xs font-medium text-amber-700 dark:text-amber-400 mb-1">Surrogate Pairs Detected ({info.surrogatePairs})</p>
           <div className="flex flex-wrap gap-1 text-xs text-amber-600 dark:text-amber-300">
             {[...new Set(info.surrogateChars)].slice(0, 10).map((c, i) => (
@@ -286,7 +286,7 @@ export function StringLength() {
       )}
 
       {info.combiningMarks > 0 && (
-        <div className="rounded-lg border border-purple-200 bg-purple-50 p-2 dark:border-purple-800 dark:bg-purple-900/20">
+        <div className="rounded-md border border-purple-200 bg-purple-50 p-2 dark:border-purple-800 dark:bg-purple-900/20">
           <p className="text-xs font-medium text-purple-700 dark:text-purple-400 mb-1">Combining Marks Detected ({info.combiningMarks})</p>
           <div className="flex flex-wrap gap-1 text-xs text-purple-600 dark:text-purple-300">
             {[...new Set(info.combiningChars)].slice(0, 10).map((c, i) => (
@@ -309,7 +309,7 @@ export function StringLength() {
         {LIMITS.map((l) => {
           const fits = info[l.key];
           return (
-            <div key={l.label} className={`rounded-lg border p-2 text-center ${fits ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
+            <div key={l.label} className={`rounded-md border p-2 text-center ${fits ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
               <div className="flex items-center justify-center gap-1">
                 <span className={`text-xs font-semibold ${fits ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}`}>
                   {fits ? "Fits" : "Exceeds"}

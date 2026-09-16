@@ -117,7 +117,7 @@ export function CgtCalculator() {
 
   if (!meta) {
     return (
-      <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+      <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
         Select a country to estimate capital gains tax.
       </p>
     );
@@ -146,7 +146,7 @@ export function CgtCalculator() {
           </Field>
         ) : (
           <Field label="Tax year">
-            <div className="rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+            <div className="rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
               {meta.taxYears[0]?.label}
             </div>
           </Field>
@@ -235,7 +235,7 @@ export function CgtCalculator() {
             </Field>
           )}
         {showMainResidence && (
-          <label className="flex items-center gap-3 self-end rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
+          <label className="flex items-center gap-3 self-end rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
             <input
               type="checkbox"
               checked={isMainResidence}
@@ -251,7 +251,7 @@ export function CgtCalculator() {
       {result ? (
         <div
           data-testid="tool-output"
-          className="space-y-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="space-y-4 rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
@@ -289,7 +289,7 @@ export function CgtCalculator() {
           </div>
 
           {result.breakdown.length > 0 && (
-            <div className="overflow-x-auto rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-bg">
+            <div className="overflow-x-auto rounded-md border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-bg">
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-surface-200 text-xs uppercase tracking-wide text-surface-500 dark:border-dark-border dark:text-dark-muted">
@@ -316,7 +316,7 @@ export function CgtCalculator() {
           )}
 
           {result.warnings.length > 0 && (
-            <ul className="list-inside list-disc space-y-1 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
+            <ul className="list-inside list-disc space-y-1 rounded-md border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
               {result.warnings.map((w, i) => (
                 <li key={i}>{w}</li>
               ))}
@@ -329,7 +329,7 @@ export function CgtCalculator() {
           </p>
         </div>
       ) : (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter a purchase price and sale price (both can be any non-negative amount) to estimate capital gains tax.
         </p>
       )}

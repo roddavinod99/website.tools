@@ -107,7 +107,7 @@ export function SvgToCss() {
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">SVG Code</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         <div className="mt-1">
           <input ref={fileRef} type="file" accept=".svg" onChange={handleFile} className="hidden" />
           <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 text-xs text-brand-500 hover:text-brand-600" aria-label="Upload SVG file"><Upload className="w-3 h-3" /> Upload SVG</button>
@@ -121,7 +121,7 @@ export function SvgToCss() {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">CSS Property</label>
-          <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <select value={mode} onChange={(e) => setMode(e.target.value)} className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="background">background-image</option>
             <option value="mask">mask-image</option>
             <option value="clip">clip-path</option>
@@ -131,7 +131,7 @@ export function SvgToCss() {
         </div>
         <div>
           <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Encoding</label>
-          <select value={encoding} onChange={(e) => setEncoding(e.target.value as "url" | "base64")} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <select value={encoding} onChange={(e) => setEncoding(e.target.value as "url" | "base64")} className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="url">URL-encoded</option>
             <option value="base64">Base64</option>
           </select>
@@ -144,7 +144,7 @@ export function SvgToCss() {
         </label>
       </div>
 
-      <div className="flex items-center gap-4 p-3 rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+      <div className="flex items-center gap-4 p-3 rounded-md border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
         <div className="text-xs text-surface-500 dark:text-dark-muted">Preview:</div>
         <div className="flex items-center justify-center min-w-[48px] min-h-[48px]" dangerouslySetInnerHTML={{ __html: safeSanitize(optimized) }} />
         {svgSize.w !== "auto" && <span className="text-xs text-surface-400">{svgSize.w}x{svgSize.h}</span>}
@@ -155,7 +155,7 @@ export function SvgToCss() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Generated CSS</label>
           <div className="relative">
-            <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-60 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{cssOutput}</pre>
+            <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-60 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{cssOutput}</pre>
             <div className="absolute top-2 right-2 flex gap-1">
               <button onClick={() => handleCopy(cssOutput, "css")} className="rounded bg-brand-500 px-2 py-1 text-xs text-white hover:bg-brand-600" aria-label="Copy CSS">{copied === "css" ? "Copied!" : "Copy CSS"}</button>
               <button onClick={downloadCss} className="rounded border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" aria-label="Download CSS">Download .css</button>

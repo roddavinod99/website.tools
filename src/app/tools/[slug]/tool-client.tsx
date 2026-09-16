@@ -252,7 +252,7 @@ function CollapsibleSection({
     <details
       id={id}
       open={defaultOpen}
-      className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
+      className="group rounded-md border border-[var(--color-border)] bg-[var(--color-surface)]"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 [&::-webkit-details-marker]:hidden">
         <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
@@ -424,7 +424,7 @@ export function ToolClient({
               )}
 
               {/* Tool Interface Card */}
-              <div id={`tool-interface-${tool.slug}`} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6">
+              <div id={`tool-interface-${tool.slug}`} className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6">
                 <ToolInterface slug={tool.slug} name={tool.name} />
               </div>
 
@@ -476,7 +476,7 @@ export function ToolClient({
 
             {/* About */}
             {content.whatItDoes || content.whyItExists || content.whoShouldUse ? (
-              <section id="about" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+              <section id="about" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>About</SectionHeading>
                 <div className="space-y-3 text-[var(--color-text-muted)]">
                   <p>{content.whatItDoes}</p>
@@ -515,7 +515,7 @@ export function ToolClient({
 
             {/* Key Features */}
             {content.features && content.features.length > 0 && (
-              <section id="features" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+              <section id="features" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>Key Features</SectionHeading>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {content.features.map((feature) => (
@@ -589,7 +589,7 @@ export function ToolClient({
 
             {/* FAQ */}
             {content.faq.length > 0 && (
-              <section id="faq" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+              <section id="faq" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
                 <SectionHeading>FAQ</SectionHeading>
                 <div className="space-y-2">
                   {content.faq.map((item, i) => {
@@ -649,7 +649,7 @@ export function ToolClient({
             <InContentAd className="my-2" slot={adSlots.toolInContent2} />
 
             {/* Share */}
-            <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+            <section className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading>Share</SectionHeading>
               <ShareButtons />
             </section>
@@ -682,7 +682,7 @@ export function ToolClient({
             </div>
 
             {/* Related Tools */}
-            <section id="related-tools" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+            <section id="related-tools" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading>Related Tools</SectionHeading>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                 {relatedList.map((rt) => (
@@ -709,7 +709,7 @@ export function ToolClient({
             </section>
 
             {/* Learning Resources */}
-            <section id="learning-resources" className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
+            <section id="learning-resources" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading icon={BookOpen}>Learning Resources</SectionHeading>
               <div className="space-y-2">
                 {specificGuide && (

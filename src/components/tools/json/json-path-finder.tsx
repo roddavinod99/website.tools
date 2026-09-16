@@ -261,20 +261,20 @@ export function JsonPathFinder() {
         <div className="flex-1">
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JSON Input</label>
           <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={5}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       </div>
 
       <div className="flex items-center gap-2">
         <input ref={fileRef} type="file" accept=".json" onChange={handleFile} className="hidden" />
-        <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
+        <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
           <Upload className="w-3 h-3" /> Upload .json
         </button>
         <span className="text-xs text-surface-400 dark:text-dark-muted">{allNodes.length} nodes</span>
       </div>
 
       {fileError && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{fileError}</p>
         </div>
       )}
@@ -289,18 +289,18 @@ export function JsonPathFinder() {
                 <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-surface-400" />
                 <input type="text" value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}
                   placeholder="Filter paths..."
-                  className="w-full rounded-lg border border-surface-200 bg-white pl-7 pr-3 py-1.5 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white pl-7 pr-3 py-1.5 text-xs font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
-              <button onClick={expandAll} className="flex items-center gap-1 rounded-lg border border-surface-200 px-2 py-1.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
+              <button onClick={expandAll} className="flex items-center gap-1 rounded-md border border-surface-200 px-2 py-1.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
                 <Expand className="w-3 h-3" /> All
               </button>
-              <button onClick={collapseAll} className="flex items-center gap-1 rounded-lg border border-surface-200 px-2 py-1.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
+              <button onClick={collapseAll} className="flex items-center gap-1 rounded-md border border-surface-200 px-2 py-1.5 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">
                 <Minimize2 className="w-3 h-3" /> All
               </button>
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto">
+          <div className="rounded-md border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto">
             <div className="px-3 py-2 border-b border-surface-200 dark:border-dark-border flex items-center gap-2">
               <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">JSON Tree</span>
               <button onClick={() => setShowPaths(!showPaths)} className="text-xs text-brand-500 hover:text-brand-600 ml-auto">{showPaths ? "Hide" : "Show"} paths</button>
@@ -359,7 +359,7 @@ export function JsonPathFinder() {
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JSONPath Expression</label>
               <input type="text" value={pathExpr} onChange={(e) => setPathExpr(e.target.value)} placeholder="$.store.book[*].author"
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
             <div className="flex flex-wrap items-center gap-1 self-end">
               {commonExpressions.map((e) => (
@@ -370,7 +370,7 @@ export function JsonPathFinder() {
           </div>
 
           {resultJson && (
-            <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Query Result</span>
                 <button onClick={() => handleCopy(resultJson, "result")} className="text-xs text-brand-500 hover:text-brand-600 transition-colors">

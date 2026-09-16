@@ -131,7 +131,7 @@ export function ContactForm() {
           required
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
           placeholder="Your name"
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? "name-error" : undefined}
@@ -157,7 +157,7 @@ export function ContactForm() {
           required
           value={formData.email}
           onChange={(e) => handleChange("email", e.target.value)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
           placeholder="you@example.com"
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "email-error" : undefined}
@@ -183,7 +183,7 @@ export function ContactForm() {
           required
           value={formData.subject}
           onChange={(e) => handleChange("subject", e.target.value)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted"
           placeholder="How can we help?"
           aria-invalid={!!errors.subject}
           aria-describedby={errors.subject ? "subject-error" : undefined}
@@ -209,7 +209,7 @@ export function ContactForm() {
           rows={6}
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
-          className="w-full rounded-lg border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted resize-y"
+          className="w-full rounded-md border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder-dark-muted resize-y"
           placeholder="Tell us more about your question or feedback..."
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
@@ -223,7 +223,7 @@ export function ContactForm() {
 
       {submitError && (
         <div
-          className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400"
+          className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400"
           role="alert"
         >
           {submitError}
@@ -233,7 +233,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 text-sm font-medium text-white hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 disabled:cursor-not-allowed disabled:opacity-60 transition-colors"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-500 px-6 py-3 text-sm font-medium text-white hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 disabled:cursor-not-allowed disabled:opacity-60 transition-colors"
       >
         {isSubmitting ? (
           <>

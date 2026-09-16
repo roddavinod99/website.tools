@@ -72,7 +72,7 @@ export function MoneyInput({
           placeholder={effectivePlaceholder}
           disabled={disabled}
           className={cn(
-            "w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted",
+            "w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted",
             disabled && "opacity-50 cursor-not-allowed",
             symbol && "pl-9"
           )}

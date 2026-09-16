@@ -38,7 +38,7 @@ export function VersionBadge({
   }
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-lg border border-surface-200 bg-white px-3 py-2 text-xs dark:border-dark-border dark:bg-dark-surface">
+    <div className="inline-flex items-center gap-2 rounded-md border border-surface-200 bg-white px-3 py-2 text-xs dark:border-dark-border dark:bg-dark-surface">
       <span className="font-semibold text-surface-900 dark:text-dark-text">
         v{RELEASE_VERSION}
       </span>

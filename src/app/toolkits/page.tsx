@@ -101,10 +101,10 @@ export default function ToolkitsIndex() {
               return (
                 <article
                   key={tk.slug}
-                  className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                  className="group flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${tk.color} text-white`}>
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-md ${tk.color} text-white`}>
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <Link

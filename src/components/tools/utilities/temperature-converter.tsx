@@ -151,7 +151,7 @@ export function TemperatureConverter() {
                 onFocus={() => setActiveUnit(f.unit)}
                 step="any"
                 placeholder="0"
-                className={`w-full rounded-lg border bg-white p-3 pr-10 font-mono text-sm dark:bg-dark-bg dark:text-dark-text transition-colors ${
+                className={`w-full rounded-md border bg-white p-3 pr-10 font-mono text-sm dark:bg-dark-bg dark:text-dark-text transition-colors ${
                   activeUnit === f.unit
                     ? "border-brand-400 ring-2 ring-brand-400/20 dark:border-brand-500"
                     : "border-surface-200 dark:border-dark-border"
@@ -173,7 +173,7 @@ export function TemperatureConverter() {
           <button
             key={p.label}
             onClick={() => applyPreset(p.celsius)}
-            className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+            className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
           >
             {p.label} ({p.celsius}°C)
           </button>
@@ -197,7 +197,7 @@ export function TemperatureConverter() {
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs text-surface-500 dark:text-dark-muted">
           <span className="font-medium text-surface-700 dark:text-dark-text">Formulas:</span>{" "}
           °F = °C×9/5+32 · K = °C+273.15 · °R = (°C+273.15)×9/5 · °De = (100-°C)×3/2 · °N = °C×33/100 · °Ré = °C×4/5 · °Rø = °C×21/40+7.5

@@ -93,7 +93,7 @@ export default async function ToolkitPage({ params }: Props) {
                 <li key={tool.id}>
                   <Link
                     href={`/tools/${tool.slug}`}
-                    className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                    className="group flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <span className="font-medium text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                       {tool.name}
@@ -125,7 +125,7 @@ export default async function ToolkitPage({ params }: Props) {
                   <Link
                     key={other.slug}
                     href={`/toolkits/${other.slug}`}
-                    className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                    className="group flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <h3 className="font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                       {other.name}

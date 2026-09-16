@@ -339,7 +339,7 @@ export function Bip39Generator() {
           <div className="flex gap-2">
             {([12, 24] as const).map((wc) => (
               <button key={wc} onClick={() => setWordCount(wc)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                   wordCount === wc
                     ? "bg-brand-500 text-white"
                     : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border"
@@ -353,25 +353,25 @@ export function Bip39Generator() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Count</label>
           <input type="number" min={1} max={20} value={count}
             onChange={(e) => setCount(Math.max(1, Math.min(20, parseInt(e.target.value) || 1)))}
-            className="w-20 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
+            className="w-20 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Language</label>
           <select value={language} onChange={(e) => setLanguage(e.target.value)}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
             {BIP39_LANGUAGES.map((lang) => (
               <option key={lang.id} value={lang.id}>{lang.label}</option>
             ))}
           </select>
         </div>
         <button onClick={generate} disabled={generating}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
           {generating ? "Generating..." : "Generate"}
         </button>
       </div>
 
       {mnemonics.map((item, idx) => (
-        <div key={idx} className="space-y-2 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div key={idx} className="space-y-2 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           {mnemonics.length > 1 && (
             <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Mnemonic #{idx + 1}</p>
           )}
@@ -384,7 +384,7 @@ export function Bip39Generator() {
                 <Copy size={12} /> {copied === `mnemonic-${idx}` ? "Copied!" : "Copy"}
               </button>
             </div>
-            <div className="flex flex-wrap gap-1.5 p-2 rounded-lg bg-white border border-surface-200 dark:bg-dark-bg dark:border-dark-border">
+            <div className="flex flex-wrap gap-1.5 p-2 rounded-md bg-white border border-surface-200 dark:bg-dark-bg dark:border-dark-border">
               {item.mnemonic.split(" ").map((word, wi) => (
                 <span key={wi} className="inline-flex items-center gap-1 rounded bg-surface-100 px-2 py-0.5 text-xs dark:bg-dark-surface">
                   <span className="text-[10px] text-surface-400 dark:text-dark-muted font-mono w-4 text-right">{wi + 1}</span>
@@ -402,14 +402,14 @@ export function Bip39Generator() {
                 <Copy size={12} /> {copied === `seed-${idx}` ? "Copied!" : "Copy"}
               </button>
             </div>
-            <code className="block text-[11px] font-mono text-surface-700 dark:text-dark-text break-all select-all p-2 rounded-lg bg-white border border-surface-200 dark:bg-dark-bg dark:border-dark-border">
+            <code className="block text-[11px] font-mono text-surface-700 dark:text-dark-text break-all select-all p-2 rounded-md bg-white border border-surface-200 dark:bg-dark-bg dark:border-dark-border">
               {item.seed}
             </code>
           </div>
         </div>
       ))}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">About BIP39</p>
         <p className="text-xs text-surface-600 dark:text-dark-text">
           BIP39 defines a standard for generating mnemonic phrases from random entropy. The mnemonic is converted to a 512-bit seed using PBKDF2-SHA512 (2048 iterations), which serves as the master key for hierarchical deterministic (HD) wallets.

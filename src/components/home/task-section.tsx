@@ -78,7 +78,7 @@ export function TaskSection({ allTools }: { allTools: Tool[] }) {
             return (
               <div
                 key={group.title}
-                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
+                className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
               >
                 <div className="flex items-center gap-3">
                   <span className={`flex h-9 w-9 items-center justify-center rounded-md ${group.color}`}>

@@ -169,7 +169,7 @@ export function AgeCalculator() {
   }, [duration, birth, at]);
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -201,7 +201,7 @@ export function AgeCalculator() {
       {error && (
         <div
           role="alert"
-          className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+          className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
         >
           {error}
         </div>
@@ -211,7 +211,7 @@ export function AgeCalculator() {
         <div
           data-testid="tool-output"
           onClick={copy}
-          className="cursor-pointer rounded-lg border border-surface-200 bg-surface-50 p-4 transition-shadow hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
+          className="cursor-pointer rounded-md border border-surface-200 bg-surface-50 p-4 transition-shadow hover:shadow-md dark:border-dark-border dark:bg-dark-surface"
         >
           <div className="flex items-baseline justify-between">
             <p className="text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">
@@ -232,17 +232,17 @@ export function AgeCalculator() {
 
       {duration && birth && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">Born on</p>
             <p className="mt-1 text-sm font-semibold text-surface-900 dark:text-dark-text">{fmt(birth)}</p>
             <p className="text-[10px] text-surface-500 dark:text-dark-muted">{dayOfWeekName(birth)}</p>
           </div>
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">Zodiac</p>
             <p className="mt-1 text-sm font-semibold text-surface-900 dark:text-dark-text">{zodiacFor(birth)}</p>
             <p className="text-[10px] text-surface-500 dark:text-dark-muted">Western astrology</p>
           </div>
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">Generation</p>
             <p className="mt-1 text-sm font-semibold text-surface-900 dark:text-dark-text">{generationFor(birth.getFullYear())}</p>
             <p className="text-[10px] text-surface-500 dark:text-dark-muted">Cohort estimate</p>
@@ -251,7 +251,7 @@ export function AgeCalculator() {
       )}
 
       {upcoming && duration && (
-        <div className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">Next birthday</p>
           <p className="mt-1 text-base font-semibold text-surface-900 dark:text-dark-text">
             {fmt(upcoming.date)} <span className="text-sm font-normal text-surface-500 dark:text-dark-muted">({dayOfWeekName(upcoming.date)})</span>

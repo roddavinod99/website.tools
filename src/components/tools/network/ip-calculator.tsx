@@ -116,7 +116,7 @@ export function IpCalculator() {
       }).filter(Boolean) as SubnetInfo[]
     : [];
 
-  const inputCls = "w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted";
+  const inputCls = "w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted";
 
   return (
     <div className="space-y-4 animate-fade-in">
@@ -124,8 +124,8 @@ export function IpCalculator() {
         <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">CIDR Notation</label>
         <div className="flex gap-2">
           <input type="text" value={cidrNotation} onChange={e => setCidrNotation(e.target.value)} placeholder="192.168.1.0/24" onKeyDown={e => e.key === "Enter" && parseCidrNotation()}
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
-          <button onClick={parseCidrNotation} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          <button onClick={parseCidrNotation} className="shrink-0 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
         </div>
       </div>
 
@@ -140,14 +140,14 @@ export function IpCalculator() {
             <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">CIDR Prefix</label>
             <div className="flex gap-2">
               <input type="number" value={cidr} onChange={e => setCidr(Math.max(0, Math.min(32, parseInt(e.target.value) || 24)))} min={0} max={32}
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-              <button onClick={calculate} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
+                className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              <button onClick={calculate} className="shrink-0 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
             </div>
           </div>
         </div>
       </details>
 
-      {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
+      {error && <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>}
 
       {result && (
         <>
@@ -161,7 +161,7 @@ export function IpCalculator() {
               { label: "Type", value: result.ipType, cls: IP_TYPE_COLORS[result.ipType] }, { label: "Hex", value: result.hexIp },
               { label: "Netmask (CIDR)", value: `/${result.cidr}` },
             ])().map(f => (
-              <div key={f.label} className="group relative rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer" onClick={() => copyValue(f.label, f.value)}>
+              <div key={f.label} className="group relative rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer" onClick={() => copyValue(f.label, f.value)}>
                 <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">{f.label}</span>
                 <span className={cn("block text-sm font-mono text-surface-900 dark:text-dark-text truncate", f.cls)}>{f.value}</span>
                 <span className="absolute top-1 right-1 text-[9px] text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">copy</span>
@@ -173,7 +173,7 @@ export function IpCalculator() {
             {[["Binary IP", result.binaryIp], ["Binary Mask", result.binaryMask]].map(([label, binary]) => (
               <div key={label as string}>
                 <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">{label as string}</span>
-                <div className="flex gap-0.5 font-mono text-xs bg-surface-50 dark:bg-dark-surface rounded-lg border border-surface-200 dark:border-dark-border p-2">
+                <div className="flex gap-0.5 font-mono text-xs bg-surface-50 dark:bg-dark-surface rounded-md border border-surface-200 dark:border-dark-border p-2">
                   {(binary as string).match(/.{1,8}/g)?.map((oct, i) => (
                     <span key={i} className={cn("px-1", (["text-red-500", "text-green-500", "text-blue-500", "text-purple-500"])[i % 4])}>{oct}</span>
                   ))}
@@ -191,7 +191,7 @@ export function IpCalculator() {
               {showSubnets && (
                 <div className="mt-2 max-h-40 overflow-y-auto space-y-1">
                   {subnets.slice(0, 32).map((s, i) => (
-                    <div key={i} className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-mono dark:border-dark-border dark:bg-dark-surface">
+                    <div key={i} className="flex items-center justify-between rounded-md border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-mono dark:border-dark-border dark:bg-dark-surface">
                       <span className="text-surface-600 dark:text-dark-muted">#{i + 1}</span>
                       <span className="text-surface-900 dark:text-dark-text">{s.network}/{s.cidr}</span>
                       <span className="text-surface-500 dark:text-dark-muted">{s.firstHost} – {s.lastHost}</span>
@@ -205,7 +205,7 @@ export function IpCalculator() {
           )}
 
           {result.cidr >= 16 && result.cidr <= 24 && (
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Supernet Suggestion</span>
               <p className="text-sm font-mono text-surface-900 dark:text-dark-text mt-0.5">
                 {result.network.split(".").slice(0, result.cidr <= 16 ? 2 : 3).join(".")}.0/{result.cidr <= 16 ? 16 : 24}
@@ -222,11 +222,11 @@ export function IpCalculator() {
             <input type="text" value={ipv6Input} onChange={e => setIpv6Input(e.target.value)} placeholder="fe80::1" className={inputCls} />
             {ipv6Input && (
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
                   <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Expanded</span>
                   <span className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all">{expandIPv6(ipv6Input)}</span>
                 </div>
-                <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
                   <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Compressed</span>
                   <span className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all">{compressIPv6(ipv6Input)}</span>
                 </div>
@@ -237,7 +237,7 @@ export function IpCalculator() {
       </div>
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
 
       {history.length > 0 && (

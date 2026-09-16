@@ -69,7 +69,7 @@ export function StringComparison() {
   const lines = useMemo(() => lineDiff(a, b), [a, b]);
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-xs dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-xs dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -93,7 +93,7 @@ export function StringComparison() {
           />
           Trim whitespace
         </label>
-        <div className="flex rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+        <div className="flex rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
           {(["summary", "lines"] as const).map((v) => (
             <button
               key={v}
@@ -132,7 +132,7 @@ export function StringComparison() {
       </div>
 
       {view === "summary" ? (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">Result</p>
           <p
             data-testid="tool-output"
@@ -161,7 +161,7 @@ export function StringComparison() {
           </div>
         </div>
       ) : (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="mb-2 text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
             Line diff
           </p>

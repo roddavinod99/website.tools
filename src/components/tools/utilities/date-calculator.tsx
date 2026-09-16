@@ -99,7 +99,7 @@ export function DateCalculator() {
   }, [mode, startIso, op, amount, unit, dateA, dateB]);
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -109,7 +109,7 @@ export function DateCalculator() {
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-2 text-xs font-medium transition-colors ${
               mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text"
             }`}
           >
@@ -161,7 +161,7 @@ export function DateCalculator() {
       )}
 
       {result?.type === "result" && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">Result</p>
           <p data-testid="tool-output" className="mt-1 text-xl font-bold text-surface-900 dark:text-dark-text">
             {fmt(result.date)}
@@ -174,7 +174,7 @@ export function DateCalculator() {
       )}
 
       {result?.type === "diff" && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
             Difference
           </p>

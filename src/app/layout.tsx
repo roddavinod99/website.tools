@@ -196,7 +196,7 @@ export default function RootLayout({
           <ThemeProvider>
             <ServiceWorkerRegister />
             <FileCleanupProvider>
-                <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white focus:outline-none">
                   Skip to content
                 </a>
                 <Suspense>

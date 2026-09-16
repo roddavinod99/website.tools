@@ -25,6 +25,13 @@ const eslintConfig = defineConfig([
       "local/no-rounded-lg-in-content": "error"
     }
   },
+  {
+    files: ["eslint-rules/**", "eslint.config.mjs"],
+    rules: {
+      "local/no-hardcoded-colors": "off",
+      "local/no-rounded-lg-in-content": "off"
+    }
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
@@ -39,6 +46,10 @@ const eslintConfig = defineConfig([
     // WASM generated types:
     "wasm/pkg/**",
     "src/lib/wasm/pkg/**",
+    // Agent/skills and docs (not part of app lint)
+    ".agents/**",
+    ".claude/**",
+    "docs/**",
   ]),
 ]);
 

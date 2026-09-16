@@ -41,9 +41,9 @@ export default function TutorialsPage() {
               <Link
                 key={topic.slug}
                 href={`/guides/${topic.slug}`}
-                className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
+                className="group flex items-start gap-4 rounded-md border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
               >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400 bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400 bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                   <BookOpen className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">

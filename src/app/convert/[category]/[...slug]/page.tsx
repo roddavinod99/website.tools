@@ -81,7 +81,7 @@ function ConversionTable({ page }: { page: LandingPage }) {
   const table = page.content?.table;
   if (!table || table.length === 0) return null;
   return (
-    <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
+    <section className="mt-8 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
       <h2 className="text-lg font-semibold text-[var(--color-text)]">
         Conversion table
       </h2>
@@ -118,7 +118,7 @@ function SeeAlso({ page }: { page: LandingPage }) {
   const refs = page.content?.seeAlso;
   if (!refs || refs.length === 0) return null;
   return (
-    <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+    <section className="mt-8 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
         See also
       </h2>
@@ -139,7 +139,7 @@ function SeeAlso({ page }: { page: LandingPage }) {
             <li key={ref}>
               <Link
                 href={href}
-                className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
+                className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
               >
                 {refPage.title}
                 <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -159,7 +159,7 @@ function FaqList({ faqs }: { faqs: { question: string; answer: string }[] }) {
       {faqs.map((faq, i) => (
         <details
           key={i}
-          className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3"
+          className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
             <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
@@ -264,7 +264,7 @@ export default async function LandingPageRoute({ params }: Props) {
               <TrustBadges />
             </div>
 
-            <div className="mt-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
+            <div className="mt-6 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5">
               <LandingToolSection
                 tool={{ slug: tool.slug, name: tool.name }}
                 prefill={page.prefill}
@@ -273,7 +273,7 @@ export default async function LandingPageRoute({ params }: Props) {
             </div>
 
             {page.content?.formula && (
-              <section className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+              <section className="mt-8 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
                 <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Formula
@@ -311,7 +311,7 @@ export default async function LandingPageRoute({ params }: Props) {
           </main>
 
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+            <section className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
               <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 <FileText className="h-4 w-4" aria-hidden="true" />
                 About this page

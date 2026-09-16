@@ -72,14 +72,14 @@ export function DataTable<T>({
 
   if (filteredData.length === 0) {
     return (
-      <div className="rounded-xl border border-tool-border bg-tool-surface p-8 text-center">
+      <div className="rounded-md border border-tool-border bg-tool-surface p-8 text-center">
         <p className="text-result-secondary">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className={`overflow-x-auto rounded-xl border border-tool-border ${className}`}>
+    <div className={`overflow-x-auto rounded-md border border-tool-border ${className}`}>
       {searchable && (
         <div className="p-4 border-b border-tool-border bg-tool-surface">
           <input
@@ -87,7 +87,7 @@ export function DataTable<T>({
             placeholder={searchPlaceholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full max-w-md rounded-lg border border-tool-border bg-tool-bg px-3 py-2 text-sm text-result-primary placeholder:text-result-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary"
+            className="w-full max-w-md rounded-md border border-tool-border bg-tool-bg px-3 py-2 text-sm text-result-primary placeholder:text-result-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary"
             aria-label="Search table"
           />
         </div>

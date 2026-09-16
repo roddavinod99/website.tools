@@ -89,7 +89,7 @@ export function MetaTagGenerator() {
             value={config.title}
             onChange={(e) => updateField("title", e.target.value)}
             placeholder="My Page Title"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div className="col-span-2 sm:col-span-1">
@@ -99,7 +99,7 @@ export function MetaTagGenerator() {
             value={config.author}
             onChange={(e) => updateField("author", e.target.value)}
             placeholder="Author name"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
       </div>
@@ -111,7 +111,7 @@ export function MetaTagGenerator() {
           onChange={(e) => updateField("description", e.target.value)}
           rows={2}
           placeholder="A brief description of the page..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
@@ -123,7 +123,7 @@ export function MetaTagGenerator() {
             value={config.keywords}
             onChange={(e) => updateField("keywords", e.target.value)}
             placeholder="keyword1, keyword2, keyword3"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div>
@@ -133,7 +133,7 @@ export function MetaTagGenerator() {
             value={config.canonicalUrl}
             onChange={(e) => updateField("canonicalUrl", e.target.value)}
             placeholder="https://example.com/page"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
       </div>
@@ -146,7 +146,7 @@ export function MetaTagGenerator() {
             value={config.ogTitle}
             onChange={(e) => updateField("ogTitle", e.target.value)}
             placeholder="Open Graph title"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div>
@@ -156,7 +156,7 @@ export function MetaTagGenerator() {
             value={config.ogImage}
             onChange={(e) => updateField("ogImage", e.target.value)}
             placeholder="https://example.com/image.jpg"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
       </div>
@@ -168,7 +168,7 @@ export function MetaTagGenerator() {
           value={config.ogDescription}
           onChange={(e) => updateField("ogDescription", e.target.value)}
           placeholder="Open Graph description"
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
@@ -178,7 +178,7 @@ export function MetaTagGenerator() {
           <select
             value={config.ogType}
             onChange={(e) => updateField("ogType", e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           >
             <option value="website">website</option>
             <option value="article">article</option>
@@ -192,7 +192,7 @@ export function MetaTagGenerator() {
           <select
             value={config.twitterCard}
             onChange={(e) => updateField("twitterCard", e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           >
             <option value="summary">summary</option>
             <option value="summary_large_image">summary_large_image</option>
@@ -205,7 +205,7 @@ export function MetaTagGenerator() {
           <select
             value={config.robots}
             onChange={(e) => updateField("robots", e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           >
             <option value="index, follow">index, follow</option>
             <option value="noindex, follow">noindex, follow</option>
@@ -220,12 +220,12 @@ export function MetaTagGenerator() {
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text">Generated HTML Meta Tags</label>
           <button
             onClick={copy}
-            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+            className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
           >
             {copied ? "Copied!" : "Copy HTML"}
           </button>
         </div>
-        <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 font-mono text-xs text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-64 whitespace-pre-wrap">
+        <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 font-mono text-xs text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-64 whitespace-pre-wrap">
           {output}
         </pre>
       </div>
@@ -233,7 +233,7 @@ export function MetaTagGenerator() {
       {config.title && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Search Result Preview</label>
-          <div className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-bg">
+          <div className="rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-bg">
             <p className="text-blue-700 dark:text-blue-400 text-lg font-medium hover:underline cursor-pointer truncate">
               {config.title}
             </p>

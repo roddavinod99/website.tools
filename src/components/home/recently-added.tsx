@@ -34,7 +34,7 @@ export function RecentlyAdded({ allTools }: { allTools: Tool[] }) {
             <Link
               key={tool.id}
               href={`/tools/${tool.slug}`}
-              className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
+              className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
             >
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:text-blue-400">

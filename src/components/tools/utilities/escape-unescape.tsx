@@ -218,18 +218,18 @@ export function EscapeUnescape() {
       <div className="flex flex-wrap gap-2">
         {(["escape", "unescape"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "escape" ? "Escape" : "Unescape"}
           </button>
         ))}
-        <button onClick={swapMode} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+        <button onClick={swapMode} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
           Swap ⇄
         </button>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <select value={type} onChange={(e) => setType(e.target.value as EscapeType)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           {escapeTypes.map((t) => (
             <option key={t} value={t}>{ESCAPE_HANDLERS[t].label}</option>
           ))}
@@ -237,7 +237,7 @@ export function EscapeUnescape() {
       </div>
 
       {detectedFormat && detectedFormat !== type && (
-        <div className="rounded-lg border border-blue-200 bg-blue-50 p-2 dark:border-blue-800 dark:bg-blue-900/20">
+        <div className="rounded-md border border-blue-200 bg-blue-50 p-2 dark:border-blue-800 dark:bg-blue-900/20">
           <p className="text-xs text-blue-700 dark:text-blue-400">
             Detected format: {ESCAPE_HANDLERS[detectedFormat].label}.
             <button onClick={() => setType(detectedFormat)} className="ml-1 underline hover:no-underline">Switch?</button>
@@ -249,24 +249,24 @@ export function EscapeUnescape() {
         <div className="flex flex-wrap gap-2">
           {(["special", "all-non-ascii", "custom"] as CharTarget[]).map((t) => (
             <button key={t} onClick={() => setCharTarget(t)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${charTarget === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${charTarget === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
               {t === "special" ? "Special Chars" : t === "all-non-ascii" ? "Non-ASCII" : "Specific Chars"}
             </button>
           ))}
           {charTarget === "custom" && (
             <input type="text" value={customChars} onChange={(e) => setCustomChars(e.target.value)}
               placeholder="Chars to escape..."
-              className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text w-40" />
+              className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text w-40" />
           )}
         </div>
       )}
 
       <div className="flex flex-wrap gap-2">
-        <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
+        <label className="flex items-center gap-1.5 rounded-md border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
           <input type="checkbox" checked={unicodeEscaping} onChange={(e) => setUnicodeEscaping(e.target.checked)} className="rounded border-surface-300 text-brand-500 focus:ring-brand-400" />
           Unicode \uXXXX
         </label>
-        <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
+        <label className="flex items-center gap-1.5 rounded-md border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
           <input type="checkbox" checked={preserveNewlines} onChange={(e) => setPreserveNewlines(e.target.checked)} className="rounded border-surface-300 text-brand-500 focus:ring-brand-400" />
           Preserve newlines
         </label>
@@ -277,17 +277,17 @@ export function EscapeUnescape() {
         <textarea value={input} onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "escape" ? "Enter text to escape..." : "Enter escaped text..."}
           rows={4} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {showSizeWarning && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+        <div className="rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
           <p className="text-sm text-amber-700 dark:text-amber-400">Input exceeds 1MB limit. Please reduce input size.</p>
         </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -302,11 +302,11 @@ export function EscapeUnescape() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
               <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">Original</p>
-              <pre className="rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-32 break-all">{input}</pre>
+              <pre className="rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-32 break-all">{input}</pre>
             </div>
             <div>
               <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">{mode === "escape" ? "Escaped" : "Unescaped"}</p>
-              <pre className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-32 break-all select-all">{output}</pre>
+              <pre className="rounded-md border border-surface-200 bg-surface-50 p-2 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-32 break-all select-all">{output}</pre>
             </div>
           </div>
         </div>

@@ -118,13 +118,13 @@ export function ImageToBase64() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <button onClick={() => setMode("encode")} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${mode === "encode" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Encode Image</button>
-        <button onClick={() => setMode("decode")} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${mode === "decode" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Decode Base64</button>
+        <button onClick={() => setMode("encode")} className={`rounded-md px-3 py-1.5 text-xs font-medium ${mode === "encode" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Encode Image</button>
+        <button onClick={() => setMode("decode")} className={`rounded-md px-3 py-1.5 text-xs font-medium ${mode === "decode" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Decode Base64</button>
       </div>
 
       {mode === "encode" ? (
         <>
-          <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={() => fileRef.current?.click()} className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-surface-200 bg-white p-6 cursor-pointer hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface">
+          <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={() => fileRef.current?.click()} className="flex flex-col items-center justify-center rounded-md border-2 border-dashed border-surface-200 bg-white p-6 cursor-pointer hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface">
             <input ref={fileRef} type="file" accept={INPUT_ACCEPT} multiple className="hidden" onChange={handleFileChange} />
             <svg className="w-8 h-8 text-surface-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             <p className="text-sm text-surface-500 dark:text-dark-muted">Click or drop images here</p>
@@ -145,7 +145,7 @@ export function ImageToBase64() {
                 <button
                   key={fmt}
                   onClick={() => setOutputFormat(fmt)}
-                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+                  className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                     outputFormat === fmt
                       ? "bg-brand-500 text-white"
                       : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text"
@@ -161,7 +161,7 @@ export function ImageToBase64() {
 
           <div className="grid gap-4">
             {images.map((img, i) => (
-              <div key={i} className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
+              <div key={i} className="rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex gap-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.dataUri} alt={img.file.name} className="max-h-32 rounded border border-surface-100 dark:border-dark-border" />
@@ -190,22 +190,22 @@ export function ImageToBase64() {
           </div>
 
           {images.length > 0 && (
-            <button onClick={clear} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text">Clear All ({images.length})</button>
+            <button onClick={clear} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text">Clear All ({images.length})</button>
           )}
         </>
       ) : (
         <>
           <div>
             <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Paste Base64 String</label>
-            <textarea value={decodeInput} onChange={(e) => handleDecodeInput(e.target.value)} placeholder="Paste base64 (data URI or raw)..." rows={4} className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            <textarea value={decodeInput} onChange={(e) => handleDecodeInput(e.target.value)} placeholder="Paste base64 (data URI or raw)..." rows={4} className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
-          <button onClick={decodeBase64} disabled={!decodeInput} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Decode</button>
+          <button onClick={decodeBase64} disabled={!decodeInput} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Decode</button>
           {error && <p className="text-sm text-red-500">{error}</p>}
           {decodedPreview && (
             <div className="space-y-2">
               <p className="text-xs text-surface-500 dark:text-dark-muted">Detected format: {decodedMime}</p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={decodedPreview} alt="Decoded" className="max-h-48 rounded-lg border border-surface-200 dark:border-dark-border" />
+              <img src={decodedPreview} alt="Decoded" className="max-h-48 rounded-md border border-surface-200 dark:border-dark-border" />
               <div className="flex gap-2">
                 <button onClick={() => download(decodedPreview, `decoded.${decodedMime.split("/")[1]}`)} className="rounded bg-brand-500 px-2.5 py-1 text-xs text-white hover:bg-brand-600">Download Image</button>
               </div>

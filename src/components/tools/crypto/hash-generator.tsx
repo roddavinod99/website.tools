@@ -351,13 +351,13 @@ export function HashGenerator() {
         <div className="flex flex-wrap gap-2 mb-3">
           {coreAlgos.map((a) => (
             <span key={a.id}
-              className="rounded-lg px-3 py-1.5 text-xs font-medium bg-brand-500 text-white cursor-default">
+              className="rounded-md px-3 py-1.5 text-xs font-medium bg-brand-500 text-white cursor-default">
               {a.label}
             </span>
           ))}
           {extraAlgos.map((a) => (
             <button key={a.id} onClick={() => toggleAlgo(a.id)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
                 selected.includes(a.id)
                   ? "bg-brand-500 text-white"
                   : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border"
@@ -375,7 +375,7 @@ export function HashGenerator() {
             <div className="flex items-center gap-2">
               <label htmlFor="hash-format" className="text-sm font-medium text-surface-700 dark:text-dark-text">Format:</label>
               <select id="hash-format" value={hashFmt} onChange={(e) => setHashFmt(e.target.value as "hex" | "base64" | "binary")}
-                className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 <option value="hex">Hex</option>
                 <option value="base64">Base64</option>
                 <option value="binary">Binary</option>
@@ -396,7 +396,7 @@ export function HashGenerator() {
               <div>
                 <label htmlFor="hash-hmac-key" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">HMAC Secret Key</label>
                 <input type="text" id="hash-hmac-key" value={hmacKey} onChange={(e) => setHmacKey(e.target.value)} placeholder="Enter secret key..."
-                  className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
             </OptionRow>
           )}
@@ -407,12 +407,12 @@ export function HashGenerator() {
             <div>
               <label htmlFor="hash-salt" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt (optional)</label>
               <input type="text" id="hash-salt" value={salt} onChange={(e) => setSalt(e.target.value)} placeholder="Enter salt..."
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
             <div>
               <label htmlFor="hash-salt-pos" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Salt Position</label>
               <select id="hash-salt-pos" value={saltPos} onChange={(e) => setSaltPos(e.target.value as "prepend" | "append")}
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 <option value="prepend">Prepend</option>
                 <option value="append">Append</option>
               </select>
@@ -439,7 +439,7 @@ export function HashGenerator() {
               ref={dropRef}
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
-              className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
+              className="rounded-md border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
             >
               <p>Drop a file here or <label htmlFor="hash-file-picker" className="text-brand-500 hover:text-brand-600 cursor-pointer underline">browse<input type="file" id="hash-file-picker" onChange={handleFilePick} className="hidden" /></label></p>
               <div className="flex items-center gap-2 justify-center mt-2">
@@ -451,7 +451,7 @@ export function HashGenerator() {
                 </select>
               </div>
               {hasFile && (
-                <div className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+                <div className="mt-2 rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
                   <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">{file?.name} ({file ? (file.size / 1024).toFixed(1) : 0} KB)</p>
                   <code className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all select-all">{fileHash}</code>
                   {fileMatchesExpected !== null && (
@@ -470,7 +470,7 @@ export function HashGenerator() {
         <div>
           <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text to hash (real-time)..."
             rows={4}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       )}
 
@@ -479,16 +479,16 @@ export function HashGenerator() {
           <div>
             <label htmlFor="hash-compare-a" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 1</label>
             <input type="text" id="hash-compare-a" value={compareA} onChange={(e) => setCompareA(e.target.value)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
           <div>
             <label htmlFor="hash-compare-b" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hash 2</label>
             <input type="text" id="hash-compare-b" value={compareB} onChange={(e) => setCompareB(e.target.value)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
           <div className="col-span-2">
             <button onClick={() => setCompareResult(compareA.trim().toLowerCase() === compareB.trim().toLowerCase())}
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Compare</button>
+              className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Compare</button>
             {compareResult !== null && (
               <span className={`ml-3 text-sm font-medium ${compareResult ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                 {compareResult ? "✓ Match" : "✗ No Match"}
@@ -503,7 +503,7 @@ export function HashGenerator() {
           <label htmlFor="hash-bulk-input" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Enter text (one item per line)</label>
           <textarea id="hash-bulk-input" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text (one item per line)..."
             rows={6}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           {bulkResults.length > 0 && (
             <div className="mt-2 max-h-64 overflow-auto">
               <div className="table-responsive">
@@ -535,7 +535,7 @@ export function HashGenerator() {
         ref={dropRef}
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
+        className="rounded-md border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted"
       >
         <p>Drop a file here or <label htmlFor="hash-file-picker" className="text-brand-500 hover:text-brand-600 cursor-pointer underline">browse<input type="file" id="hash-file-picker" onChange={handleFilePick} className="hidden" /></label></p>
         <div className="flex items-center gap-2 justify-center mt-2">
@@ -547,7 +547,7 @@ export function HashGenerator() {
           </select>
         </div>
         {hasFile && (
-          <div className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+          <div className="mt-2 rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-1">{file?.name} ({file ? (file.size / 1024).toFixed(1) : 0} KB)</p>
             <code className="block text-xs font-mono text-surface-900 dark:text-dark-text break-all select-all">{fileHash}</code>
             {fileMatchesExpected !== null && (
@@ -573,7 +573,7 @@ export function HashGenerator() {
           <div className="flex items-center gap-2">
             <label htmlFor="hash-verify" className="text-xs text-surface-500 dark:text-dark-muted shrink-0">Expected hash (verify):</label>
             <input type="text" id="hash-verify" value={verifyHash} onChange={(e) => setVerifyHash(e.target.value)} placeholder="Paste a hash to verify results against..."
-              className="flex-1 min-w-0 rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+              className="flex-1 min-w-0 rounded-md border border-surface-200 bg-white px-3 py-1.5 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
             {expectedNormalized && (
               <span className={`text-xs font-medium shrink-0 ${verifiedCount === activeAlgos.length ? "text-green-600 dark:text-green-400" : "text-amber-600 dark:text-amber-400"}`}>
                 {verifiedCount}/{activeAlgos.length} match
@@ -585,7 +585,7 @@ export function HashGenerator() {
             if (!hash) return null;
             const matches = expectedNormalized ? normHash(hash) === expectedNormalized : null;
             return (
-              <div key={algo.id} className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+              <div key={algo.id} className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">{algo.label}</span>

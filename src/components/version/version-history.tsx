@@ -24,7 +24,7 @@ function shortCommit(commit: string): string {
 export function VersionHistory({ releases, currentVersion }: VersionHistoryProps) {
   if (releases.length === 0) {
     return (
-      <div className="rounded-lg border border-surface-200 bg-white p-6 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+      <div className="rounded-md border border-surface-200 bg-white p-6 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
         No release history available.
       </div>
     );
@@ -37,7 +37,7 @@ export function VersionHistory({ releases, currentVersion }: VersionHistoryProps
         return (
           <div
             key={`${release.version}-${release.buildNumber}`}
-            className={`rounded-lg border p-4 ${
+            className={`rounded-md border p-4 ${
               isCurrent
                 ? "border-brand-500 bg-brand-50 dark:border-brand-700 dark:bg-brand-900/20"
                 : "border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface"

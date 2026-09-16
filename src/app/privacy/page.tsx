@@ -36,14 +36,14 @@ export default function PrivacyPage() {
           </p>
         </div>
 
-        <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
+        <div className="mb-8 p-4 rounded-md bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
           <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Key Promise:</strong> Your code, files, and data never leave your browser. We implement
             client-side processing by design — not as a feature, but as our foundational architecture.
           </p>
         </div>
 
-        <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <nav className="mb-8 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
             <li><a href="#1-controller" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Controller & Contact</a></li>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
             <p className="mt-2">
               Pursuant to Article 4(7) GDPR, the data controller is:
             </p>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-1">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] space-y-1">
               <p><strong>DevStackIO</strong></p>
               <p>Email: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p>Privacy Inquiries: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
@@ -143,7 +143,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">3. Categories of Personal Data Processed</h2>
             <p className="mt-2">We minimize data collection. The following categories may be processed:</p>
             <div className="mt-4 space-y-3">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">A. Technical Data (Automatically Collected)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>IP address (temporarily via Cloudflare for security/rate limiting)</li>
@@ -153,7 +153,7 @@ export default function PrivacyPage() {
                   <li>Request headers, response codes, latency metrics</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">B. Analytics Data (Consent-Based)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Pseudonymous user ID (GA4 client_id)</li>
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
                   <li>Device category (desktop/mobile/tablet)</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">C. Cookie & Preference Data</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Cookie consent choices (necessary/analytics/advertising/functional)</li>
@@ -171,14 +171,14 @@ export default function PrivacyPage() {
                   <li>Tool-specific settings (indentation, encoding preferences) — client-side only</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">D. Contact Form Data (Voluntary)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Name, email address, subject, message content</li>
                   <li>Optional: organization, phone number</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+              <div className="p-4 rounded-md bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                 <h3 className="font-semibold text-green-800 dark:text-green-200">NOT Processed by Us (Client-Side Only)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Tool inputs: code, text, files, JSON, SQL, regex patterns, etc.</li>
@@ -194,7 +194,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">4. Purposes of Processing</h2>
             <p className="mt-2">We process personal data only for the following specific, explicit, and legitimate purposes:</p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">1. Service Delivery & Security (Art. 6(1)(f))</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Deliver static assets via CDN (Cloudflare)</li>
@@ -203,7 +203,7 @@ export default function PrivacyPage() {
                   <li>Platform stability and uptime monitoring</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">2. Analytics & Improvement (Art. 6(1)(a) — Consent)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Understand tool popularity and usage patterns</li>
@@ -212,7 +212,7 @@ export default function PrivacyPage() {
                   <li>No profiling, no automated decision-making</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">3. Advertising (Art. 6(1)(a) — Consent)</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Display relevant ads via Google AdSense</li>
@@ -220,7 +220,7 @@ export default function PrivacyPage() {
                   <li>Only with explicit consent; non-personalized by default</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">4. Communication (Art. 6(1)(b)/(f))</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Respond to contact form inquiries</li>
@@ -228,7 +228,7 @@ export default function PrivacyPage() {
                   <li>No marketing emails without separate opt-in</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">5. Legal Compliance (Art. 6(1)(c))</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Comply with valid legal requests, court orders</li>
@@ -307,28 +307,28 @@ export default function PrivacyPage() {
               Some subprocessors are located outside the EEA/UK. We ensure adequate safeguards under Chapter V GDPR:
             </p>
             <div className="mt-4 space-y-3">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Standard Contractual Clauses (SCCs)</h3>
                 <p className="mt-1 text-sm">
                   All subprocessors outside EEA/UK/CH execute EU Commission-approved SCCs (2021/914) as Controller-to-Processor
                   or Processor-to-Processor modules, supplemented by UK Addendum where applicable.
                 </p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">EU-US Data Privacy Framework</h3>
                 <p className="mt-1 text-sm">
                   US-based subprocessors (Cloudflare, Google, Vercel) self-certify under the EU-US DPF (2023 adequacy decision).
                   UK Extension applies for UK data flows.
                 </p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Transfer Impact Assessments (TIAs)</h3>
                 <p className="mt-1 text-sm">
                   We conduct TIAs for all third-country transfers, evaluating: local surveillance laws, government access
                   mechanisms, data subject rights enforceability, and supplementary measures (encryption, pseudonymization).
                 </p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">No Transfer of Your Tool Data</h3>
                 <p className="mt-1 text-sm">
                   Critically, <strong>your tool inputs and outputs never leave your browser</strong>. No international transfer
@@ -377,44 +377,44 @@ export default function PrivacyPage() {
               You have the following rights regarding your personal data. We honor all applicable rights:
             </p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right of Access (Art. 15 GDPR, §1798.100 CCPA)</h3>
                 <p className="mt-1 text-sm">Request confirmation of processing and a copy of your personal data.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Rectification (Art. 16 GDPR)</h3>
                 <p className="mt-1 text-sm">Request correction of inaccurate or incomplete personal data.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Erasure / "Right to Be Forgotten" (Art. 17 GDPR, §1798.105 CCPA)</h3>
                 <p className="mt-1 text-sm">Request deletion where data is no longer necessary, consent withdrawn, or processing unlawful.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Restriction (Art. 18 GDPR)</h3>
                 <p className="mt-1 text-sm">Request limitation of processing pending verification or objection.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Data Portability (Art. 20 GDPR)</h3>
                 <p className="mt-1 text-sm">Receive your data in a structured, commonly used, machine-readable format.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Object (Art. 21 GDPR)</h3>
                 <p className="mt-1 text-sm">Object to processing based on legitimate interest (Art. 6(1)(f)) or direct marketing.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Rights re: Automated Decision-Making (Art. 22 GDPR)</h3>
                 <p className="mt-1 text-sm">Not applicable — we do not engage in automated decision-making or profiling with legal effects.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Withdraw Consent (Art. 7(3) GDPR)</h3>
                 <p className="mt-1 text-sm">Withdraw cookie/analytics consent anytime via <a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Preferences</a> in footer.</p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">CCPA Rights (§1798.100-1798.199)</h3>
                 <p className="mt-1 text-sm">Know, access, delete, opt-out of sale (we don't sell), non-discrimination for exercising rights.</p>
               </div>
             </div>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
               <h3 className="font-semibold text-blue-700 dark:text-blue-400">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
                 Email <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>
@@ -423,7 +423,7 @@ export default function PrivacyPage() {
                 No fee for standard requests.
               </p>
             </div>
-            <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+            <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
               <h3 className="font-semibold text-[var(--color-text)]">Supervisory Authority Complaint</h3>
               <p className="mt-1 text-sm">
                 You have the right to lodge a complaint with a supervisory authority, e.g.:
@@ -443,7 +443,7 @@ export default function PrivacyPage() {
               to the risk, including:
             </p>
             <div className="mt-4 space-y-3">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Encryption & Transport</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>TLS 1.2+ for all traffic (HSTS with preload)</li>
@@ -451,7 +451,7 @@ export default function PrivacyPage() {
                   <li>No server-side storage of user content = no encryption-at-rest needed for tool data</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Application Security</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Strict per-route hash-based CSP served at edge; no nonces</li>
@@ -461,7 +461,7 @@ export default function PrivacyPage() {
                   <li>X-Content-Type-Options: nosniff; X-Frame-Options: DENY</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Infrastructure & Resilience</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Global CDN with DDoS protection (Cloudflare)</li>
@@ -470,7 +470,7 @@ export default function PrivacyPage() {
                   <li>Service Worker for offline-capable tool access</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Organizational Measures</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Privacy by design: client-side architecture eliminates server-side data risk</li>
@@ -481,7 +481,7 @@ export default function PrivacyPage() {
                   <li>Annual security review and penetration testing</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Testing & Monitoring</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                   <li>Automated security scanning in CI/CD pipeline</li>
@@ -500,14 +500,14 @@ export default function PrivacyPage() {
               or similarly significantly affects you (Art. 22 GDPR).
             </p>
             <div className="mt-4 space-y-3">
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+              <div className="p-4 rounded-md bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                 <h3 className="font-semibold text-green-800 dark:text-green-200">No Automated Decisions</h3>
                 <p className="mt-1 text-sm">
                   No algorithmic decision-making affects your legal status, rights, or access to services.
                   Tool outputs are deterministic transformations of your input — you remain in full control.
                 </p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">No Profiling</h3>
                 <p className="mt-1 text-sm">
                   We do not build profiles of your behavior, preferences, or characteristics for automated decisions.
@@ -556,7 +556,7 @@ export default function PrivacyPage() {
               digital consent in their jurisdiction (13-16 per GDPR Art. 8).
             </p>
             <div className="mt-4 space-y-3">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">If You Are a Parent/Guardian</h3>
                 <p className="mt-1 text-sm">
                   If you believe your child has provided personal data, contact us at
@@ -564,7 +564,7 @@ export default function PrivacyPage() {
                   We will verify and delete promptly.
                 </p>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Age Verification</h3>
                 <p className="mt-1 text-sm">
                   We do not implement age gates as our tools do not target children. Contact form includes
@@ -585,7 +585,7 @@ export default function PrivacyPage() {
               <li>Version history maintained at bottom of this page.</li>
               <li>Continued use after effective date constitutes acceptance.</li>
             </ul>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
               <h3 className="font-semibold text-[var(--color-text)]">Version History</h3>
               <dl className="mt-2 space-y-1 text-sm">
                 <div className="flex flex-col sm:flex-row gap-2">
@@ -602,7 +602,7 @@ export default function PrivacyPage() {
 
           <section id="14-contact">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">14. Contact & Data Protection Officer</h2>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
               <p><strong>General Privacy Inquiries:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>Data Subject Requests:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
@@ -617,7 +617,7 @@ export default function PrivacyPage() {
           </section>
         </div>
 
-        <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <div className="mt-12 p-6 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
             <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>

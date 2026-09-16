@@ -211,7 +211,7 @@ export function JWTDecoder() {
             value={input} onChange={(e) => { setInput(e.target.value); setSelectedTokenIdx(0); setSigResult(null); }}
             placeholder="Paste one or more JWTs here..."
             rows={4}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 pr-10 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 pr-10 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           <button onClick={pasteFromClipboard} className="absolute right-2 top-2 rounded p-1.5 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:text-dark-text dark:hover:bg-dark-border" title="Paste from clipboard">
             <ClipboardPaste size={16} />
@@ -230,7 +230,7 @@ export function JWTDecoder() {
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <AlertCircle size={16} className="mt-0.5 shrink-0 text-red-500" />
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
@@ -238,7 +238,7 @@ export function JWTDecoder() {
 
       {decoded && (
         <>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Raw Token ({tokenSize} bytes)</span>
               <button onClick={() => copySection("raw", currentToken)} className="text-xs text-brand-500 hover:text-brand-600 flex items-center gap-1">
@@ -251,7 +251,7 @@ export function JWTDecoder() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="rounded-lg border border-red-200 bg-white p-3 dark:border-red-800 dark:bg-dark-surface">
+            <div className="rounded-md border border-red-200 bg-white p-3 dark:border-red-800 dark:bg-dark-surface">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold text-red-600 dark:text-red-400">Header</span>
                 <button onClick={() => copySection("header", JSON.stringify(decoded.header, null, 2))} className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1">
@@ -264,7 +264,7 @@ export function JWTDecoder() {
                 ))}
               </div>
             </div>
-            <div className="rounded-lg border border-blue-200 bg-white p-3 sm:col-span-2 dark:border-blue-800 dark:bg-dark-surface">
+            <div className="rounded-md border border-blue-200 bg-white p-3 sm:col-span-2 dark:border-blue-800 dark:bg-dark-surface">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">Payload / Claims</span>
                 <button onClick={() => copySection("payload", JSON.stringify(decoded.payload, null, 2))} className="text-xs text-blue-500 hover:text-blue-600 flex items-center gap-1">
@@ -278,7 +278,7 @@ export function JWTDecoder() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <div className="rounded-lg border border-green-200 bg-white px-3 py-2 dark:border-green-800 dark:bg-dark-surface flex-1 min-w-0">
+            <div className="rounded-md border border-green-200 bg-white px-3 py-2 dark:border-green-800 dark:bg-dark-surface flex-1 min-w-0">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-green-600 dark:text-green-400">Signature</span>
                 <button onClick={() => copySection("signature", decoded.signature)} className="text-xs text-green-500 hover:text-green-600 flex items-center gap-1">
@@ -301,7 +301,7 @@ export function JWTDecoder() {
                   {expiryInfo.status === "valid" ? (countdown || "Valid") : "Expired"}
                 </span>
               )}
-              <button onClick={downloadAsJson} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+              <button onClick={downloadAsJson} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
                 <Download size={12} /> JSON
               </button>
             </div>
@@ -312,8 +312,8 @@ export function JWTDecoder() {
               <OptionRow columns={1}>
                 <div className="flex gap-2">
                   <input type="text" value={secret} onChange={(e) => setSecret(e.target.value)} placeholder="Enter HMAC secret to verify..."
-                    className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
-                  <button onClick={verifySig} disabled={!secret} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Verify</button>
+                    className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  <button onClick={verifySig} disabled={!secret} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Verify</button>
                 </div>
                 {sigResult && (
                   <p className={`mt-1 text-xs flex items-center gap-1 ${sigResult === "match" ? "text-green-600 dark:text-green-400" : sigResult === "mismatch" ? "text-red-600 dark:text-red-400" : "text-yellow-600 dark:text-yellow-400"}`}>

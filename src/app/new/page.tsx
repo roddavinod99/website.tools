@@ -59,7 +59,7 @@ export default function NewToolsPage() {
                   <Link
                     key={tool.id}
                     href={`/tools/${tool.slug}`}
-                    className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                    className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                   >
                     <div className="flex items-start justify-between">
                       <Badge variant="new">New</Badge>
@@ -88,7 +88,7 @@ export default function NewToolsPage() {
                 <Link
                   key={tool.id}
                   href={`/tools/${tool.slug}`}
-                  className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                  className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <Badge variant="default">{tool.category}</Badge>
                   <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">

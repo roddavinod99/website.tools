@@ -29,7 +29,7 @@ export function LearningSection() {
           <Link
             key={topic.slug}
             href={`/guides/${topic.slug}`}
-            className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
+            className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
           >
             <h3 className="font-semibold text-[var(--color-text)] transition-colors group-hover:text-blue-700 dark:text-blue-400">
               {topic.title}

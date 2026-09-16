@@ -138,7 +138,7 @@ export function Binary() {
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Text to Binary" : "Binary to Text"}
           </button>
         ))}
@@ -146,7 +146,7 @@ export function Binary() {
 
       <div className="flex flex-wrap gap-2">
         <select value={separator} onChange={(e) => setSeparator(e.target.value as SeparatorType)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="space">Space</option>
           <option value="none">None</option>
           <option value="comma">Comma</option>
@@ -155,16 +155,16 @@ export function Binary() {
         {separator === "custom" && (
           <input type="text" value={customSep} onChange={(e) => setCustomSep(e.target.value)}
             placeholder="separator"
-            className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         )}
         {(["8bit", "4bit", "continuous"] as GroupMode[]).map((g) => (
           <button key={g} onClick={() => setGroupMode(g)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${groupMode === g ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${groupMode === g ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {g === "8bit" ? "8-bit Blocks" : g === "4bit" ? "4-bit Nibbles" : "Continuous"}
           </button>
         ))}
         {mode === "encode" && (
-          <button onClick={handleFileConvert} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+          <button onClick={handleFileConvert} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
             File to Binary
           </button>
         )}
@@ -177,11 +177,11 @@ export function Binary() {
         <textarea value={input} onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "encode" ? "Hello" : "01001000 01101001"}
           rows={4} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -191,7 +191,7 @@ export function Binary() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}
 
@@ -205,7 +205,7 @@ export function Binary() {
       {charMap.length > 0 && (
         <div>
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Breakdown</p>
-          <div className="max-h-48 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
+          <div className="max-h-48 overflow-y-auto rounded-md border border-surface-200 dark:border-dark-border">
             <div className="table-responsive">
             <table className="table-base table-hover font-mono">
               <thead>

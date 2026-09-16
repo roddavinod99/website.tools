@@ -471,7 +471,7 @@ export function ImageResizer() {
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onClick={() => fileRef.current?.click()}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
+        className={`flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed p-6 transition-colors ${
           dragging
             ? "border-brand-500 bg-brand-50 dark:bg-brand-500/10"
             : "border-surface-200 bg-white hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface"
@@ -491,14 +491,14 @@ export function ImageResizer() {
 
       {images.length > 0 && (
         <>
-          <div className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-3 dark:border-dark-border">
             <label className="mb-2 block text-xs font-medium text-surface-500 dark:text-dark-muted">Quick Social Media Presets</label>
             <div className="flex flex-wrap gap-1.5 mb-3">
               {SOCIAL_BUTTONS.map((btn) => (
                 <button
                   key={btn.label}
                   onClick={() => applySocialButton(btn.w, btn.h)}
-                  className="rounded-lg border border-surface-200 px-2.5 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
+                  className="rounded-md border border-surface-200 px-2.5 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
                 >
                   {btn.label} ({btn.w}x{btn.h})
                 </button>
@@ -510,7 +510,7 @@ export function ImageResizer() {
                 <button
                   key={ar.label}
                   onClick={() => applyAspectRatio(ar.label, ar.ratio)}
-                  className={`rounded-lg border px-2.5 py-1 text-xs transition-colors ${
+                  className={`rounded-md border px-2.5 py-1 text-xs transition-colors ${
                     aspectRatioMode === ar.label
                       ? "border-brand-500 bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-400"
                       : "border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface"
@@ -522,15 +522,15 @@ export function ImageResizer() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-3 dark:border-dark-border">
             <label className="mb-2 block text-xs font-medium text-surface-500 dark:text-dark-muted">Preset Dimensions</label>
             <div className="flex flex-wrap gap-1.5">
               {Object.entries(categorizedPresets).map(([category, presets]) => (
                 <details key={category} className="min-w-0">
-                  <summary className="cursor-pointer rounded-lg border border-surface-200 px-2.5 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">
+                  <summary className="cursor-pointer rounded-md border border-surface-200 px-2.5 py-1 text-xs text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface">
                     {category}
                   </summary>
-                  <div className="absolute z-10 mt-1 w-48 rounded-lg border border-surface-200 bg-white p-1 shadow-lg dark:border-dark-border dark:bg-dark-surface">
+                  <div className="absolute z-10 mt-1 w-48 rounded-md border border-surface-200 bg-white p-1 shadow-lg dark:border-dark-border dark:bg-dark-surface">
                     {presets.map((p) => (
                       <button
                         key={p.label}
@@ -551,7 +551,7 @@ export function ImageResizer() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+          <div className="flex flex-wrap items-center gap-4 rounded-md border border-surface-200 p-3 dark:border-dark-border">
             <div>
               <label className="block text-xs text-surface-500 dark:text-dark-muted">Width</label>
               <input
@@ -566,7 +566,7 @@ export function ImageResizer() {
                   }
                 }}
                 min={1}
-                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
             </div>
             <button
@@ -596,7 +596,7 @@ export function ImageResizer() {
                   }
                 }}
                 min={1}
-                className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               />
             </div>
             <div>
@@ -604,7 +604,7 @@ export function ImageResizer() {
               <select
                 value={unit}
                 onChange={(e) => setUnit(e.target.value as UnitType)}
-                className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 <option value="px">Pixels</option>
                 <option value="percent">%</option>
@@ -617,7 +617,7 @@ export function ImageResizer() {
               <select
                 value={fitMode}
                 onChange={(e) => setFitMode(e.target.value as FitMode)}
-                className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 <option value="exact">Exact</option>
                 <option value="contain">Fit (Contain)</option>
@@ -630,7 +630,7 @@ export function ImageResizer() {
               <select
                 value={format}
                 onChange={(e) => setFormat(e.target.value as ImageFormat)}
-                className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
               >
                 {FORMAT_OPTIONS.map((f) => (
                   <option key={f.value} value={f.value}>{f.label}</option>
@@ -650,7 +650,7 @@ export function ImageResizer() {
             </div>
           </div>
 
-          <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+          <details className="rounded-md border border-surface-200 dark:border-dark-border">
             <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
               Advanced Options
             </summary>
@@ -661,7 +661,7 @@ export function ImageResizer() {
                   type="text"
                   value={suffix}
                   onChange={(e) => setSuffix(e.target.value)}
-                  className="w-24 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                  className="w-24 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 />
               </div>
               <div>
@@ -671,7 +671,7 @@ export function ImageResizer() {
                   value={maxFileSize}
                   onChange={(e) => setMaxFileSize(parseInt(e.target.value) || 0)}
                   min={0}
-                  className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+                  className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
                 />
               </div>
               <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text">
@@ -689,7 +689,7 @@ export function ImageResizer() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={resizeAll}
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
+              className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors"
             >
               Resize {images.length > 1 ? `All (${images.length})` : ""}
             </button>
@@ -697,13 +697,13 @@ export function ImageResizer() {
               <>
                 <button
                   onClick={downloadAll}
-                  className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                  className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
                 >
                   Download All
                 </button>
                 <button
                   onClick={downloadAllAsZip}
-                  className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                  className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
                 >
                   Download as ZIP
                 </button>
@@ -711,7 +711,7 @@ export function ImageResizer() {
             )}
             <button
               onClick={clearAll}
-              className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               Clear All
             </button>
@@ -721,7 +721,7 @@ export function ImageResizer() {
             {images.map((entry) => (
               <div
                 key={entry.id}
-                className="rounded-lg border border-surface-200 p-3 dark:border-dark-border"
+                className="rounded-md border border-surface-200 p-3 dark:border-dark-border"
               >
                 <div className="mb-2 flex items-center justify-between">
                   <span className="truncate text-xs font-medium text-surface-700 dark:text-dark-text">
@@ -774,7 +774,7 @@ export function ImageResizer() {
                 {entry.outputUrl && (
                   <button
                     onClick={() => downloadImage(entry)}
-                    className="mt-2 w-full rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                    className="mt-2 w-full rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
                   >
                     Download
                   </button>
@@ -784,13 +784,13 @@ export function ImageResizer() {
           </div>
 
           {history.length > 0 && (
-            <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+            <details className="rounded-md border border-surface-200 dark:border-dark-border">
               <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
                 Processing History (last {history.length})
               </summary>
               <div className="grid gap-3 border-t border-surface-200 p-3 sm:grid-cols-2 lg:grid-cols-3 dark:border-dark-border">
                 {history.map((entry) => (
-                  <div key={entry.id} className="flex items-center gap-3 rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+                  <div key={entry.id} className="flex items-center gap-3 rounded-md border border-surface-200 p-2 dark:border-dark-border">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={entry.outputUrl || entry.originalUrl}

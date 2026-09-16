@@ -312,7 +312,7 @@ export function DiffChecker() {
       <div className="flex flex-wrap gap-2">
         {(["side-by-side", "unified"] as DiffView[]).map((v) => (
           <button key={v} onClick={() => setView(v)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${view === v ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${view === v ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {v === "side-by-side" ? "Side by Side" : "Unified"}
           </button>
         ))}
@@ -325,7 +325,7 @@ export function DiffChecker() {
             placeholder="Paste original text or drag & drop a file..."
             onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { if (f.size > 1024 * 1024) { alert("File size exceeds 1MB limit."); return; } const r = new FileReader(); r.onload = () => setLeftText(r.result as string); r.readAsText(f); } }}
             onDragOver={(e) => e.preventDefault()}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <input type="file" accept=".txt,.js,.ts,.jsx,.tsx,.html,.css,.json,.xml,.md,.csv" onChange={handleFile("left")} className="mt-1 text-xs text-surface-500 dark:text-dark-muted file:mr-2 file:rounded file:border-0 file:bg-brand-50 file:px-2 file:py-0.5 file:text-xs file:font-medium file:text-brand-700 dark:file:bg-brand-900/30 dark:file:text-brand-400" />
         </div>
         <div>
@@ -334,7 +334,7 @@ export function DiffChecker() {
             placeholder="Paste changed text or drag & drop a file..."
             onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) { if (f.size > 1024 * 1024) { alert("File size exceeds 1MB limit."); return; } const r = new FileReader(); r.onload = () => setRightText(r.result as string); r.readAsText(f); } }}
             onDragOver={(e) => e.preventDefault()}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <input type="file" accept=".txt,.js,.ts,.jsx,.tsx,.html,.css,.json,.xml,.md,.csv" onChange={handleFile("right")} className="mt-1 text-xs text-surface-500 dark:text-dark-muted file:mr-2 file:rounded file:border-0 file:bg-brand-50 file:px-2 file:py-0.5 file:text-xs file:font-medium file:text-brand-700 dark:file:bg-brand-900/30 dark:file:text-brand-400" />
         </div>
       </div>
@@ -343,7 +343,7 @@ export function DiffChecker() {
         <div className="flex items-center gap-2">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Level:</label>
           <select value={level} onChange={(e) => setLevel(e.target.value as DiffLevel)}
-            className="rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white px-2 py-1 text-xs text-surface-700 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="line">Line</option>
             <option value="word">Word</option>
             <option value="character">Character</option>
@@ -358,7 +358,7 @@ export function DiffChecker() {
           Ignore Case
         </label>
         <button onClick={swapSides}
-          className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+          className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           Swap Sides
         </button>
       </div>
@@ -381,7 +381,7 @@ export function DiffChecker() {
           </div>
 
           {view === "side-by-side" ? (
-            <div className="grid grid-cols-2 gap-0 border border-surface-200 rounded-lg overflow-hidden dark:border-dark-border">
+            <div className="grid grid-cols-2 gap-0 border border-surface-200 rounded-md overflow-hidden dark:border-dark-border">
               <div className="max-h-96 overflow-auto border-r border-surface-200 dark:border-dark-border">
                 <div className="sticky top-0 bg-surface-100 dark:bg-dark-surface px-2 py-1 text-xs font-medium text-surface-500 dark:text-dark-muted border-b border-surface-200 dark:border-dark-border">Original</div>
                 {lines.map((l) => renderSideLine(l, "left"))}
@@ -392,7 +392,7 @@ export function DiffChecker() {
               </div>
             </div>
           ) : (
-            <div className="max-h-96 overflow-auto border border-surface-200 rounded-lg dark:border-dark-border">
+            <div className="max-h-96 overflow-auto border border-surface-200 rounded-md dark:border-dark-border">
               <div className="sticky top-0 bg-surface-100 dark:bg-dark-surface px-2 py-1 text-xs font-medium text-surface-500 dark:text-dark-muted border-b border-surface-200 dark:border-dark-border">Unified Diff</div>
               {lines.map((l, i) => renderUnifiedLine(l, i))}
             </div>

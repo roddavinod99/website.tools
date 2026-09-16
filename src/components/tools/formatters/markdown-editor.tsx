@@ -49,10 +49,10 @@ function renderMarkdown(text: string, hljsInstance?: any): string {
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
     const highlighted = highlightCode(code.trim(), lang, hljsInstance);
     const langTag = lang ? `<span class="text-[10px] text-surface-400 dark:text-dark-muted uppercase">${escapeHtml(lang)}</span>` : "";
-    return `<div class="relative rounded-lg bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
+    return `<div class="relative rounded-md bg-surface-50 dark:bg-dark-surface border border-surface-200 dark:border-dark-border my-2"><div class="flex items-center justify-between px-3 py-1 border-b border-surface-200 dark:border-dark-border">${langTag}</div><pre class="overflow-x-auto p-3 text-xs font-mono"><code>${highlighted}</code></pre></div>`;
   });
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-brand-500 underline hover:opacity-80">$1</a>');
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-2" />');
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-md my-2" />');
   html = html.replace(/^- \[x\] (.+)$/gim, '<li class="flex items-center gap-2"><input type="checkbox" checked disabled class="accent-brand-500" /> <del>$1</del></li>');
   html = html.replace(/^- \[ \] (.+)$/gim, '<li class="flex items-center gap-2"><input type="checkbox" disabled class="accent-brand-500" /> $1</li>');
   html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
@@ -237,7 +237,7 @@ export function MarkdownEditor() {
       </div>
 
       {tableHelper && (
-        <div className="flex items-center gap-2 p-2 rounded-lg border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface">
+        <div className="flex items-center gap-2 p-2 rounded-md border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface">
           <label className="text-xs text-surface-600 dark:text-dark-muted">Rows:</label>
           <input type="number" min={1} max={20} value={tableRows} onChange={(e) => setTableRows(Number(e.target.value))} className="w-14 rounded border border-surface-200 bg-white px-2 py-1 text-xs dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           <label className="text-xs text-surface-600 dark:text-dark-muted">Cols:</label>
@@ -265,7 +265,7 @@ export function MarkdownEditor() {
         <button onClick={() => fileRef.current?.click()} className="flex items-center gap-1 rounded border border-surface-200 px-2 py-1 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface transition-colors">Upload .md</button>
       </div>
 
-      <div ref={containerRef} className="relative flex rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden" style={{ minHeight: "450px" }}>
+      <div ref={containerRef} className="relative flex rounded-md border border-surface-200 dark:border-dark-border overflow-hidden" style={{ minHeight: "450px" }}>
         <div className="relative" style={{ width: `${splitPos}%` }}>
           <textarea ref={editorRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={handleKeyDown}
             style={{ fontSize: `${fontSize}px` }}
@@ -292,7 +292,7 @@ export function MarkdownEditor() {
       </div>
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
     </div>
   );

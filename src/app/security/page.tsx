@@ -38,7 +38,7 @@ export default function SecurityPage() {
         <div className="space-y-8 text-[var(--color-text-muted)]">
           <section>
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Supported Versions</h2>
-            <div className="mt-4 overflow-x-auto rounded-lg border border-[var(--color-border)]">
+            <div className="mt-4 overflow-x-auto rounded-md border border-[var(--color-border)]">
               <table className="table-base">
                 <thead>
                   <tr className="bg-[var(--color-surface)]">
@@ -61,7 +61,7 @@ export default function SecurityPage() {
             <p className="mt-2">
               We take security seriously. If you discover a security vulnerability, please report it privately:
             </p>
-            <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
+            <div className="mt-4 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
               <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>GitHub Profile:</strong>{" "}
                 <a href="https://github.com/roddavinod99" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">github.com/roddavinod99</a>
@@ -98,7 +98,7 @@ export default function SecurityPage() {
             <div className="mt-4">
               <h3 className="font-semibold text-[var(--color-text)]">Defense in Depth</h3>
               <div className="mt-3 space-y-4">
-                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 1: Nginx Reverse Proxy</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>TLS 1.2/1.3</li>
@@ -111,7 +111,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 2: Next.js Middleware (proxy.ts)</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>Application rate limiting</li>
@@ -120,7 +120,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 3: API Routes</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>Input sanitization</li>
@@ -132,7 +132,7 @@ export default function SecurityPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                   <h4 className="font-mono text-sm font-semibold text-[var(--color-text)]">Layer 4: Client-Side</h4>
                   <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
                     <li>DOMPurify HTML/SVG sanitization</li>
@@ -146,7 +146,7 @@ export default function SecurityPage() {
 
             <div className="mt-6">
               <h3 className="font-semibold text-[var(--color-text)]">Security Headers</h3>
-              <div className="mt-3 overflow-x-auto rounded-lg border border-[var(--color-border)]">
+              <div className="mt-3 overflow-x-auto rounded-md border border-[var(--color-border)]">
                 <table className="table-base">
                   <thead>
                     <tr className="bg-[var(--color-surface)]">
@@ -193,7 +193,7 @@ export default function SecurityPage() {
               DevStackIO aligns with established web security standards and best practices. The following are
               publicly verifiable:
             </p>
-            <div className="mt-4 overflow-x-auto rounded-lg border border-[var(--color-border)]">
+            <div className="mt-4 overflow-x-auto rounded-md border border-[var(--color-border)]">
               <table className="table-base">
                 <thead>
                   <tr className="bg-[var(--color-surface)]">
@@ -257,7 +257,7 @@ export default function SecurityPage() {
           </section>
         </div>
 
-        <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <div className="mt-12 p-6 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
             <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>
@@ -268,7 +268,7 @@ export default function SecurityPage() {
           </ul>
         </div>
 
-        <div className="mt-8 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <div className="mt-8 p-6 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Contact</h2>
           <p className="mt-2 text-[var(--color-text-muted)]">
             Questions about this Security Policy? Contact us at

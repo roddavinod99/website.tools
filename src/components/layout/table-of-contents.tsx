@@ -51,7 +51,7 @@ export function TableOfContents({ items, activeId }: TableOfContentsProps) {
 
       <div
         className={cn(
-          "fixed bottom-0 left-0 right-0 md:hidden z-30 max-h-[60vh] overflow-auto rounded-t-2xl border-t border-surface-200 bg-white p-4 shadow-xl dark:border-dark-border dark:bg-dark-surface transition-transform duration-300",
+          "fixed bottom-0 left-0 right-0 md:hidden z-30 max-h-[60vh] overflow-auto rounded-md border-t border-surface-200 bg-white p-4 shadow-xl dark:border-dark-border dark:bg-dark-surface transition-transform duration-300",
           isOpen ? "translate-y-0" : "translate-y-full"
         )}
         role="dialog"

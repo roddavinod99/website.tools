@@ -67,7 +67,7 @@ export function LoanEmiCalculator() {
       {result ? (
         <div
           data-testid="tool-output"
-          className="rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
@@ -88,7 +88,7 @@ export function LoanEmiCalculator() {
           </p>
         </div>
       ) : (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter a loan amount and tenure to calculate the EMI.
         </p>
       )}

@@ -1,5 +1,4 @@
 /** @type {import('eslint').Rule.RuleModule} */
-const ALLOWED = new Set(['rounded-sm', 'rounded-md', 'rounded', 'rounded-full']);
 module.exports = {
   meta: {
     type: 'problem',
@@ -12,26 +11,40 @@ module.exports = {
     }
   },
   create(context) {
+    // Flag any rounded class that uses lg/xl/2xl/3xl (with optional directional prefix)
+    // Allowed: rounded, rounded-sm, rounded-md, rounded-full and their directional variants
+    // e.g., rounded-t, rounded-t-sm, rounded-b-md, rounded-l-full are allowed
+    // Disallowed: rounded-lg, rounded-xl, rounded-2xl, rounded-t-lg, rounded-l-xl, etc.
+    const disallowedRe = /\brounded(?:-[tblr]|-(tl|tr|bl|br))?-(lg|xl|2xl|3xl)\b/g;
+    const plainDisallowedRe = /\brounded-(lg|xl|2xl|3xl)\b/g;
     return {
       Literal(node) {
         if (typeof node.value !== 'string') return;
-        const re = /\brounded(-[a-z0-9]+)?\b/g;
+        // Check plain
         let m;
-        while ((m = re.exec(node.value)) !== null) {
-          if (!ALLOWED.has(m[0])) {
-            context.report({ node, messageId: 'radius', data: { cls: m[0] } });
-          }
+        const re1 = new RegExp(plainDisallowedRe.source, 'g');
+        while ((m = re1.exec(node.value)) !== null) {
+          context.report({ node, messageId: 'radius', data: { cls: m[0] } });
+        }
+        const re2 = new RegExp(disallowedRe.source, 'g');
+        while ((m = re2.exec(node.value)) !== null) {
+          // Avoid double-reporting plain ones already reported
+          if (/^rounded-(lg|xl|2xl|3xl)$/.test(m[0])) continue;
+          context.report({ node, messageId: 'radius', data: { cls: m[0] } });
         }
       },
       TemplateElement(node) {
         const v = node.value && node.value.cooked;
         if (!v) return;
-        const re = /\brounded(-[a-z0-9]+)?\b/g;
         let m;
-        while ((m = re.exec(v)) !== null) {
-          if (!ALLOWED.has(m[0])) {
-            context.report({ node, messageId: 'radius', data: { cls: m[0] } });
-          }
+        const re1 = new RegExp(plainDisallowedRe.source, 'g');
+        while ((m = re1.exec(v)) !== null) {
+          context.report({ node, messageId: 'radius', data: { cls: m[0] } });
+        }
+        const re2 = new RegExp(disallowedRe.source, 'g');
+        while ((m = re2.exec(v)) !== null) {
+          if (/^rounded-(lg|xl|2xl|3xl)$/.test(m[0])) continue;
+          context.report({ node, messageId: 'radius', data: { cls: m[0] } });
         }
       }
     };

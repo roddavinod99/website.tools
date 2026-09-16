@@ -120,14 +120,14 @@ export default async function WorkflowPage({ params }: Props) {
             ))}
           </ol>
 
-          <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="mt-10 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
             <h2 className="text-lg font-semibold text-[var(--color-text)]">Run the full workflow</h2>
             <p className="mt-2 text-[var(--color-text-muted)]">
               Open the first tool with the workflow context; each step will pass its output to the next.
             </p>
             <Link
               href={`/tools/${workflow.steps[0].toolSlug}?workflow=${workflow.slug}&step=1`}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] transition-colors"
+              className="mt-4 inline-flex items-center gap-2 rounded-md bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] transition-colors"
             >
               <CheckCircle className="h-4 w-4" aria-hidden="true" />
               Start workflow

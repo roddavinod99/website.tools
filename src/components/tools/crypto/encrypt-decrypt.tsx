@@ -66,7 +66,7 @@ export function EncryptDecrypt() {
       <div className="flex flex-wrap gap-2">
         {(["encrypt", "decrypt"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encrypt" ? "Encrypt" : "Decrypt"}
           </button>
         ))}
@@ -78,7 +78,7 @@ export function EncryptDecrypt() {
           <select
             value="aes-gcm"
             disabled
-            className="w-full rounded-lg border border-surface-200 bg-surface-100 px-3 py-2 text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted cursor-not-allowed"
+            className="w-full rounded-md border border-surface-200 bg-surface-100 px-3 py-2 text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted cursor-not-allowed"
           >
             <option value="aes-gcm">AES-GCM (Web Crypto API)</option>
           </select>
@@ -89,7 +89,7 @@ export function EncryptDecrypt() {
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Secret Key</label>
           <input type="text" value={secretKey} onChange={(e) => setSecretKey(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       </div>
 
@@ -98,7 +98,7 @@ export function EncryptDecrypt() {
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Your text:</label>
           <textarea value={encryptInput} onChange={(e) => setEncryptInput(e.target.value)}
             placeholder="The string to encrypt" rows={4} spellCheck={false}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       )}
 
@@ -107,16 +107,16 @@ export function EncryptDecrypt() {
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Your encrypted text:</label>
           <textarea value={decryptInput} onChange={(e) => setDecryptInput(e.target.value)}
             placeholder='Paste JSON output from encryption: {"data":"...","iv":"...","salt":"..."}' rows={4} spellCheck={false}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       )}
 
-      <button onClick={handleProcess} className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
+      <button onClick={handleProcess} className="rounded-md bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
         {mode === "encrypt" ? "Encrypt" : "Decrypt"}
       </button>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -131,7 +131,7 @@ export function EncryptDecrypt() {
               {copied === "output" ? "Copied!" : "Copy"}
             </button>
           </div>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{currentOutput}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{currentOutput}</pre>
         </div>
       )}
     </div>

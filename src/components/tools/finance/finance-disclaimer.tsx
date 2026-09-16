@@ -4,7 +4,7 @@ export function FinanceDisclaimer() {
   return (
     <section aria-label="Financial disclaimer" className="border-b border-surface-200 dark:border-dark-border">
       <div className="container py-6 md:py-8">
-        <div className="mx-auto max-w-3xl rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/40 dark:bg-amber-900/20">
+        <div className="mx-auto max-w-3xl rounded-md border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/40 dark:bg-amber-900/20">
           <div className="flex items-start gap-3">
             <CircleAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600 dark:text-amber-400" aria-hidden="true" />
             <div className="text-sm text-amber-900 dark:text-amber-100">

@@ -103,7 +103,7 @@ export default function ComparePage() {
                       <Link
                         key={comparison.slug}
                         href={`/compare/${comparison.slug}`}
-                        className="group flex flex-col rounded-lg border border-[var(--color-border)] bg-white p-5 transition-colors hover:border-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)]"
+                        className="group flex flex-col rounded-md border border-[var(--color-border)] bg-white p-5 transition-colors hover:border-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)]"
                       >
                         <h3 className="font-semibold text-[var(--color-text)]">
                           {comparison.title}

@@ -57,11 +57,11 @@ export function Ipv6UlaGenerator() {
             onChange={e => setCount(Math.max(1, Math.min(50, parseInt(e.target.value) || 1)))}
             min={1}
             max={50}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div className="flex items-end">
-          <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors w-full">
+          <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors w-full">
             Generate
           </button>
         </div>
@@ -74,7 +74,7 @@ export function Ipv6UlaGenerator() {
               Generated ULAs ({ulas.length})
             </span>
             {ulas.length > 1 && (
-              <button onClick={copyAll} className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+              <button onClick={copyAll} className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
                 Copy All
               </button>
             )}
@@ -82,7 +82,7 @@ export function Ipv6UlaGenerator() {
 
           <div className="space-y-3 max-h-96 overflow-y-auto">
             {ulas.map((ula, i) => (
-              <div key={i} className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface space-y-2">
+              <div key={i} className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">ULA #{i + 1}</span>
                 </div>
@@ -111,7 +111,7 @@ export function Ipv6UlaGenerator() {
             ))}
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
             <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">About IPv6 ULA</span>
             <div className="text-xs text-surface-600 dark:text-dark-muted space-y-0.5">
               <p><strong>Prefix:</strong> fd00::/8 (fc00::/7 block, with L bit set)</p>
@@ -124,7 +124,7 @@ export function Ipv6UlaGenerator() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
     </div>
   );

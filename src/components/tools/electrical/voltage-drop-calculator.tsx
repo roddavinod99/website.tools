@@ -113,7 +113,7 @@ export function VoltageDropCalculator() {
   }, [current, length, gauge, material, system]);
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -194,7 +194,7 @@ export function VoltageDropCalculator() {
       {result && (
         <div
           data-testid="tool-output"
-          className={`rounded-2xl border p-5 ${
+          className={`rounded-md border p-5 ${
             result.ok
               ? "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20"
               : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"

@@ -215,20 +215,20 @@ export function JwtGenerator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Algorithm</label>
           <select value={algorithm} onChange={(e) => setAlgorithm(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {algOptions.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Key ID (kid)</label>
           <input type="text" value={kid} onChange={(e) => setKid(e.target.value)} placeholder="optional"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div className="sm:col-span-2">
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Secret Key</label>
           <div className="relative">
             <input type={showSecret ? "text" : "password"} value={secret} onChange={(e) => setSecret(e.target.value)}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 pr-20 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 pr-20 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
               <button onClick={generateSecureKey} className="rounded p-1 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:text-dark-text dark:hover:bg-dark-border" title="Generate secure key">
                 <Key size={14} />
@@ -268,13 +268,13 @@ export function JwtGenerator() {
           ))}
           {expPreset === -1 && (
             <input type="number" value={customExp} onChange={(e) => setCustomExp(e.target.value)} placeholder="Custom seconds"
-              className="w-28 rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-mono text-surface-900 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-28 rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-mono text-surface-900 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           )}
         </div>
         <div className="mt-2">
           <label className="block text-xs text-surface-500 dark:text-dark-muted mb-0.5">Or pick expiration date/time</label>
           <input type="datetime-local" value={expDate} onChange={(e) => { setExpDate(e.target.value); setExpPreset(-1); }}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       </div>
 
@@ -315,7 +315,7 @@ export function JwtGenerator() {
       </div>
 
       {token && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Generated Token</span>
             <div className="flex gap-1">

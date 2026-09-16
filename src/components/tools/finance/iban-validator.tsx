@@ -118,21 +118,21 @@ export function IBANValidator() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="e.g. DE89 3704 0044 0532 0130 00"
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       <button
         onClick={() => copy(input.replace(/\s/g, "").toUpperCase())}
         disabled={!result || !result.valid}
-        className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+        className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
       >
         {copied ? "Copied!" : "Copy IBAN"}
       </button>
 
       {result && (
         <div className="space-y-3">
-          <div className={`rounded-lg border p-3 ${result.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
+          <div className={`rounded-md border p-3 ${result.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
             <div className="flex items-center justify-between">
               <p className={`text-sm font-medium ${result.valid ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}`}>
                 {result.valid ? "Valid IBAN" : "Invalid IBAN"}
@@ -153,14 +153,14 @@ export function IBANValidator() {
               { label: "IBAN Length", value: `${result.length} / ${result.expectedLength}` },
               { label: "Example Format", value: result.format },
             ].map((field) => (
-              <div key={field.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
+              <div key={field.label} className="flex items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-bg">
                 <div>
                   <p className="text-xs text-surface-500 dark:text-dark-muted">{field.label}</p>
                   <p className="text-sm font-mono text-surface-900 dark:text-dark-text">{field.value}</p>
                 </div>
                 <button
                   onClick={() => copy(field.value)}
-                  className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+                  className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
                 >
                   Copy
                 </button>
@@ -172,7 +172,7 @@ export function IBANValidator() {
 
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Supported Countries</label>
-        <div className="max-h-48 overflow-y-auto rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+        <div className="max-h-48 overflow-y-auto rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
             {IBAN_FORMATS.map((f) => (
               <button

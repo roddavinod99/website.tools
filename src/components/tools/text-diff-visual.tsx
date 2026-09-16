@@ -114,7 +114,7 @@ export function TextDiffVisual() {
             onChange={(e) => setOriginal(e.target.value)}
             rows={8}
             placeholder="Original text..."
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
         <div>
@@ -124,7 +124,7 @@ export function TextDiffVisual() {
             onChange={(e) => setModified(e.target.value)}
             rows={8}
             placeholder="Modified text..."
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
       </div>
@@ -132,7 +132,7 @@ export function TextDiffVisual() {
       <div className="flex items-center gap-2">
         <button
           onClick={() => setMode("side-by-side")}
-          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
             mode === "side-by-side" ? "bg-brand-500 text-white" : "rounded-full bg-surface-100 px-2 py-0.5 text-xs text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
           }`}
         >
@@ -140,7 +140,7 @@ export function TextDiffVisual() {
         </button>
         <button
           onClick={() => setMode("inline")}
-          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
             mode === "inline" ? "bg-brand-500 text-white" : "rounded-full bg-surface-100 px-2 py-0.5 text-xs text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
           }`}
         >
@@ -148,7 +148,7 @@ export function TextDiffVisual() {
         </button>
         <button
           onClick={copyDiff}
-          className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+          className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
         >
           Copy Diff
         </button>
@@ -161,7 +161,7 @@ export function TextDiffVisual() {
       </div>
 
       {mode === "side-by-side" ? (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface overflow-auto max-h-80">
+        <div className="rounded-md border border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface overflow-auto max-h-80">
           <div className="grid grid-cols-2 divide-x divide-surface-200 dark:divide-dark-border">
             <div>
               {diff.filter((d) => d.type !== "added").map((d, i) => (
@@ -204,7 +204,7 @@ export function TextDiffVisual() {
           </div>
         </div>
       ) : (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface overflow-auto max-h-80">
+        <div className="rounded-md border border-surface-200 bg-surface-50 dark:border-dark-border dark:bg-dark-surface overflow-auto max-h-80">
           {diff.map((d, i) => (
             <div
               key={i}

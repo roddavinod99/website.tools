@@ -618,7 +618,7 @@ export function EmojiPicker() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Type to search..."
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
@@ -626,7 +626,7 @@ export function EmojiPicker() {
         {recent.length > 0 && (
           <button
             onClick={() => setActiveCategory("__recent__")}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
               activeCategory === "__recent__"
                 ? "bg-brand-500 text-white"
                 : "rounded-full bg-surface-100 px-2 py-0.5 text-xs text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
@@ -639,7 +639,7 @@ export function EmojiPicker() {
           <button
             key={cat}
             onClick={() => { setActiveCategory(cat); setSearch(""); }}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
               activeCategory === cat
                 ? "bg-brand-500 text-white"
                 : "rounded-full bg-surface-100 px-2 py-0.5 text-xs text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
@@ -651,7 +651,7 @@ export function EmojiPicker() {
         ))}
       </div>
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface max-h-96 overflow-y-auto">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface max-h-96 overflow-y-auto">
         {search.trim() ? (
           <div className="grid grid-cols-8 sm:grid-cols-10 gap-1">
             {filteredEmojis
@@ -659,7 +659,7 @@ export function EmojiPicker() {
                 <button
                   key={`${emoji}-${i}`}
                   onClick={() => handleCopy(emoji)}
-                  className="flex items-center justify-center w-10 h-10 rounded-lg text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
+                  className="flex items-center justify-center w-10 h-10 rounded-md text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
                   title={copiedEmoji === emoji ? "Copied!" : "Click to copy"}
                 >
                   {emoji}
@@ -672,7 +672,7 @@ export function EmojiPicker() {
               <button
                 key={`${emoji}-${i}`}
                 onClick={() => handleCopy(emoji)}
-                className="flex items-center justify-center w-10 h-10 rounded-lg text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
+                className="flex items-center justify-center w-10 h-10 rounded-md text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
                 title={copiedEmoji === emoji ? "Copied!" : "Click to copy"}
               >
                 {emoji}
@@ -685,7 +685,7 @@ export function EmojiPicker() {
               <button
                 key={`${emoji}-${i}`}
                 onClick={() => handleCopy(emoji)}
-                className="flex items-center justify-center w-10 h-10 rounded-lg text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
+                className="flex items-center justify-center w-10 h-10 rounded-md text-2xl hover:bg-surface-200 dark:hover:bg-dark-bg transition-colors"
                 title={copiedEmoji === emoji ? "Copied!" : "Click to copy"}
               >
                 {emoji}
@@ -696,7 +696,7 @@ export function EmojiPicker() {
       </div>
 
       {copiedEmoji && (
-        <div className="flex items-center gap-2 rounded-lg bg-brand-50 p-2 text-sm text-brand-600 dark:bg-brand-900/20 dark:text-brand-400">
+        <div className="flex items-center gap-2 rounded-md bg-brand-50 p-2 text-sm text-brand-600 dark:bg-brand-900/20 dark:text-brand-400">
           <span className="text-2xl">{copiedEmoji}</span>
           <span>Copied to clipboard!</span>
         </div>

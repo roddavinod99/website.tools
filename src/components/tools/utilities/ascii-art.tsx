@@ -315,14 +315,14 @@ export function AsciiArt() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Text</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text to convert to ASCII art..."
           rows={2}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Font</label>
           <select value={font} onChange={(e) => setFont(e.target.value as FigletFont)}
-            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {fontCategories.map((cat) => (
               <optgroup key={cat.id} label={cat.label}>
                 {cat.fonts.map((f) => (<option key={f} value={f}>{f}</option>))}
@@ -341,17 +341,17 @@ export function AsciiArt() {
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Max Width</label>
           <input type="number" min={0} max={500} value={widthMax}
             onChange={(e) => setWidthMax(Math.max(0, parseInt(e.target.value) || 0))}
-            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Char</label>
           <input type="text" value={charSet} onChange={(e) => setCharSet(e.target.value.slice(0, 1) || "#")}
-            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-center font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-center font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Color</label>
           <select value={color} onChange={(e) => setColor(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="none">None</option>
             <option value="ansi">ANSI</option>
             <option value="red">Red</option>
@@ -372,7 +372,7 @@ export function AsciiArt() {
         <div>
           <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Layout</label>
           <select value={layout} onChange={(e) => setLayout(e.target.value as LayoutMode)}
-            className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="default">Default</option>
             <option value="full">Full</option>
             <option value="fitted">Fitted</option>
@@ -395,7 +395,7 @@ export function AsciiArt() {
           Flip V
         </label>
         <select value={bgStyle} onChange={(e) => setBgStyle(e.target.value as "transparent" | "filled")}
-          className="rounded-lg border border-surface-200 bg-white p-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white p-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="transparent">Transparent</option>
           <option value="filled">Filled</option>
         </select>
@@ -404,15 +404,15 @@ export function AsciiArt() {
       <div>
         <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">Slogan/Subtitle</label>
         <input type="text" value={slogan} onChange={(e) => setSlogan(e.target.value)} placeholder="Optional subtitle line..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <span className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white opacity-80">Live</span>
-        <button onClick={copy} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <span className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white opacity-80">Live</span>
+        <button onClick={copy} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           {copied ? "Copied!" : "Copy"}
         </button>
-        <button onClick={download} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
+        <button onClick={download} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
       </div>
 
       {output && (
@@ -424,7 +424,7 @@ export function AsciiArt() {
               <span><strong>{charCount}</strong> chars</span>
             </div>
           </div>
-          <div className="rounded-lg border border-surface-200 bg-black p-4 dark:border-dark-border overflow-auto max-h-96">
+          <div className="rounded-md border border-surface-200 bg-black p-4 dark:border-dark-border overflow-auto max-h-96">
             {color !== "none" && color !== "ansi" ? (
               <pre ref={preRef} className="text-sm leading-tight font-mono whitespace-pre"
                 style={{ color: HTML_COLORS[color], backgroundColor: bgStyle === "filled" ? "#000" : "transparent" }}

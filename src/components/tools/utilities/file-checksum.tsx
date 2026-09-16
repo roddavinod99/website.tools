@@ -204,11 +204,11 @@ export function FileChecksum() {
         onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add("border-brand-500"); }}
         onDragLeave={(e) => { e.currentTarget.classList.remove("border-brand-500"); }}
         onDrop={(e) => { e.preventDefault(); e.currentTarget.classList.remove("border-brand-500"); handleFiles(e.dataTransfer.files); }}
-        className="rounded-lg border-2 border-dashed border-surface-300 p-6 text-center hover:border-brand-400 transition-colors dark:border-dark-border">
+        className="rounded-md border-2 border-dashed border-surface-300 p-6 text-center hover:border-brand-400 transition-colors dark:border-dark-border">
         <Upload size={24} className="mx-auto text-surface-400 dark:text-dark-muted mb-2" />
         <p className="text-sm text-surface-600 dark:text-dark-muted">Drag & drop files here, or</p>
         <input ref={inputRef} type="file" multiple onChange={(e) => handleFiles(e.target.files)}
-          className="mt-2 text-sm text-surface-700 dark:text-dark-text file:mr-3 file:rounded-lg file:border-0 file:bg-brand-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-brand-600" />
+          className="mt-2 text-sm text-surface-700 dark:text-dark-text file:mr-3 file:rounded-md file:border-0 file:bg-brand-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-brand-600" />
       </div>
 
       {files.length > 0 && (
@@ -246,18 +246,18 @@ export function FileChecksum() {
       {files.length > 0 && (
         <div className="flex flex-wrap gap-2">
           <button onClick={calculate} disabled={loading || selectedAlgos.length === 0}
-            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
+            className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">
             {loading ? `Computing ${progress}%` : "Calculate Checksums"}
           </button>
           {results.length > 0 && (
             <>
-              <button onClick={copyAll} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+              <button onClick={copyAll} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
                 <Copy size={14} /> {copied === "all" ? "Copied!" : "Copy All"}
               </button>
-              <button onClick={() => saveResults("csv")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+              <button onClick={() => saveResults("csv")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
                 <Download size={14} /> CSV
               </button>
-              <button onClick={() => saveResults("json")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+              <button onClick={() => saveResults("json")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
                 <Download size={14} /> JSON
               </button>
             </>
@@ -272,7 +272,7 @@ export function FileChecksum() {
       )}
 
       {compareMode && expectedHash.trim() && results.length > 0 && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Verification Results</p>
           {results.map((r, fi) => (
             <div key={fi} className="space-y-1">
@@ -353,7 +353,7 @@ export function FileChecksum() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Expected Checksum (for verify)</label>
           <input type="text" value={expectedHash} onChange={(e) => setExpectedHash(e.target.value)} placeholder="Paste expected hash..."
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       )}
 
@@ -361,9 +361,9 @@ export function FileChecksum() {
         <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Text Mode</p>
         <textarea value={textInput} onChange={(e) => setTextInput(e.target.value)} rows={3}
           placeholder="Or type/paste text to compute its checksum..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         <div className="flex gap-2 mt-2">
-          <button onClick={calculateText} disabled={!textInput.trim()} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Compute</button>
+          <button onClick={calculateText} disabled={!textInput.trim()} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50 transition-colors">Compute</button>
         </div>
         {textResult && (
           <div className="mt-2 space-y-1">

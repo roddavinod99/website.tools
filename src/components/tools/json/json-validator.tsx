@@ -189,13 +189,13 @@ export function JSONValidator() {
           placeholder='{"key": "value"}'
           rows={6}
           spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       <div className="flex items-center gap-2">
-        <button onClick={validate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Validate</button>
-        <button onClick={() => setShowSchema(!showSchema)} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${showSchema ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+        <button onClick={validate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Validate</button>
+        <button onClick={() => setShowSchema(!showSchema)} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${showSchema ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
           {showSchema ? "Hide Schema" : "Add Schema"}
         </button>
       </div>
@@ -209,13 +209,13 @@ export function JSONValidator() {
             placeholder='{"type": "object", "properties": {...}}'
             rows={4}
             spellCheck={false}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
         </div>
       )}
 
       {result && (
-        <div className={`rounded-lg border p-3 ${result.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
+        <div className={`rounded-md border p-3 ${result.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
           <div className="flex items-center gap-2">
             <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${result.valid ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"}`}>
               {result.valid ? "VALID" : "INVALID"}
@@ -246,7 +246,7 @@ export function JSONValidator() {
             { label: "Arrays", value: stats.arrays },
             { label: "Types Used", value: Object.keys(stats.types).length },
           ].map((s) => (
-            <div key={s.label} className="rounded-lg border border-surface-200 bg-white p-3 text-center dark:border-dark-border dark:bg-dark-surface">
+            <div key={s.label} className="rounded-md border border-surface-200 bg-white p-3 text-center dark:border-dark-border dark:bg-dark-surface">
               <p className="text-2xl font-bold text-brand-500">{s.value}</p>
               <p className="text-xs text-surface-500 dark:text-dark-muted">{s.label}</p>
             </div>
@@ -276,7 +276,7 @@ export function JSONValidator() {
       {tree && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Structure Tree</label>
-          <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
             <TreeNode node={tree} expanded={expanded} toggle={toggleNode} onSelect={setSelectedPath} selected={selectedPath} />
           </div>
           {selectedPath && selectedPath !== "$" && result?.valid && (

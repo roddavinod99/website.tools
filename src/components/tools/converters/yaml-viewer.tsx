@@ -150,7 +150,7 @@ export function YAMLViewer() {
             <button
               onClick={() => copy(formattedOutput)}
               disabled={!input}
-              className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+              className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
             >
               {copied ? "Copied!" : "Copy"}
             </button>
@@ -161,12 +161,12 @@ export function YAMLViewer() {
           onChange={(e) => setInput(e.target.value)}
           rows={12}
           placeholder="Paste your YAML here..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       {validation.error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{validation.error}</p>
         </div>
       )}
@@ -179,7 +179,7 @@ export function YAMLViewer() {
 
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Syntax Highlighted Output</label>
-        <pre className={`rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg overflow-auto max-h-96 ${wordWrap ? "whitespace-pre-wrap" : "whitespace-pre"}`}>
+        <pre className={`rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg overflow-auto max-h-96 ${wordWrap ? "whitespace-pre-wrap" : "whitespace-pre"}`}>
           {tokens.map((lineTokens, li) => (
             <div key={li} className="flex">
               <span className="select-none text-right text-surface-300 dark:text-dark-muted w-8 mr-3 shrink-0 text-xs leading-5">{li + 1}</span>

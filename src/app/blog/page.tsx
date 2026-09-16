@@ -79,7 +79,7 @@ export default function BlogPage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group block rounded-lg border border-[var(--color-border)] bg-white p-6 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
+                  className="group block rounded-md border border-[var(--color-border)] bg-white p-6 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
                 >
                   <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
                     <span>{post.date}</span>

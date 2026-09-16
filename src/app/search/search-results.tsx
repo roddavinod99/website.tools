@@ -101,7 +101,7 @@ export function SearchResults() {
                 <Link
                   key={result.id}
                   href={result.url}
-                  className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
+                  className="group rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
                 >
                   <div className="flex items-start justify-between">
                     <Badge variant="default">{TYPE_LABELS[type]}</Badge>

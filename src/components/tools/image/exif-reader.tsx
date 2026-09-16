@@ -266,7 +266,7 @@ export function ExifReader() {
 
   return (
     <div className="space-y-4">
-      <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={() => fileRef.current?.click()} className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-surface-200 bg-white p-6 cursor-pointer hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface">
+      <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={() => fileRef.current?.click()} className="flex flex-col items-center justify-center rounded-md border-2 border-dashed border-surface-200 bg-white p-6 cursor-pointer hover:border-brand-400 dark:border-dark-border dark:bg-dark-surface">
         <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         <svg className="w-8 h-8 text-surface-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
         <p className="text-sm text-surface-500 dark:text-dark-muted">Drop images here to read EXIF</p>
@@ -276,7 +276,7 @@ export function ExifReader() {
       {warning && <p className="text-sm text-yellow-600 dark:text-yellow-400">{warning}</p>}
 
       {files.map((f, idx) => (
-        <div key={idx} className="rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div key={idx} className="rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2 min-w-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -305,7 +305,7 @@ export function ExifReader() {
                     <button
                       key={tab.key}
                       onClick={() => setActiveTab(tab.key)}
-                      className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+                      className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                         activeTab === tab.key
                           ? "bg-brand-500 text-white"
                           : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-muted dark:hover:bg-dark-border"

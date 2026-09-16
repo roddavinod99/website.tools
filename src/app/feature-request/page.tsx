@@ -41,7 +41,7 @@ export default function FeatureRequestPage() {
         </p>
 
         {status === "success" ? (
-          <div className="mt-8 rounded-lg border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">
+          <div className="mt-8 rounded-md border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">
             <p className="font-medium text-green-700 dark:text-green-400">Thank you! Your feature request has been received.</p>
           </div>
         ) : (
@@ -50,19 +50,19 @@ export default function FeatureRequestPage() {
               <label className="block text-sm font-medium text-[var(--color-text-muted)]">Feature Title</label>
               <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required
                 placeholder="e.g., Dark mode toggle"
-                className="mt-1 flex h-10 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
+                className="mt-1 flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-[var(--color-text-muted)]">Description</label>
               <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows={4}
                 placeholder="Describe the feature and how it would benefit you..."
-                className="mt-1 flex w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
+                className="mt-1 flex w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)]" />
             </div>
             {status === "error" && (
               <p className="text-sm text-red-600 dark:text-red-400">Failed to submit. Please try again.</p>
             )}
             <button type="submit" disabled={status === "loading"}
-              className="inline-flex w-full items-center justify-center rounded-lg bg-[var(--color-accent)] px-6 py-3 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] disabled:opacity-50 transition-colors">
+              className="inline-flex w-full items-center justify-center rounded-md bg-[var(--color-accent)] px-6 py-3 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] disabled:opacity-50 transition-colors">
               {status === "loading" ? "Submitting..." : "Submit Request"}
             </button>
           </form>

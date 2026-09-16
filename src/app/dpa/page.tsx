@@ -35,7 +35,7 @@ export default function DPAPage() {
           </p>
         </div>
 
-        <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
+        <div className="mb-8 p-4 rounded-md bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
           <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Status:</strong> This DPA is incorporated by reference into the{" "}
             <a href="/terms" className="underline hover:text-blue-800">Terms of Service</a>
@@ -44,7 +44,7 @@ export default function DPAPage() {
           </p>
         </div>
 
-        <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <nav className="mb-8 p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
             <li><a href="#1-definitions" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Definitions and Interpretation</a></li>
@@ -386,7 +386,7 @@ export default function DPAPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Annex 2: Technical and Organizational Measures</h2>
             <p className="mt-2">Pursuant to <a href="#6-security-measures" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Section 6</a> and Article 32 GDPR.</p>
             <div className="mt-4 space-y-4">
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">1. Pseudonymization and Encryption</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
                   <li>HTTPS/TLS 1.2+ for all traffic (HSTS enabled)</li>
@@ -394,7 +394,7 @@ export default function DPAPage() {
                   <li>Client-side Processing eliminates data-in-transit to Processor</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">2. Confidentiality, Integrity, Availability</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
                   <li>Content Security Policy (CSP) with strict directives</li>
@@ -406,7 +406,7 @@ export default function DPAPage() {
                   <li>Cloudflare DDoS protection and WAF</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">3. Resilience and Recovery</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
                   <li>Static hosting on globally distributed CDN (99.9%+ uptime SLA)</li>
@@ -414,7 +414,7 @@ export default function DPAPage() {
                   <li>Service Worker for offline-capable tool access</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">4. Organizational Measures</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
                   <li>Data protection by design and by default (client-side architecture)</li>
@@ -424,7 +424,7 @@ export default function DPAPage() {
                   <li>Incident response plan with 24-hour notification target</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+              <div className="p-4 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">5. Testing and Evaluation</h3>
                 <ul className="mt-2 list-disc pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
                   <li>Automated security scanning in CI/CD pipeline</li>
@@ -490,7 +490,7 @@ export default function DPAPage() {
           </section>
         </div>
 
-        <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+        <div className="mt-12 p-6 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Execution</h2>
           <p className="mt-2 text-[var(--color-text-muted)]">
             This Data Processing Addendum is incorporated into and forms part of the Agreement between the parties.

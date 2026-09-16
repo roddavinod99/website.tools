@@ -215,7 +215,7 @@ export function BMICalculator() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div className="inline-flex rounded-lg border border-surface-200 bg-white p-1 text-sm dark:border-dark-border dark:bg-dark-surface">
+        <div className="inline-flex rounded-md border border-surface-200 bg-white p-1 text-sm dark:border-dark-border dark:bg-dark-surface">
           <button
             type="button"
             onClick={() => setUnit("metric")}
@@ -244,7 +244,7 @@ export function BMICalculator() {
         <button
           type="button"
           onClick={swap}
-          className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
+          className="rounded-md border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg"
         >
           Swap units
         </button>
@@ -263,7 +263,7 @@ export function BMICalculator() {
             step="any"
             min="0"
             data-testid="bmi-height"
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
         </div>
         <div>
@@ -278,7 +278,7 @@ export function BMICalculator() {
             step="any"
             min="0"
             data-testid="bmi-weight"
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
         </div>
       </div>
@@ -302,14 +302,14 @@ export function BMICalculator() {
               if (w && !isNaN(parseFloat(w))) setWeight(w);
             }
           }}
-          className="w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 font-mono text-xs text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-surface-50 px-3 py-2 font-mono text-xs text-surface-600 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted"
         />
       </div>
 
       {error && (
         <div
           role="alert"
-          className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+          className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
         >
           {error}
         </div>
@@ -319,7 +319,7 @@ export function BMICalculator() {
         <div
           data-testid="tool-output"
           onClick={copyResult}
-          className={`cursor-pointer rounded-lg border p-4 ${range.bgColor} transition-shadow hover:shadow-md`}
+          className={`cursor-pointer rounded-md border p-4 ${range.bgColor} transition-shadow hover:shadow-md`}
         >
           <div className="flex items-baseline justify-between">
             <p className="text-xs font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">
@@ -345,7 +345,7 @@ export function BMICalculator() {
 
       {bmi !== null && ideal && (
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">
               BMI Prime
             </p>
@@ -356,7 +356,7 @@ export function BMICalculator() {
               Ratio of BMI to upper normal (25)
             </p>
           </div>
-          <div className="rounded-lg border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-white p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted">
               Healthy weight range
             </p>
@@ -370,7 +370,7 @@ export function BMICalculator() {
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-[10px] font-medium uppercase tracking-wider text-surface-500 dark:text-dark-muted mb-2">
           WHO BMI classification
         </p>

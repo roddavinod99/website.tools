@@ -109,7 +109,7 @@ export function DateFormatter() {
   };
 
   const inputCls =
-    "w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+    "w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
   const labelCls = "block text-xs font-medium text-surface-700 dark:text-dark-text mb-1";
 
   return (
@@ -117,7 +117,7 @@ export function DateFormatter() {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => toggleUseNow()}
-          className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-2 text-xs font-medium transition-colors ${
             useNow ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border"
           }`}
         >
@@ -125,7 +125,7 @@ export function DateFormatter() {
         </button>
         <button
           onClick={() => toggleUseNow()}
-          className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+          className={`rounded-md px-3 py-2 text-xs font-medium transition-colors ${
             !useNow ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border"
           }`}
         >
@@ -156,7 +156,7 @@ export function DateFormatter() {
       )}
 
       {date && token && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted">
             Source (UTC)
           </p>
@@ -177,7 +177,7 @@ export function DateFormatter() {
               <button
                 key={p.key}
                 onClick={() => copyFormat(p.key, text)}
-                className="flex w-full items-center justify-between rounded-lg border border-surface-200 bg-white px-3 py-2 text-left hover:border-brand-300 dark:border-dark-border dark:bg-dark-surface"
+                className="flex w-full items-center justify-between rounded-md border border-surface-200 bg-white px-3 py-2 text-left hover:border-brand-300 dark:border-dark-border dark:bg-dark-surface"
               >
                 <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">{p.label}</span>
                 <span className="ml-4 flex-1 truncate font-mono text-xs text-surface-900 dark:text-dark-text">

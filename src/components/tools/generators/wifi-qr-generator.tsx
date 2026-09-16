@@ -73,12 +73,12 @@ export function WifiQRGenerator() {
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Network Name (SSID)</label>
           <input type="text" value={ssid} onChange={(e) => setSsid(e.target.value)} placeholder="MyWiFiNetwork"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Encryption</label>
           <select value={encryption} onChange={(e) => setEncryption(e.target.value as Encryption)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="nopass">None (Open)</option><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="WPA2-EAP">WPA2-EAP</option>
           </select>
         </div>
@@ -86,7 +86,7 @@ export function WifiQRGenerator() {
           <div>
             <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Password</label>
             <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="WiFi password"
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
         )}
         <label className="flex items-center gap-2 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
@@ -95,7 +95,7 @@ export function WifiQRGenerator() {
       </div>
 
       {encryption === "WPA2-EAP" && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 rounded-lg border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 rounded-md border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface">
           <div>
             <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">EAP Method</label>
             <select value={eapMethod} onChange={(e) => setEapMethod(e.target.value)}
@@ -133,9 +133,9 @@ export function WifiQRGenerator() {
       </div>
 
       <div className="flex flex-col items-center gap-3">
-        <button onClick={generateQR} disabled={!ssid} className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors disabled:opacity-50">Generate QR Code</button>
-        <canvas ref={canvasRef} className="rounded-lg border border-surface-200 dark:border-dark-border" />
-        <button onClick={download} className="rounded-lg border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download QR Code</button>
+        <button onClick={generateQR} disabled={!ssid} className="rounded-md bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors disabled:opacity-50">Generate QR Code</button>
+        <canvas ref={canvasRef} className="rounded-md border border-surface-200 dark:border-dark-border" />
+        <button onClick={download} className="rounded-md border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Download QR Code</button>
       </div>
     </div>
   );

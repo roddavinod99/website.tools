@@ -87,7 +87,7 @@ export function PercentageCalculator() {
               key={m.key}
               onClick={() => { setMode(m.key); setA(""); setB(""); }}
               title={m.desc}
-              className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+              className={`rounded-md px-3 py-2 text-xs font-medium transition-colors ${
                 mode === m.key
                   ? "bg-brand-500 text-white"
                   : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
@@ -110,7 +110,7 @@ export function PercentageCalculator() {
             onChange={(e) => setA(e.target.value)}
             placeholder="0"
             step="any"
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
         </div>
         <div>
@@ -123,14 +123,14 @@ export function PercentageCalculator() {
             onChange={(e) => setB(e.target.value)}
             placeholder="0"
             step="any"
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
         </div>
       </div>
 
       {result && (
         <div
-          className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
+          className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
           onClick={copyResult}
         >
           <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">
@@ -154,7 +154,7 @@ export function PercentageCalculator() {
         </p>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs text-surface-500 dark:text-dark-muted">
           <span className="font-medium text-surface-700 dark:text-dark-text">Quick reference:</span>{" "}
           50 is 25% of 200 · 25% of 200 is 50 · Change from 200 to 250 is +25% · 200 + 25% = 250 · 200 - 25% = 150

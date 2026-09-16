@@ -35,7 +35,7 @@ export function BasicAuthGenerator() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter username"
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         />
       </div>
 
@@ -46,19 +46,19 @@ export function BasicAuthGenerator() {
           onChange={(e) => setPassword(e.target.value)}
           type="text"
           placeholder="Enter password"
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={copy} disabled={!output} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40">Copy Header</button>
-        <button onClick={copyValue} disabled={!username && !password} className="rounded-lg border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Copy Value Only</button>
+        <button onClick={copy} disabled={!output} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40">Copy Header</button>
+        <button onClick={copyValue} disabled={!username && !password} className="rounded-md border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Copy Value Only</button>
       </div>
 
       {output && (
         <div>
           <label className="text-sm font-medium text-surface-700 dark:text-dark-text mb-1 block">Authorization Header</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 select-all">{output}</pre>
         </div>
       )}
     </div>

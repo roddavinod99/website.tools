@@ -12,7 +12,7 @@ interface CurrencySelectorProps {
   className?: string;
 }
 
-const SELECT_BASE = "w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
+const SELECT_BASE = "w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text";
 
 export function CurrencySelector({
   value,
@@ -119,7 +119,7 @@ export function CurrencySelector({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-1 w-full max-h-64 overflow-auto rounded-lg border border-surface-200 bg-white shadow-lg dark:border-dark-border dark:bg-dark-bg">
+        <div className="absolute z-50 mt-1 w-full max-h-64 overflow-auto rounded-md border border-surface-200 bg-white shadow-lg dark:border-dark-border dark:bg-dark-bg">
           <div className="p-2 border-b border-surface-200 dark:border-dark-border">
             <input
               type="search"

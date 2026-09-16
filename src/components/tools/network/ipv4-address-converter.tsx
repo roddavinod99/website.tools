@@ -127,7 +127,7 @@ export function Ipv4AddressConverter() {
         <select
           value={format}
           onChange={e => setFormat(e.target.value as FormatType)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
         >
           <option value="dotted">Dotted Decimal (192.168.1.1)</option>
           <option value="integer">Integer (3232235777)</option>
@@ -145,14 +145,14 @@ export function Ipv4AddressConverter() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && convert()}
             placeholder={format === "dotted" ? "192.168.1.1" : format === "integer" ? "3232235777" : format === "hex" ? "C0A80101" : "11000000.10101000.00000001.00000001"}
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
-          <button onClick={convert} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Convert</button>
+          <button onClick={convert} className="shrink-0 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Convert</button>
         </div>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>
+        <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>
       )}
 
       {result && (
@@ -161,7 +161,7 @@ export function Ipv4AddressConverter() {
             {allFormats.map(f => (
               <div
                 key={f.label}
-                className="group relative rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
+                className="group relative rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
                 onClick={() => copyValue(f.label, f.value)}
               >
                 <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">{f.label}</span>
@@ -171,7 +171,7 @@ export function Ipv4AddressConverter() {
             ))}
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-3 dark:border-dark-border dark:bg-dark-surface">
             <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-2">Octet Breakdown</span>
             <div className="grid grid-cols-4 gap-2">
               {octets.map((oct, i) => (
@@ -188,7 +188,7 @@ export function Ipv4AddressConverter() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
     </div>
   );

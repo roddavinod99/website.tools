@@ -100,11 +100,11 @@ export function GitCheatsheet() {
   return (
     <div className="space-y-4">
       <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search commands..."
-        className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+        className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
 
       <div className="space-y-3">
         {filtered.map(section => (
-          <div key={section.title} className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+          <div key={section.title} className="rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
             <button onClick={() => setExpanded(expanded === section.title ? null : section.title)}
               className="w-full flex items-center justify-between p-3 text-left bg-surface-50 dark:bg-dark-surface hover:bg-surface-100 dark:hover:bg-dark-border transition-colors">
               <span className="text-sm font-medium text-surface-900 dark:text-dark-text">{section.title} ({section.items.length})</span>

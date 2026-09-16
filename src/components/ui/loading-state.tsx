@@ -18,7 +18,7 @@ export function LoadingState({ variant = "skeleton", className = "", rows = 3 }:
   return (
     <div className={`space-y-3 ${className}`}>
       {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="animate-shimmer h-10 rounded-lg bg-tool-border" />
+        <div key={i} className="animate-shimmer h-10 rounded-md bg-tool-border" />
       ))}
     </div>
   );

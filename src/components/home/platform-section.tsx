@@ -40,7 +40,7 @@ export function PlatformSection() {
             return (
               <div
                 key={item.title}
-                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-6"
+                className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-6"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                   <Icon className="h-5 w-5" aria-hidden="true" />

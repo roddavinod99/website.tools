@@ -94,7 +94,7 @@ export function Base64Encoder() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <select value={encoding} onChange={(e) => setEncoding(e.target.value as CharEncoding)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="utf-8">UTF-8</option>
           <option value="ascii">ASCII</option>
           <option value="utf-16le">UTF-16 LE</option>
@@ -106,18 +106,18 @@ export function Base64Encoder() {
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer">
           <input type="checkbox" checked={wrapLines} onChange={(e) => setWrapLines(e.target.checked)} className="rounded border-surface-300" /> Wrap at 76 chars
         </label>
-        <button onClick={handleFileUpload} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Upload File</button>
+        <button onClick={handleFileUpload} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Upload File</button>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Text to Encode</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)}
           placeholder="Enter text to encode..." rows={6} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -131,7 +131,7 @@ export function Base64Encoder() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Base64 Output</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}
 

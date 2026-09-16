@@ -15,7 +15,7 @@ interface StatCardProps {
 
 export function StatCard({ label, value, icon, trend, className = "" }: StatCardProps) {
   return (
-    <div className={`rounded-xl border border-tool-border bg-tool-surface p-4 ${className}`}>
+    <div className={`rounded-md border border-tool-border bg-tool-surface p-4 ${className}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <p className="text-xs font-medium uppercase tracking-wide text-result-secondary">

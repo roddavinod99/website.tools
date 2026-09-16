@@ -213,7 +213,7 @@ export function JSONDiff() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Left (Original)</label>
           <textarea value={left} onChange={(e) => setLeft(e.target.value)} rows={8} spellCheck={false}
             placeholder='{"key": "value"}'
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-0.5">Drop a .json file here</p>
         </div>
@@ -221,26 +221,26 @@ export function JSONDiff() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Right (Modified)</label>
           <textarea value={right} onChange={(e) => setRight(e.target.value)} rows={8} spellCheck={false}
             placeholder='{"key": "value"}'
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           <p className="text-[10px] text-surface-400 dark:text-dark-muted mt-0.5">Drop a .json file here</p>
         </div>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
 
       <div className="flex flex-wrap items-center gap-2">
-        <button onClick={() => setViewMode("side")} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "side" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Side-by-Side</button>
-        <button onClick={() => setViewMode("unified")} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "unified" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Unified</button>
-        <button onClick={() => setViewMode("tree")} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "tree" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Tree</button>
+        <button onClick={() => setViewMode("side")} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "side" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Side-by-Side</button>
+        <button onClick={() => setViewMode("unified")} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "unified" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Unified</button>
+        <button onClick={() => setViewMode("tree")} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${viewMode === "tree" ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Tree</button>
         <label className="flex items-center gap-1.5 text-xs text-surface-600 dark:text-dark-muted cursor-pointer ml-2">
           <input type="checkbox" checked={ignoreOrder} onChange={(e) => setIgnoreOrder(e.target.checked)} className="rounded border-surface-300" /> Ignore key order
         </label>
-        <button onClick={() => setMergeMode(!mergeMode)} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${mergeMode ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Merge Mode</button>
+        <button onClick={() => setMergeMode(!mergeMode)} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${mergeMode ? "bg-brand-500 text-white" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>Merge Mode</button>
       </div>
 
       {stats.total > 0 && (
@@ -252,7 +252,7 @@ export function JSONDiff() {
             { label: "Changed", value: stats.changed, color: "text-orange-500 dark:text-orange-400" },
             { label: "Different", value: pctDiff.toFixed(1) + "%", color: "text-brand-500" },
           ].map((s) => (
-            <div key={s.label} className="rounded-lg border border-surface-200 bg-white p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+            <div key={s.label} className="rounded-md border border-surface-200 bg-white p-2 text-center dark:border-dark-border dark:bg-dark-surface">
               <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
               <p className="text-[10px] text-surface-500 dark:text-dark-muted">{s.label}</p>
             </div>
@@ -271,7 +271,7 @@ export function JSONDiff() {
       )}
 
       {mergeMode && (
-        <div className="flex items-center gap-2 p-2 rounded-lg border border-brand-200 bg-brand-50 dark:border-brand-800 dark:bg-brand-900/20">
+        <div className="flex items-center gap-2 p-2 rounded-md border border-brand-200 bg-brand-50 dark:border-brand-800 dark:bg-brand-900/20">
           <span className="text-xs font-medium text-brand-700 dark:text-brand-400">Merge:</span>
           <button onClick={handleAcceptLeft} className="rounded border border-brand-300 px-3 py-1 text-xs text-brand-700 hover:bg-brand-100 dark:border-brand-700 dark:text-brand-400 dark:hover:bg-brand-900/40">Accept Left</button>
           <button onClick={handleAcceptRight} className="rounded border border-brand-300 px-3 py-1 text-xs text-brand-700 hover:bg-brand-100 dark:border-brand-700 dark:text-brand-400 dark:hover:bg-brand-900/40">Accept Right</button>
@@ -286,7 +286,7 @@ export function JSONDiff() {
           {["Left", "Right"].map((side, si) => (
             <div key={side}>
               <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">{side}</p>
-              <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto font-mono text-xs leading-5">
+              <div className="rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto font-mono text-xs leading-5">
                 {lineDiff.map((pair, i) => (
                   <div
                     key={i}
@@ -309,7 +309,7 @@ export function JSONDiff() {
       {viewMode === "unified" && unifiedText && (
         <div>
           <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">Unified Diff</p>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-80 whitespace-pre-wrap">
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-80 whitespace-pre-wrap">
             {unifiedText.split("\n").map((line, i) => {
               let cls = "text-surface-900 dark:text-dark-text";
               if (line.startsWith("+ ")) cls = "text-green-700 dark:text-green-400";
@@ -324,7 +324,7 @@ export function JSONDiff() {
       {viewMode === "tree" && treeDiffEntries.length > 0 && (
         <div>
           <p className="text-xs text-surface-400 dark:text-dark-muted mb-1">Tree Diff (changes only)</p>
-          <div className="rounded-lg border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto font-mono text-xs">
+          <div className="rounded-md border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface max-h-80 overflow-auto font-mono text-xs">
             {treeDiffEntries.map((entry, i) => (
               <div key={i} className="mb-1 pb-1 border-b border-surface-100 dark:border-dark-border last:border-0">
                 <div className="flex items-center gap-1">

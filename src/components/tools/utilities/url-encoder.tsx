@@ -162,7 +162,7 @@ export function URLEncoder() {
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Encode" : "Decode"}
           </button>
         ))}
@@ -172,14 +172,14 @@ export function URLEncoder() {
         <div role="group" aria-label="Encoding type">
           {(["component", "full"] as EncodingType[]).map((t) => (
             <button key={t} onClick={() => setEncodingType(t)} aria-pressed={encodingType === t}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${encodingType === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+              className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${encodingType === t ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
               {t === "component" ? "Component" : "Full URL"}
             </button>
           ))}
         </div>
         <label htmlFor="url-encoder-char-set" className="sr-only">Character set to encode</label>
         <select id="url-encoder-char-set" value={charSet} onChange={(e) => setCharSet(e.target.value as CharSet)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="all">Encode All Chars</option>
           <option value="special">Special Chars Only</option>
           <option value="non-ascii">Non-ASCII Only</option>
@@ -191,11 +191,11 @@ export function URLEncoder() {
           <textarea id="url-encoder-input" value={input} onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "encode" ? "Enter text or URL to encode..." : "Enter URL-encoded string..."}
           rows={4} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {urlValidation && mode === "encode" && (
-        <div className={`rounded-lg border p-3 ${urlValidation.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
+        <div className={`rounded-md border p-3 ${urlValidation.valid ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"}`}>
           <p className={`text-sm ${urlValidation.valid ? "text-green-700 dark:text-green-400" : "text-red-700 dark:text-red-400"}`}>
             {urlValidation.valid ? "URL is valid" : `URL Error: ${urlValidation.error}`}
           </p>
@@ -203,7 +203,7 @@ export function URLEncoder() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -215,20 +215,20 @@ export function URLEncoder() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
             {mode === "encode" ? "Encoded" : "Decoded"}
           </label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 break-all select-all">{output}</pre>
         </div>
       )}
 
       {mode === "encode" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Component Encoded</p>
               <button onClick={() => copy(outputComponentEncoded())} disabled={!input} className="text-xs text-brand-500 hover:text-brand-600 disabled:opacity-40" aria-label="Copy component encoded URL">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputComponentEncoded() || "-"}</p>
           </div>
-          <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Full URL Encoded</p>
               <button onClick={() => copy(outputFullEncoded())} disabled={!input} className="text-xs text-brand-500 hover:text-brand-600 disabled:opacity-40" aria-label="Copy full URL encoded">Copy</button>
@@ -240,14 +240,14 @@ export function URLEncoder() {
 
       {mode === "decode" && input && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Component Decoded</p>
               <button onClick={() => copy(outputComponentDecoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy component decoded URL">Copy</button>
             </div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text break-all">{outputComponentDecoded() || "-"}</p>
           </div>
-          <div className="rounded-lg border border-surface-200 p-2 dark:border-dark-border">
+          <div className="rounded-md border border-surface-200 p-2 dark:border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Full URL Decoded</p>
               <button onClick={() => copy(outputFullDecoded())} className="text-xs text-brand-500 hover:text-brand-600" aria-label="Copy full URL decoded">Copy</button>
@@ -273,7 +273,7 @@ export function URLEncoder() {
       {urlParts && urlParts.params.length > 0 && (
         <div>
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">URL Analysis</p>
-          <div className="rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+          <div className="rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
             <div className="grid grid-cols-2 gap-x-2 gap-y-1 p-2 text-xs font-mono bg-surface-50 dark:bg-dark-surface">
               <span className="text-surface-400">Protocol:</span>
               <span className="text-surface-700 dark:text-dark-text">{urlParts.protocol}</span>
@@ -285,7 +285,7 @@ export function URLEncoder() {
               {urlParts.hash && <><span className="text-surface-400">Hash:</span><span className="text-surface-700 dark:text-dark-text">{urlParts.hash}</span></>}
             </div>
           </div>
-          <div className="mt-2 rounded-lg border border-surface-200 dark:border-dark-border overflow-hidden">
+          <div className="mt-2 rounded-md border border-surface-200 dark:border-dark-border overflow-hidden">
             <div className="table-responsive">
             <table className="table-base font-mono">
               <thead>

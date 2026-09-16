@@ -161,7 +161,7 @@ export default function SitemapPage() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-6">
+        <div className="mt-10 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] p-6">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">
             XML Sitemap
           </h2>

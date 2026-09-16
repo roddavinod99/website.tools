@@ -41,7 +41,7 @@ test.describe("WASM-gated hashing tools", () => {
 
     await page.getByPlaceholder("Enter text to hash (real-time)...").fill(VECTOR_INPUT);
 
-    const sha256Block = page.locator("div.rounded-lg.border").filter({ hasText: "SHA-256" });
+    const sha256Block = page.locator("div.rounded-md.border").filter({ hasText: "SHA-256" });
     await expect(sha256Block.locator("code")).toContainText(SHA256_HELLO_WORLD, { timeout: 10000 });
 
     // The fallback chain must never leak "Error" into any algorithm result.

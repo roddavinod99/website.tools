@@ -11,7 +11,7 @@ export function NextStepCTA({ suggestions }: NextStepCTAProps) {
   if (!suggestions.length) return null;
 
   return (
-    <section className="mt-4 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface" aria-labelledby="next-step-heading">
+    <section className="mt-4 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface" aria-labelledby="next-step-heading">
       <h3 id="next-step-heading" className="mb-2 text-sm font-semibold text-surface-900 dark:text-dark-text">
         Next steps
       </h3>

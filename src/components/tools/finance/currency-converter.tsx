@@ -126,7 +126,7 @@ export function CurrencyConverter() {
         <button
           onClick={refresh}
           disabled={loading}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
         >
           {loading ? "Loading…" : hasRates ? "Refresh rates" : "Load rates"}
         </button>
@@ -135,7 +135,7 @@ export function CurrencyConverter() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
           <p className="text-xs text-red-600 dark:text-red-400 mt-1">
             Using cached rates. Results may be outdated.
@@ -147,7 +147,7 @@ export function CurrencyConverter() {
       )}
 
       {isOffline && rates && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+        <div className="rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
           <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
             Offline mode — showing cached rates from {lastUpdated}
           </p>
@@ -158,7 +158,7 @@ export function CurrencyConverter() {
         <div className="space-y-4">
           <div
             data-testid="tool-output"
-            className="grid gap-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 sm:grid-cols-3 dark:border-dark-border dark:bg-dark-surface"
+            className="grid gap-4 rounded-md border border-surface-200 bg-surface-50 p-5 sm:grid-cols-3 dark:border-dark-border dark:bg-dark-surface"
           >
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-surface-500 dark:text-dark-muted">You convert</p>
@@ -181,7 +181,7 @@ export function CurrencyConverter() {
           </div>
 
           {/* All Rates Table - Top 20 + Searchable "Show All" */}
-          <div className="rounded-xl border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface overflow-hidden">
+          <div className="rounded-md border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-surface-200 dark:border-dark-border">
               <h3 className="text-sm font-semibold text-surface-900 dark:text-dark-text">All Exchange Rates</h3>
               <button
@@ -198,7 +198,7 @@ export function CurrencyConverter() {
                 value={rateSearch}
                 onChange={(e) => setRateSearch(e.target.value)}
                 placeholder="Search currencies..."
-                className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted mb-3"
+                className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted mb-3"
                 aria-label="Search exchange rates"
               />
               <div className="overflow-x-auto">
@@ -244,7 +244,7 @@ export function CurrencyConverter() {
         </div>
       ) : (
         !error && (
-          <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+          <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
             {loading ? "Loading live rates…" : "Enter an amount and load rates to convert."}
           </p>
         )

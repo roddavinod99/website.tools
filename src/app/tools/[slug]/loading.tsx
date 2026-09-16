@@ -20,13 +20,13 @@ export default function ToolLoading() {
             <div className="mt-4 h-10 w-72 animate-pulse rounded bg-surface-200 dark:bg-dark-border" />
             <div className="mt-2 h-5 w-96 animate-pulse rounded bg-surface-200 dark:bg-dark-border" />
 
-            <div className="mt-8 rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface">
+            <div className="mt-8 rounded-md border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface">
               <div className="space-y-4">
                 <div className="h-8 w-48 animate-pulse rounded bg-surface-200 dark:bg-dark-border" />
                 <div className="h-32 w-full animate-pulse rounded bg-surface-200 dark:bg-dark-border" />
                 <div className="flex gap-3">
-                  <div className="h-10 w-32 animate-pulse rounded-lg bg-surface-200 dark:bg-dark-border" />
-                  <div className="h-10 w-32 animate-pulse rounded-lg bg-surface-200 dark:bg-dark-border" />
+                  <div className="h-10 w-32 animate-pulse rounded-md bg-surface-200 dark:bg-dark-border" />
+                  <div className="h-10 w-32 animate-pulse rounded-md bg-surface-200 dark:bg-dark-border" />
                 </div>
               </div>
             </div>

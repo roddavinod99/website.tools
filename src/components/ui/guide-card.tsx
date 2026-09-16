@@ -20,9 +20,9 @@ interface GuideCardProps {
 }
 
 const variantStyles = {
-  default: "group block rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
-  compact: "group block rounded-lg border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
-  featured: "group relative rounded-2xl border border-surface-200 bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:border-dark-border dark:bg-dark-surface",
+  default: "group block rounded-md border border-surface-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  compact: "group block rounded-md border border-surface-200 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  featured: "group relative rounded-md border border-surface-200 bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:border-dark-border dark:bg-dark-surface",
 };
 
 export function GuideCard({ 

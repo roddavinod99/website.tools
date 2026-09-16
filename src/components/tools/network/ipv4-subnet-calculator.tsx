@@ -168,9 +168,9 @@ export function Ipv4SubnetCalculator() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && calculateSubnet()}
             placeholder="192.168.1.0/24 or 192.168.1.0 255.255.255.0"
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
-          <button onClick={calculateSubnet} className="shrink-0 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
+          <button onClick={calculateSubnet} className="shrink-0 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Calculate</button>
         </div>
         <p className="mt-1 text-[11px] text-surface-400 dark:text-dark-muted">
           Supports: CIDR (192.168.1.0/24), IP + mask (192.168.1.0 255.255.255.0), or IP/slash-mask (192.168.1.0/255.255.255.0)
@@ -178,7 +178,7 @@ export function Ipv4SubnetCalculator() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>
+        <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400">{error}</div>
       )}
 
       {result && (
@@ -186,7 +186,7 @@ export function Ipv4SubnetCalculator() {
           {fields.map(f => (
             <div
               key={f.label}
-              className="group relative rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
+              className="group relative rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface cursor-pointer"
               onClick={() => copyValue(f.label, f.value)}
             >
               <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">{f.label}</span>
@@ -201,7 +201,7 @@ export function Ipv4SubnetCalculator() {
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigateSubnet("prev")}
-            className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+            className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
           >
             ← Previous Subnet
           </button>
@@ -210,7 +210,7 @@ export function Ipv4SubnetCalculator() {
           </span>
           <button
             onClick={() => navigateSubnet("next")}
-            className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+            className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
           >
             Next Subnet →
           </button>
@@ -218,7 +218,7 @@ export function Ipv4SubnetCalculator() {
       )}
 
       {result && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-3 dark:border-dark-border dark:bg-dark-surface">
           <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-2">Binary View</span>
           <div className="space-y-1 font-mono text-xs">
             <div className="flex gap-2">
@@ -250,7 +250,7 @@ export function Ipv4SubnetCalculator() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
     </div>
   );

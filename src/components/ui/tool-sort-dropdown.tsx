@@ -39,7 +39,7 @@ export function ToolSortDropdown({ className, ariaLabel = "Sort tools" }: ToolSo
       <select
         value={currentSort}
         onChange={(e) => handleChange(e.target.value as ToolSort)}
-        className="h-10 rounded-lg border border-surface-200 bg-white px-3 pr-8 text-sm text-surface-700 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
+        className="h-10 rounded-md border border-surface-200 bg-white px-3 pr-8 text-sm text-surface-700 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted"
       >
         {TOOL_SORTS.map((s) => (
           <option key={s.key} value={s.key}>

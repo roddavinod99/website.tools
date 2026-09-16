@@ -261,7 +261,7 @@ export function PasswordGenerator() {
           ref={inputRef}
           type="number" id="pwd-length-input" min={minLen} max={maxLen} value={lengthInput}
           onChange={(e) => handleLengthInput(e.target.value)}
-          className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+          className="w-16 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
           aria-label="Password length"
         />
       </div>
@@ -270,7 +270,7 @@ export function PasswordGenerator() {
         <input
           type="number" id="pwd-count" min={1} max={50} value={count}
           onChange={(e) => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
-          className="w-16 rounded-lg border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+          className="w-16 rounded-md border border-surface-200 bg-white px-2 py-1 text-sm text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
         />
       </div>
     </div>
@@ -325,7 +325,7 @@ export function PasswordGenerator() {
             <label htmlFor="pwd-custom-set" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Custom Character Set</label>
             <input
               type="text" id="pwd-custom-set" value={customSet} onChange={(e) => setCustomSet(e.target.value)} placeholder="e.g. ABCabc123"
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
             />
             {charsetDisplay && !pronounceable && !pinMode && (
               <p className="mt-1 text-xs text-surface-500 dark:text-dark-muted">Chars: {charsetSize} &mdash; {charsetDisplay.trim()}</p>
@@ -335,16 +335,16 @@ export function PasswordGenerator() {
       </AdvancedOptions>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
+        <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
         {passwords.length > 0 && (
           <>
-            <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label={count === 1 ? "Copy password to clipboard" : "Copy all passwords to clipboard"}>
+            <button onClick={() => copyOne(count === 1 ? passwords[0] : passwords.join("\n"), -2)} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label={count === 1 ? "Copy password to clipboard" : "Copy all passwords to clipboard"}>
               {copiedIdx === -2 ? "Copied!" : "Copy All"}
             </button>
-            <button onClick={downloadTxt} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download passwords as text file">Download .txt</button>
+            <button onClick={downloadTxt} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Download passwords as text file">Download .txt</button>
           </>
         )}
-        <button onClick={() => setShowHistory(!showHistory)} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-expanded={showHistory} aria-controls="password-history">
+        <button onClick={() => setShowHistory(!showHistory)} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-expanded={showHistory} aria-controls="password-history">
           History ({history.length})
         </button>
       </div>
@@ -368,7 +368,7 @@ export function PasswordGenerator() {
       {passwords.length > 0 && (
         <div className="space-y-2">
           {passwords.map((pw, i) => (
-            <div key={i} className="flex items-center gap-2 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div key={i} className="flex items-center gap-2 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all break-all">{pw}</code>
               <button onClick={() => copyOne(pw, i)} className="text-xs text-brand-500 hover:text-brand-600 whitespace-nowrap" aria-label={`Copy password ${i + 1} to clipboard`}>
                 {copiedIdx === i ? "Copied!" : "Copy"}

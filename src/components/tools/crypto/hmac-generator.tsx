@@ -94,21 +94,21 @@ export function HmacGenerator() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Message</label>
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3}
           placeholder="Plain text to compute the hash..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Secret Key</label>
         <input type="text" value={secretKey} onChange={(e) => setSecretKey(e.target.value)}
           placeholder="Enter the secret key..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Hashing Function</label>
           <select value={algorithm} onChange={(e) => setAlgorithm(e.target.value as HashFn)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
             {HASH_FUNCTIONS.map((fn) => (
               <option key={fn.value} value={fn.value}>{fn.label}</option>
             ))}
@@ -118,7 +118,7 @@ export function HmacGenerator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output Encoding</label>
           <select value={encoding} onChange={(e) => setEncoding(e.target.value as OutputEncoding)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text">
             {ENCODING_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
@@ -136,12 +136,12 @@ export function HmacGenerator() {
       </div>
 
       {output && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <pre className="text-sm font-mono text-surface-900 dark:text-dark-text break-all select-all whitespace-pre-wrap">{output}</pre>
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">About HMAC</p>
         <p className="text-xs text-surface-600 dark:text-dark-text">
           HMAC (Hash-based Message Authentication Code) provides both data integrity and authentication using a secret key. It is widely used for API request signing, webhook verification, and token generation.

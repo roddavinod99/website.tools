@@ -159,13 +159,13 @@ export function MorseCode() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex gap-1 rounded-lg border border-surface-200 p-1 dark:border-dark-border">
+        <div className="flex gap-1 rounded-md border border-surface-200 p-1 dark:border-dark-border">
           <button onClick={() => setMode("encode")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${mode === "encode" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>Encode Text → Morse</button>
           <button onClick={() => setMode("decode")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${mode === "decode" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>Decode Morse → Text</button>
         </div>
-        <button onClick={handleClear} className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Clear</button>
+        <button onClick={handleClear} className="rounded-md border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Clear</button>
         <input ref={fileInputRef} type="file" accept={mode === "encode" ? ".txt" : ".morse,.txt"} onChange={handleFileUpload} className="hidden" />
-        <button onClick={() => fileInputRef.current?.click()} className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Upload File</button>
+        <button onClick={() => fileInputRef.current?.click()} className="rounded-md border border-surface-200 px-3 py-1.5 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">Upload File</button>
       </div>
 
       <div>
@@ -174,7 +174,7 @@ export function MorseCode() {
         </label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={4}
           placeholder={mode === "encode" ? "Enter text to encode..." : "Enter morse code (use . - and space between letters, / between words)..."}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
@@ -192,7 +192,7 @@ export function MorseCode() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
             {mode === "encode" ? "Morse Code" : "Decoded Text"}
           </label>
-          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text whitespace-pre-wrap break-all">{output}</pre>
+          <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-40 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text whitespace-pre-wrap break-all">{output}</pre>
 
           {stats && (
             <div className="mt-2 flex flex-wrap gap-3 text-xs text-surface-500 dark:text-dark-muted">

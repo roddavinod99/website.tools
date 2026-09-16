@@ -132,19 +132,19 @@ export function DNSLookup() {
       <div className="flex gap-2">
         <input type="text" value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="e.g. example.com"
           onKeyDown={(e) => e.key === "Enter" && lookup(domain, type)}
-          className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         <select value={type} onChange={(e) => setType(e.target.value as RecordType)}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           {RECORD_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
         <button onClick={() => lookup(domain, type)} disabled={loading || !domain.trim()}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors whitespace-nowrap">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors whitespace-nowrap">
           {loading ? "Looking up..." : "Lookup"}
         </button>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
           <div className="flex gap-2 mt-1">
             <button onClick={() => lookup(domain, type)} className="text-xs text-brand-500 hover:text-brand-600">Retry</button>
@@ -168,7 +168,7 @@ export function DNSLookup() {
           </div>
 
           {/* Answer Records Table */}
-          <div data-testid="tool-output" className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+          <div data-testid="tool-output" className="table-responsive rounded-md border border-surface-200 dark:border-dark-border">
             <table className="table-base font-mono">
               <thead>
                 <tr className="bg-surface-50 dark:bg-dark-surface">
@@ -200,7 +200,7 @@ export function DNSLookup() {
           {data.Authority && data.Authority.length > 0 && (
             <div className="mt-3">
               <h4 className="text-xs font-semibold text-surface-600 dark:text-dark-muted mb-2 uppercase tracking-wide">Authority Records</h4>
-              <div className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+              <div className="table-responsive rounded-md border border-surface-200 dark:border-dark-border">
                 <table className="table-base font-mono text-xs">
                   <thead>
                     <tr className="bg-surface-50 dark:bg-dark-surface">
@@ -232,7 +232,7 @@ export function DNSLookup() {
           {data.Additional && data.Additional.length > 0 && (
             <div className="mt-3">
               <h4 className="text-xs font-semibold text-surface-600 dark:text-dark-muted mb-2 uppercase tracking-wide">Additional Records</h4>
-              <div className="table-responsive rounded-lg border border-surface-200 dark:border-dark-border">
+              <div className="table-responsive rounded-md border border-surface-200 dark:border-dark-border">
                 <table className="table-base font-mono text-xs">
                   <thead>
                     <tr className="bg-surface-50 dark:bg-dark-surface">
@@ -269,24 +269,24 @@ export function DNSLookup() {
             </button>
           </div>
           {showRaw && (
-            <pre className="mt-2 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">
+            <pre className="mt-2 rounded-md border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">
               {JSON.stringify(data, null, 2)}
             </pre>
           )}
 
           {/* WHOIS / RDAP Summary */}
           {whoisLoading && (
-            <div className="mt-3 rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+            <div className="mt-3 rounded-md border border-surface-200 bg-surface-50 p-3 text-xs text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
               Loading WHOIS/RDAP data…
             </div>
           )}
           {!whoisLoading && whoisError && (
-            <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
+            <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
               {whoisError}
             </div>
           )}
           {!whoisLoading && whois && !whoisError && (
-            <div className="mt-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="mt-3 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">WHOIS / RDAP Summary</p>
               <div className="text-xs text-surface-700 dark:text-dark-text space-y-1">
                 {whois.registrar && <p>Registrar: {whois.registrar}</p>}

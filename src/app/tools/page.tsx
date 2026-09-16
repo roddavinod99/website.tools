@@ -79,7 +79,7 @@ export default function ToolsPage() {
               <input
                 name="q"
                 placeholder="Search tools..."
-                className="flex h-12 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                className="flex h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
               />
             </form>
           </div>
@@ -105,7 +105,7 @@ export default function ToolsPage() {
 
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">
-          <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-2 mb-8">
+          <div className="flex flex-wrap items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-2 mb-8">
             <Link
               href="/tools"
               className="rounded-md border border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-4 py-1.5 text-sm font-medium text-blue-700 dark:text-blue-400"

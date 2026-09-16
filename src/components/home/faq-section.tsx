@@ -26,7 +26,7 @@ export function FAQSection({ faqItems }: { faqItems: FaqItem[] }) {
             {faqItems.map((item, i) => (
               <div
                 key={i}
-                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
+                className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)]"
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}

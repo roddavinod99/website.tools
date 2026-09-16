@@ -51,7 +51,7 @@ export function DownPaymentPlanner() {
       {result ? (
         <div
           data-testid="tool-output"
-          className="space-y-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="space-y-4 rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           {result.monthsToGoal < Infinity ? (
             <>
@@ -84,7 +84,7 @@ export function DownPaymentPlanner() {
           )}
         </div>
       ) : (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter a down payment goal to plan your savings schedule.
         </p>
       )}

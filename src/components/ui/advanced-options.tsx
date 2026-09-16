@@ -20,7 +20,7 @@ export function AdvancedOptions({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+    <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}

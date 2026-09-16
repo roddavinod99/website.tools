@@ -207,7 +207,7 @@ export function Base64Tool() {
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); updateState({ mode: m }); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Encode" : "Decode"}
           </button>
         ))}
@@ -216,20 +216,20 @@ export function Base64Tool() {
       <div className="flex flex-wrap gap-2 mb-3">
         <label htmlFor="base64-output-format" className="sr-only">Output format</label>
         <select id="base64-output-format" value={outputFormat} onChange={(e) => { const v = e.target.value as OutputFormat; setOutputFormat(v); updateState({ outputFormat: v }); }}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="plain">Plain Text</option>
           <option value="datauri">Data URI</option>
           <option value="base64url">Base64url</option>
         </select>
         <label htmlFor="base64-char-encoding" className="sr-only">Character encoding</label>
         <select id="base64-char-encoding" value={charEncoding} onChange={(e) => { const v = e.target.value as CharEncoding; setCharEncoding(v); updateState({ charEncoding: v }); }}
-          className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-xs font-medium text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="utf-8">UTF-8</option>
           <option value="ascii">ASCII</option>
           <option value="utf-16">UTF-16</option>
           <option value="latin-1">Latin-1</option>
         </select>
-        <button onClick={handleFileUpload} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+        <button onClick={handleFileUpload} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
           Upload File
         </button>
       </div>
@@ -239,7 +239,7 @@ export function Base64Tool() {
           <OptionRow columns={2}>
             <label htmlFor="base64-char-encoding" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Character Encoding</label>
             <select id="base64-char-encoding" value={charEncoding} onChange={(e) => { const v = e.target.value as CharEncoding; setCharEncoding(v); updateState({ charEncoding: v }); }}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               <option value="utf-8">UTF-8 (default)</option>
               <option value="ascii">ASCII</option>
               <option value="utf-16">UTF-16</option>
@@ -248,7 +248,7 @@ export function Base64Tool() {
 
             <label htmlFor="base64-output-format" className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output Format</label>
             <select id="base64-output-format" value={outputFormat} onChange={(e) => { const v = e.target.value as OutputFormat; setOutputFormat(v); updateState({ outputFormat: v }); }}
-              className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
               <option value="plain">Plain Text</option>
               <option value="datauri">Data URI</option>
               <option value="base64url">Base64url (URL-safe)</option>
@@ -258,9 +258,9 @@ export function Base64Tool() {
 
         <OptionGroup title="File Operations" description="Upload, drag & drop, or download files">
           <OptionRow columns={1}>
-            <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()} className="rounded-lg border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted">
+            <div onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()} className="rounded-md border-2 border-dashed border-surface-300 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:text-dark-muted">
               <p>Drag & drop a file here</p>
-              <button onClick={handleFileUpload} className="mt-2 rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+              <button onClick={handleFileUpload} className="mt-2 rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
                 Browse Files
               </button>
             </div>
@@ -285,14 +285,14 @@ export function Base64Tool() {
         <textarea id="base64-input" value={input} onChange={(e) => handleInputChange(e.target.value)}
           placeholder={mode === "encode" ? "Enter text or drop a file..." : "Enter Base64 string or drop a file..."}
           rows={5} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         {!input && (
           <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">Drag & drop a file or use Upload File button</p>
         )}
       </div>
 
       {validationMsg && mode === "decode" && (
-        <div className={`rounded-lg border p-3 ${validationMsg.ok ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20"}`}>
+        <div className={`rounded-md border p-3 ${validationMsg.ok ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20" : "border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20"}`}>
           <p className={`text-sm ${validationMsg.ok ? "text-green-700 dark:text-green-400" : "text-amber-700 dark:text-amber-400"}`}>
             {validationMsg.text}
           </p>
@@ -300,7 +300,7 @@ export function Base64Tool() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -317,7 +317,7 @@ export function Base64Tool() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}
 

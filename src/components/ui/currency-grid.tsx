@@ -50,7 +50,7 @@ export function CurrencyGrid({
               key={currency}
               onClick={() => onSelect(currency)}
               className={`
-                relative rounded-lg border p-3 text-left transition-all
+                relative rounded-md border p-3 text-left transition-all
                 ${isActive
                   ? "border-brand-primary bg-brand-50 dark:bg-brand-900/20"
                   : "border-tool-border bg-tool-surface hover:border-brand-primary/50 hover:shadow-[var(--tool-card-shadow)]"}

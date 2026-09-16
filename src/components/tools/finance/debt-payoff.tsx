@@ -82,7 +82,7 @@ export function DebtPayoff() {
         {debts.map((debt, i) => (
           <div
             key={i}
-            className="grid gap-3 rounded-xl border border-surface-200 bg-white p-4 sm:grid-cols-4 dark:border-dark-border dark:bg-dark-surface"
+            className="grid gap-3 rounded-md border border-surface-200 bg-white p-4 sm:grid-cols-4 dark:border-dark-border dark:bg-dark-surface"
           >
             <Field label="Name">
               <input
@@ -90,7 +90,7 @@ export function DebtPayoff() {
                 value={debt.name}
                 onChange={(e) => updateDebt(i, { name: e.target.value })}
                 aria-label={`Debt ${i + 1} name`}
-                className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+                className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 focus-ring dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
               />
             </Field>
             <MoneyInput
@@ -120,7 +120,7 @@ export function DebtPayoff() {
       {result ? (
         <div
           data-testid="tool-output"
-          className="space-y-4 rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="space-y-4 rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
@@ -138,7 +138,7 @@ export function DebtPayoff() {
           </div>
         </div>
       ) : (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter your debts and a monthly budget that covers at least the minimum payments.
         </p>
       )}

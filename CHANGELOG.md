@@ -784,6 +784,14 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 
 - add SVG logomark, wordmark, favicon, and og card
 - load Geist Sans + Geist Mono via next/font
+## [1.15.1] - 2026-09-16
+
+### Changed
+
+- Merge pull request #39 from roddavinod99/feat/platform-overhaul-p0
+### Infrastructure
+
+- update .gitignore docs for Platform Overhaul P0-P4, clear dev cache (check-examples, designplan, graphify-out, parse-tools)
 ## Template
 
 For future releases:

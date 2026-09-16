@@ -222,7 +222,7 @@ export function LoremIpsum() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Style</label>
           <select value={ipsumStyle} onChange={(e) => setIpsumStyle(e.target.value as IpsumStyle)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="lorem">Lorem Ipsum (classic)</option>
             <option value="tech">Tech Ipsum</option>
             <option value="hipster">Hipster Ipsum</option>
@@ -232,7 +232,7 @@ export function LoremIpsum() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Type</label>
           <select value={unit} onChange={(e) => setUnit(e.target.value as Unit)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="paragraphs">Paragraphs</option>
             <option value="sentences">Sentences</option>
             <option value="words">Words</option>
@@ -244,14 +244,14 @@ export function LoremIpsum() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Count</label>
           <input type="number" min={1} max={1000} value={count}
             onChange={(e) => setCount(Math.max(1, Math.min(1000, parseInt(e.target.value) || 1)))}
-            className="w-20 rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-20 rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         {unit === "paragraphs" && (
           <>
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Style</label>
               <select value={paragraphStyle} onChange={(e) => setParagraphStyle(e.target.value as ParagraphStyle)}
-                className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 <option value="standard">Standard</option>
                 <option value="short">Short</option>
                 <option value="medium">Medium</option>
@@ -261,7 +261,7 @@ export function LoremIpsum() {
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Start</label>
               <select value={starting} onChange={(e) => setStarting(e.target.value as StartingText)}
-                className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 <option value="lorem">Traditional Lorem</option>
                 <option value="cicero">Cicero</option>
                 <option value="custom">Custom</option>
@@ -272,7 +272,7 @@ export function LoremIpsum() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Code</label>
           <select value={codeSample} onChange={(e) => setCodeSample(e.target.value as CodeSampleType)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="none">None</option>
             <option value="html">HTML</option>
             <option value="css">CSS</option>
@@ -286,7 +286,7 @@ export function LoremIpsum() {
       {starting === "custom" && (
         <textarea value={customStart} onChange={(e) => setCustomStart(e.target.value)} placeholder="Enter custom starting text..."
           rows={2}
-          className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       )}
 
       <div className="flex flex-wrap items-center gap-3">
@@ -307,14 +307,14 @@ export function LoremIpsum() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
+        <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
           Generate (Ctrl+Enter)
         </button>
-        <button onClick={copy} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={copy} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           {copied ? "Copied!" : "Copy"}
         </button>
-        <button onClick={() => download("txt")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
-        <button onClick={() => download("html")} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.html</button>
+        <button onClick={() => download("txt")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.txt</button>
+        <button onClick={() => download("html")} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">.html</button>
       </div>
 
       {output && (
@@ -327,7 +327,7 @@ export function LoremIpsum() {
             </div>
           </div>
           <textarea ref={textAreaRef} readOnly value={output}
-            className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-80 whitespace-pre-wrap" rows={8} />
+            className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-80 whitespace-pre-wrap" rows={8} />
         </div>
       )}
 

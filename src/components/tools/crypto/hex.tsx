@@ -170,7 +170,7 @@ export function Hex() {
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Text to Hex" : "Hex to Text"}
           </button>
         ))}
@@ -179,25 +179,25 @@ export function Hex() {
       <div className="flex flex-wrap gap-2">
         {(["lower", "upper"] as CaseType[]).map((c) => (
           <button key={c} onClick={() => setCaseType(c)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${caseType === c ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${caseType === c ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {c === "lower" ? "Lowercase" : "Uppercase"}
           </button>
         ))}
         {(["space", "continuous", "0x", "x"] as SeparatorType[]).map((s) => (
           <button key={s} onClick={() => setSeparator(s)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${separator === s ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${separator === s ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {s === "space" ? "Space" : s === "continuous" ? "Continuous" : s === "0x" ? "0x-prefix" : "\\x-escape"}
           </button>
         ))}
         {mode === "encode" && (
-          <button onClick={handleFileConvert} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+          <button onClick={handleFileConvert} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
             File to Hex
           </button>
         )}
       </div>
 
       {colorPreview && mode === "encode" && (
-        <div className="flex items-center gap-3 rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+        <div className="flex items-center gap-3 rounded-md border border-surface-200 p-3 dark:border-dark-border">
           <div className="w-10 h-10 rounded border border-surface-300" style={{ backgroundColor: colorPreview }} />
           <div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text">{colorPreview}</p>
@@ -213,18 +213,18 @@ export function Hex() {
         <textarea value={input} onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "encode" ? "Hello" : "48 65 6c 6c 6f"}
           rows={4} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="flex items-center gap-2">
         <label className="text-xs font-medium text-surface-500 dark:text-dark-muted">XOR Key (0-255):</label>
         <input type="number" min={0} max={255} value={xorKey} onChange={(e) => setXorKey(e.target.value)}
           placeholder="Optional"
-          className="w-20 rounded-lg border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-20 rounded-md border border-surface-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -234,12 +234,12 @@ export function Hex() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}
 
       {outputColorPreview && (
-        <div className="flex items-center gap-3 rounded-lg border border-surface-200 p-3 dark:border-dark-border">
+        <div className="flex items-center gap-3 rounded-md border border-surface-200 p-3 dark:border-dark-border">
           <div className="w-10 h-10 rounded border border-surface-300" style={{ backgroundColor: outputColorPreview }} />
           <div>
             <p className="text-xs font-mono text-surface-700 dark:text-dark-text">{outputColorPreview}</p>
@@ -251,7 +251,7 @@ export function Hex() {
       {byteDetails.length > 0 && (
         <div>
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Byte Breakdown</p>
-          <div className="max-h-48 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
+          <div className="max-h-48 overflow-y-auto rounded-md border border-surface-200 dark:border-dark-border">
             <div className="table-responsive">
             <table className="table-base table-hover font-mono">
               <thead>

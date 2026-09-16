@@ -147,7 +147,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </Prose>
           {blogToGuide[blogPost.slug] && (
-            <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="mt-10 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
                 Quick guide
               </h3>

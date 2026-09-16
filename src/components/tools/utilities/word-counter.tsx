@@ -190,7 +190,7 @@ export function WordCounter() {
           </div>
         </div>
         <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Type or paste your text here..." rows={8}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {stats.words > 0 && (
@@ -210,7 +210,7 @@ export function WordCounter() {
               { label: "Speaking Time", value: stats.speakingTime },
               { label: "Avg Word Len", value: stats.avgWordLength },
             ].map((s) => (
-              <div key={s.label} className="rounded-lg border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
+              <div key={s.label} className="rounded-md border border-surface-200 bg-surface-50 p-2 text-center dark:border-dark-border dark:bg-dark-surface">
                 <div className="text-lg font-bold text-brand-500">{s.value}</div>
                 <div className="text-[10px] text-surface-500 dark:text-dark-muted truncate">{s.label}</div>
               </div>
@@ -236,7 +236,7 @@ export function WordCounter() {
 
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Grade Level</p>
-              <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
                 <div className="text-lg font-bold text-brand-500">{stats.fleschKincaid}</div>
                 <div className="text-[10px] text-surface-500 dark:text-dark-muted">Flesch-Kincaid Grade Level</div>
               </div>
@@ -260,7 +260,7 @@ export function WordCounter() {
 
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Avg Sentence Length</p>
-              <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-surface-50 p-3 text-center dark:border-dark-border dark:bg-dark-surface">
                 <div className="text-lg font-bold text-brand-500">{stats.avgSentenceLength}</div>
                 <div className="text-[10px] text-surface-500 dark:text-dark-muted">words per sentence</div>
               </div>
@@ -270,7 +270,7 @@ export function WordCounter() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Word Frequency (Top 20)</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {stats.wordFrequency.map(([w, c]) => (
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text truncate">{w}</span>
@@ -281,7 +281,7 @@ export function WordCounter() {
             </div>
             <div>
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Keyword Density (%)</p>
-              <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+              <div className="rounded-md border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
                 {stats.keywordDensity.map(([w, d]) => (
                   <div key={w} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
                     <span className="text-surface-900 dark:text-dark-text truncate">{w}</span>
@@ -294,7 +294,7 @@ export function WordCounter() {
 
           <div>
             <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Character Frequency (Top 20)</p>
-            <div className="rounded-lg border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-2 max-h-60 overflow-auto dark:border-dark-border dark:bg-dark-surface">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
                 {stats.charFrequency.map(([c, n]) => (
                   <div key={c} className="flex justify-between text-xs font-mono py-0.5 px-1 hover:bg-surface-50 dark:hover:bg-dark-bg rounded">
@@ -308,7 +308,7 @@ export function WordCounter() {
 
           <div>
             <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Letter Density</p>
-            <div className="rounded-lg border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-white p-2 dark:border-dark-border dark:bg-dark-surface">
               {stats.letterDensity.map((l) => (
                 <div key={l.letter} className="flex items-center gap-2 text-xs py-0.5">
                   <span className="font-mono w-4 text-center text-surface-900 dark:text-dark-text">{l.letter}</span>

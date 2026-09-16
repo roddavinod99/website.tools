@@ -33,7 +33,7 @@ export default function SupportPage() {
               <a
                 key={opt.title}
                 href={opt.href}
-                className="group rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all border-[var(--color-border)] bg-[var(--color-surface)]"
+                className="group rounded-md border border-[var(--color-border)] bg-white p-5 transition-all border-[var(--color-border)] bg-[var(--color-surface)]"
               >
                 <Icon className="h-5 w-5 text-blue-700 dark:text-blue-400" />
                 <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 text-[var(--color-text)]">

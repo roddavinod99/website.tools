@@ -140,7 +140,7 @@ export function HtmlEntity() {
       <div className="flex flex-wrap gap-2">
         {(["encode", "decode"] as Mode[]).map((m) => (
           <button key={m} onClick={() => { setMode(m); setError(""); }}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "encode" ? "Encode" : "Decode"}
           </button>
         ))}
@@ -149,7 +149,7 @@ export function HtmlEntity() {
       <div className="flex flex-wrap gap-2">
         {(["named", "numeric", "hex"] as EntityMode[]).map((em) => (
           <button key={em} onClick={() => setEntityMode(em)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${entityMode === em ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${entityMode === em ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {em === "named" ? "Named (&amp;)" : em === "numeric" ? "Numeric (&#38;)" : "Hex (&#x26;)"}
           </button>
         ))}
@@ -158,12 +158,12 @@ export function HtmlEntity() {
       <div className="flex flex-wrap gap-2">
         {(["none", "body", "attribute"] as Preset[]).map((p) => (
           <button key={p} onClick={() => setPreset(p)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${preset === p ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${preset === p ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {p === "none" ? "Custom" : p === "body" ? "HTML Body" : "HTML Attribute"}
           </button>
         ))}
         {mode === "encode" && preset === "none" && (
-          <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
+          <label className="flex items-center gap-1.5 rounded-md border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
             <input type="checkbox" checked={encodeAll} onChange={(e) => setEncodeAll(e.target.checked)} className="rounded border-surface-300 text-brand-500 focus:ring-brand-400" />
             Encode all chars
           </label>
@@ -171,12 +171,12 @@ export function HtmlEntity() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
+        <label className="flex items-center gap-1.5 rounded-md border border-surface-200 px-3 py-1.5 text-xs text-surface-700 dark:border-dark-border dark:text-dark-text">
           <input type="checkbox" checked={preserveWhitespace} onChange={(e) => setPreserveWhitespace(e.target.checked)} className="rounded border-surface-300 text-brand-500 focus:ring-brand-400" />
           Preserve whitespace
         </label>
         {mode === "encode" && (
-          <button onClick={() => setInput(xssEncode(input))} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
+          <button onClick={() => setInput(xssEncode(input))} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface">
             XSS-safe encode
           </button>
         )}
@@ -189,17 +189,17 @@ export function HtmlEntity() {
         <textarea value={input} onChange={(e) => { const val = e.target.value; setInput(val); if (val && detectHtmlEntity(val) && mode === "encode") setMode("decode"); }}
           placeholder={mode === "encode" ? '<div class="example">' : "&lt;div&gt;"}
           rows={4} spellCheck={false}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {showSizeWarning && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+        <div className="rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
           <p className="text-sm text-amber-700 dark:text-amber-400">Input exceeds 1MB limit. Please reduce input size.</p>
         </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
@@ -209,7 +209,7 @@ export function HtmlEntity() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Output</label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-60 break-all select-all">{output}</pre>
         </div>
       )}
 

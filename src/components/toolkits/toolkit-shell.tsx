@@ -34,7 +34,7 @@ export function ToolkitShell({ title, description, tabs, defaultTab }: Props) {
               aria-controls={`tabpanel-${tab.id}`}
               id={`tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left ${
+              className={`w-full flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors text-left ${
                 activeTab === tab.id
                   ? "bg-brand-500 text-white shadow-sm"
                   : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"
@@ -57,7 +57,7 @@ export function ToolkitShell({ title, description, tabs, defaultTab }: Props) {
           role="tabpanel"
           id={`tabpanel-${activeTab}`}
           aria-labelledby={`tab-${activeTab}`}
-          className="rounded-xl border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface"
+          className="rounded-md border border-surface-200 bg-white p-6 dark:border-dark-border dark:bg-dark-surface"
         >
           {active?.content}
         </div>

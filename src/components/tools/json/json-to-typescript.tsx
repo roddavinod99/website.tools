@@ -154,13 +154,13 @@ export function JsonToTypescript() {
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JSON Input</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
         <div>
           <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Output Style</label>
-          <div className="flex gap-1 rounded-lg border border-surface-200 p-1 dark:border-dark-border">
+          <div className="flex gap-1 rounded-md border border-surface-200 p-1 dark:border-dark-border">
             <button onClick={() => setOutputType("interface")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${outputType === "interface" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>Interface</button>
             <button onClick={() => setOutputType("type")} className={`px-3 py-1.5 text-sm rounded-md transition-colors ${outputType === "type" ? "bg-brand-500 text-white" : "text-surface-600 hover:bg-surface-100 dark:text-dark-muted dark:hover:bg-dark-surface"}`}>Type Alias</button>
           </div>
@@ -184,7 +184,7 @@ export function JsonToTypescript() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Generated TypeScript</label>
-          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
+          <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
         </div>
       )}
     </div>

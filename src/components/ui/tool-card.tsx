@@ -41,11 +41,11 @@ const sizeClasses: Record<ToolCardSize, { padding: string; title: string; desc: 
 };
 
 const variantClasses: Record<ToolCardVariant, string> = {
-  default: "group relative flex flex-col gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
-  compact: "group relative flex flex-col gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
-  featured: "group relative flex flex-col gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
-  related: "group relative flex flex-col gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-3 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
-  home: "group relative flex flex-col gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
+  default: "group relative flex flex-col gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
+  compact: "group relative flex flex-col gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
+  featured: "group relative flex flex-col gap-2 rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
+  related: "group relative flex flex-col gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-3 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
+  home: "group relative flex flex-col gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)] dark:bg-[var(--color-surface)]",
 };
 
 export function ToolCard({ 

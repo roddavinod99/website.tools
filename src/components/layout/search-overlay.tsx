@@ -106,7 +106,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]" role="dialog" aria-modal="true" aria-label="Search tools and guides">
       <div className="fixed inset-0 z-50 bg-[var(--color-bg)]/70 backdrop-blur" onClick={onClose} />
-      <div ref={panelRef} className="relative mx-auto mt-24 w-full max-w-xl rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm">
+      <div ref={panelRef} className="relative mx-auto mt-24 w-full max-w-xl rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm">
         <form onSubmit={handleSubmit} className="flex items-center border-b border-[var(--color-border)] px-4">
           <Search className="h-5 w-5 shrink-0 text-[var(--color-text-muted)]" />
           <label htmlFor="search-overlay-input" className="sr-only">Search tools and guides</label>

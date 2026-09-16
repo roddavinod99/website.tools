@@ -95,7 +95,7 @@ export function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps) {
       <div
         ref={contentRef}
         tabIndex={-1}
-        className="relative w-full max-w-2xl max-h-[85vh] overflow-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm animate-slide-up"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-auto rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm animate-slide-up"
       >
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--color-border)] p-4 bg-[var(--color-bg)]">
           <h2 id="shortcuts-title" className="text-lg font-semibold text-[var(--color-text)]">

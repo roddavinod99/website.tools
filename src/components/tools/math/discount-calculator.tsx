@@ -93,7 +93,7 @@ export function DiscountCalculator() {
             Original price
           </label>
           <div className="flex">
-            <span className="inline-flex items-center rounded-l-lg border border-r-0 border-surface-200 bg-surface-50 px-3 text-sm text-surface-500 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
+            <span className="inline-flex items-center rounded-l-md border border-r-0 border-surface-200 bg-surface-50 px-3 text-sm text-surface-500 dark:border-dark-border dark:bg-dark-bg dark:text-dark-muted">
               $
             </span>
             <input
@@ -103,7 +103,7 @@ export function DiscountCalculator() {
               onChange={(e) => setPrice(e.target.value)}
               min="0"
               step="any"
-              className="w-full rounded-r-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+              className="w-full rounded-r-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ export function DiscountCalculator() {
             onChange={(e) => setRaw(e.target.value)}
             placeholder="20, 10"
             data-testid="disc-input"
-            className="w-full rounded-lg border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-2.5 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
         </div>
       </div>
@@ -129,7 +129,7 @@ export function DiscountCalculator() {
       {result && (
         <div
           data-testid="tool-output"
-          className="rounded-2xl border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
+          className="rounded-md border border-surface-200 bg-surface-50 p-5 dark:border-dark-border dark:bg-dark-surface"
         >
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
             <div>
@@ -165,7 +165,7 @@ export function DiscountCalculator() {
       )}
 
       {!result && (
-        <p className="rounded-xl border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
+        <p className="rounded-md border border-surface-200 bg-surface-50 p-4 text-center text-sm text-surface-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-muted">
           Enter a positive price and at least one discount percentage.
         </p>
       )}

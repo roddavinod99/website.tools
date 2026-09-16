@@ -188,7 +188,7 @@ export function TextSorter() {
             </div>
           </div>
           <textarea ref={inputRef} value={input} onChange={(e) => handleInputChange(e.target.value)} rows={10}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
         <div>
           <div className="flex items-center justify-between mb-1">
@@ -199,18 +199,18 @@ export function TextSorter() {
             </div>
           </div>
           <textarea value={outputText} readOnly rows={10}
-            className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
         </div>
       </div>
 
       {sizeWarning && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">{sizeWarning}</div>
+        <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">{sizeWarning}</div>
       )}
 
       <div className="flex flex-wrap gap-2">
         {SORT_MODES.map((m) => (
           <button key={m.id} onClick={() => setMode(m.id)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${mode === m.id ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${mode === m.id ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m.label}
           </button>
         ))}

@@ -300,19 +300,19 @@ export function UnitConverter() {
       <div className="grid grid-cols-3 gap-3">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Category</label>
-          <select value={category} onChange={(e) => handleCategoryChange(e.target.value as CategoryKey)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <select value={category} onChange={(e) => handleCategoryChange(e.target.value as CategoryKey)} className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {Object.entries(categories).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">From</label>
-          <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {current.units.map((u) => <option key={u.value} value={u.value}>{u.label} ({u.value})</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">To</label>
-          <select value={toUnit} onChange={(e) => setToUnit(e.target.value)} className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <select value={toUnit} onChange={(e) => setToUnit(e.target.value)} className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {current.units.map((u) => <option key={u.value} value={u.value}>{u.label} ({u.value})</option>)}
           </select>
         </div>
@@ -321,10 +321,10 @@ export function UnitConverter() {
       <div className="flex gap-2 items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Value</label>
-          <input type="text" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Enter value..." className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          <input type="text" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Enter value..." className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
-        <button onClick={swap} title="Swap units" className="rounded-lg border border-surface-200 px-3 py-2 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Swap units">Swap</button>
-        <button onClick={toggleFavorite} className={`rounded-lg px-3 py-2 text-sm transition-colors ${isFavorite ? "bg-yellow-100 text-yellow-700 border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>{isFavorite ? "Star" : "Star"}</button>
+        <button onClick={swap} title="Swap units" className="rounded-md border border-surface-200 px-3 py-2 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors" aria-label="Swap units">Swap</button>
+        <button onClick={toggleFavorite} className={`rounded-md px-3 py-2 text-sm transition-colors ${isFavorite ? "bg-yellow-100 text-yellow-700 border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>{isFavorite ? "Star" : "Star"}</button>
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">
@@ -344,7 +344,7 @@ export function UnitConverter() {
       {result && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Result</label>
-          <div className="flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 p-3 dark:border-brand-700 dark:bg-brand-900/20">
+          <div className="flex items-center gap-2 rounded-md border border-brand-200 bg-brand-50 p-3 dark:border-brand-700 dark:bg-brand-900/20">
             <code className="flex-1 text-lg font-bold font-mono text-surface-900 dark:text-dark-text select-all">{result} {toUnit}</code>
           </div>
           <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">{value} {fromUnit} = {resultNum.toPrecision(precision).replace(/(\.\d*?[1-9])0+$|\.0+$/, "")} {toUnit}</p>
@@ -357,7 +357,7 @@ export function UnitConverter() {
           <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">
             {value} {fromDef.label} in every {current.label} unit
           </p>
-          <div className="overflow-hidden rounded-lg border border-surface-200 dark:border-dark-border">
+          <div className="overflow-hidden rounded-md border border-surface-200 dark:border-dark-border">
             <div className="table-responsive">
             <table className="table-base">
               <caption className="sr-only">Conversion of {value} {fromDef.label} to all {current.label} units</caption>
@@ -413,8 +413,8 @@ export function UnitConverter() {
 
       <div className="border-t border-surface-200 pt-4 dark:border-dark-border">
         <p className="text-sm font-medium text-surface-700 dark:text-dark-text mb-2">Batch Convert</p>
-        <textarea value={batchInput} onChange={(e) => setBatchInput(e.target.value)} placeholder="Paste values, one per line" rows={3} className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
-        <button onClick={handleBatch} className="mt-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Convert Batch</button>
+        <textarea value={batchInput} onChange={(e) => setBatchInput(e.target.value)} placeholder="Paste values, one per line" rows={3} className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+        <button onClick={handleBatch} className="mt-2 rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Convert Batch</button>
         {batchResults.length > 0 && (
           <div className="mt-2 max-h-32 overflow-y-auto space-y-1">
             {batchResults.map((r, i) => <div key={i} className="rounded border border-surface-200 bg-surface-50 px-3 py-1.5 text-xs font-mono text-surface-700 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{r}</div>)}

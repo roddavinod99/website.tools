@@ -60,9 +60,9 @@ export default function BestPracticesPage() {
                 <Link
                   key={p.slug}
                   href={`/guides/${p.slug}`}
-                  className="group flex items-start gap-4 rounded-lg border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
+                  className="group flex items-start gap-4 rounded-md border border-[var(--color-border)] bg-white p-5 transition-all hover:-translate-y-0.5 border-[var(--color-border)] bg-[var(--color-surface)]"
                 >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
                     <Lightbulb className="h-5 w-5" />
                   </div>
                   <div className="min-w-0 flex-1">

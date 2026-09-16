@@ -45,12 +45,12 @@ export function TokenGenerator() {
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Length</label>
           <input type="number" min={1} max={512} value={length} onChange={(e) => setLength(Number(e.target.value))}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Count</label>
           <input type="number" min={1} max={50} value={count} onChange={(e) => setCount(Math.min(50, Math.max(1, Number(e.target.value))))}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div className="sm:col-span-2">
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Length slider</label>
@@ -76,20 +76,20 @@ export function TokenGenerator() {
         <div>
           <label className="text-xs text-surface-500 dark:text-dark-muted block mb-0.5">Custom Characters</label>
           <input type="text" value={customSymbols} onChange={(e) => setCustomSymbols(e.target.value)}
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       )}
 
       <div className="flex items-center gap-3">
-        <button onClick={generate} className="rounded-lg bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
-        {tokens.length > 1 && <button onClick={copyAll} className="rounded-lg border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy All</button>}
+        <button onClick={generate} className="rounded-md bg-brand-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
+        {tokens.length > 1 && <button onClick={copyAll} className="rounded-md border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy All</button>}
         <span className="text-xs text-surface-400 dark:text-dark-muted">Charset: {charsetSize} chars · Entropy: {entropy} bits</span>
       </div>
 
       {tokens.length > 0 && (
         <div className="space-y-1.5">
           {tokens.map((t, i) => (
-            <div key={i} className="flex items-center gap-2 p-2 rounded-lg border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface group">
+            <div key={i} className="flex items-center gap-2 p-2 rounded-md border border-surface-200 dark:border-dark-border bg-surface-50 dark:bg-dark-surface group">
               <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text break-all select-all">{t}</code>
               <button onClick={() => copy(t)} className="rounded bg-brand-500 px-2 py-0.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Copy</button>
             </div>

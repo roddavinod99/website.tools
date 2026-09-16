@@ -201,13 +201,13 @@ export function UserAgentParser() {
       <div>
         <label className="block text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">User-Agent String</label>
         <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="Mozilla/5.0 ..." rows={3}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
       <div className="flex flex-wrap gap-2">
-        <button onClick={() => parse()} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
-        <button onClick={detectCurrent} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Detect Current Browser</button>
-        {result && <button onClick={exportJson} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export JSON</button>}
+        <button onClick={() => parse()} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Parse</button>
+        <button onClick={detectCurrent} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Detect Current Browser</button>
+        {result && <button onClick={exportJson} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export JSON</button>}
       </div>
 
       <div className="flex flex-wrap gap-1.5">
@@ -222,7 +222,7 @@ export function UserAgentParser() {
       {result && (
         <>
           {result.isBot && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400 flex items-center gap-2">
+            <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400 flex items-center gap-2">
               <span className="inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-700 dark:text-amber-100">BOT</span>
               This is a <strong>{result.botName}</strong> crawler/bot
             </div>
@@ -230,7 +230,7 @@ export function UserAgentParser() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {categories.map(c => (
-              <div key={c.label} className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+              <div key={c.label} className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
                 <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">{c.label}</span>
                 <span className="block text-sm font-medium text-surface-900 dark:text-dark-text">{c.value}</span>
                 {c.detail && <span className="block text-xs text-surface-500 dark:text-dark-muted">{c.detail}</span>}
@@ -243,9 +243,9 @@ export function UserAgentParser() {
               <summary className="text-xs font-medium text-surface-500 dark:text-dark-muted cursor-pointer hover:text-surface-700 dark:hover:text-dark-text transition-colors">Compare with another UA</summary>
               <div className="mt-2 space-y-2">
                 <textarea value={compareInput} onChange={e => setCompareInput(e.target.value)} placeholder="Paste second UA string" rows={2}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+                  className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
                 />
-                <button onClick={doCompare} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Compare</button>
+                <button onClick={doCompare} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Compare</button>
                 {compareResult && (
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     {["browser", "browserVersion", "engine", "os", "deviceType", "isBot"].map(field => (
@@ -297,7 +297,7 @@ export function UserAgentParser() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">
           {copyFeedback}
         </div>
       )}

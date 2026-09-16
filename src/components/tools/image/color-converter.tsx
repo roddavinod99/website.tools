@@ -228,10 +228,10 @@ export function ColorConverter() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <input type="color" value={hex || "#000000"} onChange={(e) => setInput(e.target.value)} className="h-12 w-20 rounded-lg border border-surface-200 dark:border-dark-border cursor-pointer" aria-label="Color picker" />
+        <input type="color" value={hex || "#000000"} onChange={(e) => setInput(e.target.value)} className="h-12 w-20 rounded-md border border-surface-200 dark:border-dark-border cursor-pointer" aria-label="Color picker" />
         <div className="flex-1">
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Color Input</label>
-          <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="#000000, rgb(r,g,b), hsl(h,s,l), crimson..." className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="#000000, rgb(r,g,b), hsl(h,s,l), crimson..." className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       </div>
 
@@ -245,7 +245,7 @@ export function ColorConverter() {
       {rgb && (
         <div className="space-y-2">
           {items.map((item) => (
-            <div key={item.key} className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div key={item.key} className="flex items-center justify-between rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <span className="text-sm text-surface-500 dark:text-dark-muted w-32 shrink-0">{item.label}</span>
               <code className="flex-1 text-sm font-mono text-surface-900 dark:text-dark-text select-all">{item.value}</code>
               <button onClick={() => handleCopy(item.value, item.key)} disabled={!item.value || item.value === "\u2014"} className="ml-2 text-xs text-brand-500 hover:text-brand-600 disabled:text-surface-300 dark:disabled:text-dark-muted transition-colors min-w-[3rem] text-right" aria-label={`Copy ${item.label}`}>{copied === item.key ? "Copied!" : "Copy"}</button>
@@ -299,14 +299,14 @@ export function ColorConverter() {
                   <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Foreground</label>
                   <div className="flex gap-1 items-center">
                     <input type="color" value={parseColor(fgInput) ? rgbToHex(parseColor(fgInput)!) : "#000000"} onChange={(e) => setFgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
-                    <input type="text" value={fgInput} onChange={(e) => setFgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                    <input type="text" value={fgInput} onChange={(e) => setFgInput(e.target.value)} className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Background</label>
                   <div className="flex gap-1 items-center">
                     <input type="color" value={parseColor(bgInput) ? rgbToHex(parseColor(bgInput)!) : "#ffffff"} onChange={(e) => setBgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
-                    <input type="text" value={bgInput} onChange={(e) => setBgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                    <input type="text" value={bgInput} onChange={(e) => setBgInput(e.target.value)} className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
                   </div>
                 </div>
               </OptionRow>
@@ -374,14 +374,14 @@ export function ColorConverter() {
                 <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Foreground</label>
                 <div className="flex gap-1 items-center">
                   <input type="color" value={parseColor(fgInput) ? rgbToHex(parseColor(fgInput)!) : "#000000"} onChange={(e) => setFgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
-                  <input type="text" value={fgInput} onChange={(e) => setFgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  <input type="text" value={fgInput} onChange={(e) => setFgInput(e.target.value)} className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
                 </div>
               </div>
               <div>
                 <label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Background</label>
                 <div className="flex gap-1 items-center">
                   <input type="color" value={parseColor(bgInput) ? rgbToHex(parseColor(bgInput)!) : "#ffffff"} onChange={(e) => setBgInput(e.target.value)} className="h-7 w-7 rounded border border-surface-200 cursor-pointer" />
-                  <input type="text" value={bgInput} onChange={(e) => setBgInput(e.target.value)} className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  <input type="text" value={bgInput} onChange={(e) => setBgInput(e.target.value)} className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
                 </div>
               </div>
             </div>

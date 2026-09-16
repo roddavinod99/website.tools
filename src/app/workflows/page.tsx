@@ -71,7 +71,7 @@ export default function WorkflowsIndex() {
             {workflows.map((w) => (
               <article
                 key={w.slug}
-                className="group rounded-lg border border-[var(--color-border)] bg-white p-6 transition-shadow border-[var(--color-border)] bg-[var(--color-surface)]"
+                className="group rounded-md border border-[var(--color-border)] bg-white p-6 transition-shadow border-[var(--color-border)] bg-[var(--color-surface)]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">

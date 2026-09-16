@@ -116,13 +116,13 @@ export function JsonSchemaGenerator() {
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JSON Input</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       <div className="flex flex-wrap items-center gap-3">
-        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Draft</label><select value={draft} onChange={(e) => setDraft(e.target.value as "07" | "2020-12")} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"><option value="07">Draft-07</option><option value="2020-12">Draft-2020-12</option></select></div>
+        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Draft</label><select value={draft} onChange={(e) => setDraft(e.target.value as "07" | "2020-12")} className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"><option value="07">Draft-07</option><option value="2020-12">Draft-2020-12</option></select></div>
         <div className="flex items-end gap-2 pb-1">
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={allRequired} onChange={(e) => setAllRequired(e.target.checked)} className="accent-brand-500" /> Mark all required</label>
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={includeExamples} onChange={(e) => setIncludeExamples(e.target.checked)} className="accent-brand-500" /> Include examples</label>
@@ -138,7 +138,7 @@ export function JsonSchemaGenerator() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Generated JSON Schema</label>
-          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
+          <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
         </div>
       )}
     </div>

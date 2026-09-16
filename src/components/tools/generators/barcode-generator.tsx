@@ -201,7 +201,7 @@ export function BarcodeGenerator() {
           <input
             type="text" value={input} onChange={(e) => setInput(e.target.value)}
             placeholder="Enter barcode value..." autoFocus
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
           {validation && !validation.valid && (
             <p className="mt-1 text-xs text-red-500">{validation.error}</p>
@@ -213,7 +213,7 @@ export function BarcodeGenerator() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Format</label>
           <select value={format} onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {FORMATS.map((f) => (
               <option key={f} value={f}>{f === "pharmacode" ? "Pharmacode" : f === "codabar" ? "Codabar" : f === "MSI" ? "MSI/Plessey" : f}</option>
             ))}
@@ -270,14 +270,14 @@ export function BarcodeGenerator() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
-        <button onClick={() => download("svg")} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">SVG</button>
-        <button onClick={() => download("png")} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">PNG</button>
-        <button onClick={() => download("jpeg")} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">JPEG</button>
-        <button onClick={copyImage} disabled={!input} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
+        <button onClick={() => download("svg")} disabled={!input} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">SVG</button>
+        <button onClick={() => download("png")} disabled={!input} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">PNG</button>
+        <button onClick={() => download("jpeg")} disabled={!input} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">JPEG</button>
+        <button onClick={copyImage} disabled={!input} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           {copied ? "Copied!" : "Copy Image"}
         </button>
-        <button onClick={clear} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Clear</button>
+        <button onClick={clear} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Clear</button>
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
@@ -286,7 +286,7 @@ export function BarcodeGenerator() {
       {input.trim() && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Preview</label>
-          <div className="flex justify-center rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
+          <div className="flex justify-center rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface">
             <div ref={svgRef} />
           </div>
           <canvas ref={canvasRef} className="hidden" />

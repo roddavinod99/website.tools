@@ -222,13 +222,13 @@ export function CspGenerator() {
       </div>
 
       {hasInlineWarnings.scriptUnsafe && (
-        <div className="flex items-start gap-2 rounded-lg border border-yellow-200 bg-yellow-50 p-2 dark:border-yellow-800 dark:bg-yellow-900/20">
+        <div className="flex items-start gap-2 rounded-md border border-yellow-200 bg-yellow-50 p-2 dark:border-yellow-800 dark:bg-yellow-900/20">
           <AlertTriangle size={14} className="mt-0.5 shrink-0 text-yellow-500" />
           <p className="text-xs text-yellow-700 dark:text-yellow-400">script-src contains &apos;unsafe-inline&apos; — consider using a nonce or hash instead.</p>
         </div>
       )}
       {hasInlineWarnings.styleUnsafe && (
-        <div className="flex items-start gap-2 rounded-lg border border-yellow-200 bg-yellow-50 p-2 dark:border-yellow-800 dark:bg-yellow-900/20">
+        <div className="flex items-start gap-2 rounded-md border border-yellow-200 bg-yellow-50 p-2 dark:border-yellow-800 dark:bg-yellow-900/20">
           <AlertTriangle size={14} className="mt-0.5 shrink-0 text-yellow-500" />
           <p className="text-xs text-yellow-700 dark:text-yellow-400">style-src contains &apos;unsafe-inline&apos; — consider using a nonce or hash instead.</p>
         </div>
@@ -244,7 +244,7 @@ export function CspGenerator() {
 
       <div className="space-y-1.5 max-h-80 overflow-y-auto">
         {directives.map((d) => (
-          <div key={d.id} className="flex items-start gap-2 rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+          <div key={d.id} className="flex items-start gap-2 rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
             <input type="checkbox" checked={d.enabled} onChange={() => toggle(d.id)}
               className="mt-1 rounded border-surface-300 text-brand-500 focus:ring-brand-400 dark:border-dark-muted" />
             <div className="flex-1 min-w-0">
@@ -284,7 +284,7 @@ export function CspGenerator() {
       </div>
 
       {customDirs.map((d, i) => (
-        <div key={i} className="flex items-center gap-2 rounded-lg border border-dashed border-brand-300 bg-brand-50 px-3 py-2 dark:border-brand-700 dark:bg-brand-900/10">
+        <div key={i} className="flex items-center gap-2 rounded-md border border-dashed border-brand-300 bg-brand-50 px-3 py-2 dark:border-brand-700 dark:bg-brand-900/10">
           <input type="text" value={d.id} onChange={(e) => updateCustomDir(i, e.target.value)} placeholder="custom-directive"
             className="w-28 rounded border border-brand-200 bg-white px-2 py-1 text-xs font-mono text-surface-900 focus:outline-none focus:ring-1 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           <div className="flex-1 flex flex-wrap gap-1">
@@ -331,7 +331,7 @@ export function CspGenerator() {
       </label>
 
       {policy && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-surface-500 dark:text-dark-muted">Generated Policy</span>
             <div className="flex gap-1">

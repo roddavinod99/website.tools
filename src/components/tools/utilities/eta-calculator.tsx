@@ -76,7 +76,7 @@ export function EtaCalculator() {
               min={0}
               step="any"
               placeholder="0"
-              className="flex-1 rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+              className="flex-1 rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
             />
             <select
               value={effectiveDistanceUnit}
@@ -87,7 +87,7 @@ export function EtaCalculator() {
                   setDistanceUnit(e.target.value as "km" | "mi");
                 }
               }}
-              className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+              className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
             >
               <option value="km">km</option>
               <option value="mi">miles</option>
@@ -107,7 +107,7 @@ export function EtaCalculator() {
               min={0}
               step="any"
               placeholder="0"
-              className="flex-1 rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+              className="flex-1 rounded-md border border-surface-200 bg-white p-3 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
             />
             <select
               value={effectiveSpeedUnit}
@@ -118,7 +118,7 @@ export function EtaCalculator() {
                   setSpeedUnit(e.target.value as "km/h" | "mph");
                 }
               }}
-              className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+              className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-medium text-surface-700 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
             >
               <option value="km/h">km/h</option>
               <option value="mph">mph</option>
@@ -129,7 +129,7 @@ export function EtaCalculator() {
 
       <button
         onClick={toggleUnits}
-        className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2"
+        className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-2"
       >
         <span className="text-lg">⇄</span>
         Swap Units ({effectiveDistanceUnit} / {effectiveSpeedUnit})
@@ -137,7 +137,7 @@ export function EtaCalculator() {
 
       {result && (
         <div className="space-y-3">
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs font-medium uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">
               Estimated Travel Time
             </p>
@@ -150,25 +150,25 @@ export function EtaCalculator() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Distance (km)</span>
               <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.distKm}</span>
             </div>
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Distance (mi)</span>
               <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.distMiles}</span>
             </div>
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Speed (km/h)</span>
               <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.spdKmh}</span>
             </div>
-            <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
               <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted">Speed (mph)</span>
               <span className="block text-sm font-mono text-surface-900 dark:text-dark-text">{result.spdMph}</span>
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-center">
+          <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface text-center">
             <span className="text-xs text-surface-500 dark:text-dark-muted">
               Estimated arrival: <span className="font-medium text-surface-700 dark:text-dark-text">{result.arrivalTime}</span> (if starting now)
             </span>

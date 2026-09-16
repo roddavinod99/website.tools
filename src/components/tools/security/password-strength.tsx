@@ -114,7 +114,7 @@ export function PasswordStrength() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter a password to analyse..."
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 pr-16 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="w-full rounded-md border border-surface-200 bg-white p-3 pr-16 font-mono text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           />
           <button
             onClick={() => setShowPassword(!showPassword)}
@@ -142,13 +142,13 @@ export function PasswordStrength() {
 
       {password && (
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Entropy</p>
             <p className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text">
               {result.entropy.toFixed(1)} <span className="text-xs font-normal">bits</span>
             </p>
           </div>
-          <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Est. Crack Time</p>
             <p className="text-lg font-bold text-surface-900 dark:text-dark-text break-words">
               {result.crackTime}
@@ -158,7 +158,7 @@ export function PasswordStrength() {
       )}
 
       {password && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Character Pool</p>
           <div className="grid grid-cols-4 gap-2 text-center">
             {[
@@ -176,7 +176,7 @@ export function PasswordStrength() {
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Tips</p>
         <ul className="space-y-1">
           {result.tips.map((tip, i) => (

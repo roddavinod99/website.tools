@@ -377,7 +377,7 @@ export function CronExpression() {
       <div className="flex flex-wrap gap-2">
         {PRESETS.map((p) => (
           <button key={p.cron} onClick={() => applyPreset(p.cron)}
-            className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${
               cronStr === p.cron
                 ? "border-brand-400 bg-brand-50 text-brand-700 dark:bg-brand-900/20 dark:text-brand-300"
                 : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
@@ -395,14 +395,14 @@ export function CronExpression() {
         <div className="flex items-center gap-2">
           <label className="text-sm text-surface-700 dark:text-dark-text">Mode:</label>
           <button onClick={() => setEditMode("form")}
-            className={`rounded-lg px-3 py-1 text-xs font-medium transition-colors ${editMode === "form" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Form</button>
+            className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${editMode === "form" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Form</button>
           <button onClick={() => setEditMode("raw")}
-            className={`rounded-lg px-3 py-1 text-xs font-medium transition-colors ${editMode === "raw" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Raw</button>
+            className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${editMode === "raw" ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 dark:border-dark-border dark:text-dark-text"}`}>Raw</button>
         </div>
         <div>
           <label className="text-sm text-surface-700 dark:text-dark-text mr-1">TZ:</label>
           <input type="text" value={timezone} onChange={(e) => setTimezone(e.target.value)} placeholder="UTC"
-            className="w-24 rounded-lg border border-surface-200 bg-white p-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-24 rounded-md border border-surface-200 bg-white p-1.5 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
       </div>
 
@@ -421,7 +421,7 @@ export function CronExpression() {
               <label className="block text-xs font-medium text-surface-600 dark:text-dark-muted mb-1">{f.label}</label>
               {f.label === "Minute" || f.label === "Seconds" ? (
                 <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                   <option value="*">Every minute</option>
                   <option value="0">0 (top of hour)</option>
                   <option value="15">15</option>
@@ -435,7 +435,7 @@ export function CronExpression() {
                 </select>
               ) : f.label === "Hour" ? (
                 <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                   <option value="*">Every hour</option>
                   <option value="0">Midnight (0)</option>
                   <option value="9">9 AM</option>
@@ -448,7 +448,7 @@ export function CronExpression() {
                 </select>
               ) : f.label === "Day of Month" ? (
                 <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                   <option value="*">Every day</option>
                   <option value="1">1st</option>
                   <option value="15">15th</option>
@@ -458,7 +458,7 @@ export function CronExpression() {
                 </select>
               ) : f.label === "Month" ? (
                 <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                   <option value="*">Every month</option>
                   <option value="1">January</option>
                   <option value="3">March</option>
@@ -468,7 +468,7 @@ export function CronExpression() {
                 </select>
               ) : f.label === "Day of Week" ? (
                 <select value={f.value} onChange={(e) => updateField(i, e.target.value)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-xs font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                   <option value="*">Every day</option>
                   <option value="1-5">Weekdays (Mon-Fri)</option>
                   <option value="0,6">Weekends</option>
@@ -484,7 +484,7 @@ export function CronExpression() {
                 <div>
                 <input type="text" value={f.value}
                   onChange={(e) => updateField(i, e.target.value)}
-                  className={`w-full rounded-lg border bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:bg-dark-surface dark:text-dark-text ${isInvalid ? "border-red-400 dark:border-red-600" : "border-surface-200 dark:border-dark-border"}`} />
+                  className={`w-full rounded-md border bg-white p-2 text-sm font-mono text-surface-900 text-center focus:outline-none focus:ring-2 focus:ring-brand-400 dark:bg-dark-surface dark:text-dark-text ${isInvalid ? "border-red-400 dark:border-red-600" : "border-surface-200 dark:border-dark-border"}`} />
                 {isInvalid && <p className="text-[10px] text-red-500 mt-0.5">{range.min}-{range.max}</p>}
                 </div>
               )}
@@ -497,18 +497,18 @@ export function CronExpression() {
           <div className="flex gap-2">
             <input ref={rawRef} type="text" value={cronStr}
               onChange={(e) => handleRawChange(e.target.value)}
-              className="flex-1 rounded-lg border border-surface-200 bg-white p-3 text-lg font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+              className="flex-1 rounded-md border border-surface-200 bg-white p-3 text-lg font-mono text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
           </div>
         </div>
       )}
 
       {!validation.valid && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-2 text-xs text-red-700 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300">
+        <div className="rounded-md border border-red-200 bg-red-50 p-2 text-xs text-red-700 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300">
           {validation.error}
         </div>
       )}
 
-      <div data-testid="tool-output" className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div data-testid="tool-output" className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-surface-500 dark:text-dark-muted mb-0.5">Cron Expression</p>
@@ -516,29 +516,29 @@ export function CronExpression() {
             <p className="text-sm text-surface-600 dark:text-dark-muted mt-1">{description}</p>
           </div>
           <button onClick={() => copy(cronStr)}
-            className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy</button>
+            className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Copy</button>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={saveToFavorites} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Save to Favorites</button>
-        <button onClick={copyAsCrontab} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={saveToFavorites} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Save to Favorites</button>
+        <button onClick={copyAsCrontab} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           {favCopied ? "Copied!" : "Copy as crontab"}
         </button>
-        <button onClick={copyAsSystemd} className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={copyAsSystemd} className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           Copy as systemd timer
         </button>
         <select value="" onChange={(e) => { if (e.target.value) applyPreset(e.target.value); }}
-          className="rounded-lg border border-surface-200 bg-white p-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          className="rounded-md border border-surface-200 bg-white p-1.5 text-xs text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
           <option value="">Macros...</option>
           {Object.entries(MACROS).map(([k, v]) => (<option key={k} value={v}>{k}</option>))}
         </select>
         <button onClick={() => setShowSyntax(!showSyntax)}
-          className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Syntax Guide</button>
+          className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Syntax Guide</button>
       </div>
 
       {showSyntax && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">Cron Syntax Reference</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             {SYNTAX_GUIDE.map((item) => (
@@ -556,7 +556,7 @@ export function CronExpression() {
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Favorites</p>
           <div className="flex flex-wrap gap-1">
             {favorites.map((fav) => (
-              <div key={fav} className="flex items-center gap-1 rounded-lg border border-surface-200 bg-white px-2 py-1 dark:border-dark-border dark:bg-dark-surface">
+              <div key={fav} className="flex items-center gap-1 rounded-md border border-surface-200 bg-white px-2 py-1 dark:border-dark-border dark:bg-dark-surface">
                 <button onClick={() => applyPreset(fav)} className="text-xs font-mono text-surface-700 hover:text-brand-500 dark:text-dark-text">{fav}</button>
                 <button onClick={() => removeFav(fav)} className="text-xs text-surface-400 hover:text-red-500">&times;</button>
               </div>

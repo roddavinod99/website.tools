@@ -98,15 +98,15 @@ export function UlidGenerator() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Count (1-100)</label>
           <input type="number" min={1} max={100} value={count}
             onChange={(e) => setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
-            className="w-24 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
+            className="w-24 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
         </div>
         <button onClick={generate}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
           Generate
         </button>
         {ulids.length > 0 && (
           <button onClick={copyAll}
-            className="rounded-lg border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+            className="rounded-md border border-surface-200 px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
             {copied === "all" ? "Copied All!" : "Copy All"}
           </button>
         )}
@@ -119,7 +119,7 @@ export function UlidGenerator() {
             const timestampPart = ulid.slice(0, 10);
             const randomPart = ulid.slice(10);
             return (
-              <div key={idx} className="rounded-lg border border-surface-200 bg-surface-50 p-2.5 flex items-center justify-between dark:border-dark-border dark:bg-dark-surface">
+              <div key={idx} className="rounded-md border border-surface-200 bg-surface-50 p-2.5 flex items-center justify-between dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-xs text-surface-400 dark:text-dark-muted w-6 shrink-0 text-right">{idx + 1}</span>
                   <code className="text-sm font-mono select-all break-all">
@@ -140,7 +140,7 @@ export function UlidGenerator() {
         </div>
       )}
 
-      <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+      <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
         <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-2">About ULIDs</p>
         <ul className="text-xs text-surface-600 dark:text-dark-text space-y-1">
           <li>26 characters, Crockford Base32 encoded (case-insensitive)</li>

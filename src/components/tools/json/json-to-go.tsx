@@ -145,12 +145,12 @@ export function JsonToGo() {
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">JSON Input</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={6}
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Package</label><input value={packageName} onChange={(e) => setPackageName(e.target.value)} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm w-24 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" /></div>
-        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Struct Name</label><input value={structName} onChange={(e) => setStructName(e.target.value)} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm w-24 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" /></div>
+        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Package</label><input value={packageName} onChange={(e) => setPackageName(e.target.value)} className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm w-24 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" /></div>
+        <div><label className="block text-xs text-surface-500 dark:text-dark-muted mb-1">Struct Name</label><input value={structName} onChange={(e) => setStructName(e.target.value)} className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm w-24 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" /></div>
         <div className="flex items-end gap-2 pb-1">
           <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={jsonTags} onChange={(e) => setJsonTags(e.target.checked)} className="accent-brand-500" /> JSON tags</label>
           {jsonTags && <label className="flex items-center gap-1 text-xs text-surface-600 dark:text-dark-muted"><input type="checkbox" checked={includeOmitempty} onChange={(e) => setIncludeOmitempty(e.target.checked)} className="accent-brand-500" /> omitempty</label>}
@@ -170,7 +170,7 @@ export function JsonToGo() {
       {output && (
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Generated Go Code</label>
-          <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
+          <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 overflow-auto max-h-80 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">{output}</pre>
         </div>
       )}
     </div>

@@ -260,7 +260,7 @@ export function ScientificCalculator() {
   );
 
   const btnCls =
-    "rounded-lg px-2 py-2 text-sm font-medium transition-colors active:scale-95";
+    "rounded-md px-2 py-2 text-sm font-medium transition-colors active:scale-95";
   const numBtnCls = `${btnCls} bg-surface-50 text-surface-900 hover:bg-surface-100 dark:bg-dark-bg dark:text-dark-text dark:hover:bg-dark-border`;
   const opBtnCls = `${btnCls} bg-brand-500 text-white hover:bg-brand-600`;
   const fnBtnCls = `${btnCls} bg-surface-100 text-surface-700 hover:bg-surface-200 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border`;
@@ -297,7 +297,7 @@ export function ScientificCalculator() {
 
       <div
         data-testid="tool-output"
-        className="rounded-xl border border-surface-200 bg-surface-900 p-4 text-right font-mono dark:border-dark-border"
+        className="rounded-md border border-surface-200 bg-surface-900 p-4 text-right font-mono dark:border-dark-border"
         role="region"
         aria-label="Calculator display"
       >
@@ -386,7 +386,7 @@ export function ScientificCalculator() {
       </div>
 
       {history.length > 0 && (
-        <details className="rounded-lg border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
+        <details className="rounded-md border border-surface-200 bg-white dark:border-dark-border dark:bg-dark-surface">
           <summary className="cursor-pointer list-none px-3 py-2 text-xs font-medium text-surface-500 dark:text-dark-muted [&::-webkit-details-marker]:hidden">
             History ({history.length})
           </summary>

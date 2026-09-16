@@ -374,7 +374,7 @@ export function SslDecoder() {
         <div className="relative">
           <textarea value={input} onChange={(e) => setInput(e.target.value)}
             placeholder="-----BEGIN CERTIFICATE-----&#10;...&#10;-----END CERTIFICATE-----" rows={8}
-            className="w-full rounded-lg border border-surface-200 bg-white p-3 pr-10 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white p-3 pr-10 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <button onClick={pasteFromClipboard} className="absolute right-2 top-2 rounded p-1.5 text-surface-400 hover:text-surface-600 hover:bg-surface-100 dark:hover:text-dark-text dark:hover:bg-dark-border" title="Paste from clipboard">
             <ClipboardPaste size={16} />
           </button>
@@ -382,23 +382,23 @@ export function SslDecoder() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={loadExample} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Load Example</button>
-        <button onClick={() => fileInputRef.current?.click()} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
+        <button onClick={loadExample} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Load Example</button>
+        <button onClick={() => fileInputRef.current?.click()} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors flex items-center gap-1">
           <Upload size={14} /> Upload .pem/.crt/.cer
         </button>
         <input ref={fileInputRef} type="file" accept=".pem,.crt,.cer,.cert" onChange={handleFileUpload} className="hidden" />
-        <button onClick={() => setShowAsn1(!showAsn1)} className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${showAsn1 ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+        <button onClick={() => setShowAsn1(!showAsn1)} className={`rounded-md border px-4 py-2 text-sm font-medium transition-colors ${showAsn1 ? "bg-brand-50 border-brand-300 text-brand-700 dark:bg-brand-900/20 dark:border-brand-700 dark:text-brand-400" : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
           {showAsn1 ? "Hide" : "Show"} ASN.1 Dump
         </button>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
 
-      <div className="flex items-start gap-2 rounded-lg border border-yellow-200 bg-yellow-50 p-3 dark:border-yellow-800 dark:bg-yellow-900/20">
+      <div className="flex items-start gap-2 rounded-md border border-yellow-200 bg-yellow-50 p-3 dark:border-yellow-800 dark:bg-yellow-900/20">
         <AlertCircle size={16} className="mt-0.5 shrink-0 text-yellow-500" />
         <p className="text-xs text-yellow-700 dark:text-yellow-400">
           Client-side basic ASN.1 decoder with limited field support. For production certificate inspection, use OpenSSL or dedicated certificate tools.
@@ -406,14 +406,14 @@ export function SslDecoder() {
       </div>
 
       {showAsn1 && asn1Dump && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Raw ASN.1 (DER) Hex Dump</p>
           <pre className="text-[10px] font-mono text-surface-700 dark:text-dark-text break-all max-h-40 overflow-auto whitespace-pre-wrap">{asn1Dump}</pre>
         </div>
       )}
 
       {hasMultiple && (
-        <div className="rounded-lg border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-white px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted">Certificate Chain: {certResults.length} certificate(s) detected</p>
         </div>
       )}
@@ -424,7 +424,7 @@ export function SslDecoder() {
             <p className="text-sm font-semibold text-surface-700 dark:text-dark-text">Certificate #{idx + 1}</p>
           )}
           {result.error && (
-            <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+            <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
               <AlertCircle size={16} className="mt-0.5 shrink-0 text-red-500" />
               <p className="text-sm text-red-700 dark:text-red-400">{result.error}</p>
             </div>
@@ -436,7 +436,7 @@ export function SslDecoder() {
                 const expiryDays = isDate ? getExpiryDays(field.value) : null;
                 const expiryStatus = isDate ? getExpiryStatus(field.value) : null;
                 return (
-                  <div key={i} className="flex items-center justify-between gap-2 rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+                  <div key={i} className="flex items-center justify-between gap-2 rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-xs text-surface-500 dark:text-dark-muted shrink-0">{field.label}</span>
                       {isDate && expiryStatus === "expired" && <AlertCircle size={12} className="shrink-0 text-red-500" />}
@@ -462,7 +462,7 @@ export function SslDecoder() {
             </div>
           )}
           {result.sANs.length > 0 && (
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Subject Alternative Names (SANs)</p>
               <div className="flex flex-wrap gap-1">
                 {result.sANs.map((san, si) => (
@@ -474,7 +474,7 @@ export function SslDecoder() {
             </div>
           )}
           {result.keyUsages.length > 0 && (
-            <div className="rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+            <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
               <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1">Key Usage</p>
               <div className="flex flex-wrap gap-1">
                 {result.keyUsages.map((ku, ki) => (

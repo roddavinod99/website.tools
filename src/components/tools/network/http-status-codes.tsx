@@ -98,7 +98,7 @@ export function HTTPStatusCodes() {
     <div className="space-y-4">
       <div>
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by code, name, or description..."
-          className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       <div className="flex flex-wrap gap-1.5">
@@ -112,7 +112,7 @@ export function HTTPStatusCodes() {
 
       <div className="space-y-1.5">
         {filtered.map(c => (
-          <div key={c.code} className="flex items-start gap-3 p-3 rounded-lg border border-surface-200 dark:border-dark-border bg-white dark:bg-dark-surface">
+          <div key={c.code} className="flex items-start gap-3 p-3 rounded-md border border-surface-200 dark:border-dark-border bg-white dark:bg-dark-surface">
             <span className="text-lg font-bold font-mono text-surface-900 dark:text-dark-text min-w-[3rem]">{c.code}</span>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">

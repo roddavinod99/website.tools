@@ -66,7 +66,7 @@ export function SecurityShell({
           <Collapsible id="findings" title="Findings" defaultOpen={true}>
             <div className="space-y-3">
               {findings.map((f, i) => (
-                <div key={i} className="rounded-lg border border-tool-border bg-tool-surface p-4">
+                <div key={i} className="rounded-md border border-tool-border bg-tool-surface p-4">
                   <div className="flex items-start gap-3">
                     <span className={`font-semibold ${severityColors[f.severity]}`}>{f.severity.toUpperCase()}</span>
                     <div className="flex-1">

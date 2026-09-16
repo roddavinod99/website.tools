@@ -154,7 +154,7 @@ export default async function ComparisonPage({ params }: Props) {
           </div>
 
           {toolLinks.length > 0 && (
-            <div className="mt-12 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="mt-12 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
                 <Zap className="h-5 w-5 text-blue-700 dark:text-blue-400" />
                 Try the tools
@@ -167,7 +167,7 @@ export default async function ComparisonPage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
+                      className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
                     >
                       {tool.name}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -187,7 +187,7 @@ export default async function ComparisonPage({ params }: Props) {
                 {comparison.faq.map((item) => (
                   <details
                     key={item.question}
-                    className="group rounded-lg border border-[var(--color-border)] bg-white p-5 border-[var(--color-border)] bg-[var(--color-surface)]"
+                    className="group rounded-md border border-[var(--color-border)] bg-white p-5 border-[var(--color-border)] bg-[var(--color-surface)]"
                   >
                     <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium text-[var(--color-text)]">
                       {item.question}
@@ -202,7 +202,7 @@ export default async function ComparisonPage({ params }: Props) {
             </section>
           )}
 
-          <div className="mt-12 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="mt-12 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
             <h2 className="text-lg font-semibold text-[var(--color-text)]">
               More comparisons
             </h2>
@@ -211,7 +211,7 @@ export default async function ComparisonPage({ params }: Props) {
             </p>
             <Link
               href="/compare"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-accent-hover)]"
+              className="mt-4 inline-flex items-center gap-2 rounded-md bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-accent-hover)]"
             >
               View all comparisons
               <ArrowRight className="h-4 w-4" />

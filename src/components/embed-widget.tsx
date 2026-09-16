@@ -42,7 +42,7 @@ export function EmbedWidget({ slug, title }: { slug: string; title: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-surface-200 bg-white px-3.5 py-2 text-sm font-medium text-surface-700 transition-colors hover:border-brand-500 hover:text-brand-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-400 dark:hover:text-brand-400"
+        className="inline-flex items-center gap-1.5 rounded-md border border-surface-200 bg-white px-3.5 py-2 text-sm font-medium text-surface-700 transition-colors hover:border-brand-500 hover:text-brand-500 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-400 dark:hover:text-brand-400"
       >
         <Code2 className="h-4 w-4" aria-hidden="true" />
         Embed this tool
@@ -59,7 +59,7 @@ export function EmbedWidget({ slug, title }: { slug: string; title: string }) {
             if (e.target === e.currentTarget) setOpen(false);
           }}
         >
-          <div className="w-full max-w-2xl rounded-xl bg-white shadow-2xl dark:bg-dark-surface">
+          <div className="w-full max-w-2xl rounded-md bg-white shadow-2xl dark:bg-dark-surface">
             <div className="flex items-center justify-between border-b border-surface-200 p-4 dark:border-dark-border">
               <h2 className="flex items-center gap-2 text-lg font-semibold text-surface-900 dark:text-dark-text">
                 <Code2 className="h-5 w-5" aria-hidden="true" />
@@ -109,7 +109,7 @@ export function EmbedWidget({ slug, title }: { slug: string; title: string }) {
                   readOnly
                   value={embedCode}
                   rows={4}
-                  className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 font-mono text-xs text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+                  className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 font-mono text-xs text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
                   aria-label="Embed code"
                 />
                 <button
@@ -132,7 +132,7 @@ export function EmbedWidget({ slug, title }: { slug: string; title: string }) {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-lg border border-surface-200 bg-white px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border"
+                  className="rounded-md border border-surface-200 bg-white px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-border"
                 >
                   Done
                 </button>

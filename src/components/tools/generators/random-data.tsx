@@ -297,7 +297,7 @@ export function RandomData() {
       <div className="flex flex-wrap gap-2">
         {(Object.keys(CATEGORY_LABELS) as DataCategory[]).map((cat) => (
           <button key={cat} onClick={() => toggleCategory(cat)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
               category === cat
                 ? "bg-brand-500 text-white"
                 : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
@@ -310,7 +310,7 @@ export function RandomData() {
       <div className="flex flex-wrap gap-2">
         {activeFields.map((f) => (
           <label key={f.id}
-            className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm cursor-pointer transition-colors ${
+            className={`flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm cursor-pointer transition-colors ${
               checked[f.id]
                 ? "border-brand-400 bg-brand-50 text-brand-700 dark:bg-brand-900/20 dark:text-brand-300"
                 : "border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
@@ -326,12 +326,12 @@ export function RandomData() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Count</label>
           <input type="number" min={1} max={10000} value={count}
             onChange={(e) => setCount(Math.max(1, Math.min(10000, parseInt(e.target.value) || 1)))}
-            className="w-20 rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-20 rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Format</label>
           <select value={format} onChange={(e) => setFormat(e.target.value as ExportFormat)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="json">JSON</option>
             <option value="csv">CSV</option>
             <option value="tsv">TSV</option>
@@ -345,7 +345,7 @@ export function RandomData() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Locale</label>
           <select value={locale} onChange={(e) => setLocale(e.target.value as Locale)}
-            className="rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+            className="rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             <option value="en-US">en-US</option>
             <option value="en-GB">en-GB</option>
             <option value="in-IN">in-IN</option>
@@ -358,7 +358,7 @@ export function RandomData() {
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Seed</label>
           <input type="text" value={seedInput} onChange={(e) => setSeedInput(e.target.value)} placeholder="Optional seed"
-            className="w-28 rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+            className="w-28 rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
         </div>
 {(format === "csv" || format === "tsv") && (
           <div className="flex items-end">
@@ -377,7 +377,7 @@ export function RandomData() {
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Locale</label>
               <select value={locale} onChange={(e) => setLocale(e.target.value as Locale)}
-                className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+                className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 <option value="en-US">en-US</option>
                 <option value="en-GB">en-GB</option>
                 <option value="in-IN">in-IN</option>
@@ -390,7 +390,7 @@ export function RandomData() {
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Seed</label>
               <input type="text" value={seedInput} onChange={(e) => setSeedInput(e.target.value)} placeholder="Optional seed"
-                className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
             </div>
           </OptionRow>
         </OptionGroup>
@@ -401,12 +401,12 @@ export function RandomData() {
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Prefix</label>
                 <input type="text" value={textPrefix} onChange={(e) => setTextPrefix(e.target.value)} placeholder="e.g. start_"
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Suffix</label>
                 <input type="text" value={textSuffix} onChange={(e) => setTextSuffix(e.target.value)} placeholder="e.g. _end"
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
             </OptionRow>
           </OptionGroup>
@@ -418,12 +418,12 @@ export function RandomData() {
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Min Value</label>
                 <input type="number" value={numMin} onChange={(e) => setNumMin(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Max Value</label>
                 <input type="number" value={numMax} onChange={(e) => setNumMax(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-lg border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
+                  className="w-full rounded-md border border-surface-200 bg-white p-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text" />
               </div>
             </OptionRow>
           </OptionGroup>
@@ -431,11 +431,11 @@ export function RandomData() {
       </AdvancedOptions>
 
       <div className="flex flex-wrap gap-2">
-        <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
-        <button onClick={copy} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">Generate</button>
+        <button onClick={copy} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           {copied ? "Copied!" : "Copy"}
         </button>
-        <button onClick={exportFile} disabled={!output} className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export</button>
+        <button onClick={exportFile} disabled={!output} className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">Export</button>
       </div>
 
       {stats && (
@@ -450,7 +450,7 @@ export function RandomData() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
             {preview !== output ? "Preview (first 5 items)" : "Output"}
           </label>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-80 whitespace-pre">
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-80 whitespace-pre">
             {preview}{preview !== output ? "\n..." : ""}
           </pre>
         </div>

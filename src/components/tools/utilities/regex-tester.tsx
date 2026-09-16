@@ -261,7 +261,7 @@ export function RegexTester() {
       <div className="flex items-center gap-2">
         {(["match", "replace", "split"] as Mode[]).map((m) => (
           <button key={m} onClick={() => setMode(m)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${mode === m ? "bg-brand-500 text-white" : "border border-surface-200 text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"}`}>
             {m === "match" ? "Match" : m === "replace" ? "Replace" : "Split"}
           </button>
         ))}
@@ -286,7 +286,7 @@ export function RegexTester() {
         <div className="flex gap-2">
           <input type="text" value={pattern} onChange={(e) => setPattern(e.target.value)}
             placeholder="Enter regex pattern..."
-            className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
           <div className="flex items-center gap-0.5">
             {FLAGS.map((f) => (
               <button key={f.id} onClick={() => toggleFlag(f.id)} title={f.tooltip}
@@ -302,7 +302,7 @@ export function RegexTester() {
       </div>
 
       {showHistory && history.length > 0 && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1.5 px-1">Pattern History</p>
           <div className="flex flex-wrap gap-1">
             {history.map((h, i) => (
@@ -316,7 +316,7 @@ export function RegexTester() {
       )}
 
       {showLibrary && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1.5 px-1">Common Patterns</p>
           <div className="flex flex-wrap gap-1">
             {COMMON_PATTERNS.map((p) => (
@@ -330,7 +330,7 @@ export function RegexTester() {
       )}
 
       {showCheatSheet && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface max-h-48 overflow-y-auto">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface max-h-48 overflow-y-auto">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-1.5 px-1">Regex Cheat Sheet</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-0.5">
             {CHEAT_SHEET_ITEMS.map((item) => (
@@ -347,7 +347,7 @@ export function RegexTester() {
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Test String</label>
         <textarea value={testText} onChange={(e) => setTestText(e.target.value)} rows={6}
           placeholder="Enter text to test against..."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="w-full rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
       </div>
 
       {mode === "replace" && (
@@ -355,7 +355,7 @@ export function RegexTester() {
           <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">Replacement String</label>
           <input type="text" value={replacement} onChange={(e) => setReplacement(e.target.value)}
             placeholder="$1 (use $1, $2, etc. for backreferences)"
-            className="w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+            className="w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         </div>
       )}
 
@@ -396,7 +396,7 @@ export function RegexTester() {
       </AdvancedOptions>
 
       {mode === "match" && highlightText && (
-        <div className="rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono leading-relaxed whitespace-pre-wrap break-all dark:border-dark-border dark:bg-dark-surface dark:text-dark-text max-h-48 overflow-y-auto">
+        <div className="rounded-md border border-surface-200 bg-white p-3 text-sm font-mono leading-relaxed whitespace-pre-wrap break-all dark:border-dark-border dark:bg-dark-surface dark:text-dark-text max-h-48 overflow-y-auto">
           {highlightText.length === 0 ? (
             <span className="text-surface-400 dark:text-dark-muted">{testText || "\u00A0"}</span>
           ) : (
@@ -415,7 +415,7 @@ export function RegexTester() {
               {copiedIdx === 999 ? "Copied!" : "Copy"}
             </button>
           </div>
-          <pre className="w-full rounded-lg border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 select-all break-all">{replaceResult}</pre>
+          <pre className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text overflow-auto max-h-40 select-all break-all">{replaceResult}</pre>
         </div>
       )}
 
@@ -455,7 +455,7 @@ export function RegexTester() {
           </div>
           <div className="space-y-1 max-h-80 overflow-y-auto">
             {matches.map((m, i) => (
-              <div key={i} className="rounded-lg border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface animate-fade-in">
+              <div key={i} className="rounded-md border border-surface-200 bg-surface-50 p-2 dark:border-dark-border dark:bg-dark-surface animate-fade-in">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex gap-2 text-xs text-surface-400 dark:text-dark-muted font-mono">
                     <span>#{i + 1}</span>

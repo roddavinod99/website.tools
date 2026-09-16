@@ -19,9 +19,9 @@ interface CategoryCardProps {
 }
 
 const variantStyles = {
-  default: "group rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
-  compact: "group rounded-lg border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
-  home: "group flex items-center gap-3 rounded-xl border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
+  default: "group rounded-md border border-surface-200 bg-white p-6 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
+  compact: "group rounded-md border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md dark:border-dark-border dark:bg-dark-surface",
+  home: "group flex items-center gap-3 rounded-md border border-surface-200 bg-white p-4 shadow-sm transition-all duration-150 hover:shadow-md hover:-translate-y-0.5 dark:border-dark-border dark:bg-dark-surface",
 };
 
 const colorDefaults: Record<string, string> = {
@@ -60,7 +60,7 @@ export function CategoryCard({
         href={`/categories/${slug}`}
         className={cn(variantStyles.home, className)}
       >
-        <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-lg", bgColor)}>
+        <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-md", bgColor)}>
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="min-w-0">
@@ -82,7 +82,7 @@ export function CategoryCard({
         className={cn(variantStyles.compact, className)}
       >
         <div className="flex items-center gap-3">
-          <div className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-lg", bgColor)}>
+          <div className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-md", bgColor)}>
             <Icon className="h-4 w-4" aria-hidden="true" />
           </div>
           <div className="min-w-0">
@@ -106,7 +106,7 @@ export function CategoryCard({
       href={`/categories/${slug}`}
       className={cn(variantStyles.default, className)}
     >
-      <div className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-xl", bgColor)}>
+      <div className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-md", bgColor)}>
         <Icon className="h-6 w-6" aria-hidden="true" />
       </div>
       <h3 className="mt-4 font-semibold text-surface-900 group-hover:text-brand-500 dark:text-dark-text dark:group-hover:text-brand-400">

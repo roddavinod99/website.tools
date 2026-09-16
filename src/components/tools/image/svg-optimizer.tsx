@@ -352,30 +352,30 @@ export function SvgOptimizer() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste your SVG code here..."
           rows={6}
-          className="min-h-[120px] flex-1 rounded-lg border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="min-h-[120px] flex-1 rounded-md border border-surface-200 bg-white p-3 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
         <button
           onClick={handlePaste}
-          className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+          className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
         >
           Paste from Clipboard
         </button>
-        <label className="cursor-pointer rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+        <label className="cursor-pointer rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
           Upload .SVG File
           <input ref={fileRef} type="file" accept=".svg,image/svg+xml" onChange={handleFileUpload} className="hidden" />
         </label>
         <button
           onClick={clear}
-          className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+          className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
         >
           Clear
         </button>
       </div>
 
-      <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+      <details className="rounded-md border border-surface-200 dark:border-dark-border">
         <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
           Optimization Options
         </summary>
@@ -510,7 +510,7 @@ export function SvgOptimizer() {
         </div>
       </details>
 
-      <details className="rounded-lg border border-surface-200 dark:border-dark-border">
+      <details className="rounded-md border border-surface-200 dark:border-dark-border">
         <summary className="cursor-pointer px-4 py-2 text-sm font-medium text-surface-700 dark:text-dark-text hover:bg-surface-50 dark:hover:bg-dark-surface">
           Quick Presets
         </summary>
@@ -519,7 +519,7 @@ export function SvgOptimizer() {
             <button
               key={p.label}
               onClick={() => setOpts(p.opts)}
-              className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+              className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
             >
               {p.label}
             </button>
@@ -536,28 +536,28 @@ export function SvgOptimizer() {
               <button
                 onClick={handleCopyOutput}
                 disabled={!result}
-                className="rounded-lg bg-brand-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
+                className="rounded-md bg-brand-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
               >
                 Copy Optimized
               </button>
               <button
                 onClick={handleCopyJSX}
                 disabled={!result}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
               >
                 Copy as React Component
               </button>
               <button
                 onClick={handleCopyDataURI}
                 disabled={!result}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
               >
                 Copy as Data URI
               </button>
               <button
                 onClick={handleDownload}
                 disabled={!result}
-                className="rounded-lg border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+                className="rounded-md border border-surface-200 px-3 py-1.5 text-xs font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
               >
                 Download SVG
               </button>
@@ -575,7 +575,7 @@ export function SvgOptimizer() {
 
       {result && (
         <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="flex flex-wrap items-center gap-3 rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
             <span className="text-sm text-surface-600 dark:text-dark-muted">
               Original: <strong className="text-surface-900 dark:text-dark-text">{formatBytes(result.inputBytes)}</strong>
             </span>
@@ -616,7 +616,7 @@ export function SvgOptimizer() {
               </label>
               <div
                 dangerouslySetInnerHTML={{ __html: sanitize(result.output) }}
-                className="flex items-center justify-center rounded-lg border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface"
+                className="flex items-center justify-center rounded-md border border-surface-200 bg-white p-4 dark:border-dark-border dark:bg-dark-surface"
                 style={{ minHeight: 120, maxHeight: 240 }}
               />
             </div>
@@ -624,7 +624,7 @@ export function SvgOptimizer() {
               <label className="mb-1 block text-xs font-medium text-surface-500 dark:text-dark-muted">
                 Optimized Output
               </label>
-              <pre className="max-h-60 overflow-auto rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+              <pre className="max-h-60 overflow-auto rounded-md border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
                 {displayOutput}
               </pre>
             </div>
@@ -633,7 +633,7 @@ export function SvgOptimizer() {
       )}
 
       {!input.trim() && (
-        <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-surface-200 p-8 text-center dark:border-dark-border">
+        <div className="flex flex-col items-center justify-center rounded-md border-2 border-dashed border-surface-200 p-8 text-center dark:border-dark-border">
           <svg className="mb-2 h-10 w-10 text-surface-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
           </svg>

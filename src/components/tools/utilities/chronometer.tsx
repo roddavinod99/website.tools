@@ -68,7 +68,7 @@ export function Chronometer() {
   return (
     <div className="space-y-4">
       <div className="flex flex-col items-center">
-        <div className="rounded-2xl border-2 border-surface-200 bg-surface-50 px-8 py-6 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border-2 border-surface-200 bg-surface-50 px-8 py-6 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-5xl font-mono font-bold text-surface-900 dark:text-dark-text tabular-nums tracking-wider">
             {formatTime(time)}
           </p>
@@ -79,14 +79,14 @@ export function Chronometer() {
         {!isRunning ? (
           <button
             onClick={start}
-            className="rounded-lg bg-green-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-green-600 transition-colors"
+            className="rounded-md bg-green-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-green-600 transition-colors"
           >
             Start
           </button>
         ) : (
           <button
             onClick={stop}
-            className="rounded-lg bg-red-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-red-600 transition-colors"
+            className="rounded-md bg-red-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-red-600 transition-colors"
           >
             Stop
           </button>
@@ -95,7 +95,7 @@ export function Chronometer() {
         <button
           onClick={lap}
           disabled={!isRunning && time === 0}
-          className="rounded-lg border border-surface-200 px-6 py-2.5 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+          className="rounded-md border border-surface-200 px-6 py-2.5 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
         >
           Lap
         </button>
@@ -103,7 +103,7 @@ export function Chronometer() {
         <button
           onClick={reset}
           disabled={time === 0 && laps.length === 0}
-          className="rounded-lg border border-surface-200 px-6 py-2.5 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
+          className="rounded-md border border-surface-200 px-6 py-2.5 text-sm font-medium text-surface-700 hover:bg-surface-50 disabled:opacity-40 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors"
         >
           Reset
         </button>
@@ -118,7 +118,7 @@ export function Chronometer() {
                 const text = laps.map((l, i) => `Lap ${laps.length - i}: ${formatTime(l.diff)}`).join("\n");
                 navigator.clipboard.writeText(text);
               }}
-              className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
+              className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface"
             >
               Copy Laps
             </button>
@@ -130,7 +130,7 @@ export function Chronometer() {
               return (
                 <div
                   key={l.id}
-                  className={`flex items-center justify-between rounded-lg border px-3 py-2 text-sm font-mono ${
+                  className={`flex items-center justify-between rounded-md border px-3 py-2 text-sm font-mono ${
                     isBest
                       ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20"
                       : isWorst

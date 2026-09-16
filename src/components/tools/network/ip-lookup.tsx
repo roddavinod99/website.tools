@@ -144,19 +144,19 @@ export function IPLookup() {
       <div className="flex gap-2">
         <input type="text" value={ip} onChange={(e) => setIp(e.target.value)} placeholder="Enter IP address (e.g. 8.8.8.8)"
           onKeyDown={(e) => e.key === "Enter" && lookup(ip)}
-          className="flex-1 rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
+          className="flex-1 rounded-md border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted" />
         <button onClick={() => lookup(ip)} disabled={loading || !ip.trim()}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors">
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors">
           {loading ? "Looking up..." : "Lookup"}
         </button>
         <button onClick={lookupSelf} disabled={loading}
-          className="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors whitespace-nowrap">
+          className="rounded-md border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors whitespace-nowrap">
           My IP
         </button>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
           <button onClick={() => lookup(ip)} className="mt-1 text-xs text-brand-500 hover:text-brand-600">Retry</button>
         </div>
@@ -172,7 +172,7 @@ export function IPLookup() {
       {data && (
         <div className="space-y-3">
           {data.lat !== undefined && data.lon !== undefined && (
-            <div className="rounded-lg border border-surface-200 overflow-hidden dark:border-dark-border">
+            <div className="rounded-md border border-surface-200 overflow-hidden dark:border-dark-border">
               <div className="bg-surface-50 dark:bg-dark-surface p-2 text-xs text-surface-500 dark:text-dark-muted">
                 {data.lat.toFixed(4)}°N, {data.lon.toFixed(4)}°E
               </div>
@@ -184,7 +184,7 @@ export function IPLookup() {
 
           <div data-testid="tool-output" className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {fields.map((f) => f.value !== undefined && f.value !== "" && (
-              <div key={f.label} className="flex items-center justify-between rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+              <div key={f.label} className="flex items-center justify-between rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
                 <span className="text-xs text-surface-500 dark:text-dark-muted">{f.label}</span>
                 <span className="text-sm font-mono text-surface-900 dark:text-dark-text">{String(f.value)}</span>
               </div>
@@ -193,7 +193,7 @@ export function IPLookup() {
 
           {showRaw && rawApiResponse && (
             <div className="mt-3">
-              <pre className="rounded-lg border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">
+              <pre className="rounded-md border border-surface-200 bg-surface-50 p-3 text-xs font-mono text-surface-900 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text overflow-auto max-h-60 whitespace-pre-wrap">
                 {JSON.stringify(rawApiResponse, null, 2)}
               </pre>
             </div>

@@ -64,7 +64,7 @@ export function MacAddressGenerator() {
     setTimeout(() => setCopyFeedback(""), 2000);
   };
 
-  const inputCls = "w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted";
+  const inputCls = "w-full rounded-md border border-surface-200 bg-white px-3 py-2 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted";
 
   return (
     <div className="space-y-4 animate-fade-in">
@@ -85,7 +85,7 @@ export function MacAddressGenerator() {
           <select
             value={separator}
             onChange={e => setSeparator(e.target.value)}
-            className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+            className="rounded-md border border-surface-200 bg-white px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
           >
             <option value=":">Colon (:)</option>
             <option value="-">Dash (-)</option>
@@ -128,7 +128,7 @@ export function MacAddressGenerator() {
         </div>
       </div>
 
-      <button onClick={generate} className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
+      <button onClick={generate} className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition-colors">
         Generate {count > 1 ? `${count} MACs` : "MAC Address"}
       </button>
 
@@ -139,12 +139,12 @@ export function MacAddressGenerator() {
               Generated Addresses ({addresses.length})
             </span>
             {addresses.length > 1 && (
-              <button onClick={copyAll} className="rounded-lg border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
+              <button onClick={copyAll} className="rounded-md border border-surface-200 px-3 py-1 text-xs font-medium text-surface-700 hover:bg-surface-50 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surface transition-colors">
                 Copy All
               </button>
             )}
           </div>
-          <div className="max-h-80 overflow-y-auto rounded-lg border border-surface-200 dark:border-dark-border">
+          <div className="max-h-80 overflow-y-auto rounded-md border border-surface-200 dark:border-dark-border">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-surface-200 dark:bg-dark-border">
               {addresses.map((mac, i) => (
                 <button
@@ -159,7 +159,7 @@ export function MacAddressGenerator() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
+          <div className="rounded-md border border-surface-200 bg-surface-50 px-3 py-2 dark:border-dark-border dark:bg-dark-surface">
             <span className="block text-[10px] uppercase tracking-wider text-surface-400 dark:text-dark-muted mb-1">Bit Explanation</span>
             <div className="text-xs text-surface-600 dark:text-dark-muted space-y-0.5">
               <p><strong>First octet bits:</strong> xxxxxxxx</p>
@@ -171,7 +171,7 @@ export function MacAddressGenerator() {
       )}
 
       {copyFeedback && (
-        <div className="fixed bottom-4 right-4 rounded-lg bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
+        <div className="fixed bottom-4 right-4 rounded-md bg-brand-500 px-4 py-2 text-sm text-white shadow-lg animate-fade-in">{copyFeedback}</div>
       )}
     </div>
   );

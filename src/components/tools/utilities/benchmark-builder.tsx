@@ -62,7 +62,7 @@ export function BenchmarkBuilder() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+      <div className="rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
         <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
           Warning: This tool executes arbitrary JavaScript code using the Function constructor. Only run code you trust.
         </p>
@@ -75,7 +75,7 @@ export function BenchmarkBuilder() {
           onChange={(e) => setCode(e.target.value)}
           rows={8}
           placeholder="Write code to benchmark. Use 'return' for the final value."
-          className="w-full rounded-lg border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
+          className="w-full rounded-md border border-surface-200 bg-white p-3 font-mono text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-muted"
         />
       </div>
 
@@ -87,7 +87,7 @@ export function BenchmarkBuilder() {
               <button
                 key={n}
                 onClick={() => setIterations(n)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
                   iterations === n
                     ? "bg-brand-500 text-white"
                     : "rounded-full bg-surface-100 px-2 py-0.5 text-xs text-surface-600 dark:bg-dark-surface dark:text-dark-muted"
@@ -102,20 +102,20 @@ export function BenchmarkBuilder() {
         <button
           onClick={runBenchmark}
           disabled={isRunning || !code.trim()}
-          className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
+          className="rounded-md bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 transition-colors"
         >
           {isRunning ? "Running..." : "Run Benchmark"}
         </button>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
           <p className="text-sm font-medium text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {result && (
-        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-4 dark:border-dark-border dark:bg-dark-surface">
           <p className="text-xs font-medium text-surface-500 dark:text-dark-muted mb-3">Results ({result.iterations.toLocaleString()} iterations)</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
@@ -126,7 +126,7 @@ export function BenchmarkBuilder() {
               { label: "Ops/sec", value: result.opsPerSec === Infinity ? "Infinity" : result.opsPerSec.toFixed(2) },
               { label: "Iterations", value: result.iterations.toLocaleString() },
             ].map((item) => (
-              <div key={item.label} className="rounded-lg bg-white dark:bg-dark-bg p-3">
+              <div key={item.label} className="rounded-md bg-white dark:bg-dark-bg p-3">
                 <p className="text-xs text-surface-500 dark:text-dark-muted">{item.label}</p>
                 <p className="text-lg font-mono font-bold text-surface-900 dark:text-dark-text">{item.value}</p>
               </div>
