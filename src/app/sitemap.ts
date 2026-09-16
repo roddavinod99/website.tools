@@ -1,3 +1,14 @@
+/**
+ * Sitemap — https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
+ * and https://www.sitemaps.org/protocol.html
+ *
+ * Next.js MetadataRoute.Sitemap generates /sitemap.xml at build + ISR.
+ * Spec: <urlset> with <url><loc>absolute URL</loc><lastmod>W3C datetime</lastmod></url>
+ * Google ignores <priority>/<changefreq> (see comment below); only <loc> +
+ * <lastmod> are used per https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+ * lastmod is derived from git commit dates via TOOL_LASTMOD (scripts/prebuild.mjs)
+ * per AGENTS.md "lastmod from git commit date or content hash — REQUIRED".
+ */
 import type { MetadataRoute } from "next";
 import { allTools, categories, siteConfig, guidesTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
@@ -6,6 +17,7 @@ import { comparisons } from "@/lib/data/comparisons";
 import { TOOL_LASTMOD } from "@/lib/seo/__generated__/tool-lastmod";
 import { listIndexableLandingPages, landingPageUrl } from "@/lib/seo/landing-pages";
 
+// ISR: regenerate daily (86400s) per sitemaps.org freshness best practice
 export const revalidate = 86400;
 
 const BASE = siteConfig.url.replace(/\/+$/, "");

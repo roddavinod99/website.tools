@@ -141,7 +141,11 @@ console.log(
 // file automatically so setting the env var is sufficient.
 // ---------------------------------------------------------------------------
 const ENV = loadNextEnv();
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY || ENV.INDEXNOW_KEY || "";
+// Per https://www.indexnow.org/documentation#verifyingOwnershipViaKey
+// Option 1: key file at root /{key}.txt containing only the key (UTF-8).
+// The key must be 8-128 chars of [A-Za-z0-9-] (docs say "hex" but allow dash).
+const INDEXNOW_KEY_RAW = process.env.INDEXNOW_KEY || ENV.INDEXNOW_KEY || "";
+const INDEXNOW_KEY = INDEXNOW_KEY_RAW.trim();
 const INDEXNOW_KEY_RE = /^[A-Za-z0-9-]{8,128}$/;
 const PUBLIC_DIR = join(ROOT, "public");
 
@@ -181,19 +185,22 @@ function pruneStaleIndexNowKeyFiles(currentKey) {
 if (INDEXNOW_KEY) {
   if (INDEXNOW_KEY_RE.test(INDEXNOW_KEY)) {
     const keyFile = join(PUBLIC_DIR, `${INDEXNOW_KEY}.txt`);
+    // Must be UTF-8, no BOM, no extra newline — exactly the key
     writeFileSync(keyFile, INDEXNOW_KEY, "utf-8");
     console.log(`[prebuild] Generated ${keyFile} (IndexNow verification)`);
+    console.log(`[prebuild] Verify at: https://tools.devstackio.com/${INDEXNOW_KEY}.txt (should return key)`);
     const pruned = pruneStaleIndexNowKeyFiles(INDEXNOW_KEY);
     if (pruned > 0) {
       console.log(`[prebuild] Pruned ${pruned} stale IndexNow key file(s)`);
     }
   } else {
     console.warn(
-      "[prebuild] INDEXNOW_KEY ignored: must be 8-128 chars of [A-Za-z0-9-]"
+      `[prebuild] INDEXNOW_KEY ignored: must be 8-128 chars of [A-Za-z0-9-] (got ${INDEXNOW_KEY.length} chars)`
     );
   }
 } else {
   console.log("[prebuild] INDEXNOW_KEY not set — skipping IndexNow key file");
+  console.log("[prebuild] Set INDEXNOW_KEY in .env or GitHub Secret to enable IndexNow");
   pruneStaleIndexNowKeyFiles("");
 }
 

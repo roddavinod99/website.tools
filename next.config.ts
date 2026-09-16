@@ -167,6 +167,17 @@ const nextConfig: NextConfig = {
         { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
       ],
     },
+    // IndexNow key file — per https://www.indexnow.org/documentation
+    // Must be served as text/plain, no HTML wrapping, at /{key}.txt
+    // Next.js serves public/{key}.txt automatically, but we set explicit
+    // headers to ensure correct MIME and caching for the verification fetch.
+    {
+      source: "/:key([A-Za-z0-9-]{8,128}).txt",
+      headers: [
+        { key: "Content-Type", value: "text/plain; charset=utf-8" },
+        { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
+      ],
+    },
   ],
 };
 

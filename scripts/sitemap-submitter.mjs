@@ -44,16 +44,59 @@ import { createHash } from "node:crypto";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://tools.devstackio.com";
+// ---------------------------------------------------------------------------
+// Env loading — per https://www.indexnow.org/documentation the key must be
+// available at submit-time. The deploy workflow sources .env, but local runs
+// and cron jobs may not, so we also parse .env/.env.local directly (same
+// logic as scripts/prebuild.mjs). This fixes "INDEXNOW_KEY not set" false
+// negatives when the secret was added after the last deploy but .env already
+// contains it.
+// ---------------------------------------------------------------------------
+function parseEnvFile(path) {
+  try {
+    const raw = readFileSync(path, "utf-8");
+    const out = {};
+    for (const line of raw.split(/\r?\n/)) {
+      const t = line.trim();
+      if (!t || t.startsWith("#")) continue;
+      const eq = t.indexOf("=");
+      if (eq <= 0) continue;
+      const k = t.slice(0, eq).trim();
+      const v = t.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      if (k) out[k] = v;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+function loadEnvFallback() {
+  // Match Next.js / prebuild.mjs order: .env, .env.{NODE_ENV}, .env.local, .env.{NODE_ENV}.local
+  // per https://nextjs.org/docs/app/building-your-application/configuring/environment-variables
+  const nodeEnv = process.env.NODE_ENV || "production";
+  const files = [".env", `.env.${nodeEnv}`, ".env.local", `.env.${nodeEnv}.local`];
+  const merged = {};
+  for (const f of files) Object.assign(merged, parseEnvFile(join(ROOT, f)));
+  return merged;
+}
+const ENV_FALLBACK = loadEnvFallback();
+
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || ENV_FALLBACK.NEXT_PUBLIC_SITE_URL || ENV_FALLBACK.SITE_URL || "https://tools.devstackio.com").trim();
 const SITEMAP_URL = `${SITE_URL.replace(/\/+$/, "")}/sitemap.xml`;
+// Official IndexNow endpoint per https://www.indexnow.org/documentation:
+// POST https://api.indexnow.org/indexnow  (aggregator) or
+// POST https://<searchengine>/indexnow    (e.g. https://www.bing.com/indexnow)
+// The aggregator at api.indexnow.org forwards to Bing, Yandex, Seznam, Naver
+// etc., so a single POST is sufficient (see FAQ: "Search engines adopting
+// IndexNow share URLs automatically").
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 const INDEXNOW_MAX_URLS_PER_REQUEST = 10000;
 const SUBMISSION_INTERVAL_DAYS = 5;
 const FETCH_TIMEOUT_MS = 20000;
 const USER_AGENT = "DevStackIO-SitemapSubmitter/1.0 (+https://tools.devstackio.com)";
 
-const STATE_FILE = process.env.SITEMAP_STATE_PATH
-  ? process.env.SITEMAP_STATE_PATH.trim()
+const STATE_FILE = (process.env.SITEMAP_STATE_PATH || ENV_FALLBACK.SITEMAP_STATE_PATH || "").trim()
+  ? (process.env.SITEMAP_STATE_PATH || ENV_FALLBACK.SITEMAP_STATE_PATH).trim()
   : join(ROOT, "data", "sitemap-state.json");
 
 function log(...args) {
@@ -135,6 +178,10 @@ async function fetchWithTimeout(url, { timeoutMs = FETCH_TIMEOUT_MS, accept = "*
 }
 
 async function verifyIndexNowKey(key) {
+  // Per https://www.indexnow.org/documentation#verifyingOwnershipViaKey
+  // Option 1: key file at root /{key}.txt containing only the key. The submitter
+  // must verify it is reachable before POSTing, otherwise the aggregator returns
+  // 403/422.
   const keyLocation = `${SITE_URL.replace(/\/+$/, "")}/${key}.txt`;
   try {
     const res = await fetchWithTimeout(keyLocation, { accept: "text/plain" });
@@ -143,7 +190,7 @@ async function verifyIndexNowKey(key) {
     }
     const body = (await res.text()).trim();
     if (body !== key) {
-      return { ok: false, keyLocation, reason: `key file content mismatch (got ${body.slice(0, 16)}…)` };
+      return { ok: false, keyLocation, reason: `key file content mismatch (expected ${key.slice(0, 8)}…, got ${body.slice(0, 16)}…)` };
     }
     return { ok: true, keyLocation };
   } catch (err) {
@@ -152,6 +199,12 @@ async function verifyIndexNowKey(key) {
 }
 
 async function postIndexNowBatch({ key, keyLocation, host, urls }) {
+  // Per https://www.indexnow.org/documentation#submittingSetOfUrls
+  // POST /indexnow with JSON {host, key, [keyLocation], urlList}
+  // Host must be the bare host (e.g. tools.devstackio.com), urlList up to 10k
+  // URLs that belong to that host. keyLocation is required for Option 2
+  // (non-root key), but we always send it for Option 1 as well — it is
+  // accepted and makes verification explicit.
   const payload = { host, key, keyLocation, urlList: urls };
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
@@ -352,16 +405,19 @@ async function main() {
     log(` INDEXNOW (PRIMARY)`);
     log(bar);
 
-    const key = process.env.INDEXNOW_KEY;
+    const rawKey = process.env.INDEXNOW_KEY || ENV_FALLBACK.INDEXNOW_KEY || "";
+    const key = rawKey.trim();
     let indexNowResult;
     if (!key) {
       log("  – IndexNow: skipped (set INDEXNOW_KEY to enable)");
       log("    Generate a key at https://www.indexnow.org/ (8-128 chars, [A-Za-z0-9-])");
+      log("    Set it as GitHub Secret INDEXNOW_KEY and as .env INDEXNOW_KEY");
       log("    prebuild.mjs will publish /<KEY>.txt for ownership verification");
       log("    The aggregator at api.indexnow.org forwards to Bing, Yandex, Seznam, Naver, Amazon, Yep");
-      indexNowResult = { skipped: true, reason: "no INDEXNOW_KEY env var" };
+      log("    Debug: checked process.env.INDEXNOW_KEY and .env INDEXNOW_KEY — both empty");
+      indexNowResult = { skipped: true, reason: "no INDEXNOW_KEY env var (checked process.env and .env)" };
     } else if (!/^[A-Za-z0-9-]{8,128}$/.test(key)) {
-      log(`  ✗ IndexNow: INDEXNOW_KEY is malformed (must be 8-128 chars of [A-Za-z0-9-])`);
+      log(`  ✗ IndexNow: INDEXNOW_KEY is malformed (must be 8-128 chars of [A-Za-z0-9-], got ${key.length} chars)`);
       indexNowResult = { skipped: true, reason: "malformed INDEXNOW_KEY" };
     } else {
       const urls = extractUrls(xml);
@@ -378,8 +434,10 @@ async function main() {
       }
     }
 
-    if (!indexNowResult.skipped) {
+    if (!indexNowResult.skipped && indexNowResult.acceptedBatches > 0) {
       state.lastSubmissionDate = new Date().toISOString();
+    } else if (!indexNowResult.skipped) {
+      log(`  Note: not updating lastSubmissionDate — no batches accepted (will retry next run)`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
@@ -397,11 +455,12 @@ async function main() {
     log(`  Google: register sitemap manually at https://search.google.com/search-console`);
     log(`  Time: ${elapsed}s`);
   } else {
-    const daysUntilNext = Number.isFinite(daysSinceLastSubmit)
-      ? Math.max(0, SUBMISSION_INTERVAL_DAYS - daysSinceLastSubmit)
-      : 0;
-    log(` Next scheduled submission: ~${daysUntilNext} day(s) (or when sitemap content changes)`);
-  }
+     const daysUntilNext = Number.isFinite(daysSinceLastSubmit)
+       ? Math.max(0, SUBMISSION_INTERVAL_DAYS - daysSinceLastSubmit)
+       : 0;
+     log(` Next scheduled submission: ~${daysUntilNext} day(s) (or when sitemap content changes)`);
+     log(` To force submission: delete ${STATE_FILE} or set SITEMAP_STATE_PATH to a temp file`);
+   }
 
   log(bar);
   log(` CLEANUP`);
