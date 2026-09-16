@@ -261,7 +261,7 @@ export function NumberToWords() {
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-surface-700 dark:text-dark-text mb-1">
-          Number Input <span className="text-xs text-surface-400 dark:text-dark-muted">(supports commas, negative, up to 999 trillion, decimal)</span>
+          Number Input <span className="text-xs text-surface-500 dark:text-dark-muted">(supports commas, negative, up to 999 trillion, decimal)</span>
         </label>
         <div className="flex gap-2">
           <input
@@ -282,8 +282,10 @@ export function NumberToWords() {
 
       <div className="flex flex-wrap gap-3 items-center">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-surface-700 dark:text-dark-text">Currency:</label>
+          <label htmlFor="n2w-currency" className="text-sm text-surface-700 dark:text-dark-text">Currency:</label>
           <select
+            id="n2w-currency"
+            aria-label="Currency"
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
             className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
@@ -293,8 +295,8 @@ export function NumberToWords() {
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <label className="text-sm text-surface-700 dark:text-dark-text">Decimals:</label>
-          <select value={decimalPlaces} onChange={(e) => setDecimalPlaces(Number(e.target.value))} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+          <label htmlFor="n2w-decimals" className="text-sm text-surface-700 dark:text-dark-text">Decimals:</label>
+          <select id="n2w-decimals" aria-label="Decimals" value={decimalPlaces} onChange={(e) => setDecimalPlaces(Number(e.target.value))} className="rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>

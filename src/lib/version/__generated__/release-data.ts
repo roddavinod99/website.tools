@@ -3,13 +3,13 @@
 
 export const RELEASE_VERSION = "1.15.0";
 export const RELEASE_BUILD_NUMBER = 55;
-export const RELEASE_GIT_COMMIT = "5314bbd0bf3424eb56de5dbb969ced7cfc4f48bb";
-export const RELEASE_GIT_SHORT_HASH = "5314bbd";
+export const RELEASE_GIT_COMMIT = "4d68e89759a37ce9e8101dd75cb4fd6c6daf17f1";
+export const RELEASE_GIT_SHORT_HASH = "4d68e89";
 export const RELEASE_GIT_BRANCH = "feat/platform-overhaul-p0";
-export const RELEASE_GIT_COMMIT_COUNT = 199;
+export const RELEASE_GIT_COMMIT_COUNT = 200;
 export const RELEASE_GIT_IS_DIRTY = true;
-export const RELEASE_BUILD_TIME = 1789549076677;
-export const RELEASE_BUILD_DATE = "2026-09-16T08:57:56.677Z";
+export const RELEASE_BUILD_TIME = 1789550121053;
+export const RELEASE_BUILD_DATE = "2026-09-16T09:15:21.053Z";
 export const RELEASE_NODE_VERSION = "v25.7.0";
 export const RELEASE_NEXT_VERSION = "16.3.0";
 export const RELEASE_ENVIRONMENT = "development";

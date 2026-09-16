@@ -18,15 +18,15 @@ DevStackIO is a privacy-first developer tools platform built with Next.js 16. Th
 │  - Attack path blocking                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                  Next.js (PM2 Cluster x2)                    │
- │  ├── Static Pages (SSG) ── ~260 pages (164 tools, 8 categories, 25 blog posts, 28 guides, ~30 static) │
- │  ├── ISR ── sitemap.xml (24h revalidation)                  │
+ │  ├── Static Pages (SSG) ── 907 pages (172 tools, 12 categories, 9 blog, 50 guides, 412 convert long-tail, ~30 static) │
+ │  ├── ISR ── sitemap.xml (24h, lastmod git) + search-index.json (248) │
  │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
  │  └── Middleware ── Rate limiter & security (middleware.ts)  │
 ├─────────────────────────────────────────────────────────────┤
 │                  Client Browser                              │
-│  ├── Web Workers ── Search, JSON, CSV, Hash                 │
-│  ├── DOMPurify ── HTML/SVG sanitization                    │
-│  ├── Fuse.js ── Fuzzy search in Web Worker                 │
+ │  ├── Web Workers ── Search (MiniSearch+Fuse synonyms), JSON, CSV, Hash │
+ │  ├── DOMPurify ── HTML/SVG sanitization                    │
+ │  ├── Preline 4.2 ── lazy autoInit (idle/interaction)      │
 │  └── Service Worker ── Offline caching (PWA)               │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -99,14 +99,11 @@ visitor gets a pre-rendered HTML document before any JS runs. This is what keeps
 
 ### 2. Tool usable in 10 seconds
 A first-time visitor on any tool page should be able to try the tool without bringing
-their own input. The mechanism is the `Tool.examples` field in the registry:
-- The tool page reads `tool.examples` and renders a `<TryExamples>` strip below the
-  tool interface (`src/app/tools/[slug]/tool-client.tsx`).
-- Clicking an example dispatches a `devstackio:load-example` `CustomEvent` with the
-  example text.
-- Tool components opt in with a one-line hook:
-  `useLoadExample("tool-slug", (text) => setInput(text));`
-  (defined in `src/lib/load-example.ts`).
+their own input. The mechanism is the `Tool.examples` field in the registry (172 tools, 25 with examples):
+- The tool page reads `tool.examples` and renders `<TryExamples>` + `<ExamplesRow>` below the
+  tool interface (`src/app/tools/[slug]/tool-client.tsx`, `src/components/ui/try-examples.tsx`).
+- Clicking an example dispatches `devstackio:load-example` (`src/lib/load-example.ts`, `src/lib/examples/normalize.ts` 200ms debounce, `ready⟹subscribed`, `autoRun` true, `?example=0` via `ExampleUrlListener`).
+- Tool components opt in: `useLoadExample("tool-slug", (text) => setInput(text));` — 8 calculators + 5 converters wired in P0.
 The event-bus pattern works because the tool component is loaded lazily by
 `dynamic-tool-loader.tsx` and therefore lives in a different React tree from the page —
 a React context would not reach it, but a `window` event does. Tools that don't
