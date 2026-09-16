@@ -797,6 +797,11 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Fixed
 
 - rebuild IndexNow and sitemap per official docs
+## [1.16.0] - 2026-09-16
+
+### Added
+
+- refactor tools listing to client component and fix sitemap lastmod
 ## Template
 
 For future releases:
