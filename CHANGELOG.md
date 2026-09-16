@@ -792,6 +792,11 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Infrastructure
 
 - update .gitignore docs for Platform Overhaul P0-P4, clear dev cache (check-examples, designplan, graphify-out, parse-tools)
+## [1.15.2] - 2026-09-16
+
+### Fixed
+
+- rebuild IndexNow and sitemap per official docs
 ## Template
 
 For future releases:
