@@ -802,6 +802,11 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Added
 
 - refactor tools listing to client component and fix sitemap lastmod
+## [1.16.1] - 2026-09-16
+
+### Fixed
+
+- restore href links in markdown guides
 ## Template
 
 For future releases:
