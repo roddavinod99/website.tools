@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] — Platform Overhaul (P0→P4)
+## [1.15.0] - 2026-09-16 — Platform Overhaul (P0→P4)
 
 ### Added
 - Per-tool audit script with CI gate (`scripts/tool-audit.mjs`, `tests/audit/`)
