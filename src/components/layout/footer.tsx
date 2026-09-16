@@ -67,7 +67,7 @@ export function Footer() {
                 href={siteConfig.mainSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-2"
+                className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline underline-offset-2"
               >
                 DevStackIO
               </a>{" "}
@@ -83,7 +83,7 @@ export function Footer() {
                 DevStackIO Home
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
-              <span className="text-[var(--color-text-subtle)]" aria-hidden="true">|</span>
+              <span className="text-[var(--color-text-muted)]" aria-hidden="true">|</span>
               <a
                 href={siteConfig.links.github}
                 target="_blank"
@@ -128,17 +128,17 @@ export function Footer() {
               <Link
                 key={label}
                 href={href}
-                className="flex items-center gap-2 text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]"
+                className="flex items-center gap-2 text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
               >
-                <Icon className="h-4 w-4 text-[var(--color-accent)]" aria-hidden="true" />
+                <Icon className="h-4 w-4 text-blue-700 dark:text-blue-400" aria-hidden="true" />
                 {label}
               </Link>
             ))}
             <span className="hidden h-4 w-px bg-[var(--color-border)] sm:block" aria-hidden="true" />
-            <Link href="/security" className="text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]">
+            <Link href="/security" className="text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]">
               Security
             </Link>
-            <Link href="/accessibility" className="text-xs text-[var(--color-text-subtle)] transition-colors hover:text-[var(--color-text)]">
+            <Link href="/accessibility" className="text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]">
               Accessibility
             </Link>
           </div>
@@ -146,29 +146,29 @@ export function Footer() {
             <p className="text-sm text-[var(--color-text-muted)]">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-[var(--color-text-muted)]">
-              <Link href="/privacy" className="hover:text-[var(--color-text)] transition-colors">
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <Link href="/privacy" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/terms" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Terms
               </Link>
-              <Link href="/cookie-policy" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/cookie-policy" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Cookies
               </Link>
-              <Link href="/disclaimer" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/disclaimer" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Disclaimer
               </Link>
-              <Link href="/about" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/about" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/contact" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Contact
               </Link>
-              <Link href="/sitemap" className="hover:text-[var(--color-text)] transition-colors">
+              <Link href="/sitemap" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 Sitemap
               </Link>
-              <a href="/feed.xml" className="hover:text-[var(--color-text)] transition-colors">
+              <a href="/feed.xml" className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                 RSS
               </a>
             </div>

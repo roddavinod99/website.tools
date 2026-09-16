@@ -16,9 +16,9 @@ Internet → Nginx (443) → PM2 Cluster (2x instance, port 3000)
               ↓                       ↓
          SSL/TLS 1.2/1.3        Next.js Standalone
               ↓                       ↓
-         Rate Limiting          ~260 SSG Pages (164 tools, categories, blog, guides, static)
-              ↓                       ↓
-         Attack Blocking        API Routes
+          Rate Limiting          907 SSG Pages (172 tools, 12 categories, 9 blog, 50 guides, 412 convert, static)
+               ↓                       ↓
+          Attack Blocking        API Routes + /admin/audit
 ```
 
 ## Environment Setup
@@ -213,14 +213,17 @@ sudo certbot --nginx -d tools.devstackio.com
 
 - [ ] SSL certificate valid: `curl -I https://tools.devstackio.com`
 - [ ] Health endpoint OK: `curl https://tools.devstackio.com/api/health`
-- [ ] Sitemap accessible: `curl https://tools.devstackio.com/sitemap.xml | head`
-- [ ] Security headers present: `curl -I https://tools.devstackio.com`
+- [ ] Sitemap accessible: `curl https://tools.devstackio.com/sitemap.xml | head` (907 URLs, lastmod git)
+- [ ] Security headers present: `curl -I https://tools.devstackio.com` (per-route hash CSP 3584 hashes)
 - [ ] Rate limiting active: `ab -n 100 -c 10 https://tools.devstackio.com/api/health`
-- [ ] Cron jobs installed: `sudo crontab -l`
-- [ ] PM2 processes running: `pm2 status`
+- [ ] Cron jobs installed: `sudo crontab -l` (sitemap + IndexNow)
+- [ ] PM2 processes running: `pm2 status` (2× cluster, port 3000)
 - [ ] Logs directory writable: `ls -la /var/www/tools/logs/`
 - [ ] Production readiness: `npm run production:readiness`
-- [ ] Sitemap submitted: `npm run sitemap:submit`
+- [ ] SEO audit: `npm run seo:audit` (99/100, 15 passed)
+- [ ] Tool audit: `npm run audit:tools` (120/120) + `npm run dashboard` (`/admin/audit`)
+- [ ] Smoke: `npm run smoke` (`data/bundle-diff.json` 5.64MB, lighthouse placeholder)
+- [ ] Sitemap submitted: `npm run sitemap:submit` (IndexNow `api.indexnow.org` batches 10k)
 
 ## Monitoring
 

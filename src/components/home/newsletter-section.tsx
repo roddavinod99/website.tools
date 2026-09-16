@@ -62,7 +62,7 @@ export function NewsletterSection() {
                 className="h-11 sm:w-80 rounded-md border border-[var(--color-accent-fg)]/30 bg-[var(--color-accent-hover)] px-3 text-sm text-[var(--color-accent-fg)] placeholder:text-[var(--color-accent-fg)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-fg)]/40"
               />
               <button type="submit" disabled={status === "loading"}
-                className="inline-flex h-11 items-center justify-center rounded-md bg-[var(--color-accent-fg)] px-6 text-sm font-medium text-[var(--color-accent)] hover:bg-[var(--color-accent-fg)]/90 disabled:opacity-50 transition-colors">
+                className="inline-flex h-11 items-center justify-center rounded-md bg-[var(--color-accent-fg)] px-6 text-sm font-medium text-blue-700 dark:text-blue-400 hover:bg-[var(--color-accent-fg)]/90 disabled:opacity-50 transition-colors">
                 {status === "loading" ? "Subscribing..." : "Subscribe"}
               </button>
             </form>

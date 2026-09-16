@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,9 +26,14 @@
     "test:snapshots": "playwright test tests/snapshots.spec.ts",
     "test:security": "playwright test tests/security.spec.ts",
     "test:seo": "playwright test tests/seo-structured-data.spec.ts",
+    "audit:tools": "node scripts/tool-audit.mjs",
     "analyze": "cross-env ANALYZE=true next build",
     "clean": "node scripts/cleanup.mjs",
-    "csp:auto-update": "node scripts/csp-auto-update.mjs"
+    "csp:auto-update": "node scripts/csp-auto-update.mjs",
+    "smoke": "node scripts/post-rebuild-smoke.mjs",
+    "dashboard": "node scripts/build-audit-dashboard.mjs",
+    "signoff": "node scripts/release-signoff.mjs",
+    "measure:route-js": "node scripts/measure-route-js.mjs"
   },
   "browserslist": {
     "production": [
@@ -54,6 +59,7 @@
     "libphonenumber-js": "^1.13.8",
     "lucide-react": "^1.23.0",
     "next": "16.3.0",
+    "preline": "4.2.0",
     "qrcode": "^1.5.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -81,6 +87,7 @@
     "@next/bundle-analyzer": "^16.2.10",
     "@playwright/mcp": "0.0.78",
     "@playwright/test": "^1.61.1",
+    "@tailwindcss/forms": "0.5.11",
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsbarcode": "^3.11.4",
@@ -95,6 +102,7 @@
     "minisearch": "7.2.0",
     "schema-dts": "2.0.0",
     "tailwindcss": "^4",
+    "tsx": "4.23.13",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }

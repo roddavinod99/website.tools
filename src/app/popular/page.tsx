@@ -59,7 +59,7 @@ export default function PopularPage() {
                 <li key={tool.id}>
                   <a
                     href={`/tools/${tool.slug}`}
-                    className="group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
+                    className="group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
                   >
                     <div className="flex items-start justify-between">
                       <span className="rounded-full bg-[var(--color-surface-2)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
@@ -71,7 +71,7 @@ export default function PopularPage() {
                         </span>
                       )}
                     </div>
-                    <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                    <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                       {tool.name}
                     </h3>
                     <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

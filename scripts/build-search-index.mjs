@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -231,10 +231,24 @@ function readToolkits() {
   }
 }
 
+/**
+ * Drop later docs whose id already occurred. Registry entries come first
+ * in the array, so they win over same-slug content docs. MiniSearch.addAll
+ * throws on duplicate ids, which used to kill site search entirely.
+ */
+export function dedupeDocs(docs) {
+  const seen = new Set();
+  return docs.filter((doc) => {
+    if (seen.has(doc.id)) return false;
+    seen.add(doc.id);
+    return true;
+  });
+}
+
 function main() {
   console.log("[build-search-index] Building search index...");
 
-  const allDocs = [
+  const allDocs = dedupeDocs([
     ...readToolsRegistry(),
     ...readCategories(),
     ...readComparisons(),
@@ -245,7 +259,7 @@ function main() {
     ...readToolContent(),
     ...readMarkdownFiles(join(ROOT, "src", "content", "blog"), "blog"),
     ...readMarkdownFiles(join(ROOT, "src", "content", "guides"), "guides"),
-  ];
+  ]);
 
   console.log(`[build-search-index] Indexed ${allDocs.length} documents`);
 
@@ -264,4 +278,6 @@ function main() {
   console.log(`[build-search-index] Written to ${OUTPUT_FILE}`);
 }
 
-main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

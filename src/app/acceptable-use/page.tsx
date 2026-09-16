@@ -37,12 +37,12 @@ export default function AcceptableUsePage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)]">
+          <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Scope:</strong> This policy applies to all users of DevStackIO tools, website, API, and services.
             It supplements our{" "}
-            <a href="/terms" className="underline hover:text-[var(--color-accent-hover)]">Terms of Service</a>
+            <a href="/terms" className="underline hover:text-blue-800">Terms of Service</a>
             {" "}and{" "}
-            <a href="/privacy" className="underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a>.
+            <a href="/privacy" className="underline hover:text-blue-800">Privacy Policy</a>.
             Violations may result in suspension or termination of access.
           </p>
         </div>
@@ -50,16 +50,16 @@ export default function AcceptableUsePage() {
         <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#1-general-principles" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">1. General Principles</a></li>
-            <li><a href="#2-prohibited-activities" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">2. Prohibited Activities</a></li>
-            <li><a href="#3-tool-specific-restrictions" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">3. Tool-Specific Restrictions</a></li>
-            <li><a href="#4-api-usage" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">4. API Usage (Current and Future)</a></li>
-            <li><a href="#5-security-and-integrity" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">5. Security and Integrity</a></li>
-            <li><a href="#6-intellectual-property" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">6. Intellectual Property</a></li>
-            <li><a href="#7-user-conduct" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">7. User Conduct</a></li>
-            <li><a href="#8-enforcement" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">8. Enforcement and Consequences</a></li>
-            <li><a href="#9-reporting-violations" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">9. Reporting Violations</a></li>
-            <li><a href="#10-changes" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">10. Changes to This Policy</a></li>
+            <li><a href="#1-general-principles" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. General Principles</a></li>
+            <li><a href="#2-prohibited-activities" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">2. Prohibited Activities</a></li>
+            <li><a href="#3-tool-specific-restrictions" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">3. Tool-Specific Restrictions</a></li>
+            <li><a href="#4-api-usage" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">4. API Usage (Current and Future)</a></li>
+            <li><a href="#5-security-and-integrity" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">5. Security and Integrity</a></li>
+            <li><a href="#6-intellectual-property" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">6. Intellectual Property</a></li>
+            <li><a href="#7-user-conduct" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">7. User Conduct</a></li>
+            <li><a href="#8-enforcement" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">8. Enforcement and Consequences</a></li>
+            <li><a href="#9-reporting-violations" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">9. Reporting Violations</a></li>
+            <li><a href="#10-changes" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">10. Changes to This Policy</a></li>
           </ol>
         </nav>
 
@@ -249,7 +249,7 @@ export default function AcceptableUsePage() {
                   We encourage responsible security research. If you discover a vulnerability, please report it via:
                 </p>
                 <div className="mt-2 p-3 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
-                  <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+                  <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
                   <p><strong>PGP:</strong> Available on request</p>
                 </div>
                 <p className="mt-2 text-sm">
@@ -372,7 +372,7 @@ export default function AcceptableUsePage() {
               <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Appeals</h3>
                 <p className="mt-2 text-sm">
-                  To appeal a restriction, contact <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
+                  To appeal a restriction, contact <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>
                   with your IP, the restriction details, and explanation. We review appeals within 5 business days.
                 </p>
               </div>
@@ -386,10 +386,10 @@ export default function AcceptableUsePage() {
                 Help us keep DevStackIO safe. Report violations to:
               </p>
               <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-                <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-                <p><strong>Copyright/DMCA:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
-                <p><strong>General Policy:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-                <p><strong>Security Issues:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
+                <p><strong>Abuse/Security:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+                <p><strong>Copyright/DMCA:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a> (see <a href="/dmca" className="underline">DMCA Policy</a>)</p>
+                <p><strong>General Policy:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+                <p><strong>Security Issues:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a> (see <a href="/security" className="underline">Security Policy</a>)</p>
               </div>
               <p className="text-sm text-[var(--color-text-muted)]">
                 Include: Description of violation, URL/tool involved, screenshots if applicable, and your contact info.
@@ -419,12 +419,12 @@ export default function AcceptableUsePage() {
         <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
-            <li><a href="/terms" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Terms of Service</a></li>
-            <li><a href="/privacy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a></li>
-            <li><a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Policy</a></li>
-            <li><a href="/dmca" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">DMCA / Copyright Policy</a></li>
-            <li><a href="/dpa" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/security" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Security Policy</a></li>
+            <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>
+            <li><a href="/privacy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Privacy Policy</a></li>
+            <li><a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Policy</a></li>
+            <li><a href="/dmca" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">DMCA / Copyright Policy</a></li>
+            <li><a href="/dpa" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/security" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Security Policy</a></li>
           </ul>
         </div>
 
@@ -432,8 +432,8 @@ export default function AcceptableUsePage() {
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Contact</h2>
           <p className="mt-2 text-[var(--color-text-muted)]">
             Questions about this Acceptable Use Policy? Contact us at
-            <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
-            or use our <a href="/contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact form</a>.
+            <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>
+            or use our <a href="/contact" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact form</a>.
           </p>
         </div>
       </article>

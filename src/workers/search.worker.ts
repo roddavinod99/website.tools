@@ -1,5 +1,6 @@
 import Fuse from "fuse.js";
 import type { Tool } from "@/types";
+import { expandQuery } from "@/lib/search/synonyms";
 
 type SearchMessage = {
   id: string;
@@ -40,11 +41,20 @@ self.onmessage = (e: MessageEvent<SearchMessage>) => {
         self.postMessage({ id, type: "search", result: { items: [] } });
         break;
       }
-      const results = fuse.search(query, { limit: limit ?? 20 });
-      const items = results.map((r) => ({
-        ...r.item,
-        score: r.score,
-      }));
+      // Synonym-expanded terms are searched independently and merged by
+      // best score, mirroring src/lib/search-minisearch.ts.
+      const merged = new Map<string, Tool & { score?: number }>();
+      for (const term of expandQuery(query)) {
+        for (const r of fuse.search(term, { limit: limit ?? 20 })) {
+          const prev = merged.get(r.item.slug);
+          if (!prev || (r.score ?? 1) < (prev.score ?? 1)) {
+            merged.set(r.item.slug, { ...r.item, score: r.score });
+          }
+        }
+      }
+      const items = [...merged.values()]
+        .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
+        .slice(0, limit ?? 20);
       self.postMessage({ id, type: "search", result: { items } });
       break;
     }

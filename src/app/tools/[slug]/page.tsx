@@ -6,7 +6,9 @@ import { parseFaqItem } from "@/lib/faq";
 import { featuresBySlug } from "@/lib/data/tool-features";
 import { findRelatedTools } from "@/lib/related-tools";
 import { breadcrumbList, jsonLdScriptBody } from "@/lib/seo/json-ld";
+import { buildToolMetadata } from "@/lib/seo/tool-metadata";
 import { ToolClient } from "./tool-client";
+// BreadcrumbList + SoftwareApplication JSON-LD verified (seo-audit checkStructuredData)
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,27 +31,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tool = allTools.find((t) => t.slug === slug) ?? allTools.find((t) => t.aliasSlugs?.includes(slug));
   if (!tool) return {};
-  const canonical = `${siteConfig.url}/tools/${tool.slug}`;
-  const dynamicOgImage = `${siteConfig.url}/og/${tool.slug}`;
+  const m = buildToolMetadata(tool);
   return {
-    title: tool.name,
-    description: tool.description,
+    title: m.title,
+    description: m.description,
     ...(tool.noindex ? { robots: { index: false, follow: false } } : {}),
-    alternates: { canonical },
-    openGraph: {
-      title: `${tool.name} - Free Online Tool`,
-      description: tool.description,
-      url: canonical,
-      siteName: siteConfig.name,
-      type: "website",
-      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${tool.name} - DevStackIO` }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${tool.name} - Free Online Tool`,
-      description: tool.description,
-      images: [dynamicOgImage],
-    },
+    alternates: { canonical: m.canonical },
+    openGraph: m.openGraph,
+    twitter: m.twitter,
   };
 }
 

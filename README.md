@@ -15,6 +15,10 @@
 - **PWA Ready** — Installable as a Progressive Web App with offline support
 - **Accessible** — WCAG 2.2 AA compliant, keyboard navigable, screen reader friendly
 - **Ad-Supported** — Google AdSense with Auto Ads for sustainable free access
+- **⌘K Palette** — Instant tool search with synonyms, recents, and keyboard navigation
+- **One-Click Examples** — Every tool has `Load example` with `autoRun` and shareable `?example=key` URLs
+- **Per-Tool Audit** — `npm run audit:tools` gates CI (page loads, no console errors, examples populate, output produced)
+- **Visual Baseline** — 11 snapshots (homepage/tool/category/listing/guide/blog/compare/search/404, light+dark)
 
 ## 🚀 Quick Start
 
@@ -57,9 +61,11 @@ npm start
 | Styling | Tailwind CSS v4 |
 | Icons | Lucide React |
 | Fonts | Geist (Vercel) |
-| Tool Processing | Client-side (Web APIs, Web Workers) |
-| Search | Fuse.js in Web Worker |
-| Ads | Google AdSense (Auto Ads + Manual Placements) |
+| Tool Processing | Client-side (Web APIs, Web Workers, `src/lib/load-example.ts` ready-gate) |
+| Search | MiniSearch + Fuse.js in Web Worker (synonyms, `storeFields.text`) |
+| Palette | `src/components/layout/search-overlay.tsx` (⌘K, recents) |
+| UI Primitives | Preline 4.2 + Tailwind Forms (lazy `preline-provider.tsx`) |
+| Ads | Google AdSense (Auto Ads + Manual Placements, `AdContainer` min-height) |
 | Process Manager | PM2 cluster mode |
 | Reverse Proxy | Nginx |
 | Deployment | Oracle Cloud ARM64 (Ampere A1) |
@@ -76,30 +82,38 @@ npm start
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── tools/[slug]/       # Individual tool pages
-│   ├── categories/[slug]/  # Category listing pages
-│   ├── api/                # Server endpoints
-│   └── ...
+│   ├── tools/[slug]/       # Individual tool pages (SoftwareApplication + BreadcrumbList)
+│   ├── categories/[slug]/  # Category landing (top-6 ToolCard + see-all)
+│   ├── tools/              # Listing 2+8+2 FilterRail + ToolGrid (24/page)
+│   ├── compare/[slug]/     # Curated comparisons + auto buildCompare
+│   ├── api/                # Server endpoints (currency-rates)
+│   └── admin/audit/        # Audit dashboard
 ├── components/
-│   ├── tools/              # Interactive tool interfaces
-│   ├── ui/                 # Reusable UI components
-│   ├── layout/             # Header, Footer, Analytics
-│   ├── ads/                # AdSense components (Auto Ads, Banner, In-Content)
-│   └── ...
+│   ├── tools/              # 172 tool interfaces + example-url-listener
+│   ├── ui/                 # Prose, Breadcrumb, TrustPills, ToolCard, Badge
+│   ├── layout/             # Header (CategoriesMegaMenu 640px), Footer 4-col, search-overlay (⌘K)
+│   ├── listings/           # FilterRail (sticky) + ToolGrid (24)
+│   ├── home/               # hero (trending 8), conversions-rail, recently-added
+│   ├── ads/                # AdSense (AdContainer min-height, no CLS)
+│   └── providers/          # preline-provider (lazy autoInit)
 ├── lib/
-│   ├── constants.ts        # Tool registry, site config
-│   ├── search.ts           # Search implementation
-│   ├── sanitize.ts         # DOMPurify wrapper
-│   ├── highlight-lazy.ts   # Tree-shakeable highlight.js (core + 25 langs)
-│   ├── math-lite.ts        # Tree-shakeable mathjs (functions-only subset)
-│   ├── version/            # Release & version management system
-│   ├── workers/            # Web Worker infrastructure
-│   └── ...
-├── workers/                # Web Worker implementations
-│   ├── compute.worker.ts   # Heavy computation worker
-│   └── search.worker.ts    # Fuse.js search worker
-├── middleware.ts           # Rate limiter & security middleware
-└── types/                  # TypeScript type definitions
+│   ├── data/               # tools.ts 172, categories.ts 12, site-config
+│   ├── seo/                # tool-metadata, lastmod (git), json-ld, landing-pages
+│   ├── search/             # synonyms + MiniSearch ranking (storeFields.text)
+│   ├── links/related.ts    # getRelatedTools Jaccard + sameCat + pop
+│   ├── compare/            # buildCompare + hints
+│   ├── examples/           # normalize + loader (text/object, ready⟹subscribed)
+│   ├── load-example.ts     # dispatchLoadExample + useLoadExample (200ms)
+│   └── version/            # release-data
+├── workers/search.worker.ts # Fuse.js + synonyms
+├── middleware.ts           # Rate limiter + security
+└── types/                  # Tool, Category, ToolContent
+scripts/
+├── tool-audit.mjs          # per-tool Playwright audit (AUDIT_BASE_URL)
+├── post-rebuild-smoke.mjs  # bundle-diff + lighthouse placeholder
+├── build-audit-dashboard.mjs # public/admin/audit.html
+├── measure-route-js.mjs    # per-route 250KB
+└── seo-audit.mjs           # 99/100
 ```
 
 ## 🛡️ Security
@@ -150,16 +164,26 @@ NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX  # Required for product
 | Script | Purpose |
 |--------|---------|
 | `npm run dev` | Start development server |
-| `npm run build` | Production build (runs `prebuild` hook automatically) |
-| `npm start` | Start production server |
-| `npm run lint` | ESLint check |
+| `npm run build` | Production build (runs `prebuild` + `postbuild-csp` + `build-search-index`) |
+| `npm start` | Start production server (`node .next/standalone/server.js`) |
+| `npm run lint` | ESLint check (local `no-hardcoded-colors` `no-nested-card` `no-rounded-lg`) |
+| `npm run typecheck` | `tsc --noEmit` |
 | `npm run test` | Run Playwright test suite |
+| `npm run test:unit` | Vitest (bundle-size, synonyms, prose, links) |
+| `npm run test:tools` | Playwright data-driven `tests/tools.spec.ts` 120 tools |
+| `npm run test:a11y` | Axe WCAG 2.2 AA (`tests/a11y/page-types.spec.ts` 40) |
+| `npm run test:seo` | `tests/seo-structured-data.spec.ts` 5 |
+| `npm run test:snapshots` | Visual snapshots 11 `redesign/` |
+| `npm run audit:tools` | Per-tool audit (`scripts/tool-audit.mjs`, `AUDIT_BASE_URL`) |
+| `npm run smoke` | Post-rebuild `bundle-diff.json` + `lighthouse-*.html` (`scripts/post-rebuild-smoke.mjs`) |
+| `npm run dashboard` | `public/admin/audit.html` (`scripts/build-audit-dashboard.mjs`) |
+| `npm run signoff` | 6 checks `lint/typecheck/build/unit/tools/seo` (`scripts/release-signoff.mjs`) |
+| `npm run seo:audit` | Run SEO audit 99/100 (`scripts/seo-audit.mjs`) |
+| `npm run sitemap:submit` | Submit sitemap to IndexNow (`api.indexnow.org`) |
+| `npm run version` | Interactive release CLI |
+| `npm run version:auto` | Auto version from conventional commits |
 | `npm run clean` | Remove build artifacts (`.next/`, `wasm/target/`, test dirs) |
 | `npm run analyze` | Bundle analyzer report |
-| `npm run production:readiness` | Run production readiness checks |
-| `npm run seo:audit` | Run SEO audit |
-| `npm run sitemap:submit` | Submit sitemap to search engines |
-| `npm run version` | Interactive release CLI (bumps version, updates changelog) |
 
 ## 📦 Deployment
 

@@ -36,7 +36,7 @@ export default function AccessibilityPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)]">
+          <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Our Commitment:</strong> We aim to conform to the Web Content Accessibility Guidelines
             (WCAG) 2.2 Level AA. Accessibility is treated as a design requirement for every new tool, not
             as an afterthought.
@@ -46,13 +46,13 @@ export default function AccessibilityPage() {
         <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#1-conformance" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">1. Conformance Status</a></li>
-            <li><a href="#2-keyboard" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">2. Keyboard Accessibility</a></li>
-            <li><a href="#3-screen-readers" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">3. Screen Reader Support</a></li>
-            <li><a href="#4-visual" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">4. Visual Design & Contrast</a></li>
-            <li><a href="#5-content" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">5. Content & Media</a></li>
-            <li><a href="#6-limitations" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">6. Known Limitations</a></li>
-            <li><a href="#7-feedback" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">7. Feedback & Contact</a></li>
+            <li><a href="#1-conformance" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Conformance Status</a></li>
+            <li><a href="#2-keyboard" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">2. Keyboard Accessibility</a></li>
+            <li><a href="#3-screen-readers" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">3. Screen Reader Support</a></li>
+            <li><a href="#4-visual" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">4. Visual Design & Contrast</a></li>
+            <li><a href="#5-content" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">5. Content & Media</a></li>
+            <li><a href="#6-limitations" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">6. Known Limitations</a></li>
+            <li><a href="#7-feedback" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">7. Feedback & Contact</a></li>
           </ol>
         </nav>
 
@@ -131,8 +131,8 @@ export default function AccessibilityPage() {
               barrier, please let us know so we can address it:
             </p>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p><strong>Contact page:</strong> <a href="/contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Contact DevStackIO</a></p>
+              <p><strong>Email:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p><strong>Contact page:</strong> <a href="/contact" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Contact DevStackIO</a></p>
             </div>
             <p className="mt-4">
               Please include the page or tool you were using and the assistive technology involved. We
@@ -144,9 +144,9 @@ export default function AccessibilityPage() {
         <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
-            <li><a href="/security" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Security Policy</a></li>
-            <li><a href="/privacy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Privacy Policy</a></li>
-            <li><a href="/terms" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Terms of Service</a></li>
+            <li><a href="/security" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Security Policy</a></li>
+            <li><a href="/privacy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Privacy Policy</a></li>
+            <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>
           </ul>
         </div>
       </article>

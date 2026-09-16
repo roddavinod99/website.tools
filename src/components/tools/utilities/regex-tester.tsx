@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
+import { useLoadExample } from "@/lib/load-example";
 import { getStorageJSON, setStorageJSON } from "@/lib/client-storage";
 import { AdvancedOptions, OptionGroup, OptionRow } from "@/components/ui/advanced-options";
 
@@ -98,6 +99,8 @@ export function RegexTester() {
   const resultRef = useRef<HTMLDivElement>(null);
 
   const [history, setHistory] = useState<HistoryEntry[]>(() => getStorageJSON<HistoryEntry[]>("regex-history") || []);
+
+  useLoadExample("regex-tester", (text) => setPattern(text));
 
   useEffect(() => {
     setStorageJSON("regex-history", history.slice(0, 20));

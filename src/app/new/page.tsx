@@ -42,7 +42,7 @@ export default function NewToolsPage() {
               tools frequently &mdash; from data generators and encoders to security helpers and formatters.
               Every tool processes data locally on your device, keeping your information private by design.
               Check back regularly to see what&apos;s new, or browse the{" "}
-              <a href="/popular" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">most popular tools</a>{" "}
+              <a href="/popular" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">most popular tools</a>{" "}
               our community uses daily.
             </p>
           </div>
@@ -65,7 +65,7 @@ export default function NewToolsPage() {
                       <Badge variant="new">New</Badge>
                       <Badge variant="default">{tool.category}</Badge>
                     </div>
-                    <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                    <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                       {tool.name}
                     </h3>
                     <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">
@@ -91,7 +91,7 @@ export default function NewToolsPage() {
                   className="group rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]"
                 >
                   <Badge variant="default">{tool.category}</Badge>
-                  <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                  <h3 className="mt-3 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                     {tool.name}
                   </h3>
                   <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

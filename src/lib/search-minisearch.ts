@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import MiniSearch from "minisearch";
+import { expandQuery } from "./search/synonyms";
 
 export interface SearchDoc {
   id: string;
@@ -44,7 +45,9 @@ export function useMiniSearch() {
 
         const ms = new MiniSearch<SearchDoc>({
           fields: ["title", "text", "category"],
-          storeFields: ["title", "url", "type", "category", "popularity"],
+          // "text" must be stored: search-results.tsx renders a snippet
+          // from it, and MiniSearch returns only storeFields.
+          storeFields: ["title", "text", "url", "type", "category", "popularity"],
         });
 
         ms.addAll(docs);
@@ -72,11 +75,22 @@ export function useMiniSearch() {
     const limit = options?.limit ?? 20;
     const types = options?.types;
 
-    let results = miniSearch.search(q, {
-      boost: { title: 3, category: 2, text: 1 },
-      fuzzy: 0.2,
-      prefix: true,
-    }).slice(0, limit);
+    // Synonym-expanded terms are searched independently and merged by max
+    // score. Queries without synonym hits expand to [q] — identical to the
+    // previous single search.
+    type Hit = ReturnType<MiniSearch<SearchDoc>['search']>[number];
+    const merged = new Map<string, Hit>();
+    for (const term of expandQuery(q)) {
+      for (const hit of miniSearch.search(term, {
+        boost: { title: 3, category: 2, text: 1 },
+        fuzzy: 0.2,
+        prefix: true,
+      })) {
+        const prev = merged.get(hit.id);
+        if (!prev || hit.score > prev.score) merged.set(hit.id, hit);
+      }
+    }
+    let results = [...merged.values()].sort((a, b) => b.score - a.score).slice(0, limit);
 
     if (types && types.length > 0) {
       results = results.filter(r => types.includes(r.type));

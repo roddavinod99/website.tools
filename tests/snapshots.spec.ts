@@ -66,3 +66,30 @@ test.describe("Visual regression snapshots", () => {
     });
   });
 });
+
+test.describe("P2-10 redesign baseline — every page type, both themes", () => {
+  const targets = [
+    { name: "homepage", url: "/", theme: "light" },
+    { name: "homepage-dark", url: "/", theme: "dark" },
+    { name: "tool-standard", url: "/tools/json-formatter", theme: "light" },
+    { name: "tool-standard-dark", url: "/tools/json-formatter", theme: "dark" },
+    { name: "category", url: "/categories/formatters", theme: "light" },
+    { name: "listing", url: "/tools", theme: "light" },
+    { name: "guide", url: "/guides/concepts/json-basics", theme: "light" },
+    { name: "blog", url: "/blog/base64-encode-decode-online", theme: "light" },
+    { name: "compare", url: "/compare/base64-vs-url-encoding", theme: "light" },
+    { name: "search", url: "/search?q=json", theme: "light" },
+    { name: "404", url: "/this-does-not-exist-xyz", theme: "light" },
+  ] as const;
+
+  for (const t of targets) {
+    test(`snapshot ${t.name}`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: t.theme as "light" | "dark" });
+      await page.goto(`${BASE_URL}${t.url}`);
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(1000);
+      await stabilizePage(page);
+      await expect(page).toHaveScreenshot(`redesign/${t.name}.png`, { fullPage: true, maxDiffPixelRatio: 0.01, animations: "disabled" });
+    });
+  }
+});

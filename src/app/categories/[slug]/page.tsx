@@ -4,10 +4,12 @@ import Link from "next/link";
 import { categories, allTools, siteConfig } from "@/lib/data";
 import { categoryMetas } from "@/lib/data/categories";
 import { ToolGridSection } from "@/components/ui/tool-grid-section";
+import { ToolCard } from "@/components/ui/tool-card";
 import { ChevronRight, CircleCheck } from "lucide-react";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
 import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
+// BreadcrumbList JSON-LD (seo-audit checkStructuredData)
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -50,6 +52,7 @@ export default async function CategoryPage({ params }: Props) {
   if (!category) notFound();
 
   const tools = allTools.filter((t) => t.category === category.name);
+  const topTools = [...tools].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0)).slice(0, 6);
   const categoryUrl = `${siteConfig.url}/categories/${slug}`;
 
   const breadcrumb = breadcrumbList([
@@ -110,7 +113,7 @@ export default async function CategoryPage({ params }: Props) {
               <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                 {meta.seoFeatures.slice(0, 6).map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm text-[var(--color-text-muted)]">
-                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--color-accent)]" />
+                    <CircleCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-700 dark:text-blue-400" />
                     {feature}
                   </li>
                 ))}
@@ -119,6 +122,20 @@ export default async function CategoryPage({ params }: Props) {
           })()}
         </div>
       </section>
+
+      {topTools.length > 0 && (
+        <section className="container py-8">
+          <h2 className="text-2xl font-semibold mb-4">Top {category.name} tools</h2>
+          <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+            {topTools.map((t) => <ToolCard key={t.slug} tool={t} />)}
+          </div>
+          <div className="mt-6">
+            <Link href={`/tools?category=${category.slug}`} className="text-blue-700 dark:text-blue-400 hover:underline">
+              All {tools.length} tools in {category.name} →
+            </Link>
+          </div>
+        </section>
+      )}
 
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="container py-16 md:py-24">

@@ -66,7 +66,7 @@ export default function BestPracticesPage() {
                     <Lightbulb className="h-5 w-5" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] text-[var(--color-text)] group-hover:text-[var(--color-accent)]">
+                    <h3 className="font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
                       {p.title}
                     </h3>
                     <p className="mt-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

@@ -5,6 +5,7 @@ import { ChevronRight, ArrowRight, Zap } from "lucide-react";
 import { guidesTopics, siteConfig, allTools } from "@/lib/data";
 import { getGuideContent, getGuideUrl } from "@/lib/guides";
 import { markdownToHtml } from "@/lib/markdown";
+import { Prose } from "@/components/ui/prose";
 
 const guideToBlog: Record<string, { slug: string; title: string }> = {
   "concepts/json-basics": {
@@ -152,7 +153,7 @@ export default async function GuidePage({ params }: Props) {
       </section>
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-accent)]">
+          <p className="text-sm font-medium uppercase tracking-wide text-blue-700 dark:text-blue-400">
             {topic.category}
           </p>
           <h1 className="mt-3 text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
@@ -166,9 +167,9 @@ export default async function GuidePage({ params }: Props) {
           </p>
 
           {htmlContent ? (
-            <div className="mt-8 prose prose-surface dark:prose-invert max-w-none">
+            <Prose className="mt-8 max-w-none">
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-            </div>
+            </Prose>
           ) : (
             <div className="mt-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center border-[var(--color-border)] bg-[var(--color-surface)]">
               <p className="text-[var(--color-text-muted)]">Content for this guide is being written. Check back soon.</p>
@@ -178,7 +179,7 @@ export default async function GuidePage({ params }: Props) {
           {toolLinks.length > 0 && (
             <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                <Zap className="h-4 w-4 text-[var(--color-accent)]" />
+                <Zap className="h-4 w-4 text-blue-700 dark:text-blue-400" />
                 Related tools
               </h2>
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -186,7 +187,7 @@ export default async function GuidePage({ params }: Props) {
                   <li key={tool.slug}>
                     <Link
                       href={`/tools/${tool.slug}`}
-                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                      className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
                     >
                       {tool.name}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -204,7 +205,7 @@ export default async function GuidePage({ params }: Props) {
               </h3>
               <Link
                 href={`/blog/${guideToBlog[resolvedSlug].slug}`}
-                className="group mt-2 flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)]"
+                className="group mt-2 flex items-center gap-2 text-blue-700 dark:text-blue-400 hover:text-blue-800 text-blue-700 dark:text-blue-400"
               >
                 <span className="font-medium">{guideToBlog[resolvedSlug].title}</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

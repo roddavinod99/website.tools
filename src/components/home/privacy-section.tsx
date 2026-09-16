@@ -10,7 +10,7 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
       <div className="container py-16 md:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
               Privacy
             </p>
             <h2 id="privacy-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -40,7 +40,7 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
                 "Free to use",
               ].map((point) => (
                 <li key={point} className="flex items-center gap-3 text-sm text-[var(--color-text)]">
-                  <CheckCircle className="h-5 w-5 shrink-0 text-[var(--color-success)]" aria-hidden="true" />
+                  <CheckCircle className="h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
                   {point}
                 </li>
               ))}
@@ -78,7 +78,7 @@ export function PrivacySection({ allTools }: { allTools: Tool[] }) {
                   key={item.title}
                   className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <h3 className="mt-4 font-semibold text-[var(--color-text)]">

@@ -41,7 +41,7 @@ export function Wordmark({ className }: { className?: string }) {
         className,
       )}
     >
-      DevStack<span className="text-[var(--color-accent)]">IO</span>
+      DevStack<span className="text-blue-700 dark:text-blue-400">IO</span>
     </span>
   );
 }

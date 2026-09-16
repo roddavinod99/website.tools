@@ -139,7 +139,7 @@ function SeeAlso({ page }: { page: LandingPage }) {
             <li key={ref}>
               <Link
                 href={href}
-                className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                className="group flex items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-accent)] hover:text-blue-700 dark:text-blue-400"
               >
                 {refPage.title}
                 <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -163,11 +163,11 @@ function FaqList({ faqs }: { faqs: { question: string; answer: string }[] }) {
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
             <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
-              <CircleHelp className="h-4 w-4 text-[var(--color-accent)]" aria-hidden="true" />
+              <CircleHelp className="h-4 w-4 text-blue-700 dark:text-blue-400" aria-hidden="true" />
               {faq.question}
             </h3>
             <ChevronDown
-              className="h-4 w-4 flex-shrink-0 text-[var(--color-text-subtle)] transition-transform group-open:rotate-180"
+              className="h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)] transition-transform group-open:rotate-180"
               aria-hidden="true"
             />
           </summary>
@@ -244,7 +244,7 @@ export default async function LandingPageRoute({ params }: Props) {
       <div className="container py-8 md:py-12">
         <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
           <main>
-            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-[var(--color-accent)]">
+            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-blue-700 dark:text-blue-400">
               <Calculator className="h-3.5 w-3.5" aria-hidden="true" />
               {categoryLabel}
             </div>
@@ -320,7 +320,7 @@ export default async function LandingPageRoute({ params }: Props) {
                 This page wraps the{" "}
                 <Link
                   href={`/tools/${tool.slug}`}
-                  className="font-medium text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]"
+                  className="font-medium text-blue-700 dark:text-blue-400 underline hover:text-blue-800"
                 >
                   {tool.name}
                 </Link>{" "}

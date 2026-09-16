@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { siteConfig } from "@/lib/data";
 import { getBlogPost, getPostContent, getPostUrl, blogPosts } from "@/lib/blog";
 import { markdownToHtml } from "@/lib/markdown";
+import { Prose } from "@/components/ui/prose";
 
 const blogToGuide: Record<string, { slug: string; title: string }> = {
   "getting-started-json": { slug: "getting-started-json", title: "Getting Started with JSON Guide" },
@@ -127,7 +128,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex items-center gap-3 text-sm text-[var(--color-text-muted)]">
             <Link
               href="/about"
-              className="font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)]"
+              className="font-medium text-[var(--color-text-muted)] hover:text-blue-700 dark:text-blue-400 text-[var(--color-text-muted)] hover:text-blue-700 dark:text-blue-400"
             >
               {siteConfig.name} Team
             </Link>
@@ -142,9 +143,9 @@ export default async function BlogPostPage({ params }: Props) {
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">
             {blogPost.excerpt}
           </p>
-          <div className="mt-8 prose prose-surface dark:prose-invert max-w-none">
+          <Prose className="mt-8 max-w-none">
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-          </div>
+          </Prose>
           {blogToGuide[blogPost.slug] && (
             <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 border-[var(--color-border)] bg-[var(--color-surface)]">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
@@ -152,7 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
               </h3>
               <Link
                 href={`/guides/${blogToGuide[blogPost.slug].slug}`}
-                className="mt-2 inline-flex items-center gap-2 font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-[var(--color-accent)]"
+                className="mt-2 inline-flex items-center gap-2 font-medium text-blue-700 dark:text-blue-400 hover:text-blue-800 text-blue-700 dark:text-blue-400"
               >
                 {blogToGuide[blogPost.slug].title}
               </Link>

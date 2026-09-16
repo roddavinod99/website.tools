@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useMiniSearch } from "@/lib/search-minisearch";
+import { useRecentTools } from "@/lib/personalize";
+import { allTools } from "@/lib/data/tools";
 import { useFocusTrap } from "@/lib/use-focus-trap";
-import { Search, X, FileText, BookOpen, Code, FlaskConical } from "lucide-react";
+import { Search, X, FileText, BookOpen, Code, FlaskConical, History } from "lucide-react";
 
 const TYPE_ICONS = {
   tool: Code,
@@ -21,12 +23,22 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const { search, ready, error } = useMiniSearch();
+  const { recent } = useRecentTools();
   const [localQuery, setLocalQuery] = useState("");
 
   const results = useMemo(() => {
     if (!ready || localQuery.trim().length < 2) return [];
     return search(localQuery, { limit: 15 });
   }, [search, ready, localQuery]);
+
+  const recentTools = useMemo(() => {
+    if (localQuery.trim() || !ready) return [];
+    return recent
+      .map((slug) => allTools.find((t) => t.slug === slug))
+      .filter((t): t is (typeof allTools)[number] => Boolean(t))
+      .slice(0, 5)
+      .map((t) => ({ title: t.name, url: `/tools/${t.slug}` }));
+  }, [recent, localQuery, ready]);
 
   const handleSearch = useCallback((q: string) => {
     setLocalQuery(q);
@@ -96,7 +108,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
       <div className="fixed inset-0 z-50 bg-[var(--color-bg)]/70 backdrop-blur" onClick={onClose} />
       <div ref={panelRef} className="relative mx-auto mt-24 w-full max-w-xl rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-2 shadow-sm">
         <form onSubmit={handleSubmit} className="flex items-center border-b border-[var(--color-border)] px-4">
-          <Search className="h-5 w-5 shrink-0 text-[var(--color-text-subtle)]" />
+          <Search className="h-5 w-5 shrink-0 text-[var(--color-text-muted)]" />
           <label htmlFor="search-overlay-input" className="sr-only">Search tools and guides</label>
           <input
             id="search-overlay-input"
@@ -105,10 +117,10 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
             value={localQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder={ready ? "Search tools, guides, blog..." : "Loading search..."}
-            className="flex-1 h-14 bg-transparent px-3 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] focus:outline-none"
+            className="flex-1 h-14 bg-transparent px-3 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none"
           />
           {localQuery && (
-            <button type="button" onClick={() => { setLocalQuery(() => ""); }} className="p-1 text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)]">
+            <button type="button" onClick={() => { setLocalQuery(() => ""); }} className="p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text-muted)]">
               <X className="h-4 w-4" />
             </button>
           )}
@@ -119,7 +131,7 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
         <div className="max-h-80 overflow-y-auto p-2">
           {error && (
-            <div className="flex items-center justify-center py-8 text-sm text-[var(--color-danger)]">
+            <div className="flex items-center justify-center py-8 text-sm text-red-700">
               Search unavailable: {error}
             </div>
           )}
@@ -131,17 +143,53 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
             </div>
           )}
 
-          {ready && !localQuery && !error && (
-            <div className="rounded-md bg-[var(--color-accent-soft)] px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
+          {ready && !localQuery && !error && recentTools.length > 0 && (
+            <div>
+              <p className="px-3 pt-1 pb-2 text-xs font-medium text-[var(--color-text-muted)]">
+                Recently used
+              </p>
+              <div className="space-y-0.5">
+                {recentTools.map((t) => (
+                  <button
+                    key={t.url}
+                    data-search-result
+                    onClick={() => handleSelect(t.url)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleSelect(t.url); }}
+                    className="group w-full flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-[var(--color-surface-2)] focus:bg-[var(--color-surface-2)] focus:outline-none"
+                  >
+                    <History className="h-4 w-4 shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
+                    <span className="flex-1 font-medium text-[var(--color-text)] truncate">
+                      {t.title}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {ready && !localQuery && !error && recentTools.length === 0 && (
+            <div className="rounded-md bg-blue-50 px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
               Type to search tools, guides, blog posts & comparisons
             </div>
           )}
 
           {ready && localQuery && results.length === 0 && !error && (
-            <div className="rounded-md bg-[var(--color-accent-soft)] px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
-              No results for &ldquo;{localQuery}&rdquo;
+            <div className="rounded-md bg-blue-50 px-4 py-6 text-center text-sm text-[var(--color-text-muted)]">
+              <p>No results for &ldquo;{localQuery}&rdquo;</p>
+              <button
+                onClick={() => handleSelect("/tools")}
+                className="mt-2 text-blue-700 dark:text-blue-400 hover:underline"
+              >
+                Browse all tools &rarr;
+              </button>
             </div>
           )}
+
+          <div className="flex items-center gap-3 border-t border-[var(--color-border)] px-3 pt-2 pb-1 text-xs text-[var(--color-text-muted)]">
+            <span><kbd className="font-mono">↑↓</kbd> navigate</span>
+            <span><kbd className="font-mono">↵</kbd> open</span>
+            <span><kbd className="font-mono">esc</kbd> close</span>
+          </div>
 
           {ready && results.length > 0 && (
             <div className="space-y-0.5">
@@ -156,12 +204,12 @@ export function SearchOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: (
                     className="group w-full flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-[var(--color-surface-2)] focus:bg-[var(--color-surface-2)] focus:outline-none"
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] opacity-0 group-hover:opacity-100" aria-hidden="true" />
-                    <Icon className="h-4 w-4 shrink-0 text-[var(--color-text-subtle)]" aria-hidden="true" />
+                    <Icon className="h-4 w-4 shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
                     <span className="shrink-0 rounded-md bg-[var(--color-surface)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
                       {result.type}
                     </span>
                     {result.category && (
-                      <span className="shrink-0 rounded-md bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
+                      <span className="shrink-0 rounded-md bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 dark:text-blue-400">
                         {result.category}
                       </span>
                     )}

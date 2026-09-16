@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         </div>
 
         <div className="mb-8 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-          <p className="text-sm text-[var(--color-accent)]">
+          <p className="text-sm text-blue-700 dark:text-blue-400">
             <strong>Key Promise:</strong> Your code, files, and data never leave your browser. We implement
             client-side processing by design — not as a feature, but as our foundational architecture.
           </p>
@@ -46,20 +46,20 @@ export default function PrivacyPage() {
         <nav className="mb-8 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-sm font-semibold text-[var(--color-text)] mb-3">Table of Contents</h2>
           <ol className="list-decimal pl-6 space-y-1 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#1-controller" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">1. Controller & Contact</a></li>
-            <li><a href="#2-lawful-basis" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">2. Lawful Basis for Processing (GDPR Art. 6)</a></li>
-            <li><a href="#3-data-categories" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">3. Categories of Personal Data Processed</a></li>
-            <li><a href="#4-purpose" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">4. Purposes of Processing</a></li>
-            <li><a href="#5-recipients" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">5. Recipients & Subprocessors</a></li>
-            <li><a href="#6-international-transfers" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">6. International Data Transfers</a></li>
-            <li><a href="#7-retention" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">7. Data Retention Periods</a></li>
-            <li><a href="#8-your-rights" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">8. Your Rights (GDPR Arts. 15-22, CCPA)</a></li>
-            <li><a href="#9-security" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">9. Data Security Measures</a></li>
-            <li><a href="#10-automated-decision" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">10. Automated Decision-Making & Profiling</a></li>
-            <li><a href="#11-cookies" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">11. Cookies & Similar Technologies</a></li>
-            <li><a href="#12-children" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">12. Children's Privacy</a></li>
-            <li><a href="#13-changes" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">13. Changes to This Policy</a></li>
-            <li><a href="#14-contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">14. Contact & DPO</a></li>
+            <li><a href="#1-controller" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">1. Controller & Contact</a></li>
+            <li><a href="#2-lawful-basis" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">2. Lawful Basis for Processing (GDPR Art. 6)</a></li>
+            <li><a href="#3-data-categories" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">3. Categories of Personal Data Processed</a></li>
+            <li><a href="#4-purpose" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">4. Purposes of Processing</a></li>
+            <li><a href="#5-recipients" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">5. Recipients & Subprocessors</a></li>
+            <li><a href="#6-international-transfers" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">6. International Data Transfers</a></li>
+            <li><a href="#7-retention" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">7. Data Retention Periods</a></li>
+            <li><a href="#8-your-rights" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">8. Your Rights (GDPR Arts. 15-22, CCPA)</a></li>
+            <li><a href="#9-security" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">9. Data Security Measures</a></li>
+            <li><a href="#10-automated-decision" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">10. Automated Decision-Making & Profiling</a></li>
+            <li><a href="#11-cookies" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">11. Cookies & Similar Technologies</a></li>
+            <li><a href="#12-children" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">12. Children's Privacy</a></li>
+            <li><a href="#13-changes" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">13. Changes to This Policy</a></li>
+            <li><a href="#14-contact" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">14. Contact & DPO</a></li>
           </ol>
         </nav>
 
@@ -71,11 +71,11 @@ export default function PrivacyPage() {
             </p>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-1">
               <p><strong>DevStackIO</strong></p>
-              <p>Email: <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p>Privacy Inquiries: <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p>Data Protection Officer: <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+              <p>Email: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p>Privacy Inquiries: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p>Data Protection Officer: <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p>Postal: DevStackIO, 123 Developer Way, San Francisco, CA 94102, USA</p>
-              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+              <p>EU Representative (Art. 27 GDPR): Available upon request at <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
             </div>
           </section>
 
@@ -407,7 +407,7 @@ export default function PrivacyPage() {
               </div>
               <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">Right to Withdraw Consent (Art. 7(3) GDPR)</h3>
-                <p className="mt-1 text-sm">Withdraw cookie/analytics consent anytime via <a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Preferences</a> in footer.</p>
+                <p className="mt-1 text-sm">Withdraw cookie/analytics consent anytime via <a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Preferences</a> in footer.</p>
               </div>
               <div className="p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
                 <h3 className="font-semibold text-[var(--color-text)]">CCPA Rights (§1798.100-1798.199)</h3>
@@ -415,10 +415,10 @@ export default function PrivacyPage() {
               </div>
             </div>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/30">
-              <h3 className="font-semibold text-[var(--color-accent)]">How to Exercise Your Rights</h3>
+              <h3 className="font-semibold text-blue-700 dark:text-blue-400">How to Exercise Your Rights</h3>
               <p className="mt-2 text-sm">
-                Email <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>
-                or use our <a href="/contact" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact form</a>.
+                Email <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>
+                or use our <a href="/contact" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact form</a>.
                 We verify identity and respond within 30 days (extendable to 60 days for complex requests).
                 No fee for standard requests.
               </p>
@@ -429,9 +429,9 @@ export default function PrivacyPage() {
                 You have the right to lodge a complaint with a supervisory authority, e.g.:
               </p>
               <ul className="mt-2 list-disc pl-6 space-y-1 text-sm">
-                <li><strong>EU:</strong> <a href="https://edpb.europa.eu/about-edpb/board/members_en" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Your national DPA</a></li>
-                <li><strong>UK:</strong> <a href="https://ico.org.uk/" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">ICO</a></li>
-                <li><strong>CA:</strong> <a href="https://www.priv.gc.ca/" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">OPC</a></li>
+                <li><strong>EU:</strong> <a href="https://edpb.europa.eu/about-edpb/board/members_en" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Your national DPA</a></li>
+                <li><strong>UK:</strong> <a href="https://ico.org.uk/" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">ICO</a></li>
+                <li><strong>CA:</strong> <a href="https://www.priv.gc.ca/" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">OPC</a></li>
               </ul>
             </div>
           </section>
@@ -521,7 +521,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">11. Cookies & Similar Technologies</h2>
             <p className="mt-2">
               We use cookies and localStorage for essential functionality and optional analytics/advertising.
-              See our <a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Policy</a> for full details.
+              See our <a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Policy</a> for full details.
             </p>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -543,7 +543,7 @@ export default function PrivacyPage() {
               </table>
             </div>
             <p className="mt-4 text-sm">
-              Manage preferences anytime: <a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Preferences</a> (footer link).
+              Manage preferences anytime: <a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Preferences</a> (footer link).
               You can also delete cookies via browser settings.
             </p>
           </section>
@@ -560,7 +560,7 @@ export default function PrivacyPage() {
                 <h3 className="font-semibold text-[var(--color-text)]">If You Are a Parent/Guardian</h3>
                 <p className="mt-1 text-sm">
                   If you believe your child has provided personal data, contact us at
-                  <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a>.
+                  <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a>.
                   We will verify and delete promptly.
                 </p>
               </div>
@@ -603,11 +603,11 @@ export default function PrivacyPage() {
           <section id="14-contact">
             <h2 className="text-2xl font-bold text-[var(--color-text)]">14. Contact & Data Protection Officer</h2>
             <div className="mt-4 p-4 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p><strong>Data Subject Requests:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
-              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:contact@devstackio.com" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">contact@devstackio.com</a></p>
+              <p><strong>General Privacy Inquiries:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p><strong>Data Protection Officer (DPO):</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p><strong>Data Subject Requests:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p><strong>Security Vulnerabilities:</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
+              <p><strong>EU Representative (Art. 27 GDPR):</strong> <a href="mailto:contact@devstackio.com" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">contact@devstackio.com</a></p>
               <p><strong>Postal:</strong> DevStackIO, Privacy Team, 123 Developer Way, San Francisco, CA 94102, USA</p>
             </div>
             <p className="mt-4 text-sm text-[var(--color-text-muted)]">
@@ -620,12 +620,12 @@ export default function PrivacyPage() {
         <div className="mt-12 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
           <h2 className="text-lg font-semibold text-[var(--color-text)]">Related Documents</h2>
           <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[var(--color-text-muted)]">
-            <li><a href="/terms" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Terms of Service</a></li>
-            <li><a href="/cookie-policy" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Cookie Policy</a></li>
-            <li><a href="/dpa" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Data Processing Addendum (DPA)</a></li>
-            <li><a href="/acceptable-use" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Acceptable Use Policy</a></li>
-            <li><a href="/dmca" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">DMCA / Copyright Policy</a></li>
-            <li><a href="/security" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">Security Policy</a></li>
+            <li><a href="/terms" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Terms of Service</a></li>
+            <li><a href="/cookie-policy" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Cookie Policy</a></li>
+            <li><a href="/dpa" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Data Processing Addendum (DPA)</a></li>
+            <li><a href="/acceptable-use" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Acceptable Use Policy</a></li>
+            <li><a href="/dmca" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">DMCA / Copyright Policy</a></li>
+            <li><a href="/security" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">Security Policy</a></li>
           </ul>
         </div>
       </article>

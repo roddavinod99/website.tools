@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo } from "react";
-import { usePrefillTool } from "@/lib/load-example";
+import { useLoadExample, usePrefillTool } from "@/lib/load-example";
 
 type Unit = "metric" | "imperial";
 
@@ -124,6 +124,14 @@ export function BMICalculator() {
   // PLAN.md) prefill the calculator with { unit, height, weight } so
   // e.g. /health/bmi-180cm-75kg shows the BMI computed for a
   // 180cm/75kg person immediately on load.
+  // Registry examples are "height, weight" pairs (e.g. "180, 75" = 180cm, 75kg).
+  useLoadExample("bmi-calculator", (text) => {
+    const [h, w] = text.split(",").map((s) => s.trim());
+    if (h) setHeight(h);
+    if (w) setWeight(w);
+    setUnit("metric");
+  });
+
   usePrefillTool("bmi-calculator", (prefill) => {
     if (prefill.unit === "metric" || prefill.unit === "imperial") {
       setUnit(prefill.unit);

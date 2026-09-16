@@ -69,19 +69,19 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">The DevStackIO Platform</h2>
             <p className="mt-2">
               DevStackIO is the parent platform behind{" "}
-              <a href={siteConfig.url} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">tools.devstackio.com</a>
+              <a href={siteConfig.url} className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">tools.devstackio.com</a>
               {" — "}the official collection of free online developer tools. Both websites are maintained
               by the same team and share the same commitment to privacy, quality, and accessibility.
             </p>
             <p className="mt-2">
-              <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
+              <a href={siteConfig.mainSiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">
                 DevStackIO
               </a>{" "}
               is the parent organization that provides the developer tools platform, learning resources,
               APIs, and utilities for the developer community.
             </p>
             <p className="mt-2">
-              <a href={siteConfig.url} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
+              <a href={siteConfig.url} className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">
                 Tools.DevStackIO
               </a>{" "}
               is our dedicated tools website featuring {TOOL_COUNT}+ free online developer utilities —
@@ -126,23 +126,23 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Our Principles</h2>
             <ul className="mt-2 space-y-3">
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold">01</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">01</span>
                 <div><strong>Privacy First</strong> &mdash; We never store or share your data. All processing happens in your browser.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold">02</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">02</span>
                 <div><strong>Free Forever</strong> &mdash; Core tools will always be free. No hidden charges, no credit card needed.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold">03</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">03</span>
                 <div><strong>Quality Over Quantity</strong> &mdash; Every tool is thoughtfully designed, thoroughly tested, and continuously improved.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold">04</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">04</span>
                 <div><strong>Developer Experience</strong> &mdash; Fast, keyboard-friendly, accessible, and a joy to use.</div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold">05</span>
+                <span className="text-blue-700 dark:text-blue-400 font-bold">05</span>
                 <div><strong>Open-Source Philosophy</strong> &mdash; We believe in transparency and community-driven development where possible.</div>
               </li>
             </ul>
@@ -171,7 +171,7 @@ export default function AboutPage() {
               We believe in the power of open source. Our tools are built with transparency and
               community input. We welcome contributions, bug reports, and feature suggestions from
               the developer community. Visit our{" "}
-              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
+              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">
                 GitHub repository
               </a>{" "}
               to contribute.
@@ -182,7 +182,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-[var(--color-text)]">Contact Us</h2>
             <p className="mt-2">
               Have questions, suggestions, or feedback? We&apos;d love to hear from you.{" "}
-              <a href="/contact" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">Get in touch</a>.
+              <a href="/contact" className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">Get in touch</a>.
             </p>
           </section>
         </div>

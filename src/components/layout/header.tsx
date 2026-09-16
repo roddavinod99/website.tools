@@ -3,13 +3,14 @@
 import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command, ChevronDown, ChevronRight } from "lucide-react";
-import { mainNav, siteConfig, categories, allTools } from "@/lib/data";
+import { Menu, X, Search, Moon, Sun, ExternalLink, HelpCircle, Command } from "lucide-react";
+import { mainNav, siteConfig, allTools } from "@/lib/data";
 import { setStorageItem } from "@/lib/client-storage";
 import { cn } from "@/lib/utils";
 import { Logomark, Wordmark } from "@/components/ui/logomark";
 import { Badge } from "@/components/ui/badge";
 import { ShortcutsModal, shortcutCategories } from "@/components/layout/shortcuts-modal";
+import { CategoriesMegaMenu } from "./categories-mega-menu";
 
 const SearchOverlay = lazy(() => import("./search-overlay").then((m) => ({ default: m.SearchOverlay })));
 
@@ -20,89 +21,12 @@ const NAV_SHORTCUTS: Record<string, string> = {
   "4": "/blog",
 };
 
-function CategoryMenu({ allTools }: { allTools: import("@/types").Tool[] }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (buttonRef.current && !buttonRef.current.contains(e.target as Node) &&
-          menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Get categories with tool counts
-  const catsWithCounts = categories.map((c) => ({
-    ...c,
-    toolCount: allTools.filter((t) => t.category === c.name).length,
-  })).filter((c) => c.toolCount > 0);
-
-  return (
-    <div className="relative">
-      <button
-        ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-        aria-label="Browse categories"
-        className="hidden md:flex items-center gap-1.5 h-10 px-3 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] rounded-md touch-target"
-      >
-        <span>Categories</span>
-        <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} aria-hidden="true" />
-      </button>
-
-      {isOpen && (
-        <div
-          ref={menuRef}
-          className="absolute right-0 mt-2 w-72 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-2 shadow-sm animate-fade-in-up z-dropdown"
-          role="menu"
-        >
-          <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-            {catsWithCounts.length} Categories
-          </div>
-          <nav className="max-h-96 overflow-y-auto" aria-label="Tool categories">
-            {catsWithCounts.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/categories/${cat.slug}`}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-sm text-[var(--color-text-muted)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)] transition-colors"
-                role="menuitem"
-              >
-                <span className="shrink-0 rounded-full bg-[var(--color-accent-soft)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-accent)]">
-                  {cat.toolCount}
-                </span>
-                <span className="flex-1 truncate font-medium">{cat.name}</span>
-                <ChevronRight className="h-4 w-4 text-[var(--color-text-subtle)]" aria-hidden="true" />
-              </Link>
-            ))}
-          </nav>
-          <div className="border-t border-[var(--color-border)] mt-2 pt-2">
-            <Link
-              href="/categories"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
-              role="menuitem"
-            >
-              <span>View all categories</span>
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
@@ -118,7 +42,7 @@ export function Header() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setSearchOpen(true);
         return;
@@ -152,6 +76,19 @@ export function Header() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [router]);
+
+  // Mobile sheet a11y: move focus inside on open, return it on close.
+  // The ref guard skips the initial mount so page load never steals focus.
+  const wasMobileOpen = useRef(false);
+  useEffect(() => {
+    if (isOpen) {
+      wasMobileOpen.current = true;
+      mobilePanelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+    } else if (wasMobileOpen.current) {
+      wasMobileOpen.current = false;
+      mobileToggleRef.current?.focus();
+    }
+  }, [isOpen]);
 
   const toggleDark = () => {
     const isDark = document.documentElement.classList.toggle("dark");
@@ -207,7 +144,7 @@ export function Header() {
                 </Link>
               );
             })}
-            <CategoryMenu allTools={allTools} />
+            <CategoriesMegaMenu />
             <div className="mx-2 h-5 w-px bg-[var(--color-border)]" aria-hidden="true" />
             <a
               href={siteConfig.mainSiteUrl}
@@ -310,6 +247,7 @@ export function Header() {
             )}
           </div>
           <button
+            ref={mobileToggleRef}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
@@ -320,8 +258,14 @@ export function Header() {
         </div>
       </div>
       {isOpen && (
-        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg)] md:hidden animate-slide-down">
-          <nav className="container py-4 space-y-1">
+        <div
+          ref={mobilePanelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation"
+          className="border-t border-[var(--color-border)] bg-[var(--color-bg)] md:hidden animate-slide-down"
+        >
+          <nav className="container py-4 space-y-1" aria-label="Mobile">
             {mainNav.map((item) => (
               <Link
                 key={item.href}

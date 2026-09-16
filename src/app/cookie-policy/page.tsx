@@ -136,7 +136,7 @@ export default function CookiePolicyPage() {
           <h2 className="text-2xl font-bold text-[var(--color-text)]">Contact</h2>
           <p>
             If you have questions about this Cookie Policy, please{" "}
-            <a href="/contact" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">contact us</a>.
+            <a href="/contact" className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">contact us</a>.
           </p>
         </div>
       </article>

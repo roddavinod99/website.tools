@@ -8,28 +8,28 @@ const communityLinks = [
     description: "Have an idea? Let us know what tool you need.",
     icon: Lightbulb,
     href: "/suggest",
-    color: "bg-[var(--color-warning)]/10 text-[var(--color-warning)]",
+    color: "bg-[var(--color-warning)]/10 text-amber-800",
   },
   {
     title: "Request a Feature",
     description: "Help shape the future of DevStackIO.",
     icon: Vote,
     href: "/feature-request",
-    color: "bg-[var(--color-accent-soft)] text-[var(--color-accent)]",
+    color: "bg-[var(--color-accent-soft)] text-blue-700 dark:text-blue-400",
   },
   {
     title: "Report a Bug",
     description: "Found something broken? Let us fix it.",
     icon: Bug,
     href: "/report-bug",
-    color: "bg-[var(--color-danger)]/10 text-[var(--color-danger)]",
+    color: "bg-[var(--color-danger)]/10 text-red-700",
   },
   {
     title: "Share Feedback",
     description: "We'd love to hear your thoughts.",
     icon: MessageSquare,
     href: "/feedback",
-    color: "bg-[var(--color-success)]/10 text-[var(--color-success)]",
+    color: "bg-[var(--color-success)]/10 text-emerald-700",
   },
 ];
 
@@ -38,7 +38,7 @@ export function CommunitySection() {
     <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="community-heading">
       <div className="container py-16 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
             Community
           </p>
           <h2 id="community-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -60,7 +60,7 @@ export function CommunitySection() {
                 <div className={cn("flex h-10 w-10 items-center justify-center rounded-md", link.color)}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                   {link.title}
                 </h3>
                 <p className="mt-1 text-sm text-[var(--color-text-muted)]">

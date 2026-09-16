@@ -31,7 +31,7 @@ export function TrendingRail({ trendingTools }: { trendingTools: Tool[] }) {
       <div className="container py-12 md:py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
               Trending now
             </p>
             <h2 id="trending-heading" className="mt-2 text-3xl font-bold tracking-tight text-[var(--color-text)] sm:text-4xl text-balance">
@@ -43,7 +43,7 @@ export function TrendingRail({ trendingTools }: { trendingTools: Tool[] }) {
           </div>
           <Link
             href="/tools?sort=popular"
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-[var(--color-accent-hover)]"
           >
             View all popular
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -59,15 +59,15 @@ export function TrendingRail({ trendingTools }: { trendingTools: Tool[] }) {
                 className="group relative flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:border-[var(--color-border-strong)] hover:shadow-sm"
               >
                 <div className="flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-50 text-blue-700 dark:text-blue-400">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <span className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-warning)]">
+                  <span className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-0.5 text-[10px] font-medium text-amber-800">
                     <Flame className="h-2.5 w-2.5" aria-hidden="true" />
                     Trending
                   </span>
                 </div>
-                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
+                <h3 className="mt-4 font-semibold text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400 transition-colors">
                   {tool.name}
                 </h3>
                 <p className="mt-1 flex-1 text-sm text-[var(--color-text-muted)] line-clamp-2">

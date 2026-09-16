@@ -45,9 +45,9 @@ export default function RoadmapPage() {
           Our public roadmap shows the features and improvements planned for DevStackIO. Priorities are
           driven by community feedback, developer needs, and our commitment to privacy-first, browser-based
           tooling. Want to influence what ships next? Submit a{" "}
-          <a href="/feature-request" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">feature request</a>{" "}
+          <a href="/feature-request" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">feature request</a>{" "}
           or{" "}
-          <a href="/suggest" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">suggest a new tool</a>{" "}
+          <a href="/suggest" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">suggest a new tool</a>{" "}
           and it will be considered for a future quarter.
         </p>
 

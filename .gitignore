@@ -146,4 +146,11 @@ docs/suggestions/og-images/
 
 
 
-# Last updated: 2026-08-29
+# Dev-only one-off scripts and generated graphs (zero production use)
+check-examples.js
+designplan.md
+lighthouse-budget.json
+graphify-out/
+scripts/parse-tools.mjs
+
+# Last updated: 2026-09-16 — Platform Overhaul P0→P4

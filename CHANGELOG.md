@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.15.0] - 2026-09-16 — Platform Overhaul (P0→P4)
+
+### Added
+- Per-tool audit script with CI gate (`scripts/tool-audit.mjs`, `tests/audit/`)
+- Preline UI provider (lazy-loaded, `src/components/providers/preline-provider.tsx`)
+- Examples contract (single/two/N inputs) with `autoRun` (`src/lib/examples/`, `src/lib/load-example.ts`)
+- ⌘K command palette (`src/components/layout/command-palette.tsx`, `src/hooks/use-command-palette.ts`)
+- Homepage hero with search trigger and trending chips (`src/components/home/hero.tsx`)
+- Tool page shell (9+3 layout, trust pills, sticky sidebar) (`src/components/tools/tool-shell.tsx`)
+- Prose component for guides/blog (`src/components/ui/prose.tsx`, `src/styles/highlight-theme.css`)
+- Compare page auto-generated, curated pairs (`src/lib/compare/`, `src/app/compare/[slug]/`)
+- Shareable example URLs (`?example=key`, `src/components/tools/example-url-listener.tsx`)
+- 5-persona Playwright suite (`tests/personas.spec.ts`, `scripts/run-personas.mjs`)
+- Lighthouse CI gate (`.github/workflows/lighthouse.yml`, `lighthouse-budget.json`)
+- IndexNow submission (`scripts/sitemap-submitter.mjs`, `scripts/indexnow-submit.ts`)
+- Audit dashboard at `/admin/audit` (`scripts/build-audit-dashboard.mjs`, `src/app/admin/audit/page.tsx`)
+- Categories mega-menu (640px, `src/components/layout/categories-mega-menu.tsx`)
+- Listings 2+8+2 with sticky filter rail (`src/components/listings/`)
+- Visual regression baseline 11 snapshots (`tests/snapshots.spec.ts`)
+
+### Changed
+- Tool page chrome replaced (Crisp Minimal tokens preserved, `src/styles/globals.css`)
+- Header rebuilt with mega-menu and ⌘K trigger (`src/components/layout/header.tsx`)
+- Listings 2+8+2 with sticky filter rail (`src/app/tools/page.tsx`)
+- Footer 3 columns (no card wrapper, `src/components/layout/footer.tsx`)
+- Sitemap `lastmod` from git commit (`src/lib/seo/__generated__/tool-lastmod.ts`, `src/lib/seo/lastmod.ts`)
+- No `Crawl-delay` in `src/app/robots.ts`
+- `vitest.config.ts` now includes `*.test.tsx`
+
+### Fixed
+- Every tool page emits `SoftwareApplication` + `BreadcrumbList` JSON-LD (`src/app/tools/[slug]/page.tsx`)
+- Examples actually populate inputs (was broken on N tools, `src/lib/load-example.ts` ready-gate)
+- Card-on-card patterns flagged and removed (`eslint-rules/no-nested-card-elements.cjs`)
+- Hard-coded `white`/`black` colors replaced with `--color-*` tokens (partial, 4040 → badge + category-card fixed)
+- Number-to-words BigInt `**` → iterative (`src/components/tools/utilities/number-to-words.tsx:224`, Turbopack `Math.pow` fix)
+- `/tools` CSP hydration blocked → static 24 (`src/app/tools/page.tsx:40`)
+
 ## [1.14.0] - 2026-09-05
 
 ### Visual redesign — Crisp Modern Minimal

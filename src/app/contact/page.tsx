@@ -29,16 +29,16 @@ export default function ContactPage() {
             Whether you need help with a specific tool, want to report an issue, discuss a partnership, or
             share ideas for the future of DevStackIO, this is the place. For a focused report, you can also
             use our{" "}
-            <a href="/report-bug" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">bug report</a>{" "}
+            <a href="/report-bug" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">bug report</a>{" "}
             or{" "}
-            <a href="/feature-request" className="text-[var(--color-accent)] underline hover:text-[var(--color-accent-hover)]">feature request</a>{" "}
+            <a href="/feature-request" className="text-blue-700 dark:text-blue-400 underline hover:text-blue-800">feature request</a>{" "}
             forms. We welcome questions from developers and visitors alike.
           </p>
         </div>
 
         <div className="mb-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm text-[var(--color-text-muted)] border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)]">
           <strong>Business inquiries:</strong>{" "}
-          <a href={`mailto:${siteConfig.contactEmail}`} className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline">
+          <a href={`mailto:${siteConfig.contactEmail}`} className="text-blue-700 dark:text-blue-400 hover:text-blue-800 underline">
             {siteConfig.contactEmail}
           </a>
         </div>
