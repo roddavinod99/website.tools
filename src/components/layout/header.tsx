@@ -161,7 +161,7 @@ export function Header() {
           {/* Mobile search button - visible only on mobile */}
           <button
             onClick={handleSearchClick}
-            aria-label="Search tools..."
+            aria-label="Search tools (open search)"
             className="flex sm:hidden h-10 w-10 items-center justify-center rounded-md text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)] touch-target"
           >
             <Search className="h-5 w-5" aria-hidden="true" />
@@ -170,7 +170,7 @@ export function Header() {
           {/* Desktop search bar - hidden on mobile */}
           <button
             onClick={handleSearchClick}
-            aria-label="Search tools..."
+            aria-label="Search tools (Ctrl+K)"
             className="hidden sm:flex items-center gap-2 h-10 flex-1 max-w-md sm:max-w-lg rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-border-strong)]"
           >
             <Search className="h-4 w-4" aria-hidden="true" />

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 if (!existsSync('data/tool-audit.json')) {
   console.error('[dashboard] No tool-audit.json. Run `npm run audit:tools` first.');
   process.exit(1);
@@ -14,9 +14,7 @@ for (const t of tools) {
   byCat[t.category][s]++;
   byVar[s] = (byVar[s] ?? 0) + 1;
 }
-import { mkdirSync as mk } from 'node:fs';
-import { dirname } from 'node:path';
-try { mk('public/admin', { recursive: true }); } catch {}
+try { mkdirSync('public/admin', { recursive: true }); } catch {}
 writeFileSync('public/admin/audit.html', `<!doctype html>
 <html><head><meta charset="utf-8"><title>Tool audit</title>
 <style>body{font-family:system-ui;padding:24px}table{border-collapse:collapse;width:100%}td,th{padding:6px 12px;border:1px solid #ddd;text-align:left}.pass{color:green}.fail{color:red}.warn{color:#c08400}</style>

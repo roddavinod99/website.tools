@@ -42,41 +42,77 @@ const legalDisclaimer = dateFrom(LEGAL.disclaimer);
 const legalSecurity = dateFrom(LEGAL.security);
 const legalAccessibility = dateFrom(LEGAL.accessibility);
 
+// Fallback lastmod for listing/category pages: derive from most recent tool lastmod (git commit date)
+// so <lastmod> reflects real content freshness, not build date, per AGENTS.md.
+const mostRecentToolLastmod = (() => {
+  const dates = Object.values(TOOL_LASTMOD)
+    .map((d) => dateFrom(d))
+    .filter((d): d is Date => !!d)
+    .sort((a, b) => b.getTime() - a.getTime());
+  return dates[0];
+})();
+const listingLastmod = mostRecentToolLastmod ?? latestBlogDate ?? new Date();
+
+function categoryLastmod(slug: string): Date | undefined {
+  const slugToCategoryName: Record<string, string> = {
+    encoders: "Encoders",
+    formatters: "Formatters",
+    generators: "Generators",
+    converters: "Converters",
+    security: "Security Tools",
+    "image-tools": "Image Tools",
+    utilities: "Utilities",
+    finance: "Finance",
+    "health-calculators": "Health",
+    "date-time-calculators": "Date-Time",
+    "math-calculators": "Math",
+    "electrical-calculators": "Electrical",
+  };
+  const catName = slugToCategoryName[slug];
+  if (!catName) return listingLastmod;
+  const dates = allTools
+    .filter((t) => t.category === catName && !t.noindex && TOOL_LASTMOD[t.slug])
+    .map((t) => dateFrom(TOOL_LASTMOD[t.slug])!)
+    .filter(Boolean)
+    .sort((a, b) => b.getTime() - a.getTime());
+  return dates[0] ?? listingLastmod;
+}
+
 const staticPages: MetadataRoute.Sitemap = [
-  entry(`${BASE}/`, latestBlogDate),
-  entry(`${BASE}/tools`),
-  entry(`${BASE}/categories`),
-  entry(`${BASE}/guides`),
-  entry(`${BASE}/blog`, latestBlogDate),
-  entry(`${BASE}/compare`),
-  entry(`${BASE}/popular`),
-  entry(`${BASE}/new`),
-  entry(`${BASE}/changelog`),
-  entry(`${BASE}/about`),
-  entry(`${BASE}/acceptable-use`),
-  entry(`${BASE}/accessibility`, legalAccessibility),
-  entry(`${BASE}/best-practices`),
-  entry(`${BASE}/contact`),
-  entry(`${BASE}/cookie-policy`, legalCookie),
-  entry(`${BASE}/disclaimer`, legalDisclaimer),
-  entry(`${BASE}/dmca`),
-  entry(`${BASE}/dpa`),
-  entry(`${BASE}/feature-request`),
-  entry(`${BASE}/feedback`),
-  entry(`${BASE}/privacy`, legalPrivacy),
-  entry(`${BASE}/report-bug`),
-  entry(`${BASE}/roadmap`),
-  entry(`${BASE}/security`, legalSecurity),
-  entry(`${BASE}/status`),
-  entry(`${BASE}/suggest`),
-  entry(`${BASE}/support`),
-  entry(`${BASE}/terms`, legalTerms),
-  entry(`${BASE}/tutorials`),
+  entry(`${BASE}/`, latestBlogDate ?? listingLastmod),
+  entry(`${BASE}/tools`, listingLastmod),
+  entry(`${BASE}/categories`, listingLastmod),
+  entry(`${BASE}/guides`, listingLastmod),
+  entry(`${BASE}/blog`, latestBlogDate ?? listingLastmod),
+  entry(`${BASE}/compare`, listingLastmod),
+  entry(`${BASE}/popular`, listingLastmod),
+  entry(`${BASE}/new`, listingLastmod),
+  entry(`${BASE}/changelog`, listingLastmod),
+  entry(`${BASE}/about`, listingLastmod),
+  entry(`${BASE}/acceptable-use`, listingLastmod),
+  entry(`${BASE}/accessibility`, legalAccessibility ?? listingLastmod),
+  entry(`${BASE}/best-practices`, listingLastmod),
+  entry(`${BASE}/contact`, listingLastmod),
+  entry(`${BASE}/cookie-policy`, legalCookie ?? listingLastmod),
+  entry(`${BASE}/disclaimer`, legalDisclaimer ?? listingLastmod),
+  entry(`${BASE}/dmca`, listingLastmod),
+  entry(`${BASE}/dpa`, listingLastmod),
+  entry(`${BASE}/feature-request`, listingLastmod),
+  entry(`${BASE}/feedback`, listingLastmod),
+  entry(`${BASE}/privacy`, legalPrivacy ?? listingLastmod),
+  entry(`${BASE}/report-bug`, listingLastmod),
+  entry(`${BASE}/roadmap`, listingLastmod),
+  entry(`${BASE}/security`, legalSecurity ?? listingLastmod),
+  entry(`${BASE}/status`, listingLastmod),
+  entry(`${BASE}/suggest`, listingLastmod),
+  entry(`${BASE}/support`, listingLastmod),
+  entry(`${BASE}/terms`, legalTerms ?? listingLastmod),
+  entry(`${BASE}/tutorials`, listingLastmod),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const categoriesPages: MetadataRoute.Sitemap = categories.map((cat) =>
-    entry(`${BASE}/categories/${cat.slug}`)
+    entry(`${BASE}/categories/${cat.slug}`, categoryLastmod(cat.slug))
   );
 
   const toolPages: MetadataRoute.Sitemap = allTools
@@ -96,7 +132,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   const toolkitPages: MetadataRoute.Sitemap = Object.keys(toolkits).map((slug) =>
-    entry(`${BASE}/toolkits/${slug}`)
+    entry(`${BASE}/toolkits/${slug}`, listingLastmod)
   );
 
   // Long-tail conversion landing pages emitted by the landing-page engine

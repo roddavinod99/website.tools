@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { allTools, categories, siteConfig, TOOL_COUNT } from "@/lib/data";
-import { ToolGridSection } from "@/components/ui/tool-grid-section";
-import { ToolSortDropdown } from "@/components/ui/tool-sort-dropdown";
 import { AdBanner } from "@/components/ads";
 import { adSlots } from "@/lib/data/ads";
 import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
 import { Search } from "lucide-react";
-import { FilterRail } from "@/components/listings/filter-rail";
-import { ToolGrid } from "@/components/listings/tool-grid";
+import { ToolsListingClient } from "@/components/listings/tools-listing-client";
 
 const toolCountText = `${TOOL_COUNT} free online developer tools`;
 const TOOLS_URL = `${siteConfig.url}/tools`;
@@ -36,10 +32,6 @@ export const metadata: Metadata = {
 };
 
 export default function ToolsPage() {
-  // Static render for P2-09 audit: show first 24 popular tools.
-  // Client-side FilterRail handles filtering without server searchParams (avoids dynamic CSP fallback).
-  const tools = [...allTools].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0)).slice(0, 24);
-
   const breadcrumb = breadcrumbList([{ name: "Home", url: siteConfig.url }, { name: "Tools" }]);
   const collection = collectionPage({
     name: "All Developer Tools",
@@ -61,9 +53,7 @@ export default function ToolsPage() {
       <section>
         <div className="container py-12 md:py-16">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">
-              All Tools
-            </h1>
+            <h1 className="text-3xl font-bold text-[var(--color-text)] sm:text-4xl">All Tools</h1>
             <p className="mt-2 text-lg text-[var(--color-text-muted)]">
               {allTools.length} free tools. No login required.
             </p>
@@ -75,10 +65,11 @@ export default function ToolsPage() {
               the search box or category filters below to find the right tool for the task.
             </p>
             <form action="/search" method="GET" className="mt-6 relative">
-              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-muted)]" />
+              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-muted)]" aria-hidden="true" />
               <input
                 name="q"
-                placeholder="Search tools..."
+                aria-label="Search tools"
+                placeholder="Search 172 tools..."
                 className="flex h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-4 text-base text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
               />
             </form>
@@ -88,48 +79,7 @@ export default function ToolsPage() {
 
       <AdBanner className="my-12" slot={adSlots.toolsTop} />
 
-      <section className="container py-8">
-        <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
-          <div className="lg:col-span-2"><div className="lg:sticky lg:top-24"><FilterRail /></div></div>
-          <div className="lg:col-span-8"><ToolGrid tools={tools.slice(0, 24)} /></div>
-          <div className="lg:col-span-2 hidden lg:block">
-            <p className="text-xs text-[var(--color-text-muted)]">Quick links</p>
-            <ul className="mt-2 text-sm space-y-1">
-              {['JSON', 'XML', 'YAML', 'SQL', 'HTML'].map((q) => (
-                <li key={q}><Link href={`/search?q=${q.toLowerCase()}`} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)]">{q}</Link></li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
-        <div className="container py-16 md:py-24">
-          <div className="flex flex-wrap items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-2 mb-8">
-            <Link
-              href="/tools"
-              className="rounded-md border border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-4 py-1.5 text-sm font-medium text-blue-700 dark:text-blue-400"
-            >
-              All
-            </Link>
-            {categories.slice(0, 10).map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/categories/${cat.slug}`}
-                className="rounded-md border border-[var(--color-border)] px-4 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-border-strong)] hover:text-[var(--color-text)]"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="mb-6 flex items-center justify-between gap-3">
-            <ToolSortDropdown />
-          </div>
-
-          <ToolGridSection tools={tools} midAdSlot={adSlots.toolsMid} />
-        </div>
-      </section>
+      <ToolsListingClient tools={allTools} categories={categories} />
     </>
   );
 }

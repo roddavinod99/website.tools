@@ -761,21 +761,6 @@ export function ToolClient({
                   </div>
                   <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
                 </Link>
-                <Link
-                  href="/guides"
-                  className="group flex items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5 transition-colors hover:border-[var(--color-accent)] hover:bg-blue-50"
-                >
-                  <div className="flex items-start gap-2">
-                    <BookOpen className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-700 dark:text-blue-400" aria-hidden="true" />
-                    <div>
-                      <p className="text-sm font-medium text-[var(--color-text)] group-hover:text-blue-700 dark:text-blue-400">
-                        Developer Guides
-                      </p>
-                      <p className="text-xs text-[var(--color-text-muted)]">In-depth guides and tutorials</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="h-4 w-4 flex-shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
-                </Link>
               </div>
             </section>
 

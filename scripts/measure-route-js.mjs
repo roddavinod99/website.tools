@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // @ts-check
 // P4-03: Measure per-route initial JS gzipped — reads .next/build-manifest.json
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
 const ROUTES = ['/', '/tools', '/tools/[slug]', '/categories', '/categories/[slug]', '/search'];
