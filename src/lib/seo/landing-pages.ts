@@ -118,9 +118,23 @@ export const landingPages: LandingPage[] = [
 /**
  * Resolves a landing page by URL components. Returns undefined when no
  * entry matches, so the catch-all route can call notFound().
+ *
+ * Per https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap#general-guidelines
+ * URLs must be canonical and consistently cased. This resolver supports both
+ * single-segment categories (e.g. "health") and nested categories (e.g.
+ * "wire/voltage-drop") which the sitemap emits as /convert/wire/voltage-drop/<slug>.
+ * In the latter case Next.js splits the request as category="wire" and
+ * slug=["voltage-drop","<slug>"] → slugSeg="voltage-drop/<slug>".
+ * We therefore match on both exact (category,slug) and full-path
+ * `${category}/${slug}` === `${page.category}/${page.slug}`.
  */
 export function getLandingPage(category: string, slug: string): LandingPage | undefined {
-  return landingPages.find((p) => p.category === category && p.slug === slug);
+  const direct = landingPages.find((p) => p.category === category && p.slug === slug);
+  if (direct) return direct;
+  // Fallback for nested categories like "wire/voltage-drop" where the request
+  // arrives as category="wire" + slug="voltage-drop/<actual>"
+  const fullPath = `${category}/${slug}`;
+  return landingPages.find((p) => `${p.category}/${p.slug}` === fullPath);
 }
 
 /**
@@ -131,9 +145,18 @@ export function getLandingPage(category: string, slug: string): LandingPage | un
  * Note: this returns ALL pages including `noindex` ones. The catch-all
  * route renders every page (so dev/CI can verify wiring); the sitemap
  * separately filters noindex pages out via {@link listIndexableLandingPages}.
+ *
+ * For nested categories (e.g. "wire/voltage-drop") the dynamic route is
+ * /convert/[category]/[...slug] → we split the stored category so Next.js
+ * receives { category: "wire", slug: ["voltage-drop","<actual>"] }.
+ * See https://nextjs.org/docs/app/api-reference/functions/generate-static-params
  */
-export function listLandingPageParams(): { category: string; slug: string }[] {
-  return landingPages.map((p) => ({ category: p.category, slug: p.slug }));
+export function listLandingPageParams(): { category: string; slug: string[] }[] {
+  return landingPages.map((p) => {
+    const segs = p.category.split("/");
+    if (segs.length === 1) return { category: p.category, slug: [p.slug] };
+    return { category: segs[0], slug: [...segs.slice(1), p.slug] };
+  });
 }
 
 /**

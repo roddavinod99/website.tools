@@ -59,6 +59,13 @@ const nextConfig: NextConfig = {
         destination: "/.well-known/security.txt",
         permanent: true,
       },
+      // Legacy: PR 7 emitted wire/voltage-drop/* before fix to top-level voltage-drop.
+      // Preserve ranking signals per https://developers.google.com/search/docs/crawling-indexing/site-moves-with-url-changes
+      {
+        source: "/convert/wire/voltage-drop/:slug*",
+        destination: "/convert/voltage-drop/:slug*",
+        permanent: true,
+      },
     ];
   },
 

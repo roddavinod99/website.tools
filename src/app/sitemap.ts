@@ -15,7 +15,7 @@ import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";
 import { TOOL_LASTMOD } from "@/lib/seo/__generated__/tool-lastmod";
-import { listIndexableLandingPages, landingPageUrl } from "@/lib/seo/landing-pages";
+import { listIndexableLandingPages, landingPageUrl, landingPageCountsByCategory } from "@/lib/seo/landing-pages";
 
 // ISR: regenerate daily (86400s) per sitemaps.org freshness best practice
 export const revalidate = 86400;
@@ -139,10 +139,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // (PR 1 of the rapidtables-alternative plan: PLAN.md). Each entry's
   // lastmod is derived from the canonical tool's git lastmod so search
   // engines see a real modification date, not the build date.
+  // Per https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap#which-urls-to-include
+  // only canonical, 200, indexable URLs belong in the sitemap.
   const conversionPages: MetadataRoute.Sitemap = listIndexableLandingPages().map((page) => {
     const lastmod = dateFrom(TOOL_LASTMOD[page.canonicalSlug]);
     return entry(landingPageUrl(page, BASE), lastmod);
   });
+
+  // Hub pages for /convert/* — provide internal-link crawl path for
+  // every landing page (fixes 710 Discovered – not indexed: orphan
+  // sitemap-only URLs). See https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl#help-google-find-your-pages
+  const convertHub: MetadataRoute.Sitemap = [entry(`${BASE}/convert`, listingLastmod)];
+  const convertCategoryHubs: MetadataRoute.Sitemap = landingPageCountsByCategory().map(({ category }) =>
+    entry(`${BASE}/convert/${category}`, listingLastmod),
+  );
 
   return [
     ...staticPages,
@@ -152,6 +162,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPages,
     ...comparisonPages,
     ...toolkitPages,
+    ...convertHub,
+    ...convertCategoryHubs,
     ...conversionPages,
   ];
 }

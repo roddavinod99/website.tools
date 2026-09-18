@@ -57,16 +57,30 @@ const SCIENTIFIC_FILLS: ScientificFill[] = [
 ];
 
 function scientificSlug(s: ScientificFill): string {
+  // Per sitemaps protocol (sitemaps.org/protocol.html) & RFC 3986, slugs must be
+  // pure a-z0-9 and hyphens. The previous version left the degree symbol (U+00B0)
+  // in the URL (sin30° → sin30%C2%B0) causing double-encoding (Â°) and 5xx on
+  // some origins. See https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap#general-guidelines
   if (s.title.startsWith("sin(") || s.title.startsWith("cos(") || s.title.startsWith("tan(")) {
-    return s.title.split(" ")[0]!.toLowerCase().replace("(", "").replace(")", "");
+    const m = s.title.match(/^(sin|cos|tan)\(([^)]+)\)/i);
+    if (m) {
+      const fn = m[1].toLowerCase();
+      // "30°" → "30", "1 rad" → "1-rad" → normalised to alphanumerics only
+      const raw = m[2].toLowerCase().replace(/°/g, "").trim();
+      const slugVal = raw.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      // Keep rad marker when angleMode is rad for uniqueness (sin1 vs sin1-rad)
+      if (s.angleMode === "rad" && slugVal === "1") return `${fn}1-rad`;
+      return `${fn}${slugVal}`;
+    }
+    return s.title.split(" ")[0]!.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   }
   if (s.title.startsWith("log(")) {
-    return `log-${s.input}`;
+    return `log-${s.input.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
   }
   if (s.title.startsWith("ln(")) {
-    return `ln-${s.input.replace(".", "")}`;
+    return `ln-${s.input.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
   }
-  return `scientific-${s.input}`;
+  return `scientific-${s.input.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
 }
 
 function scientificDescription(s: ScientificFill): string {

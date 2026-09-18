@@ -11,7 +11,7 @@ import type { LandingPage } from "./landing-pages";
 const URL_CATEGORY_INFLATION = "inflation";
 const URL_CATEGORY_VAT = "vat";
 const URL_CATEGORY_WIRE = "wire";
-const URL_CATEGORY_VOLTAGE = "wire/voltage-drop";
+const URL_CATEGORY_VOLTAGE = "voltage-drop";
 
 const TOOL_INFLATION = "inflation";
 const TOOL_VAT = "vat-gst";
@@ -241,15 +241,22 @@ const WIRE_FILLS: WireFill[] = [
 ];
 
 function wireSlug(w: WireFill): string {
+  // Per RFC 3986 + sitemaps spec slugs must be unreserved a-z0-9- only. Previous
+  // version kept " (4/0)" → "awg-0000-(4/0)-to-mm2" causing 5xx on strict origins
+  // due to parentheses/slash encoding mismatch.
+  // See https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+  const normalizeAwg = (v: string) =>
+    v
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
   if (w.mode === "mm2-to-awg" && w.area) {
-    // mm² values may collide after stripping the decimal (2.5 → 25 same as 25).
-    // Replace the decimal with a 'p' to keep uniqueness.
     const slugified = w.area.replace(".", "p");
     return `mm2-${slugified}-to-awg`;
   }
-  if (w.mode === "awg-to-mm2" && w.awg) return `awg-${w.awg.replace(" ", "-")}-to-mm2`;
-  if (w.mode === "awg-to-diameter" && w.awg) return `awg-${w.awg.replace(" ", "-")}-diameter`;
-  return `wire-${w.awg ?? w.area ?? "unknown"}`;
+  if (w.mode === "awg-to-mm2" && w.awg) return `awg-${normalizeAwg(w.awg)}-to-mm2`;
+  if (w.mode === "awg-to-diameter" && w.awg) return `awg-${normalizeAwg(w.awg)}-diameter`;
+  return `wire-${normalizeAwg(w.awg ?? w.area ?? "unknown")}`;
 }
 
 function wireDescription(w: WireFill): string {
@@ -340,7 +347,14 @@ const VOLTAGE_FILLS: VoltageFill[] = [
 ];
 
 function voltageSlug(v: VoltageFill): string {
-  return `${v.system}-${v.current}a-${v.length}ft-awg-${v.gauge.replace(" ", "-")}`.toLowerCase();
+  const normalizeGauge = (g: string) =>
+    g
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+  const normalizeSystem = (s: string) =>
+    s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `${normalizeSystem(v.system)}-${v.current}a-${v.length}ft-awg-${normalizeGauge(v.gauge)}`;
 }
 
 function voltageDescription(v: VoltageFill): string {

@@ -29,10 +29,10 @@ interface Props {
 }
 
 export function generateStaticParams() {
-  return listLandingPageParams().map((p) => ({
-    category: p.category,
-    slug: [p.slug],
-  }));
+  // Per Next.js generateStaticParams docs (nextjs.org/docs/app/api-reference/functions/generate-static-params)
+  // the return shape must match the dynamic segments: [category] + [...slug]
+  // listLandingPageParams already splits nested categories (wire/voltage-drop).
+  return listLandingPageParams();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
