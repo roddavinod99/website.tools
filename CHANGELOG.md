@@ -807,6 +807,11 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Fixed
 
 - restore href links in markdown guides
+## [1.16.2] - 2026-09-18
+
+### Fixed
+
+- resolve GSC coverage — 5xx encoding, orphan 710, noindex/redirect hygiene
 ## Template
 
 For future releases:
