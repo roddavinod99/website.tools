@@ -812,6 +812,14 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Fixed
 
 - resolve GSC coverage — 5xx encoding, orphan 710, noindex/redirect hygiene
+## [1.17.0] - 2026-09-18
+
+### Added
+
+- workflows CTR + privacy-proof for 10k/day (suggestions.md)
+### Changed
+
+- changes to Sitemap
 ## Template
 
 For future releases:
