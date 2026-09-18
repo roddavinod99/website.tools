@@ -14,6 +14,7 @@ import { allTools, categories, siteConfig, guidesTopics } from "@/lib/data";
 import { toolkits } from "@/lib/toolkits";
 import { blogPosts as blogData } from "@/lib/blog";
 import { comparisons } from "@/lib/data/comparisons";
+import { workflows } from "@/lib/data/workflows";
 import { TOOL_LASTMOD } from "@/lib/seo/__generated__/tool-lastmod";
 import { listIndexableLandingPages, landingPageUrl, landingPageCountsByCategory } from "@/lib/seo/landing-pages";
 
@@ -100,6 +101,7 @@ const staticPages: MetadataRoute.Sitemap = [
   entry(`${BASE}/feature-request`, listingLastmod),
   entry(`${BASE}/feedback`, listingLastmod),
   entry(`${BASE}/privacy`, legalPrivacy ?? listingLastmod),
+  entry(`${BASE}/privacy-proof`, listingLastmod),
   entry(`${BASE}/report-bug`, listingLastmod),
   entry(`${BASE}/roadmap`, listingLastmod),
   entry(`${BASE}/security`, legalSecurity ?? listingLastmod),
@@ -154,6 +156,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry(`${BASE}/convert/${category}`, listingLastmod),
   );
 
+  // Workflows — multi-tool task flows per suggestions.md (≈5) for tool→tool CTR
+  const workflowsHub: MetadataRoute.Sitemap = [entry(`${BASE}/workflows`, listingLastmod)];
+  const workflowPages: MetadataRoute.Sitemap = workflows.map((w) => entry(`${BASE}/workflows/${w.slug}`, listingLastmod));
+
   return [
     ...staticPages,
     ...categoriesPages,
@@ -162,6 +168,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPages,
     ...comparisonPages,
     ...toolkitPages,
+    ...workflowsHub,
+    ...workflowPages,
     ...convertHub,
     ...convertCategoryHubs,
     ...conversionPages,

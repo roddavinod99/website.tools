@@ -28,6 +28,8 @@ import {
 import { dispatchToolShortcut, isToolShortcutEvent } from "@/lib/tool-shortcuts";
 import { copyText } from "@/lib/clipboard";
 import { parseFaqItem } from "@/lib/faq";
+import { useSearchParams } from "next/navigation";
+import { workflows } from "@/lib/data/workflows";
 import { dispatchLoadExample, TOOL_READY_EVENT, type ToolReadyDetail } from "@/lib/load-example";
 import { useNetworkRequestCount } from "@/lib/network-monitor";
 import { siteConfig } from "@/lib/data";
@@ -379,6 +381,57 @@ export function ToolClient({
 
   const relatedList = [...sameCategory, ...related, ...popularTools].slice(0, 8);
 
+  // Workflow banner — reads ?workflow=slug&step=N per suggestions.md W2 (URL params shareable, fallback localStorage)
+  const searchParams = useSearchParams();
+  const workflowSlug = searchParams.get("workflow");
+  const stepParam = searchParams.get("step");
+  const workflow = workflowSlug ? workflows.find((w) => w.slug === workflowSlug) : null;
+  const currentStepIdx = workflow && stepParam ? Math.max(0, parseInt(stepParam, 10) - 1) : -1;
+  const nextWorkflowStep =
+    workflow && currentStepIdx >= 0 && currentStepIdx + 1 < workflow.steps.length
+      ? workflow.steps[currentStepIdx + 1]
+      : null;
+
+  const handleWorkflowNext = useCallback(async () => {
+    if (!workflow || !nextWorkflowStep) return;
+    // Pass output via URL param if <2k else localStorage (decision 3)
+    const outputOk = await copyToolOutput(tool.slug);
+    let payload = "";
+    try {
+      const container = document.getElementById(`tool-interface-${tool.slug}`);
+      const output =
+        container?.querySelector<HTMLElement>('[data-testid="tool-output"]') ??
+        container?.querySelector<HTMLTextAreaElement>("textarea[readonly]");
+      if (output instanceof HTMLTextAreaElement) payload = output.value;
+      else if (output) payload = (output as HTMLElement).innerText ?? "";
+    } catch {
+      payload = "";
+    }
+    const nextUrl = new URL(`/tools/${nextWorkflowStep.toolSlug}`, window.location.origin);
+    nextUrl.searchParams.set("workflow", workflow.slug);
+    nextUrl.searchParams.set("step", String(currentStepIdx + 2));
+    if (payload && payload.length < 1800) {
+      nextUrl.searchParams.set("input", payload.slice(0, 1800));
+    } else if (payload) {
+      try {
+        localStorage.setItem(`workflow:${workflow.slug}:step:${currentStepIdx + 2}`, payload.slice(0, 10000));
+      } catch {
+        // ignore quota
+      }
+    }
+    try {
+      const gtag = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+      gtag?.("event", "tool_next_step_click", {
+        current_tool: tool.slug,
+        next_tool: nextWorkflowStep.toolSlug,
+        workflow: workflow.slug,
+      });
+    } catch {
+      // noop
+    }
+    window.location.href = nextUrl.toString();
+  }, [workflow, nextWorkflowStep, currentStepIdx, tool.slug]);
+
   return (
     <>
       <TableOfContents items={tocItems} activeId={activeTocId} />
@@ -423,6 +476,29 @@ export function ToolClient({
                 </div>
               )}
 
+              {/* Workflow banner — shown when ?workflow is present */}
+              {workflow && currentStepIdx >= 0 && (
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-sm dark:border-blue-900 dark:bg-blue-950">
+                  <span className="font-medium text-blue-800 dark:text-blue-200">
+                    Workflow: {workflow.title} ({currentStepIdx + 1}/{workflow.steps.length})
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/workflows/${workflow.slug}`}
+                      className="text-xs font-medium text-blue-700 underline dark:text-blue-300"
+                    >
+                      View workflow
+                    </Link>
+                    {nextWorkflowStep && (
+                      <Button size="sm" variant="primary" onClick={handleWorkflowNext} className="h-7 gap-1">
+                        Next: {nextWorkflowStep.label}
+                        <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Tool Interface Card */}
               <div id={`tool-interface-${tool.slug}`} className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6">
                 <ToolInterface slug={tool.slug} name={tool.name} />
@@ -441,9 +517,9 @@ export function ToolClient({
                 <ExampleUrlListener slug={tool.slug} examples={tool.examples} ready={toolReady} />
               )}
 
-              {/* Next Step CTA */}
+              {/* Next Step CTA — India-first, Hybrid, URL-param per suggestions.md:29 */}
               {nextSteps && nextSteps.length > 0 && (
-                <NextStepCTA suggestions={nextSteps} />
+                <NextStepCTA suggestions={nextSteps} currentTool={tool.slug} />
               )}
 
               {/* Tool Actions - immediately accessible */}
