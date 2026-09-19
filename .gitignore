@@ -121,6 +121,10 @@ Desktop.ini
 /wasm/target/
 /src/lib/wasm/pkg/
 
+# deploy logs (local debugging, not committed)
+docs/deployLog/
+base64.html
+
 # suggestions / notes
 suggestions.md
 SEO.md

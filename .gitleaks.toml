@@ -10,4 +10,6 @@ paths = [
   '''tests/fixtures/jwt\.json$''',
   '''src/lib/tool-content\.ts$''',
   '''public/search-index\.json$''',
+  '''base64\.html$''',
+  '''docs/deployLog/.*''',
 ]
