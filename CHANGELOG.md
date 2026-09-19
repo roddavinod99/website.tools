@@ -837,6 +837,11 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Infrastructure
 
 - trigger redeploy
+## [1.17.3] - 2026-09-19
+
+### Fixed
+
+- resolve CSP violations by removing Next.js Script components
 ## Template
 
 For future releases:
