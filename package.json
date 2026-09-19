@@ -82,7 +82,7 @@
     "@babel/parser": "8.0.4",
     "@babel/types": "8.0.4",
     "@ericthered926/duckduckgo-mcp-server": "0.6.0",
-    "@modelcontextprotocol/server-filesystem": "2026.7.10",
+    "@modelcontextprotocol/server-filesystem": "2026.8.31",
     "@modelcontextprotocol/server-github": "2025.4.8",
     "@modelcontextprotocol/server-sequential-thinking": "2026.7.4",
     "@next/bundle-analyzer": "^16.2.10",
