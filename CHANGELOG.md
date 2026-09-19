@@ -829,6 +829,14 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 
 - removed
 - New changes committed: Add Notion Resources Freeb
+## [1.17.2] - 2026-09-19
+
+### Fixed
+
+- resolve 9 errors blocking Validate - rounded-lg cap and gif-maker hooks
+### Infrastructure
+
+- trigger redeploy
 ## Template
 
 For future releases:
