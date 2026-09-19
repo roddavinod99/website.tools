@@ -820,6 +820,15 @@ The site is now a monochrome, Electric-Blue-accented, Geist-typed design system.
 ### Changed
 
 - changes to Sitemap
+## [1.17.1] - 2026-09-19
+
+### Fixed
+
+- remove leaked base64.html and ignore deploy logs
+### Changed
+
+- removed
+- New changes committed: Add Notion Resources Freeb
 ## Template
 
 For future releases:

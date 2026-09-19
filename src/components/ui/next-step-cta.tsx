@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +16,7 @@ interface NextStepCTAProps {
  * Styled with design tokens only (spec §10-13).
  */
 export function NextStepCTA({ suggestions, currentTool }: NextStepCTAProps) {
+  const router = useRouter();
   if (!suggestions.length) return null;
 
   const onClick = (target: string, label: string) => {
@@ -32,7 +34,7 @@ export function NextStepCTA({ suggestions, currentTool }: NextStepCTAProps) {
     } catch {
       // analytics is best-effort; never block navigation
     }
-    window.location.href = `/tools/${target}`;
+    router.push(`/tools/${target}`);
   };
 
   return (
