@@ -167,8 +167,11 @@ export function GifMaker() {
   // keep refs in sync for animation loop
   useEffect(() => {
     framesRef.current = frames;
-    if (frames.length === 0) setCurrentIndex(0);
-    else if (currentIndex >= frames.length) setCurrentIndex(0);
+    if (frames.length === 0) {
+      if (currentIndex !== 0) queueMicrotask(() => setCurrentIndex(0));
+      return;
+    }
+    if (currentIndex >= frames.length) queueMicrotask(() => setCurrentIndex(0));
   }, [frames, currentIndex]);
 
   useEffect(() => {
@@ -388,8 +391,8 @@ export function GifMaker() {
       .then((img) => {
         if (cancelled) return;
         const base = frames[0];
-        let w = base.width;
-        let h = base.height;
+        const w = base.width;
+        const h = base.height;
         const maxPreview = 480;
         const scale = Math.min(1, maxPreview / Math.max(w, h));
         if (scale < 1) {

@@ -87,7 +87,7 @@ export function GlossaryClient({ terms }: { terms: GlossaryTerm[] }) {
         {filtered.map((term) => (
           <article
             key={term.slug}
-            className="flex flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-shadow hover:shadow-md"
+            className="flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-shadow hover:shadow-md"
           >
             <div className="flex items-start justify-between gap-3">
               <Link

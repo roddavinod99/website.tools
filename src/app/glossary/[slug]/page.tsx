@@ -133,7 +133,7 @@ export default async function GlossaryTermPage({ params }: Props) {
             What is {term.term}?
           </h1>
 
-          <p className="mt-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-lg leading-relaxed text-[var(--color-text)]">
+          <p className="mt-6 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-lg leading-relaxed text-[var(--color-text)]">
             {term.definition}
           </p>
 
@@ -146,7 +146,7 @@ export default async function GlossaryTermPage({ params }: Props) {
                   <Link
                     key={tool.slug}
                     href={`/tools/${tool.slug}`}
-                    className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-hover)]"
+                    className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-hover)]"
                   >
                     <span className="font-medium text-[var(--color-text)]">{tool.name}</span>
                     <span className="mt-1 block text-sm text-[var(--color-text-muted)] line-clamp-2">{tool.description}</span>
@@ -175,7 +175,7 @@ export default async function GlossaryTermPage({ params }: Props) {
             </section>
           ) : null}
 
-          <section className="mt-10 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+          <section className="mt-10 rounded-md border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] p-6">
             <h2 className="text-sm font-semibold text-[var(--color-text)]">About this glossary</h2>
             <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)]">
               Definitions are written in plain language and sourced from MDN Web Docs, W3C

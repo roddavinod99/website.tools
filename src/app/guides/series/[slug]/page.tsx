@@ -90,7 +90,7 @@ export default async function SeriesDetail({ params }: Props) {
       <section className="container py-10 md:py-12">
         <div className="mx-auto max-w-3xl space-y-4">
           {guides.map((g, idx) => (
-            <Link key={g.slug} href={`/guides/${g.slug}`} className="block rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:border-[var(--color-accent)] transition-colors">
+            <Link key={g.slug} href={`/guides/${g.slug}`} className="block rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:border-[var(--color-accent)] transition-colors">
               <div className="flex items-start gap-3">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-sm font-semibold text-[var(--color-accent)]">{idx + 1}</span>
                 <div className="flex-1">

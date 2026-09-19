@@ -63,7 +63,7 @@ export default function SeriesListing() {
           {seriesList.map((s) => {
             const guides = getSeriesGuides(s);
             return (
-              <Link key={s.slug} href={`/guides/series/${s.slug}`} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 hover:border-[var(--color-accent)] transition-colors">
+              <Link key={s.slug} href={`/guides/series/${s.slug}`} className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 hover:border-[var(--color-accent)] transition-colors">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)]">{s.category}</span>
                 <h2 className="mt-2 text-lg font-semibold text-[var(--color-text)]">{s.title}</h2>
                 <p className="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-3">{s.description}</p>
