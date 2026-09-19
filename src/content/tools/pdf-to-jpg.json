@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Exports PDF pages as JPEG images — one JPG per page — and packs them as a ZIP. Shows page count, creates 800×1120 placeholder JPGs with 'Page N of M' text, and allows download of individual JPGs or a ZIP of all pages. Client-side via pdf-lib and canvas.",
+  "whyItExists": "Sharing PDF pages as images is handy for slides and previews, but uploading PDFs to a server risks privacy. This renders pages locally to JPEGs (currently placeholder rendering; full pdfjs-dist rasterization is planned) so your document never leaves the browser.",
+  "whoShouldUse": "Anyone needing to turn PDF pages into images for presentations, thumbnails, or sharing where PDF viewers are not available.",
+  "useCases": [
+    "Export a 10-page PDF as 10 JPGs and ZIP them for an image gallery",
+    "Create a thumbnail JPG of the first page for a document preview"
+  ],
+  "instructions": [
+    "Drop a PDF (10MB). The tool shows page count.",
+    "Click Export to JPG — each page is rendered to an 800×1120 JPEG (placeholder with page number) and a ZIP is prepared.",
+    "Download individual JPGs or the ZIP of all pages from the green card. All rendering is local."
+  ],
+  "examples": [
+    "Input: 3-page PDF → Output: 3 JPGs (Page 1/3, 2/3, 3/3) + ZIP (~300KB total placeholder).",
+    "Input: 1-page PDF → Output: single JPG download."
+  ],
+  "bestPractices": [
+    "For true rasterization, wait for pdfjs-dist integration; current placeholder is for layout testing",
+    "Use PDF Compressor first if the PDF is large before exporting to JPG"
+  ],
+  "commonMistakes": [
+    "Expecting pixel-perfect rendering — current version uses placeholder canvases; verify output before sharing",
+    "Uploading encrypted PDFs — they will error; decrypt first"
+  ],
+  "faq": [
+    "Is the PDF uploaded? No — export is pdf-lib + canvas in your browser. Files never leave your device.",
+    "Does it need pdfjs-dist? Full rasterization will use pdfjs-dist; currently a placeholder is used to keep the build light (no new dep).",
+    "Can I choose PNG? Currently JPEG only; PNG/WebP options are planned."
+  ],
+  "features": [
+    "PDF → JPG, one per page, ZIP packed",
+    "Page count and placeholder preview",
+    "Individual and ZIP download",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "pdf-lib", "url": "https://pdf-lib.js.org/" },
+    { "label": "pdfjs-dist", "url": "https://mozilla.github.io/pdf.js/" }
+  ]
+}

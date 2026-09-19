@@ -102,6 +102,8 @@ export function TextSorter() {
   const [removeEmptyLines, setRemoveEmptyLines] = useState(true);
   const [trimWhitespace, setTrimWhitespace] = useState(true);
   const [caseSensitive, setCaseSensitive] = useState(false);
+  const [dedupCaseInsensitive, setDedupCaseInsensitive] = useState(false);
+  const [dedupTrimWhitespace, setDedupTrimWhitespace] = useState(false);
   const [copied, setCopied] = useState(false);
   const [inputSizeWarn, setInputSizeWarn] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
@@ -145,9 +147,22 @@ export function TextSorter() {
 
     if (trimWhitespace) lines = lines.map((l) => l.trim());
     if (removeEmptyLines) lines = lines.filter((l) => l.length > 0);
-    if (removeDuplicates) lines = [...new Set(lines)];
+    if (removeDuplicates) {
+      const seen = new Set<string>();
+      const deduped: string[] = [];
+      for (const line of lines) {
+        let key = line;
+        if (dedupTrimWhitespace) key = key.trim();
+        if (dedupCaseInsensitive) key = key.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          deduped.push(line);
+        }
+      }
+      lines = deduped;
+    }
     return { rawCount: debouncedInput.split("\n").length, uniqueCount: new Set(lines).size, lines };
-  }, [debouncedInput, trimWhitespace, removeEmptyLines, removeDuplicates, lineSizeWarn]);
+  }, [debouncedInput, trimWhitespace, removeEmptyLines, removeDuplicates, dedupCaseInsensitive, dedupTrimWhitespace, lineSizeWarn]);
 
   const output = useMemo(
     () => executeSort(processed.lines, mode, caseSensitive),
@@ -198,7 +213,7 @@ export function TextSorter() {
               <button onClick={download} disabled={output.length === 0} className="rounded px-2 py-0.5 text-xs border border-surface-200 text-surface-600 hover:bg-surface-50 dark:border-dark-border dark:text-dark-muted dark:hover:bg-dark-surface disabled:opacity-50">Download .txt</button>
             </div>
           </div>
-          <textarea value={outputText} readOnly rows={10}
+          <textarea value={outputText} readOnly rows={10} data-testid="tool-output" aria-label="Sorted output"
             className="w-full rounded-md border border-surface-200 bg-surface-50 p-3 text-sm font-mono text-surface-900 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text" />
         </div>
       </div>
@@ -218,22 +233,39 @@ export function TextSorter() {
 
       <div className="flex flex-wrap items-center gap-4">
         <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
-          <input type="checkbox" checked={removeDuplicates} onChange={(e) => setRemoveDuplicates(e.target.checked)} className="accent-brand-500 rounded" />
-          Remove Duplicates
+          <input type="checkbox" checked={removeDuplicates} onChange={(e) => setRemoveDuplicates(e.target.checked)} aria-label="Remove duplicates" className="accent-brand-500 rounded" />
+          Remove duplicates
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
           <input type="checkbox" checked={removeEmptyLines} onChange={(e) => setRemoveEmptyLines(e.target.checked)} className="accent-brand-500 rounded" />
           Remove Empty Lines
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
-          <input type="checkbox" checked={trimWhitespace} onChange={(e) => setTrimWhitespace(e.target.checked)} className="accent-brand-500 rounded" />
-          Trim Whitespace
+          <input type="checkbox" checked={trimWhitespace} onChange={(e) => setTrimWhitespace(e.target.checked)} aria-label="Trim whitespace" className="accent-brand-500 rounded" />
+          Trim whitespace
         </label>
         <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
           <input type="checkbox" checked={caseSensitive} onChange={(e) => setCaseSensitive(e.target.checked)} className="accent-brand-500 rounded" />
           Case Sensitive
         </label>
       </div>
+
+      {removeDuplicates && (
+        <div className="rounded-md border border-surface-200 bg-surface-50 p-3 dark:border-dark-border dark:bg-dark-surface">
+          <p className="text-xs font-medium text-surface-700 dark:text-dark-text mb-2">Duplicate Line Remover</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
+              <input type="checkbox" checked={dedupCaseInsensitive} onChange={(e) => setDedupCaseInsensitive(e.target.checked)} aria-label="Case-insensitive duplicate removal" className="accent-brand-500 rounded" />
+              Case-insensitive
+            </label>
+            <label className="flex items-center gap-1.5 text-xs text-surface-700 dark:text-dark-text cursor-pointer select-none">
+              <input type="checkbox" checked={dedupTrimWhitespace} onChange={(e) => setDedupTrimWhitespace(e.target.checked)} aria-label="Trim whitespace for duplicate detection" className="accent-brand-500 rounded" />
+              Trim whitespace
+            </label>
+            <span className="text-xs text-surface-500 dark:text-dark-muted">Dedup keeps first occurrence</span>
+          </div>
+        </div>
+      )}
 
       <div className="flex gap-3 text-xs text-surface-500 dark:text-dark-muted">
         <span>Input: <strong className="text-surface-700 dark:text-dark-text">{processed.rawCount}</strong> lines</span>

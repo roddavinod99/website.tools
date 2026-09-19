@@ -1,0 +1,7 @@
+[
+  { "slug": "pdf-merger", "category": "PDF Tools", "name": "PDF Merger", "input": "", "action": "Merge", "expect": "output" },
+  { "slug": "pdf-splitter", "category": "PDF Tools", "name": "PDF Splitter", "input": "", "action": "Extract", "expect": "output" },
+  { "slug": "image-to-pdf", "category": "PDF Tools", "name": "Image to PDF", "input": "", "action": "Convert", "expect": "output" },
+  { "slug": "pdf-compressor", "category": "PDF Tools", "name": "PDF Compressor", "input": "", "action": "Compress", "expect": "output" },
+  { "slug": "pdf-to-jpg", "category": "PDF Tools", "name": "PDF to JPG", "input": "", "action": "Export", "expect": "output" }
+]

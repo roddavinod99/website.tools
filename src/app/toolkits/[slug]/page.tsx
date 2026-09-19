@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { toolkits, toolkitSlugs } from "@/lib/toolkits";
 import { allTools, siteConfig } from "@/lib/data";
 import { DynamicToolkitLoader, type ToolkitSlug } from "@/components/toolkits/dynamic-toolkit-loader";
+import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
@@ -55,8 +56,27 @@ export default async function ToolkitPage({ params }: Props) {
   const toolkitToolSlugs = toolkitSlugs[slug] ?? [];
   const toolkitTools = allTools.filter((t) => toolkitToolSlugs.includes(t.slug));
 
+  const canonical = `${siteConfig.url}/toolkits/${slug}`;
+  const breadcrumb = breadcrumbList([
+    { name: "Home", url: siteConfig.url },
+    { name: "Tools", url: `${siteConfig.url}/tools` },
+    { name: tk.name, url: canonical },
+  ]);
+  const collection = collectionPage({
+    name: tk.name,
+    description: tk.description,
+    url: canonical,
+    items: toolkitTools.map((t) => ({
+      name: t.name,
+      url: `${siteConfig.url}/tools/${t.slug}`,
+      description: t.description,
+    })),
+  });
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(collection) }} />
       <section className="border-b border-[var(--color-border)]">
         <div className="container py-8">
           <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">

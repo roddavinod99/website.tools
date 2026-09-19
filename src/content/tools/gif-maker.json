@@ -1,0 +1,46 @@
+{
+  "whatItDoes": "Creates animated GIFs from 2–100 images with adjustable frame delay (20–1000ms) and loop count (0 = infinite). Shows live canvas preview with play/pause and downloads as GIF or ZIP of frames. All processing is browser-local via canvas.",
+  "whyItExists": "Making a GIF from photos normally requires cloud upload or desktop software. This maker composites frames locally, lets you reorder via drag, and previews the animation at the chosen speed without sending images to a server.",
+  "whoShouldUse": "Marketers making social GIFs, educators animating slides, and anyone needing a quick, private GIF from screenshots without installing software.",
+  "useCases": [
+    "Turn 10 product photos into a 200ms looping GIF for a landing page",
+    "Create a 1s delay GIF from 3 screenshots to show a workflow",
+    "Reorder 5 frames by drag before exporting a seamless loop"
+  ],
+  "instructions": [
+    "Drop 2–100 JPEG/PNG/WebP images (50MB total). Use the delay slider (20–1000ms) and loop select (0 = infinite).",
+    "Drag to reorder frames, use play/pause to preview the animation on the canvas.",
+    "Click Download GIF (or ZIP of frames as fallback) — encoding is client-side and never uploads.",
+    "If a frame fails to load, it is skipped with an error shown in the alert box."
+  ],
+  "examples": [
+    "Input: 3 images, delay 500ms, loop 0 → Output: 3-frame infinite GIF, ~1.5s loop, preview animates at 500ms per frame.",
+    "Input: 20 screenshots, delay 100ms → Output: fast 20-frame GIF, ~2s total, zipped if encoder unavailable."
+  ],
+  "bestPractices": [
+    "Keep frame count under 30 and delay above 80ms for smooth playback on mobile",
+    "Use loop 0 for endless, loop 1 for single play on presentation slides",
+    "Compress source images first with Image Compressor to keep GIF under 5MB"
+  ],
+  "commonMistakes": [
+    "Setting delay below 20ms — browsers clamp to ~10ms and animation may skip",
+    "Uploading 100 × 10MB images — you will hit 50MB total limit; compress first",
+    "Expecting transparency — GIF supports 1-bit alpha; use WebP for true alpha"
+  ],
+  "faq": [
+    "Is the image uploaded? No — frames are composited on a canvas in your browser. Images never leave your device.",
+    "What if GIF encoding fails? The tool falls back to a ZIP of frames (frame-001.jpg etc.) so you never lose work.",
+    "Can I set per-frame delay? Currently global delay only — set once for all frames.",
+    "Does it support WebP output? GIF only; for WebP animation use a video tool."
+  ],
+  "features": [
+    "2–100 images with drag reorder",
+    "Delay 20–1000ms and loop 0–10",
+    "Live canvas preview with play/pause",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "MDN — Canvas", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" },
+    { "label": "GIF format", "url": "https://www.w3.org/Graphics/GIF/spec-gif89a.txt" }
+  ]
+}

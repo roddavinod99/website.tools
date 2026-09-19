@@ -118,12 +118,9 @@ const nextConfig: NextConfig = {
         { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
       ],
     },
-    {
-      source: "/_next/static/:path(.+\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|webp|avif|woff|woff2|ttf|otf))",
-      headers: [
-        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-      ],
-    },
+    // Note: Next.js automatically sets `Cache-Control: public, max-age=31536000, immutable`
+    // for `/_next/static/*` immutable assets (SHA-hashed). Per https://nextjs.org/docs/app/api-reference/config/next-config-js/headers#cache-control
+    // this cannot be overridden and a custom header breaks dev HMR ("Warning: Custom Cache-Control headers detected...").
     {
       source: "/sw.js",
       headers: [

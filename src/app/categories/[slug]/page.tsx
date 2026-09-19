@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: Props) {
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
 
-  const tools = allTools.filter((t) => t.category === category.name);
+  const tools = allTools.filter((t) => t.category === category.name && !t.noindex);
   const topTools = [...tools].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0)).slice(0, 6);
   const categoryUrl = `${siteConfig.url}/categories/${slug}`;
 

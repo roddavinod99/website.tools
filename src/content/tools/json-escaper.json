@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Escapes raw text into a JSON string (quotes, backslashes, newlines, Unicode \\uXXXX) and unescapes JSON strings back to raw. Handles nested JSON where a string contains stringified JSON.",
+  "whyItExists": "Logs and API responses often contain nested JSON that must be pasted into code. Manual escaping is error-prone; this does it correctly per RFC 8259 and reverses it without losing Unicode.",
+  "whoShouldUse": "Developers working with logs, API payloads, and code generation where JSON strings contain JSON.",
+  "useCases": [
+    "Escape a multiline log line into a JSON string for a test fixture",
+    "Unescape a response field `\\\"{\\\\\\\"name\\\\\\\": \\\\\\\"a\\\\\\\"}\\\"` back to {\"name\": \"a\"}",
+    "Toggle Unicode escaping for \\u00a0 vs raw characters"
+  ],
+  "instructions": [
+    "Paste text in Input, choose Escape (with options: wrap quotes, Unicode) or Unescape.",
+    "Escape uses JSON.stringify slicing; Unescape tries JSON.parse with quote wrapping then manual \\n/\\u fallback.",
+    "Copy the output from the preview (data-testid). No upload — pure string ops."
+  ],
+  "examples": [
+    "Input: Hello\\nWorld → Escape → \"Hello\\nWorld\" (with quotes) or Hello\\nWorld (without).",
+    "Input: \"\\\"a\\\"\" → Unescape → \"a\" (or {\"a\":1} nested)."
+  ],
+  "bestPractices": [
+    "Use wrap quotes when pasting into code, without when storing as value",
+    "Enable Unicode escaping for ASCII-only transports"
+  ],
+  "commonMistakes": [
+    "Double-escaping — escape once, then paste; re-escaping will add extra backslashes",
+    "Expecting unescape to parse JSON objects — it returns text; use JSON Formatter to parse the result"
+  ],
+  "faq": [
+    "Is it the same as String Escape? JSON escaping is a subset (quotes/backslashes/controls); String Escape also handles HTML/URL.",
+    "Does it handle surrogate pairs? Yes — Unicode above U+FFFF is preserved or escaped as \\uXXXX pairs.",
+    "Is it reversible? Escape then Unescape round-trips for valid JSON strings."
+  ],
+  "features": [
+    "Escape/unescape with Unicode toggle",
+    "Handles nested JSON strings",
+    "Wrap quotes option",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "RFC 8259", "url": "https://www.rfc-editor.org/rfc/rfc8259" },
+    { "label": "MDN — JSON", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" }
+  ]
+}

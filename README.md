@@ -19,6 +19,8 @@
 - **One-Click Examples** — Every tool has `Load example` with `autoRun` and shareable `?example=key` URLs
 - **Per-Tool Audit** — `npm run audit:tools` gates CI (page loads, no console errors, examples populate, output produced)
 - **Visual Baseline** — 11 snapshots (homepage/tool/category/listing/guide/blog/compare/search/404, light+dark)
+- **Direct Share** — WhatsApp/X/Facebook/LinkedIn/Reddit/Pinterest/Telegram/Email with SVGRepo original-colour icons, app-intent URLs (`wa.me/?text=`, `twitter.com/intent/tweet`) + Copy + Web Share API (`src/components/tools/utilities/share-buttons.tsx`)
+- **Illustrations** — Office-Club Duotone (Overflow Design 2026.09, single-user licence) recolored `#A0A0A0→var(--color-accent)` — `OcProjectDevelopment` in hero, `OcTarget` on 404 (`src/components/illustrations/`)
 
 ## 🚀 Quick Start
 
@@ -106,7 +108,7 @@ src/
 │   ├── load-example.ts     # dispatchLoadExample + useLoadExample (200ms)
 │   └── version/            # release-data
 ├── workers/search.worker.ts # Fuse.js + synonyms
-├── middleware.ts           # Rate limiter + security
+├── proxy.ts                # Rate limiter + security (Next 16 proxy, ex-middleware.ts)
 └── types/                  # Tool, Category, ToolContent
 scripts/
 ├── tool-audit.mjs          # per-tool Playwright audit (AUDIT_BASE_URL)
@@ -122,7 +124,7 @@ Security is a core design principle. See [SECURITY.md](SECURITY.md) for the full
 
 ### Key Security Features
 
-- **Content Security Policy** — Build-time per-route SHA-256 hash CSP served by Nginx (no middleware CSP; no nonces; no `unsafe-inline`)
+- **Content Security Policy** — Build-time per-route SHA-256 hash CSP served by Nginx + `proxy.ts` (`strict-dynamic`, `require-trusted-types-for`) (no nonces; no `unsafe-inline`)
 - **HTTP Security Headers** — HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP, CORP
 - **Rate Limiting** — Three-tier in-memory rate limiter + Nginx rate limiting zones
 - **Input Validation** — All API inputs validated, sanitized, and size-limited
@@ -170,7 +172,7 @@ NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX  # Required for product
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run test` | Run Playwright test suite |
 | `npm run test:unit` | Vitest (bundle-size, synonyms, prose, links) |
-| `npm run test:tools` | Playwright data-driven `tests/tools.spec.ts` 120 tools |
+| `npm run test:tools` | Playwright data-driven `tests/tools.spec.ts` 172 tools |
 | `npm run test:a11y` | Axe WCAG 2.2 AA (`tests/a11y/page-types.spec.ts` 40) |
 | `npm run test:seo` | `tests/seo-structured-data.spec.ts` 5 |
 | `npm run test:snapshots` | Visual snapshots 11 `redesign/` |

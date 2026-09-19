@@ -1,0 +1,49 @@
+{
+  "whatItDoes": "Merges multiple PDF files into a single document with drag-and-drop reordering. Supports up to 20 PDFs, shows page count per file, and preserves all pages and vector content via client-side pdf-lib processing.",
+  "whyItExists": "Combining PDFs usually requires uploading to a server or installing desktop software. This tool merges PDFs entirely in your browser — no upload, no signup — with explicit page-count feedback and reorder controls so you get the exact document order you need.",
+  "whoShouldUse": "Students combining assignments, office workers merging reports or invoices, and anyone needing to assemble a single PDF from multiple sources without trusting a third-party server.",
+  "useCases": [
+    "Merge 5 scanned chapter PDFs into one book for reading",
+    "Combine 3 invoice PDFs into a single file for accounting",
+    "Reorder 2 PDFs by dragging before merging into final submission",
+    "Check page counts before merging to verify completeness",
+    "Merge PDFs on a slow connection without uploading 50MB to a server"
+  ],
+  "instructions": [
+    "Click or drop 2–20 PDF files (10MB each, 50MB total). Each shows its page count.",
+    "Drag items or use the up/down arrows to set the desired order.",
+    "Click Merge — the tool concatenates pages in displayed order using pdf-lib.",
+    "Review the green success card showing total pages and file size.",
+    "Click Download Merged PDF to save the result. Process is 100% local."
+  ],
+  "examples": [
+    "Input: 3 PDFs (2 pages, 1 page, 4 pages) in order B, A, C → Output: 7-page merged PDF in B-A-C order with size sum + overhead.",
+    "Input: 2 PDFs each 1 page, reordered via drag → Output: 2-page PDF reflecting the dragged order."
+  ],
+  "bestPractices": [
+    "Verify page counts after upload before merging — mismatched counts signal a corrupted file",
+    "Keep total under 50MB to avoid browser memory pressure",
+    "For large PDFs, merge in batches of 10 if the tab becomes slow"
+  ],
+  "commonMistakes": [
+    "Dropping non-PDF files — the tool validates MIME and magic bytes and will reject them",
+    "Trying to merge encrypted/password-protected PDFs — pdf-lib will report an error",
+    "Expecting bookmarks to merge — this version concatenates pages; outline merging is not preserved"
+  ],
+  "faq": [
+    "Is my PDF uploaded to a server? No — merging happens in your browser via pdf-lib. Files never leave your device.",
+    "How many PDFs can I merge? Up to 20 files, 10MB each, 50MB total. Limits follow the 10MB upload rule in File Upload Rules.",
+    "Does it preserve quality? Yes — pages are copied vector-for-vector, not rasterized.",
+    "Why does dragging matter? Page order in the list is merge order. Drag or use arrows to control it."
+  ],
+  "features": [
+    "Merge up to 20 PDFs client-side",
+    "Drag-to-reorder and up/down controls",
+    "Page count per file and total size preview",
+    "No upload — 100% browser processing"
+  ],
+  "references": [
+    { "label": "pdf-lib", "url": "https://pdf-lib.js.org/" },
+    { "label": "MDN — PDF", "url": "https://developer.mozilla.org/en-US/docs/Web/Media/Formats" }
+  ]
+}

@@ -2,31 +2,42 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allTools, siteConfig } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
+import { breadcrumbList, jsonLdScriptBody } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "New Tools",
   description: "Recently added free developer tools on DevStackIO. Discover the latest additions to our collection of browser-based utilities.",
   alternates: { canonical: `${siteConfig.url}/new` },
+  openGraph: {
+    title: "New Tools — DevStackIO",
+    description: "Recently added free developer tools on DevStackIO. Discover the latest additions to our collection of browser-based utilities.",
+    url: `${siteConfig.url}/new`,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "New Tools — DevStackIO" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "New Tools — DevStackIO",
+    description: "Recently added free developer tools on DevStackIO. Discover the latest additions to our collection of browser-based utilities.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function NewToolsPage() {
   const newTools = allTools.filter((t) => t.new);
   const others = allTools.filter((t) => !t.new);
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: "New Tools" },
-    ],
-  };
+  const breadcrumbJsonLd = breadcrumbList([
+    { name: "Home", url: siteConfig.url },
+    { name: "New Tools", url: `${siteConfig.url}/new` },
+  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumbJsonLd) }}
       />
       <div className="border-b border-[var(--color-border)]">
         <div className="container py-12 md:py-16">

@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Re-saves PDFs with optimized object streams via pdf-lib to reduce size 5–15% without rasterizing. Shows original vs new size, saved bytes, compression ratio, page count, and lets you download the optimized file. All client-side.",
+  "whyItExists": "PDFs often contain uncompressed object streams. Re-saving with `useObjectStreams: false` and compact content can shave payload without quality loss, locally without uploading to a server that might keep your document.",
+  "whoShouldUse": "Anyone needing to email or upload a PDF that is slightly too large, and who wants a private, no-upload optimization before trying heavier image recompression.",
+  "useCases": [
+    "Shrink a 5MB 20-page PDF by re-saving with object streams",
+    "Compare original vs compressed size before deciding to recompress images separately"
+  ],
+  "instructions": [
+    "Drop a PDF (10MB). The tool shows page count and original size.",
+    "Pick quality (low/medium/high — currently re-save only, UI for future image recompression).",
+    "Click Compress — the tool copies pages to a new PDFDocument and saves with optimized streams.",
+    "Download the compressed PDF from the green card showing saved bytes and ratio."
+  ],
+  "examples": [
+    "Input: 10-page PDF 5.0MB → Output: 4.6MB (saved 400KB, 8% reduction) via object stream optimization.",
+    "Input: 1-page PDF with many fonts → Output: similar size if already optimized; ratio near 0% is expected."
+  ],
+  "bestPractices": [
+    "Try this first before image-based compressors — it is lossless and fast",
+    "If ratio is 0%, your PDF is already optimized; try Image Compressor on extracted images instead"
+  ],
+  "commonMistakes": [
+    "Expecting 50% reduction — this method only optimizes structure, not images; use image tools for heavy cuts",
+    "Uploading encrypted PDFs — pdf-lib will error; remove password first"
+  ],
+  "faq": [
+    "Is the PDF uploaded? No — compression is pdf-lib in your browser. Files never leave your device.",
+    "Does it recompress images? Not yet — currently structural optimization only. Image recompression is on the roadmap.",
+    "Will it preserve text? Yes — pages are copied vector-for-vector, not rasterized."
+  ],
+  "features": [
+    "Re-save with object stream optimization",
+    "Original vs compressed size and ratio",
+    "Page count and saved bytes",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "pdf-lib", "url": "https://pdf-lib.js.org/" },
+    { "label": "PDF spec ISO 32000", "url": "https://www.iso.org/standard/45874.html" }
+  ]
+}

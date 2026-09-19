@@ -18,10 +18,10 @@ DevStackIO is a privacy-first developer tools platform built with Next.js 16. Th
 │  - Attack path blocking                                     │
 ├─────────────────────────────────────────────────────────────┤
 │                  Next.js (PM2 Cluster x2)                    │
- │  ├── Static Pages (SSG) ── 907 pages (172 tools, 12 categories, 9 blog, 50 guides, 412 convert long-tail, ~30 static) │
- │  ├── ISR ── sitemap.xml (24h, lastmod git) + search-index.json (248) │
- │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
- │  └── Middleware ── Rate limiter & security (middleware.ts)  │
+  │  ├── Static Pages (SSG) ── 907 pages (172 tools, 12 categories, 9 blog, 50 guides, 412 convert long-tail, ~30 static) │
+  │  ├── ISR ── sitemap.xml (24h, lastmod git) + search-index.json (248) │
+  │  ├── Dynamic ── API routes (DNS, IP, submit, contact)       │
+  │  └── Proxy ── Rate limiter & security (proxy.ts, Next 16 ex-middleware)  │
 ├─────────────────────────────────────────────────────────────┤
 │                  Client Browser                              │
  │  ├── Web Workers ── Search (MiniSearch+Fuse synonyms), JSON, CSV, Hash │
@@ -38,7 +38,7 @@ All tool processing runs client-side using Web APIs. No file uploads or text inp
 
 ### 2. Static-First Rendering
 Tool pages use Static Site Generation (SSG) with `generateStaticParams`. This means:
-- All 164 tool pages are pre-rendered at build time
+- All 172 tool pages are pre-rendered at build time
 - Instant page loads (no server processing)
 - Excellent SEO (fully rendered HTML)
 - Minimal server resource usage
@@ -58,9 +58,9 @@ The API is minimal and focused on functionality that cannot run client-side:
 
 ### 5. Security Layers
 Security is implemented at multiple layers:
-1. **Nginx** — SSL, rate limiting, attack blocking, **per-route hash-based CSP**
-2. **Next.js Middleware** (middleware.ts) — Application-level rate limiting
-3. **API Routes** — Input validation, sanitization, origin checking
+1. **Nginx** — SSL, rate limiting, attack blocking, **per-route hash-based CSP** (`nginx/csp.generated.conf`)
+2. **Next.js Proxy** (`src/proxy.ts`, Next 16 — ex `middleware.ts`) — Application-level rate limiting + per-route hash CSP (`strict-dynamic`, `trusted-types dompurify`)
+3. **API Routes** — Input validation, sanitization, origin checking (CSP-report 8KB cap + salted IP hash)
 4. **Client-side** — DOMPurify sanitization
 
 ### 6. Monetization (AdSense)
@@ -156,6 +156,8 @@ lives.
 
 The map intentionally pairs each visible region with the file that renders it. When
 someone asks "where does the trust badge live?", the answer is one line in this diagram.
+
+**Illustrations & Share** — `src/components/illustrations/` (`OcThinking`, `OcProjectDevelopment`, `OcTarget` from Overflow Design Duotone, recolored `#A0A0A0→var(--color-accent)`) used in hero (`OcProjectDevelopment`) and 404 (`OcTarget`); `src/components/tools/utilities/share-buttons.tsx` provides 8 direct app intents (WhatsApp/X/Facebook/LinkedIn/Reddit/Pinterest/Telegram/Email) with SVGRepo original-colour icons + Copy/Web Share.
 
 ## Performance Targets
 

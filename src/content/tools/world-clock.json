@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Shows current time for 4 default cities (NY/London/Tokyo/Sydney) and lets you add any IANA zone via select (Intl.supportedValuesOf or 20-zone fallback). Displays time via Intl.DateTimeFormat, updates every second, and shows diff vs local.",
+  "whyItExists": "Remote teams need to see multiple zones and DST at a glance without installing a clock app. This does it with browser Intl APIs, no server, and live updates.",
+  "whoShouldUse": "Distributed teams scheduling meetings, travelers checking destination time, and anyone comparing zones before a call.",
+  "useCases": [
+    "Add Europe/Paris and America/Chicago to see Paris vs Chicago diff",
+    "Check if Tokyo is in DST today via the offset display",
+    "Use the live tick to time a meeting start across zones"
+  ],
+  "instructions": [
+    "View 4 default clocks updating every second. Pick a zone from the select to add a custom clock.",
+    "Each card shows local time, zone name, and offset/diff vs your local zone.",
+    "Remove any custom clock with the X button. All rendering is local via Intl."
+  ],
+  "examples": [
+    "Input: Add Europe/Berlin → Output: Berlin 14:30 (UTC+2, +6h vs NY) live.",
+    "Input: Tokyo default → Output: Tokyo 21:30 JST (UTC+9) live tick."
+  ],
+  "bestPractices": [
+    "Add only the zones you need — each adds a 1s interval",
+    "Use the diff to propose meeting times in the overlapping window"
+  ],
+  "commonMistakes": [
+    "Assuming the clock is server time — it is your device's clock formatted for that zone via Intl",
+    "Expecting historical DST — Intl uses current rules; past dates may differ if rules changed"
+  ],
+  "faq": [
+    "Is it uploaded? No — time is your device's Date formatted via Intl.DateTimeFormat in your browser.",
+    "Does it need a server? No — all zones are via Intl; no API call.",
+    "Can I add any zone? Yes — via supportedValuesOf if available, else a 20-zone fallback list."
+  ],
+  "features": [
+    "4 default + custom IANA zones",
+    "Live 1s tick via Intl",
+    "Diff vs local and offset",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "MDN — DateTimeFormat", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat" },
+    { "label": "IANA TZ", "url": "https://www.iana.org/time-zones" }
+  ]
+}

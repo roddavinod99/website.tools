@@ -1,0 +1,48 @@
+{
+  "whatItDoes": "Splits a PDF by extracting a page range (e.g., 1-3,5,7-9) into one PDF, or bursting every page into a ZIP of single-page PDFs. Shows total page count after upload and validates ranges client-side.",
+  "whyItExists": "Extracting pages normally means uploading a private PDF to a server. This splitter parses page counts and extracts pages locally with pdf-lib, with strict range validation so you cannot request pages that do not exist.",
+  "whoShouldUse": "Anyone needing to extract a chapter, remove blank pages, or split a scanned document into individual pages without sending the file to a cloud service.",
+  "useCases": [
+    "Extract pages 1-3 as a new PDF for sharing an excerpt",
+    "Burst a 20-page scan into 20 single-page PDFs packed as ZIP",
+    "Extract non-contiguous pages 2,5,7-9 for a custom handout",
+    "Validate a PDF's page count before deciding what to extract"
+  ],
+  "instructions": [
+    "Drop or select one PDF (10MB max). The tool shows its page count.",
+    "Enter a range like 1-3 or 1-3,5,7-9. Input is validated against 1–pageCount.",
+    "Click Extract Pages to copy that subset into a new PDF, or Split All Pages to burst every page.",
+    "Download the single extracted PDF or the ZIP of all pages from the green success card.",
+    "All operations run in your browser; nothing is uploaded."
+  ],
+  "examples": [
+    "Input: 10-page PDF, range 1-3,5 → Output: 4-page PDF containing original pages 1,2,3,5.",
+    "Input: 3-page PDF, Split All → Output: ZIP with 3 PDFs (page-1.pdf, page-2.pdf, page-3.pdf)."
+  ],
+  "bestPractices": [
+    "Use 1-N range syntax; non-numeric or out-of-range input is rejected with an error",
+    "For large PDFs, extract a small range first to test before bursting into ZIP",
+    "Download the ZIP for per-page distribution; extract for excerpts"
+  ],
+  "commonMistakes": [
+    "Entering 0 or a page beyond the count — validation will block it",
+    "Trying to split an encrypted PDF — loading will fail with a clear error",
+    "Confusing page numbers (1-indexed) with array indices (0-indexed)"
+  ],
+  "faq": [
+    "Is the PDF uploaded? No — splitting is client-side via pdf-lib with no network request.",
+    "What format does Split All use? A ZIP containing one PDF per page, built with CompressionStream if available.",
+    "Can I extract overlapping ranges? Overlaps are deduplicated — 1-3,2-4 yields pages 1,2,3,4.",
+    "Does it keep annotations? Vector pages are copied; comments/forms may not transfer — verify the output."
+  ],
+  "features": [
+    "Extract by range (1-3,5,7-9) with validation",
+    "Burst every page into a ZIP",
+    "Shows page count on upload",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "pdf-lib", "url": "https://pdf-lib.js.org/" },
+    { "label": "MDN — File API", "url": "https://developer.mozilla.org/en-US/docs/Web/API/File" }
+  ]
+}

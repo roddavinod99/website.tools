@@ -1,0 +1,45 @@
+{
+  "whatItDoes": "Combines 2–20 images into horizontal, vertical, or grid (2–4 cols) collages with spacing 0–40px, background color, and rounded corners 0–20px. Scales each image to fit its cell, draws to canvas, and exports as JPEG/PNG/WebP.",
+  "whyItExists": "Collaging photos for mood boards or comparison grids usually means cloud editors that see your images. This composites locally on canvas with precise layout math, so your photos stay private and you control spacing and background.",
+  "whoShouldUse": "Designers making comparison sheets, sellers creating product grids, and anyone needing a quick collage without Photoshop.",
+  "useCases": [
+    "Make a horizontal 3-image collage with 10px spacing and white background for eBay",
+    "Create a 2×2 grid of 4 screenshots with 20px spacing and rounded 12px corners",
+    "Export the same collage as JPEG (90) and WebP to compare file sizes"
+  ],
+  "instructions": [
+    "Drop 2–20 images (JPEG/PNG/WebP/GIF/BMP, 50MB total). Pick layout: horizontal, vertical, or grid (choose cols 2–4).",
+    "Set spacing, background color, and border radius. Drag to reorder if needed.",
+    "Choose output format (JPEG/PNG/WebP + quality) and click Download. Preview updates live and never uploads."
+  ],
+  "examples": [
+    "Input: 4 images, grid 2 cols, spacing 10, white bg → Output: 520×520 canvas (260px cells + 10px gaps) JPEG, ~200KB.",
+    "Input: 2 images, horizontal, spacing 0, radius 16 → Output: side-by-side with rounded outer corners, PNG."
+  ],
+  "bestPractices": [
+    "Use grid for even counts, horizontal for 2–3, vertical for story sequences",
+    "Keep spacing 10–20px for airy layouts; 0 for seamless panoramas",
+    "Export as WebP for smallest size, PNG for lossless"
+  ],
+  "commonMistakes": [
+    "Setting spacing 40px on a 20-image collage — canvas becomes huge; keep spacing low for many images",
+    "Expecting original EXIF to carry over — the collage is a new bitmap without metadata",
+    "Using radius 20 on small cells — corners may overlap; reduce radius for tight grids"
+  ],
+  "faq": [
+    "Is the image uploaded? No — collaging is canvas-only in your browser. Images never leave your device.",
+    "How are images scaled? Each image is scaled to fit its cell with `min(cellW/imgW, cellH/imgH)` centered, clipped to rounded rect if radius > 0.",
+    "Can I mix orientations? Yes — each cell centers its image regardless of aspect.",
+    "What is the max size? Preview caps at 260px cells; final canvas is cells × spacing, up to ~2000px, to avoid memory issues."
+  ],
+  "features": [
+    "Horizontal, vertical, grid (2–4 cols) layouts",
+    "Spacing, background, rounded corners",
+    "Drag reorder and format/quality control",
+    "100% local canvas — no upload"
+  ],
+  "references": [
+    { "label": "MDN — Canvas", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" },
+    { "label": "MDN — drawImage", "url": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage" }
+  ]
+}

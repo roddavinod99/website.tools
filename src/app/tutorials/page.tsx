@@ -2,17 +2,48 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { guidesTopics, siteConfig } from "@/lib/data";
+import { breadcrumbList, collectionPage, jsonLdScriptBody } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Tutorials",
   description: "Developer tutorials and how-to guides.",
   alternates: { canonical: `${siteConfig.url}/tutorials` },
+  openGraph: {
+    title: "Tutorials — DevStackIO",
+    description: "Developer tutorials and how-to guides.",
+    url: `${siteConfig.url}/tutorials`,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "Tutorials — DevStackIO" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tutorials — DevStackIO",
+    description: "Developer tutorials and how-to guides.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function TutorialsPage() {
   const tutorialTopics = guidesTopics.filter((t) => t.category === "Tutorials");
+  const breadcrumb = breadcrumbList([
+    { name: "Home", url: siteConfig.url },
+    { name: "Tutorials", url: `${siteConfig.url}/tutorials` },
+  ]);
+  const collection = collectionPage({
+    name: "Tutorials",
+    description: "Developer tutorials and how-to guides.",
+    url: `${siteConfig.url}/tutorials`,
+    items: tutorialTopics.map((t) => ({
+      name: t.title,
+      url: `${siteConfig.url}/guides/${t.slug}`,
+      description: t.description,
+    })),
+  });
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScriptBody(collection) }} />
     <div className="border-b border-[var(--color-border)]">
       <div className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl">

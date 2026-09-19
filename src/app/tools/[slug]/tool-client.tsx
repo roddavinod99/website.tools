@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, type ReactNode } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense, type ReactNode } from "react";
 import { ToolInterface } from "@/components/tools/dynamic-tool-loader";
 import { ShareButtons } from "@/components/tools/utilities/share-buttons";
 import { FinanceDisclaimer } from "@/components/tools/finance/finance-disclaimer";
@@ -34,6 +34,7 @@ import { dispatchLoadExample, TOOL_READY_EVENT, type ToolReadyDetail } from "@/l
 import { useNetworkRequestCount } from "@/lib/network-monitor";
 import { siteConfig } from "@/lib/data";
 import { recordToolView } from "@/lib/personalize";
+import { GlossaryRelated } from "@/components/tools/glossary-related";
 
 interface ToolData {
   id: string;
@@ -268,6 +269,32 @@ function CollapsibleSection({
   );
 }
 
+function WorkflowTracker({
+  onUpdate,
+}: {
+  onUpdate: (s: {
+    workflow: (typeof workflows)[number] | null;
+    currentStepIdx: number;
+    nextWorkflowStep: (typeof workflows)[number]["steps"][number] | null;
+  }) => void;
+}) {
+  const searchParams = useSearchParams();
+  const workflowSlug = searchParams.get("workflow");
+  const stepParam = searchParams.get("step");
+  const workflow = workflowSlug ? workflows.find((w) => w.slug === workflowSlug) ?? null : null;
+  const currentStepIdx = workflow && stepParam ? Math.max(0, parseInt(stepParam, 10) - 1) : -1;
+  const nextWorkflowStep =
+    workflow && currentStepIdx >= 0 && currentStepIdx + 1 < workflow.steps.length
+      ? workflow.steps[currentStepIdx + 1]
+      : null;
+
+  useEffect(() => {
+    onUpdate({ workflow, currentStepIdx, nextWorkflowStep });
+  }, [workflow, currentStepIdx, nextWorkflowStep, onUpdate]);
+
+  return null;
+}
+
 export function ToolClient({
   tool,
   content,
@@ -381,21 +408,18 @@ export function ToolClient({
 
   const relatedList = [...sameCategory, ...related, ...popularTools].slice(0, 8);
 
-  // Workflow banner — reads ?workflow=slug&step=N per suggestions.md W2 (URL params shareable, fallback localStorage)
-  const searchParams = useSearchParams();
-  const workflowSlug = searchParams.get("workflow");
-  const stepParam = searchParams.get("step");
-  const workflow = workflowSlug ? workflows.find((w) => w.slug === workflowSlug) : null;
-  const currentStepIdx = workflow && stepParam ? Math.max(0, parseInt(stepParam, 10) - 1) : -1;
-  const nextWorkflowStep =
-    workflow && currentStepIdx >= 0 && currentStepIdx + 1 < workflow.steps.length
-      ? workflow.steps[currentStepIdx + 1]
-      : null;
+  // Workflow banner state lifted from inner component via callback
+  const [workflowState, setWorkflowState] = useState<{
+    workflow: (typeof workflows)[number] | null;
+    currentStepIdx: number;
+    nextWorkflowStep: (typeof workflows)[number]["steps"][number] | null;
+  }>({ workflow: null, currentStepIdx: -1, nextWorkflowStep: null });
+  const workflow = workflowState.workflow;
+  const currentStepIdx = workflowState.currentStepIdx;
+  const nextWorkflowStep = workflowState.nextWorkflowStep;
 
   const handleWorkflowNext = useCallback(async () => {
     if (!workflow || !nextWorkflowStep) return;
-    // Pass output via URL param if <2k else localStorage (decision 3)
-    const outputOk = await copyToolOutput(tool.slug);
     let payload = "";
     try {
       const container = document.getElementById(`tool-interface-${tool.slug}`);
@@ -475,6 +499,10 @@ export function ToolClient({
                   <FeatureBadgesGroup features={content.features} maxVisible={5} variant="brand" size="sm" />
                 </div>
               )}
+
+              <Suspense fallback={null}>
+                <WorkflowTracker onUpdate={setWorkflowState} />
+              </Suspense>
 
               {/* Workflow banner — shown when ?workflow is present */}
               {workflow && currentStepIdx >= 0 && (
@@ -724,10 +752,17 @@ export function ToolClient({
 
             <InContentAd className="my-2" slot={adSlots.toolInContent2} />
 
-            {/* Share */}
+            {/* Share — direct app intents with original-color brand icons (SVGRepo) */}
             <section className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">
               <SectionHeading>Share</SectionHeading>
-              <ShareButtons />
+              <p className="text-xs text-[var(--color-text-muted)]">
+                Share directly to WhatsApp, X, Facebook, LinkedIn, Reddit, Pinterest, Telegram or Email — opens the app with the link preview pre-filled.
+              </p>
+              <ShareButtons
+                url={`${siteConfig.url}/tools/${tool.slug}`}
+                title={`${tool.name} — Free Online ${tool.category} Tool on DevStackIO`}
+                description={tool.description}
+              />
             </section>
           </div>
 
@@ -783,6 +818,8 @@ export function ToolClient({
                 ))}
               </div>
             </section>
+
+            <GlossaryRelated toolSlug={tool.slug} />
 
             {/* Learning Resources */}
             <section id="learning-resources" className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4 lg:p-6 space-y-3">

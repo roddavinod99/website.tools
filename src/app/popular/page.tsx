@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   title: "Popular Tools",
   description: "Most used free developer tools on DevStackIO — JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more. Rated by the community.",
   alternates: { canonical: `${siteConfig.url}/popular` },
+  openGraph: {
+    title: "Popular Tools — DevStackIO",
+    description: "Most used free developer tools on DevStackIO — JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more.",
+    url: `${siteConfig.url}/popular`,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "Popular Tools — DevStackIO" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Popular Tools — DevStackIO",
+    description: "Most used free developer tools on DevStackIO — JSON formatter, JWT decoder, UUID generator, Base64 encoder, and more.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function PopularPage() {

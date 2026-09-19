@@ -1,0 +1,48 @@
+{
+  "whatItDoes": "Converts JPG, PNG, WebP, GIF, BMP images into a multi-page PDF — one image per page — with reorderable pages, page-size (A4/Letter/Fit), orientation, and margin controls. All rendering is client-side via pdf-lib and canvas.",
+  "whyItExists": "Creating a PDF from images typically means uploading photos to a server. This tool embeds images locally, scales them to fit the page while preserving aspect ratio, and lets you control page geometry without any upload.",
+  "whoShouldUse": "Students turning phone photos into a PDF assignment, professionals creating portfolios, and anyone needing a quick image-to-PDF without cloud risk.",
+  "useCases": [
+    "Convert 10 phone photos into an A4 portrait PDF for submission",
+    "Reorder 5 screenshots by dragging before converting to PDF",
+    "Use Fit size to create a PDF where each page matches the image dimensions",
+    "Choose Letter landscape with medium margin for a slide-like PDF"
+  ],
+  "instructions": [
+    "Drop or select up to 30 images (JPG/PNG/WebP/GIF/BMP, 10MB each). Each shows dimensions.",
+    "Drag cards or use up/down to set page order — page number badge updates.",
+    "Pick Page size (A4, Letter, Fit), Orientation (ignored for Fit), and Margin (None/Small/Medium).",
+    "Click Convert to PDF — images are embedded centered and scaled to fit the printable area.",
+    "Download the PDF from the green card showing page count and size."
+  ],
+  "examples": [
+    "Input: 3 images (1200×800, 800×600, 1920×1080) → A4 portrait, small margin → Output: 3-page PDF with each image centered and fitted.",
+    "Input: 1 2000×1500 PNG → Fit size, no margin → Output: single-page PDF exactly 2000×1500 pt plus zero margin."
+  ],
+  "bestPractices": [
+    "Use A4/Letter for printing, Fit for screen viewing where page size should match image",
+    "Set margin to None only for full-bleed images; Small is safer for printers",
+    "WebP/GIF are converted via canvas to PNG before embedding — verify transparency if needed"
+  ],
+  "commonMistakes": [
+    "Expecting metadata/EXIF to transfer — the PDF embeds pixel data only",
+    "Uploading 30 × 10MB images may hit 50MB total limit and trigger an error",
+    "Assuming Fit preserves file size — Fit creates one page per image; large images still embed at full resolution"
+  ],
+  "faq": [
+    "Are images uploaded? No — conversion uses pdf-lib and canvas in your browser. Images never leave your device.",
+    "How are images sized? Each image is scaled uniformly to fit the page's printable area (page minus margins) and centered.",
+    "Does it support WebP? Yes — WebP/GIF/BMP are rasterized via canvas then embedded as PNG.",
+    "Can I mix orientations? Each page can have a different image aspect; page orientation is global (A4/Letter) or per-image if Fit is chosen."
+  ],
+  "features": [
+    "Images to PDF, one per page, with drag reorder",
+    "A4 / Letter / Fit page sizes with margin control",
+    "Supports JPG, PNG, WebP, GIF, BMP",
+    "100% browser-based, no upload"
+  ],
+  "references": [
+    { "label": "pdf-lib", "url": "https://pdf-lib.js.org/" },
+    { "label": "MDN — Canvas", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" }
+  ]
+}

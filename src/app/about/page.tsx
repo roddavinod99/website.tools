@@ -2,20 +2,27 @@ import type { Metadata } from "next";
 import { siteConfig, TOOL_COUNT } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About DevStackIO — Free Developer Tools Platform",
   description: "Learn about DevStackIO — the parent platform behind tools.devstackio.com. Our mission is to provide free, privacy-first developer tools for everyone.",
   alternates: { canonical: `${siteConfig.url}/about` },
   openGraph: {
     title: "About DevStackIO — Free Developer Tools Platform",
     description: "DevStackIO provides free online developer tools at tools.devstackio.com. Learn about our mission, principles, and roadmap.",
     url: `${siteConfig.url}/about`,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "About DevStackIO — DevStackIO" }],
   },
-  other: {
-    "article:modified_time": "2024-01-01",
+  twitter: {
+    card: "summary_large_image",
+    title: "About DevStackIO — Free Developer Tools Platform",
+    description: "DevStackIO provides free online developer tools at tools.devstackio.com. Learn about our mission, principles, and roadmap.",
+    images: [siteConfig.ogImage],
   },
 };
 
 export default function AboutPage() {
+  const orgId = `${siteConfig.url}/#organization`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -23,31 +30,14 @@ export default function AboutPage() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-          { "@type": "ListItem", position: 2, name: "About" },
+          { "@type": "ListItem", position: 2, name: "About", item: `${siteConfig.url}/about` },
         ],
       },
       {
         "@type": "Organization",
+        "@id": orgId,
         name: "DevStackIO",
-        url: siteConfig.mainSiteUrl,
-        logo: {
-          "@type": "ImageObject",
-          url: `${siteConfig.url}/favicon.svg`,
-        },
-        description: "DevStackIO provides free online developer tools, learning resources, APIs, and utilities — all processing data entirely in your browser.",
-        email: siteConfig.contactEmail,
-        foundingDate: "2024",
-        alternateName: "DevStack",
-        sameAs: [
-          siteConfig.mainSiteUrl,
-          siteConfig.url,
-          siteConfig.links.github,
-        ],
-        contactPoint: {
-          "@type": "ContactPoint",
-          email: siteConfig.contactEmail,
-          contactType: "customer service",
-        },
+        url: siteConfig.url,
       },
     ],
   };
@@ -56,7 +46,7 @@ export default function AboutPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <div className="container py-12 md:py-16">
       <article className="prose mx-auto max-w-3xl">

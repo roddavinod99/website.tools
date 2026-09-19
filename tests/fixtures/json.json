@@ -12,5 +12,7 @@
   { "slug": "json-to-typescript", "category": "Converters", "name": "JSON to TypeScript", "input": "{\"name\":\"string\",\"age\":\"number\"}", "action": "Convert", "expect": "output" },
   { "slug": "json-to-go", "category": "Converters", "name": "JSON to Go Struct", "input": "{\"id\":1,\"name\":\"test\"}", "action": "Convert", "expect": "output" },
   { "slug": "json-schema-generator", "category": "Security", "name": "JSON Schema Generator", "input": "{\"name\":\"test\"}", "action": "Generate", "expect": "output" },
-  { "slug": "json-path-finder", "category": "Utilities", "name": "JSON Path Finder", "input": "{\"store\":{\"book\":[{\"title\":\"A\"}]}}", "action": "Find", "expect": "output" }
+  { "slug": "json-path-finder", "category": "Utilities", "name": "JSON Path Finder", "input": "{\"store\":{\"book\":[{\"title\":\"A\"}]}}", "action": "Find", "expect": "output" },
+  { "slug": "json-escaper", "category": "Formatters", "name": "JSON Escaper", "input": "{\"name\":\"test\"}", "action": "Escape", "expect": "output" },
+  { "slug": "json-to-code", "category": "Converters", "name": "JSON to Code", "input": "{\"name\":\"test\",\"value\":123}", "action": "Generate", "expect": "output" }
 ]

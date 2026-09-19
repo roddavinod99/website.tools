@@ -1,0 +1,43 @@
+{
+  "whatItDoes": "Visual color picker with live <input type='color'>, HEX/RGB/HSL/HSV synced inputs, and palette generation (complementary, analogous ±30°, triadic 120°/240°). Shows conversions and copy buttons, all browser-native.",
+  "whyItExists": "Designers and developers need to translate between color models and pick harmonious palettes without opening Figma. This does it instantly in the browser with no upload and one-click copy.",
+  "whoShouldUse": "Frontend developers styling sites, designers picking palettes, and anyone converting a brand color between HEX/RGB/HSL.",
+  "useCases": [
+    "Pick #ff6600, copy RGB 255,102,0 for CSS",
+    "Generate complementary and triadic palettes from a brand purple",
+    "Convert HSL 210 100% 50% to HEX for a design token"
+  ],
+  "instructions": [
+    "Pick a color via the color input or type HEX/RGB/HSL directly — all fields stay synced.",
+    "View conversions (HEX, RGB, HSL, HSV) and click Copy on any.",
+    "Choose a palette type to see complementary/analogous/triadic swatches and copy them.",
+    "No upload — all math is local."
+  ],
+  "examples": [
+    "Input: #ff6600 → Output: RGB 255,102,0, HSL 24 100% 50%, complementary #0099ff.",
+    "Input: HSL 210 100% 50% → Output: #007bff, RGB 0,123,255, HSV 210 100% 100%."
+  ],
+  "bestPractices": [
+    "Use HEX for CSS variables, HSL for tuning lightness/saturation",
+    "Check contrast with the Contrast Checker tool after picking"
+  ],
+  "commonMistakes": [
+    "Typing HEX without # — the field auto-adds it but copy includes #",
+    "Confusing HSL and HSV — they differ in lightness vs value; the tool shows both"
+  ],
+  "faq": [
+    "Does it need a server? No — color math is pure JS in your browser.",
+    "Can I pick from screen? Use Color Eyedropper for screen picking; this picker is for manual/typed colors.",
+    "Does it support alpha? Currently opaque only; alpha is on the roadmap."
+  ],
+  "features": [
+    "Visual picker with HEX/RGB/HSL/HSV",
+    "Palettes: complementary, analogous, triadic",
+    "One-click copy for any format",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "MDN — color", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" },
+    { "label": "W3C — CSS Color", "url": "https://www.w3.org/TR/css-color-4/" }
+  ]
+}

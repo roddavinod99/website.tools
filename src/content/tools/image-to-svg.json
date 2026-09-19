@@ -1,0 +1,41 @@
+{
+  "whatItDoes": "Wraps raster images (JPEG/PNG/WebP) as base64 inside SVG <image> elements sized to the source dimensions, so they can be embedded inline in HTML/CSS with vector scaffolding. Shows sanitized preview and allows download as .svg.",
+  "whyItExists": "Embedding raster images as SVG is useful for inline HTML that needs a single file. Instead of linking, this creates a self-contained SVG that displays the raster via data URI, done locally without uploading.",
+  "whoShouldUse": "Frontend developers needing inline SVG placeholders and designers wrapping photos for prototyping.",
+  "useCases": [
+    "Embed a logo PNG as SVG for an email template that blocks external images",
+    "Wrap a screenshot as SVG to style it with CSS filters",
+    "Create an SVG data URI for a background-image without a separate file"
+  ],
+  "instructions": [
+    "Drop a JPEG/PNG/WebP image (10MB). The tool reads it as data URL and wraps it in <svg width/height viewBox><image href=\"data:...\"/></svg>.",
+    "Preview the SVG (sanitized), copy the SVG code, or download as .svg. The image never leaves your browser."
+  ],
+  "examples": [
+    "Input: 200×100 PNG → Output: <svg width=\"200\" height=\"100\" viewBox=\"0 0 200 100\"><image href=\"data:image/png;base64,...\" width=\"200\" height=\"100\"/></svg> (~50KB).",
+    "Input: WebP 800×600 → Output: SVG wrapper with same dims, viewBox 0 0 800 600, base64 data URI inside."
+  ],
+  "bestPractices": [
+    "Use for small inline assets; large rasters as base64 bloat HTML — prefer <img> for photos",
+    "Keep SVGs for icons and wrappers; for true vector, trace with a vectorizer instead"
+  ],
+  "commonMistakes": [
+    "Expecting vectorization — this wraps raster, not traces to paths",
+    "Embedding huge images — base64 adds 33% overhead; compress first with Image Compressor"
+  ],
+  "faq": [
+    "Is the image uploaded? No — wrapping is FileReader + string templating in your browser.",
+    "Is the SVG sanitized? Yes — preview is sanitized, output is plain <svg><image href=\"data:...\"/> with no scripts.",
+    "Can I edit the SVG? Yes — download and open in any code editor; change width/height/viewBox as needed."
+  ],
+  "features": [
+    "Raster → SVG wrapper with base64",
+    "Preserves dimensions and viewBox",
+    "Copy code and download .svg",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "MDN — SVG image", "url": "https://developer.mozilla.org/en-US/docs/Web/SVG/Element/image" },
+    { "label": "MDN — data URI", "url": "https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data" }
+  ]
+}

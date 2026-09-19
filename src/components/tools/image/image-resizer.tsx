@@ -57,8 +57,8 @@ const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
 ];
 
 const INPUT_ACCEPT = "image/jpeg,image/png,image/gif,image/webp,image/bmp";
-const MAX_FILES = 20;
-const MAX_TOTAL_SIZE = 25 * 1024 * 1024;
+const MAX_FILES = 100;
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
 const MAX_HISTORY = 5;
 
 interface ImageEntry {
@@ -236,11 +236,11 @@ export function ImageResizer() {
       const file = fileList[i];
       if (!file.type.match(/^image\/(jpeg|png|gif|webp|bmp)$/)) continue;
       if (images.length + newEntries.length >= MAX_FILES) {
-        setError("Maximum 20 files allowed");
+        setError(`Maximum ${MAX_FILES} files allowed`);
         break;
       }
-      if (totalSize + file.size > MAX_TOTAL_SIZE) {
-        setError("Total size exceeds 25MB limit");
+      if (totalSize + newEntries.reduce((s, e) => s + e.file.size, 0) + file.size > MAX_TOTAL_SIZE) {
+        setError(`Total size exceeds ${MAX_TOTAL_SIZE / (1024 * 1024)}MB limit`);
         break;
       }
       const info = await readImageFile(file);
@@ -484,7 +484,7 @@ export function ImageResizer() {
         <p className="text-sm text-surface-500 dark:text-dark-muted">
           {images.length > 0 ? `${images.length} image(s) selected` : "Click or drop images here"}
         </p>
-        <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">JPEG, PNG, GIF, WebP, BMP &middot; Max 20 files &middot; 25MB total</p>
+        <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">JPEG, PNG, GIF, WebP, BMP &middot; Max {MAX_FILES} files &middot; {MAX_TOTAL_SIZE / (1024 * 1024)}MB total · 100% local</p>
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}

@@ -1,0 +1,42 @@
+{
+  "whatItDoes": "Encodes latitude/longitude to geohash (precision 1–12) and decodes geohash to center, bounds, error, and 8 neighbors. Shows bounds as min/max lat/lng and a map placeholder. Pure JS, no map dep.",
+  "whyItExists": "Geohashes are used for spatial indexing and proximity search. Manual base32 math is tedious; this does it locally with neighbor calc for bounding-box queries without calling a maps API.",
+  "whoShouldUse": "Backend developers indexing locations, mobile devs debugging nearby queries, and GIS learners exploring geohash precision.",
+  "useCases": [
+    "Encode 37.7749,-122.4194 precision 9 → 9q8yyk8yt for a DB key",
+    "Decode 9q8yyk8yt → center/bounds/neighbors for a bounding-box query",
+    "Compare precision 5 vs 9 to see error radius"
+  ],
+  "instructions": [
+    "In Encode, enter lat/lng and pick precision 1–12, click Encode to get geohash and bounds.",
+    "In Decode, paste a geohash, click Decode to see center, bounds, and 8 neighbors in a grid.",
+    "Copy any value from the output (data-testid). All math is local — no upload."
+  ],
+  "examples": [
+    "Input: 37.7749, -122.4194, precision 5 → Output: 9q8yy (error ~2.4km).",
+    "Input: 9q8yyk8yt → Output: center 37.7749,-122.419, bounds 37.77/37.78, -122.42/-122.41, neighbors 8."
+  ],
+  "bestPractices": [
+    "Use precision 5 for city, 9 for building; higher precision = smaller error but longer hash",
+    "Use neighbors to expand a bounding-box search beyond the base cell"
+  ],
+  "commonMistakes": [
+    "Entering lng outside −180..180 — the encoder clamps but shows an error",
+    "Expecting decode to return the original lat/lng exactly — it returns the cell center, not the input point"
+  ],
+  "faq": [
+    "Is it uploaded? No — base32 encode/decode is pure JS in your browser.",
+    "Does it need a map? No — a placeholder div is shown; integrate Leaflet if you need a visual map.",
+    "What base32 alphabet? 0123456789bcdefghjkmnpqrstuvwxyz (no a,i,l,o) per geohash spec."
+  ],
+  "features": [
+    "Encode lat/lng → geohash 1–12",
+    "Decode → center/bounds/neighbors",
+    "Copy and map placeholder",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "Geohash", "url": "https://en.wikipedia.org/wiki/Geohash" },
+    { "label": "base32", "url": "https://en.wikipedia.org/wiki/Base32" }
+  ]
+}

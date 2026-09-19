@@ -1,0 +1,44 @@
+{
+  "whatItDoes": "Generates TypeScript interfaces, Go structs with json tags, Python dataclasses, Java classes, Rust structs, and C# classes from a single JSON sample. Infers nested objects, arrays, nullable fields, and emits code ready to paste.",
+  "whyItExists": "Turning an API response into types by hand is tedious and error-prone. One sample can scaffold all target languages at once, locally without sending your payload to a server.",
+  "whoShouldUse": "Full-stack developers scaffolding SDKs, mobile devs needing models from an endpoint, and anyone converting a webhook sample into typed code.",
+  "useCases": [
+    "Paste a user API response → Generate TypeScript User + Address interfaces",
+    "Generate Go structs with `json:\"field\"` tags for a backend handler",
+    "Create Python dataclasses with Optional for nullable API fields"
+  ],
+  "instructions": [
+    "Paste JSON in the left pane, pick a language from the select, optionally set the root name.",
+    "The code updates live as you type, with nested types and array item types inferred from the first element.",
+    "Copy the code (data-testid) or download as a file. One sample is heuristic — validate with JSON Schema for production."
+  ],
+  "examples": [
+    "Input: {\"user\": {\"name\": \"Ada\", \"age\": 30}, \"tags\": [\"dev\"]} → TypeScript: interface User {name: string; age: number;} interface Root {user: User; tags: string[];}",
+    "Input: same → Go: type User struct { Name string `json:\"name\"` ... }"
+  ],
+  "bestPractices": [
+    "Provide a representative sample with all optional fields present (null for optional) so nullable is inferred",
+    "Rename Root to your domain name after generation",
+    "Validate generated types with JSON Schema for arrays of heterogeneous items"
+  ],
+  "commonMistakes": [
+    "Feeding a single sample and expecting schema guarantees — one sample is not a schema; add missing fields manually",
+    "Ignoring nulls — nulls become Optional/pointers; remove if the field is always present",
+    "Assuming array item types from empty arrays — empty arrays default to any[]/interface{}"
+  ],
+  "faq": [
+    "Is the JSON uploaded? No — generation is pure JS in your browser. Samples never leave your device.",
+    "Does it support nested arrays? Yes — it recurses and creates item types for arrays of objects.",
+    "Can I change the root name? Yes — edit the Root field before copying."
+  ],
+  "features": [
+    "6 languages in one UI with live preview",
+    "Nested objects and arrays inferred",
+    "Nullable and array item handling",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "JSON Schema", "url": "https://json-schema.org/" },
+    { "label": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/" }
+  ]
+}

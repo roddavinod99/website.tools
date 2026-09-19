@@ -26,7 +26,8 @@ const FORMAT_OPTIONS: { value: ImageFormat; label: string; ext: string }[] = [
 ];
 
 const INPUT_ACCEPT = "image/jpeg,image/png,image/webp";
-const MAX_TOTAL_SIZE = 25 * 1024 * 1024;
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024;
+const MAX_FILES = 100;
 
 interface ImageEntry {
   id: string;
@@ -149,8 +150,12 @@ export function ImageCompressor() {
         continue;
       }
       if (!file.type.match(/^image\/(jpeg|png|webp)$/)) continue;
-      if (totalSize + file.size > MAX_TOTAL_SIZE) {
-        setError("Total size exceeds 25MB limit");
+      if (images.length + newEntries.length >= MAX_FILES) {
+        setError(`Maximum ${MAX_FILES} files allowed`);
+        break;
+      }
+      if (totalSize + newEntries.reduce((s, e) => s + e.file.size, 0) + file.size > MAX_TOTAL_SIZE) {
+        setError(`Total size exceeds ${MAX_TOTAL_SIZE / (1024 * 1024)}MB limit`);
         break;
       }
       const info = await readImageFile(file);
@@ -380,7 +385,7 @@ export function ImageCompressor() {
             : "Click or drop images here"}
         </p>
         <p className="mt-1 text-xs text-surface-400 dark:text-dark-muted">
-          Supports JPEG, PNG, WebP &middot; 25MB total limit
+          Supports JPEG, PNG, WebP &middot; {MAX_FILES} files &middot; {MAX_TOTAL_SIZE / (1024 * 1024)}MB total · 100% local
         </p>
       </div>
 

@@ -5,8 +5,8 @@ import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Force Node.js runtime to access fs for CSP hash map
-export const runtime = "nodejs";
+// Proxy runs on Node.js runtime by default (Next 16) — `runtime` export is not allowed in proxy per https://nextjs.org/docs/app/api-reference/file-conventions/proxy#runtime
+// Direct fs access for CSP hash map is available in Node runtime without explicit export.
 
 // Policy inputs emitted by scripts/postbuild-csp.mjs at build time.
 interface CspPolicyInputs {
@@ -112,6 +112,7 @@ function buildHashCsp(pathname: string): string {
 
   const scriptSources = [
     "'self'",
+    "'strict-dynamic'",
     ...(route?.scripts ?? []),
     ...(inputs.runtimeScriptHashes ?? []),
     ...inputs.externalScriptSources,
@@ -123,6 +124,7 @@ function buildHashCsp(pathname: string): string {
   // cannot be pre-hashed, so style-src allows inline styles. Script execution
   // remains strictly hash-locked; CSS injection cannot run JavaScript, and
   // exfiltration channels are covered by img/connect-src.
+  // 'strict-dynamic' allows nonce-validated scripts to load Next.js RSC.
   const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
   return [
@@ -137,6 +139,8 @@ function buildHashCsp(pathname: string): string {
     "form-action 'self'",
     "base-uri 'self'",
     "object-src 'none'",
+    "require-trusted-types-for 'script'",
+    "trusted-types dompurify",
     "report-uri /api/csp-report",
   ].join("; ");
 }
@@ -217,7 +221,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
-// Test-only bypass for rate limiting (non-production)
+// Test-only bypass for rate limiting — production-gated
 const TEST_BYPASS_HEADER = "x-test-bypass-rate-limit";
 
 const RATE_LIMIT_CONFIG = {
@@ -256,7 +260,7 @@ function addSecurityHeaders(response: NextResponse): void {
   }
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const ip = getClientIp(request);
   const path = getPath(request);
   const ua = request.headers.get("user-agent") || "";
@@ -280,7 +284,8 @@ export async function middleware(request: NextRequest) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
-  const rateLimit = checkRateLimit(ip, path, request.headers.get(TEST_BYPASS_HEADER) === "true");
+  const isTestBypass = process.env.NODE_ENV !== "production" && request.headers.get(TEST_BYPASS_HEADER) === "true";
+  const rateLimit = checkRateLimit(ip, path, isTestBypass);
   if (!rateLimit.allowed) {
     await logSecurityEvent("rate_limit_violation", ip, path, "Rate limit exceeded");
     const retryResponse = new NextResponse(JSON.stringify({ error: "Too many requests. Please try again later." }), {

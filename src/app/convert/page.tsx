@@ -32,11 +32,13 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/convert`,
     siteName: siteConfig.name,
     type: "website",
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "All Conversion & Calculation Pages — DevStackIO" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "All Conversion & Calculation Pages — DevStackIO",
     description: "Browse 580+ pre-filled tools.",
+    images: [siteConfig.ogImage],
   },
 };
 

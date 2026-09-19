@@ -1,0 +1,48 @@
+{
+  "whatItDoes": "Adds text and/or logo watermarks to images via canvas. Text controls: content, font size 10–120, color, opacity 0–100, sans/serif/mono, bold/italic, rotation −180–180. Logo controls: upload PNG/JPEG/WebP, scale 5–100%, opacity. Position via 3×3 grid plus offset X/Y and optional tiled repeat across the image. Output to JPEG/PNG/WebP.",
+  "whyItExists": "Protecting photos and branding content normally requires cloud editors that see your images. This tool composites watermarks locally with precise position, tiled repeat, and rotation, so you can batch-protect images without uploading them.",
+  "whoShouldUse": "Photographers adding copyright, marketers stamping logos on campaign images, and anyone needing quick, private watermarking without Photoshop.",
+  "useCases": [
+    "Add © 2026 text at bottom-right with 60% opacity to a portfolio photo",
+    "Overlay a PNG logo at center with 80% opacity for product shots",
+    "Tile a semi-transparent text watermark diagonally across an image to deter copying",
+    "Rotate a text watermark −30° for a classic stock-photo look before download"
+  ],
+  "instructions": [
+    "Drop a base image (JPEG/PNG/WebP, 10MB) — it appears in the preview canvas scaled to max 2000px.",
+    "Optionally drop a logo image (PNG with transparency recommended) in the second zone.",
+    "Set text, font size, color, opacity, family, bold/italic, rotation. Set logo scale/opacity if a logo is loaded.",
+    "Pick a position from the 3×3 grid (top-left … bottom-right), adjust offset X/Y, enable Tiled to repeat across the image.",
+    "Choose output format (JPEG/PNG/WebP + quality) and click Download. Preview updates live (100ms debounce) and never uploads."
+  ],
+  "examples": [
+    "Input: 2000×1500 base, text '© DevStackIO' 32px white 60% at bottom-right → Output: watermarked JPEG, text composited via fillText with globalAlpha.",
+    "Input: base + logo PNG scaled 20% at center tiled → Output: logo repeated in a grid with rotation −30°, each tile drawn with translate/rotate/drawImage."
+  ],
+  "bestPractices": [
+    "Use PNG logos with transparency for clean overlay; JPEG logos will have a solid background",
+    "Keep text opacity 40–70% for visibility without obscuring the photo",
+    "For tiled watermarks, use a moderate rotation (−30°) and 60–80px spacing for even coverage"
+  ],
+  "commonMistakes": [
+    "Setting logo scale 100% on a large logo — it will be auto-fit to 90% of canvas; start at 20%",
+    "Forgetting tiled repeats on large images — enable Tiled to cover the whole canvas, not just one placement",
+    "Expecting EXIF to persist — the output is a new bitmap without original metadata"
+  ],
+  "faq": [
+    "Is the image uploaded? No — watermarking is canvas-only in your browser. Images never leave your device.",
+    "What formats are supported? Base: JPEG/PNG/WebP; Logo: PNG/JPEG/WebP. Output: JPEG/PNG/WebP with quality control (PNG ignores quality).",
+    "Can I use both text and logo? Yes — they composite in order: base → text (or tiled text) → logo (or tiled logo) with separate opacities.",
+    "How is position calculated? From the 3×3 grid anchor plus offset X/Y. Tiled ignores position and repeats in a grid with rotation applied per tile."
+  ],
+  "features": [
+    "Text watermark with font, color, opacity, rotation",
+    "Logo watermark with scale and opacity",
+    "3×3 position grid plus tiled repeat",
+    "100% local canvas — no upload"
+  ],
+  "references": [
+    { "label": "MDN — Canvas", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" },
+    { "label": "MDN — File API", "url": "https://developer.mozilla.org/en-US/docs/Web/API/File" }
+  ]
+}

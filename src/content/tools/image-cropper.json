@@ -1,0 +1,49 @@
+{
+  "whatItDoes": "Crops images with a draggable rectangle and 8 resize handles. Supports aspect presets (Free, 1:1, 4:3, 16:9, 9:16, 3:2, 2:3) with ratio locking, live dimmed overlay outside the crop, and export to JPEG/PNG/WebP at chosen quality. Works entirely in the browser via canvas.",
+  "whyItExists": "Cropping for thumbnails, profile pictures, and social posts requires precise aspect control and visual feedback. Server uploads risk privacy and are slow; this tool gives pixel-accurate cropping locally with tiled handles and keyboard nudging without ever uploading the image.",
+  "whoShouldUse": "Designers preparing social assets, developers generating thumbnails, and anyone needing quick, private image cropping without Photoshop or cloud converters.",
+  "useCases": [
+    "Crop a photo to 1:1 for an Instagram profile picture with exact centering",
+    "Crop a 16:9 banner from a larger photo for a YouTube thumbnail",
+    "Use Free mode to cut out a specific object from a screenshot",
+    "Nudge the crop 1px with arrow keys for pixel-perfect alignment before export",
+    "Export the same crop as JPEG (90), PNG, and WebP to compare file sizes"
+  ],
+  "instructions": [
+    "Click or drop a JPEG/PNG/WebP image (10MB max). A centered 70% crop appears.",
+    "Pick an aspect preset (Free, 1:1, 4:3, etc.) — ratio locks and recenters the rectangle.",
+    "Drag the rectangle to move, or drag any of the 8 handles to resize. Shift+arrow nudges 10px, arrow nudges 1px, Enter crops.",
+    "Choose output format (JPEG/PNG/WebP) and quality (for JPEG/WebP).",
+    "Click Crop to generate the preview, then Download (or Download as PNG/WebP). The cropped image never leaves your browser."
+  ],
+  "examples": [
+    "Input: 3000×2000 photo, preset 1:1, crop 1400×1400 centered → Output: 1400×1400 JPEG, ~300KB at 90 quality.",
+    "Input: 1920×1080 screenshot, Free mode, crop 800×600 around a dialog → Output: 800×600 PNG with sharp text preserved."
+  ],
+  "bestPractices": [
+    "Use Free for arbitrary cuts, locked ratios for social presets to avoid distortion",
+    "For WebP, compare quality 85 vs 90 via preview file size before downloading",
+    "Reset crop if you switch aspect — it recenters to avoid empty edges"
+  ],
+  "commonMistakes": [
+    "Dragging outside the image — the clamp prevents negative coordinates but watch the dimmed overlay",
+    "Expecting EXIF to carry over — cropping creates a new bitmap without original metadata",
+    "Using very small MIN_CROP (20px) then upscaling — keep crops above 200px for quality"
+  ],
+  "faq": [
+    "Is the image uploaded? No — cropping uses canvas in your browser. Files never leave your device.",
+    "What aspect ratios are supported? Free, 1:1, 4:3, 16:9, 9:16, 3:2, 2:3. Free allows any rectangle; locked ratios resize proportionally.",
+    "Can I nudge with keyboard? Yes — focus the crop area, arrow keys move 1px, Shift+arrow moves 10px, Enter crops.",
+    "Does it preserve quality? Yes — the output is rendered at the crop's pixel size via drawImage, no upscaling unless you resize handles beyond the source."
+  ],
+  "features": [
+    "Draggable rectangle with 8 handles and dimmed outside",
+    "Aspect presets with ratio locking and keyboard nudging",
+    "Export to JPEG/PNG/WebP with quality control",
+    "100% local — no upload"
+  ],
+  "references": [
+    { "label": "MDN — Canvas drawImage", "url": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage" },
+    { "label": "MDN — File API", "url": "https://developer.mozilla.org/en-US/docs/Web/API/File" }
+  ]
+}

@@ -109,7 +109,7 @@ never log user content.
 ### Usage & Terms
 
 - **No authentication required** for the current public endpoints.
-- Requests are **rate-limited** at both the application (`src/middleware.ts`) and
+- Requests are **rate-limited** at both the application (`src/proxy.ts`, Next 16 ex-middleware) and
   Nginx layers. Excessive requests may be rejected with `429 Too Many
   Requests`.
 - Inputs are **validated and size-limited**; `domain`/`ip` values resolve
@@ -192,7 +192,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-> **Note**: CSP is issued per-request (nonce-based) by the Next.js middleware (`src/middleware.ts`) and is the single source of truth. Do **not** add a static `Content-Security-Policy` header at the nginx level — two CSP headers are intersected by the browser and would break hydration. `scripts/verify-csp.mjs` runs in CI after every deploy to confirm the served policy authorizes all inline scripts.
+> **Note**: CSP is **hash-based per-route** (`scripts/postbuild-csp.mjs` → `data/csp-hashes.json` → `src/proxy.ts` + `nginx/csp.generated.conf`, `strict-dynamic` + `trusted-types`, no nonces) and is the single source of truth. Do **not** add a static `Content-Security-Policy` header at the nginx level — two CSP headers are intersected by the browser and would break hydration. `scripts/verify-csp.mjs` runs in CI after every deploy to confirm the served policy authorizes all inline scripts.
 
 ## SSL Certificate
 
@@ -221,7 +221,7 @@ sudo certbot --nginx -d tools.devstackio.com
 - [ ] Logs directory writable: `ls -la /var/www/tools/logs/`
 - [ ] Production readiness: `npm run production:readiness`
 - [ ] SEO audit: `npm run seo:audit` (99/100, 15 passed)
-- [ ] Tool audit: `npm run audit:tools` (120/120) + `npm run dashboard` (`/admin/audit`)
+- [ ] Tool audit: `npm run audit:tools` (172/172) + `npm run dashboard` (`/admin/audit`)
 - [ ] Smoke: `npm run smoke` (`data/bundle-diff.json` 5.64MB, lighthouse placeholder)
 - [ ] Sitemap submitted: `npm run sitemap:submit` (IndexNow `api.indexnow.org` batches 10k)
 

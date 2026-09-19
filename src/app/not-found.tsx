@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Search, ArrowRight, Home } from "lucide-react";
 import { categories, allTools } from "@/lib/data";
+import { OcTarget } from "@/components/illustrations";
 
 export default function NotFound() {
   const popularTools = [...allTools]
@@ -10,6 +11,7 @@ export default function NotFound() {
   return (
     <div className="container py-16 md:py-24">
       <div className="mx-auto max-w-2xl text-center">
+        <OcTarget className="mx-auto w-full max-w-[280px] h-auto text-[var(--color-text)] mb-8 opacity-90" />
         <h1 className="text-7xl font-bold text-surface-400 dark:text-dark-muted">404</h1>
         <h2 className="mt-4 text-2xl font-semibold text-surface-900 dark:text-dark-text">
           Page Not Found

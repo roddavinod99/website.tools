@@ -78,6 +78,10 @@ function getCategoryData(slug: string) {
     "image-tools": { title: "Image Tools", description: "Image processing & optimization tools" },
     utilities: { title: "Utilities", description: "Text analysis & development tools" },
     finance: { title: "Finance", description: "Financial calculators for investing & loans" },
+    "health-calculators": { title: "Health", description: "Health calculators for BMI & fitness" },
+    "date-time-calculators": { title: "Date-Time", description: "Date and time calculators" },
+    "math-calculators": { title: "Math", description: "Math calculators: scientific & stats" },
+    "electrical-calculators": { title: "Electrical", description: "Electrical calculators for wire gauge" },
   };
   const cat = cats[slug];
   if (!cat) return null;

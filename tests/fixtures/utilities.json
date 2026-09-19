@@ -14,5 +14,7 @@
   { "slug": "ipv6-calculator", "category": "Utilities", "name": "IPv6 Calculator", "input": "2001:db8::1", "action": "", "expect": "output" },
   { "slug": "string-comparison", "category": "Utilities", "name": "String Comparator", "input": "hello", "input2": "hello", "action": "", "expect": "output" },
   { "slug": "code-complexity", "category": "Utilities", "name": "Code Complexity Analyzer", "input": "function foo() { if (a) { b(); } }", "action": "", "expect": "output" },
-  { "slug": "math-evaluator", "category": "Utilities", "name": "Math Evaluator", "input": "sqrt(144) + 3^2", "action": "Evaluate", "expect": "output" }
+  { "slug": "math-evaluator", "category": "Utilities", "name": "Math Evaluator", "input": "sqrt(144) + 3^2", "action": "Evaluate", "expect": "output" },
+  { "slug": "geohash-tool", "category": "Utilities", "name": "Geohash Tool", "input": "37.7749, -122.4194", "action": "Encode", "expect": "output" },
+  { "slug": "world-clock", "category": "Utilities", "name": "World Clock", "input": "", "action": "", "expect": "output" }
 ]
