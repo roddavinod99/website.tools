@@ -1,0 +1,13 @@
+import * as fs from 'node:fs';
+import * as crypto from 'node:crypto';
+const html = fs.readFileSync('.next/server/app/index.html','utf8');
+const re = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
+const scripts = [...html.matchAll(re)].map(m=>m[1]);
+console.log('count scripts',scripts.length);
+const hashes = scripts.map(s=>"'sha256-"+crypto.createHash('sha256').update(s,'utf8').digest('base64')+"'");
+console.log(hashes.slice(0,4));
+const d = JSON.parse(fs.readFileSync('data/csp-hashes.json','utf8'));
+console.log('perRoute / count', d.perRoute['/'].scripts.length);
+console.log(d.perRoute['/'].scripts.slice(0,4));
+const missing = hashes.filter(h=>!d.perRoute['/'].scripts.includes(h));
+console.log('missing', missing.slice(0,4));

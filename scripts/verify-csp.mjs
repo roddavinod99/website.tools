@@ -32,6 +32,8 @@ get(url, (res) => {
     // Every inline script must have its content hash present in the policy
     // (hash-based CSP for static/ISR pages; nonces are not used).
     const INLINE_SCRIPT_RE = /<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/gi;
+    const SRC_SCRIPT_RE = /<script[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi;
+    const scriptSrc = (csp.match(/script-src([^;]*)/) || ["", ""])[1];
     let match;
     let total = 0;
     let violations = 0;
@@ -43,7 +45,7 @@ get(url, (res) => {
       const hasNonceAttr = /\bnonce=/.test(attrs);
       const hashAllowed = csp.includes(hash);
       // In hash-based CSP, scripts are authorized by hash. Nonce attributes
-      // are also accepted if present (for 'strict-dynamic' compatibility).
+      // are also accepted if present.
       if (!hasNonceAttr && !hashAllowed) {
         violations++;
         console.error(
@@ -52,11 +54,31 @@ get(url, (res) => {
       }
     }
 
+    // Same-origin external scripts (Next.js chunks) carry no integrity
+    // metadata, so per W3C CSP3 §8.4 they cannot be hash-allowlisted and rely
+    // on 'self' in script-src. 'strict-dynamic' neutralizes 'self' for
+    // parser-inserted scripts, so flag that combination before it deadens
+    // hydration in production (2026-09 incident: all chunks blocked).
+    let externalTotal = 0;
+    while ((match = SRC_SCRIPT_RE.exec(body)) !== null) {
+      const src = match[1];
+      const sameOrigin = src.startsWith("/") || src.startsWith(`${new URL(url).origin}/`);
+      if (!sameOrigin) continue;
+      externalTotal++;
+      if (!scriptSrc.includes("'self'") || scriptSrc.includes("'strict-dynamic'")) {
+        violations++;
+        console.error(
+          `[verify-csp] BLOCKED external script (${src}) — same-origin <script src> without integrity metadata requires 'self' without 'strict-dynamic' in script-src`
+        );
+      }
+    }
+    total += externalTotal;
+
     if (violations > 0) {
       console.error(`[verify-csp] FAILED: ${violations}/${total} inline scripts would be blocked by CSP`);
       process.exit(1);
     }
-    console.log(`[verify-csp] OK: ${total} inline scripts checked, all authorized (hash-based CSP active)`);
+    console.log(`[verify-csp] OK: ${total} scripts checked (inline + same-origin src), all authorized (hash-based CSP active)`);
   });
 }).on("error", (err) => {
   console.error(`[verify-csp] ERROR: ${err.message}`);

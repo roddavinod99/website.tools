@@ -40,6 +40,10 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ["lucide-react", "highlight.js"],
+    // Enables app/global-not-found.tsx: 404-specific metadata for unmatched
+    // URLs (plain not-found.js inherits root layout metadata instead).
+    // Per https://nextjs.org/docs/app/api-reference/file-conventions/not-found
+    globalNotFound: true,
   },
 
   async redirects() {

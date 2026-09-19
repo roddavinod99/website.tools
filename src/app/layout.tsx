@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "../styles/globals.css";
@@ -152,24 +151,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <Script
-          id="theme-init"
-          src="/theme-init.js"
-          strategy="beforeInteractive"
-        />
+        <script defer src="/theme-init.js" />
         {HAS_GOOGLE_TAGS && (
-          <Script
-            id="consent-init"
-            src="/consent-init.js"
-            strategy="lazyOnload"
-          />
+          <script async src="/consent-init.js" />
         )}
         {GA_ID && (
-          <Script
-            id="analytics-init"
-            src="/analytics-init.js"
-            strategy="lazyOnload"
-          />
+          <script async src="/analytics-init.js" />
         )}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />

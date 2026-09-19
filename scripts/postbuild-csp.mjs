@@ -131,17 +131,33 @@ const EVAL_ROUTES = new Set([
 ]);
 
 function buildCsp(scriptHashes, styleHashes, includeWasm, includeEval) {
-  const scriptSources = ["'self'", "'strict-dynamic'", ...scriptHashes, ...RUNTIME_SCRIPT_HASHES];
+  // script-src uses 'self' + per-route inline-script hashes + runtime hashes
+  // + explicit third-party hosts. 'strict-dynamic' is deliberately NOT used:
+  // per W3C CSP3 §8.4, hash allowlisting covers external scripts only when
+  // the <script> tag carries matching integrity metadata, which Next.js does
+  // not emit for /_next/static chunks — and with 'strict-dynamic' present,
+  // 'self' is ignored for those parser-inserted scripts, so every chunk was
+  // blocked (MDN: "External scripts must also include the integrity
+  // attribute for this method to work"). Same-origin chunks therefore rely
+  // on 'self'. Inline scripts stay strictly hash-locked.
+  const scriptSources = ["'self'", ...scriptHashes, ...RUNTIME_SCRIPT_HASHES];
   if (includeWasm) scriptSources.push("'wasm-unsafe-eval'");
   if (includeEval) scriptSources.push("'unsafe-eval'");
   scriptSources.push(...EXTERNAL_SCRIPT_SOURCES);
 
   // Inline styles are allowed (React 19 injects runtime <style> elements that
-  // cannot be pre-hashed); script-src remains strictly hash/nonce-locked.
-  // 'strict-dynamic' allows nonce-validated scripts to load additional scripts
-  // (e.g., Next.js RSC payload) without requiring their hashes in the policy.
+  // cannot be pre-hashed); script-src remains strictly hash-locked for inline
+  // scripts, with same-origin external scripts covered by 'self'.
   const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
+  // Trusted Types enforcement is intentionally NOT part of the enforcing
+  // policy: require-trusted-types-for 'script' throws on every plain-string
+  // sink assignment (React innerHTML, dynamic script.src), and the codebase
+  // does not yet route all sinks through a policy — enforcing it broke all
+  // pages. Violations are collected via the report-only policy emitted in
+  // src/proxy.ts (MDN: "deploying a report-only policy ... watching for
+  // violation reports, and then moving to an enforced policy"). Re-enable
+  // enforcement only after full sink compliance is verified.
   return [
     "default-src 'self'",
     `script-src ${scriptSources.join(" ")}`,
@@ -154,8 +170,6 @@ function buildCsp(scriptHashes, styleHashes, includeWasm, includeEval) {
     "form-action 'self'",
     "base-uri 'self'",
     "object-src 'none'",
-    "require-trusted-types-for 'script'",
-    "trusted-types dompurify",
     "report-uri /api/csp-report",
   ].join("; ");
 }

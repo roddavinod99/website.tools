@@ -203,7 +203,7 @@ for (const [slug, loader] of Object.entries(toolLoaders)) {
   toolComponents[slug] = dynamic(loader, {
     loading: () => (
       <div className="flex items-center justify-center min-h-[200px]">
-        <div className="text-sm text-surface-400 dark:text-dark-muted">Loading tool...</div>
+        <div className="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)]">Loading tool...</div>
       </div>
     ),
   });
@@ -238,7 +238,7 @@ export function ToolInterface({ slug, name }: Props) {
 
   if (!Component) {
     return (
-      <div className="flex items-center justify-center min-h-[200px] text-surface-400 dark:text-dark-muted">
+      <div className="flex items-center justify-center min-h-[200px] text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)]">
         <div className="text-center">
           <p className="text-lg font-medium">Interactive {name}</p>
           <p className="mt-1 text-sm">Tool interface coming soon</p>
@@ -252,7 +252,7 @@ export function ToolInterface({ slug, name }: Props) {
       <Suspense
         fallback={
           <div className="flex items-center justify-center min-h-[200px]">
-            <div className="text-sm text-surface-400 dark:text-dark-muted">Loading tool...</div>
+<div className="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)]">Loading tool...</div>
           </div>
         }
       >

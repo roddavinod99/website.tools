@@ -1,6 +1,5 @@
 "use client";
 
-import Script from "next/script";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getStorageJSON } from "@/lib/client-storage";
@@ -48,14 +47,16 @@ export function Analytics() {
     });
   }, [consented, pathname, searchParams]);
 
+  useEffect(() => {
+    if (!GA_ID) return;
+    if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${GA_ID}"]`)) return;
+    const script = document.createElement("script");
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
+  }, [GA_ID]);
+
   if (!GA_ID) return null;
 
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="lazyOnload"
-      />
-    </>
-  );
+  return null;
 }

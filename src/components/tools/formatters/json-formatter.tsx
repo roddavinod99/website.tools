@@ -404,7 +404,7 @@ export function JSONFormatter() {
             spellCheck={false}
             className="w-full rounded-md border border-surface-200 bg-white p-3 pr-20 text-sm font-mono text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-400 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
           />
-          <div className="absolute bottom-2 right-2 flex gap-1 text-[10px] text-surface-400 dark:text-dark-muted">
+          <div className="absolute bottom-2 right-2 flex gap-1 text-[10px] text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)]">
             <span>{inputLines}L</span>
             <span>|</span>
             <span>{inputChars}C</span>

@@ -262,7 +262,7 @@ export function TextDiffVisual() {
                     key={`orig-${i}`}
                     className={`flex border-b border-surface-200 dark:border-dark-border ${d.type === "removed" ? "bg-red-50 dark:bg-red-900/20" : "bg-white dark:bg-dark-bg"}`}
                   >
-                    <span className="w-8 shrink-0 text-right pr-1 text-xs text-surface-400 dark:text-dark-muted font-mono border-r border-surface-200 dark:border-dark-border">{d.originalNum}</span>
+                    <span className="w-8 shrink-0 text-right pr-1 text-xs text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)] font-mono border-r border-surface-200 dark:border-dark-border">{d.originalNum}</span>
                     <span className="flex-1 px-2 py-1 text-xs font-mono text-surface-900 dark:text-dark-text">
                       {d.type === "removed" && d.chunks && granularity !== "line" ? renderChunks(d.chunks) : d.type === "removed" ? <span className="text-red-600 dark:text-red-400">{d.content}</span> : d.content}
                     </span>
@@ -275,7 +275,7 @@ export function TextDiffVisual() {
                     key={`mod-${i}`}
                     className={`flex border-b border-surface-200 dark:border-dark-border ${d.type === "added" ? "bg-green-50 dark:bg-green-900/20" : "bg-white dark:bg-dark-bg"}`}
                   >
-                    <span className="w-8 shrink-0 text-right pr-1 text-xs text-surface-400 dark:text-dark-muted font-mono border-r border-surface-200 dark:border-dark-border">{d.modifiedNum}</span>
+                    <span className="w-8 shrink-0 text-right pr-1 text-xs text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)] font-mono border-r border-surface-200 dark:border-dark-border">{d.modifiedNum}</span>
                     <span className="flex-1 px-2 py-1 text-xs font-mono text-surface-900 dark:text-dark-text">
                       {d.type === "added" && d.chunks && granularity !== "line" ? renderChunks(d.chunks) : d.type === "added" ? <span className="text-green-600 dark:text-green-400">{d.content}</span> : d.content}
                     </span>
@@ -291,9 +291,9 @@ export function TextDiffVisual() {
                 key={i}
                 className={`flex border-b border-surface-200 dark:border-dark-border ${d.type === "added" ? "bg-green-50 dark:bg-green-900/20" : d.type === "removed" ? "bg-red-50 dark:bg-red-900/20" : "bg-white dark:bg-dark-bg"}`}
               >
-                <span className="w-8 shrink-0 text-right pr-1 text-xs text-surface-400 dark:text-dark-muted font-mono border-r border-surface-200 dark:border-dark-border">{d.originalNum || d.modifiedNum}</span>
+                <span className="w-8 shrink-0 text-right pr-1 text-xs text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)] font-mono border-r border-surface-200 dark:border-dark-border">{d.originalNum || d.modifiedNum}</span>
                 <span className="w-5 shrink-0 text-center text-xs font-mono font-bold border-r border-surface-200 dark:border-dark-border">
-                  <span className={d.type === "added" ? "text-green-600 dark:text-green-400" : d.type === "removed" ? "text-red-600 dark:text-red-400" : "text-surface-400 dark:text-dark-muted"}>
+                  <span className={d.type === "added" ? "text-green-600 dark:text-green-400" : d.type === "removed" ? "text-red-600 dark:text-red-400" : "text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-secondary)]"}>
                     {d.type === "added" ? "+" : d.type === "removed" ? "-" : " "}
                   </span>
                 </span>

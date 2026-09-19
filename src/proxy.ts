@@ -112,7 +112,6 @@ function buildHashCsp(pathname: string): string {
 
   const scriptSources = [
     "'self'",
-    "'strict-dynamic'",
     ...(route?.scripts ?? []),
     ...(inputs.runtimeScriptHashes ?? []),
     ...inputs.externalScriptSources,
@@ -122,11 +121,15 @@ function buildHashCsp(pathname: string): string {
 
   // Styles: React 19 hoists/injects <style> elements at runtime whose content
   // cannot be pre-hashed, so style-src allows inline styles. Script execution
-  // remains strictly hash-locked; CSS injection cannot run JavaScript, and
-  // exfiltration channels are covered by img/connect-src.
-  // 'strict-dynamic' allows nonce-validated scripts to load Next.js RSC.
+  // stays hash-locked for inline scripts; same-origin external scripts
+  // (Next.js chunks, which carry no integrity metadata) are covered by
+  // 'self'. 'strict-dynamic' is omitted on purpose — per W3C CSP3 §8.4 it
+  // only extends trust to non-parser-inserted scripts, so parser-inserted
+  // chunk <script src> tags were blocked while 'self' was neutralized.
   const styleSources = ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"];
 
+  // Trusted Types stays report-only until every sink uses a policy (see
+  // scripts/postbuild-csp.mjs). Enforcing it now throws on all pages.
   return [
     "default-src 'self'",
     `script-src ${scriptSources.join(" ")}`,
@@ -139,11 +142,17 @@ function buildHashCsp(pathname: string): string {
     "form-action 'self'",
     "base-uri 'self'",
     "object-src 'none'",
-    "require-trusted-types-for 'script'",
-    "trusted-types dompurify",
     "report-uri /api/csp-report",
   ].join("; ");
 }
+
+// Report-only Trusted Types policy (MDN "Testing your policy": a
+// Content-Security-Policy-Report-Only policy "generates reports but is not
+// enforced"). Collects require-trusted-types-for violations via the existing
+// /api/csp-report endpoint while enforcement stays off pending sink
+// compliance. Both headers are honored simultaneously per W3C CSP3 §3.2.
+const TRUSTED_TYPES_REPORT_ONLY =
+  "require-trusted-types-for 'script'; trusted-types dompurify; report-uri /api/csp-report";
 
 const ATTACK_PATHS = [
   "/.env",
@@ -346,6 +355,7 @@ export async function proxy(request: NextRequest) {
 
     const cspResponse = NextResponse.next({ request: { headers: requestHeaders } });
     cspResponse.headers.set("Content-Security-Policy", csp);
+    cspResponse.headers.set("Content-Security-Policy-Report-Only", TRUSTED_TYPES_REPORT_ONLY);
     addSecurityHeaders(cspResponse);
     return cspResponse;
   }
